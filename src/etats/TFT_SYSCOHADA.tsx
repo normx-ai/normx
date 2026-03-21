@@ -13,7 +13,9 @@ import {
   bilanBA, bilanBB, bilanBH, bilanBI, bilanBJ, bilanTresoActif, bilanDP, bilanTresoPassif,
   bilanAD_brut, bilanAI_brut,
   computeResultatNet, computeCAFG, computeAllFlux,
+  diagnosticTFT,
 } from './TFT_helpers';
+import type { DiagnosticItem } from './TFT_helpers';
 
 interface TFT_SYSCOHADAProps extends EtatBaseProps {
   offre?: Offre;
@@ -157,6 +159,16 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
   }, [lignesN1, lignesN2]);
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const [showDebug, setShowDebug] = useState(false);
+
+  // Diagnostic automatique N et N-1
+  const diagN = useMemo<DiagnosticItem[]>(() => {
+    if (lignesN.length === 0) return [];
+    return diagnosticTFT(lignesN, lignesN1);
+  }, [lignesN, lignesN1]);
+  const diagN1 = useMemo<DiagnosticItem[]>(() => {
+    if (lignesN1.length === 0) return [];
+    return diagnosticTFT(lignesN1, lignesN2);
+  }, [lignesN1, lignesN2]);
 
   const getValue = (ref: string): number => {
     return fluxN[ref] || 0;
@@ -472,6 +484,55 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
               </table>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Diagnostic automatique */}
+      {balanceFound && (diagN.length > 0 || diagN1.length > 0) && (
+        <div style={{ margin: '16px 0' }}>
+          {[
+            { label: 'Exercice N (' + annee + ')', items: diagN },
+            { label: 'Exercice N-1 (' + (annee - 1) + ')', items: diagN1 },
+          ].map(({ label, items }) => {
+            if (items.length === 0) {
+              return (
+                <div key={label} style={{ padding: '8px 12px', marginBottom: 8, background: '#f3f4f6', borderRadius: 6, fontSize: 12, color: '#6b7280' }}>
+                  {label} : Pas de donnees pour le diagnostic.
+                </div>
+              );
+            }
+            const hasErrors = items.some(d => d.type === 'erreur');
+            const hasAlerts = items.some(d => d.type === 'alerte');
+            const resume = items.find(d => d.poste === 'Resume');
+            const details = items.filter(d => d.poste !== 'Resume' && d.type !== 'info');
+            if (!hasErrors && !hasAlerts) {
+              return (
+                <div key={label} style={{ padding: '8px 12px', marginBottom: 8, background: '#dcfce7', borderRadius: 6, fontSize: 12, color: '#166534' }}>
+                  {label} : {resume?.message || 'TFT equilibre.'}
+                </div>
+              );
+            }
+            return (
+              <div key={label} style={{ marginBottom: 12, background: hasErrors ? '#fef2f2' : '#fffbeb', border: '1px solid ' + (hasErrors ? '#fecaca' : '#fde68a'), borderRadius: 6, padding: 12, fontSize: 12 }}>
+                <div style={{ fontWeight: 700, marginBottom: 8, color: hasErrors ? '#991b1b' : '#92400e' }}>
+                  {hasErrors ? '\u26D4' : '\u26A0\uFE0F'} {label}
+                  {resume && <span style={{ fontWeight: 400, marginLeft: 8 }}>— {resume.message}</span>}
+                </div>
+                {details.map((d, i) => (
+                  <div key={i} style={{ padding: '6px 0', borderBottom: i < details.length - 1 ? '1px solid #f3f4f6' : 'none' }}>
+                    <div style={{ color: d.type === 'erreur' ? '#991b1b' : '#92400e', fontWeight: 600 }}>
+                      [{d.poste}] {d.message}
+                    </div>
+                    {d.suggestion && (
+                      <div style={{ marginTop: 4, color: '#4b5563', paddingLeft: 12, whiteSpace: 'pre-line' }}>
+                        {d.suggestion}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
+          })}
         </div>
       )}
 
