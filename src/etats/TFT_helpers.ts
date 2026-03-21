@@ -638,7 +638,72 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     });
   }
 
-  // ===== 4. COHERENCE DES SOUS-TOTAUX =====
+  // ===== 4. DETECTION RENUMEROTATION DE COMPTES =====
+  // Si un compte existe en N-1 mais pas en N, et qu'un compte similaire
+  // (meme prefixe 3-4 chiffres) existe en N mais pas en N-1 -> renumerotation probable
+  if (ecart !== 0) {
+    const comptesN = new Set(lN.map(l => (l.numero_compte || '').trim()).filter(n => n && n[0] < '5'));
+    const comptesN1 = new Set(lN1.map(l => (l.numero_compte || '').trim()).filter(n => n && n[0] < '5'));
+
+    // Comptes disparus (en N-1 mais pas en N)
+    const disparus: { num: string; lib: string; sc: number; sd: number }[] = [];
+    for (const l of lN1) {
+      const num = (l.numero_compte || '').trim();
+      if (!num || num[0] >= '5') continue;
+      if (!comptesN.has(num) && (getSD(l) > 0 || getSC(l) > 0)) {
+        disparus.push({ num, lib: l.libelle_compte || '', sd: getSD(l), sc: getSC(l) });
+      }
+    }
+
+    // Comptes apparus (en N mais pas en N-1)
+    const apparus: { num: string; lib: string; sc: number; sd: number }[] = [];
+    for (const l of lN) {
+      const num = (l.numero_compte || '').trim();
+      if (!num || num[0] >= '5') continue;
+      if (!comptesN1.has(num) && (getSD(l) > 0 || getSC(l) > 0)) {
+        apparus.push({ num, lib: l.libelle_compte || '', sd: getSD(l), sc: getSC(l) });
+      }
+    }
+
+    // Chercher des paires (disparu, apparu) avec le meme prefixe 3 chiffres
+    const renumerotations: { ancien: string; nouveau: string; libAncien: string; libNouveau: string; montant: number }[] = [];
+    for (const d of disparus) {
+      const prefix3 = d.num.substring(0, 3);
+      for (const a of apparus) {
+        if (a.num.substring(0, 3) === prefix3 && a.num !== d.num) {
+          // Meme classe et sous-classe -> probable renumerotation
+          const montant = Math.max(d.sd, d.sc);
+          if (montant > 0) {
+            renumerotations.push({
+              ancien: d.num,
+              nouveau: a.num,
+              libAncien: d.lib,
+              libNouveau: a.lib,
+              montant
+            });
+          }
+          break; // une seule paire par compte disparu
+        }
+      }
+    }
+
+    if (renumerotations.length > 0) {
+      for (const r of renumerotations) {
+        diag.push({
+          poste: 'Renumerotation',
+          type: 'alerte',
+          message: 'Le compte ' + r.ancien + ' (' + r.libAncien + ') en N-1 semble avoir ete renumerote en '
+            + r.nouveau + ' (' + r.libNouveau + ') en N. Montant : ' + formatMontant(r.montant) + '.',
+          suggestion: 'Utiliser le meme numero de compte en N et N-1. '
+            + 'Renommer le compte ' + r.ancien + ' en ' + r.nouveau + ' dans la balance N-1 '
+            + '(ou inversement) puis reimporter.',
+          montant: r.montant
+        });
+      }
+    }
+  }
+
+  // ===== 5. COHERENCE DES SOUS-TOTAUX =====
   const checks: [string, number, string, number][] = [
     ['ZB', flux.ZB, 'FA+FB+FC+FD+FE', flux.FA + (flux.FB||0) + (flux.FC||0) + (flux.FD||0) + (flux.FE||0)],
     ['ZC', flux.ZC, 'FF+FG+FH+FI+FJ', (flux.FF||0) + (flux.FG||0) + (flux.FH||0) + (flux.FI||0) + (flux.FJ||0)],
