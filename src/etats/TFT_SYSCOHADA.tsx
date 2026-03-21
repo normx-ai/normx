@@ -166,237 +166,44 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
     return fluxN1[ref] || 0;
   };
 
-  // Formules détaillées du TFT avec valeurs intermédiaires
+  // Feuille de travail — formules conformes au guide d'application SYSCOHADA
   const fdt = useMemo(() => {
     if (!balanceFound) return null;
-    const lN = lignesN, lN1 = lignesN1;
 
-    // CAFG
-    const resultatNet = computeResultatNet(lN);
-    const dotations = sumSoldeDebiteur(lN, DOTATIONS_PREFIXES);
-    const reprises = sumSoldeCrediteur(lN, REPRISES_PREFIXES_TFT);
-    const vncCessions = sumSoldeDebiteur(lN, ['81']);
-    const prodCessions = sumSoldeCrediteur(lN, ['82']);
+    type Line = { label: string; value: number; valueN1?: number; indent?: boolean; bold?: boolean; };
+    type Section = { ref: string; title: string; total: number; totalN1: number; lines: Line[]; };
 
-    // ZA
-    const tresoActifN1 = bilanTresoActif(lN1);
-    const tresoPassifN1 = bilanTresoPassif(lN1);
-    const ecartConvN1 = rawSC(lN1, ['4726']);
-
-    // FB
-    const baN = bilanBA(lN), baN1 = bilanBA(lN1);
-    const sd485N = rawSD(lN, ['485']), sd485N1 = rawSD(lN1, ['485']);
-    const sd47818N = rawSD(lN, ['47818']), sd47818N1 = rawSD(lN1, ['47818']);
-    const sc47918N = rawSC(lN, ['47918']), sc47918N1 = rawSC(lN1, ['47918']);
-
-    // FC
-    const bbN = bilanBB(lN), bbN1 = bilanBB(lN1);
-
-    // FD
-    const bhN = bilanBH(lN), bhN1 = bilanBH(lN1);
-    const biN = bilanBI(lN), biN1 = bilanBI(lN1);
-    const bjN = bilanBJ(lN), bjN1 = bilanBJ(lN1);
-    const creancesN = bhN + biN + bjN, creancesN1 = bhN1 + biN1 + bjN1;
-    const sd414N = rawSD(lN, ['414','4494','458','461','467','4752']);
-    const sd414N1 = rawSD(lN1, ['414','4494','458','461','467']);
-    const mvtD2714 = sumMvtDebit(lN, ['2714','2766']);
-    const sd47811N = rawSD(lN, ['47811']), sd47811N1 = rawSD(lN1, ['47811']);
-    const sc47911N = rawSC(lN, ['47911']), sc47911N1 = rawSC(lN1, ['47911']);
-
-    // FE
-    const dpN = bilanDP(lN), dpN1 = bilanDP(lN1);
-    const feAdj = ['404','461','465','4726','481','482'];
-    const scFeN = rawSC(lN, feAdj), scFeN1 = rawSC(lN1, feAdj);
-    const sc4793N = rawSC(lN, ['4793']), sc4793N1 = rawSC(lN1, ['4793']);
-    const sd4783N = rawSD(lN, ['4783']), sd4783N1 = rawSD(lN1, ['4783']);
-    const mvtD4752 = sumMvtDebit(lN, ['4752']), mvtC4752 = sumMvtCredit(lN, ['4752']);
-
-    // FF
-    const adN = bilanAD_brut(lN), adN1 = bilanAD_brut(lN1);
-    const mvtD251 = sumMvtDebit(lN, ['251']), mvtC251 = sumMvtCredit(lN, ['251']);
-    const ffSup = ['4041','4046','4811','48161','48171','48181','4821'];
-    const mvtDffSup = sumMvtDebit(lN, [...ffSup, '281']), mvtCffSup = sumMvtCredit(lN, ffSup);
-    const sd6541_811 = rawSD(lN, ['6541','811']);
-
-    // FG
-    const aiN = bilanAI_brut(lN), aiN1 = bilanAI_brut(lN1);
-    const mvtD252 = sumMvtDebit(lN, ['252']), mvtC252 = sumMvtCredit(lN, ['252']);
-    const fgSup = ['4042','4047','4812','48162','48172','48182','4822'];
-    const mvtDfgSup = sumMvtDebit(lN, [...fgSup, '282','283','284']);
-    const mvtCfgSup = sumMvtCredit(lN, ['17','19842',...fgSup]);
-    const sd6542_812 = rawSD(lN, ['6542','812']);
-
-    // FH
-    const mvtD26_27 = sumMvtDebit(lN, ['26','27'], ['2714','2766']);
-    const mvtD4813 = sumMvtDebit(lN, ['4813']), mvtC4813 = sumMvtCredit(lN, ['4813']);
-    const sd4782 = rawSD(lN, ['4782']), sc4792 = rawSC(lN, ['4792']);
-
-    // FI
-    const sc754_821_822 = rawSC(lN, ['754','821','822']);
-    const mvtD414_485_fi = sumMvtDebit(lN, ['414','485'], ['4856']);
-    const mvtC414_485_fi = sumMvtCredit(lN, ['414','485'], ['4856']);
-
-    // FJ
-    const sc826 = rawSC(lN, ['826']);
-    const mvtC27_fj = sumMvtCredit(lN, ['27'], ['2714','2766']);
-    const mvtD4856 = sumMvtDebit(lN, ['4856']), mvtC4856 = sumMvtCredit(lN, ['4856']);
-
-    // FK
-    const scCapN = rawSC(lN, ['101','102','1051']), scCapN1 = rawSC(lN1, ['101','102','1051']);
-    const sd109_fk = rawSD(lN, ['109','4613','467','4581']);
-    const mvtD11_fk = sumMvtDebit(lN, ['11','12','130','131']);
-    const mvtC103_fk = sumMvtCredit(lN, ['103','104','11','12','139','4619','465']);
-
-    // FL
-    const sc14N = rawSC(lN, ['14']), sc14N1 = rawSC(lN1, ['14']);
-    const sc799 = rawSC(lN, ['799']);
-    const sd4494_fl = rawSD(lN, ['4494','4582']);
-
-    // FM
-    const mvtD4619_fm = sumMvtDebit(lN, ['4619']);
-    const mvtD103_fm = sumMvtDebit(lN, ['103','104']);
-
-    // FN
-    const mvtD465 = sumMvtDebit(lN, ['465']);
-
-    // FO
-    const mvtC161 = sumMvtCredit(lN, ['161','162','1661','1662']);
-    const mvtD4713 = sumMvtDebit(lN, ['4713']);
-    const sd4784 = rawSD(lN, ['4784']);
-
-    // FP
-    const mvtC163 = sumMvtCredit(lN, ['163','164','165','166','167','168','181','182','183'], ['1661','1662']);
-
-    // FQ
-    const mvtD16_fq = sumMvtDebit(lN, ['16','17','181','182','183']);
-    const sc4794 = rawSC(lN, ['4794']);
-
-    // ZI
-    const tresoActifN = bilanTresoActif(lN);
-    const tresoPassifN = bilanTresoPassif(lN);
-    const ecartConvN = rawSC(lN, ['4726']);
-
-    type Line = { label: string; value: number; indent?: boolean; bold?: boolean; };
-    type Section = { ref: string; title: string; total: number; lines: Line[]; };
+    const v = (ref: string) => fluxN[ref] || 0;
+    const v1 = (ref: string) => fluxN1[ref] || 0;
 
     const sections: Section[] = [
-      { ref: 'ZA', title: 'Trésorerie nette au 1er janvier', total: getValue('ZA'), lines: [
-        { label: 'Trésorerie actif N-1 (BQ+BR+BS)', value: tresoActifN1, indent: true },
-        { label: '- Écart conversion SC(4726) N-1', value: -ecartConvN1, indent: true },
-        { label: '- Trésorerie passif N-1 (DQ+DR)', value: -tresoPassifN1, indent: true },
-      ]},
-      { ref: 'FA', title: 'CAFG (Capacité d\'Autofinancement Globale)', total: getValue('FA'), lines: [
-        { label: 'Résultat net (Produits - Charges)', value: resultatNet, indent: true },
-        { label: '+ Dotations (681+691+697)', value: dotations, indent: true },
-        { label: '- Reprises (791+797+798+799)', value: -reprises, indent: true },
-        { label: '+ VNC cessions (81)', value: vncCessions, indent: true },
-        { label: '- Produits cessions (82)', value: -prodCessions, indent: true },
-      ]},
-      { ref: 'FB', title: 'Variation actif circulant HAO', total: getValue('FB'), lines: [
-        { label: 'BA net N', value: baN, indent: true },
-        { label: 'BA net N-1', value: baN1, indent: true },
-        { label: '- SD(485) N + SD(485) N-1', value: -sd485N + sd485N1, indent: true },
-        { label: '+ SD(47818) N - SD(47818) N-1', value: sd47818N - sd47818N1, indent: true },
-        { label: '- SC(47918) N + SC(47918) N-1', value: -sc47918N + sc47918N1, indent: true },
-      ]},
-      { ref: 'FC', title: 'Variation des stocks', total: getValue('FC'), lines: [
-        { label: 'BB net N (stocks)', value: bbN, indent: true },
-        { label: 'BB net N-1', value: bbN1, indent: true },
-        { label: 'FC = -(BB_N - BB_N-1)', value: -(bbN - bbN1), indent: true, bold: true },
-      ]},
-      { ref: 'FD', title: 'Variation des créances', total: getValue('FD'), lines: [
-        { label: 'Créances N (BH+BI+BJ)', value: creancesN, indent: true },
-        { label: 'Créances N-1 (BH+BI+BJ)', value: creancesN1, indent: true },
-        { label: '- SD(414,4494,458,461,467,4752) N', value: -sd414N, indent: true },
-        { label: '+ SD(414,4494,458,461,467) N-1', value: sd414N1, indent: true },
-        { label: '+ MvtD(2714,2766)', value: mvtD2714, indent: true },
-        { label: '+ SD(47811) N - SD(47811) N-1', value: sd47811N - sd47811N1, indent: true },
-        { label: '- SC(47911) N + SC(47911) N-1', value: -sc47911N + sc47911N1, indent: true },
-      ]},
-      { ref: 'FE', title: 'Variation du passif circulant', total: getValue('FE'), lines: [
-        { label: 'DP N (passif circulant)', value: dpN, indent: true },
-        { label: 'DP N-1', value: dpN1, indent: true },
-        { label: '- SC(404,461,465,4726,481,482) N', value: -scFeN, indent: true },
-        { label: '+ SC(404,461,465,4726,481,482) N-1', value: scFeN1, indent: true },
-        { label: '+ SC(4793) N - SC(4793) N-1', value: sc4793N - sc4793N1, indent: true },
-        { label: '- SD(4783) N + SD(4783) N-1', value: -sd4783N + sd4783N1, indent: true },
-        { label: '+ MvtD(4752) - MvtC(4752)', value: mvtD4752 - mvtC4752, indent: true },
-      ]},
-      { ref: 'ZB', title: 'FLUX OPÉRATIONNELS (FA+FB+FC+FD+FE)', total: getValue('ZB'), lines: [] },
-      { ref: 'FF', title: 'Décaissements acquis. immob. incorporelles', total: getValue('FF'), lines: [
-        { label: 'AD brut N (immob. incorp.)', value: adN, indent: true },
-        { label: 'AD brut N-1', value: adN1, indent: true },
-        { label: '+ MvtD(251) - MvtC(251)', value: mvtD251 - mvtC251, indent: true },
-        { label: '+ MvtD(fournisseurs,281) - MvtC(fournisseurs)', value: mvtDffSup - mvtCffSup, indent: true },
-        { label: '+ SD(6541,811)', value: sd6541_811, indent: true },
-      ]},
-      { ref: 'FG', title: 'Décaissements acquis. immob. corporelles', total: getValue('FG'), lines: [
-        { label: 'AI brut N (immob. corp.)', value: aiN, indent: true },
-        { label: 'AI brut N-1', value: aiN1, indent: true },
-        { label: '+ MvtD(252) - MvtC(252)', value: mvtD252 - mvtC252, indent: true },
-        { label: '+ MvtD(fournisseurs,282-284) - MvtC(17,fournisseurs)', value: mvtDfgSup - mvtCfgSup, indent: true },
-        { label: '+ SD(6542,812)', value: sd6542_812, indent: true },
-      ]},
-      { ref: 'FH', title: 'Décaissements acquis. immob. financières', total: getValue('FH'), lines: [
-        { label: 'MvtD(26,27 sauf 2714,2766)', value: mvtD26_27, indent: true },
-        { label: '+ MvtD(4813) - MvtC(4813)', value: mvtD4813 - mvtC4813, indent: true },
-        { label: '+ SD(4782) - SC(4792)', value: sd4782 - sc4792, indent: true },
-      ]},
-      { ref: 'FI', title: 'Encaissements cessions incorp./corp.', total: getValue('FI'), lines: [
-        { label: 'SC(754,821,822)', value: sc754_821_822, indent: true },
-        { label: '- MvtD(414,485) + MvtC(414,485)', value: -mvtD414_485_fi + mvtC414_485_fi, indent: true },
-      ]},
-      { ref: 'FJ', title: 'Encaissements cessions financières', total: getValue('FJ'), lines: [
-        { label: 'SC(826)', value: sc826, indent: true },
-        { label: '+ MvtC(27 sauf 2714,2766)', value: mvtC27_fj, indent: true },
-        { label: '- MvtD(4856) + MvtC(4856)', value: -mvtD4856 + mvtC4856, indent: true },
-      ]},
-      { ref: 'ZC', title: 'FLUX INVESTISSEMENT (FF+FG+FH+FI+FJ)', total: getValue('ZC'), lines: [] },
-      { ref: 'FK', title: 'Augmentation de capital', total: getValue('FK'), lines: [
-        { label: 'SC(101,102,1051) N', value: scCapN, indent: true },
-        { label: '- SC(101,102,1051) N-1', value: -scCapN1, indent: true },
-        { label: '- SD(109,4613,467,4581)', value: -sd109_fk, indent: true },
-        { label: '- MvtD(11,12,130,131)', value: -mvtD11_fk, indent: true },
-        { label: '+ MvtC(103,104,11,12,139,4619,465)', value: mvtC103_fk, indent: true },
-      ]},
-      { ref: 'FL', title: 'Subventions d\'investissement reçues', total: getValue('FL'), lines: [
-        { label: 'SC(14) N - SC(14) N-1', value: sc14N - sc14N1, indent: true },
-        { label: '+ SC(799)', value: sc799, indent: true },
-        { label: '- SD(4494,4582)', value: -sd4494_fl, indent: true },
-      ]},
-      { ref: 'FM', title: 'Prélèvements sur le capital', total: getValue('FM'), lines: [
-        { label: '- MvtD(4619)', value: -mvtD4619_fm, indent: true },
-        { label: '- MvtD(103,104)', value: -mvtD103_fm, indent: true },
-      ]},
-      { ref: 'FN', title: 'Dividendes versés', total: getValue('FN'), lines: [
-        { label: '- MvtD(465)', value: -mvtD465, indent: true },
-      ]},
-      { ref: 'ZD', title: 'FLUX CAPITAUX PROPRES (FK+FL+FM+FN)', total: getValue('ZD'), lines: [] },
-      { ref: 'FO', title: 'Emprunts', total: getValue('FO'), lines: [
-        { label: 'MvtC(161,162,1661,1662)', value: mvtC161, indent: true },
-        { label: '- MvtD(4713)', value: -mvtD4713, indent: true },
-        { label: '+ SD(4784)', value: sd4784, indent: true },
-      ]},
-      { ref: 'FP', title: 'Autres dettes financières', total: getValue('FP'), lines: [
-        { label: 'MvtC(163-168,181-183 sauf 1661,1662)', value: mvtC163, indent: true },
-      ]},
-      { ref: 'FQ', title: 'Remboursements emprunts', total: getValue('FQ'), lines: [
-        { label: '- MvtD(16,17,181-183)', value: -mvtD16_fq, indent: true },
-        { label: '+ SC(4794)', value: sc4794, indent: true },
-      ]},
-      { ref: 'ZE', title: 'FLUX CAPITAUX ÉTRANGERS (FO+FP+FQ)', total: getValue('ZE'), lines: [] },
-      { ref: 'ZF', title: 'FLUX FINANCEMENT (ZD+ZE)', total: getValue('ZF'), lines: [] },
-      { ref: 'ZG', title: 'VARIATION TRÉSORERIE (ZB+ZC+ZF)', total: getValue('ZG'), lines: [] },
-      { ref: 'ZH', title: 'Trésorerie nette au 31 décembre (ZG+ZA)', total: getValue('ZH'), lines: [] },
-      { ref: 'ZI', title: 'Contrôle : Tréso actif N - Tréso passif N', total: getValue('ZI'), lines: [
-        { label: 'Trésorerie actif N', value: tresoActifN, indent: true },
-        { label: '- Écart conversion SC(4726) N', value: -ecartConvN, indent: true },
-        { label: '- Trésorerie passif N', value: -tresoPassifN, indent: true },
-      ]},
+      { ref: 'ZA', title: 'Tresorerie nette au 1er janvier', total: v('ZA'), totalN1: v1('ZA'), lines: [] },
+      { ref: 'FA', title: 'Capacite d\'Autofinancement Globale (CAFG)', total: v('FA'), totalN1: v1('FA'), lines: [] },
+      { ref: 'FB', title: '- Variation de l\'actif circulant HAO', total: v('FB'), totalN1: v1('FB'), lines: [] },
+      { ref: 'FC', title: '- Variation des stocks', total: v('FC'), totalN1: v1('FC'), lines: [] },
+      { ref: 'FD', title: '- Variation des creances et emplois assimiles', total: v('FD'), totalN1: v1('FD'), lines: [] },
+      { ref: 'FE', title: '+ Variation du passif circulant', total: v('FE'), totalN1: v1('FE'), lines: [] },
+      { ref: 'ZB', title: 'Flux de tresorerie provenant des activites operationnelles (FA a FE)', total: v('ZB'), totalN1: v1('ZB'), lines: [] },
+      { ref: 'FF', title: '- Decaissements lies aux acquisitions d\'immobilisations incorporelles', total: v('FF'), totalN1: v1('FF'), lines: [] },
+      { ref: 'FG', title: '- Decaissements lies aux acquisitions d\'immobilisations corporelles', total: v('FG'), totalN1: v1('FG'), lines: [] },
+      { ref: 'FH', title: '- Decaissements lies aux acquisitions d\'immobilisations financieres', total: v('FH'), totalN1: v1('FH'), lines: [] },
+      { ref: 'FI', title: '+ Encaissements lies aux cessions d\'immobilisations incorporelles et corporelles', total: v('FI'), totalN1: v1('FI'), lines: [] },
+      { ref: 'FJ', title: '+ Encaissements lies aux cessions d\'immobilisations financieres', total: v('FJ'), totalN1: v1('FJ'), lines: [] },
+      { ref: 'ZC', title: 'Flux de tresorerie provenant des activites d\'investissement (FF a FJ)', total: v('ZC'), totalN1: v1('ZC'), lines: [] },
+      { ref: 'FK', title: '+ Augmentations de capital par apports nouveaux', total: v('FK'), totalN1: v1('FK'), lines: [] },
+      { ref: 'FL', title: '+ Subventions d\'investissement', total: v('FL'), totalN1: v1('FL'), lines: [] },
+      { ref: 'FN', title: '- Distribution de dividendes', total: v('FN'), totalN1: v1('FN'), lines: [] },
+      { ref: 'ZD', title: 'Flux de tresorerie provenant des capitaux propres (FK a FN)', total: v('ZD'), totalN1: v1('ZD'), lines: [] },
+      { ref: 'FO', title: '+ Emprunts', total: v('FO'), totalN1: v1('FO'), lines: [] },
+      { ref: 'FQ', title: '- Remboursements des emprunts et autres dettes financieres', total: v('FQ'), totalN1: v1('FQ'), lines: [] },
+      { ref: 'ZE', title: 'Flux de tresorerie provenant des capitaux etrangers (FO a FQ)', total: v('ZE'), totalN1: v1('ZE'), lines: [] },
+      { ref: 'ZF', title: 'Flux de tresorerie provenant des activites de financement (ZD+ZE)', total: v('ZF'), totalN1: v1('ZF'), lines: [] },
+      { ref: 'ZG', title: 'VARIATION DE LA TRESORERIE NETTE DE LA PERIODE (ZB+ZC+ZF)', total: v('ZG'), totalN1: v1('ZG'), lines: [] },
+      { ref: 'ZH', title: 'Tresorerie nette au 31 Decembre (ZG+ZA)', total: v('ZH'), totalN1: v1('ZH'), lines: [] },
     ];
 
     return sections;
-  }, [lignesN, lignesN1, balanceFound, fluxN]);
+  }, [fluxN, fluxN1, balanceFound]);
 
   const fmt = (v: number) => { if (!v || v === 0) return ''; const neg = v < 0; return (neg ? '(' : '') + Math.abs(Math.round(v)).toLocaleString('fr-FR') + (neg ? ')' : ''); };
 
@@ -621,35 +428,45 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
                 <thead>
                   <tr style={{ borderBottom: '2px solid #1A3A5C', background: '#eef2f7' }}>
-                    <th style={{ textAlign: 'left', padding: '4px 8px', width: '8%' }}>REF</th>
-                    <th style={{ textAlign: 'left', padding: '4px 8px' }}>Formule / Composante</th>
-                    <th style={{ textAlign: 'right', padding: '4px 8px', width: '18%' }}>Montant</th>
+                    <th style={{ textAlign: 'left', padding: '4px 8px', width: '6%' }}>REF</th>
+                    <th style={{ textAlign: 'left', padding: '4px 8px' }}>LIBELLES</th>
+                    <th style={{ textAlign: 'center', padding: '4px 8px', width: '4%' }}>Note</th>
+                    <th style={{ textAlign: 'right', padding: '4px 8px', width: '16%' }}>EXERCICE N</th>
+                    <th style={{ textAlign: 'right', padding: '4px 8px', width: '16%' }}>EXERCICE N-1</th>
                   </tr>
                 </thead>
                 <tbody>
                   {fdt.map((section, si) => {
                     const isTotal = section.ref.startsWith('Z');
+                    const isSubtotal = ['ZB','ZC','ZD','ZE','ZF'].includes(section.ref);
+                    const isGrand = ['ZG','ZH'].includes(section.ref);
+                    const bg = isGrand ? '#1A3A5C' : isSubtotal ? '#d1e7ff' : isTotal ? '#eef2f7' : '#fff';
+                    const color = isGrand ? '#fff' : '#1f2937';
+                    const fw = isTotal ? 700 : 400;
+                    const note = section.ref === 'ZB' ? 'B' : section.ref === 'ZC' ? 'C' : section.ref === 'ZD' ? 'D' : section.ref === 'ZE' ? 'E' : section.ref === 'ZF' ? 'F' : section.ref === 'ZG' ? 'G' : section.ref === 'ZH' ? 'H' : section.ref === 'ZA' ? 'A' : '';
                     return (
-                      <React.Fragment key={si}>
-                        <tr style={{ borderBottom: '1px solid #d1d5db', background: isTotal ? '#1A3A5C' : '#eef2f7', color: isTotal ? '#fff' : '#1f2937', fontWeight: 700 }}>
-                          <td style={{ padding: '4px 8px' }}>{section.ref}</td>
-                          <td style={{ padding: '4px 8px' }}>{section.title}</td>
-                          <td style={{ textAlign: 'right', padding: '4px 8px' }}>{fmt(section.total)}</td>
-                        </tr>
-                        {section.lines.map((line, li) => (
-                          <tr key={li} style={{ borderBottom: '1px solid #f3f4f6', fontWeight: line.bold ? 600 : 400 }}>
-                            <td style={{ padding: '2px 8px' }}></td>
-                            <td style={{ padding: '2px 8px', paddingLeft: 24, color: '#4b5563' }}>{line.label}</td>
-                            <td style={{ textAlign: 'right', padding: '2px 8px' }}>{fmt(line.value)}</td>
-                          </tr>
-                        ))}
-                      </React.Fragment>
+                      <tr key={si} style={{ borderBottom: '1px solid #d1d5db', background: bg, color, fontWeight: fw }}>
+                        <td style={{ padding: '4px 8px' }}>{section.ref}</td>
+                        <td style={{ padding: '4px 8px' }}>{section.title}</td>
+                        <td style={{ textAlign: 'center', padding: '4px 8px' }}>{note}</td>
+                        <td style={{ textAlign: 'right', padding: '4px 8px' }}>{fmt(section.total)}</td>
+                        <td style={{ textAlign: 'right', padding: '4px 8px' }}>{fmt(section.totalN1)}</td>
+                      </tr>
                     );
                   })}
                   <tr style={{ fontWeight: 700, background: Math.abs(getValue('ZH') - getValue('ZI')) < 1 ? '#dcfce7' : '#fee2e2' }}>
                     <td style={{ padding: '4px 8px' }}></td>
-                    <td style={{ padding: '4px 8px' }}>ÉCART (ZH - ZI)</td>
+                    <td style={{ padding: '4px 8px' }}>Controle : Tresorerie actif N - Tresorerie passif N</td>
+                    <td style={{ textAlign: 'center', padding: '4px 8px' }}></td>
+                    <td style={{ textAlign: 'right', padding: '4px 8px' }}>{fmt(getValue('ZI'))}</td>
+                    <td style={{ textAlign: 'right', padding: '4px 8px' }}>{fmt(getValueN1('ZI'))}</td>
+                  </tr>
+                  <tr style={{ fontWeight: 700, background: Math.abs(getValue('ZH') - getValue('ZI')) < 1 ? '#dcfce7' : '#fee2e2' }}>
+                    <td style={{ padding: '4px 8px' }}></td>
+                    <td style={{ padding: '4px 8px' }}>Ecart (ZH - ZI)</td>
+                    <td style={{ textAlign: 'center', padding: '4px 8px' }}></td>
                     <td style={{ textAlign: 'right', padding: '4px 8px' }}>{fmt(getValue('ZH') - getValue('ZI'))}</td>
+                    <td style={{ textAlign: 'right', padding: '4px 8px' }}>{fmt(getValueN1('ZH') - getValueN1('ZI'))}</td>
                   </tr>
                 </tbody>
               </table>
