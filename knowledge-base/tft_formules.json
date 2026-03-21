@@ -1,0 +1,259 @@
+{
+  "titre": "Tableau des Flux de Trésorerie SYSCOHADA - Formules Guide d'Application",
+  "source": "Guide d'application SYSCOHADA révisé",
+  "articles": [
+    {
+      "ref": "ZA",
+      "libelle": "Trésorerie nette au 1er janvier",
+      "formule": "Trésorerie actif N-1 (BQ+BR+BS) - SC(4726)_N-1 - Trésorerie passif N-1 (DQ+DR)",
+      "comptes": {
+        "tresorerie_actif": ["50", "51", "52", "53", "54", "55", "57", "581", "582"],
+        "tresorerie_actif_deprec": ["590", "591", "592", "593", "594"],
+        "ecart_conversion": ["4726"],
+        "tresorerie_passif": ["564", "565", "561", "566"]
+      },
+      "methode": "variation"
+    },
+    {
+      "ref": "FA",
+      "libelle": "Capacité d'Autofinancement Globale (CAFG)",
+      "formule": "Résultat net + Dotations (681,691,697) - Reprises (791,797,798,799) + SD(81) - SC(82)",
+      "comptes": {
+        "dotations": ["681", "691", "697"],
+        "reprises": ["791", "797", "798", "799"],
+        "vnc_cessions": ["81"],
+        "produits_cessions": ["82"]
+      },
+      "methode": "soustractive",
+      "note": "La méthode soustractive part du résultat net et neutralise les éléments non-cash. Le guide propose aussi la méthode additive (EBE + ajustements) qui donne le même résultat."
+    },
+    {
+      "ref": "FB",
+      "libelle": "Variation de l'actif circulant HAO",
+      "formule": "-(variation BA excl 485)",
+      "comptes": {
+        "ba_inclus": ["488"],
+        "ba_deprec": ["498"],
+        "ba_exclus": ["485"],
+        "ecart_conversion_hao_actif": ["47818"],
+        "ecart_conversion_hao_passif": ["47918"]
+      },
+      "methode": "variation",
+      "note": "Le 485 (créances sur cessions d'immobilisations) est exclu car capté par FI/FJ. BA sans 485 = seulement 488 net de 498."
+    },
+    {
+      "ref": "FC",
+      "libelle": "Variation des stocks",
+      "formule": "-(variation BB)",
+      "comptes": {
+        "stocks_brut": ["31", "32", "33", "34", "35", "36", "37", "38"],
+        "stocks_deprec": ["39"]
+      },
+      "methode": "variation"
+    },
+    {
+      "ref": "FD",
+      "libelle": "Variation des créances et emplois assimilés",
+      "formule": "-(variation BH+BI+BJ excl exclusions) + écarts conversion + MvtD(2714,2766)",
+      "comptes": {
+        "bh_brut": ["409", "41"],
+        "bh_deprec": ["419", "490", "491"],
+        "bi_brut": ["185", "42", "43", "44", "45", "46", "47", "478"],
+        "bi_deprec": ["492", "493", "494", "495", "496", "497"],
+        "bi_exclu_brut": ["478"],
+        "bi_debit_only": ["42", "43", "44", "45", "46", "47"],
+        "exclusions": ["414", "467", "458", "4494", "4751"],
+        "ecart_conversion_actif": ["4781"],
+        "ecart_conversion_passif": ["4791"],
+        "creances_location_financement": ["2714", "2766"]
+      },
+      "methode": "variation",
+      "note": "Les exclusions retirent la VARIATION (N et N-1). Le préfixe 4781 capte les comptes non subdivisés comme 478100. Le 478 est exclu du brut de BI mais capté ici via l'ajustement écarts de conversion."
+    },
+    {
+      "ref": "FE",
+      "libelle": "Variation du passif circulant",
+      "formule": "variation DP excl exclusions + écarts conversion dettes",
+      "comptes": {
+        "dp_composantes": {
+          "DH": { "inclus": ["481", "482", "484", "4998"] },
+          "DI": { "inclus": ["419"] },
+          "DJ": { "inclus": ["40"], "exclus": ["409"] },
+          "DK": { "inclus": ["42", "43", "44"], "credit_only": ["42", "43", "44"] },
+          "DM": { "inclus": ["185", "45", "46", "47"], "exclus": ["479"], "credit_only": ["185", "45", "46", "47"] },
+          "DN": { "inclus": ["499", "599"], "exclus": ["4998"] }
+        },
+        "exclusions": ["404", "481", "482", "467", "4752", "472"],
+        "ecart_conversion_diminution": ["4793"],
+        "ecart_conversion_augmentation": ["4783"]
+      },
+      "methode": "variation",
+      "note": "Le 465 (dividendes à payer) n'est PAS exclu du guide. Le 4752 (compte transitoire SYSCOHADA) est exclu."
+    },
+    {
+      "ref": "ZB",
+      "libelle": "Flux de trésorerie provenant des activités opérationnelles",
+      "formule": "FA + FB + FC + FD + FE"
+    },
+    {
+      "ref": "FF",
+      "libelle": "Décaissements liés aux acquisitions d'immobilisations incorporelles",
+      "formule": "-(investissement reconstitué - variation fournisseurs invest + variation avances)",
+      "comptes": {
+        "ad_brut": ["21"],
+        "ad_amort": ["281"],
+        "ad_deprec": ["291"],
+        "dotations_amort": ["281", "291"],
+        "vnc_cessions": ["811"],
+        "reevaluation": ["1061"],
+        "provisions_demantelement": ["19841"],
+        "fournisseurs_invest": ["4041", "4046", "4811", "48161", "48171", "48181", "48211"],
+        "avances": ["251"]
+      },
+      "methode": "variation_nette_plus_ajustements",
+      "note": "Investissement = variation AD nette + dotations + VNC - réévaluation - provisions démantèlement. Décaissement = investissement - variation fournisseurs + variation avances. Le préfixe 48211 (pas 4821) évite de capter les comptes non subdivisés 482100 qui vont dans FG."
+    },
+    {
+      "ref": "FG",
+      "libelle": "Décaissements liés aux acquisitions d'immobilisations corporelles",
+      "formule": "-(investissement reconstitué - variation fournisseurs invest + variation avances)",
+      "comptes": {
+        "ai_brut": ["22", "23", "24"],
+        "ai_amort": ["282", "283", "284"],
+        "ai_deprec": ["292", "293", "294"],
+        "dotations_amort": ["282", "283", "284", "292", "293", "294"],
+        "vnc_cessions": ["812"],
+        "reevaluation": ["106", "154"],
+        "provisions_demantelement": ["19842"],
+        "location_acquisition": ["17"],
+        "creances_lt": ["2714"],
+        "fournisseurs_invest": ["4042", "4047", "4812", "48162", "48172", "48182", "481800", "48212", "482100"],
+        "avances": ["252"]
+      },
+      "methode": "variation_nette_plus_ajustements",
+      "note": "Investissement = variation AI nette + dotations + VNC - réévaluation (106,154) - provisions démantèlement - location-acquisition (17) - créances LT (2714). Les comptes non subdivisés (481800, 482100) vont dans FG par défaut (corporelles plus fréquent)."
+    },
+    {
+      "ref": "FH",
+      "libelle": "Décaissements liés aux acquisitions d'immobilisations financières",
+      "formule": "-(MvtD(26,27 sauf 2714,2766) + MvtD(4813) - MvtC(4813) + SD(4782) - SC(4792))",
+      "comptes": {
+        "immob_financieres": ["26", "27"],
+        "immob_financieres_exclus": ["2714", "2766"],
+        "fournisseurs_invest_fin": ["4813"],
+        "ecart_conversion_actif": ["4782"],
+        "ecart_conversion_passif": ["4792"]
+      },
+      "methode": "mouvements",
+      "note": "MvtC(106,154) pour immob financières est déjà captée dans FG. Pas de double soustraction."
+    },
+    {
+      "ref": "FI",
+      "libelle": "Encaissements liés aux cessions d'immobilisations incorporelles et corporelles",
+      "formule": "SC(754,821,822) - MvtD(414,485 sauf 4856) + MvtC(414,485 sauf 4856)",
+      "comptes": {
+        "produits_cessions": ["754", "821", "822"],
+        "creances_cessions": ["414", "485"],
+        "creances_cessions_exclus": ["4856"]
+      },
+      "methode": "mouvements"
+    },
+    {
+      "ref": "FJ",
+      "libelle": "Encaissements liés aux cessions d'immobilisations financières",
+      "formule": "SC(826) + MvtC(27 sauf 2714,2766) - MvtD(4856) + MvtC(4856)",
+      "comptes": {
+        "produits_cessions_fin": ["826"],
+        "remboursements_prets": ["27"],
+        "remboursements_exclus": ["2714", "2766"],
+        "creances_cessions_fin": ["4856"]
+      },
+      "methode": "mouvements"
+    },
+    {
+      "ref": "ZC",
+      "libelle": "Flux de trésorerie provenant des activités d'investissement",
+      "formule": "FF + FG + FH + FI + FJ"
+    },
+    {
+      "ref": "FK",
+      "libelle": "Augmentation de capital par apports nouveaux",
+      "formule": "TODO - à implémenter selon guide t7",
+      "comptes": {},
+      "methode": "variation_et_mouvements"
+    },
+    {
+      "ref": "FL",
+      "libelle": "Subventions d'investissement reçues",
+      "formule": "TODO - à implémenter selon guide t7",
+      "comptes": {},
+      "methode": "variation"
+    },
+    {
+      "ref": "FM",
+      "libelle": "Prélèvement sur le capital",
+      "formule": "TODO - à implémenter selon guide t7",
+      "comptes": {},
+      "methode": "mouvements"
+    },
+    {
+      "ref": "FN",
+      "libelle": "Dividendes versés",
+      "formule": "TODO - à implémenter selon guide t7",
+      "comptes": {},
+      "methode": "mouvements"
+    },
+    {
+      "ref": "ZD",
+      "libelle": "Flux de trésorerie provenant des capitaux propres",
+      "formule": "FK + FL + FM + FN"
+    },
+    {
+      "ref": "FO",
+      "libelle": "Emprunts",
+      "formule": "TODO - à implémenter selon guide t7",
+      "comptes": {},
+      "methode": "mouvements_ou_variation"
+    },
+    {
+      "ref": "FP",
+      "libelle": "Autres dettes financières",
+      "formule": "TODO - à implémenter selon guide t7",
+      "comptes": {},
+      "methode": "mouvements_ou_variation"
+    },
+    {
+      "ref": "FQ",
+      "libelle": "Remboursements des emprunts et autres dettes financières",
+      "formule": "TODO - à implémenter selon guide t7",
+      "comptes": {},
+      "methode": "mouvements_ou_variation"
+    },
+    {
+      "ref": "ZE",
+      "libelle": "Flux de trésorerie provenant des capitaux étrangers",
+      "formule": "FO + FP + FQ"
+    },
+    {
+      "ref": "ZF",
+      "libelle": "Flux de trésorerie provenant des activités de financement",
+      "formule": "ZD + ZE"
+    },
+    {
+      "ref": "ZG",
+      "libelle": "Variation de la trésorerie nette de la période",
+      "formule": "ZB + ZC + ZF"
+    },
+    {
+      "ref": "ZH",
+      "libelle": "Trésorerie nette au 31 décembre",
+      "formule": "ZG + ZA"
+    },
+    {
+      "ref": "ZI",
+      "libelle": "Contrôle : Trésorerie actif N - Trésorerie passif N",
+      "formule": "Trésorerie actif N (BQ+BR+BS) - SC(4726)_N - Trésorerie passif N (DQ+DR)",
+      "note": "ZH doit être égal à ZI. Si écart, il y a une erreur dans les formules."
+    }
+  ]
+}
