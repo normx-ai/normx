@@ -167,7 +167,9 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
   }, [lignesN, lignesN1]);
   const diagN1 = useMemo<DiagnosticItem[]>(() => {
     if (lignesN1.length === 0) return [];
-    return diagnosticTFT(lignesN1, lignesN2);
+    const result = diagnosticTFT(lignesN1, lignesN2);
+    log.info('Diagnostic N-1', { nbItems: result.length, items: result.map(d => d.poste + ':' + d.type + ':' + d.message.substring(0, 60)) });
+    return result;
   }, [lignesN1, lignesN2]);
 
   const getValue = (ref: string): number => {

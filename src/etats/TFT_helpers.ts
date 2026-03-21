@@ -490,7 +490,9 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     const affecte = mvtC11 + mvtC12 + mvtC465;
     const ecartAffect = Math.round(mvtD131 - affecte);
 
-    if (Math.abs(ecartAffect) > 1) {
+    if (ecartAffect > 1) {
+      // Seulement si ecart positif = montant non affecte (dividendes manquants)
+      // Un ecart negatif signifie que les MvtC incluent d'autres ecritures (normal)
       // Cas 1 : 465 absent, 462 a des mouvements
       if (mvtC465 === 0 && mvtD465 === 0 && mvtC462 > 0) {
         diag.push({
