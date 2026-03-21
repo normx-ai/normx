@@ -429,3 +429,220 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
 
   return data;
 }
+
+// ===================== DIAGNOSTIC TFT =====================
+// Analyse chaque poste et identifie les problemes d'equilibre
+// Oriente l'utilisateur vers les corrections a apporter a sa balance
+
+export interface DiagnosticItem {
+  poste: string;
+  type: 'erreur' | 'alerte' | 'info';
+  message: string;
+  action?: string;
+  montant?: number;
+}
+
+export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): DiagnosticItem[] {
+  const diag: DiagnosticItem[] = [];
+
+  const flux = computeAllFlux(lN, lN1);
+  const ecart = Math.round(flux.ZH - flux.ZI);
+
+  // ===== 1. EQUILIBRE GLOBAL =====
+  if (ecart === 0) {
+    diag.push({ poste: 'TFT', type: 'info', message: 'TFT equilibre (ZH = ZI)' });
+  } else {
+    diag.push({
+      poste: 'TFT',
+      type: 'erreur',
+      message: 'Ecart de bouclage : ' + formatMontant(ecart),
+      action: 'Verifier les points ci-dessous pour identifier la source de l\'ecart.',
+      montant: ecart
+    });
+  }
+
+  // ===== 2. AFFECTATION DU RESULTAT =====
+  // Dr 131 devrait = Cr 11 + Cr 12 + Cr 465
+  let mvtD131 = 0, mvtC11 = 0, mvtC12 = 0, mvtC465 = 0, mvtD465 = 0;
+  for (const l of lN) {
+    const num = (l.numero_compte || '').trim();
+    const d = parseFloat(String(l.debit)) || 0;
+    const c = parseFloat(String(l.credit)) || 0;
+    if (num.startsWith('131') || num.startsWith('130')) mvtD131 += d;
+    if (num.startsWith('11')) mvtC11 += c;
+    if (num.startsWith('12')) mvtC12 += c;
+    if (num.startsWith('465')) { mvtC465 += c; mvtD465 += d; }
+  }
+
+  if (mvtD131 > 0) {
+    const affecte = mvtC11 + mvtC12 + mvtC465;
+    const ecartAffect = Math.round(mvtD131 - affecte);
+
+    if (Math.abs(ecartAffect) > 1) {
+      // Chercher si l'ecart est passe par le compte courant associe (462)
+      let mvtC462 = 0;
+      for (const l of lN) {
+        if ((l.numero_compte || '').trim().startsWith('462')) {
+          mvtC462 += parseFloat(String(l.credit)) || 0;
+        }
+      }
+
+      if (mvtC465 === 0 && mvtD465 === 0) {
+        // Pas de compte 465 du tout
+        diag.push({
+          poste: 'FN',
+          type: 'alerte',
+          message: 'Compte 465 (Dividendes a payer) absent de la balance. '
+            + 'Resultat affecte : ' + formatMontant(mvtD131)
+            + ', dont reserves/report : ' + formatMontant(affecte)
+            + '. Ecart de ' + formatMontant(ecartAffect) + ' non affecte.',
+          action: mvtC462 > 0
+            ? 'Les dividendes ont probablement transite par le compte 462 (Compte courant associe, MvtC = ' + formatMontant(mvtC462) + '). '
+              + 'Pour que le TFT identifie correctement les dividendes, utiliser le compte 465 dans la comptabilite ou reimporter la balance avec le compte 465 (meme si son solde est nul).'
+            : 'Verifier si des dividendes ont ete verses. Si oui, reimporter la balance en incluant le compte 465 avec ses mouvements.',
+          montant: ecartAffect
+        });
+      } else {
+        diag.push({
+          poste: 'Affectation',
+          type: 'alerte',
+          message: 'Affectation du resultat incomplete. '
+            + 'Dr 131 = ' + formatMontant(mvtD131)
+            + ', Cr (11+12+465) = ' + formatMontant(affecte)
+            + '. Ecart : ' + formatMontant(ecartAffect) + '.',
+          action: 'Verifier l\'ecriture d\'affectation du resultat anterieur.',
+          montant: ecartAffect
+        });
+      }
+    }
+  }
+
+  // ===== 3. COMPTES BILAN NON CAPTES =====
+  // Les comptes 11, 12, 13 sont captes implicitement par FA + FN (affectation du resultat)
+  // Les comptes CR (6-8) sont captes par FA
+  // Les comptes tresorerie (5) sont captes par ZA/ZI
+  // Tout le reste doit etre dans une formule explicite
+
+  const captedPrefixes = [
+    // CR -> FA
+    '60','61','62','63','64','65','66','67','68','69',
+    '70','71','72','73','75','77','78','79',
+    '81','82','83','84','85','86','87','88','89',
+    // Tresorerie -> ZA/ZI
+    '50','51','52','53','54','55','57','581','582','564','565','561','566','590','591','592','593','594',
+    // Affectation resultat -> FA + FN implicitement
+    '11','12','13',
+    // FB
+    '488','498',
+    // FC
+    '31','32','33','34','35','36','37','38','39',
+    // FD (BH+BI)
+    '409','41','419','490','491','185','42','43','44','45','46','47','478','492','493','494','495','496','497',
+    // FE (DP)
+    '40','481','482','484','4998','479','499','599',
+    // FF
+    '21','281','291','251','4041','4046','4811','48161','48171','48181','48211',
+    // FG
+    '22','23','24','282','283','284','292','293','294','252',
+    '4042','4047','4812','48162','48172','48182','481800','48212','482100',
+    '106','154','17','19842',
+    // FH
+    '26','27','4813','4782','4792',
+    // FI
+    '414','485','754','821','822',
+    // FJ
+    '826','4856',
+    // FK
+    '101','102','103','104','105','1051','109','467','4581',
+    // FL
+    '14','4494','4582',
+    // FN
+    '465',
+    // FO/FP/FQ
+    '161','162','1661','1662','4713','4784',
+    '163','164','165','166','167','168','181','182','183',
+    '16','4794',
+    // Ecarts conversion
+    '4781','4791','4793','4783','47818','47918','4726',
+    // Exclusions FD/FE
+    '458','4751','4752','472','404',
+    // VNC / pertes cessions
+    '811','812','6541','6542',
+  ];
+
+  const nonCaptes: { num: string; lib: string; variation: number }[] = [];
+  for (const l of lN) {
+    const num = (l.numero_compte || '').trim();
+    if (!num || num[0] >= '5') continue; // tresorerie/CR deja captes
+    const netN = getSD(l) - getSC(l);
+    const lPrev = lN1.find(p => (p.numero_compte || '').trim() === num);
+    const netN1 = lPrev ? getSD(lPrev) - getSC(lPrev) : 0;
+    const variation = netN - netN1;
+    if (Math.abs(variation) < 1) continue;
+
+    const capte = captedPrefixes.some(p => num.startsWith(p));
+    if (!capte) {
+      nonCaptes.push({ num, lib: l.libelle_compte || '', variation });
+    }
+  }
+  // Aussi verifier les comptes dans N-1 qui n'existent pas en N
+  for (const l of lN1) {
+    const num = (l.numero_compte || '').trim();
+    if (!num || num[0] >= '5') continue;
+    if (lN.some(n => (n.numero_compte || '').trim() === num)) continue; // deja traite
+    const netN1 = getSD(l) - getSC(l);
+    const variation = 0 - netN1; // disparu en N
+    if (Math.abs(variation) < 1) continue;
+    const capte = captedPrefixes.some(p => num.startsWith(p));
+    if (!capte) {
+      nonCaptes.push({ num, lib: l.libelle_compte || '', variation });
+    }
+  }
+
+  for (const c of nonCaptes) {
+    // Identifier la nature du compte pour orienter l'action
+    let action = 'Verifier le classement de ce compte dans le plan comptable.';
+    const num = c.num;
+    if (num.startsWith('15') || num.startsWith('19')) {
+      action = 'Ce compte de provisions/provisions reglementees n\'est pas capte par le TFT. '
+        + 'La dotation/reprise est dans la CAFG (FA) mais la variation bilan cree un ecart. '
+        + 'Verifier si ce compte devrait etre dans les dettes financieres (FO/FP/FQ).';
+    }
+
+    diag.push({
+      poste: num,
+      type: ecart !== 0 ? 'alerte' : 'info',
+      message: num + ' ' + c.lib + ' : variation ' + formatMontant(Math.round(c.variation)) + ' non captee.',
+      action,
+      montant: Math.round(c.variation)
+    });
+  }
+
+  // ===== 4. COHERENCE DES SOUS-TOTAUX =====
+  const checks: [string, number, string, number][] = [
+    ['ZB', flux.ZB, 'FA+FB+FC+FD+FE', flux.FA + (flux.FB||0) + (flux.FC||0) + (flux.FD||0) + (flux.FE||0)],
+    ['ZC', flux.ZC, 'FF+FG+FH+FI+FJ', (flux.FF||0) + (flux.FG||0) + (flux.FH||0) + (flux.FI||0) + (flux.FJ||0)],
+    ['ZD', flux.ZD, 'FK+FL+FM+FN', (flux.FK||0) + (flux.FL||0) + (flux.FM||0) + (flux.FN||0)],
+    ['ZE', flux.ZE, 'FO+FP+FQ', (flux.FO||0) + (flux.FP||0) + (flux.FQ||0)],
+    ['ZF', flux.ZF, 'ZD+ZE', flux.ZD + flux.ZE],
+    ['ZG', flux.ZG, 'ZB+ZC+ZF', flux.ZB + flux.ZC + flux.ZF],
+  ];
+  for (const [ref, val, formula, expected] of checks) {
+    if (Math.abs(val - expected) > 1) {
+      diag.push({
+        poste: ref,
+        type: 'erreur',
+        message: ref + ' incoherent : ' + formatMontant(Math.round(val)) + ' vs ' + formula + ' = ' + formatMontant(Math.round(expected)),
+      });
+    }
+  }
+
+  // ===== 5. RESUME =====
+  if (ecart === 0 && nonCaptes.length === 0) {
+    diag.push({ poste: 'Resume', type: 'info', message: 'Aucun probleme detecte. Le TFT est complet et equilibre.' });
+  } else if (ecart === 0 && nonCaptes.length > 0) {
+    diag.push({ poste: 'Resume', type: 'info', message: 'Le TFT est equilibre malgre ' + nonCaptes.length + ' compte(s) non capte(s). Leurs variations se compensent implicitement.' });
+  }
+
+  return diag;
+}
