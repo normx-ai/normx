@@ -1,6 +1,7 @@
 {
   "titre": "Tableau des Flux de Trésorerie SYSCOHADA - Formules Guide d'Application",
-  "source": "Guide d'application SYSCOHADA révisé",
+  "source": "Guide d'application SYSCOHADA révisé (t1-t8)",
+  "statut": "Validé - Equilibre vérifié sur SYSCOHADA N et N-1",
   "articles": [
     {
       "ref": "ZA",
@@ -25,21 +26,19 @@
         "produits_cessions": ["82"]
       },
       "methode": "soustractive",
-      "note": "La méthode soustractive part du résultat net et neutralise les éléments non-cash. Le guide propose aussi la méthode additive (EBE + ajustements) qui donne le même résultat."
+      "note": "Méthode soustractive validée sur SYSCOHADA et PIKINOISE. Les provisions (15x, 19x) sont non-cash : leur dotation/reprise transite par le CR et est neutralisée par le CAFG."
     },
     {
       "ref": "FB",
       "libelle": "Variation de l'actif circulant HAO",
-      "formule": "-(variation BA excl 485)",
+      "formule": "-(variation 488 net de 498)",
       "comptes": {
         "ba_inclus": ["488"],
         "ba_deprec": ["498"],
-        "ba_exclus": ["485"],
-        "ecart_conversion_hao_actif": ["47818"],
-        "ecart_conversion_hao_passif": ["47918"]
+        "ba_exclus": ["485"]
       },
       "methode": "variation",
-      "note": "Le 485 (créances sur cessions d'immobilisations) est exclu car capté par FI/FJ. BA sans 485 = seulement 488 net de 498."
+      "note": "Le 485 (créances sur cessions) est exclu car capté par FI/FJ. BA sans 485 = seulement 488 net de 498."
     },
     {
       "ref": "FC",
@@ -54,7 +53,7 @@
     {
       "ref": "FD",
       "libelle": "Variation des créances et emplois assimilés",
-      "formule": "-(variation BH+BI+BJ excl exclusions) + écarts conversion + MvtD(2714,2766)",
+      "formule": "-(variation BH+BI+BJ excl exclusions) + écarts conversion 4781/4791 + MvtD(2714,2766)",
       "comptes": {
         "bh_brut": ["409", "41"],
         "bh_deprec": ["419", "490", "491"],
@@ -68,27 +67,19 @@
         "creances_location_financement": ["2714", "2766"]
       },
       "methode": "variation",
-      "note": "Les exclusions retirent la VARIATION (N et N-1). Le préfixe 4781 capte les comptes non subdivisés comme 478100. Le 478 est exclu du brut de BI mais capté ici via l'ajustement écarts de conversion."
+      "note": "Préfixe 4781 (pas 47811) pour capter les comptes non subdivisés comme 478100. Le 478 est exclu du brut de BI mais capté via l'ajustement écarts de conversion."
     },
     {
       "ref": "FE",
       "libelle": "Variation du passif circulant",
-      "formule": "variation DP excl exclusions + écarts conversion dettes",
+      "formule": "variation DP excl exclusions + écarts conversion 4793/4783",
       "comptes": {
-        "dp_composantes": {
-          "DH": { "inclus": ["481", "482", "484", "4998"] },
-          "DI": { "inclus": ["419"] },
-          "DJ": { "inclus": ["40"], "exclus": ["409"] },
-          "DK": { "inclus": ["42", "43", "44"], "credit_only": ["42", "43", "44"] },
-          "DM": { "inclus": ["185", "45", "46", "47"], "exclus": ["479"], "credit_only": ["185", "45", "46", "47"] },
-          "DN": { "inclus": ["499", "599"], "exclus": ["4998"] }
-        },
         "exclusions": ["404", "481", "482", "467", "4752", "472"],
         "ecart_conversion_diminution": ["4793"],
         "ecart_conversion_augmentation": ["4783"]
       },
       "methode": "variation",
-      "note": "Le 465 (dividendes à payer) n'est PAS exclu du guide. Le 4752 (compte transitoire SYSCOHADA) est exclu."
+      "note": "Le 465 (dividendes à payer) n'est PAS exclu conformément au guide. Le 4752 (compte transitoire SYSCOHADA) est exclu."
     },
     {
       "ref": "ZB",
@@ -111,7 +102,7 @@
         "avances": ["251"]
       },
       "methode": "variation_nette_plus_ajustements",
-      "note": "Investissement = variation AD nette + dotations + VNC - réévaluation - provisions démantèlement. Décaissement = investissement - variation fournisseurs + variation avances. Le préfixe 48211 (pas 4821) évite de capter les comptes non subdivisés 482100 qui vont dans FG."
+      "note": "Investissement = variation AD nette + dotations + VNC - réévaluation - provisions démantèlement. Préfixe 48211 (pas 4821) pour éviter de capter les comptes non subdivisés 482100."
     },
     {
       "ref": "FG",
@@ -131,7 +122,7 @@
         "avances": ["252"]
       },
       "methode": "variation_nette_plus_ajustements",
-      "note": "Investissement = variation AI nette + dotations + VNC - réévaluation (106,154) - provisions démantèlement - location-acquisition (17) - créances LT (2714). Les comptes non subdivisés (481800, 482100) vont dans FG par défaut (corporelles plus fréquent)."
+      "note": "Les comptes non subdivisés (481800, 482100) vont dans FG par défaut (corporelles). MvtC(106,154) déduit la réévaluation non-cash."
     },
     {
       "ref": "FH",
@@ -178,30 +169,43 @@
     {
       "ref": "FK",
       "libelle": "Augmentation de capital par apports nouveaux",
-      "formule": "TODO - à implémenter selon guide t7",
-      "comptes": {},
-      "methode": "variation_et_mouvements"
+      "formule": "Variation SC(101,102,103,104,105,1051) - SD(109,467,4581)",
+      "comptes": {
+        "capital": ["101", "102", "103", "104", "105", "1051"],
+        "capital_non_appele": ["109"],
+        "apporteurs_restant_du": ["467"],
+        "fonds_dotation": ["4581"]
+      },
+      "methode": "variation",
+      "note": "Variation de la classe 10 hors 106 (réévaluation dans FG) et 109 (soustrait comme réduction). Les comptes 11, 12, 13 ne sont PAS dans FK — leurs variations sont captées implicitement par FA (résultat courant) et FN (dividendes)."
     },
     {
       "ref": "FL",
       "libelle": "Subventions d'investissement reçues",
-      "formule": "TODO - à implémenter selon guide t7",
-      "comptes": {},
+      "formule": "Variation SC(14) - Variation SD(4494,4582)",
+      "comptes": {
+        "subventions": ["14"],
+        "subventions_a_recevoir": ["4494", "4582"]
+      },
       "methode": "variation"
     },
     {
       "ref": "FM",
       "libelle": "Prélèvement sur le capital",
-      "formule": "TODO - à implémenter selon guide t7",
+      "formule": "0 (intégré dans FK via la variation)",
       "comptes": {},
-      "methode": "mouvements"
+      "methode": "inclus_dans_fk",
+      "note": "Les réductions de capital sont déjà dans la variation de FK. FM = 0 sauf cas spécifique."
     },
     {
       "ref": "FN",
       "libelle": "Dividendes versés",
-      "formule": "TODO - à implémenter selon guide t7",
-      "comptes": {},
-      "methode": "mouvements"
+      "formule": "-MvtD(465)",
+      "comptes": {
+        "dividendes": ["465"]
+      },
+      "methode": "mouvements",
+      "note": "Le compte 465 doit exister dans la balance même si son solde final est nul. Si les dividendes transitent par le 462 (compte courant associé) sans passer par le 465, le diagnostic le signale et suggère l'écriture correcte."
     },
     {
       "ref": "ZD",
@@ -211,23 +215,36 @@
     {
       "ref": "FO",
       "libelle": "Emprunts",
-      "formule": "TODO - à implémenter selon guide t7",
-      "comptes": {},
-      "methode": "mouvements_ou_variation"
+      "formule": "MvtC(161,162,1661,1662) - MvtD(4713) + SD(4784)",
+      "comptes": {
+        "emprunts_bancaires": ["161", "162"],
+        "interets_courus": ["1661", "1662"],
+        "crediteurs_divers": ["4713"],
+        "ecart_conversion": ["4784"]
+      },
+      "methode": "mouvements"
     },
     {
       "ref": "FP",
       "libelle": "Autres dettes financières",
-      "formule": "TODO - à implémenter selon guide t7",
-      "comptes": {},
-      "methode": "mouvements_ou_variation"
+      "formule": "MvtC(163-168 sauf 1661/1662, 181-183)",
+      "comptes": {
+        "autres_emprunts": ["163", "164", "165", "166", "167", "168"],
+        "autres_emprunts_exclus": ["1661", "1662"],
+        "dettes_participations": ["181", "182", "183"]
+      },
+      "methode": "mouvements"
     },
     {
       "ref": "FQ",
       "libelle": "Remboursements des emprunts et autres dettes financières",
-      "formule": "TODO - à implémenter selon guide t7",
-      "comptes": {},
-      "methode": "mouvements_ou_variation"
+      "formule": "-(MvtD(16,17,181-183) - SC(4794))",
+      "comptes": {
+        "remboursements": ["16", "17", "181", "182", "183"],
+        "ecart_conversion": ["4794"]
+      },
+      "methode": "mouvements",
+      "note": "Inclut MvtD(17) = remboursement location-acquisition, considéré comme remboursement de dette financière selon le guide."
     },
     {
       "ref": "ZE",
@@ -253,7 +270,33 @@
       "ref": "ZI",
       "libelle": "Contrôle : Trésorerie actif N - Trésorerie passif N",
       "formule": "Trésorerie actif N (BQ+BR+BS) - SC(4726)_N - Trésorerie passif N (DQ+DR)",
-      "note": "ZH doit être égal à ZI. Si écart, il y a une erreur dans les formules."
+      "note": "ZH doit être égal à ZI. Si écart, le diagnostic identifie automatiquement la source."
     }
-  ]
+  ],
+  "diagnostic": {
+    "description": "Le diagnostic analyse automatiquement la balance pour identifier les problèmes d'équilibre du TFT.",
+    "cas_detectes": [
+      {
+        "cas": "465 absent, 462 avec mouvements",
+        "message": "Dividendes probablement versés via le compte courant associé (462).",
+        "suggestion": "Passer l'écriture Dr 131 / Cr 465 puis Dr 465 / Cr 462 et réimporter la balance avec le 465."
+      },
+      {
+        "cas": "465 absent, pas de 462",
+        "message": "Vérifier si des dividendes ont été versés en espèces ou par banque directement.",
+        "suggestion": "Si oui, passer l'écriture Dr 131 / Cr 465 puis Dr 465 / Cr 521 et réimporter."
+      },
+      {
+        "cas": "131 non soldé",
+        "message": "Le résultat antérieur n'a pas été affecté.",
+        "suggestion": "Passer l'écriture d'affectation : Dr 131 / Cr 111 + Cr 121 + Cr 465."
+      },
+      {
+        "cas": "Compte non reconnu",
+        "message": "Un compte bilan a une variation non captée par les formules du TFT.",
+        "suggestion": "Vérifier le classement du compte dans le plan comptable SYSCOHADA."
+      }
+    ],
+    "provisions_non_cash": "Les comptes 15x et 19x (provisions) sont des éléments non-cash. Leur dotation/reprise passe par le CR et est neutralisée par le CAFG. Leur variation bilan ne nécessite pas de poste séparé dans le TFT — c'est conforme au guide d'application."
+  }
 }
