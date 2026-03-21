@@ -456,7 +456,7 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
       poste: 'TFT',
       type: 'erreur',
       message: 'Ecart de bouclage de ' + formatMontant(ecart) + '.',
-      suggestion: 'Consultez les alertes ci-dessous pour identifier et corriger la source de l\'ecart.',
+      suggestion: 'Verifier les points ci-dessous. Si aucune alerte, l\'ecart peut provenir de comptes renumerotes entre N et N-1 (ex: 462000 devenu 462001) ou de comptes avec solde nul non importes.',
       montant: ecart
     });
   }
