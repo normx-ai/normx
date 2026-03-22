@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1336
+  },
+  "articles": [
+    {
+      "numero": 2176,
+      "titre": "Compte de résultat (suite)",
+      "texte": [
+        "des risques et des charges probables, même en cas d'absence ou d'insuffisance d'excédent.",
+        "Il doit être tenu compte des risques, charges et produits intervenus au cours de l'exercice ou d'un exercice antérieur, même s'ils sont connus seulement entre la date de clôture de l'exercice et celle de l'arrêté des comptes."
+      ],
+      "comptes": [],
+      "mots_cles": ["compte de résultat", "risques", "charges probables", "arrêté des comptes"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1335"
+    },
+    {
+      "numero": 2177,
+      "titre": "Tableau des flux de trésorerie",
+      "texte": [
+        "Le Tableau des flux de trésorerie retrace les mouvements « entrées » et « sorties » de liquidités de l'exercice.",
+        "Le Tableau des flux de trésorerie de l'exercice fait apparaître la trésorerie nette en début d'exercice, les flux de trésorerie provenant des activités opérationnelles, les flux de trésorerie provenant des opérations d'investissement, les flux de trésorerie provenant des fonds propres, les flux de trésorerie provenant des fonds extérieurs et la trésorerie nette en fin d'exercice."
+      ],
+      "comptes": [],
+      "mots_cles": ["tableau flux trésorerie", "entrées", "sorties", "liquidités", "activités opérationnelles", "opérations investissement", "fonds propres", "fonds extérieurs", "trésorerie nette"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2178,
+      "titre": "Notes annexes",
+      "texte": [
+        "Les Notes annexes contiennent des informations complémentaires à celles qui sont présentées dans le Bilan, le Compte de résultat et le Tableau des flux de trésorerie. Les Notes annexes fournissent des descriptions narratives ou des décompositions d'éléments présentées dans les autres états financiers, ainsi que des informations relatives aux éléments qui ne répondent pas aux critères de comptabilisation dans les autres états financiers.",
+        "Les Notes annexes comportent tous les éléments significatifs qui ne sont pas mis en évidence dans les autres états financiers et sont susceptibles d'influencer le jugement que les utilisateurs des documents peuvent porter sur le patrimoine, la situation financière et le résultat de l'entité. Il en est ainsi notamment pour le montant des engagements donnés et reçus dont le suivi doit être assuré par l'entité dans le cadre de son organisation comptable.",
+        "Les Notes annexes font partie intégrante des états financiers. Elles doivent comporter obligatoirement une déclaration explicite de conformité à l'Acte Uniforme relatif au droit comptable et à l'information financière et au Système comptable des entités à but non lucratif."
+      ],
+      "comptes": [],
+      "mots_cles": ["notes annexes", "informations complémentaires", "descriptions narratives", "décompositions", "éléments significatifs", "engagements donnés reçus", "déclaration conformité", "Acte Uniforme"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

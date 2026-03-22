@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Système Minimal de Trésorerie (SMT)",
+    "section": "§2240 - Introduction au SMT",
+    "page_source": 1389
+  },
+  "articles": [
+    {
+      "numero": 2240,
+      "titre": "§2240 - Système Minimal de Trésorerie (SMT) - Introduction",
+      "texte": [
+        "Les entités à but non lucratif dont les ressources annuelles sont inférieures à trente millions (30.000.000) de francs CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie, sont assujetties au Système Minimal de Trésorerie (SMT).",
+        "Le SMT repose sur une comptabilité de trésorerie fondée sur les encaissements et les décaissements avec des retraitements en fin d'exercice.",
+        "Les états financiers annuels du SMT comprennent :",
+        "- le Bilan ;",
+        "- le Compte de résultat ;",
+        "- les Notes annexes.",
+        "Ils forment un tout indissociable et décrivent de façon régulière et sincère les événements, opérations et situations de l'exercice pour donner une image fidèle du patrimoine, de la situation financière et du résultat de l'entité.",
+        "L'exercice comptable a une durée de douze (12) mois. Il commence le 1er janvier et se termine le 31 décembre de chaque année.",
+        "L'entité qui remplit les conditions requises pour être assujettie au système normal peut opter pour le SMT. Cependant, l'option inverse est toujours possible."
+      ],
+      "comptes": [],
+      "mots_cles": ["SMT", "système minimal de trésorerie", "30 millions FCFA", "seuil", "comptabilité de trésorerie", "encaissements", "décaissements", "bilan", "compte de résultat", "notes annexes", "image fidèle"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1326
+  },
+  "articles": [
+    {
+      "numero": 2132,
+      "titre": "Fonds affectés — Comptabilisation",
+      "texte": [
+        "Les fonds affectés peuvent provenir d'un tiers financeur qui met à la disposition de l'entité de la trésorerie pour lui permettre de couvrir, des dépenses bien déterminées sur une période bien définie par exemple, couverture d'une catégorie de charges sur plusieurs exercices, achat d'immobilisations, etc... Ces fonds sont enregistrés au crédit compte 165 Fonds affectés à un projet spécifique par le débit du compte 5 Compte de trésorerie lors de la mise à disposition. Ensuite ils sont repris au fur et à mesure de la réalisation des engagements par le biais du compte 7925 Reprises de fonds affectés à un projet spécifique.",
+        "Si les fonds sont affectés à un bien immobilier, la quotité de la dotation annuelle aux amortissements sera neutralisée par le compte 7925."
+      ],
+      "comptes": ["165", "5", "7925"],
+      "mots_cles": ["fonds affectés", "comptabilisation", "tiers financeur", "trésorerie", "reprises fonds affectés", "bien immobilier", "amortissements"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2133,
+      "titre": "Fonds affectés — Dons ou legs de biens immobiliers et schéma des écritures",
+      "texte": [
+        "Les fonds affectés relatifs aux dons ou legs de biens immobiliers sont traités aux §§ 2080 et suivants."
+      ],
+      "ecritures": [
+        {
+          "description": "Réception des fonds des financeurs",
+          "lignes": [
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "x", "credit": ""},
+            {"compte": "165", "libelle": "Fonds affectés à un projet spécifiques", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Achat de biens",
+          "lignes": [
+            {"compte": "2", "libelle": "Compte d'actif immobilisé (achat de biens immobiliers)", "debit": "x", "credit": ""},
+            {"compte": "6", "libelle": "Comptes de charges", "debit": "x", "credit": ""},
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Dotation annuelle",
+          "lignes": [
+            {"compte": "681", "libelle": "Dotations aux amortissements", "debit": "x", "credit": ""},
+            {"compte": "691", "libelle": "Dotations aux dépréciations", "debit": "x", "credit": ""},
+            {"compte": "28", "libelle": "Amortissements", "debit": "", "credit": "x"},
+            {"compte": "29", "libelle": "Dépréciations des immobilisations", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Reprise de la quotité de charges, des dotations aux amortissements et dépréciations et des dettes payées par les fonds spécifiques",
+          "lignes": [
+            {"compte": "165", "libelle": "Fonds affectés à un projet spécifique", "debit": "x", "credit": ""},
+            {"compte": "7925", "libelle": "Reprises de fonds affectés à un projet spécifique", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["5", "165", "2", "6", "681", "691", "28", "29", "7925"],
+      "mots_cles": ["dons legs biens immobiliers", "réception fonds", "achat biens", "dotation annuelle", "amortissements", "dépréciations", "reprises fonds"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

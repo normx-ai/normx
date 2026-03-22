@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Articles 13, 14 et 15 - Réconciliation trésorerie, livre d'inventaire, notes annexes",
+    "page_source": 1452
+  },
+  "articles": [
+    {
+      "numero": 2402,
+      "titre": "Article 13 - Tableau de réconciliation de trésorerie",
+      "texte": [
+        "Le Tableau de réconciliation de trésorerie retrace la trésorerie de début d'exercice, les transferts de fonds reçus des bailleurs, les emplois de l'exercice, la trésorerie de fin d'exercice et les paiements en instance."
+      ],
+      "comptes": [],
+      "mots_cles": ["réconciliation trésorerie", "trésorerie début", "transferts fonds", "bailleurs", "emplois", "paiements instance"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 14 - Livre d'inventaire",
+      "texte": [
+        "Le livre d'inventaire est un document obligatoire sur lequel sont transcrits :",
+        "- le Bilan, le Compte de résultat et le Tableau des flux de trésorerie de chaque exercice, ainsi que le résumé de l'opération d'inventaire, pour les associations et les ordres professionnels ;",
+        "- le Tableau emplois-ressources, le Tableau d'exécution budgétaire, le Tableau de réconciliation de trésorerie, le Bilan, le Compte d'exploitation de chaque exercice, ainsi que le résumé de l'opération d'inventaire pour les entités ayant pour objet la gestion ou l'administration de projets de développement."
+      ],
+      "comptes": [],
+      "mots_cles": ["livre inventaire", "document obligatoire", "associations", "projets développement", "opération inventaire"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 15 - Notes annexes",
+      "texte": [
+        "Les états financiers annuels, décrits aux articles 7 à 13, sont accompagnés de Notes annexes, organisées par une référence croisée avec l'information liée.",
+        "Les Notes annexes contiennent des informations complémentaires à celles qui sont présentées dans le Bilan, le Compte de résultat, le Compte d'exploitation, le Tableau des flux de trésorerie, le Tableau emplois-ressources, le Tableau d'exécution budgétaire, le Tableau de réconciliation de trésorerie. Les Notes annexes fournissent des descriptions narratives ou des décompositions d'éléments présentés dans les autres états financiers, ainsi que des informations relatives aux éléments qui ne répondent pas aux critères de comptabilisation dans les autres états financiers.",
+        "Les Notes annexes comportent tous les éléments à caractère significatif qui ne sont pas mis en évidence dans les autres états financiers et sont susceptibles d'influencer le jugement que les utilisateurs des documents peuvent porter sur le patrimoine, la situation financière et la performance de l'entité. Il en est ainsi notamment pour le montant des engagements donnés et reçus dont le suivi doit être assuré par l'entité dans le cadre de son organisation comptable."
+      ],
+      "comptes": [],
+      "mots_cles": ["notes annexes", "référence croisée", "informations complémentaires", "éléments significatifs", "engagements"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

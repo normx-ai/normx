@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "I - Fonds affectés aux investissements (fin) et II - Fonds d'administration",
+    "page_source": 1404
+  },
+  "articles": [
+    {
+      "numero": 2263,
+      "titre": "Exemple 5 : Reprise des biens fin de projet (suite - Solution)",
+      "texte": [
+        "Solution",
+        "15/12/N: Débit 162 Fonds affectés aux investissements 15 000 000 / Crédit 2441 Mobilier de bureau 5 000 000 / Crédit 2451 Matériel automobile 10 000 000 — Transfert du mobilier de bureau et de la voiture"
+      ],
+      "comptes": ["162", "2441", "2451"],
+      "mots_cles": ["exemple", "transfert", "mobilier bureau", "matériel automobile", "solution"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1403"
+    },
+    {
+      "numero": 2270,
+      "titre": "Fonds d'administration - Enregistrement",
+      "texte": [
+        "Les fonds que le bailleur met à la disposition de l'entité, pour faire face aux charges d'exploitation ou frais généraux, sont des dotations consomptibles qui doivent être enregistrés au crédit d'un des comptes 462 à 464 Fonds d'administration selon le cas par le débit d'un compte 5 Trésorerie à la réception des fonds.",
+        "Aucune écriture comptable ne doit être enregistrée si les ressources ne sont pas réceptionnées par le projet."
+      ],
+      "comptes": ["462", "463", "464", "5"],
+      "mots_cles": ["fonds administration", "charges exploitation", "frais généraux", "dotations consomptibles", "réception fonds"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2271,
+      "titre": "Paiement direct des charges par le bailleur",
+      "texte": [
+        "Si les charges d'exploitation sont payées directement par le bailleur, l'un des comptes 462 à 464 Fonds d'administration sera crédité par le débit d'un compte de charges 6 ou 8."
+      ],
+      "comptes": ["462", "463", "464", "6", "8"],
+      "mots_cles": ["paiement direct", "bailleur", "charges exploitation", "fonds administration"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2272,
+      "titre": "Fonds sans répartition entre charges et immobilisations",
+      "texte": [
+        "Les fonds envoyés à l'entité sans aucune répartition entre les charges d'exploitation et les immobilisations sont traités au §2252"
+      ],
+      "comptes": [],
+      "mots_cles": ["fonds sans répartition", "renvoi", "charges exploitation", "immobilisations"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2273,
+      "titre": "Avance initiale pour charges d'exploitation",
+      "texte": [
+        "Si Le bailleur de fonds fait une avance initiale, pour la couverture des charges d'exploitation qui doivent être justifiées par le projet aux fins de remboursement, le compte 161 Avances de fonds à justifier sera crédité par le débit d'un compte 5 trésorerie, (en cas de non reconstitution de l'avance initiale, l'un des comptes 462 à 464 Fonds d'administration selon le cas sera crédité en lieu et place du compte 161).",
+        "Les fonds reçus en remboursement de la couverture des charges d'exploitation seront enregistrés au crédit d'un des comptes 462 à 464 Fonds d'administration selon le cas par le débit du compte 5 trésorerie."
+      ],
+      "comptes": ["161", "462", "463", "464", "5"],
+      "mots_cles": ["avance initiale", "charges exploitation", "justification", "remboursement", "reconstitution"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2274,
+      "titre": "Neutralisation des charges - Quote-part fonds d'administration",
+      "texte": [
+        "Le compte 46 Fonds d'administration, destiné à neutraliser les charges d'exploitation, sera repris au fur et à mesure de l'engagement des charges ou au plus tard enfin de période par le crédit du compte 702 Quote-part de fonds d'administration transférés et par le débit d'un des comptes 462 à 464 Fonds d'administration."
+      ],
+      "comptes": ["46", "462", "463", "464", "702"],
+      "mots_cles": ["neutralisation charges", "quote-part", "fonds administration", "engagement charges"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

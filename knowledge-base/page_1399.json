@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "I - Fonds affectés aux investissements - Schéma des écritures",
+    "page_source": 1399
+  },
+  "articles": [
+    {
+      "numero": 2258,
+      "titre": "Schéma des écritures - Fonds affectés aux investissements",
+      "texte": [
+        "Débit 5 Comptes de trésorerie / Crédit 162 à 164 Fonds affectés aux investissements — Transfert de fonds en numéraire du bailleur",
+        "Débit 2 Comptes d'actif immobilisé / Crédit 162 à 164 Fonds affectés aux investissements — Paiement direct d'immobilisations ou transfert d'immobilisations du bailleur",
+        "Débit 5 Comptes de trésorerie / Crédit 161 Avances de fonds à justifier — Avance de fonds du bailleur à justifier par le projet",
+        "Débit 5 Comptes de trésorerie / Crédit 162 à 164 Fonds affectés aux investissements / Crédit 46 Bailleurs Fonds d'administration — Affection selon budget en cas de transfert de fonds sans distinction entre immobilisations et charges",
+        "Débit 2 Comptes d'actif immobilisé / Crédit 481 Fournisseurs d'investissements / Crédit 5 Comptes de trésorerie — Achat de biens immobiliers",
+        "Débit 162 à 164 Fonds affectés aux investissements / Crédit 1651 Fonds affectés aux invest. non consommés — Détermination des fonds affectés aux immobilisations non consommés en fin d'exercice. Cette écriture sera extournée le 1er janvier",
+        "Débit 162 à 164 Fonds affectés aux investissements / Crédit 2 Comptes d'actif immobilisé — Transfert des immobilisations au bailleur, à un autre projet ou à une institution"
+      ],
+      "comptes": ["5", "162", "163", "164", "2", "161", "46", "481", "1651"],
+      "mots_cles": ["schéma écritures", "fonds investissements", "transfert fonds", "avance à justifier", "immobilisations", "extourne"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

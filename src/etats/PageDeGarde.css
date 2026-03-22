@@ -1,0 +1,228 @@
+/* Page de garde — styles officiels */
+
+.pdg-page {
+  font-family: 'Times New Roman', 'Outfit', serif;
+  font-size: 12px;
+  color: #000;
+  padding: 15mm 15mm 12mm;
+}
+
+/* Bloc supérieur */
+.pdg-top-block {
+  border: 1px solid #000;
+  padding: 10px 12px;
+  margin-bottom: 0;
+}
+
+/* Ligne champ générique */
+.pdg-field-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 24px;
+  margin-bottom: 2px;
+}
+
+.pdg-label-bold {
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pdg-underline {
+  /* Les labels soulignés */
+}
+
+.pdg-underline-value {
+  flex: 1;
+  border-bottom: 1px solid #000;
+  min-height: 18px;
+  font-size: 12px;
+  padding-bottom: 1px;
+}
+
+.pdg-value-center {
+  text-align: center;
+  font-weight: 600;
+}
+
+.pdg-field-sub {
+  font-size: 10px;
+  color: #555;
+  margin-top: -2px;
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
+/* Spacers */
+.pdg-spacer {
+  height: 20px;
+}
+.pdg-spacer-sm {
+  height: 12px;
+}
+
+/* Titre principal */
+.pdg-main-title {
+  text-align: center;
+  margin: 28px 0 8px;
+}
+.pdg-title-line {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.pdg-dotted-line {
+  border-bottom: 1px dotted #888;
+  width: 70%;
+  margin: 8px auto;
+}
+
+/* Exercice clos le */
+.pdg-exercice-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0 24px;
+}
+.pdg-exercice-value {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Section title (DESIGNATION DE L'ENTITE) */
+.pdg-section-title {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  margin: 20px 0 16px;
+  letter-spacing: 0.5px;
+}
+
+/* Système (SYSTEME NORMAL) */
+.pdg-systeme-title {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: underline;
+  margin: 28px 0 20px;
+  letter-spacing: 0.5px;
+}
+
+/* Deux colonnes */
+.pdg-two-cols {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+.pdg-col-left {
+  flex: 1;
+}
+.pdg-col-right {
+  flex: 1;
+}
+.pdg-col-header {
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+/* Box documents déposés */
+.pdg-doc-box {
+  border: 1px solid #000;
+  padding: 10px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pdg-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pdg-doc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.pdg-checkbox {
+  font-size: 14px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000;
+  background: #f0f0f0;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* Pages section */
+.pdg-pages-section {
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 1px solid #ccc;
+}
+.pdg-pages-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+.pdg-pages-input {
+  width: 60px;
+  border-bottom: 1px solid #000;
+  min-height: 16px;
+}
+
+/* Box DGI */
+.pdg-dgi-box {
+  border: 1px solid #000;
+  padding: 10px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+}
+.pdg-dgi-field {
+  margin-bottom: 4px;
+}
+.pdg-dgi-label {
+  font-size: 11px;
+  font-weight: 600;
+}
+.pdg-dgi-value {
+  font-size: 11px;
+  text-align: center;
+  display: block;
+  margin-top: 4px;
+  padding: 4px 0;
+  border-bottom: 1px solid #000;
+}
+.pdg-dgi-spacer {
+  height: 30px;
+  border-bottom: 1px solid #ccc;
+}
+.pdg-dgi-spacer-large {
+  height: 50px;
+}
+
+/* Print */
+@media print {
+  .pdg-page {
+    box-shadow: none;
+    margin: 0;
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1333
+  },
+  "articles": [
+    {
+      "numero": 2170,
+      "titre": "États financiers — Définition (suite)",
+      "texte": [
+        "- la tenue obligatoire de livres ou autres supports autorisés ainsi que la mise en place de procédures nécessaires à une organisation comptable permettant aussi bien un contrôle interne fiable que le contrôle externe, par l'intermédiaire, le cas échéant, de l'auditeur, de la réalité des opérations et de la qualité des comptes, tout en favorisant la collecte des informations ;",
+        "- à la clôture de chaque exercice, les organes d'administration ou de direction, selon le cas, dressent l'inventaire et les états financiers, conformément aux dispositions de l'Acte uniforme et établissent un rapport d'activité. Le rapport d'activité expose la situation de l'entité durant l'exercice écoulé, ses perspectives de développement ou son évolution prévisible et l'évolution de la situation de trésorerie. Les événements importants, survenus entre la date de clôture de l'exercice et la date à laquelle il est établi, doivent également y être mentionnés ;",
+        "- le Bilan d'ouverture d'un exercice doit correspondre au Bilan de clôture de l'exercice précédent ;",
+        "- toute compensation, non juridiquement fondée, entre postes d'actif et postes de passif dans le Bilan et entre postes de charges et postes de produits dans le Compte de résultat est interdite à moins qu'elle ne soit autorisée par des dispositions normatives ;",
+        "- la présentation des états financiers est identique d'un exercice à l'autre ;",
+        "- chacun des postes des états financiers comporte l'indication du chiffre relatif au poste correspondant de l'exercice précédent. Pour la première année d'application, l'entité n'a l'obligation de renseigner que la colonne N-1 du bilan ;",
+        "- chacune des rubriques des états financiers, comprend un ou plusieurs comptes et est identifiée par un code alphabétique : AA, AB, AG etc.",
+        "Lorsque l'un des postes chiffrés d'un état financier n'est pas comparable à celui de l'exercice précédent, c'est ce dernier qui doit être adapté. L'absence de comparabilité ou l'adaptation des chiffres est signalée dans les Notes annexes."
+      ],
+      "comptes": [],
+      "mots_cles": ["états financiers", "tenue livres", "contrôle interne", "contrôle externe", "auditeur", "inventaire", "rapport d'activité", "bilan ouverture", "compensation interdite", "présentation identique", "comparabilité", "code alphabétique", "notes annexes"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1332"
+    }
+  ]
+}

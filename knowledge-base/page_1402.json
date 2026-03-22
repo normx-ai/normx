@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "I - Fonds affectés aux investissements - Exemples 2 (suite) et 3",
+    "page_source": 1402
+  },
+  "articles": [
+    {
+      "numero": 2260,
+      "titre": "Exemple 2 : Transfert de fonds sans affectation (suite)",
+      "texte": [
+        "30/07/N: Débit 2458 Matériel triporteur 3 500 000 / Crédit 52 Banques 3 500 000 — Achat triporteur",
+        "30/09/N: Débit 60111 Achats nourriture 5 000 000 / Débit 60112 Achats Vêtements 1 600 000 / Débit 60113 Achats produits pharmaceutique 1 200 000 / Débit 6327 Rémunérations des autres prestataires de services 450 000 / Débit 6324 Honoraires des professions réglementées 750 000 / Crédit 52 Banques 9 000 000 — Règlement frais de fonctionnement trimestriel",
+        "d°: Débit 162 Fonds affectés aux investissements 1 150 000 / Crédit 462 Fonds d'administration 1 150 000 — Réajustement de la réalisation"
+      ],
+      "comptes": ["2458", "52", "60111", "60112", "60113", "6327", "6324", "162", "462"],
+      "mots_cles": ["exemple", "triporteur", "frais fonctionnement", "réajustement", "réalisation"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1401"
+    },
+    {
+      "numero": 2261,
+      "titre": "Exemple 3 : Avance de fonds à justifier",
+      "texte": [
+        "3/01/N, le bailleur Afrique a fait un virement bancaire de FCFA 10 000 000 à titre d'avance à justifier par le projet JOYCE qui a pour objectif l'amélioration des conditions de vie du village le Tam.",
+        "30/03/N le projet JOYCE a fait parvenir au bailleur le justificatif des dépenses au cours du premier trimestre :",
+        "- Ordinateur FCFA 1 500 000",
+        "- Honoraires de l'ingénieur FCFA 750 000",
+        "- Construction de latrines pour le village FCFA 4 500 000",
+        "- Construction de puits pour le village FCFA 1 800 000",
+        "15/04/N le Bailleur Afrique a fait un virement au projet de FCFA 8 550 000",
+        "Passer les écritures au 3/01/N et au 15/04"
+      ],
+      "comptes": ["52", "161"],
+      "mots_cles": ["exemple", "avance à justifier", "remboursement", "justificatif dépenses"],
+      "statut": "en_vigueur",
+      "note": "Suite page 1403"
+    }
+  ]
+}

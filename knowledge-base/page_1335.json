@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1335
+  },
+  "articles": [
+    {
+      "numero": 2174,
+      "titre": "Système normal (suite)",
+      "texte": [
+        "Les états financiers forment un tout indissociable et décrivent de façon régulière et sincère les événements, opérations et situations de l'exercice pour donner une image fidèle du patrimoine, de la situation financière et du résultat de l'entité.",
+        "Les états financiers sont établis et présentés conformément aux modèles du Système comptable des entités à but non lucratif.",
+        "Toute entité qui applique correctement le Système comptable des entités à but non lucratif est réputée donner, dans ses états financiers, une image fidèle de sa situation et de ses opérations.",
+        "Lorsque l'application d'une prescription comptable se révèle insuffisante ou inadaptée pour donner l'image fidèle, des informations complémentaires ou des justifications nécessaires sont obligatoirement fournies dans les Notes annexes (art. 4 de l'Acte uniforme)."
+      ],
+      "comptes": [],
+      "mots_cles": ["image fidèle", "régularité", "sincérité", "notes annexes", "informations complémentaires"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1334"
+    },
+    {
+      "numero": 2175,
+      "titre": "Bilan",
+      "texte": [
+        "Le Bilan décrit séparément les éléments d'actif et les éléments de passif constituant le patrimoine de l'entité.",
+        "Le Bilan de l'exercice fait apparaître de façon distincte :",
+        "- un actif constitué d'éléments identifiables du patrimoine représentant une ressource économique actuelle contrôlée par l'entité du fait d'événements passés. On y trouve l'actif immobilisé, l'actif circulant, la trésorerie-actif et l'écart de conversion actif ;",
+        "- un passif, composé des ressources propres et assimilées et du passif externe. Un passif externe est une obligation actuelle de l'entité résultant d'un événement passé, qu'elle ne peut régler que par une sortie de ressources économiques. Sont regroupés dans cette rubrique les ressources stables, le passif circulant, la trésorerie-passif et l'écart de conversion-passif."
+      ],
+      "comptes": [],
+      "mots_cles": ["bilan", "actif", "passif", "patrimoine", "actif immobilisé", "actif circulant", "trésorerie-actif", "écart conversion actif", "ressources propres", "passif externe", "ressources stables", "passif circulant", "trésorerie-passif", "écart conversion-passif"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2176,
+      "titre": "Compte de résultat",
+      "texte": [
+        "Le Compte de résultat récapitule en liste, les produits et les charges qui font apparaître l'excédent net ou le déficit net de l'exercice.",
+        "Il doit être procédé, dans l'exercice, à tous les amortissements, dépréciations et provisions nécessaires pour tenir compte des consommations d'avantages économiques, des pertes de valeurs,"
+      ],
+      "comptes": [],
+      "mots_cles": ["compte de résultat", "produits", "charges", "excédent net", "déficit net", "amortissements", "dépréciations", "provisions"],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1336"
+    }
+  ]
+}

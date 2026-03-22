@@ -1,0 +1,79 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1332
+  },
+  "articles": [
+    {
+      "numero": 2161,
+      "titre": "Bénévolat — Schéma des écritures",
+      "texte": [
+        "Écritures de comptabilisation du bénévolat (frais de bénévolat)."
+      ],
+      "ecritures": [
+        {
+          "description": "Frais de bénévolat",
+          "lignes": [
+            {"compte": "904", "libelle": "Personnel bénévole", "debit": "x", "credit": ""},
+            {"compte": "914", "libelle": "Bénévolat", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["904", "914"],
+      "mots_cles": ["bénévolat", "écritures", "personnel bénévole", "classe 9"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2162,
+      "titre": "Frais engagés par les bénévoles — Abandons de frais",
+      "texte": [
+        "Les frais engagés par le bénévole, pour le compte de l'entité, peuvent faire l'objet d'un remboursement, si les dépenses sont réelles et justifiées. Ces dépenses sont enregistrées dans les comptes de charges par nature. En cas de renonciation au remboursement, les produits générés seront enregistrés au crédit du compte 7583 Abandons de frais par les bénévoles."
+      ],
+      "comptes": ["7583"],
+      "mots_cles": ["frais bénévoles", "remboursement", "abandons de frais", "renonciation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2163,
+      "titre": "Frais engagés par les bénévoles — Schéma des écritures",
+      "texte": [
+        "Écritures d'engagement des frais par les bénévoles et d'abandons de frais."
+      ],
+      "ecritures": [
+        {
+          "description": "Engagement des frais par les bénévoles",
+          "lignes": [
+            {"compte": "6", "libelle": "Comptes de charges par nature", "debit": "x", "credit": ""},
+            {"compte": "4572", "libelle": "Bénévoles", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Abandons de frais",
+          "lignes": [
+            {"compte": "4572", "libelle": "Bénévoles", "debit": "x", "credit": ""},
+            {"compte": "7583", "libelle": "Abandons de frais par les bénévoles", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["6", "4572", "7583"],
+      "mots_cles": ["écritures bénévoles", "engagement frais", "abandons frais"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2170,
+      "titre": "États financiers — Définition",
+      "texte": [
+        "Les états financiers sont un ensemble complet de documents qui fournissent à l'ensemble des parties prenantes des informations utiles sur le patrimoine, la situation financière, la performance et les variations de la situation de trésorerie des associations et des ordres professionnels.",
+        "Les états financiers annuels de chaque entité respectent les dispositions ci-dessous :",
+        "- le recours, pour la tenue de la comptabilité de l'entité, à un plan de comptes normalisé dont la liste figure dans le Système comptable des entités à but non lucratif ;"
+      ],
+      "comptes": [],
+      "mots_cles": ["états financiers", "définition", "patrimoine", "situation financière", "performance", "trésorerie", "plan de comptes normalisé"],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1333"
+    }
+  ]
+}

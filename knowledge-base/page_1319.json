@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1319
+  },
+  "articles": [
+    {
+      "numero": 2115,
+      "titre": "Conditions de reprise et entretien des biens apportés (suite)",
+      "texte": [
+        "La reprise sera enregistrée au débit compte 28 Amortissements et au crédit du compte 2 compte d'actif immobilisé.",
+        "Lorsque le renouvellement du bien sera effectif, le compte 102 Dotation non consomptible avec droit de reprise sera soldé par le crédit du compte 101 Dotation non consomptible sans droit de reprise.",
+        "L'entité peut bénéficier des avantages de l'apport temporaire sans être intéressée par le renouvellement du bien. Dans ce cas, l'entité est dispensée d'amortissements, qui même s'ils étaient pratiqués seraient repris en produit pour annuler l'impact de la dotation.",
+        "La reprise de l'apport sera enregistrée au débit du compte 102 Dotation non consomptible avec droit de reprise et au crédit du compte 2 compte d'actif immobilisé."
+      ],
+      "comptes": ["28", "2", "102", "101"],
+      "mots_cles": ["reprise apport", "amortissements", "renouvellement bien", "dotation non consomptible", "droit de reprise"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1318"
+    },
+    {
+      "numero": 2116,
+      "titre": "Le droit d'entrée",
+      "texte": [
+        "Le droit d'entrée est un fonds versé une seule fois lors de l'adhésion de tout nouveau membre. Il s'agit d'un droit d'adhésion à l'entité si les statuts ou le règlement intérieur le prévoient. C'est souvent une dotation non consomptible sans droit de reprise que le SYCEBNL a prévu d'enregistrer dans un compte spécifique 103 Droit d'entrée.",
+        "Toutefois, les dispositions statutaires ou réglementaires relatives au droit d'entrée peuvent stipuler qu'il s'agit :",
+        "- d'un dépôt restituable (dettes financières de l'entité), il convient dans ce cas de l'enregistrer dans une subdivision du compte dépôts reçus, nous suggérons le compte 18511 Droit d'entrée, dépôt restituable ;",
+        "- d'un complément de cotisation, dans ce cas le compte 701 Cotisations des adhérents sera plus approprié.",
+        "La Note annexe doit mentionner la méthode de comptabilisation retenue."
+      ],
+      "comptes": ["103", "18511", "701"],
+      "mots_cles": ["droit d'entrée", "adhésion", "dotation non consomptible", "dépôt restituable", "cotisation", "note annexe"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2117,
+      "titre": "La dotation consomptible",
+      "texte": [
+        "La dotation consomptible est un fonds consommé par l'entité dans le cadre de son fonctionnement ou un fonds destiné à l'accomplissement de l'objet social de l'entité sur une période statutairement définie.",
+        "Ce fonds destiné exclusivement à couvrir les frais de fonctionnement de l'entité est enregistré dans le compte 104 dotation consomptible. Cette ressource est reprise, à la clôture de chaque exercice, au compte résultat à concurrence de la quotité nécessaire pour neutraliser les"
+      ],
+      "comptes": ["104"],
+      "mots_cles": ["dotation consomptible", "fonctionnement", "objet social", "période statutaire"],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1320"
+    }
+  ]
+}

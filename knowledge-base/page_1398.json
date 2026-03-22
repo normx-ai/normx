@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "I - Fonds affectés aux investissements (suite)",
+    "page_source": 1398
+  },
+  "articles": [
+    {
+      "numero": 2253,
+      "titre": "Avance initiale du bailleur pour immobilisations",
+      "texte": [
+        "Le bailleur de fonds peut être amené à faire une avance initiale pour les immobilisations qui doit être justifiée par le projet aux fins de remboursement pour reconstitution de ladite avance. Dans ce cas le compte 161 Avances de fonds à justifier sera crédité par le débit du compte 5 trésorerie, (en cas de non reconstitution de l'avance initiale l'un des comptes 162 à 164 Fonds affectés aux investissements sera crédité en lieu et place du compte 161). Si l'avance initiale concerne aussi les frais de fonctionnement (charges) voir §2273.",
+        "Si cette avance doit être reconstituée régulièrement par le bailleur, les fonds reçus en remboursement des achats d'immobilisations seront enregistrés au crédit de l'un des comptes 162 à 164 selon le cas par le débit du compte 5 trésorerie."
+      ],
+      "comptes": ["161", "162", "163", "164", "5"],
+      "mots_cles": ["avance initiale", "justification", "remboursement", "reconstitution avance", "immobilisations"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2254,
+      "titre": "Acquisition de biens immobiliers",
+      "texte": [
+        "Au fur et à mesure des acquisitions des biens immobiliers les comptes 2 Comptes d'actif immobilisé sont débités par le crédit du compte 481 Fournisseurs d'investissements ou d'un compte 5 Comptes de trésorerie."
+      ],
+      "comptes": ["2", "481", "5"],
+      "mots_cles": ["acquisition", "biens immobiliers", "actif immobilisé", "fournisseurs investissements"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2255,
+      "titre": "Immobilisations transférées ou mises à disposition",
+      "texte": [
+        "Les immobilisations transférées et celles mises à la disposition du projet par le bailleur doivent être évaluées à leur valeur actuelle et inscrites au débit du compte 2 Comptes d'actif immobilisé et au crédit d'un des comptes 162 à 164 Fonds affectés aux investissements."
+      ],
+      "comptes": ["2", "162", "163", "164"],
+      "mots_cles": ["immobilisations transférées", "mise à disposition", "valeur actuelle", "évaluation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2256,
+      "titre": "Fin de période - Amortissements et fonds non consommés",
+      "texte": [
+        "En fin de période,",
+        "- aucune dotation aux amortissements et dépréciations ne sera constatée dans les comptes du projet. En effet, un projet n'a pas vocation à reconstituer ses immobilisations par le biais d'un autofinancement ;",
+        "- les fonds affectés aux immobilisations non consommés seront enregistrés au crédit du compte 1651 Fonds affectés aux investissements non consommés par le débit d'un des comptes 162 à 164 selon le cas. Cette écriture de régularisation sera extournée au début de l'exercice suivant."
+      ],
+      "comptes": ["1651", "162", "163", "164"],
+      "mots_cles": ["fin de période", "amortissements", "dépréciations", "fonds non consommés", "régularisation", "extourne"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2257,
+      "titre": "Fin de projet - Restitution ou transfert des biens",
+      "texte": [
+        "A la fin de projet le bailleur peut demander la restitution des biens ou le transfert des biens à un autre projet ou à l'Etat partie.",
+        "Dans tous les cas, l'un des comptes 162 à 164 Fonds affectés aux investissements sera débité par le crédit du compte 2 Comptes d'actif immobilisé."
+      ],
+      "comptes": ["162", "163", "164", "2"],
+      "mots_cles": ["fin de projet", "restitution biens", "transfert biens", "Etat partie"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

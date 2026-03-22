@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1331
+  },
+  "articles": [
+    {
+      "numero": 2153,
+      "titre": "Autres comptes de charges spécifiques — Achats de biens et services liés à l'activité",
+      "texte": [
+        "Des comptes de charges spécifiques ont été créés pour les entités à but non lucratif. Il s'agit du :",
+        "- compte 601 Achats de biens et services liés à l'activité, ce compte a été créé pour y loger les achats des biens et services acquis pour la réalisation de l'objet social de l'entité. Par exemple, achats de nourritures pour les sans-abris, achats de vêtements pour les talibés, constructions de puits au profit d'un village etc. ;"
+      ],
+      "comptes": ["601"],
+      "mots_cles": ["charges spécifiques", "achats biens services", "objet social", "nourritures", "vêtements", "constructions"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2154,
+      "titre": "Autres comptes de charges spécifiques — Achats autres activités",
+      "texte": [
+        "- compte 606 Achats autres activités, ce compte est prévu pour enregistrer les frais engagés pour la confection des tickets, l'achat des lots, des billets de voyage pour les manifestations, les loteries et autres jeux ;"
+      ],
+      "comptes": ["606"],
+      "mots_cles": ["achats autres activités", "tickets", "lots", "billets voyage", "manifestations", "loteries", "jeux"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2155,
+      "titre": "Autres comptes de charges spécifiques — Frais de recherche de fonds",
+      "texte": [
+        "- compte 636 Frais de recherche de fonds, ce compte est prévu pour enregistrer toutes les dépenses relatives à la recherche de dons, par exemple, publicité, confection de calendrier, de bloc notes de stylos, etc."
+      ],
+      "comptes": ["636"],
+      "mots_cles": ["frais recherche fonds", "recherche dons", "publicité", "calendrier"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2160,
+      "titre": "Bénévolat",
+      "texte": [
+        "Le bénévole est une personne qui s'engage librement pour mener une action non rémunérée au profit de l'entité dans le cadre de son objet social.",
+        "Le bénévolat étant gratuite, il n'entraîne pas de flux financiers, cependant il est valorisé et comptabilisé si son poids dans l'activité de l'entité est significatif et si celle-ci est en mesure de le recenser et de le valoriser de façon pertinente.",
+        "Chaque acte de bénévolat doit correspondre une pièce comptable indiquant la date, la nature de l'opération, le nom de la personne ou de l'organisme concerné et le mode d'évaluation de l'apport.",
+        "Le bénévolat est enregistré dans les comptes de la classe 9 Compte des contributions en nature. Cet enregistrement n'a aucune incidence sur le compte de résultat. Toutefois, la Note annexe doit fournir l'information relative à l'identification des bénévoles, la nature de leur mission et la période d'exécution des travaux pour une appréciation du poids du bénévolat dans l'entité."
+      ],
+      "comptes": ["9"],
+      "mots_cles": ["bénévolat", "bénévole", "action non rémunérée", "contributions en nature", "classe 9", "valorisation", "pièce comptable", "note annexe"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

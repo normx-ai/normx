@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "Tableau de correspondance - Bilan",
+    "page_source": 1444
+  },
+  "articles": [
+    {
+      "numero": 2321,
+      "titre": "Tableau de correspondance - Bilan",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - BILAN",
+        "ACTIF :",
+        "AA | Immobilisations incorporelles | 21",
+        "AB | Terrains et bâtiment | 22, 231, 232, 233, 2391, 2392, 2393, 2396",
+        "AC | Aménagements, agencements et installations | 234, 235, 238, 2394, 2395, 2398",
+        "AD | Matériel, mobilier et actifs biologiques | 24 (sauf 245 et 2495)",
+        "AE | Matériel de transport | 245, 2495",
+        "AF | Avances et acomptes versés sur immobilisations | 25",
+        "AG | Dépôts et cautionnements | 275",
+        "AH | Autres immobilisations corporelles et financières | 26, 27 (sauf 275)",
+        "AZ | TOTAL ACTIF IMMOBILISE |",
+        "BA | Actif circulant HAO | 485",
+        "BB | Stocks et encours | 31, 32, 33, 34, 36, 37, 38",
+        "BC | Fournisseurs débiteurs | 409",
+        "BD | Clients-usagers | 41 (sauf 411 et 419)",
+        "BE | Autres créances | Soldes débiteurs : 42, 43, 44, 47 (sauf 478)",
+        "BF | TOTAL ACTIF CIRCULANT |",
+        "BV | Valeurs à encaisser | 51",
+        "BW | Banques, établissements financiers caisses et assimilés | Soldes débiteurs : 52, 53, 55, 57",
+        "BX | TOTAL TRESORERIE ACTIF |",
+        "BY | Ecart de conversion-Actif | 478",
+        "BZ | TOTAL GENERAL |",
+        "PASSIF :",
+        "CA | Fonds affectés aux investissements | 16",
+        "CB | Report à nouveau (+ ou -) | 12",
+        "CC | Solde des opérations de l'exercice (excédent + ou déficit -) | 13 (131 ou 139)",
+        "CD | Subventions d'investissement | 14",
+        "CZ | TOTAL RESSOURCES PROPRES ET ASSIMILEES |",
+        "DA | Emprunts et dettes assimilées | 18",
+        "DB | Provisions pour risques et charges | 19",
+        "DC | TOTAL DETTES FINANCIERES ET RESSOURCES ASSIMILEES |",
+        "DD | TOTAL RESSOURCES STABLES |",
+        "DE | Dettes circulantes HAO | 481, 484, 4998",
+        "DF | Fonds d'administration | 46",
+        "DG | Fournisseurs | 40 (409)",
+        "DH | Autres dettes | 419, Soldes créditeurs : 42, 43, 44, 47 (sauf 479), 499 (sauf 4998), 599",
+        "DJ | TOTAL PASSIF CIRCULANT |",
+        "DW | Banques, établissements financiers et crédits de trésorerie | 56, Soldes créditeurs 52, 53",
+        "DX | TOTAL TRESORERIE PASSIF |",
+        "DY | Ecart de conversion-Passif | 479",
+        "DZ | TOTAL GENERAL |"
+      ],
+      "comptes": ["21", "22", "231", "232", "233", "2391", "2392", "2393", "2396", "234", "235", "238", "2394", "2395", "2398", "24", "245", "2495", "25", "275", "26", "27", "485", "31", "32", "33", "34", "36", "37", "38", "409", "41", "411", "419", "42", "43", "44", "47", "478", "51", "52", "53", "55", "57", "16", "12", "13", "131", "139", "14", "18", "19", "481", "484", "4998", "46", "40", "479", "499", "599", "56"],
+      "mots_cles": ["tableau de correspondance", "bilan", "actif", "passif", "immobilisations", "actif circulant", "trésorerie", "ressources stables", "dettes", "projet de développement"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

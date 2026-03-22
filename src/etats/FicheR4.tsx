@@ -1,0 +1,319 @@
+import React, { useState, useRef, useEffect } from 'react';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings } from 'react-icons/lu';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import './BilanSYCEBNL.css';
+import './FicheIdentification.css';
+import type { Exercice, EtatBaseProps } from '../types';
+
+interface FicheR4Props extends EtatBaseProps {
+  onGoToParametres?: () => void;
+}
+
+const NOTES: { id: string; intitule: string; defaultA?: boolean; defaultNA?: boolean }[] = [
+  { id: 'note_1', intitule: 'DETTES GARANTIES PAR DES SURETES REELLES', defaultA: true },
+  { id: 'note_2', intitule: 'INFORMATIONS OBLIGATOIRES', defaultA: true },
+  { id: 'note_3a', intitule: 'IMMOBILISATION BRUTE', defaultA: true },
+  { id: 'note_3b', intitule: 'BIENS PRIS EN LOCATION ACQUISITION', defaultNA: true },
+  { id: 'note_3c', intitule: 'IMMOBILISATIONS : AMORTISSEMENTS', defaultA: true },
+  { id: 'note_3d', intitule: 'IMMOBILISATIONS : PLUS-VALUES ET MOINS VALUE DE CESSION', defaultA: true },
+  { id: 'note_3e', intitule: 'INFORMATIONS SUR LES REEVALUATIONS EFFECTUEES PAR L\'ENTITE', defaultA: true },
+  { id: 'note_3f', intitule: 'TABLEAU D\'ETALEMENT DES CHARGES IMMOBILISEES', defaultNA: true },
+  { id: 'note_4', intitule: 'IMMOBILISATIONS FINANCIERES', defaultA: true },
+  { id: 'note_5', intitule: 'ACTIF CIRCULANT ET DETTES CIRCULANTES HAO', defaultA: true },
+  { id: 'note_6', intitule: 'STOCKS ET ENCOURS', defaultA: true },
+  { id: 'note_7', intitule: 'CLIENTS', defaultA: true },
+  { id: 'note_8', intitule: 'AUTRES CREANCES', defaultA: true },
+  { id: 'note_9', intitule: 'TITRES DE PLACEMENT', defaultNA: true },
+  { id: 'note_10', intitule: 'VALEURS A ENCAISSER', defaultNA: true },
+  { id: 'note_11', intitule: 'DISPONIBILITES', defaultA: true },
+  { id: 'note_12', intitule: 'ECARTS DE CONVERSION ET TRANSFERTS DE CHARGES', defaultA: true },
+  { id: 'note_13', intitule: 'CAPITAL : VALEUR NOMINALE DES ACTIONS OU PARTS', defaultA: true },
+  { id: 'note_14', intitule: 'PRIMES ET RESERVES', defaultA: true },
+  { id: 'note_15a', intitule: 'SUBVENTIONS ET PROVISIONS REGLEMENTEES', defaultA: true },
+  { id: 'note_15b', intitule: 'AUTRES FONDS PROPRES', defaultNA: true },
+  { id: 'note_16a', intitule: 'DETTES FINANCIERES ET RESSOURCES ASSIMILEES', defaultA: true },
+  { id: 'note_16b', intitule: 'ENGAGEMENTS DE RETRAITE ET AVANTAGES ASSIMILES (METHODE ACTUARIELLE)', defaultNA: true },
+  { id: 'note_16b_bis', intitule: 'ENGAGEMENTS DE RETRAITE ET AVANTAGES ASSIMILES (METHODE ACTUARIELLE)', defaultA: true },
+  { id: 'note_16c', intitule: 'ACTIFS ET PASSIFS EVENTUELS', defaultA: true },
+  { id: 'note_17', intitule: 'FOURNISSEURS D\'EXPLOITATION', defaultA: true },
+  { id: 'note_18', intitule: 'DETTES FISCALES ET SOCIALES', defaultA: true },
+  { id: 'note_19', intitule: 'AUTRES DETTES ET PROVISIONS POUR RISQUES A COURT TERME', defaultA: true },
+  { id: 'note_20', intitule: 'BANQUES, CREDIT D\'ESCOMPTE ET DE TRESORERIE', defaultNA: true },
+  { id: 'note_21', intitule: 'CHIFFRE D\'AFFAIRES ET AUTRES PRODUITS', defaultA: true },
+  { id: 'note_22', intitule: 'ACHATS', defaultA: true },
+  { id: 'note_23', intitule: 'TRANSPORTS', defaultA: true },
+  { id: 'note_24', intitule: 'SERVICES EXTERIEURS', defaultA: true },
+  { id: 'note_25', intitule: 'IMPOTS ET TAXES', defaultA: true },
+  { id: 'note_26', intitule: 'AUTRES CHARGES', defaultA: true },
+  { id: 'note_27a', intitule: 'CHARGES DE PERSONNEL', defaultA: true },
+  { id: 'note_27b', intitule: 'EFFECTIFS, MASSE SALARIALE ET PERSONNEL EXTERIEUR', defaultA: true },
+  { id: 'note_28', intitule: 'PROVISIONS ET DEPRECIATIONS INSCRITES AU BILAN', defaultA: true },
+  { id: 'note_29', intitule: 'CHARGES ET REVENUS FINANCIERS', defaultA: true },
+  { id: 'note_30', intitule: 'AUTRES CHARGES ET PRODUITS HAO', defaultA: true },
+  { id: 'note_31', intitule: 'REPARTITION DU RESULTAT ET AUTRES ELEMENTS CARACTERISTIQUES DES', defaultA: true },
+  { id: 'note_32', intitule: 'PRODUCTION DE L\'EXERCICE', defaultA: true },
+  { id: 'note_33', intitule: 'ACHATS DESTINES A LA PRODUCTION', defaultA: true },
+  { id: 'note_34', intitule: 'FICHE DE SYNTHESE DES PRINCIPAUX INDICATEURS FINANCIERS', defaultA: true },
+  { id: 'note_35', intitule: 'LISTE DES INFORMATIONS SOCIALES, ENVIRONNEMENTALES ET SOCIETALES A FOURNIR', defaultNA: true },
+  { id: 'note_36', intitule: 'TABLES DES CODES', defaultA: true },
+];
+
+const NOTE_LABELS: Record<string, string> = {
+  note_1: 'NOTE 1', note_2: 'NOTE 2', note_3a: 'NOTE 3A', note_3b: 'NOTE 3B',
+  note_3c: 'NOTE 3C', note_3d: 'NOTE 3D', note_3e: 'NOTE 3E', note_3f: 'NOTE 3F',
+  note_4: 'NOTE 4', note_5: 'NOTE 5', note_6: 'NOTE 6', note_7: 'NOTE 7',
+  note_8: 'NOTE 8', note_9: 'NOTE 9', note_10: 'NOTE 10', note_11: 'NOTE 11',
+  note_12: 'NOTE 12', note_13: 'NOTE 13', note_14: 'NOTE 14', note_15a: 'NOTE 15A',
+  note_15b: 'NOTE 15B', note_16a: 'NOTE 16A', note_16b: 'NOTE 16B', note_16b_bis: 'NOTE 16B bis',
+  note_16c: 'NOTE 16C', note_17: 'NOTE 17', note_18: 'NOTE 18', note_19: 'NOTE 19',
+  note_20: 'NOTE 20', note_21: 'NOTE 21', note_22: 'NOTE 22', note_23: 'NOTE 23',
+  note_24: 'NOTE 24', note_25: 'NOTE 25', note_26: 'NOTE 26', note_27a: 'NOTE 27A',
+  note_27b: 'NOTE 27B', note_28: 'NOTE 28', note_29: 'NOTE 29', note_30: 'NOTE 30',
+  note_31: 'NOTE 31', note_32: 'NOTE 32', note_33: 'NOTE 33', note_34: 'NOTE 34',
+  note_35: 'NOTE 35', note_36: 'NOTE 36',
+};
+
+function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametres }: FicheR4Props): React.JSX.Element {
+  const [exercices, setExercices] = useState<Exercice[]>([]);
+  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  const [params, setParams] = useState<Record<string, string>>({});
+  const [noteStates, setNoteStates] = useState<Record<string, 'A' | 'NA'>>({});
+
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  // Init default states
+  useEffect(() => {
+    const defaults: Record<string, 'A' | 'NA'> = {};
+    NOTES.forEach(n => {
+      defaults[n.id] = n.defaultNA ? 'NA' : 'A';
+    });
+    setNoteStates(defaults);
+  }, []);
+
+  // Load saved states from entité params
+  useEffect(() => {
+    if (!entiteId) return;
+    fetch('/api/entites/' + entiteId)
+      .then(r => r.json())
+      .then(ent => {
+        const data = ent.data || {};
+        setParams(data);
+        // Restore saved note states
+        const saved: Record<string, 'A' | 'NA'> = {};
+        NOTES.forEach(n => {
+          const key = 'r4_' + n.id;
+          if (data[key] === 'A' || data[key] === 'NA') saved[n.id] = data[key];
+          else saved[n.id] = n.defaultNA ? 'NA' : 'A';
+        });
+        setNoteStates(saved);
+      })
+      .catch(() => {});
+  }, [entiteId]);
+
+  useEffect(() => {
+    if (!entiteId) return;
+    fetch('/api/balance/exercices/' + entiteId)
+      .then(r => r.json())
+      .then((data: Exercice[]) => {
+        setExercices(data);
+        if (data.length > 0) {
+          const now = new Date();
+          const year = now.getFullYear();
+          const month = now.getMonth();
+          const preferYear = month <= 2 ? year - 1 : year;
+          const pick = data.find(e => e.annee === preferYear)
+            || data.find(e => e.annee === year)
+            || data.find(e => e.annee === year - 1)
+            || data[0];
+          setSelectedExercice(pick);
+        }
+      })
+      .catch(() => {});
+  }, [entiteId]);
+
+  const toggleNote = (id: string) => {
+    setNoteStates(prev => ({
+      ...prev,
+      [id]: prev[id] === 'A' ? 'NA' : 'A',
+    }));
+  };
+
+  // Save note states
+  const saveStates = async () => {
+    const data: Record<string, string> = { ...params };
+    NOTES.forEach(n => {
+      data['r4_' + n.id] = noteStates[n.id] || 'A';
+    });
+    try {
+      await fetch(`/api/entites/${entiteId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data }),
+      });
+    } catch { /* */ }
+  };
+
+  const duree = selectedExercice?.duree_mois || 12;
+  const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
+  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
+
+  const fmtDateShort = (d: Date | null): string => {
+    if (!d) return '';
+    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  };
+
+  const generatePDF = async (): Promise<jsPDF> => {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    if (!pageRef.current) return pdf;
+    const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+    const imgData = canvas.toDataURL('image/png');
+    const pdfWidth = 210;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    return pdf;
+  };
+
+  const openPreview = async () => {
+    await saveStates();
+    const pdf = await generatePDF();
+    const blob = pdf.output('blob');
+    setPdfBlob(blob);
+    setPreviewUrl(URL.createObjectURL(blob));
+  };
+
+  const closePreview = () => {
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setPreviewUrl(null);
+    setPdfBlob(null);
+  };
+
+  const downloadPDF = () => {
+    if (!pdfBlob) return;
+    const url = URL.createObjectURL(pdfBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Fiche_R4_' + annee + '.pdf';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const printPDF = () => {
+    if (!previewUrl) return;
+    const w = window.open(previewUrl);
+    if (w) { w.onload = () => w.print(); }
+  };
+
+  const thStyle: React.CSSProperties = {
+    border: '0.5px solid #000',
+    padding: '6px 8px',
+    fontSize: 11,
+    fontWeight: 600,
+    textAlign: 'center',
+    verticalAlign: 'middle',
+    background: '#dce6f0',
+  };
+
+  const tdStyle: React.CSSProperties = {
+    border: '0.5px solid #000',
+    padding: '4px 6px',
+    fontSize: 10,
+    verticalAlign: 'middle',
+  };
+
+  return (
+    <div>
+      {/* Toolbar */}
+      <div className="etat-toolbar">
+        <button className="etat-back-btn" onClick={onBack}><LuArrowLeft size={18} /> Retour</button>
+        <div className="etat-toolbar-title">Fiche R4 — Notes annexes</div>
+        <div className="etat-toolbar-actions">
+          {onGoToParametres && (
+            <button className="etat-action-btn" onClick={onGoToParametres}><LuSettings size={16} /> Paramètres</button>
+          )}
+          <select
+            className="etat-exercice-select"
+            value={selectedExercice?.id || ''}
+            onChange={e => {
+              const ex = exercices.find(ex => ex.id === Number(e.target.value));
+              if (ex) setSelectedExercice(ex);
+            }}
+          >
+            {exercices.map(ex => (
+              <option key={ex.id} value={ex.id}>{ex.annee}</option>
+            ))}
+          </select>
+          <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+        </div>
+      </div>
+
+      {/* Preview modal */}
+      {previewUrl && (
+        <div className="etat-preview-overlay" onClick={closePreview}>
+          <div className="etat-preview-modal" onClick={e => e.stopPropagation()}>
+            <div className="etat-preview-header">
+              <span>Aperçu — Fiche R4</span>
+              <div className="etat-preview-actions">
+                <button onClick={printPDF} title="Imprimer"><LuPrinter size={18} /></button>
+                <button onClick={downloadPDF} title="Télécharger"><LuDownload size={18} /></button>
+                <button onClick={closePreview}><LuX size={18} /></button>
+              </div>
+            </div>
+            <iframe src={previewUrl} className="etat-preview-iframe" title="Aperçu Fiche R4" />
+          </div>
+        </div>
+      )}
+
+      {/* Page A4 */}
+      <div className="a4-page fi-page" ref={pageRef}>
+        {/* En-tête */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
+          <div>
+            <div style={{ fontSize: 12 }}><strong>Désignation entité :</strong> {entiteName}</div>
+            <div style={{ fontSize: 12 }}><strong>Numéro d'identification :</strong> {entiteNif}</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: 12 }}><strong>Exercice clos le</strong> {dateFin ? fmtDateShort(dateFin) : ''}</div>
+            <div style={{ fontSize: 12 }}><strong>Durée (en mois)</strong> {duree}</div>
+          </div>
+        </div>
+
+        {/* Tableau des notes */}
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr>
+              <th style={{ ...thStyle, width: '12%' }}>NOTES</th>
+              <th style={{ ...thStyle, width: '68%' }}>INTITULES</th>
+              <th style={{ ...thStyle, width: '10%' }}>A</th>
+              <th style={{ ...thStyle, width: '10%' }}>N/A</th>
+            </tr>
+          </thead>
+          <tbody>
+            {NOTES.map(note => {
+              const state = noteStates[note.id] || 'A';
+              return (
+                <tr key={note.id} onClick={() => toggleNote(note.id)} style={{ cursor: 'pointer' }}>
+                  <td style={{ ...tdStyle, fontWeight: 600, color: '#1A3A5C' }}>{NOTE_LABELS[note.id]}</td>
+                  <td style={tdStyle}>{note.intitule}</td>
+                  <td style={{ ...tdStyle, textAlign: 'center', fontWeight: 600 }}>{state === 'A' ? 'X' : ''}</td>
+                  <td style={{ ...tdStyle, textAlign: 'center', fontWeight: 600 }}>{state === 'NA' ? 'X' : ''}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+
+        <div style={{ marginTop: 12, fontSize: 10, color: '#333' }}>
+          <p style={{ margin: '4px 0' }}>A : Applicable &nbsp;&nbsp;&nbsp;&nbsp; N/A : Non applicable.</p>
+          <p style={{ margin: '4px 0', fontStyle: 'italic' }}>
+            Par exemple pour une entité qui n'a pas de stocks et en-cours, elle doit cocher à l'intersection ('ligne NOTE6' & 'colonne N/A')
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default FicheR4;

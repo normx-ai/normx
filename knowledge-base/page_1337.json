@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1337
+  },
+  "articles": [
+    {
+      "numero": 2178,
+      "titre": "Notes annexes (suite)",
+      "texte": [
+        "Les états financiers ne doivent être déclarés conformes au Système comptable des entités à but non lucratif que s'ils sont conformes à toutes les dispositions prévues par le présent Système comptable.",
+        "Chaque élément des états financiers de synthèse doit faire l'objet d'une référence croisée vers l'information liée figurant dans les notes."
+      ],
+      "comptes": [],
+      "mots_cles": ["notes annexes", "conformité", "référence croisée", "états financiers synthèse"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1336"
+    },
+    {
+      "numero": 2179,
+      "titre": "États financiers normalisés",
+      "texte": [
+        "Les rubriques et les postes des états financiers non chiffrés ne doivent pas être présentés.",
+        "Les modèles de Notes ci-dessous non documentés ne doivent pas être joints aux états financiers. Leur contenu peut être amélioré."
+      ],
+      "comptes": [],
+      "mots_cles": ["états financiers normalisés", "rubriques non chiffrées", "modèles notes", "contenu améliorable"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

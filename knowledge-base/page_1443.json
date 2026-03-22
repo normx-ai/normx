@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "Tableau de correspondance - Tableau d'exécution budgétaire",
+    "page_source": 1443
+  },
+  "articles": [
+    {
+      "numero": 2320,
+      "titre": "Tableau de correspondance - Tableau d'exécution budgétaire",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - TABLEAU D'EXECUTION BUDGETAIRE",
+        "Colonnes du tableau : Code (a) | Libellé (a) | Budget de l'exercice (b) | Décaissement (c) | Engagement (d) | Réalisation 4=2+3 | Crédit Disponible 5=1-4 | Exécution budget (%) 4/1",
+        "a) Remplir, code et libellé, suivant la nomenclature budgétaire du projet.",
+        "b) Le plan comptable doit être conçu en tenant compte du budget du projet. Cette rubrique sera remplie au vu du budget de l'exercice du projet compte par compte.",
+        "c) Si le plan comptable est conçu sur la base du budget, indiquer le décaissement pour chaque item qui doit correspondre à la somme algébrique suivante :",
+        "- mouvement débit balance N des comptes immobilisations (compte 2) à l'exception des virements de compte à compte + (Solde créditeur N-1 du compte 481 - Solde créditeur N du compte 481)",
+        "- mouvement débit balance N des comptes de charges (comptes 6 et 8) + (Solde créditeur N-1 du compte 40 sauf 409 - Solde créditeur N du compte 40 sauf 409) + (Solde débiteur balance N du compte 409 - Solde débiteur balance N-1 du compte 409).",
+        "c) Le montant de l'engagement pour chaque item doit correspondre :",
+        "- (solde créditeur balance N) des comptes fournisseurs d'exploitation (compte 40, 481) d'investissement (Compte 481),",
+        "- bons de commande des biens et services remis aux fournisseurs au cours de l'exercice budgétaire non exécutés,",
+        "- contrats signés par les parties prenantes au cours de l'exercice budgétaire non exécutés."
+      ],
+      "comptes": ["2", "481", "6", "8", "40", "409"],
+      "mots_cles": ["tableau de correspondance", "exécution budgétaire", "décaissement", "engagement", "nomenclature budgétaire", "budget projet", "crédit disponible"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

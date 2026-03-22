@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Articles 6 (suite) et 7 - Seuil système normal, contenu des états financiers",
+    "page_source": 1450
+  },
+  "articles": [
+    {
+      "numero": 2402,
+      "titre": "Article 6 (suite) - Seuil du Système normal",
+      "texte": [
+        "Si l'une des ressources citées ci-dessus est supérieure aux seuils visés susmentionnés, ou si de manière cumulée sur deux exercices, les ressources dépassent trente (30) millions de F.CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie, l'entité est éligible au Système normal."
+      ],
+      "comptes": [],
+      "mots_cles": ["système normal", "seuil", "30 millions FCFA", "cumulé deux exercices"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 7 - Contenu des états financiers",
+      "texte": [
+        "Le Bilan décrit séparément les éléments d'actif et les éléments de passif constituant le patrimoine de l'entité. Il fait apparaître de façon distincte les fonds propres de l'entité.",
+        "Le Compte de résultat des associations et ordres professionnels récapitule en liste, les produits et les charges qui font apparaître l'excédent net ou le déficit net de l'exercice.",
+        "Il doit être procédé, dans l'exercice, à tous amortissements, dépréciations et provisions nécessaires pour tenir compte des consommations d'avantages économiques, des pertes de valeurs, des risques et des charges probables, même en cas d'absence ou d'insuffisance d'excédent.",
+        "Il doit être tenu compte des risques, charges et produits intervenus au cours de l'exercice ou d'un exercice antérieur, même s'ils sont connus seulement entre la date de clôture de l'exercice et celle de l'arrêté des comptes.",
+        "Le Compte d'exploitation des projets de développement et entités assimilées récapitule en liste, les charges sans amortissement, ni dépréciation et une quotité des ressources équivalente aux charges pour que le solde des opérations de l'exercice soit nul.",
+        "Le Tableau des flux de trésorerie retrace les mouvements « entrées » et « sorties » de liquidités de l'exercice.",
+        "Le Tableau emplois-ressources récapitule tous les emplois (immobilisations et charges) sans amortissement ni dépréciation et les fonds reçus des bailleurs ;",
+        "Le Tableau d'exécution budgétaire, fait apparaitre le budget de l'exercice et les réalisations de l'exercice ;",
+        "Le Tableau de réconciliation de trésorerie retrace les mouvements de trésorerie du début à la fin de l'exercice ;"
+      ],
+      "comptes": [],
+      "mots_cles": ["bilan", "compte résultat", "compte exploitation", "flux trésorerie", "emplois-ressources", "exécution budgétaire", "réconciliation trésorerie", "amortissement", "solde nul", "fonds propres"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

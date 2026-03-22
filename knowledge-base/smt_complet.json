@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SMT",
+    "partie": "Troisième partie",
+    "titre": "Système Minimal de Trésorerie (SMT) — Comptabilité de trésorerie pour très petites entités",
+    "pages_source": "52, 1324-1330",
+    "date_extraction": "2026-03-20"
+  },
+  "articles": [
+    {
+      "numero": "SMT-1",
+      "titre": "Définition et champ d'application du SMT",
+      "texte": [
+        "Le système minimal de trésorerie (SMT) est le système de comptabilité admis pour les très petites entités dont les recettes annuelles ne dépassent pas un certain seuil. Il répond à des conditions de forme et de fond, dérogatoires aux dispositions comptables de droit commun.",
+        "Ce système repose sur l'établissement d'un état des recettes et des dépenses dégageant le résultat de l'exercice. Cet état est dressé à partir de la comptabilité de trésorerie que les entités relevant de ce système doivent tenir par dérogation aux dispositions de l'Acte uniforme relatif au droit comptable et à l'information financière."
+      ],
+      "mots_cles": ["SMT", "système minimal de trésorerie", "très petites entités", "comptabilité de trésorerie", "recettes", "dépenses", "seuil"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-2",
+      "titre": "Seuils d'application du SMT",
+      "texte": [
+        "Le système minimal de trésorerie (SMT) concerne :",
+        "- les entités de négoce dont les recettes annuelles sont inférieures à FCFA 60 millions ou l'équivalent dans l'unité monétaire ayant cours légal dans l'État partie ;",
+        "- les entités artisanales et assimilées dont le chiffre d'affaires annuel est inférieur à FCFA 40 millions ou l'équivalent dans l'unité monétaire ayant cours légal dans l'État partie ;",
+        "- les entités de services dont le chiffre d'affaires annuel est inférieur à FCFA 30 millions.",
+        "NB : Selon l'article 17 de l'Acte uniforme de l'OHADA relatif à la comptabilité, la tenue de la comptabilité dans la langue officielle et dans l'unité monétaire ayant cours légal dans l'État partie. Les seuils indiqués à l'article 13 de l'Acte uniforme sont exprimés en FCFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'État partie. Les États parties ayant une monnaie différente devront convertir ces seuils dans leurs monnaies respectives au cours du jour de l'adoption de l'Acte uniforme relatif au droit comptable soit le 26 janvier 2017."
+      ],
+      "mots_cles": ["seuils SMT", "60 millions", "40 millions", "30 millions", "négoce", "artisanale", "services", "FCFA", "article 13", "article 17"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-3",
+      "titre": "Présentation générale du SMT",
+      "texte": [
+        "Le Système minimal de trésorerie repose sur l'établissement d'un état des recettes et des dépenses dégageant le résultat de l'exercice (recette nette ou perte nette), dressé à partir d'une comptabilité de trésorerie que doivent tenir les entités relevant de ce système.",
+        "La fiabilité de la comptabilisation des opérations de trésorerie au cours de l'exercice est basée sur :",
+        "- l'existence d'un journal unique de trésorerie (NOTE 4) ;",
+        "- l'existence d'un journal de suivi des créances impayées et un journal de suivi des dettes à payer ;",
+        "- la conservation des pièces justificatives des enregistrements au journal."
+      ],
+      "mots_cles": ["présentation SMT", "journal unique de trésorerie", "créances impayées", "dettes à payer", "pièces justificatives", "recette nette", "perte nette"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-4",
+      "titre": "Inventaire extra-comptable de fin d'exercice",
+      "texte": [
+        "En fin d'exercice, le responsable de l'entité doit procéder à un inventaire extra-comptable de chacun des quatre éléments suivants :",
+        "- le montant des créances et des dettes d'exploitation, dans le cas où les ventes et les achats ne sont pas totalement réglés ;",
+        "- le montant des stocks (produits finis, matières premières, consommables...) et des travaux en cours ;",
+        "- le montant des immobilisations acquises ou cédées au cours de l'exercice ;",
+        "- le montant des emprunts souscrits ou remboursés au cours de l'exercice.",
+        "Les états récapitulatifs de ces inventaires doivent être conservés en tant que pièce justificative de la comptabilité de l'entité."
+      ],
+      "mots_cles": ["inventaire extra-comptable", "fin d'exercice", "créances", "dettes", "stocks", "immobilisations", "emprunts", "pièces justificatives"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-5",
+      "titre": "Registre des immobilisations et amortissements",
+      "texte": [
+        "Les entités possédant des immobilisations doivent tenir un registre des immobilisations (NOTE 1). Chaque immobilisation doit faire l'objet d'un tableau d'amortissement basé le mode linéaire sans prorata temporis."
+      ],
+      "mots_cles": ["registre des immobilisations", "amortissement", "mode linéaire", "prorata temporis", "NOTE 1"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-6",
+      "titre": "Structure des états financiers du SMT",
+      "texte": [
+        "Les états financiers annuels du Système minimal de trésorerie (S.M.T) doivent être établis par les entités soumises à une comptabilité de trésorerie. Ces états financiers sont constitués des documents suivants :",
+        "- le Bilan ;",
+        "- le Compte de résultat ; et",
+        "- les Notes annexes.",
+        "Les Notes annexes sont composées d'un :",
+        "- Tableau SMT de suivi du matériel, du mobilier et des cautions ;",
+        "- État des stocks ;",
+        "- État des créances et des dettes non échues."
+      ],
+      "mots_cles": ["états financiers SMT", "bilan", "compte de résultat", "notes annexes", "tableau suivi matériel", "état des stocks", "état des créances", "dettes non échues"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-7",
+      "titre": "Bilan SMT — Structure de l'actif",
+      "texte": [
+        "Le Bilan SMT présente l'actif et le passif de l'entité. L'actif est composé des postes suivants :",
+        "GA - Immobilisations : valeur brute des immobilisations corporelles et incorporelles (comptes 20 à 25) diminuée des amortissements cumulés (comptes 28-29). Comprend le matériel, le mobilier, les cautions versées.",
+        "GB - Stocks : valeur des stocks de marchandises, matières premières, produits finis et en-cours (comptes 31 à 38) nets de dépréciations (compte 39).",
+        "GC - Adhérents/Débiteurs : montant des créances sur clients et autres débiteurs (comptes 41 à 47) nets de dépréciations (compte 49). Représente les sommes dues à l'entité.",
+        "GD - Caisse : solde du compte caisse (compte 57). Représente les espèces détenues par l'entité.",
+        "GE - Banque : solde des comptes bancaires (comptes 51 à 53) nets de dépréciations (compte 59). Représente les avoirs en banque.",
+        "TOTAL ACTIF = GA + GB + GC + GD + GE"
+      ],
+      "comptes": ["20", "21", "22", "23", "24", "25", "28", "29", "31", "32", "33", "34", "35", "36", "37", "38", "39", "41", "42", "43", "44", "45", "46", "47", "49", "51", "52", "53", "57", "59"],
+      "mots_cles": ["bilan SMT", "actif", "immobilisations", "stocks", "créances", "caisse", "banque", "GA", "GB", "GC", "GD", "GE"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-8",
+      "titre": "Bilan SMT — Structure du passif",
+      "texte": [
+        "Le passif du Bilan SMT est composé des postes suivants :",
+        "HA - Dotations : capital ou dotation initiale de l'entité (comptes 101 à 104). Représente les fonds propres mis à disposition.",
+        "HB - Résultat net : résultat de l'exercice (bénéfice ou perte) calculé comme la différence entre les produits et les charges de l'exercice.",
+        "HC - Autres fonds propres : réserves, report à nouveau, subventions, emprunts et dettes financières (comptes 11, 12, 14, 106, 15, 16, 17). Comprend les dettes à long terme.",
+        "HD - Fournisseurs/Créditeurs : dettes envers les fournisseurs et autres créditeurs (comptes 40, 42 à 47, 56, sauf 409). Représente les sommes dues par l'entité à court terme.",
+        "TOTAL PASSIF = HA + HB + HC + HD",
+        "Le total de l'actif doit être égal au total du passif (principe de l'équilibre du bilan)."
+      ],
+      "comptes": ["101", "102", "103", "104", "106", "11", "12", "14", "15", "16", "17", "40", "42", "43", "44", "45", "46", "47", "56"],
+      "mots_cles": ["bilan SMT", "passif", "dotations", "résultat net", "fonds propres", "fournisseurs", "créditeurs", "HA", "HB", "HC", "HD"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-9",
+      "titre": "Compte de résultat SMT — Produits (recettes)",
+      "texte": [
+        "Le Compte de résultat SMT présente les produits (recettes) et les charges (dépenses) de l'exercice. Les produits sont ventilés comme suit :",
+        "KA - Recettes principales : chiffre d'affaires issu de l'activité principale de l'entité, ventes de marchandises, production vendue (comptes 701 à 708, 71).",
+        "KB - Autres recettes : autres produits d'exploitation, revenus financiers, produits accessoires (comptes 72 à 75, 77 à 79).",
+        "TOTAL DES RECETTES = KA + KB",
+        "Les recettes sont comptabilisées au moment de l'encaissement effectif dans le journal de trésorerie."
+      ],
+      "comptes": ["701", "702", "703", "704", "705", "706", "707", "708", "71", "72", "73", "74", "75", "77", "78", "79"],
+      "mots_cles": ["compte de résultat SMT", "produits", "recettes", "chiffre d'affaires", "ventes", "KA", "KB", "encaissement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-10",
+      "titre": "Compte de résultat SMT — Charges (dépenses)",
+      "texte": [
+        "Les charges (dépenses) du Compte de résultat SMT sont ventilées comme suit :",
+        "JA - Achats de marchandises et matières : achats de biens destinés à la revente ou à la production (comptes 601 à 606, 608).",
+        "JB - Loyers et charges locatives : loyers, charges locatives, entretien des locaux (comptes 613 à 616).",
+        "JC - Salaires et charges sociales : rémunérations du personnel et charges sociales associées (comptes 64, 66).",
+        "JD - Impôts et taxes : tous impôts et taxes supportés par l'entité (comptes 63, 65).",
+        "JE - Intérêts bancaires : frais financiers, intérêts sur emprunts (compte 67).",
+        "JF - Autres dépenses : transports, services extérieurs, autres charges d'exploitation (comptes 61, 62).",
+        "JG - Dotations aux amortissements : constatation de la dépréciation des immobilisations (compte 68).",
+        "TOTAL DES DEPENSES = JA + JB + JC + JD + JE + JF + JG"
+      ],
+      "comptes": ["601", "602", "603", "604", "605", "606", "608", "613", "614", "615", "616", "61", "62", "63", "64", "65", "66", "67", "68"],
+      "mots_cles": ["compte de résultat SMT", "charges", "dépenses", "achats", "loyers", "salaires", "impôts", "intérêts", "amortissements", "JA", "JB", "JC", "JD", "JE", "JF", "JG"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-11",
+      "titre": "Compte de résultat SMT — Variations et résultat",
+      "texte": [
+        "Le résultat de l'exercice est obtenu après prise en compte des variations suivantes :",
+        "Variation des stocks : différence entre le stock final et le stock initial de l'exercice. Une augmentation des stocks diminue les charges, une diminution les augmente.",
+        "Variation des créances : différence entre les créances à la clôture et les créances à l'ouverture. Une augmentation des créances représente des produits non encore encaissés.",
+        "Variation des dettes : différence entre les dettes à la clôture et les dettes à l'ouverture. Une augmentation des dettes représente des charges non encore décaissées.",
+        "RESULTAT NET = TOTAL RECETTES - TOTAL DEPENSES +/- Variation des stocks +/- Variation des créances +/- Variation des dettes",
+        "Le résultat net est positif (recette nette / bénéfice) ou négatif (perte nette)."
+      ],
+      "mots_cles": ["résultat SMT", "variation des stocks", "variation des créances", "variation des dettes", "recette nette", "perte nette", "bénéfice"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-12",
+      "titre": "Journal unique de trésorerie SMT",
+      "texte": [
+        "Le journal unique de trésorerie est le document principal de la comptabilité SMT. Il enregistre chronologiquement toutes les opérations de trésorerie (encaissements et décaissements).",
+        "Le journal comprend les colonnes suivantes :",
+        "- Date : date de l'opération",
+        "- Libellé : description de l'opération",
+        "- Recettes : montant encaissé",
+        "- Dépenses : montant décaissé",
+        "- Solde : solde cumulé de trésorerie",
+        "- Ventilation recettes : Ventes, Autres",
+        "- Ventilation dépenses : Matériel et Mobilier, Achats marchandises, Achats matières et fournitures, Loyers, Salaires, Impôts et Taxes, Autres",
+        "NB : Il faut prévoir un journal par banque et un journal pour la caisse. Les colonnes « ventilation recettes et dépenses » peuvent être complétées en cas de besoin par des rajouts notamment « compte exploitant ».",
+        "Chaque page du journal commence par le report à nouveau (solde de la page précédente) et se termine par le solde à reporter."
+      ],
+      "mots_cles": ["journal de trésorerie", "encaissements", "décaissements", "ventilation", "recettes", "dépenses", "solde", "report à nouveau", "journal banque", "journal caisse"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-13",
+      "titre": "Journal de suivi des créances impayées SMT",
+      "texte": [
+        "Le journal de suivi des créances impayées permet de suivre les montants dus à l'entité par ses clients ou débiteurs qui n'ont pas encore été réglés.",
+        "Le journal comprend les colonnes suivantes :",
+        "- Date : date de la facture ou de la créance",
+        "- N° facture : numéro de référence de la facture",
+        "- Nom du client : identification du débiteur",
+        "- Montant : montant de la créance impayée",
+        "- Date paiement : date effective du paiement (à remplir lors du règlement)",
+        "Ce journal permet d'assurer le suivi des créances en attente de recouvrement et constitue une pièce justificative pour l'inventaire de fin d'exercice."
+      ],
+      "mots_cles": ["créances impayées", "suivi créances", "clients", "débiteurs", "recouvrement", "facture", "paiement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-14",
+      "titre": "Journal de suivi des dettes à payer SMT",
+      "texte": [
+        "Le journal de suivi des dettes à payer permet de suivre les montants que l'entité doit à ses fournisseurs ou créanciers et qui n'ont pas encore été réglés.",
+        "Le journal comprend les colonnes suivantes :",
+        "- Date : date de la facture ou de la dette",
+        "- N° facture : numéro de référence de la facture fournisseur",
+        "- Nom du fournisseur : identification du créancier",
+        "- Montant : montant de la dette à payer",
+        "- Date paiement : date effective du paiement (à remplir lors du règlement)",
+        "Ce journal permet d'assurer le suivi des dettes en attente de règlement et constitue une pièce justificative pour l'inventaire de fin d'exercice."
+      ],
+      "mots_cles": ["dettes à payer", "suivi dettes", "fournisseurs", "créanciers", "facture fournisseur", "règlement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-15",
+      "titre": "Note annexe SMT — Tableau de suivi du matériel, du mobilier et des cautions",
+      "texte": [
+        "Le Tableau SMT de suivi du matériel, du mobilier et des cautions (NOTE 1) est un état annexe obligatoire qui recense l'ensemble des immobilisations de l'entité.",
+        "Il permet de suivre pour chaque immobilisation :",
+        "- la désignation du bien ;",
+        "- la date d'acquisition ;",
+        "- la valeur d'acquisition (coût d'achat) ;",
+        "- la durée de vie estimée ;",
+        "- le montant de l'amortissement annuel (mode linéaire) ;",
+        "- le cumul des amortissements ;",
+        "- la valeur nette comptable (valeur d'acquisition - cumul amortissements) ;",
+        "- la date et le montant de cession éventuelle.",
+        "L'amortissement est calculé selon le mode linéaire, sans prorata temporis (l'annuité complète est comptabilisée dès l'année d'acquisition)."
+      ],
+      "mots_cles": ["tableau suivi matériel", "mobilier", "cautions", "immobilisations", "amortissement linéaire", "valeur nette comptable", "NOTE 1", "durée de vie"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-16",
+      "titre": "Note annexe SMT — État des stocks",
+      "texte": [
+        "L'État des stocks au 31 décembre est un état annexe obligatoire qui présente la situation des stocks de l'entité à la clôture de l'exercice.",
+        "Il comprend les colonnes suivantes :",
+        "- Référence : code ou référence de l'article en stock",
+        "- Désignation : description de l'article",
+        "- Quantité : nombre d'unités en stock",
+        "- Prix unitaire : coût unitaire de l'article",
+        "- Montant : valeur totale (quantité × prix unitaire)",
+        "L'état fait apparaître en bas de tableau :",
+        "- VALEUR DU STOCK FINAL : total des montants à la clôture de l'exercice",
+        "- VALEUR DU STOCK INITIAL : valeur du stock au début de l'exercice (reprise de l'état précédent)",
+        "La différence entre stock final et stock initial constitue la variation des stocks utilisée dans le compte de résultat."
+      ],
+      "mots_cles": ["état des stocks", "stock final", "stock initial", "variation des stocks", "inventaire", "quantité", "prix unitaire", "31 décembre"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-17",
+      "titre": "Note annexe SMT — État des créances et des dettes non échues",
+      "texte": [
+        "L'État des créances et des dettes non échues au 31 décembre est un état annexe obligatoire qui présente les créances à recouvrer et les dettes à payer à la clôture de l'exercice.",
+        "Partie créances — colonnes :",
+        "- Date : date de la créance",
+        "- Nom du client : identification du débiteur",
+        "- Montant au 31 décembre : solde de la créance à la clôture",
+        "- Montant au 1er janvier : solde de la créance à l'ouverture",
+        "- Variation % : évolution en pourcentage",
+        "- TOTAL DES CREANCES : somme des créances non échues",
+        "Partie dettes — colonnes :",
+        "- Date : date de la dette",
+        "- Nom du fournisseur : identification du créancier",
+        "- Montant au 31 décembre : solde de la dette à la clôture",
+        "- Montant au 1er janvier : solde de la dette à l'ouverture",
+        "- Variation % : évolution en pourcentage",
+        "- TOTAL DES DETTES : somme des dettes non échues",
+        "La variation des créances et des dettes est utilisée dans le calcul du résultat du compte de résultat SMT."
+      ],
+      "mots_cles": ["créances non échues", "dettes non échues", "clients", "fournisseurs", "variation", "31 décembre", "1er janvier", "recouvrement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-18",
+      "titre": "Principes comptables applicables au SMT",
+      "texte": [
+        "Bien que simplifié, le SMT respecte les principes comptables fondamentaux suivants :",
+        "- Principe de prudence : les créances douteuses doivent être signalées, les stocks dépréciés doivent être évalués à leur valeur probable de réalisation.",
+        "- Principe d'indépendance des exercices : les recettes et dépenses sont rattachées à l'exercice au cours duquel elles sont encaissées ou décaissées (comptabilité de trésorerie), avec corrections en fin d'exercice via les variations de créances, dettes et stocks.",
+        "- Principe de continuité d'exploitation : les états financiers sont établis dans l'hypothèse de la poursuite des activités de l'entité.",
+        "- Principe du coût historique : les immobilisations sont évaluées à leur coût d'acquisition.",
+        "- Principe de permanence des méthodes : les méthodes d'évaluation et de présentation ne doivent pas être modifiées d'un exercice à l'autre sauf changement exceptionnel dûment justifié."
+      ],
+      "mots_cles": ["principes comptables", "prudence", "indépendance des exercices", "continuité d'exploitation", "coût historique", "permanence des méthodes", "comptabilité de trésorerie"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-19",
+      "titre": "Passage du SMT au système normal ou allégé",
+      "texte": [
+        "Lorsque le chiffre d'affaires d'une entité dépasse les seuils prévus pour le SMT pendant deux exercices consécutifs, l'entité doit obligatoirement passer au système comptable normal (SYSCOHADA) ou au système allégé.",
+        "Le passage implique :",
+        "- l'établissement d'un bilan d'ouverture conforme au plan comptable SYSCOHADA ;",
+        "- la reprise des soldes du dernier bilan SMT dans les comptes correspondants du nouveau plan ;",
+        "- la mise en place d'une comptabilité en partie double ;",
+        "- la tenue des livres comptables obligatoires (journal, grand livre, balance).",
+        "Les immobilisations déjà amorties dans le SMT conservent leurs valeurs nettes comptables lors du passage."
+      ],
+      "mots_cles": ["passage SMT", "système normal", "système allégé", "seuils dépassés", "bilan d'ouverture", "comptabilité en partie double", "plan comptable"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "SMT-20",
+      "titre": "Différences entre SMT, système allégé et système normal",
+      "texte": [
+        "Le SYSCOHADA prévoit trois niveaux de système comptable :",
+        "1. Le Système normal : jeu complet d'états financiers (Bilan, Compte de résultat, Tableau des flux de trésorerie, Notes annexes). Applicable aux grandes et moyennes entités. Comptabilité en partie double avec plan comptable détaillé.",
+        "2. Le Système allégé : états financiers simplifiés mais toujours en partie double. Pour les entités de taille intermédiaire ne dépassant pas certains seuils.",
+        "3. Le Système minimal de trésorerie (SMT) : comptabilité de trésorerie (recettes/dépenses). Pour les très petites entités. États financiers simplifiés : Bilan, Compte de résultat, Notes annexes (sans tableau des flux de trésorerie).",
+        "Le SMT se distingue par sa simplicité : pas de plan comptable détaillé, pas de partie double, pas de journal général — uniquement un journal de trésorerie et des états d'inventaire."
+      ],
+      "mots_cles": ["système normal", "système allégé", "SMT", "comparaison", "partie double", "comptabilité de trésorerie", "plan comptable", "états financiers"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

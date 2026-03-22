@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1330
+  },
+  "articles": [
+    {
+      "numero": 2142,
+      "titre": "Cotisations — Schéma des écritures (suite et fin)",
+      "texte": [
+        "Suite des écritures de comptabilisation des cotisations : règlement, quote part mandant et appel cotisation structure affiliée."
+      ],
+      "ecritures": [
+        {
+          "description": "Règlement cotisation",
+          "lignes": [
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "x", "credit": ""},
+            {"compte": "411", "libelle": "Adhérents", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Quote part cotisation du mandant",
+          "lignes": [
+            {"compte": "701", "libelle": "Cotisations des adhérents", "debit": "x", "credit": ""},
+            {"compte": "4712", "libelle": "Créditeurs divers", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Appel cotisation d'une structure dans laquelle l'entité est affiliée",
+          "lignes": [
+            {"compte": "6351", "libelle": "Cotisations", "debit": "x", "credit": ""},
+            {"compte": "4712", "libelle": "Créditeurs divers", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["5", "411", "701", "4712", "6351"],
+      "mots_cles": ["règlement cotisation", "quote part mandant", "cotisation affiliée", "créditeurs divers"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1329"
+    },
+    {
+      "numero": 2150,
+      "titre": "Revenus des activités économiques",
+      "texte": [
+        "Dans plusieurs États parties les entités à but non lucratif sont exemptées d'impôt sur le revenu dans la limite de leur objet social. L'exercice d'une activité économique qui consiste à la commercialisation de biens ou de services marchands sur un marché donné n'est pas en principe compatible avec l'objet d'une association.",
+        "Selon l'article 2 de l'Acte uniforme portant sur le droit commercial général, un acte de commerce par nature est celui par lequel une personne s'entremet dans la circulation des biens qu'elle produit ou achète ou par lequel elle fournit des prestations de service avec l'intention d'en tirer un profit pécuniaire. Ont, notamment, le caractère d'actes de commerce par nature l'achat de biens, meubles ou immeubles, en vue de leur revente etc.",
+        "Lorsque les actes de commerce sont occasionnels et accessoires à l'objet de l'entité à but non lucratif, ils peuvent être requalifiés d'actes civils. Lorsque les actes de commerce sont habituels et répétés, l'entité devient commerçante et est soumise aux dispositions de l'Acte uniforme portant sur le droit commercial général et au SYSCOHADA.",
+        "Les produits en provenance des actes de commerce sont enregistrés dans les 705 Ventes de marchandises, de services et de produits finis et 706 Revenus des manifestations et éventuellement dans le compte 707 Produits accessoires.",
+        "Les entités à but non lucratif doivent veiller au caractère accessoire des produits provenant des actes de commerce inscrits dans les comptes ci-dessus."
+      ],
+      "comptes": ["705", "706", "707"],
+      "mots_cles": ["revenus activités économiques", "exemption impôt", "actes de commerce", "droit commercial", "SYSCOHADA", "ventes marchandises", "revenus manifestations", "produits accessoires"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

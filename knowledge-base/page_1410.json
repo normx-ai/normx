@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "III - États financiers (fin)",
+    "page_source": 1410
+  },
+  "articles": [
+    {
+      "numero": 2286,
+      "titre": "6 - Notes annexes",
+      "texte": [
+        "Les Notes annexes contiennent des informations complémentaires à celles qui sont présentées le Tableau emplois-ressources, le Tableau d'exécution budgétaire, le Tableau de réconciliation de trésorerie, le Bilan, le Compte d'exploitation. Les Notes annexes fournissent des descriptions narratives ou des décompositions d'éléments présentés dans les autres états financiers, ainsi que des informations relatives aux éléments qui ne répondent pas aux critères de comptabilisation dans les autres états financiers.",
+        "Les Notes annexes comportent tous les éléments de caractère significatif qui ne sont pas mis en évidence dans les autres états financiers et sont susceptibles d'influencer le jugement que les utilisateurs des documents peuvent porter sur le patrimoine, la situation financière et le résultat de l'entité. Il en est ainsi notamment pour le montant des engagements donnés et reçus dont le suivi doit être assuré par l'entité dans le cadre de son organisation comptable.",
+        "Les Notes annexes font partie intégrante des états financiers. Elles doivent comporter obligatoirement une déclaration explicite de conformité à l'Acte Uniforme relatif au droit comptable et à l'information financière et au Système comptable des entités à but non lucratif.",
+        "Les états financiers ne doivent être déclarés conformes au Système comptable des entités à but non lucratif que s'ils sont conformes à toutes les dispositions prévues par le présent Système comptable.",
+        "Chaque élément des états financiers de synthèse doit faire l'objet d'une référence croisée vers l'information liée figurant dans les notes."
+      ],
+      "comptes": [],
+      "mots_cles": ["notes annexes", "informations complémentaires", "engagements", "conformité", "Acte Uniforme", "référence croisée"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2287,
+      "titre": "7 - États financiers normalisés",
+      "texte": [
+        "Les rubriques et les postes des états financiers non chiffrés ne doivent pas être présentés.",
+        "Les modèles de Notes ci-dessous non documentés ne doivent pas être joints aux états financiers. Leur contenu peut être amélioré."
+      ],
+      "comptes": [],
+      "mots_cles": ["états financiers normalisés", "rubriques non chiffrées", "modèles notes", "contenu améliorable"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

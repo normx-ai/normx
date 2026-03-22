@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "II - Fonds d'administration - Exemple 1",
+    "page_source": 1406
+  },
+  "articles": [
+    {
+      "numero": 2277,
+      "titre": "Exemple 1 : Transfert de fonds",
+      "texte": [
+        "15/02/N Le bailleur OHADA a fait un virement bancaire de FCFA 15 000 000 au projet AMSAT pour couvrir les charges d'exploitation.",
+        "31/13/N, le projet AMSAT a payé par chèques les dépenses suivantes :",
+        "- Loyer : 1 000 000 FCFA",
+        "- Electricité : 750 000 FCFA",
+        "- Fourniture de bureau : 2 000 000 FCFA",
+        "- Frais réparation véhicule : 1 500 000 FCFA",
+        "- Carburant véhicule : 250 000 FCFA",
+        "Passer les écritures",
+        "Solution",
+        "15/03/N: Débit 52 Banques 15 000 000 / Crédit 462 Fonds d'administration 15 000 000 — Virement du bailleur Afrique",
+        "31/03/N: Débit 622 Locations et charges locatives 1 000 000 / Débit 6052 Électricité 750 000 / Débit 6055 Fourniture de bureau 2 000 000 / Débit 6241 Entretien et réparation véhicule 1 500 000 / Débit 6053 Carburant 250 000 / Crédit 52 Banques 5 500 000 — Règlement diverses dépenses",
+        "d°: Débit 462 Fonds d'administration 5 500 000 / Crédit 702 Achat habillement 5 500 000 — Neutralisation des charges d'exploitation"
+      ],
+      "comptes": ["52", "462", "622", "6052", "6055", "6241", "6053", "702"],
+      "mots_cles": ["exemple", "transfert fonds", "charges exploitation", "neutralisation", "loyer", "électricité", "carburant"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

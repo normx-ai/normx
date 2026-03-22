@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "I - Fonds affectés aux investissements - Exemple 1",
+    "page_source": 1400
+  },
+  "articles": [
+    {
+      "numero": 2259,
+      "titre": "Exemple 1 : Transfert de fonds conformément au budget",
+      "texte": [
+        "1/04/N, le bailleur JOJO a transféré par virement bancaire ce jour au projet appui à la fertilisation des terres les fonds suivants conformément au budget:",
+        "- FCFA 15 000 000 pour achat de voiture ;",
+        "- FCFA 2 000 000 pour achat d'un ordinateur ;",
+        "Le 30/6/N le projet a acheté et payé par chèque la voiture à FCFA 15 000 000 et un ordinateur à FCFA 1 200 000. La durée d'utilité de la voiture est de 5 ans et celle de l'ordinateur 3 ans.",
+        "Passer les écritures au 1/04, au 30/6 et au 31/12",
+        "Solution",
+        "1/04/N: Débit 52 Banques 17 000 000 / Crédit 162 Fonds affectés aux investissements 15 000 000 / Crédit 462 Fonds d'administration 2 000 000 — Transfert de fonds bailleur JOJO",
+        "30/06/N: Débit 2451 Matériel automobile 15 000 000 / Débit 2442 Matériel informatique 1 200 000 / Crédit 52 Banques 16 200 000 — Achat voiture et ordinateur",
+        "31/12/N: Débit 162 Fonds affectés aux investissements 800 000 / Crédit 1651 Fonds affectés aux invest. non consommés 800 000 — Ordinateur : 2 000 000 – 1 200 000 = 800 000",
+        "NB: aucune dotation aux amortissements ne doit être enregistrée dans les livres de l'entité."
+      ],
+      "comptes": ["52", "162", "462", "2451", "2442", "1651"],
+      "mots_cles": ["exemple", "transfert fonds", "budget", "voiture", "ordinateur", "amortissements", "fonds non consommés"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "Tableau de correspondance - Tableau emplois ressources (suite - Notes)",
+    "page_source": 1442
+  },
+  "articles": [
+    {
+      "numero": 2319,
+      "titre": "Tableau de correspondance - Tableau emplois ressources (suite - Notes)",
+      "texte": [
+        "(1) Les produits d'exploitation à recevoir en cas de vente de cahier de charges, de location de voiture, sous location de bureau, etc.",
+        "(2) déduire la variation des dettes fournisseurs d'investissements (+Solde créditeur N-1 du compte 481 concerné sauf 4813 - Solde créditeur N du compte 481 concerné sauf 4813). En sus, ne pas tenir compte des virements de compte à compte qui ne traduisent pas une acquisition d'immobilisation incorporelle et corporelle décaissée.",
+        "(3) déduire la variation des dettes rattachées aux versements restant à effectuer sur titres de participation et titres immobilisés non libérés (+Solde débiteur N-1 du compte 4813 - Solde débiteur N du compte 4813). En sus, ne pas tenir compte :",
+        "- du mouvement débit de la Balance du compte 276 des intérêts courus sur immobilisations financières,",
+        "- des virements de compte à compte qui ne traduisent pas une acquisition d'immobilisation financière décaissée.",
+        "(4) déduire la variation des dettes fournisseurs d'exploitation (+Solde débiteur N-1 du compte 401 concerné - Solde débiteur N du compte 401 concerné). En sus, ne pas tenir compte :",
+        "- de la variation des stocks (compte 603) figurant dans le compte 60 Achats.",
+        "- des comptes 60 Achats et dettes équivalentes qui ont été transférés en immobilisations (livraison à soi-même) afin d'éviter le double emploi.",
+        "(5) déduire la variation des dettes fiscales (+Solde débiteur N-1 du compte 44 - Solde débiteur N du compte 44).",
+        "(6) déduire la variation des dettes rattachées au compte 65 Autres charges » (+Solde débiteur N-1 du compte de tiers concernés - Solde débiteur N du compte de tiers concernés). En sus, ne pas tenir compte :",
+        "- des comptes « Autres charges » et dettes équivalentes qui ont été transférés en immobilisations (livraison à soi-même) afin d'éviter le double emploi.",
+        "- des dépréciations et provisions à court terme, comptes 49",
+        "(7) déduire la variation des dettes rattachées aux charges de personnel (+Solde débiteur N-1 des comptes 42 et 43 - Solde débiteur N des comptes 42 et 43). En sus, ne pas tenir compte des charges de personnel et dettes équivalentes qui ont été transférées en immobilisations (livraison à soi-même) afin d'éviter le double emploi.",
+        "(8) déduire le mouvement crédit de la Balance compte 166.",
+        "En sus, ne pas tenir compte :",
+        "- des comptes 67 Charges financières qui ont été transférées en immobilisations (livraison à soi-même) afin d'éviter le double emploi.",
+        "- des dépréciations et provisions à court terme, comptes 49"
+      ],
+      "comptes": ["481", "4813", "276", "401", "603", "60", "44", "65", "49", "42", "43", "166", "67"],
+      "mots_cles": ["notes", "tableau emplois ressources", "variation dettes", "fournisseurs investissements", "fournisseurs exploitation", "dettes fiscales", "charges personnel", "livraison à soi-même", "dépréciations", "provisions"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

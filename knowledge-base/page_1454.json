@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Chapitre 3 - Moyens de contrôle, Articles 16 (suite), 17 et 18",
+    "page_source": 1454
+  },
+  "articles": [
+    {
+      "numero": 2402,
+      "titre": "Article 16 (suite) - Première année et colonne N-1",
+      "texte": [
+        "L'absence de comparabilité ou l'adaptation des chiffres est signalée dans les Notes annexes.",
+        "Pour la première année d'application, l'entité n'a pas l'obligation de renseigner que la colonne N-1 du bilan."
+      ],
+      "comptes": [],
+      "mots_cles": ["première année", "colonne N-1", "comparabilité", "notes annexes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2403,
+      "titre": "Article 17 - Registre des donateurs",
+      "texte": [
+        "Il est établi pour chaque entité à but non lucratif un registre des donateurs pour tous les dons, donations, et legs reçus par l'entité.",
+        "Le registre des donateurs est coté, paraphé et numéroté de façon continue par la juridiction compétente de chaque Etat partie concerné.",
+        "Le registre contient :",
+        "- la date de l'opération ;",
+        "- les nom et prénoms, le domicile et l'adresse mail des personnes physiques ;",
+        "- la dénomination de la personne morale, le registre de commerce, le numéro d'identification fiscal, l'adresse du siège social et du mail ;",
+        "- le montant du don/legs et le mode de libération (espèces, chèques, virement, nature).",
+        "Toutes les écritures contenues dans ce registre doivent être signées par le représentant légal de l'entité à but non lucratif.",
+        "Ce registre peut être tenu en version physique reliée, brochée ou en version électronique."
+      ],
+      "comptes": [],
+      "mots_cles": ["registre donateurs", "dons", "donations", "legs", "représentant légal", "version électronique"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2403,
+      "titre": "Article 18 - Mise à jour du registre des donateurs",
+      "texte": [
+        "L'entité tient à jour le registre des donateurs. S'il existe un auditeur, ce dernier soumet à l'assemblée générale ou l'instance qui en tient lieu, des membres ou au bailleur de fonds du projet un rapport qui constate l'existence du registre des donateurs et donne son avis sur sa tenue conforme.",
+        "Une déclaration des dirigeants attestant de la tenue conforme du registre des donateurs est annexée audit rapport ou soumise à l'assemblée générale ou l'instance qui en tient lieu, s'il n'existe pas d'auditeur."
+      ],
+      "comptes": [],
+      "mots_cles": ["registre donateurs", "auditeur", "assemblée générale", "rapport", "déclaration dirigeants"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

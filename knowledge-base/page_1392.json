@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Système Minimal de Trésorerie (SMT)",
+    "section": "§2243 - Fiche récapitulative des notes annexes SMT",
+    "page_source": 1392
+  },
+  "articles": [
+    {
+      "numero": 2243,
+      "titre": "§2243 - Fiche récapitulative des notes annexes du SMT",
+      "texte": [
+        "Les notes annexes du SMT comprennent cinq (5) notes qui complètent et précisent l'information donnée par le Bilan et le Compte de résultat :",
+        "Note 1 — Tableau des immobilisations : présente les immobilisations brutes, les amortissements cumulés et les valeurs nettes.",
+        "Note 2 — Tableau des stocks : détaille les stocks par catégorie avec stock initial, entrées, sorties et stock final.",
+        "Note 3 — Tableau des créances et des dettes : présente l'état des créances et des dettes de l'entité.",
+        "Note 4 — Journal unique de trésorerie : récapitule les encaissements et décaissements de l'exercice.",
+        "Note 5 — Dotations : détaille les dotations non consomptibles et consomptibles."
+      ],
+      "comptes": [],
+      "mots_cles": ["notes annexes SMT", "fiche récapitulative", "immobilisations", "stocks", "créances", "dettes", "journal trésorerie", "dotations", "Note 1", "Note 2", "Note 3", "Note 4", "Note 5"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

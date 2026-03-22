@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Système Minimal de Trésorerie (SMT)",
+    "section": "§2248 - Note 5 : Dotations",
+    "page_source": 1395
+  },
+  "articles": [
+    {
+      "numero": 2248,
+      "titre": "§2248 - Note 5 : Dotations (consomptible et non consomptible)",
+      "texte": [
+        "La note 5 détaille les dotations de l'entité, distinguant :",
+        "Dotation non consomptible :",
+        "- Dotation non consomptible sans droit de reprise : apports définitifs qui ne peuvent être ni consommés ni repris par le donateur. Le capital doit être maintenu en permanence.",
+        "- Dotation non consomptible avec droit de reprise : apports dont le capital doit être maintenu mais qui peuvent être repris par le donateur sous certaines conditions.",
+        "Dotation consomptible :",
+        "- Dotation consomptible : ressources destinées à être consommées pour la réalisation de l'objet de l'entité. Elles peuvent être utilisées intégralement.",
+        "Le tableau présente pour chaque type de dotation :",
+        "- le montant à l'ouverture de l'exercice ;",
+        "- les augmentations de l'exercice ;",
+        "- les diminutions de l'exercice (consommation, reprise) ;",
+        "- le montant à la clôture de l'exercice."
+      ],
+      "comptes": ["101", "102", "104"],
+      "mots_cles": ["Note 5", "dotations", "non consomptible", "consomptible", "droit de reprise", "sans droit de reprise", "apports", "capital"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

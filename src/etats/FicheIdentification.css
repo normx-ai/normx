@@ -1,0 +1,285 @@
+/* Fiche d'identification — styles officiels */
+
+.fi-page {
+  font-family: 'Times New Roman', 'Outfit', serif;
+  font-size: 11px;
+  color: #000;
+  padding: 10mm 10mm 4mm;
+}
+
+/* REF table */
+.fi-ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 4px;
+}
+.fi-ref-table td {
+  border: 0.5px solid #000;
+  padding: 4px 6px;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+.fi-ref {
+  width: 30px;
+  text-align: center;
+  font-weight: 700;
+  background: #dce6f0;
+  font-size: 10px;
+  color: #1A3A5C;
+}
+
+.fi-lbl {
+  font-weight: 600;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.fi-val {
+  font-size: 11px;
+  min-height: 18px;
+}
+
+.fi-sub-label {
+  font-size: 9px;
+  color: #555;
+  padding: 1px 6px;
+  font-style: italic;
+}
+
+.fi-sub-label-indent {
+  font-size: 9px;
+  color: #555;
+  font-style: italic;
+  padding-left: 20px;
+  margin-top: 2px;
+}
+
+.fi-label-row td {
+  border: none !important;
+  padding: 0 6px 4px;
+}
+
+/* Text blocks (contact, comptable) */
+.fi-text-block {
+  border: 0.5px solid #000;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  min-height: 36px;
+}
+
+.fi-text-value {
+  min-height: 16px;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+/* Visa + AG block combiné (comme sur l'image officielle) */
+.fi-visa-ag-block {
+  border: 0.5px solid #000;
+  display: flex;
+  margin-bottom: 4px;
+  min-height: 70px;
+}
+.fi-visa-left {
+  flex: 1;
+  padding: 8px 10px;
+  border-right: 0.5px solid #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.fi-visa-line-sep {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 6px;
+}
+.fi-ag-right {
+  width: 220px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+.fi-ag-checkboxes {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.fi-ag-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+}
+.fi-checkbox-box {
+  font-size: 14px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px solid #000;
+}
+
+/* Bottom table (signataire + banques) */
+.fi-bottom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 4px;
+}
+.fi-bottom-table td {
+  border: 0.5px solid #000;
+  padding: 10px 8px;
+  font-size: 12px;
+  vertical-align: middle;
+}
+.fi-sub-label-cell {
+  font-size: 9px;
+  color: #555;
+  font-style: italic;
+  border: none;
+  padding: 2px 6px;
+  text-align: center;
+}
+
+/* Signature box */
+.fi-signature-box {
+  border: 0.5px solid #000;
+  height: 60px;
+  margin-top: 0;
+}
+
+/* ===================== PAGE 2 ===================== */
+
+/* Code boxes */
+.fi-code-boxes {
+  display: inline-flex;
+  gap: 1px;
+}
+.fi-code-box {
+  width: 18px;
+  height: 20px;
+  border: 0.5px solid #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: monospace;
+  background: #fff;
+}
+
+/* Grid ZK-ZP + Contrôle */
+.fi-p2-grid {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+}
+.fi-p2-left {
+  flex: 1;
+  border: 0.5px solid #000;
+  padding: 10px;
+}
+.fi-p2-left .fi-ref-table td {
+  padding: 10px 8px;
+}
+.fi-p2-right {
+  flex: 1;
+  border: 0.5px solid #000;
+  border-left: none;
+  padding: 10px;
+}
+
+/* Contrôle table */
+.fi-controle-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8px;
+  text-decoration: underline;
+}
+.fi-controle-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.fi-controle-table td {
+  border: 0.5px solid #000;
+  padding: 8px 8px;
+  font-size: 11px;
+  vertical-align: middle;
+}
+.fi-check-cell {
+  width: 30px;
+  text-align: center;
+}
+
+/* ACTIVITE DE L'ENTITE */
+.fi-activite-title {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: underline;
+  margin: 24px 0 14px;
+  letter-spacing: 0.5px;
+}
+
+.fi-activite-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+.fi-activite-table th {
+  border: 0.5px solid #000;
+  padding: 8px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: middle;
+  background: #f5f5f5;
+  line-height: 1.4;
+}
+.fi-activite-table td {
+  border: 0.5px solid #000;
+  padding: 8px 8px;
+  font-size: 11px;
+  vertical-align: middle;
+  min-height: 28px;
+}
+.fi-val-center {
+  text-align: center;
+}
+.fi-val-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.fi-total-row td {
+  border-top: 2px solid #000;
+}
+
+/* Notes */
+.fi-notes {
+  margin-top: 24px;
+  font-size: 10px;
+  color: #333;
+}
+.fi-note-line {
+  width: 120px;
+  border-bottom: 0.5px solid #000;
+  margin-bottom: 10px;
+}
+.fi-notes p {
+  margin: 4px 0;
+  line-height: 1.5;
+}
+
+/* Print */
+@media print {
+  .fi-page {
+    box-shadow: none;
+    margin: 0;
+    page-break-after: always;
+  }
+}

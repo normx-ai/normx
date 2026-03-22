@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "II - Fonds d'administration - Schéma des écritures",
+    "page_source": 1405
+  },
+  "articles": [
+    {
+      "numero": 2275,
+      "titre": "Charges non remboursées - Fonds d'administration à recevoir",
+      "texte": [
+        "En fin de période, les charges d'exploitation engagées par l'entité non remboursées par le bailleur doivent être neutralisées par le débit du compte 469 Fonds d'administration à recevoir et le crédit du compte 702 Quote-part de fonds d'administration transférés."
+      ],
+      "comptes": ["469", "702"],
+      "mots_cles": ["charges non remboursées", "neutralisation", "fonds administration à recevoir", "fin de période"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2276,
+      "titre": "Réception des fonds exercice suivant",
+      "texte": [
+        "A la réception des fonds dans le courant de l'exercice suivant le compte 469 sera soldé par le débit d'un des comptes 462 à 464 Fonds d'administration selon le cas."
+      ],
+      "comptes": ["469", "462", "463", "464"],
+      "mots_cles": ["réception fonds", "exercice suivant", "solde compte", "fonds administration"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2276,
+      "titre": "Schéma des écritures - Fonds d'administration",
+      "texte": [
+        "Débit 5 Comptes de trésorerie / Crédit 462 à 464 Fonds d'administration — Transfert de fonds en numéraire du bailleur",
+        "Débit 6 Comptes de charges / Crédit 462 à 464 Fonds d'administration — Paiement direct du bailleur",
+        "Débit 5 Comptes de trésorerie / Crédit 161 Avances de fonds à justifier — Avance du bailleur à justifier par le projet",
+        "Débit 5 Comptes de trésorerie / Crédit 162 à 164 Fonds affectés aux investissements / Crédit 46 Bailleurs Fonds d'administration — Affection selon budget en cas de transfert de fonds sans distinction entre immobilisations et charges d'exploitation",
+        "Débit 6 Comptes de charges / Crédit 40 Fournisseurs / Crédit 5 Comptes de trésorerie — Achats de biens",
+        "Débit 462 à 464 Fonds d'administration / Crédit 702 Quote-part de fonds d'administration transférés — Pour neutralisation des charges",
+        "Débit 469 Fonds d'administration à recevoir / Crédit 702 Quote-part de fonds d'administration transférés — Neutralisation achat à crédit en attente de transfert de fonds",
+        "Débit 462 à 464 Fonds d'administration / Crédit 469 Fonds d'administration à recevoir — Solde du compte crédité dès réception des fonds en attente"
+      ],
+      "comptes": ["5", "462", "463", "464", "6", "161", "162", "163", "164", "46", "40", "702", "469"],
+      "mots_cles": ["schéma écritures", "fonds administration", "transfert fonds", "neutralisation charges", "avance à justifier"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

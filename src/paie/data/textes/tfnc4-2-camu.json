@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "document": "Contribution de solidarité pour la CAMU",
+    "pays": "République du Congo",
+    "edition": "2025",
+    "tome": "TFNC4-CAMU",
+    "partie": null,
+    "livre": null,
+    "chapitre": 2,
+    "chapitre_titre": "Contribution de solidarité pour la CAMU",
+    "section": null,
+    "section_titre": null,
+    "page_source": null
+  },
+  "articles": [
+    {
+      "article": "Art. 1",
+      "titre": "Institution de la contribution CAMU",
+      "texte": [
+        "",
+        "Art.1.- Il est institué en République du Congo, une contribution de solidarité pour la couverture assurance maladie universelle (CAMU).",
+        "Les ressources de cette contribution sont affectées conformément à son objet."
+      ],
+      "mots_cles": [
+        "CAMU",
+        "contribution solidarité",
+        "couverture assurance maladie universelle",
+        "affectation ressources"
+      ],
+      "statut": "en vigueur"
+    },
+    {
+      "article": "Art. 2",
+      "titre": "Personnes assujetties à la CAMU",
+      "texte": [
+        "Art.2.- Sont soumis à la contribution de solidarité pour la couverture assurance maladie universelle :",
+        "- les personnes morales ;",
+        "- les exploitants individuels ;",
+        "- les titulaires de hauts revenus pour la fraction de revenu supérieure à 500.000 FCFA."
+      ],
+      "mots_cles": [
+        "assujettis CAMU",
+        "personnes morales",
+        "exploitants individuels",
+        "hauts revenus",
+        "500 000 FCFA"
+      ],
+      "statut": "en vigueur"
+    },
+    {
+      "article": "Art. 3",
+      "titre": "Assiette de la CAMU",
+      "texte": [
+        "Art.3.- La contribution de solidarité pour la couverture assurance maladie universelle (CAMU) est une taxe assise sur :",
+        "- le montant de la contribution de la patente liquidée au cours de l'année d'exercice, pour les personnes morales et les exploitants individuels ;",
+        "- la fraction de revenu supérieure à 500.000 FCFA, pour les titulaires de hauts revenus.",
+        "Les contribuables exonérés de la contribution de patente, sont assujettis à la taxe dans les mêmes conditions comme s'ils n'en avaient pas été exonérés."
+      ],
+      "mots_cles": [
+        "assiette CAMU",
+        "patente",
+        "fraction revenu",
+        "exonérés patente assujettis"
+      ],
+      "statut": "en vigueur"
+    },
+    {
+      "article": "Art. 4",
+      "titre": "Taux de la CAMU",
+      "texte": [
+        "Art.4.- Le taux de la taxe est égal à 0,5 % applicable à la base indiquée à l'article 3 ci-dessus."
+      ],
+      "mots_cles": [
+        "taux CAMU",
+        "0,5%"
+      ],
+      "statut": "en vigueur"
+    },
+    {
+      "article": "Art. 5",
+      "titre": "Recouvrement de la CAMU",
+      "texte": [
+        "Art.5.- La taxe est recouvrée :",
+        "- pour les personnes morales et les exploitants individuels, par déclaration et paiement spontané auprès du comptable public de leurs résidences fiscales sans avertissement préalable, dans les délais prévus en matière de contribution de la patente ;",
+        "- pour les titulaires de hauts revenus, par voie de retenue à la source par l'organe payeur qui en est le redevable légal."
+      ],
+      "mots_cles": [
+        "recouvrement CAMU",
+        "déclaration spontanée",
+        "comptable public",
+        "retenue source",
+        "organe payeur"
+      ],
+      "statut": "en vigueur"
+    },
+    {
+      "article": "Art. 6",
+      "titre": "Sanctions défaut déclaration ou paiement tardif",
+      "texte": [
+        "Art.6.- Le défaut de déclaration ou paiement tardif est sanctionné :",
+        "- dans les mêmes conditions qu'en matière de patente pour les personnes morales et les exploitants individuels ;",
+        "- dans les mêmes conditions qu'en matière d'impôts retenus à la source, pour les redevables légaux."
+      ],
+      "mots_cles": [
+        "sanctions CAMU",
+        "défaut déclaration",
+        "paiement tardif",
+        "sanctions patente",
+        "sanctions retenue source"
+      ],
+      "statut": "en vigueur"
+    },
+    {
+      "article": "Art. 7",
+      "titre": "Contentieux CAMU",
+      "texte": [
+        "Art.7.- Le contentieux relatif à l'assiette et au recouvrement de la taxe est régi par le Code général des impôts."
+      ],
+      "mots_cles": [
+        "contentieux CAMU",
+        "assiette",
+        "recouvrement",
+        "CGI"
+      ],
+      "statut": "en vigueur"
+    }
+  ]
+}

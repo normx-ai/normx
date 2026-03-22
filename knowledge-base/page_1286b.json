@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "page_source": 1286
+  },
+  "articles": [
+    {
+      "numero": 2003,
+      "titre": "Champ d'application — L'ordre professionnel (suite)",
+      "texte": [
+        "L'ordre professionnel : un organisme de caractère corporatif institué par une loi et regroupant obligatoirement les membres de certaines professions libérales qui exercent outre une fonction de représentation, une mission de service public dans la réglementation de la profession et la juridiction disciplinaire sur ses membres.",
+        "Il s'agit en principe des professions suivantes : avocats ; médecins ; notaires ; huissiers ; experts-comptables ; géomètres ; vétérinaires ; architectes ; infirmiers ; sages femmes ; tout autre organisme qui rentre dans cette définition."
+      ],
+      "mots_cles": ["ordre professionnel", "avocats", "médecins", "notaires", "huissiers", "experts-comptables", "géomètres", "vétérinaires", "architectes", "infirmiers", "sages femmes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2004,
+      "titre": "Champ d'application — Le projet de développement",
+      "texte": [
+        "Le projet de développement est une entité financée en général par les bailleurs bilatéraux, multilatéraux, privés et/ou par l'État partie et qui a pour but la promotion du développement économique et social d'un pays.",
+        "L'Acte uniforme relatif aux entités à but non lucratif entend par projet de développement : tout projet financé par les bailleurs de fonds et/ou l'État partie ; tout autre projet y compris les agences d'exécution de l'État partie, qui répond à la définition ci-dessus."
+      ],
+      "mots_cles": ["projet de développement", "bailleurs de fonds", "bilatéraux", "multilatéraux", "agences d'exécution", "État partie"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2005,
+      "titre": "Entrée en vigueur et objectif",
+      "texte": [
+        "Cet Acte uniforme qui entre en vigueur le 1er Janvier 2024 améliore la qualité de l'information financière des entités à but non lucratif à travers des états financiers normalisés fiables qui répondent aux besoins de l'ensemble des utilisateurs de ces informations."
+      ],
+      "mots_cles": ["entrée en vigueur", "1er janvier 2024", "information financière", "états financiers normalisés"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2006,
+      "titre": "Jeu complet d'états financiers annuels",
+      "texte": [
+        "Un jeu complet d'états financiers annuels comprend :",
+        "Pour l'association et l'ordre professionnel : le Bilan, le Compte de résultat, le Tableau des flux de trésorerie ainsi que les Notes annexes.",
+        "Pour le projet de développement : le Tableau emplois-ressources, le Tableau d'exécution budgétaire, le Tableau de réconciliation de trésorerie, le Bilan, le Compte d'exploitation et les Notes annexes."
+      ],
+      "mots_cles": ["états financiers", "bilan", "compte de résultat", "tableau flux trésorerie", "notes annexes", "tableau emplois-ressources", "exécution budgétaire", "réconciliation trésorerie", "compte d'exploitation"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

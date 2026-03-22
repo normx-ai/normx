@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Articles 19 - Sanctions pénales, désignation de l'auditeur",
+    "page_source": 1455
+  },
+  "articles": [
+    {
+      "numero": 2403,
+      "titre": "Article 19 - Obligation de désigner un auditeur",
+      "texte": [
+        "Les entités à but non lucratif qui remplissent, à la clôture de l'exercice, l'un des trois critères suivants :",
+        "1) total du bilan supérieur à cent millions (100.000.000) de francs CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie ;",
+        "2) ressources annuelles supérieures à deux cents millions (200.000.000) de francs CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie ;",
+        "3) effectif permanent supérieur à vingt (20) personnes ;",
+        "sont tenues de désigner au moins un (1) auditeur.",
+        "L'entité n'est plus tenue de désigner un auditeur dès lors qu'elle ne remplit plus aucun des trois (3) critères fixés ci-dessus pendant les deux (2) exercices précédent l'expiration du mandat de l'auditeur.",
+        "Pour les autres entités à but non lucratif ne remplissant pas ces critères, la nomination de l'auditeur est facultative. Elle peut toutefois être demandée en justice par au moins dix pour cent (10%) des membres.",
+        "Les états financiers et le rapport de gestion annuels sont transmis à l'auditeur s'il existe, quarante-cinq jours, au moins, avant la date de l'assemblée générale ordinaire ou de l'instance qui en tient lieu de l'association et l'ordre professionnel ou la date de transmission du rapport de l'auditeur aux bailleurs de fonds et/ou à l'Etat bénéficiaire du Projet de développement.",
+        "Dans les entités qui désignent, volontairement ou obligatoirement, un auditeur, ce dernier :",
+        "- soit émet une opinion indiquant que les états financiers sont réguliers et sincères et donnent une image fidèle du résultat des opérations de l'exercice écoulé ainsi que de la situation financière et du patrimoine à la fin de cet exercice ;",
+        "- soit exprime en la motivant, une opinion avec réserve ou défavorable ou indique qu'il est dans l'impossibilité d'exprimer une opinion.",
+        "L'auditeur se prononce sur la sincérité et la concordance avec les états financiers, des informations données dans le rapport d'activité."
+      ],
+      "comptes": [],
+      "mots_cles": ["auditeur", "critères désignation", "100 millions bilan", "200 millions ressources", "20 personnes", "opinion", "image fidèle", "rapport activité"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "III - États financiers",
+    "page_source": 1408
+  },
+  "articles": [
+    {
+      "numero": 2280,
+      "titre": "États financiers du projet de développement",
+      "texte": [
+        "La définition, et les conditions de recevabilité des états financiers ainsi que la première application du SYCEBNL sont traitées aux §§ 2170 à 2173.",
+        "Un jeu complet d'états financiers annuels comprend :",
+        "- le Tableau emplois-ressources,",
+        "- le Tableau d'exécution budgétaire,",
+        "- le Tableau de réconciliation de trésorerie,",
+        "- le Bilan,",
+        "- le Compte d'exploitation,",
+        "- les Notes annexes.",
+        "Les états financiers forment un tout indissociable et décrivent de façon régulière et sincère les événements, opérations et situations de l'exercice pour donner une image fidèle du patrimoine et de la situation financière de l'entité.",
+        "Les états financiers sont établis et présentés conformément aux modèles du Système comptable des entités à but non lucratif.",
+        "Toute entité qui applique correctement le Système comptable des entités à but non lucratif est réputée donner, dans ses états financiers, une image fidèle de sa situation et de ses opérations.",
+        "Lorsque l'application d'une prescription comptable se révèle insuffisante ou inadaptée pour donner l'image fidèle, des informations complémentaires ou des justifications nécessaires sont obligatoirement fournies dans les Notes annexes.",
+        "A notre avis, le Tableau de réconciliation de la trésorerie et le Compte d'exploitation sont redondants par rapport au Tableau emplois-ressources et au Tableau d'exécution du budget on y trouve les mêmes informations classées autrement."
+      ],
+      "comptes": [],
+      "mots_cles": ["états financiers", "tableau emplois-ressources", "exécution budgétaire", "réconciliation trésorerie", "bilan", "compte exploitation", "notes annexes", "image fidèle"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2281,
+      "titre": "1 - Tableau emplois-ressources",
+      "texte": [
+        "Le Tableau emplois-ressources est un état financier spécifique au projet de développement. Il présente les fonds reçus des bailleurs au cours de la période, la consommation de ces fonds en immobilisations et charges de fonctionnement, l'excédent ou le déficit des ressources reçues au cours de la période sur les emplois, les fonds disponibles en début d'exercice et le montant net de l'encaisse disponible en fin de période."
+      ],
+      "comptes": [],
+      "mots_cles": ["tableau emplois-ressources", "projet développement", "fonds bailleurs", "immobilisations", "charges fonctionnement", "encaisse"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

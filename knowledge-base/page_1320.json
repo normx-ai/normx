@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1320
+  },
+  "articles": [
+    {
+      "numero": 2117,
+      "titre": "La dotation consomptible (suite)",
+      "texte": [
+        "charges de l'exercice, par le biais du débit du compte 1049 Dotation consomptible inscrite au compte de résultat et du crédit du compte 703 Quote part de dotation consomptible transférée.",
+        "Lorsque la dotation consomptible sera intégralement consommée, le compte 104 dotation consomptible sera débité par le crédit du compte 1049 Dotation consomptible inscrite au compte de résultat."
+      ],
+      "comptes": ["1049", "703", "104"],
+      "mots_cles": ["dotation consomptible", "quote part transférée", "compte de résultat"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1319"
+    },
+    {
+      "numero": 2118,
+      "titre": "Réévaluation et comptabilisation des apports de fonds propres",
+      "texte": [
+        "Les immobilisations corporelles et financières enregistrées au coût historique, peuvent faire l'objet d'une réévaluation suivant une décision des organes de gestion pour ajuster la valeur de ces biens à leur valeur actuelle. La réévaluation est traitée aux §§ 203 et suivants.",
+        "La comptabilisation des apports de fonds propres doit être effectuée conformément aux dispositions juridiques et réglementaires (statuts et règlement intérieur) qui régissent les entités à but non lucratif.",
+        "Les apports sont enregistrés lors de leur réalisation, si les dispositions juridiques et réglementaires ne prévoient pas de souscription et de libération.",
+        "Il est rare de rencontrer dans les dispositions relatives aux entités à but non lucratif, la souscription et la libération des apports. Dans une telle hypothèse, l'entité doit enregistrer toutes les écritures relatives à la souscription et à la libération des apports à condition, qu'elle puisse justifier le droit d'agir pour le recouvrement de la souscription, en cas de défaillance des membres. Autrement, les apports sont enregistrés lors de leur réalisation."
+      ],
+      "comptes": [],
+      "mots_cles": ["réévaluation", "immobilisations corporelles", "immobilisations financières", "coût historique", "apports fonds propres", "souscription", "libération"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2119,
+      "titre": "Schéma des écritures des apports sans souscription préalable",
+      "texte": [
+        "Schéma des écritures des apports sans souscription préalable :"
+      ],
+      "ecritures": [
+        {"compte": "2", "libelle": "Comptes d'actif immobilisé (sauf compte 20)", "debit": "x", "credit": ""},
+        {"compte": "3", "libelle": "Comptes de stocks", "debit": "x", "credit": ""},
+        {"compte": "4", "libelle": "Comptes de tiers", "debit": "x", "credit": ""},
+        {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "x", "credit": ""},
+        {"compte": "101", "libelle": "Dotation non consomptible sans droit de reprise", "debit": "", "credit": "x"},
+        {"compte": "102", "libelle": "Dotation non consomptible avec droit de reprise", "debit": "", "credit": "x"},
+        {"compte": "1984", "libelle": "Provisions pour remise en état", "debit": "", "credit": "x"}
+      ],
+      "description_ecriture": "Apports des membres ou affectation des fondateurs",
+      "comptes": ["2", "3", "4", "5", "101", "102", "1984"],
+      "mots_cles": ["écritures comptables", "apports sans souscription", "actif immobilisé", "stocks", "tiers", "trésorerie", "dotation non consomptible", "provisions remise en état"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

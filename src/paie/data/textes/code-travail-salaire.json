@@ -1,0 +1,122 @@
+{
+  "titre": "Code du Travail - Titre III : Du Salaire",
+  "source": "Loi n°6-96 du 6 mars 1996 modifiant la loi n°45-75 du 15 mars 1975",
+  "pays": "Congo-Brazzaville",
+  "articles": [
+    {
+      "numero": 80,
+      "titre": "Egalite de remuneration",
+      "contenu": "A conditions egales de travail, de qualification professionnelle et de rendement, le salaire est egal pour tous les travailleurs, quels que soient leur origine, leur sexe, leur age et leur statut. Les salaires sont fixes par mois."
+    },
+    {
+      "numero": 81,
+      "titre": "Indemnite de deplacement",
+      "contenu": "Lorsque le travailleur est deplace du lieu de sa residence habituelle par le fait de l'employeur, il a droit a une indemnite compensant les frais supplementaires entraines par ce deplacement."
+    },
+    {
+      "numero": 82,
+      "titre": "Determination du salaire",
+      "contenu": "Le salaire de chaque travailleur est determine en fonction de l'emploi qui lui est attribue dans l'entreprise. Les categories professionnelles et les salaires minima correspondants sont fixes par les conventions collectives ou a defaut par voie reglementaire."
+    },
+    {
+      "numero": 83,
+      "titre": "SMIG et heures supplementaires",
+      "contenu": "Un salaire minimum interprofessionnel garanti (SMIG) est fixe par decret. Tout travail effectue au-dela de la duree legale du travail donne lieu a une majoration de salaire. Les taux de majoration sont : 10% pour les 2 premieres heures (41e et 42e), 25% pour les heures suivantes (43e a 48e), 50% au-dela de 48 heures, 100% pour les dimanches et jours feries."
+    },
+    {
+      "numero": 84,
+      "titre": "Pourboires",
+      "contenu": "Les pourboires verses directement par la clientele au travailleur ou centralises par l'employeur constituent un element du salaire."
+    },
+    {
+      "numero": 85,
+      "titre": "Remuneration en nature",
+      "contenu": "Lorsque la remuneration comprend des avantages en nature, ceux-ci sont evalues selon les taux fixes par arrete du ministre charge du travail."
+    },
+    {
+      "numero": 86,
+      "titre": "Prestations en nature",
+      "contenu": "Les prestations en nature ne peuvent constituer la totalite de la remuneration. En aucun cas, elles ne peuvent etre inferieures au salaire minimum."
+    },
+    {
+      "numero": 87,
+      "titre": "Paiement en monnaie legale",
+      "contenu": "Le salaire doit etre paye en monnaie ayant cours legal. Est interdit le paiement en bons, coupons, jetons ou sous toute autre forme."
+    },
+    {
+      "numero": 88,
+      "titre": "Periodicite du paiement",
+      "contenu": "Le paiement du salaire a lieu a intervalles reguliers ne pouvant exceder 15 jours pour les travailleurs engages a la journee ou a la semaine, et un mois pour les travailleurs engages a la quinzaine ou au mois. Les paiements mensuels doivent etre effectues au plus tard 8 jours apres la fin du mois de travail."
+    },
+    {
+      "numero": 89,
+      "titre": "Lieu et heure du paiement",
+      "contenu": "Le paiement du salaire est effectue sur le lieu de travail ou au bureau de l'employeur lorsqu'il est voisin du lieu de travail. En aucun cas, le paiement ne peut etre effectue dans un debit de boissons."
+    },
+    {
+      "numero": 90,
+      "titre": "Bulletin de paie",
+      "contenu": "L'employeur est tenu de delivrer au travailleur, au moment du paiement, un bulletin individuel de paie dont le contenu est fixe par voie reglementaire. Les mentions obligatoires comprennent : nom et adresse de l'employeur, nom et emploi du salarie, periode et nombre d'heures, salaire brut, nature et montant des retenues, montant net, date de paiement."
+    },
+    {
+      "numero": 91,
+      "titre": "Elements du salaire",
+      "contenu": "Le salaire se compose du salaire de base, de l'allocation de conge, des primes et des indemnites inherentes a la nature du travail, a l'exclusion des indemnites de licenciement."
+    },
+    {
+      "numero": 92,
+      "titre": "Privilege du salaire",
+      "contenu": "La creance de salaire est privilegiee. Elle prime toutes les autres creances, y compris celles du Tresor et de la securite sociale."
+    },
+    {
+      "numero": 93,
+      "titre": "Rang du privilege",
+      "contenu": "Le privilege des salaires s'exerce sur les biens meubles et immeubles de l'employeur. Il prend rang avant tous les autres privileges, y compris le privilege du Tresor."
+    },
+    {
+      "numero": 94,
+      "titre": "Fraction insaisissable",
+      "contenu": "Les portions de salaire sont saisissables ou cessibles selon un bareme progressif fixe par decret. Une quotite insaisissable est toujours reservee au travailleur."
+    },
+    {
+      "numero": 95,
+      "titre": "Avance sur salaire",
+      "contenu": "Toute avance en especes porte le nom d'acompte sur salaire. L'acompte ne donne lieu a aucun interet."
+    },
+    {
+      "numero": 96,
+      "titre": "Prescription des salaires",
+      "contenu": "L'action en paiement du salaire se prescrit par cinq ans."
+    },
+    {
+      "numero": 97,
+      "titre": "Economat",
+      "contenu": "Les economats sont autorises a condition qu'ils ne poursuivent aucun but lucratif et que les travailleurs ne soient pas obliges de s'y approvisionner."
+    },
+    {
+      "numero": 98,
+      "titre": "Interdiction de l'economat obligatoire",
+      "contenu": "Il est interdit a l'employeur d'imposer a ses travailleurs l'obligation de depenser tout ou partie de leur salaire dans des magasins ou il a des interets."
+    },
+    {
+      "numero": 99,
+      "titre": "Retenues sur salaire",
+      "contenu": "Les retenues sur salaire ne peuvent etre operees que dans les cas et conditions prevus par la reglementation en vigueur. Les retenues pour cotisations syndicales ne sont operees que sur demande ecrite du travailleur."
+    },
+    {
+      "numero": 100,
+      "titre": "Cessions et saisies-arrets",
+      "contenu": "Les cessions et saisies-arrets des remunerations ne peuvent, pour chaque annee, exceder les proportions suivantes : le vingtieme sur la portion inferieure ou egale a 50 000 FCFA ; le dixieme sur la portion superieure a 50 000 et inferieure ou egale a 100 000 FCFA ; le cinquieme sur la portion superieure a 100 000 et inferieure ou egale a 200 000 FCFA ; le quart sur la portion superieure a 200 000 et inferieure ou egale a 400 000 FCFA ; le tiers sur la portion superieure a 400 000 et inferieure ou egale a 800 000 FCFA ; sans limitation sur la portion superieure a 800 000 FCFA."
+    },
+    {
+      "numero": 101,
+      "titre": "Majoration pour charges de famille",
+      "contenu": "Les limites fixees a l'article precedent sont majorees de 5 000 FCFA par personne a la charge du travailleur sur justification."
+    },
+    {
+      "numero": 102,
+      "titre": "Constatation des infractions",
+      "contenu": "Les infractions aux dispositions du present titre sont constatees par les inspecteurs du travail et les officiers de police judiciaire."
+    }
+  ]
+}

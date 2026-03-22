@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Système Minimal de Trésorerie (SMT)",
+    "section": "§2244-2246 - Notes 1, 2 et 3 du SMT",
+    "page_source": 1393
+  },
+  "articles": [
+    {
+      "numero": 2244,
+      "titre": "§2244 - Note 1 : Tableau des immobilisations",
+      "texte": [
+        "Le tableau des immobilisations présente pour chaque catégorie d'immobilisations :",
+        "- la valeur brute à l'ouverture de l'exercice ;",
+        "- les augmentations de l'exercice (acquisitions, apports, dons reçus) ;",
+        "- les diminutions de l'exercice (cessions, mises au rebut) ;",
+        "- la valeur brute à la clôture de l'exercice ;",
+        "- les amortissements cumulés à l'ouverture ;",
+        "- les dotations de l'exercice ;",
+        "- les amortissements sur éléments sortis ;",
+        "- les amortissements cumulés à la clôture ;",
+        "- la valeur nette à la clôture.",
+        "Les catégories d'immobilisations sont : terrains, bâtiments, matériel et mobilier, matériel de transport, autres immobilisations."
+      ],
+      "comptes": ["20", "21", "22", "23", "24", "28"],
+      "mots_cles": ["Note 1", "immobilisations", "valeur brute", "amortissements cumulés", "valeur nette", "acquisitions", "cessions", "dotations"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2245,
+      "titre": "§2245 - Note 2 : Tableau des stocks",
+      "texte": [
+        "Le tableau des stocks présente pour chaque catégorie de stocks :",
+        "- le stock initial (à l'ouverture de l'exercice) ;",
+        "- les entrées de l'exercice ;",
+        "- les sorties de l'exercice ;",
+        "- le stock final (à la clôture de l'exercice).",
+        "Les catégories de stocks sont : marchandises, matières premières, produits finis, autres stocks."
+      ],
+      "comptes": ["31", "32", "33", "34", "36", "37", "38"],
+      "mots_cles": ["Note 2", "stocks", "stock initial", "stock final", "entrées", "sorties", "marchandises", "matières premières"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2246,
+      "titre": "§2246 - Note 3 : Tableau des créances et des dettes",
+      "texte": [
+        "Le tableau des créances et des dettes présente :",
+        "- les créances : créances sur adhérents/membres, autres créances, avec le montant à l'ouverture, les augmentations, les diminutions et le montant à la clôture ;",
+        "- les dettes : dettes fournisseurs, dettes fiscales et sociales, autres dettes, avec le montant à l'ouverture, les augmentations, les diminutions et le montant à la clôture."
+      ],
+      "comptes": ["41", "42", "43", "44", "45", "40"],
+      "mots_cles": ["Note 3", "créances", "dettes", "adhérents", "fournisseurs", "dettes fiscales", "dettes sociales"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

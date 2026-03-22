@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "Tableau de correspondance - Tableau emplois ressources",
+    "page_source": 1441
+  },
+  "articles": [
+    {
+      "numero": 2319,
+      "titre": "Tableau de correspondance - Tableau emplois ressources",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - TABLEAU EMPLOIS RESSOURCES",
+        "REF | DESIGNATION | NUMEROS DE COMPTES A INCORPORER DANS LES POSTES N",
+        "FA | Fonds reçus, Bailleurs …. | Balance mouvement crédit : comptes 161, 162, 462 (si plusieurs bailleurs créer des sous comptes de 161, 162, 462 pour remplir FB)",
+        "FB | Fonds reçus, Bailleurs …. | Balance mouvement crédit : comptes 161, 162, 462",
+        "FC | Fonds contrepartie Etat | Balance mouvement crédit : comptes 163, 463",
+        "FD | Autres fonds reçus | Balance mouvement crédit : comptes 164, 464, 707(1), 77",
+        "GR | I. RESSOURCES |",
+        "FE | Immobilisations incorporelles | Balance mouvement débit : compte 21(2)",
+        "FF | Terrains | Balance mouvement débit : compte 22(2)",
+        "FG | Bâtiments | Balance mouvement débit : comptes 231, 232, 233, 2391, 2392, 2393, 2396(2)",
+        "FH | Aménagements, agencements et installations | Balance mouvement débit : comptes 234, 235, 238, 2394, 2395, 2398(2)",
+        "FI | Matériel, mobilier et actifs biologiques | Balance mouvement débit : comptes 24 (sauf 245 et 2495)(2)",
+        "FJ | Matériel de transport | Balance mouvement débit : comptes 245 et 2495(2)",
+        "FK | Avances et acomptes sur immobilisations | Balance mouvement débit : comptes 25",
+        "FL | Immobilisations financières | Balance mouvement débit : comptes 26, 27(3)",
+        "GS | A- TOTAL DES IMMOBILISATIONS |",
+        "FM | Achats de biens et services | Balance mouvement débit : compte 60(4)",
+        "FN | Transports | Balance mouvement débit : compte 61(4)",
+        "FO | Services extérieurs | Balance mouvement débit : comptes 62, 63(4)",
+        "FP | Impôts et taxes | Balance mouvement débit : compte 64(5)",
+        "FQ | Autres charges | Balance mouvement débit : compte 65(6)",
+        "FR | Charges de personnel | Balance mouvement débit : compte 66(7)",
+        "FS | Charges financières | Balance mouvement débit : compte 67(8)",
+        "FT | Avances sur charges (à justifier) | Balance solde débiteur : comptes 4091, 4093",
+        "GT | B- TOTAL DES CHARGES DE FONCTIONNEMENT |",
+        "GU | II. EMPLOIS (A+B) |",
+        "GV | III. EXCEDENT /DEFICIT DES FONDS RECUS SUR LES EMPLOIS (I-II) |",
+        "FU | Fonds Bailleur en début exercice N | Balance solde débiteur N-1 des fonds bailleurs : comptes 51, 52, 53, 55, 57",
+        "FV | Fonds de contrepartie Etat en début exercice N | Balance solde débiteur N-1 des fonds de contrepartie Etat : comptes 51, 52, 53, 55, 57",
+        "FW | Autres fonds en début exercice N | Balance solde débiteur N-1 des autres fonds : comptes 51, 52, 53, 55, 57",
+        "GW | IV. FONDS DISPONIBLE EN DEBUT EXERCICE |",
+        "GX | V. MONTANT NET DE L'ENCAISSE DISPONIBLE (III+IV) |",
+        "FX | Fonds Bailleur en fin exercice N | Balance solde débiteur N des fonds bailleurs : comptes 51, 52, 53, 55, 57",
+        "FY | Fonds de contrepartie Etat en fin exercice N | Balance solde débiteur N des fonds de contrepartie Etat : comptes 51, 52, 53, 55, 57",
+        "FZ | Autres fonds en fin exercice N | Balance solde débiteur N des autres fonds : comptes 51, 52, 53, 55, 57",
+        "GY | VI. FONDS DISPONIBLE EN FIN EXERCICE |",
+        "GZ | VII. CONTRÔLE : TOTAL V = TOTAL VI |"
+      ],
+      "comptes": ["161", "162", "163", "164", "462", "463", "464", "707", "77", "21", "22", "231", "232", "233", "2391", "2392", "2393", "2396", "234", "235", "238", "2394", "2395", "2398", "24", "245", "2495", "25", "26", "27", "60", "61", "62", "63", "64", "65", "66", "67", "4091", "4093", "51", "52", "53", "55", "57"],
+      "mots_cles": ["tableau de correspondance", "tableau emplois ressources", "projet de développement", "fonds reçus", "bailleurs", "immobilisations", "charges de fonctionnement", "fonds disponible"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

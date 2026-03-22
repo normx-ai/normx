@@ -1,0 +1,4904 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "titre": "Système Comptable des Entités à But Non Lucratif (SYCEBNL)",
+    "pages_source": "1285-1410, 1441-1445",
+    "pdfs_valides": "1.pdf à 33.pdf",
+    "date_extraction": "2026-03-13"
+  },
+  "articles": [
+    {
+      "numero": 2000,
+      "titre": "Adoption de l'Acte uniforme SYCEBNL",
+      "texte": [
+        "Le Conseil des Ministres de l'OHADA a adopté, au cours de sa 53ème session tenue à Niamey les 21 et 22 décembre 2022, l'Acte uniforme relatif au Système comptable des entités à but non lucratif."
+      ],
+      "mots_cles": [
+        "OHADA",
+        "Acte uniforme",
+        "SYCEBNL",
+        "Niamey",
+        "décembre 2022",
+        "53ème session"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2001,
+      "titre": "Définition de l'entité à but non lucratif",
+      "texte": [
+        "L'entité à but non lucratif s'entend de toute organisation, poursuivant un but désintéressé, et dont les ressources éventuellement générées par l'activité servent au fonctionnement et à la réalisation de son objet social.",
+        "Les entités à but non lucratif, lorsqu'elles ne sont pas soumises au système de la comptabilité publique, au système de comptabilité soumis à un régime particulier, ou à des dispositions nationales spécifiques, sont tenues de mettre en place une comptabilité, dite comptabilité financière, conformément aux règles applicables au Système comptable des entités à but non lucratif (art. 2)."
+      ],
+      "mots_cles": [
+        "entité à but non lucratif",
+        "définition",
+        "objet social",
+        "comptabilité financière",
+        "article 2"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2002,
+      "titre": "Champ d'application — L'association",
+      "texte": [
+        "Entrent dans le champ d'application de l'Acte uniforme :",
+        "L'association : une convention par laquelle plusieurs personnes physiques ou morales mettent en commun leurs connaissances ou leurs activités dans un but autre que de partager des bénéfices. Une association est constituée suivant les dispositions législatives de chaque État partie de l'espace OHADA.",
+        "Les entités à but non lucratif que le SYCEBNL appelle association sont, sauf dispositions nationales spécifiques : associations ; fondations ; organisations religieuses ; syndicats ; partis politiques ; toute autre entité de droit ou de fait qui entre dans le champ d'application de l'Acte uniforme voir § 2001."
+      ],
+      "mots_cles": [
+        "association",
+        "fondation",
+        "organisation religieuse",
+        "syndicat",
+        "parti politique",
+        "champ d'application"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2003,
+      "titre": "Champ d'application — L'ordre professionnel",
+      "texte": [
+        "L'ordre professionnel : un organisme de caractère corporatif institué par une loi et regroupant obligatoirement les membres de certaines professions libérales qui exercent outre une fonction de représentation, une mission de service public dans la réglementation de la profession et la juridiction disciplinaire sur ses membres.",
+        "Il s'agit en principe des professions suivantes : avocats ; médecins ; notaires ; huissiers ; experts-comptables ; géomètres ; vétérinaires ; architectes ; infirmiers ; sages femmes ; tout autre organisme qui rentre dans cette définition."
+      ],
+      "mots_cles": [
+        "ordre professionnel",
+        "avocats",
+        "médecins",
+        "notaires",
+        "huissiers",
+        "experts-comptables"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2004,
+      "titre": "Champ d'application — Le projet de développement",
+      "texte": [
+        "Le projet de développement est une entité financée en général par les bailleurs bilatéraux, multilatéraux, privés et/ou par l'État partie et qui a pour but la promotion du développement économique et social d'un pays.",
+        "L'Acte uniforme relatif aux entités à but non lucratif entend par projet de développement : tout projet financé par les bailleurs de fonds et/ou l'État partie ; tout autre projet y compris les agences d'exécution de l'État partie, qui répond à la définition ci-dessus."
+      ],
+      "mots_cles": [
+        "projet de développement",
+        "bailleurs de fonds",
+        "bilatéraux",
+        "multilatéraux",
+        "agences d'exécution"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2005,
+      "titre": "Entrée en vigueur et objectif",
+      "texte": [
+        "Cet Acte uniforme qui entre en vigueur le 1er Janvier 2024 améliore la qualité de l'information financière des entités à but non lucratif à travers des états financiers normalisés fiables qui répondent aux besoins de l'ensemble des utilisateurs de ces informations."
+      ],
+      "mots_cles": [
+        "entrée en vigueur",
+        "1er janvier 2024",
+        "information financière",
+        "états financiers normalisés"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2006,
+      "titre": "Jeu complet d'états financiers annuels",
+      "texte": [
+        "Un jeu complet d'états financiers annuels comprend :",
+        "Pour l'association et l'ordre professionnel : le Bilan, le Compte de résultat, le Tableau des flux de trésorerie ainsi que les Notes annexes.",
+        "Pour le projet de développement : le Tableau emplois-ressources, le Tableau d'exécution budgétaire, le Tableau de réconciliation de trésorerie, le Bilan, le Compte d'exploitation et les Notes annexes."
+      ],
+      "mots_cles": [
+        "états financiers",
+        "bilan",
+        "compte de résultat",
+        "tableau flux trésorerie",
+        "notes annexes",
+        "tableau emplois-ressources"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2050,
+      "titre": "Règles de comptabilisation spécifiques SYCEBNL — Association et ordre professionnel",
+      "chapitre": 1,
+      "titre_chapitre": "Association, Ordre professionnel",
+      "texte": [
+        "Les règles de comptabilisation des comptes d'actif immobilisé, de stock, de tiers, de trésorerie, de charges et de produits du SYCEBNL relatives à l'association et à l'ordre professionnel sont similaires à celles du SYSCOHADA traitées dans la première partie de cet ouvrage.",
+        "Pour éviter des répétitions seuls les points spécifiques à l'association et à l'ordre professionnel seront abordés. Il s'agit : des immobilisations destinées à la vente provenant de dons et legs non encore reçus ; des usufruits reçus en donation temporaire ; des donations et legs ; du mécénat et du parrainage ; des fonds propres et assimilés ; des fonds affectés ; des fonds reportés ; des cotisations ; des revenus des activités économiques ; des comptes de charges spécifiques ; du bénévolat ; des états financiers."
+      ],
+      "mots_cles": [
+        "comptabilisation",
+        "SYCEBNL",
+        "SYSCOHADA",
+        "association",
+        "ordre professionnel",
+        "12 spécificités"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2051,
+      "titre": "Dons et legs non encore reçus — Définition des immobilisations",
+      "section": "I - Dons et legs non encore reçus d'immobilisations destinés à la vente",
+      "texte": [
+        "L'actif immobilisé correspond aux emplois durables rendus nécessaires par l'objet économique et financier de l'entité que constituent ses « activités ordinaires ».",
+        "Les immobilisations représentent les biens et valeurs destinés à rester durablement dans l'entité et ne se consomment pas par le premier usage.",
+        "Ces biens sont acquis sur fonds propres, fonds étrangers, subventions ou donation et legs.",
+        "Les biens immobiliers non encore reçus sous forme de dons et de legs destinés à la vente, auraient pu être suivis en extra comptable, dans les engagements hors bilan à la signature de l'acte notarié mais le SYCEBNL considère qu'il s'agit d'un actif contrôlé par l'entité, qui a le pouvoir d'obtenir des avantages économiques futurs."
+      ],
+      "mots_cles": [
+        "actif immobilisé",
+        "immobilisations",
+        "dons et legs",
+        "actif contrôlé",
+        "avantages économiques futurs"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2052,
+      "titre": "Définition de la donation",
+      "texte": [
+        "La donation est un contrat par lequel une personne (le donateur, la donatrice) transfère la propriété d'un bien à une autre (le donataire) qui l'accepte sans contrepartie et avec intention libérale."
+      ],
+      "mots_cles": [
+        "donation",
+        "donateur",
+        "donataire",
+        "transfert de propriété",
+        "intention libérale"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2053,
+      "titre": "Définition et types de legs",
+      "texte": [
+        "Le Legs est une transmission testamentaire du patrimoine d'une personne, réalisée à son décès. Il est dit :",
+        "« universel », lorsqu'il donne à son bénéficiaire vocation à la totalité des biens du testateur ;",
+        "« à titre universel », lorsqu'il donne vocation à une portion des biens (exemple : moitié, quart) ;",
+        "« particulier », lorsqu'il porte sur un bien déterminé (exemple : un bâtiment, un matériel..)."
+      ],
+      "mots_cles": [
+        "legs",
+        "transmission testamentaire",
+        "legs universel",
+        "legs à titre universel",
+        "legs particulier"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2054,
+      "titre": "Registre des donateurs",
+      "texte": [
+        "Il est établi pour chaque entité à but non lucratif un registre des donateurs pour tous les legs et donations, reçus par l'entité.",
+        "Le registre des donateurs est coté, paraphé et numéroté de façon continue par la juridiction compétente de l'État partie dans lequel l'entité a son siège social.",
+        "Le registre contient : la date de l'opération ; les nom et prénoms, le domicile et l'adresse mail de la personne physique donatrice ; la dénomination de la personne morale, le registre de commerce, le numéro d'identification fiscal, l'adresse du siège social et du mail du donateur ou de la donatrice ; le montant du don/legs et le mode de libération (espèces, chèques, virement, nature)."
+      ],
+      "mots_cles": [
+        "registre des donateurs",
+        "legs",
+        "donations",
+        "juridiction compétente"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2055,
+      "titre": "Validation et format du registre des donateurs",
+      "texte": [
+        "Toutes les écritures contenues dans ce registre doivent être validées par la signature du représentant légal de l'entité à but non lucratif.",
+        "Ce registre peut être tenu en version physique reliée, brochée ou en version électronique (art. 17 Acte uniforme).",
+        "L'entité tient à jour le registre des donateurs. S'il existe un auditeur, ce dernier soumet à l'assemblée générale des membres ou l'instance qui en tient lieu ou au bailleur de fonds du projet de développement, un rapport qui constate l'existence du registre des donateurs et donne son avis sur sa tenue conforme.",
+        "Une déclaration des dirigeants attestant de la tenue conforme du registre des donateurs est annexée au dit rapport ou soumise à l'assemblée générale ou l'instance qui en tient lieu, s'il n'existe pas d'auditeur (art. 18 Acte uniforme)."
+      ],
+      "mots_cles": [
+        "registre",
+        "validation",
+        "représentant légal",
+        "article 17",
+        "article 18",
+        "auditeur"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2056,
+      "titre": "Classification des immobilisations destinées à la vente",
+      "texte": [
+        "201 Immobilisations incorporelles : 2012 Brevets, licences, concessions et droits similaires ; 2013 Logiciels et sites informatiques ; 2014 Marques ; 2017 Autres.",
+        "202 Terrains",
+        "203 Bâtiments",
+        "204 Matériels",
+        "205 Titres de participations"
+      ],
+      "comptes": [
+        {
+          "numero": "201",
+          "libelle": "Immobilisations incorporelles"
+        },
+        {
+          "numero": "2012",
+          "libelle": "Brevets, licences, concessions et droits similaires"
+        },
+        {
+          "numero": "2013",
+          "libelle": "Logiciels et sites informatiques"
+        },
+        {
+          "numero": "2014",
+          "libelle": "Marques"
+        },
+        {
+          "numero": "2017",
+          "libelle": "Autres"
+        },
+        {
+          "numero": "202",
+          "libelle": "Terrains"
+        },
+        {
+          "numero": "203",
+          "libelle": "Bâtiments"
+        },
+        {
+          "numero": "204",
+          "libelle": "Matériels"
+        },
+        {
+          "numero": "205",
+          "libelle": "Titres de participations"
+        }
+      ],
+      "mots_cles": [
+        "classification",
+        "immobilisations incorporelles",
+        "terrains",
+        "bâtiments",
+        "matériels"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2057,
+      "titre": "Comptabilisation des immobilisations dons/legs non reçus",
+      "texte": [
+        "Les immobilisations sous forme de dons ou de legs non reçus, destinées à la vente dès leur réception pour consolider les ressources de l'association doivent être enregistrées à la date de signature de l'acte notarié, en cas d'étalement du transfert à la date de chaque transfert de propriété, à la valeur actuelle en contrepartie d'un compte 17 Fonds reportés."
+      ],
+      "ecritures": [
+        {
+          "debit": {
+            "compte": "20",
+            "libelle": "Immobilisations destinées à la vente provenant de dons et Legs non encore reçus"
+          },
+          "credit": {
+            "compte": "172",
+            "libelle": "Donations et legs non encore reçus d'immobilisations destinées à la vente"
+          }
+        }
+      ],
+      "mots_cles": [
+        "comptabilisation",
+        "acte notarié",
+        "valeur actuelle",
+        "compte 20",
+        "compte 172",
+        "fonds reportés"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2058,
+      "titre": "Amortissement et dépréciation des immobilisations dons/legs non reçus",
+      "texte": [
+        "Ces biens ne feront l'objet d'aucune dotation aux amortissements mais en cas de perte de valeur, ils doivent faire l'objet d'une dépréciation.",
+        "En effet à la clôture de chaque exercice, une entité doit apprécier s'il existe un quelconque indice qu'un actif a subi une perte de valeur. S'il existe un tel indice, l'entité doit estimer la valeur actuelle de l'actif concerné et la comparer avec la valeur nette comptable.",
+        "L'actif doit être déprécié lorsque la valeur nette comptable est supérieure à la valeur actuelle (art 46 AUDCIF)."
+      ],
+      "ecritures": [
+        {
+          "titre": "Dépréciation",
+          "debit": {
+            "compte": "6952",
+            "libelle": "Dotations aux dépréciations d'immobilisations destinées à la vente provenant des dons et legs non encore reçus"
+          },
+          "credit": {
+            "compte": "2902",
+            "libelle": "Dépréciations des immobilisations destinées à la vente provenant de dons et legs non encore reçus"
+          }
+        }
+      ],
+      "mots_cles": [
+        "pas d'amortissement",
+        "dépréciation",
+        "perte de valeur",
+        "article 46 AUDCIF",
+        "compte 6952",
+        "compte 2902"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2059,
+      "titre": "Cession des immobilisations dons/legs — Schémas d'écritures",
+      "texte": [
+        "Lors de la cession du bien, 4 écritures simultanées sont nécessaires."
+      ],
+      "ecritures": [
+        {
+          "titre": "Émission facture de vente",
+          "debit": [
+            {
+              "compte": "485",
+              "libelle": "Créances sur cessions d'immobilisations"
+            },
+            {
+              "compte": "5",
+              "libelle": "Comptes de trésorerie"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "828",
+              "libelle": "Produits de cessions d'immobilisations reçues destinées à la vente provenant de dons et legs"
+            }
+          ]
+        },
+        {
+          "titre": "Décomptabilisation de l'immobilisation",
+          "debit": [
+            {
+              "compte": "818",
+              "libelle": "Valeurs comptables de cessions d'immob. reçues destinées à la vente provenant de dons et legs"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "20",
+              "libelle": "Immobilisations destinées à la vente provenant de dons et Legs non encore reçus"
+            }
+          ]
+        },
+        {
+          "titre": "Reprise de fonds reportés",
+          "debit": [
+            {
+              "compte": "172",
+              "libelle": "Donations et legs non encore reçus d'immobilisations destinées à la vente"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7962",
+              "libelle": "Reprises de fonds reportés provenant de dons et legs d'immobilisations"
+            }
+          ]
+        },
+        {
+          "titre": "Reprise de dépréciations sans valeur",
+          "debit": [
+            {
+              "compte": "2902",
+              "libelle": "Dépréciations des immobilisations destinées à la vente provenant de dons et legs non encore reçus"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7952",
+              "libelle": "Reprises des dépréciations d'immobilisations destinées à la vente provenant des dons et legs non encore reçus"
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "cession",
+        "décomptabilisation",
+        "reprise fonds reportés",
+        "reprise dépréciations",
+        "compte 485",
+        "compte 828",
+        "compte 818",
+        "compte 20",
+        "compte 172",
+        "compte 7962",
+        "compte 2902",
+        "compte 7952"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2060,
+      "titre": "Exemple — Donation d'immeuble association SOS D",
+      "texte": [
+        "10/8/N, Monsieur LOVA a fait don d'un immeuble qui sera mis à la disposition de l'association SOS D le 1/01/N+3.",
+        "1/11/N, L'acte de donation a été signé par les parties prenantes auprès de Maître Sysco notaire. L'immeuble est évalué à dire d'expert à FCFA 75 000 000.",
+        "Pour consolider sa trésorerie, l'association SOS D a décidé de vendre l'immeuble, non nécessaire à son activité, dès sa mise à disposition.",
+        "30/06/N+4, les autorités ont autorisé le transfert d'une décharge publique à 1km de l'immeuble reçu en don. Cette décision engendre une perte de valeur de l'immeuble de 15%.",
+        "15/03/N+5 l'immeuble a été cédé à FCFA 70 000 000, payé par virement bancaire."
+      ],
+      "solution": {
+        "ecritures": [
+          {
+            "date": "1/11/N",
+            "libelle": "Don de Lova suivant acte notarié par devant M° Sysco",
+            "debit": [
+              {
+                "compte": "203",
+                "libelle": "Bâtiments",
+                "montant": 75000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "172",
+                "libelle": "Donations et legs non encore reçus d'immobilisations destinées à la vente",
+                "montant": 75000000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N+4",
+            "libelle": "Perte de valeur de l'immeuble : 75 000 000 x 15% = 11 250 000",
+            "debit": [
+              {
+                "compte": "6952",
+                "libelle": "Dotations aux dépréciations",
+                "montant": 11250000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "2902",
+                "libelle": "Dépréciations des immobilisations",
+                "montant": 11250000
+              }
+            ]
+          },
+          {
+            "date": "15/03/N+5",
+            "libelle": "Vente de l'immeuble payé par virement bancaire",
+            "debit": [
+              {
+                "compte": "5211",
+                "libelle": "Banques",
+                "montant": 70000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "828",
+                "libelle": "Produits de cessions",
+                "montant": 70000000
+              }
+            ]
+          },
+          {
+            "date": "15/03/N+5",
+            "libelle": "Pour solde du compte crédité",
+            "debit": [
+              {
+                "compte": "818",
+                "libelle": "Valeurs comptables de cessions",
+                "montant": 75000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "203",
+                "libelle": "Bâtiments",
+                "montant": 75000000
+              }
+            ]
+          },
+          {
+            "date": "15/03/N+5",
+            "libelle": "Reprise des fonds reportés du 1/11/N",
+            "debit": [
+              {
+                "compte": "172",
+                "libelle": "Donations et legs non encore reçus",
+                "montant": 75000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7962",
+                "libelle": "Reprises de fonds reportés",
+                "montant": 75000000
+              }
+            ]
+          },
+          {
+            "date": "15/03/N+5",
+            "libelle": "Reprise de dépréciation sans objet",
+            "debit": [
+              {
+                "compte": "2902",
+                "libelle": "Dépréciations des immobilisations",
+                "montant": 11250000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7952",
+                "libelle": "Reprises des dépréciations",
+                "montant": 11250000
+              }
+            ]
+          }
+        ]
+      },
+      "mots_cles": [
+        "exemple",
+        "donation immeuble",
+        "75 000 000 FCFA",
+        "dépréciation 15%",
+        "cession 70 000 000"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2070,
+      "titre": "Usufruit reçu en donation temporaire — Définition",
+      "section": "II - Usufruit reçu en donation temporaire",
+      "texte": [
+        "L'usufruit temporaire est une opération de démembrement de propriété. Le donateur transfère le droit d'user et de percevoir les revenus d'un de ses biens à un bénéficiaire nommément désigné, pendant une durée déterminée. Le donateur conserve quant à lui la nue-propriété de son bien, et se libère de la gestion de ce dernier."
+      ],
+      "mots_cles": [
+        "usufruit temporaire",
+        "démembrement de propriété",
+        "nue-propriété",
+        "durée déterminée"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2071,
+      "titre": "Usufruit reçu en donation temporaire — Classification",
+      "comptes": [
+        {
+          "numero": "201",
+          "libelle": "Immobilisations incorporelles"
+        },
+        {
+          "numero": "2011",
+          "libelle": "Usufruit temporaire"
+        }
+      ],
+      "mots_cles": [
+        "classification",
+        "compte 2011",
+        "usufruit temporaire"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2072,
+      "titre": "Usufruit reçu en donation temporaire — Comptabilisation",
+      "texte": [
+        "Cette donation permet de percevoir les revenus d'un bien donné en usufruit. Il s'agit donc d'un actif non monétaire sans substance physique qui a le pouvoir de générer des avantages économiques futurs à l'entité.",
+        "L'usufruit, reçu à titre gratuit, est un droit qui doit être enregistré à la valeur actuelle au compte 2011, à la date d'acceptation ou d'entrée en jouissance en contrepartie d'un compte 17 Fonds reportés."
+      ],
+      "mots_cles": [
+        "comptabilisation",
+        "usufruit",
+        "compte 2011",
+        "compte 17",
+        "fonds reportés"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2077,
+      "titre": "Exemple usufruit temporaire — 4000 actions ABC",
+      "texte": [
+        "Exemple complet d'usufruit temporaire sur 4000 actions ABC, valeur 70 000 000 FCFA, durée 5 ans, amortissement linéaire 20%."
+      ],
+      "solution": {
+        "ecritures": [
+          {
+            "date": "30/06/N",
+            "libelle": "Donation en jouissance de 4000 actions de ABC par Béta suivant acte notarié de M° Bazi",
+            "debit": [
+              {
+                "compte": "2011",
+                "libelle": "Usufruit temporaire",
+                "montant": 70000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "171",
+                "libelle": "Donation temporaire d'usufruit",
+                "montant": 70000000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N",
+            "libelle": "Dotation (70 000 000 x 20%) x 10/12 = 11 666 667",
+            "debit": [
+              {
+                "compte": "680",
+                "libelle": "Dotations aux amortiss. d'usufruit temporaire",
+                "montant": 11666667
+              }
+            ],
+            "credit": [
+              {
+                "compte": "280",
+                "libelle": "Amortissements d'usufruit temporaire",
+                "montant": 11666667
+              }
+            ]
+          },
+          {
+            "date": "31/12/N",
+            "libelle": "Reprise amortissement usufruit",
+            "debit": [
+              {
+                "compte": "171",
+                "libelle": "Donation temporaire d'usufruit",
+                "montant": 11666667
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7961",
+                "libelle": "Reprises de donation temporaire d'usufruit",
+                "montant": 11666667
+              }
+            ]
+          },
+          {
+            "date": "30/04/N+1",
+            "libelle": "Dividendes reçus de ABC : 4 500 FCFA par action = 18 000 000",
+            "debit": [
+              {
+                "compte": "5211",
+                "libelle": "Banques",
+                "montant": 18000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7082",
+                "libelle": "Revenus d'usufruit",
+                "montant": 18000000
+              }
+            ]
+          },
+          {
+            "date": "30/11/N+3",
+            "libelle": "Solde amortissements suite liquidation ABC (11 666 667 + 14 000 000 + 14 000 000 = 39 666 667)",
+            "debit": [
+              {
+                "compte": "280",
+                "libelle": "Amortissements d'usufruit temporaire",
+                "montant": 39666667
+              }
+            ],
+            "credit": [
+              {
+                "compte": "2011",
+                "libelle": "Usufruit temporaire",
+                "montant": 39666667
+              }
+            ]
+          },
+          {
+            "date": "30/11/N+3",
+            "libelle": "Solde usufruit non amorti (70 000 000 - 39 666 667 = 30 333 333)",
+            "debit": [
+              {
+                "compte": "171",
+                "libelle": "Donation temporaire d'usufruit",
+                "montant": 30333333
+              }
+            ],
+            "credit": [
+              {
+                "compte": "2011",
+                "libelle": "Usufruit temporaire",
+                "montant": 30333333
+              }
+            ]
+          }
+        ]
+      },
+      "mots_cles": [
+        "exemple",
+        "usufruit temporaire",
+        "4000 actions",
+        "amortissement 20%",
+        "liquidation",
+        "compte 2011",
+        "compte 171",
+        "compte 680",
+        "compte 280",
+        "compte 7961",
+        "compte 7082"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2080,
+      "titre": "Donations et legs destinés à être utilisés de façon durable",
+      "section": "III - Donations et legs",
+      "texte": [
+        "La donation et le legs définis aux §§ 2052 à 2055 :",
+        "sont en principe établis par un acte notarié et donc irrévocables ;",
+        "prennent effet immédiatement sauf en cas d'inexécution des charges d'ingratitude ou de survenance d'enfants."
+      ],
+      "mots_cles": [
+        "donations",
+        "legs",
+        "acte notarié",
+        "irrévocable"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2081,
+      "titre": "Comptabilisation des donations et legs d'immobilisations durables",
+      "texte": [
+        "Les biens reçus dans le cadre d'une donation ou d'un legs, que l'entité est tenue de les conserver en l'état, sont évalués à leur valeur actuelle et enregistrés à la date de la jouissance dans les comptes d'actifs en contrepartie d'un compte de passif appelé Fonds affectés ou fonds dédiés.",
+        "Activité spécifique → compte 1671 Fonds affectés provenant de dons et de legs d'immobilisations.",
+        "Aucune activité spécifique → compte 1672 Fonds non affectés provenant de dons et de legs d'immobilisations."
+      ],
+      "ecritures": [
+        {
+          "titre": "Immobilisations durables",
+          "debit": [
+            {
+              "compte": "2",
+              "libelle": "Comptes d'actif immobilisé"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "167",
+              "libelle": "Fonds provenant de dons et de legs d'immob."
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        {
+          "numero": "167",
+          "libelle": "Fonds provenant de dons et de legs d'immobilisations"
+        },
+        {
+          "numero": "1671",
+          "libelle": "Fonds affectés provenant de dons et de legs d'immobilisations"
+        },
+        {
+          "numero": "1672",
+          "libelle": "Fonds non affectés provenant de dons et de legs d'immobilisations"
+        }
+      ],
+      "mots_cles": [
+        "fonds affectés",
+        "fonds non affectés",
+        "compte 167",
+        "compte 1671",
+        "compte 1672"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2082,
+      "titre": "Créances et actifs financiers non encore encaissés/transférés",
+      "texte": [
+        "Immobilisations financières : débit 4865 / crédit 167.",
+        "Actif circulant non récurrent : débit 4882 / crédit 8411.",
+        "Actif circulant récurrent : débit 4711 / crédit 707.",
+        "À réception : solde via classe 5, comptes 26, 27 ou 50."
+      ],
+      "comptes": [
+        {
+          "numero": "4865",
+          "libelle": "Créances reçues sur dons et legs d'immobilisations"
+        },
+        {
+          "numero": "4711",
+          "libelle": "Débiteurs divers"
+        },
+        {
+          "numero": "4882",
+          "libelle": "Autres créances sur donations et legs"
+        },
+        {
+          "numero": "707",
+          "libelle": "Produits accessoires"
+        },
+        {
+          "numero": "8411",
+          "libelle": "Produits sur donations et legs"
+        }
+      ],
+      "ecritures": [
+        {
+          "titre": "Créances immobilisations financières non transférées",
+          "debit": [
+            {
+              "compte": "4865",
+              "libelle": "Créances reçues sur dons et legs d'immob."
+            }
+          ],
+          "credit": [
+            {
+              "compte": "167",
+              "libelle": "Fonds provenant de dons et de legs d'immob."
+            }
+          ]
+        },
+        {
+          "titre": "Encaissement/transfert",
+          "debit": [
+            {
+              "compte": "52",
+              "libelle": "Banques"
+            },
+            {
+              "compte": "26",
+              "libelle": "Titres de participation"
+            },
+            {
+              "compte": "27",
+              "libelle": "Autres immobilisations financières"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "4865",
+              "libelle": "Créances reçues sur dons et legs d'immob."
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "créances",
+        "actifs financiers",
+        "compte 4865",
+        "compte 4882",
+        "compte 4711",
+        "compte 707",
+        "compte 8411"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2083,
+      "titre": "Immobilisations amortissables et non amortissables — Neutralisation",
+      "texte": [
+        "Immobilisation amortissable : amortie sur durée d'utilité, neutralisée par débit 167 / crédit 7923.",
+        "Immobilisation non amortissable : dépréciation si perte de valeur, décomptabilisée par débit 167.",
+        "Biens hors usage, disparus ou cédés non entièrement amortis : décomptabilisés par débit 167+28+29 / crédit 2."
+      ],
+      "ecritures": [
+        {
+          "titre": "Dotations annuelles",
+          "debit": [
+            {
+              "compte": "68",
+              "libelle": "Dotations aux amortissements"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "28",
+              "libelle": "Amortissements des immobilisations"
+            }
+          ]
+        },
+        {
+          "titre": "Perte de valeur",
+          "debit": [
+            {
+              "compte": "69",
+              "libelle": "Dotations aux dépréciations"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "29",
+              "libelle": "Dépréciations des immobilisations"
+            }
+          ]
+        },
+        {
+          "titre": "Neutralisation (reprises)",
+          "debit": [
+            {
+              "compte": "167",
+              "libelle": "Fonds provenant de dons et de legs d'immob."
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7923",
+              "libelle": "Reprises de Fonds provenant de dons et de legs d'immobilisations"
+            }
+          ]
+        },
+        {
+          "titre": "Solde biens hors usage/cédés non entièrement amortis",
+          "debit": [
+            {
+              "compte": "167"
+            },
+            {
+              "compte": "28"
+            },
+            {
+              "compte": "29"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "2",
+              "libelle": "Comptes d'actif immobilisé"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        {
+          "numero": "167",
+          "libelle": "Fonds provenant de dons et de legs d'immobilisations"
+        },
+        {
+          "numero": "7923",
+          "libelle": "Reprises de Fonds provenant de dons et de legs d'immobilisations"
+        }
+      ],
+      "mots_cles": [
+        "neutralisation",
+        "amortissement",
+        "dépréciation",
+        "compte 167",
+        "compte 7923"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2084,
+      "titre": "Donations et legs avec charges",
+      "texte": [
+        "La donation et le legs peuvent être avec charges (dettes non acquittées : impôts, frais hospitalisation, funérailles, droits du personnel).",
+        "Charges comptabilisées : débit 167 / crédit 4861 Dettes sur donations et legs d'immobilisations.",
+        "Règlement : débit 4861 / crédit 52 ou 57."
+      ],
+      "ecritures": [
+        {
+          "titre": "Constatation charges",
+          "debit": [
+            {
+              "compte": "167",
+              "libelle": "Fonds provenant de dons et de legs d'immobilisations"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "4861",
+              "libelle": "Dettes sur donations et legs d'immobilisations"
+            }
+          ]
+        },
+        {
+          "titre": "Règlement",
+          "debit": [
+            {
+              "compte": "4861",
+              "libelle": "Dettes sur donations et legs d'immobilisations"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "52",
+              "libelle": "Banques et/ou 57 Caisse"
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "charges",
+        "dettes",
+        "compte 4861",
+        "compte 167"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2085,
+      "titre": "Engagements auprès du donateur — Provisions pour charges",
+      "texte": [
+        "Le donateur peut imposer des obligations (dettes) dont l'échéance ou le montant est incertain.",
+        "Évaluation : débit 1679 Engagements auprès du donateur / crédit 192 Provisions pour charges sur legs et donation.",
+        "Réalisation : débit 8311 Charges sur donations et legs / crédit tiers ou trésorerie.",
+        "Reprise provision prorata : débit 192 / crédit 8688 Autres reprises fonds affectés.",
+        "Apurement : débit 167 / crédit 1679."
+      ],
+      "ecritures": [
+        {
+          "titre": "Évaluation engagements",
+          "debit": [
+            {
+              "compte": "1679",
+              "libelle": "Engagements auprès du donateur"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "192",
+              "libelle": "Provisions pour charges sur donations et legs"
+            }
+          ]
+        },
+        {
+          "titre": "Engagement des obligations",
+          "debit": [
+            {
+              "compte": "8311",
+              "libelle": "Charges sur donations et legs"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "4842",
+              "libelle": "Autres dettes sur donations et legs"
+            }
+          ]
+        },
+        {
+          "titre": "Paiement",
+          "debit": [
+            {
+              "compte": "4842",
+              "libelle": "Autres dettes sur donations et legs"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "52",
+              "libelle": "Banques et/ou 57 Caisse"
+            }
+          ]
+        },
+        {
+          "titre": "Reprise provision prorata",
+          "debit": [
+            {
+              "compte": "192",
+              "libelle": "Provisions pour charges sur legs et donation"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "8688",
+              "libelle": "Autres reprises fonds affectés"
+            }
+          ]
+        },
+        {
+          "titre": "Apurement",
+          "debit": [
+            {
+              "compte": "167",
+              "libelle": "Fonds provenant de dons et de legs d'immob."
+            }
+          ],
+          "credit": [
+            {
+              "compte": "1679",
+              "libelle": "Engagements auprès du donateur"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        {
+          "numero": "1679",
+          "libelle": "Engagements auprès du donateur"
+        },
+        {
+          "numero": "192",
+          "libelle": "Provisions pour charges sur legs et donation"
+        },
+        {
+          "numero": "8311",
+          "libelle": "Charges sur donations et legs"
+        },
+        {
+          "numero": "4842",
+          "libelle": "Autres dettes sur donations et legs"
+        },
+        {
+          "numero": "8688",
+          "libelle": "Autres reprises fonds affectés"
+        }
+      ],
+      "mots_cles": [
+        "engagements",
+        "provisions",
+        "compte 1679",
+        "compte 192",
+        "compte 8311",
+        "compte 8688"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2086,
+      "titre": "Exemple — Legs avec charges, association SDF (M. HOUZAMBE)",
+      "texte": [
+        "Legs par acte notarié à l'association SDF : Immeuble 250M (terrain 40M + bâtiment 210M), ordinateur 3M, voiture 18M, 265 titres (25,175M), traite 5M.",
+        "Charges : loyers étudiant 5x290K, frais médicaux 19M.",
+        "Durées utilité : immeuble 20 ans, ordinateur 3 ans, voiture 5 ans.",
+        "Événements : frais médicaux 6,55M payés 31/12/N, ordinateur volé 30/06/N+2."
+      ],
+      "solution": {
+        "ecritures": [
+          {
+            "date": "1/05/N",
+            "libelle": "Legs HOUZAMBE — immobilisations corporelles",
+            "debit": [
+              {
+                "compte": "223",
+                "montant": 40000000
+              },
+              {
+                "compte": "231",
+                "montant": 210000000
+              },
+              {
+                "compte": "2442",
+                "montant": 3000000
+              },
+              {
+                "compte": "2451",
+                "montant": 18000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "167",
+                "montant": 271000000
+              }
+            ]
+          },
+          {
+            "date": "1/05/N",
+            "libelle": "Titres non transférés",
+            "debit": [
+              {
+                "compte": "4865",
+                "montant": 25175000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "167",
+                "montant": 25175000
+              }
+            ]
+          },
+          {
+            "date": "1/05/N",
+            "libelle": "Traite non encaissée",
+            "debit": [
+              {
+                "compte": "4882",
+                "montant": 5000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "8411",
+                "montant": 5000000
+              }
+            ]
+          },
+          {
+            "date": "1/05/N",
+            "libelle": "Charges loyers étudiant (290 000 x 5)",
+            "debit": [
+              {
+                "compte": "167",
+                "montant": 1450000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "4842",
+                "montant": 1450000
+              }
+            ]
+          },
+          {
+            "date": "1/05/N",
+            "libelle": "Provision frais médicaux",
+            "debit": [
+              {
+                "compte": "1679",
+                "montant": 19000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "192",
+                "montant": 19000000
+              }
+            ]
+          },
+          {
+            "date": "30/09/N",
+            "libelle": "Encaissement traite",
+            "debit": [
+              {
+                "compte": "521",
+                "montant": 5000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "4882",
+                "montant": 5000000
+              }
+            ]
+          },
+          {
+            "date": "30/11/N",
+            "libelle": "Transfert titres",
+            "debit": [
+              {
+                "compte": "26",
+                "montant": 25175000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "4865",
+                "montant": 25175000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N",
+            "libelle": "Frais médicaux payés",
+            "debit": [
+              {
+                "compte": "8311",
+                "montant": 6550000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "521",
+                "montant": 6550000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N",
+            "libelle": "Reprise provision frais médicaux",
+            "debit": [
+              {
+                "compte": "192",
+                "montant": 6550000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "8688",
+                "montant": 6550000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N",
+            "libelle": "Amortissements prorata 8/12 : bâtiment 7M + ordinateur 666 667 + voiture 2,4M = 10 066 667",
+            "debit": [
+              {
+                "compte": "681",
+                "montant": 10066667
+              }
+            ],
+            "credit": [
+              {
+                "compte": "2831",
+                "montant": 7000000
+              },
+              {
+                "compte": "2844",
+                "montant": 666667
+              },
+              {
+                "compte": "2845",
+                "montant": 2400000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N",
+            "libelle": "Neutralisation amortissements",
+            "debit": [
+              {
+                "compte": "167",
+                "montant": 10066667
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7923",
+                "montant": 10066667
+              }
+            ]
+          },
+          {
+            "date": "28/02/N+1",
+            "libelle": "Loyer étudiant",
+            "debit": [
+              {
+                "compte": "8311",
+                "montant": 290000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "521",
+                "montant": 290000
+              }
+            ]
+          },
+          {
+            "date": "28/02/N+1",
+            "libelle": "Reprise provision loyer",
+            "debit": [
+              {
+                "compte": "192",
+                "montant": 290000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "8688",
+                "montant": 290000
+              }
+            ]
+          },
+          {
+            "date": "28/02/N+1",
+            "libelle": "Apurement engagements",
+            "debit": [
+              {
+                "compte": "167",
+                "montant": 290000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "1679",
+                "montant": 290000
+              }
+            ]
+          },
+          {
+            "date": "30/06/N+2",
+            "libelle": "Dotation complémentaire ordinateur volé (3M/3 x 6/12 = 500K)",
+            "debit": [
+              {
+                "compte": "681",
+                "montant": 500000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "2844",
+                "montant": 500000
+              }
+            ]
+          },
+          {
+            "date": "30/06/N+2",
+            "libelle": "Neutralisation",
+            "debit": [
+              {
+                "compte": "167",
+                "montant": 500000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7923",
+                "montant": 500000
+              }
+            ]
+          },
+          {
+            "date": "30/06/N+2",
+            "libelle": "Solde amortissements ordinateur (666 667 + 1 000 000 + 500 000 = 2 166 667)",
+            "debit": [
+              {
+                "compte": "2844",
+                "montant": 2166667
+              }
+            ],
+            "credit": [
+              {
+                "compte": "2442",
+                "montant": 2166667
+              }
+            ]
+          },
+          {
+            "date": "30/06/N+2",
+            "libelle": "Solde fonds ordinateur non amorti (3 000 000 - 2 166 667 = 833 333)",
+            "debit": [
+              {
+                "compte": "167",
+                "montant": 833333
+              }
+            ],
+            "credit": [
+              {
+                "compte": "2442",
+                "montant": 833333
+              }
+            ]
+          }
+        ]
+      },
+      "mots_cles": [
+        "exemple complet",
+        "legs HOUZAMBE",
+        "association SDF",
+        "immobilisations",
+        "provisions",
+        "amortissements",
+        "disparition ordinateur"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2087,
+      "titre": "Donation et legs de biens immeubles destinés à la vente",
+      "texte": [
+        "Un bien immeuble reçu en donation/legs non nécessaire à l'objet social peut être cédé dès sa réception.",
+        "Le bien n'est ni immobilisé, ni stocké. Suivi extra comptable dans les engagements hors bilan.",
+        "Enregistré dans les contributions volontaires en nature : débit 905 Dons, legs à réaliser / crédit 915 Dons, legs d'immeubles reçus."
+      ],
+      "comptes": [
+        {
+          "numero": "905",
+          "libelle": "Dons, legs à réaliser"
+        },
+        {
+          "numero": "915",
+          "libelle": "Dons, legs d'immeubles reçus"
+        }
+      ],
+      "mots_cles": [
+        "bien immeuble",
+        "vente",
+        "contributions volontaires",
+        "compte 905",
+        "compte 915"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2088,
+      "titre": "Charges liées à la cession des biens immeubles",
+      "texte": [
+        "Charges (mutation, commission) imputées au compte 8311. Rattachées à l'exercice de vente.",
+        "Si non vendu en fin d'exercice : neutralisation via 476 Charges constatées d'avance, extournée au 1/01."
+      ],
+      "comptes": [
+        {
+          "numero": "8311",
+          "libelle": "Charges sur dons et legs"
+        },
+        {
+          "numero": "476",
+          "libelle": "Charges constatées d'avance"
+        }
+      ],
+      "mots_cles": [
+        "charges cession",
+        "neutralisation",
+        "compte 8311",
+        "compte 476"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2089,
+      "titre": "Vente du bien immeuble et affectation des produits",
+      "texte": [
+        "Vente : débit 488/5 / crédit 8411.",
+        "Si affecté à projet : débit 8411 (net de charges) / crédit 165 Fonds affectés à un projet spécifique.",
+        "Reprises annuelles : débit 165 / crédit 7925."
+      ],
+      "comptes": [
+        {
+          "numero": "8411",
+          "libelle": "Produits sur donations et legs"
+        },
+        {
+          "numero": "165",
+          "libelle": "Fonds affectés à un projet spécifique"
+        },
+        {
+          "numero": "7925",
+          "libelle": "Reprises de fonds affectés à un projet spécifique"
+        }
+      ],
+      "mots_cles": [
+        "vente immeuble",
+        "fonds affectés",
+        "compte 8411",
+        "compte 165",
+        "compte 7925"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2090,
+      "titre": "Biens immeubles destinés à la vente — Schéma d'écritures complet (8 écritures)",
+      "ecritures": [
+        {
+          "titre": "Réception",
+          "debit": [
+            {
+              "compte": "905"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "915"
+            }
+          ]
+        },
+        {
+          "titre": "Charges",
+          "debit": [
+            {
+              "compte": "8311"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "4842"
+            },
+            {
+              "compte": "52"
+            }
+          ]
+        },
+        {
+          "titre": "Neutralisation 31/12",
+          "debit": [
+            {
+              "compte": "476"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "8311"
+            }
+          ]
+        },
+        {
+          "titre": "Extourne 1/01",
+          "debit": [
+            {
+              "compte": "8311"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "476"
+            }
+          ]
+        },
+        {
+          "titre": "Vente",
+          "debit": [
+            {
+              "compte": "488"
+            },
+            {
+              "compte": "5"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "8411"
+            }
+          ]
+        },
+        {
+          "titre": "Solde engagement",
+          "debit": [
+            {
+              "compte": "915"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "905"
+            }
+          ]
+        },
+        {
+          "titre": "Affectation projet",
+          "debit": [
+            {
+              "compte": "8411"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "165"
+            }
+          ]
+        },
+        {
+          "titre": "Reprise annuelle",
+          "debit": [
+            {
+              "compte": "165"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7925"
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "schéma complet",
+        "8 écritures",
+        "contributions volontaires",
+        "fonds affectés"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2091,
+      "titre": "Exemple — Don bien immobilier association MADA / Pouponnière du Sud",
+      "texte": [
+        "Don immobilier 25M FCFA, produits affectés à la Pouponnière du Sud.",
+        "Charges : mutation 1,75M + commission agence 3,64M = 5,39M.",
+        "Vente à 37M. Fonds nets affectés : 31,61M.",
+        "Dépenses : lait 1,61M, biberons 3M, honoraires pédiatres 5M."
+      ],
+      "solution": {
+        "ecritures": [
+          {
+            "date": "1/07/N",
+            "debit": [
+              {
+                "compte": "905",
+                "montant": 25000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "915",
+                "montant": 25000000
+              }
+            ]
+          },
+          {
+            "date": "30/07/N",
+            "debit": [
+              {
+                "compte": "8311",
+                "montant": 1750000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "52",
+                "montant": 1750000
+              }
+            ]
+          },
+          {
+            "date": "15/11/N",
+            "debit": [
+              {
+                "compte": "8311",
+                "montant": 3640000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "52",
+                "montant": 3640000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N",
+            "debit": [
+              {
+                "compte": "476",
+                "montant": 5390000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "8311",
+                "montant": 5390000
+              }
+            ]
+          },
+          {
+            "date": "1/01/N+1",
+            "debit": [
+              {
+                "compte": "8311",
+                "montant": 5390000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "476",
+                "montant": 5390000
+              }
+            ]
+          },
+          {
+            "date": "10/03/N+2",
+            "debit": [
+              {
+                "compte": "52",
+                "montant": 37000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "8411",
+                "montant": 37000000
+              }
+            ]
+          },
+          {
+            "date": "10/03/N+2",
+            "libelle": "Affectation net (37M - 5,39M = 31,61M)",
+            "debit": [
+              {
+                "compte": "8411",
+                "montant": 31610000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "165",
+                "montant": 31610000
+              }
+            ]
+          },
+          {
+            "date": "30/04/N+2",
+            "debit": [
+              {
+                "compte": "60111",
+                "montant": 1610000
+              },
+              {
+                "compte": "60112",
+                "montant": 3000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "52",
+                "montant": 4610000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N+2",
+            "debit": [
+              {
+                "compte": "165",
+                "montant": 4610000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7925",
+                "montant": 4610000
+              }
+            ]
+          },
+          {
+            "date": "2/02/N+3",
+            "debit": [
+              {
+                "compte": "63241",
+                "montant": 5000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "52",
+                "montant": 5000000
+              }
+            ]
+          },
+          {
+            "date": "31/12/N+3",
+            "debit": [
+              {
+                "compte": "165",
+                "montant": 5000000
+              }
+            ],
+            "credit": [
+              {
+                "compte": "7925",
+                "montant": 5000000
+              }
+            ]
+          }
+        ]
+      },
+      "mots_cles": [
+        "exemple",
+        "association MADA",
+        "Pouponnière du Sud",
+        "fonds affectés",
+        "reprises"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2092,
+      "titre": "Don manuel — Définition",
+      "texte": [
+        "Le don manuel est une donation de la main à la main. Il ne revêt pas la forme authentique. Ce qui exclut la donation d'un immeuble qui nécessite un acte notarié.",
+        "Le don manuel est valable par la seule remise effective du bien.",
+        "3 types : en nature à distribuer ; en nature à vendre ; en numéraire."
+      ],
+      "mots_cles": [
+        "don manuel",
+        "main à main",
+        "remise effective",
+        "nature",
+        "numéraire"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2093,
+      "titre": "Dons en nature à distribuer — Comptabilisation",
+      "texte": [
+        "Biens évalués à valeur actuelle, enregistrés dès réception.",
+        "Récurrent : débit 654 / crédit 7542.",
+        "Non récurrent (HAO) : débit 832 / crédit 8425."
+      ],
+      "comptes": [
+        {
+          "numero": "654",
+          "libelle": "Dons en nature à distribuer"
+        },
+        {
+          "numero": "832",
+          "libelle": "Dons HAO en nature à distribuer"
+        },
+        {
+          "numero": "7542",
+          "libelle": "Dons en nature courants reçus"
+        },
+        {
+          "numero": "8425",
+          "libelle": "Dons en nature HAO reçus"
+        }
+      ],
+      "mots_cles": [
+        "dons nature",
+        "distribuer",
+        "récurrent",
+        "HAO",
+        "compte 654",
+        "compte 832"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2094,
+      "titre": "Dons en nature à distribuer — Inventaire stock",
+      "texte": [
+        "Stock fin exercice : débit 34 (courant) ou 38 (HAO) / crédit 6035 ou 87.",
+        "Neutralisation non distribués : débit 7542/8425 / crédit 4713/4881.",
+        "Extourne au 1/01 suivant."
+      ],
+      "comptes": [
+        {
+          "numero": "34",
+          "libelle": "Stock de dons en nature"
+        },
+        {
+          "numero": "38",
+          "libelle": "Stocks de dons en nature HAO"
+        },
+        {
+          "numero": "6035",
+          "libelle": "Variations de stocks de dons en nature à distribuer"
+        },
+        {
+          "numero": "87",
+          "libelle": "Variations de stocks de dons en nature HAO"
+        },
+        {
+          "numero": "4713",
+          "libelle": "Créditeurs, dons en nature courants non consommés"
+        },
+        {
+          "numero": "4881",
+          "libelle": "Créditeurs, dons en nature HAO non consommés"
+        }
+      ],
+      "mots_cles": [
+        "stock dons",
+        "inventaire",
+        "neutralisation",
+        "extourne"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2095,
+      "titre": "Dons récurrents à distribuer — Schéma d'écritures complet",
+      "ecritures": [
+        {
+          "titre": "Réception",
+          "debit": [
+            {
+              "compte": "654"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7542"
+            }
+          ]
+        },
+        {
+          "titre": "Stock 31/12",
+          "debit": [
+            {
+              "compte": "34"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "6035"
+            }
+          ]
+        },
+        {
+          "titre": "Neutralisation 31/12",
+          "debit": [
+            {
+              "compte": "7542"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "4713"
+            }
+          ]
+        },
+        {
+          "titre": "Extourne stock 1/01",
+          "debit": [
+            {
+              "compte": "6035"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "34"
+            }
+          ]
+        },
+        {
+          "titre": "Extourne neutralisation 1/01",
+          "debit": [
+            {
+              "compte": "4713"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7542"
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "schéma complet",
+        "dons récurrents",
+        "distribuer"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2096,
+      "titre": "Dons non récurrents (HAO) à distribuer — Schéma d'écritures complet",
+      "ecritures": [
+        {
+          "titre": "Réception",
+          "debit": [
+            {
+              "compte": "832"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "8425"
+            }
+          ]
+        },
+        {
+          "titre": "Stock 31/12",
+          "debit": [
+            {
+              "compte": "38"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "87"
+            }
+          ]
+        },
+        {
+          "titre": "Neutralisation 31/12",
+          "debit": [
+            {
+              "compte": "8425"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "4881"
+            }
+          ]
+        },
+        {
+          "titre": "Extourne stock 1/01",
+          "debit": [
+            {
+              "compte": "87"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "38"
+            }
+          ]
+        },
+        {
+          "titre": "Extourne neutralisation 1/01",
+          "debit": [
+            {
+              "compte": "4881"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "8425"
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "schéma complet",
+        "dons HAO",
+        "distribuer"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2097,
+      "titre": "Dons en nature à vendre — Comptabilisation",
+      "texte": [
+        "Biens meubles non nécessaires à l'objet social, destinés à la vente.",
+        "Suivis en extra comptable via contributions volontaires : débit 901 / crédit 910.",
+        "Mention à la Note 1."
+      ],
+      "comptes": [
+        {
+          "numero": "901",
+          "libelle": "Mise à disposition gratuite de biens"
+        },
+        {
+          "numero": "910",
+          "libelle": "Dons en nature"
+        }
+      ],
+      "mots_cles": [
+        "dons nature",
+        "vendre",
+        "contributions volontaires",
+        "compte 901",
+        "compte 910"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2098,
+      "titre": "Dons en nature à vendre — Charges et produits de cession",
+      "texte": [
+        "Charges cession : compte 6 ou 8311, rattachées à l'exercice de vente. Neutralisation via 476 si non vendu.",
+        "Vente : débit 412/488/5 / crédit 7081 (récurrent) ou 8421 (HAO).",
+        "Si affecté projet : débit 7081/8421 (net charges) / crédit 165. Reprises via 7925."
+      ],
+      "comptes": [
+        {
+          "numero": "7081",
+          "libelle": "Ventes de dons en nature"
+        },
+        {
+          "numero": "8421",
+          "libelle": "Dons en nature HAO vendus"
+        },
+        {
+          "numero": "165",
+          "libelle": "Fonds affectés à un projet spécifique"
+        },
+        {
+          "numero": "7925",
+          "libelle": "Reprises de fonds affectés à un projet spécifique"
+        }
+      ],
+      "mots_cles": [
+        "charges cession",
+        "vente dons nature",
+        "fonds affectés",
+        "compte 7081",
+        "compte 8421"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2099,
+      "titre": "Dons en nature à vendre — Schéma d'écritures complet (7 écritures)",
+      "ecritures": [
+        {
+          "titre": "Réception",
+          "debit": [
+            {
+              "compte": "901"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "910"
+            }
+          ]
+        },
+        {
+          "titre": "Charges",
+          "debit": [
+            {
+              "compte": "6"
+            },
+            {
+              "compte": "8311"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "40"
+            },
+            {
+              "compte": "484"
+            },
+            {
+              "compte": "52"
+            }
+          ]
+        },
+        {
+          "titre": "Neutralisation 31/12",
+          "debit": [
+            {
+              "compte": "476"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "6"
+            },
+            {
+              "compte": "8311"
+            }
+          ]
+        },
+        {
+          "titre": "Extourne 1/01",
+          "debit": [
+            {
+              "compte": "6"
+            },
+            {
+              "compte": "8311"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "476"
+            }
+          ]
+        },
+        {
+          "titre": "Cession",
+          "debit": [
+            {
+              "compte": "412"
+            },
+            {
+              "compte": "488"
+            },
+            {
+              "compte": "5"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7081"
+            },
+            {
+              "compte": "8421"
+            }
+          ]
+        },
+        {
+          "titre": "Affectation projet net",
+          "debit": [
+            {
+              "compte": "7081"
+            },
+            {
+              "compte": "8421"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "165"
+            }
+          ]
+        },
+        {
+          "titre": "Solde contributions volontaires",
+          "debit": [
+            {
+              "compte": "910"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "901"
+            }
+          ]
+        },
+        {
+          "titre": "Dépenses projet",
+          "debit": [
+            {
+              "compte": "6"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "40"
+            },
+            {
+              "compte": "5"
+            }
+          ]
+        },
+        {
+          "titre": "Reprise fonds",
+          "debit": [
+            {
+              "compte": "165"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7925"
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "schéma complet",
+        "dons nature à vendre",
+        "contributions volontaires",
+        "fonds affectés"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2100,
+      "titre": "Dons en numéraire — Définition et comptabilisation",
+      "texte": [
+        "Ressources reçues en espèces, chèques, virement (denier du culte, dîme, Zakat, quêtes).",
+        "Enregistrés : débit 5 / crédit 704 Revenus liés à la générosité.",
+        "Promesses certaines rattachées via 475 Générosités financières à recevoir."
+      ],
+      "comptes": [
+        {
+          "numero": "704",
+          "libelle": "Revenus liés à la générosité"
+        },
+        {
+          "numero": "475",
+          "libelle": "Générosités financières à recevoir"
+        }
+      ],
+      "mots_cles": [
+        "dons numéraire",
+        "denier du culte",
+        "dîme",
+        "Zakat",
+        "quêtes",
+        "compte 704",
+        "compte 475"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2101,
+      "titre": "Dons en numéraire affectés à un projet spécifique",
+      "texte": [
+        "Si affectés : débit 704 / crédit 165. Reprises annuelles : débit 165 / crédit 7925."
+      ],
+      "ecritures": [
+        {
+          "titre": "Don non affecté",
+          "debit": [
+            {
+              "compte": "5"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "704"
+            }
+          ]
+        },
+        {
+          "titre": "Engagement ferme",
+          "debit": [
+            {
+              "compte": "475"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "704"
+            }
+          ]
+        },
+        {
+          "titre": "Affectation projet",
+          "debit": [
+            {
+              "compte": "704"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "165"
+            }
+          ]
+        },
+        {
+          "titre": "Reprise annuelle",
+          "debit": [
+            {
+              "compte": "165"
+            }
+          ],
+          "credit": [
+            {
+              "compte": "7925"
+            }
+          ]
+        }
+      ],
+      "mots_cles": [
+        "dons numéraire",
+        "affectés",
+        "projet spécifique",
+        "compte 165",
+        "compte 7925"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2103,
+      "titre": "Mécénats et Parrainage",
+      "texte": [
+        "Mécénat : soutien financier/matériel pour intérêt général, mécène discret.",
+        "Parrainage : soutien matériel en vue d'un bénéfice direct.",
+        "Fait générateur : date convention ou réalisation.",
+        "Financier avec convention : débit 4751 / crédit 7046 (mécénat) ou 7047 (parrainage).",
+        "Sans convention : débit 5 / crédit 7046 ou 7047 à l'encaissement.",
+        "Matériel à vendre : cf §2097. Mise à disposition temporaire : Note annexe."
+      ],
+      "comptes": [
+        {
+          "numero": "7046",
+          "libelle": "Mécénats"
+        },
+        {
+          "numero": "7047",
+          "libelle": "Parrainage"
+        },
+        {
+          "numero": "4751",
+          "libelle": "Mécènes et assimilés"
+        }
+      ],
+      "mots_cles": [
+        "mécénat",
+        "parrainage",
+        "intérêt général",
+        "bénéfice direct",
+        "compte 7046",
+        "compte 7047",
+        "compte 4751"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2110,
+      "titre": "Fonds propres et assimilés — Définition",
+      "section": "IV - Fonds propres et assimilés",
+      "texte": [
+        "Ressources apportées par membres/fondateurs + excédents de fonds + provisions réglementées + subventions d'équipement."
+      ],
+      "mots_cles": [
+        "fonds propres",
+        "assimilés",
+        "membres",
+        "fondateurs",
+        "excédents"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2111,
+      "titre": "Dotation — Définition et formes",
+      "texte": [
+        "Dotation consomptible : ressource durable reprise au résultat pour charges/fonctionnement.",
+        "Dotation non consomptible : durable et permanente. Sans reprise (définitif) ou avec reprise (provisoire)."
+      ],
+      "mots_cles": [
+        "dotation",
+        "consomptible",
+        "non consomptible",
+        "sans reprise",
+        "avec reprise"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2112,
+      "titre": "Différence association / société",
+      "texte": [
+        "Association : apports non représentés par titres de propriété, pas de rémunération, 1 voix par membre."
+      ],
+      "mots_cles": [
+        "association",
+        "société",
+        "titres de propriété",
+        "rémunération"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2113,
+      "titre": "Subdivision du compte 10 Dotation",
+      "comptes": [
+        {
+          "numero": "101",
+          "libelle": "Dotation non consomptible sans droit de reprise"
+        },
+        {
+          "numero": "1011",
+          "libelle": "en numéraire"
+        },
+        {
+          "numero": "1015",
+          "libelle": "en nature"
+        },
+        {
+          "numero": "102",
+          "libelle": "Dotation non consomptible avec droit de reprise"
+        },
+        {
+          "numero": "1021",
+          "libelle": "en numéraire"
+        },
+        {
+          "numero": "1025",
+          "libelle": "en nature"
+        },
+        {
+          "numero": "103",
+          "libelle": "Droit d'entrée"
+        },
+        {
+          "numero": "104",
+          "libelle": "Droit consomptible"
+        },
+        {
+          "numero": "1041",
+          "libelle": "Dotation consomptible"
+        },
+        {
+          "numero": "1049",
+          "libelle": "Dotation consomptible inscrite au compte de résultat"
+        },
+        {
+          "numero": "106",
+          "libelle": "Ecart de réévaluation"
+        },
+        {
+          "numero": "1061",
+          "libelle": "Ecart de réévaluation sur biens sans droit de reprise"
+        },
+        {
+          "numero": "1062",
+          "libelle": "Ecart de réévaluation sur biens avec droit de reprise"
+        }
+      ],
+      "mots_cles": [
+        "subdivision",
+        "compte 10",
+        "dotation",
+        "plan de comptes"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2114,
+      "titre": "Comptabilisation — Dotation non consomptible",
+      "texte": [
+        "Compte 101 : apports définitifs non remboursables en cas de retrait.",
+        "Compte 102 : apports temporaires repris sous conditions (dissolution, délai)."
+      ],
+      "mots_cles": [
+        "compte 101",
+        "compte 102",
+        "apports définitifs",
+        "apports temporaires"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2115,
+      "titre": "Conditions de reprise et entretien des biens apportés",
+      "texte": [
+        "Conditions fixées par l'apporteur (dissolution, délai, état ou valeur à neuf).",
+        "Entretien courant : classe 6.",
+        "Remise en état : provision (cf §141-4).",
+        "Renouvellement : amortissement sur durée d'utilité ≤ durée apport temporaire.",
+        "La reprise sera enregistrée au débit compte 28 Amortissements et au crédit du compte 2 compte d'actif immobilisé.",
+        "Lorsque le renouvellement du bien sera effectif, le compte 102 Dotation non consomptible avec droit de reprise sera soldé par le crédit du compte 101 Dotation non consomptible sans droit de reprise.",
+        "L'entité peut bénéficier des avantages de l'apport temporaire sans être intéressée par le renouvellement du bien. Dans ce cas, l'entité est dispensée d'amortissements, qui même s'ils étaient pratiqués seraient repris en produit pour annuler l'impact de la dotation.",
+        "La reprise de l'apport sera enregistrée au débit du compte 102 Dotation non consomptible avec droit de reprise et au crédit du compte 2 compte d'actif immobilisé."
+      ],
+      "mots_cles": [
+        "conditions de reprise",
+        "entretien",
+        "provision remise en état",
+        "amortissement",
+        "reprise apport",
+        "amortissements",
+        "renouvellement bien",
+        "dotation non consomptible",
+        "droit de reprise"
+      ],
+      "statut": "en_vigueur",
+      "note": "Suite dans le PDF 34",
+      "comptes": [
+        "28",
+        "2",
+        "102",
+        "101"
+      ]
+    },
+    {
+      "numero": 2116,
+      "titre": "Le droit d'entrée",
+      "texte": [
+        "Le droit d'entrée est un fonds versé une seule fois lors de l'adhésion de tout nouveau membre. Il s'agit d'un droit d'adhésion à l'entité si les statuts ou le règlement intérieur le prévoient. C'est souvent une dotation non consomptible sans droit de reprise que le SYCEBNL a prévu d'enregistrer dans un compte spécifique 103 Droit d'entrée.",
+        "Toutefois, les dispositions statutaires ou réglementaires relatives au droit d'entrée peuvent stipuler qu'il s'agit :",
+        "- d'un dépôt restituable (dettes financières de l'entité), il convient dans ce cas de l'enregistrer dans une subdivision du compte dépôts reçus, nous suggérons le compte 18511 Droit d'entrée, dépôt restituable ;",
+        "- d'un complément de cotisation, dans ce cas le compte 701 Cotisations des adhérents sera plus approprié.",
+        "La Note annexe doit mentionner la méthode de comptabilisation retenue."
+      ],
+      "comptes": [
+        "103",
+        "18511",
+        "701"
+      ],
+      "mots_cles": [
+        "droit d'entrée",
+        "adhésion",
+        "dotation non consomptible",
+        "dépôt restituable",
+        "cotisation",
+        "note annexe"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2117,
+      "titre": "La dotation consomptible",
+      "texte": [
+        "La dotation consomptible est un fonds consommé par l'entité dans le cadre de son fonctionnement ou un fonds destiné à l'accomplissement de l'objet social de l'entité sur une période statutairement définie.",
+        "Ce fonds destiné exclusivement à couvrir les frais de fonctionnement de l'entité est enregistré dans le compte 104 dotation consomptible. Cette ressource est reprise, à la clôture de chaque exercice, au compte résultat à concurrence de la quotité nécessaire pour neutraliser les"
+      ],
+      "comptes": [
+        "104"
+      ],
+      "mots_cles": [
+        "dotation consomptible",
+        "fonctionnement",
+        "objet social",
+        "période statutaire"
+      ],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1320"
+    },
+    {
+      "numero": 2118,
+      "titre": "Réévaluation et comptabilisation des apports de fonds propres",
+      "texte": [
+        "Les immobilisations corporelles et financières enregistrées au coût historique, peuvent faire l'objet d'une réévaluation suivant une décision des organes de gestion pour ajuster la valeur de ces biens à leur valeur actuelle. La réévaluation est traitée aux §§ 203 et suivants.",
+        "La comptabilisation des apports de fonds propres doit être effectuée conformément aux dispositions juridiques et réglementaires (statuts et règlement intérieur) qui régissent les entités à but non lucratif.",
+        "Les apports sont enregistrés lors de leur réalisation, si les dispositions juridiques et réglementaires ne prévoient pas de souscription et de libération.",
+        "Il est rare de rencontrer dans les dispositions relatives aux entités à but non lucratif, la souscription et la libération des apports. Dans une telle hypothèse, l'entité doit enregistrer toutes les écritures relatives à la souscription et à la libération des apports à condition, qu'elle puisse justifier le droit d'agir pour le recouvrement de la souscription, en cas de défaillance des membres. Autrement, les apports sont enregistrés lors de leur réalisation."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "réévaluation",
+        "immobilisations corporelles",
+        "immobilisations financières",
+        "coût historique",
+        "apports fonds propres",
+        "souscription",
+        "libération"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2119,
+      "titre": "Schéma des écritures des apports sans souscription préalable",
+      "texte": [
+        "Schéma des écritures des apports sans souscription préalable :"
+      ],
+      "ecritures": [
+        {
+          "compte": "2",
+          "libelle": "Comptes d'actif immobilisé (sauf compte 20)",
+          "debit": "x",
+          "credit": ""
+        },
+        {
+          "compte": "3",
+          "libelle": "Comptes de stocks",
+          "debit": "x",
+          "credit": ""
+        },
+        {
+          "compte": "4",
+          "libelle": "Comptes de tiers",
+          "debit": "x",
+          "credit": ""
+        },
+        {
+          "compte": "5",
+          "libelle": "Comptes de trésorerie",
+          "debit": "x",
+          "credit": ""
+        },
+        {
+          "compte": "101",
+          "libelle": "Dotation non consomptible sans droit de reprise",
+          "debit": "",
+          "credit": "x"
+        },
+        {
+          "compte": "102",
+          "libelle": "Dotation non consomptible avec droit de reprise",
+          "debit": "",
+          "credit": "x"
+        },
+        {
+          "compte": "1984",
+          "libelle": "Provisions pour remise en état",
+          "debit": "",
+          "credit": "x"
+        }
+      ],
+      "description_ecriture": "Apports des membres ou affectation des fondateurs",
+      "comptes": [
+        "2",
+        "3",
+        "4",
+        "5",
+        "101",
+        "102",
+        "1984"
+      ],
+      "mots_cles": [
+        "écritures comptables",
+        "apports sans souscription",
+        "actif immobilisé",
+        "stocks",
+        "tiers",
+        "trésorerie",
+        "dotation non consomptible",
+        "provisions remise en état"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2120,
+      "titre": "Schéma des écritures relatives aux charges sur les apports avec droit de reprise",
+      "texte": [
+        "Écritures relatives aux charges engagées pour l'entretien des biens apportés avec droit de reprise, aux dotations aux amortissements et à la reprise de l'apport."
+      ],
+      "ecritures": [
+        {
+          "description": "Charges engagées pour l'entretien des biens apportés avec droit de reprise",
+          "lignes": [
+            {
+              "compte": "6",
+              "libelle": "Comptes de charges",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "4",
+              "libelle": "Comptes de tiers",
+              "debit": "",
+              "credit": "x"
+            },
+            {
+              "compte": "5",
+              "libelle": "Comptes de trésorerie",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Dotation annuelle des apports avec droit de reprise si option renouvellement du bien",
+          "lignes": [
+            {
+              "compte": "681",
+              "libelle": "Dotations aux amortissements",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "28",
+              "libelle": "Amortissements",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Reprise de l'apport avec droit de reprise si option renouvellement du bien",
+          "lignes": [
+            {
+              "compte": "28",
+              "libelle": "Amortissements",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "2",
+              "libelle": "Comptes d'actif immobilisé",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "6",
+        "4",
+        "5",
+        "681",
+        "28",
+        "2"
+      ],
+      "mots_cles": [
+        "charges entretien",
+        "apports droit de reprise",
+        "amortissements",
+        "renouvellement bien",
+        "reprise apport"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2121,
+      "titre": "Schéma des écritures des apports avec souscription et libération",
+      "texte": [
+        "Schéma des écritures des apports avec souscription et libération. NB : voir plan comptable pour le numéro spécifique du compte 45 selon l'entité."
+      ],
+      "ecritures": [
+        {
+          "description": "Souscription des apports",
+          "lignes": [
+            {
+              "compte": "45",
+              "libelle": "Apporteurs en nature",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "45",
+              "libelle": "Apporteurs en numéraire",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "101",
+              "libelle": "Dotation non consomptible sans droit de reprise",
+              "debit": "",
+              "credit": "x"
+            },
+            {
+              "compte": "102",
+              "libelle": "Dotation non consomptible avec droit de reprise",
+              "debit": "",
+              "credit": "x"
+            },
+            {
+              "compte": "104",
+              "libelle": "Dotation consomptible",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Réalisation des apports",
+          "lignes": [
+            {
+              "compte": "2",
+              "libelle": "Comptes d'actif immobilisé (sauf compte 20)",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "3",
+              "libelle": "Comptes de stocks",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "4",
+              "libelle": "Comptes de tiers",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "5",
+              "libelle": "Comptes de trésorerie",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "45",
+              "libelle": "Apporteurs en nature",
+              "debit": "",
+              "credit": "x"
+            },
+            {
+              "compte": "45",
+              "libelle": "Apporteurs en numéraire",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "45",
+        "101",
+        "102",
+        "104",
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "mots_cles": [
+        "apports avec souscription",
+        "libération",
+        "apporteurs nature",
+        "apporteurs numéraire",
+        "réalisation apports"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2122,
+      "titre": "Report à nouveau",
+      "texte": [
+        "Le report à nouveau correspond au montant des excédents d'exercices antérieurs dont l'affectation a été reportée sur les exercices ultérieurs ou des déficits constatés à la clôture d'exercices antérieurs qui n'ont pas été compensés par des prélèvements opérés sur les excédents.",
+        "Le report à nouveau est inscrit au passif du bilan où il doit figurer sur une ligne distincte : « en signe moins » si son solde est débiteur, et « en signe plus » si son solde est créditeur. Il constitue un élément des fonds propres. La décision d'affection du résultat de l'exercice est prise par les organes délibérants. En fin d'exercice, le résultat net de l'exercice précédent non affecté à un compte de réserves sera viré au compte 12 Report à nouveau."
+      ],
+      "comptes": [
+        "12"
+      ],
+      "mots_cles": [
+        "report à nouveau",
+        "excédents antérieurs",
+        "déficits",
+        "fonds propres",
+        "passif bilan",
+        "affectation résultat"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2123,
+      "titre": "Schéma des écritures du report à nouveau",
+      "texte": [
+        "Écritures d'affectation du résultat excédentaire, du résultat déficitaire et d'affectation du report à nouveau à la dotation."
+      ],
+      "ecritures": [
+        {
+          "description": "Affectation du Résultat excédentaire",
+          "lignes": [
+            {
+              "compte": "131",
+              "libelle": "Excédent de l'exercice",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "121",
+              "libelle": "Report à nouveau des excédents",
+              "debit": "",
+              "credit": "x"
+            },
+            {
+              "compte": "128",
+              "libelle": "Résultat en instance d'affectation",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Affectation du résultat déficitaire",
+          "lignes": [
+            {
+              "compte": "128",
+              "libelle": "Résultat en instance d'affectation",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "129",
+              "libelle": "Report à nouveau des déficits",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "139",
+              "libelle": "Déficit de l'exercice",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Affectation du report à nouveau à la dotation",
+          "lignes": [
+            {
+              "compte": "121",
+              "libelle": "Report à nouveau des excédents",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "128",
+              "libelle": "Résultat en instance d'affectation",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "118",
+              "libelle": "Autres réserves",
+              "debit": "",
+              "credit": "x"
+            },
+            {
+              "compte": "101",
+              "libelle": "Dotation non consomptible sans droit de reprise",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "131",
+        "121",
+        "128",
+        "129",
+        "139",
+        "118",
+        "101"
+      ],
+      "mots_cles": [
+        "écritures report à nouveau",
+        "affectation résultat",
+        "excédentaire",
+        "déficitaire",
+        "dotation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2124,
+      "titre": "Résultat de l'exercice",
+      "texte": [
+        "Le résultat net de l'exercice peut être défini comme la différence entre les revenus (reçus ou à recevoir) et les charges (payées ou à payer) de la période.",
+        "Le résultat est qualifié d'excédent si les revenus l'emportent sur les charges (solde créditeur) ou de déficit si les charges l'emportent sur les revenus (solde débiteur).",
+        "Aucun résultat ne peut être distribué aux adhérents. Il est définitivement acquis à l'entité qui peut décider de l'affecter en réserves, en report à nouveau ou en dotation non consomptible sans droit de reprise.",
+        "Quel que soit son signe, le résultat net de l'exercice est inscrit au passif du bilan sur la ligne correspondante, parmi les fonds propres."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "résultat exercice",
+        "excédent",
+        "déficit",
+        "revenus",
+        "charges",
+        "non distribution",
+        "fonds propres",
+        "passif bilan"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2125,
+      "titre": "Subventions d'investissement",
+      "texte": [
+        "Les subventions d'investissements sont traitées aux §§ 733 et suivants."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "subventions investissement"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2126,
+      "titre": "Provisions réglementées",
+      "texte": [
+        "Les provisions réglementées sont des provisions à caractère purement réglementaire, comptabilisées non pas en application de principes comptables, mais suivant des dispositions légales et réglementaires (lois de finances, par exemple).",
+        "Elles sont rarement rencontrées dans les entités à but non lucratif parce qu'elles ne sont pas en principe motivées par le souci de faire bénéficier aux entités d'un avantage fiscal.",
+        "Les provisions réglementées sont traitées aux 738 et suivants §§."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "provisions réglementées",
+        "dispositions légales",
+        "lois de finances",
+        "avantage fiscal"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2130,
+      "titre": "Fonds affectés — Définition",
+      "texte": [
+        "Les fonds affectés, appelés aussi fonds dédiés, sont des ressources reçues par les entités à but non lucratif affectées à un projet précis, dont on ne saurait se détourner de l'intention du donateur. On distingue notamment les fonds affectés aux charges, à l'achat d'immobilisations.",
+        "Il s'agit aussi de fonds que les tiers financeurs ont affecté à un but ou objet bien déterminé qui ne sont pas entièrement consommés en fin d'exercice conformément à l'engagement pris à leur égard."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "fonds affectés",
+        "fonds dédiés",
+        "ressources",
+        "projet précis",
+        "donateur",
+        "tiers financeurs"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2131,
+      "titre": "Fonds affectés — Subdivision",
+      "texte": [
+        "Le compte de Fonds affectés est subdivisé comme suit :",
+        "165 Fonds affectés à un projet spécifique",
+        "167 Fonds provenant de dons et legs d'immobilisation",
+        "  1671 affectés",
+        "  1672 non affectés",
+        "  1679 Engagements auprès donateur",
+        "168 Autres fonds affectés",
+        "169 Fonds affectés à recevoir"
+      ],
+      "comptes": [
+        "165",
+        "167",
+        "1671",
+        "1672",
+        "1679",
+        "168",
+        "169"
+      ],
+      "mots_cles": [
+        "fonds affectés",
+        "projet spécifique",
+        "dons et legs",
+        "immobilisation",
+        "engagements donateur",
+        "fonds à recevoir"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2132,
+      "titre": "Fonds affectés — Comptabilisation",
+      "texte": [
+        "Les fonds affectés peuvent provenir d'un tiers financeur qui met à la disposition de l'entité de la trésorerie pour lui permettre de couvrir, des dépenses bien déterminées sur une période bien définie par exemple, couverture d'une catégorie de charges sur plusieurs exercices, achat d'immobilisations, etc... Ces fonds sont enregistrés au crédit compte 165 Fonds affectés à un projet spécifique par le débit du compte 5 Compte de trésorerie lors de la mise à disposition. Ensuite ils sont repris au fur et à mesure de la réalisation des engagements par le biais du compte 7925 Reprises de fonds affectés à un projet spécifique.",
+        "Si les fonds sont affectés à un bien immobilier, la quotité de la dotation annuelle aux amortissements sera neutralisée par le compte 7925."
+      ],
+      "comptes": [
+        "165",
+        "5",
+        "7925"
+      ],
+      "mots_cles": [
+        "fonds affectés",
+        "comptabilisation",
+        "tiers financeur",
+        "trésorerie",
+        "reprises fonds affectés",
+        "bien immobilier",
+        "amortissements"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2133,
+      "titre": "Fonds affectés — Dons ou legs de biens immobiliers et schéma des écritures",
+      "texte": [
+        "Les fonds affectés relatifs aux dons ou legs de biens immobiliers sont traités aux §§ 2080 et suivants."
+      ],
+      "ecritures": [
+        {
+          "description": "Réception des fonds des financeurs",
+          "lignes": [
+            {
+              "compte": "5",
+              "libelle": "Comptes de trésorerie",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "165",
+              "libelle": "Fonds affectés à un projet spécifiques",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Achat de biens",
+          "lignes": [
+            {
+              "compte": "2",
+              "libelle": "Compte d'actif immobilisé (achat de biens immobiliers)",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "6",
+              "libelle": "Comptes de charges",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "5",
+              "libelle": "Comptes de trésorerie",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Dotation annuelle",
+          "lignes": [
+            {
+              "compte": "681",
+              "libelle": "Dotations aux amortissements",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "691",
+              "libelle": "Dotations aux dépréciations",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "28",
+              "libelle": "Amortissements",
+              "debit": "",
+              "credit": "x"
+            },
+            {
+              "compte": "29",
+              "libelle": "Dépréciations des immobilisations",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Reprise de la quotité de charges, des dotations aux amortissements et dépréciations et des dettes payées par les fonds spécifiques",
+          "lignes": [
+            {
+              "compte": "165",
+              "libelle": "Fonds affectés à un projet spécifique",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "7925",
+              "libelle": "Reprises de fonds affectés à un projet spécifique",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "5",
+        "165",
+        "2",
+        "6",
+        "681",
+        "691",
+        "28",
+        "29",
+        "7925"
+      ],
+      "mots_cles": [
+        "dons legs biens immobiliers",
+        "réception fonds",
+        "achat biens",
+        "dotation annuelle",
+        "amortissements",
+        "dépréciations",
+        "reprises fonds"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2134,
+      "titre": "Fonds affectés — Exemple pratique (entité SECOURS / protection bonobos)",
+      "texte": [
+        "Exemple : 15/04/N, Monsieur AFRIC a remis à l'entité SECOURS un chèque de FCFA 30 000 000 pour la soutenir dans la réalisation de ses activités dans le domaine de la protection des singes bonobos. Monsieur AFRIC a accepté l'affectation de 25% des fonds à l'apurement d'un emprunt contracté le 1/02/N-5 auprès d'une institution financière pour équiper la clinique des singes.",
+        "30/06/N, SECOURS a réceptionné et réglé par chèque de FCFA 5 000 000 un véhicule équipé pour les soins des bonobos. La durée d'utilité du véhicule est de 10 ans.",
+        "30/07/N, SECOURS a fait un achat de médicaments pour les Bonobos réglé par virement bancaire de FCFA 500 000.",
+        "30/08/N, SECOURS a fait un achat de nourritures des bonobos payé par chèque FCFA 350 000 et a payé les honoraires du vétérinaire par chèque de FCFA 480 000."
+      ],
+      "ecritures": [
+        {
+          "date": "15/04/N",
+          "description": "Fonds reçus de M. Afric pour les BONOBOS",
+          "lignes": [
+            {
+              "compte": "52",
+              "libelle": "Banques",
+              "debit": 30000000,
+              "credit": ""
+            },
+            {
+              "compte": "1651",
+              "libelle": "Fonds affectés aux bonobos",
+              "debit": "",
+              "credit": 22500000
+            },
+            {
+              "compte": "843",
+              "libelle": "Contributions volontaires en numéraires",
+              "debit": "",
+              "credit": 7500000
+            }
+          ]
+        },
+        {
+          "date": "30/06/N",
+          "description": "Véhicule ambulance Bonobos",
+          "lignes": [
+            {
+              "compte": "2451",
+              "libelle": "Matériel de transport bonobos",
+              "debit": 5000000,
+              "credit": ""
+            },
+            {
+              "compte": "52",
+              "libelle": "Banques",
+              "debit": "",
+              "credit": 5000000
+            }
+          ]
+        },
+        {
+          "date": "30/07/N",
+          "description": "Médicaments Bonobos",
+          "lignes": [
+            {
+              "compte": "60111",
+              "libelle": "Achats de médicaments des bonobos",
+              "debit": 500000,
+              "credit": ""
+            },
+            {
+              "compte": "52",
+              "libelle": "Banques",
+              "debit": "",
+              "credit": 500000
+            }
+          ]
+        },
+        {
+          "date": "30/08/N",
+          "description": "Nourriture Bonobos",
+          "lignes": [
+            {
+              "compte": "60112",
+              "libelle": "Achat nourriture Bonobos",
+              "debit": 350000,
+              "credit": ""
+            },
+            {
+              "compte": "52",
+              "libelle": "Banques",
+              "debit": "",
+              "credit": 350000
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "52",
+        "1651",
+        "843",
+        "2451",
+        "60111",
+        "60112"
+      ],
+      "mots_cles": [
+        "exemple pratique",
+        "fonds affectés",
+        "contributions volontaires",
+        "matériel transport",
+        "achats médicaments",
+        "nourriture",
+        "bonobos"
+      ],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1328 (honoraires vétérinaire et écritures de clôture)"
+    },
+    {
+      "numero": 2135,
+      "titre": "Fonds reportés — Définition",
+      "texte": [
+        "Les fonds reportés sont des donations ou des legs d'immobilisations non encore reçus destinés à la vente ou encore des donations temporaires d'usufruit.",
+        "Ils se traduisent en entrées de trésorerie pour l'entité lors de la cession des biens ou à l'échéance des revenus provenant des usufruits reçus par l'entité.",
+        "La comptabilisation des fonds reportés est traitée aux §§ 2051 à 2068 et aux §§ 2098 et suivants."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "fonds reportés",
+        "donations",
+        "legs immobilisations",
+        "donations temporaires usufruit",
+        "cession biens"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2140,
+      "titre": "Cotisations — Définition",
+      "texte": [
+        "Les cotisations sont des fonds versés périodiquement par les membres conformément aux dispositions réglementaires pour assurer le fonctionnement de l'entité à but non lucratif et donnent généralement droit à l'exercice des droits et obligations attachées.",
+        "Les membres ont le droit de participer :",
+        "- à l'assemblée générale, et prendre part aux votes, aux élections, ainsi qu'aux débats ;"
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "cotisations",
+        "membres",
+        "fonctionnement",
+        "droits obligations",
+        "assemblée générale"
+      ],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1329"
+    },
+    {
+      "numero": 2141,
+      "titre": "Cotisations — Comptabilisation",
+      "texte": [
+        "Les cotisations sont en principe versées dès réception de l'appel de cotisation par courrier ou par tout autre moyen prévu par les statuts et/ou le règlement intérieur. Si l'entité :",
+        "- peut justifier le droit d'agir pour recouvrer l'appel de cotisations, celles-ci sont enregistrées dès l'appel au crédit du compte 701 Cotisations des adhérents par le débit du compte 411 Adhérents ;",
+        "- ne peut justifier aucun moyen de recouvrement de la créance, il est préférable de constater le produit lors de l'encaissement effectif de la cotisation au crédit du compte 701 Cotisations des adhérents par le débit d'un compte 5 Comptes de trésorerie.",
+        "L'entité qui perçoit les cotisations des adhérents peut avoir une obligation de reverser une quote part à une autre entité (faîtière) dans laquelle elle est adhérente comme une fédération par exemple. La quote part est enregistrée à la réception de l'appel de cotisation :",
+        "- au débit du compte 701 Cotisations des adhérents par le crédit du compte 4712 Créditeurs divers, si l'entité agit en tant que mandataire ;",
+        "- au débit du compte 6351 Cotisations par le crédit du compte 4712 Créditeurs divers si l'entité n'a aucun mandat de reversement d'une quote part de la cotisation de ses membres à une autre structure.",
+        "La comptabilisation des droits d'entrée est traitée au §2115."
+      ],
+      "comptes": [
+        "701",
+        "411",
+        "5",
+        "4712",
+        "6351"
+      ],
+      "mots_cles": [
+        "cotisations comptabilisation",
+        "appel cotisation",
+        "adhérents",
+        "recouvrement",
+        "encaissement",
+        "quote part",
+        "faîtière",
+        "fédération",
+        "mandataire",
+        "créditeurs divers"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2142,
+      "titre": "Cotisations — Schéma des écritures",
+      "texte": [
+        "Schéma des écritures de comptabilisation des cotisations."
+      ],
+      "ecritures": [
+        {
+          "description": "Appel de cotisation",
+          "lignes": [
+            {
+              "compte": "411",
+              "libelle": "Adhérents",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "701",
+              "libelle": "Cotisations des adhérents",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "411",
+        "701"
+      ],
+      "mots_cles": [
+        "écritures cotisations",
+        "appel cotisation",
+        "adhérents"
+      ],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1330"
+    },
+    {
+      "numero": 2150,
+      "titre": "Revenus des activités économiques",
+      "texte": [
+        "Dans plusieurs États parties les entités à but non lucratif sont exemptées d'impôt sur le revenu dans la limite de leur objet social. L'exercice d'une activité économique qui consiste à la commercialisation de biens ou de services marchands sur un marché donné n'est pas en principe compatible avec l'objet d'une association.",
+        "Selon l'article 2 de l'Acte uniforme portant sur le droit commercial général, un acte de commerce par nature est celui par lequel une personne s'entremet dans la circulation des biens qu'elle produit ou achète ou par lequel elle fournit des prestations de service avec l'intention d'en tirer un profit pécuniaire. Ont, notamment, le caractère d'actes de commerce par nature l'achat de biens, meubles ou immeubles, en vue de leur revente etc.",
+        "Lorsque les actes de commerce sont occasionnels et accessoires à l'objet de l'entité à but non lucratif, ils peuvent être requalifiés d'actes civils. Lorsque les actes de commerce sont habituels et répétés, l'entité devient commerçante et est soumise aux dispositions de l'Acte uniforme portant sur le droit commercial général et au SYSCOHADA.",
+        "Les produits en provenance des actes de commerce sont enregistrés dans les 705 Ventes de marchandises, de services et de produits finis et 706 Revenus des manifestations et éventuellement dans le compte 707 Produits accessoires.",
+        "Les entités à but non lucratif doivent veiller au caractère accessoire des produits provenant des actes de commerce inscrits dans les comptes ci-dessus."
+      ],
+      "comptes": [
+        "705",
+        "706",
+        "707"
+      ],
+      "mots_cles": [
+        "revenus activités économiques",
+        "exemption impôt",
+        "actes de commerce",
+        "droit commercial",
+        "SYSCOHADA",
+        "ventes marchandises",
+        "revenus manifestations",
+        "produits accessoires"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2153,
+      "titre": "Autres comptes de charges spécifiques — Achats de biens et services liés à l'activité",
+      "texte": [
+        "Des comptes de charges spécifiques ont été créés pour les entités à but non lucratif. Il s'agit du :",
+        "- compte 601 Achats de biens et services liés à l'activité, ce compte a été créé pour y loger les achats des biens et services acquis pour la réalisation de l'objet social de l'entité. Par exemple, achats de nourritures pour les sans-abris, achats de vêtements pour les talibés, constructions de puits au profit d'un village etc. ;"
+      ],
+      "comptes": [
+        "601"
+      ],
+      "mots_cles": [
+        "charges spécifiques",
+        "achats biens services",
+        "objet social",
+        "nourritures",
+        "vêtements",
+        "constructions"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2154,
+      "titre": "Autres comptes de charges spécifiques — Achats autres activités",
+      "texte": [
+        "- compte 606 Achats autres activités, ce compte est prévu pour enregistrer les frais engagés pour la confection des tickets, l'achat des lots, des billets de voyage pour les manifestations, les loteries et autres jeux ;"
+      ],
+      "comptes": [
+        "606"
+      ],
+      "mots_cles": [
+        "achats autres activités",
+        "tickets",
+        "lots",
+        "billets voyage",
+        "manifestations",
+        "loteries",
+        "jeux"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2155,
+      "titre": "Autres comptes de charges spécifiques — Frais de recherche de fonds",
+      "texte": [
+        "- compte 636 Frais de recherche de fonds, ce compte est prévu pour enregistrer toutes les dépenses relatives à la recherche de dons, par exemple, publicité, confection de calendrier, de bloc notes de stylos, etc."
+      ],
+      "comptes": [
+        "636"
+      ],
+      "mots_cles": [
+        "frais recherche fonds",
+        "recherche dons",
+        "publicité",
+        "calendrier"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2160,
+      "titre": "Bénévolat",
+      "texte": [
+        "Le bénévole est une personne qui s'engage librement pour mener une action non rémunérée au profit de l'entité dans le cadre de son objet social.",
+        "Le bénévolat étant gratuite, il n'entraîne pas de flux financiers, cependant il est valorisé et comptabilisé si son poids dans l'activité de l'entité est significatif et si celle-ci est en mesure de le recenser et de le valoriser de façon pertinente.",
+        "Chaque acte de bénévolat doit correspondre une pièce comptable indiquant la date, la nature de l'opération, le nom de la personne ou de l'organisme concerné et le mode d'évaluation de l'apport.",
+        "Le bénévolat est enregistré dans les comptes de la classe 9 Compte des contributions en nature. Cet enregistrement n'a aucune incidence sur le compte de résultat. Toutefois, la Note annexe doit fournir l'information relative à l'identification des bénévoles, la nature de leur mission et la période d'exécution des travaux pour une appréciation du poids du bénévolat dans l'entité."
+      ],
+      "comptes": [
+        "9"
+      ],
+      "mots_cles": [
+        "bénévolat",
+        "bénévole",
+        "action non rémunérée",
+        "contributions en nature",
+        "classe 9",
+        "valorisation",
+        "pièce comptable",
+        "note annexe"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2161,
+      "titre": "Bénévolat — Schéma des écritures",
+      "texte": [
+        "Écritures de comptabilisation du bénévolat (frais de bénévolat)."
+      ],
+      "ecritures": [
+        {
+          "description": "Frais de bénévolat",
+          "lignes": [
+            {
+              "compte": "904",
+              "libelle": "Personnel bénévole",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "914",
+              "libelle": "Bénévolat",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "904",
+        "914"
+      ],
+      "mots_cles": [
+        "bénévolat",
+        "écritures",
+        "personnel bénévole",
+        "classe 9"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2162,
+      "titre": "Frais engagés par les bénévoles — Abandons de frais",
+      "texte": [
+        "Les frais engagés par le bénévole, pour le compte de l'entité, peuvent faire l'objet d'un remboursement, si les dépenses sont réelles et justifiées. Ces dépenses sont enregistrées dans les comptes de charges par nature. En cas de renonciation au remboursement, les produits générés seront enregistrés au crédit du compte 7583 Abandons de frais par les bénévoles."
+      ],
+      "comptes": [
+        "7583"
+      ],
+      "mots_cles": [
+        "frais bénévoles",
+        "remboursement",
+        "abandons de frais",
+        "renonciation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2163,
+      "titre": "Frais engagés par les bénévoles — Schéma des écritures",
+      "texte": [
+        "Écritures d'engagement des frais par les bénévoles et d'abandons de frais."
+      ],
+      "ecritures": [
+        {
+          "description": "Engagement des frais par les bénévoles",
+          "lignes": [
+            {
+              "compte": "6",
+              "libelle": "Comptes de charges par nature",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "4572",
+              "libelle": "Bénévoles",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        },
+        {
+          "description": "Abandons de frais",
+          "lignes": [
+            {
+              "compte": "4572",
+              "libelle": "Bénévoles",
+              "debit": "x",
+              "credit": ""
+            },
+            {
+              "compte": "7583",
+              "libelle": "Abandons de frais par les bénévoles",
+              "debit": "",
+              "credit": "x"
+            }
+          ]
+        }
+      ],
+      "comptes": [
+        "6",
+        "4572",
+        "7583"
+      ],
+      "mots_cles": [
+        "écritures bénévoles",
+        "engagement frais",
+        "abandons frais"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2170,
+      "titre": "États financiers — Définition",
+      "texte": [
+        "Les états financiers sont un ensemble complet de documents qui fournissent à l'ensemble des parties prenantes des informations utiles sur le patrimoine, la situation financière, la performance et les variations de la situation de trésorerie des associations et des ordres professionnels.",
+        "Les états financiers annuels de chaque entité respectent les dispositions ci-dessous :",
+        "- le recours, pour la tenue de la comptabilité de l'entité, à un plan de comptes normalisé dont la liste figure dans le Système comptable des entités à but non lucratif ;"
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "états financiers",
+        "définition",
+        "patrimoine",
+        "situation financière",
+        "performance",
+        "trésorerie",
+        "plan de comptes normalisé"
+      ],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1333"
+    },
+    {
+      "numero": 2171,
+      "titre": "Première année d'application du Système comptable des entités à but non lucratif",
+      "texte": [
+        "Toute entité visée par les dispositions de l'Acte uniforme relatif au système comptable des entités à but non lucratif doit préparer et présenter son Bilan d'ouverture au premier jour de l'entrée en vigueur de l'Acte uniforme. C'est le point de départ de sa comptabilité. Pour se faire l'entité :",
+        "- doit faire l'inventaire et comptabiliser tous les actifs et passifs suivant le plan des comptes du Système comptable des entités à but non lucratif ;",
+        "- ne doit pas comptabiliser des éléments en tant qu'actifs ou passifs si le Système comptable des entités à but non lucratif n'autorise pas une telle comptabilisation.",
+        "Sont considérés comme « premiers états financiers, ceux qui sont confirmés par une déclaration explicite et sans réserve de conformité au Système comptable des entités à but non lucratif »."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "première année application",
+        "bilan ouverture",
+        "inventaire",
+        "actifs passifs",
+        "premiers états financiers",
+        "conformité"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2172,
+      "titre": "Conditions de recevabilité",
+      "texte": [
+        "Les conditions de recevabilité des états financiers sont traitées au § 1251."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "recevabilité",
+        "états financiers"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2173,
+      "titre": "Modèles de présentation",
+      "texte": [
+        "Les présentations des états financiers annuels et la tenue des comptes admises sont le Système normal et le Système minimal de trésorerie, selon le cas.",
+        "Toute entité est, sauf exception liée à sa taille, soumise au Système normal de présentation des états financiers et de tenue des comptes.",
+        "Le régime juridique du dépôt des états financiers est soumis à la législation interne de chaque État partie (art. 5 de l'Acte uniforme)."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "modèles présentation",
+        "système normal",
+        "système minimal trésorerie",
+        "taille entité",
+        "dépôt états financiers"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2174,
+      "titre": "Système normal — Jeu complet d'états financiers annuels",
+      "texte": [
+        "Un jeu complet d'états financiers annuels comprend :",
+        "- le Bilan ;",
+        "- le Compte de résultat ;",
+        "- le Tableau des flux de trésorerie ;",
+        "- les Notes annexes."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "système normal",
+        "bilan",
+        "compte de résultat",
+        "tableau flux trésorerie",
+        "notes annexes",
+        "états financiers annuels"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2175,
+      "titre": "Bilan",
+      "texte": [
+        "Le Bilan décrit séparément les éléments d'actif et les éléments de passif constituant le patrimoine de l'entité.",
+        "Le Bilan de l'exercice fait apparaître de façon distincte :",
+        "- un actif constitué d'éléments identifiables du patrimoine représentant une ressource économique actuelle contrôlée par l'entité du fait d'événements passés. On y trouve l'actif immobilisé, l'actif circulant, la trésorerie-actif et l'écart de conversion actif ;",
+        "- un passif, composé des ressources propres et assimilées et du passif externe. Un passif externe est une obligation actuelle de l'entité résultant d'un événement passé, qu'elle ne peut régler que par une sortie de ressources économiques. Sont regroupés dans cette rubrique les ressources stables, le passif circulant, la trésorerie-passif et l'écart de conversion-passif."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "bilan",
+        "actif",
+        "passif",
+        "patrimoine",
+        "actif immobilisé",
+        "actif circulant",
+        "trésorerie-actif",
+        "écart conversion actif",
+        "ressources propres",
+        "passif externe",
+        "ressources stables",
+        "passif circulant",
+        "trésorerie-passif",
+        "écart conversion-passif"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2176,
+      "titre": "Compte de résultat",
+      "texte": [
+        "Le Compte de résultat récapitule en liste, les produits et les charges qui font apparaître l'excédent net ou le déficit net de l'exercice.",
+        "Il doit être procédé, dans l'exercice, à tous les amortissements, dépréciations et provisions nécessaires pour tenir compte des consommations d'avantages économiques, des pertes de valeurs,"
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "compte de résultat",
+        "produits",
+        "charges",
+        "excédent net",
+        "déficit net",
+        "amortissements",
+        "dépréciations",
+        "provisions"
+      ],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1336"
+    },
+    {
+      "numero": 2177,
+      "titre": "Tableau des flux de trésorerie",
+      "texte": [
+        "Le Tableau des flux de trésorerie retrace les mouvements « entrées » et « sorties » de liquidités de l'exercice.",
+        "Le Tableau des flux de trésorerie de l'exercice fait apparaître la trésorerie nette en début d'exercice, les flux de trésorerie provenant des activités opérationnelles, les flux de trésorerie provenant des opérations d'investissement, les flux de trésorerie provenant des fonds propres, les flux de trésorerie provenant des fonds extérieurs et la trésorerie nette en fin d'exercice."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "tableau flux trésorerie",
+        "entrées",
+        "sorties",
+        "liquidités",
+        "activités opérationnelles",
+        "opérations investissement",
+        "fonds propres",
+        "fonds extérieurs",
+        "trésorerie nette"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2178,
+      "titre": "Notes annexes",
+      "texte": [
+        "Les Notes annexes contiennent des informations complémentaires à celles qui sont présentées dans le Bilan, le Compte de résultat et le Tableau des flux de trésorerie. Les Notes annexes fournissent des descriptions narratives ou des décompositions d'éléments présentées dans les autres états financiers, ainsi que des informations relatives aux éléments qui ne répondent pas aux critères de comptabilisation dans les autres états financiers.",
+        "Les Notes annexes comportent tous les éléments significatifs qui ne sont pas mis en évidence dans les autres états financiers et sont susceptibles d'influencer le jugement que les utilisateurs des documents peuvent porter sur le patrimoine, la situation financière et le résultat de l'entité. Il en est ainsi notamment pour le montant des engagements donnés et reçus dont le suivi doit être assuré par l'entité dans le cadre de son organisation comptable.",
+        "Les Notes annexes font partie intégrante des états financiers. Elles doivent comporter obligatoirement une déclaration explicite de conformité à l'Acte Uniforme relatif au droit comptable et à l'information financière et au Système comptable des entités à but non lucratif."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "notes annexes",
+        "informations complémentaires",
+        "descriptions narratives",
+        "décompositions",
+        "éléments significatifs",
+        "engagements donnés reçus",
+        "déclaration conformité",
+        "Acte Uniforme"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2179,
+      "titre": "États financiers normalisés",
+      "texte": [
+        "Les rubriques et les postes des états financiers non chiffrés ne doivent pas être présentés.",
+        "Les modèles de Notes ci-dessous non documentés ne doivent pas être joints aux états financiers. Leur contenu peut être amélioré."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "états financiers normalisés",
+        "rubriques non chiffrées",
+        "modèles notes",
+        "contenu améliorable"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2250,
+      "titre": "Règles de comptabilisation du projet de développement",
+      "texte": [
+        "Les règles de comptabilisation des comptes d'actif immobilisé, de stocks, de tiers, de trésorerie, de charges et de produits du SYCEBNL relatives au projet de développement sont similaires à celles du SYSCOHADA traitées dans la première partie de cet ouvrage. Ne seront abordés dans cette partie que les points spécifiques au projet de développement, défini au §2004. Il s'agit :",
+        "- des fonds affectés aux immobilisations appelés fonds d'investissements ;",
+        "- des fonds affectés aux charges appelés fonds d'administration.",
+        "Dans un projet de développement, le bailleur élabore en principe un document projet qui détermine le budget nécessaire à l'atteinte de ses objectifs. Ce budget permet de distinguer les fonds alloués aux immobilisations et ceux affectés aux frais de fonctionnement du projet."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "projet développement",
+        "fonds investissements",
+        "fonds administration",
+        "bailleur",
+        "budget projet",
+        "SYCEBNL"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2251,
+      "titre": "Fonds affectés aux investissements - Enregistrement",
+      "texte": [
+        "Les fonds, que le bailleur met à la disposition du projet relatifs aux immobilisations traitées aux §§ 80 et suivants, sont enregistrés dès leur réception au crédit de l'un des comptes 162 à 164 Fonds affectés aux investissements selon le cas par le débit d'un compte 5 Comptes de trésorerie.",
+        "Aucune écriture comptable ne doit être enregistrée si les ressources ne sont pas réceptionnées par le projet."
+      ],
+      "comptes": [
+        "162",
+        "163",
+        "164",
+        "5"
+      ],
+      "mots_cles": [
+        "fonds investissements",
+        "immobilisations",
+        "bailleur",
+        "trésorerie",
+        "réception fonds"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2252,
+      "titre": "Fonds sans répartition - Affectation selon budget",
+      "texte": [
+        "Il peut arriver que le bailleur mette les fonds à la disposition du projet sans indiquer la répartition entre les fonds affectés aux immobilisations et ceux destinés à la couverture des frais de fonctionnement, dans ce cas le projet doit se référer au budget du projet pour répartir les fonds entre :",
+        "- les immobilisations qui seront enregistrés au crédit de l'un des comptes 162 à 164 Fonds affectés aux investissements ;",
+        "- et les frais (charges) qui seront inscrits au crédit du compte 46 Bailleurs Fonds d'administration.",
+        "En fin de période, un réajustement sera effectué pour se conformer à la réalité des dépenses engagées entre les immobilisations, comptes 162 à 164, et les frais de fonctionnement (charges), compte 46."
+      ],
+      "comptes": [
+        "162",
+        "163",
+        "164",
+        "46"
+      ],
+      "mots_cles": [
+        "répartition fonds",
+        "budget",
+        "immobilisations",
+        "charges fonctionnement",
+        "réajustement"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2253,
+      "titre": "Avance initiale du bailleur pour immobilisations",
+      "texte": [
+        "Le bailleur de fonds peut être amené à faire une avance initiale pour les immobilisations qui doit être justifiée par le projet aux fins de remboursement pour reconstitution de ladite avance. Dans ce cas le compte 161 Avances de fonds à justifier sera crédité par le débit du compte 5 trésorerie, (en cas de non reconstitution de l'avance initiale l'un des comptes 162 à 164 Fonds affectés aux investissements sera crédité en lieu et place du compte 161). Si l'avance initiale concerne aussi les frais de fonctionnement (charges) voir §2273.",
+        "Si cette avance doit être reconstituée régulièrement par le bailleur, les fonds reçus en remboursement des achats d'immobilisations seront enregistrés au crédit de l'un des comptes 162 à 164 selon le cas par le débit du compte 5 trésorerie."
+      ],
+      "comptes": [
+        "161",
+        "162",
+        "163",
+        "164",
+        "5"
+      ],
+      "mots_cles": [
+        "avance initiale",
+        "justification",
+        "remboursement",
+        "reconstitution avance",
+        "immobilisations"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2254,
+      "titre": "Acquisition de biens immobiliers",
+      "texte": [
+        "Au fur et à mesure des acquisitions des biens immobiliers les comptes 2 Comptes d'actif immobilisé sont débités par le crédit du compte 481 Fournisseurs d'investissements ou d'un compte 5 Comptes de trésorerie."
+      ],
+      "comptes": [
+        "2",
+        "481",
+        "5"
+      ],
+      "mots_cles": [
+        "acquisition",
+        "biens immobiliers",
+        "actif immobilisé",
+        "fournisseurs investissements"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2255,
+      "titre": "Immobilisations transférées ou mises à disposition",
+      "texte": [
+        "Les immobilisations transférées et celles mises à la disposition du projet par le bailleur doivent être évaluées à leur valeur actuelle et inscrites au débit du compte 2 Comptes d'actif immobilisé et au crédit d'un des comptes 162 à 164 Fonds affectés aux investissements."
+      ],
+      "comptes": [
+        "2",
+        "162",
+        "163",
+        "164"
+      ],
+      "mots_cles": [
+        "immobilisations transférées",
+        "mise à disposition",
+        "valeur actuelle",
+        "évaluation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2256,
+      "titre": "Fin de période - Amortissements et fonds non consommés",
+      "texte": [
+        "En fin de période,",
+        "- aucune dotation aux amortissements et dépréciations ne sera constatée dans les comptes du projet. En effet, un projet n'a pas vocation à reconstituer ses immobilisations par le biais d'un autofinancement ;",
+        "- les fonds affectés aux immobilisations non consommés seront enregistrés au crédit du compte 1651 Fonds affectés aux investissements non consommés par le débit d'un des comptes 162 à 164 selon le cas. Cette écriture de régularisation sera extournée au début de l'exercice suivant."
+      ],
+      "comptes": [
+        "1651",
+        "162",
+        "163",
+        "164"
+      ],
+      "mots_cles": [
+        "fin de période",
+        "amortissements",
+        "dépréciations",
+        "fonds non consommés",
+        "régularisation",
+        "extourne"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2257,
+      "titre": "Fin de projet - Restitution ou transfert des biens",
+      "texte": [
+        "A la fin de projet le bailleur peut demander la restitution des biens ou le transfert des biens à un autre projet ou à l'Etat partie.",
+        "Dans tous les cas, l'un des comptes 162 à 164 Fonds affectés aux investissements sera débité par le crédit du compte 2 Comptes d'actif immobilisé."
+      ],
+      "comptes": [
+        "162",
+        "163",
+        "164",
+        "2"
+      ],
+      "mots_cles": [
+        "fin de projet",
+        "restitution biens",
+        "transfert biens",
+        "Etat partie"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2258,
+      "titre": "Schéma des écritures - Fonds affectés aux investissements",
+      "texte": [
+        "Débit 5 Comptes de trésorerie / Crédit 162 à 164 Fonds affectés aux investissements — Transfert de fonds en numéraire du bailleur",
+        "Débit 2 Comptes d'actif immobilisé / Crédit 162 à 164 Fonds affectés aux investissements — Paiement direct d'immobilisations ou transfert d'immobilisations du bailleur",
+        "Débit 5 Comptes de trésorerie / Crédit 161 Avances de fonds à justifier — Avance de fonds du bailleur à justifier par le projet",
+        "Débit 5 Comptes de trésorerie / Crédit 162 à 164 Fonds affectés aux investissements / Crédit 46 Bailleurs Fonds d'administration — Affection selon budget en cas de transfert de fonds sans distinction entre immobilisations et charges",
+        "Débit 2 Comptes d'actif immobilisé / Crédit 481 Fournisseurs d'investissements / Crédit 5 Comptes de trésorerie — Achat de biens immobiliers",
+        "Débit 162 à 164 Fonds affectés aux investissements / Crédit 1651 Fonds affectés aux invest. non consommés — Détermination des fonds affectés aux immobilisations non consommés en fin d'exercice. Cette écriture sera extournée le 1er janvier",
+        "Débit 162 à 164 Fonds affectés aux investissements / Crédit 2 Comptes d'actif immobilisé — Transfert des immobilisations au bailleur, à un autre projet ou à une institution"
+      ],
+      "comptes": [
+        "5",
+        "162",
+        "163",
+        "164",
+        "2",
+        "161",
+        "46",
+        "481",
+        "1651"
+      ],
+      "mots_cles": [
+        "schéma écritures",
+        "fonds investissements",
+        "transfert fonds",
+        "avance à justifier",
+        "immobilisations",
+        "extourne"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2259,
+      "titre": "Exemple 1 : Transfert de fonds conformément au budget",
+      "texte": [
+        "1/04/N, le bailleur JOJO a transféré par virement bancaire ce jour au projet appui à la fertilisation des terres les fonds suivants conformément au budget:",
+        "- FCFA 15 000 000 pour achat de voiture ;",
+        "- FCFA 2 000 000 pour achat d'un ordinateur ;",
+        "Le 30/6/N le projet a acheté et payé par chèque la voiture à FCFA 15 000 000 et un ordinateur à FCFA 1 200 000. La durée d'utilité de la voiture est de 5 ans et celle de l'ordinateur 3 ans.",
+        "Passer les écritures au 1/04, au 30/6 et au 31/12",
+        "Solution",
+        "1/04/N: Débit 52 Banques 17 000 000 / Crédit 162 Fonds affectés aux investissements 15 000 000 / Crédit 462 Fonds d'administration 2 000 000 — Transfert de fonds bailleur JOJO",
+        "30/06/N: Débit 2451 Matériel automobile 15 000 000 / Débit 2442 Matériel informatique 1 200 000 / Crédit 52 Banques 16 200 000 — Achat voiture et ordinateur",
+        "31/12/N: Débit 162 Fonds affectés aux investissements 800 000 / Crédit 1651 Fonds affectés aux invest. non consommés 800 000 — Ordinateur : 2 000 000 – 1 200 000 = 800 000",
+        "NB: aucune dotation aux amortissements ne doit être enregistrée dans les livres de l'entité."
+      ],
+      "comptes": [
+        "52",
+        "162",
+        "462",
+        "2451",
+        "2442",
+        "1651"
+      ],
+      "mots_cles": [
+        "exemple",
+        "transfert fonds",
+        "budget",
+        "voiture",
+        "ordinateur",
+        "amortissements",
+        "fonds non consommés"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2260,
+      "titre": "Exemple 2 : Transfert de fonds sans affectation",
+      "texte": [
+        "30/06/N, le bailleur Canada a fait un virement bancaire de FCFA 12 500 000 pour couvrir les activités du troisième trimestre du projet Talibé sans aucune affectation.",
+        "L'extrait de budget du dernier semestre fait ressortir les rubriques suivantes :",
+        "- Meubles de rangement 2 500 000",
+        "- Triporteur 3 650 000",
+        "- Matériel de cuisine 1 000 000",
+        "- Vêtements 3 000 000",
+        "- Cuisinier : prestataire service 900 000",
+        "- Nourriture 10 000 000",
+        "- Honoraire médecins et assistants sociaux 1 500 000",
+        "- Pharmacie 2 000 000",
+        "- Divers imprévus 550 000",
+        "Le projet a prévu d'utiliser les fonds pour l'acquisition de la moto du matériel de cuisine et la couverture des frais de fonctionnement du trimestre.",
+        "30/07/N le projet a payé le triporteur par chèque de FCFA 3 500 000",
+        "30/09/N le projet a payé par chèque les frais de fonctionnement trimestriels suivants :",
+        "- Cuisinier (prestataire de service) : FCFA 450 000",
+        "- Nourriture : FCFA 5 000 000",
+        "- Honoraires médecins et assistants sociaux : FCFA 750 000",
+        "- Pharmacie : FCFA 1 200 000",
+        "- Vêtements : FCFA 1 600 000",
+        "Passer les écritures",
+        "Solution",
+        "30/06/N: Débit 52 Banques 12 500 000 / Crédit 162 Fonds affectés aux investissements 4 650 000 / Crédit 462 Fonds d'administration 7 850 000 — Transfert de fonds bailleur Canada",
+        "30/07/N: Débit 2458 Matériel triporteur 3 500 000 / Crédit 52 Banques 3 500 000 — Achat triporteur",
+        "30/09/N: Débit 60111 Achats nourriture 5 000 000 / Débit 60112 Achats Vêtements 1 600 000 / Débit 60113 Achats produits pharmaceutique 1 200 000 / Débit 6327 Rémunérations des autres prestataires de services 450 000 / Débit 6324 Honoraires des professions réglementées 750 000 / Crédit 52 Banques 9 000 000 — Règlement frais de fonctionnement trimestriel",
+        "d°: Débit 162 Fonds affectés aux investissements 1 150 000 / Crédit 462 Fonds d'administration 1 150 000 — Réajustement de la réalisation"
+      ],
+      "comptes": [
+        "52",
+        "162",
+        "462",
+        "2458",
+        "60111",
+        "60112",
+        "60113",
+        "6327",
+        "6324"
+      ],
+      "mots_cles": [
+        "exemple",
+        "transfert fonds",
+        "sans affectation",
+        "budget",
+        "répartition",
+        "triporteur",
+        "réajustement"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2261,
+      "titre": "Exemple 3 : Avance de fonds à justifier",
+      "texte": [
+        "3/01/N, le bailleur Afrique a fait un virement bancaire de FCFA 10 000 000 à titre d'avance à justifier par le projet JOYCE qui a pour objectif l'amélioration des conditions de vie du village le Tam.",
+        "30/03/N le projet JOYCE a fait parvenir au bailleur le justificatif des dépenses au cours du premier trimestre :",
+        "- Ordinateur FCFA 1 500 000",
+        "- Honoraires de l'ingénieur FCFA 750 000",
+        "- Construction de latrines pour le village FCFA 4 500 000",
+        "- Construction de puits pour le village FCFA 1 800 000",
+        "15/04/N le Bailleur Afrique a fait un virement au projet de FCFA 8 550 000",
+        "Passer les écritures au 3/01/N et au 15/04",
+        "Solution",
+        "03/01/N: Débit 52 Banques 10 000 000 / Crédit 161 Avances de fonds à justifier 10 000 000 — Avance à justifier",
+        "15/04/N: Débit 52 Banques 8 550 000 / Crédit 162 Fonds affectés aux investissements 1 500 000 / Crédit 462 Fonds d'administration 7 050 000 — Remboursement des dépenses du premier trimestre"
+      ],
+      "comptes": [
+        "52",
+        "161",
+        "162",
+        "462"
+      ],
+      "mots_cles": [
+        "exemple",
+        "avance à justifier",
+        "remboursement",
+        "justificatif dépenses"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2262,
+      "titre": "Exemple 4 : Mise à disposition de biens par le bailleur",
+      "texte": [
+        "30/08/N, le bailleur Europe a remis au projet Taf, un véhicule SUV d'occasion qu'il a retiré d'un autre projet.",
+        "Le projet a évalué le véhicule à sa valeur argus, soit FCFA 4 500 000.",
+        "Passer les écritures",
+        "Solution",
+        "30/01/N: Débit 2451 Matériel automobile 4 500 000 / Crédit 162 Fonds affectés aux investissements 4 500 000 — Remise du véhicule SUV par le bailleur"
+      ],
+      "comptes": [
+        "2451",
+        "162"
+      ],
+      "mots_cles": [
+        "exemple",
+        "mise à disposition",
+        "véhicule",
+        "valeur argus",
+        "bailleur"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2263,
+      "titre": "Exemple 5 : Reprise des biens fin de projet",
+      "texte": [
+        "30/11/N, le bailleur Asie a donné, au projet PES arrivé à terme, des instructions relatives au transfert du matériel à l'Etat partie.",
+        "Le 15/12/N le Projet PES a transféré le matériel suivant à l'Etat partie :",
+        "- Voiture 10 000 000",
+        "- Mobilier de bureau : 5 000 000",
+        "Passer les écritures",
+        "Solution",
+        "15/12/N: Débit 162 Fonds affectés aux investissements 15 000 000 / Crédit 2441 Mobilier de bureau 5 000 000 / Crédit 2451 Matériel automobile 10 000 000 — Transfert du mobilier de bureau et de la voiture"
+      ],
+      "comptes": [
+        "162",
+        "2441",
+        "2451"
+      ],
+      "mots_cles": [
+        "exemple",
+        "reprise biens",
+        "fin de projet",
+        "transfert",
+        "Etat partie"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2270,
+      "titre": "Fonds d'administration - Enregistrement",
+      "texte": [
+        "Les fonds que le bailleur met à la disposition de l'entité, pour faire face aux charges d'exploitation ou frais généraux, sont des dotations consomptibles qui doivent être enregistrés au crédit d'un des comptes 462 à 464 Fonds d'administration selon le cas par le débit d'un compte 5 Trésorerie à la réception des fonds.",
+        "Aucune écriture comptable ne doit être enregistrée si les ressources ne sont pas réceptionnées par le projet."
+      ],
+      "comptes": [
+        "462",
+        "463",
+        "464",
+        "5"
+      ],
+      "mots_cles": [
+        "fonds administration",
+        "charges exploitation",
+        "frais généraux",
+        "dotations consomptibles",
+        "réception fonds"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2271,
+      "titre": "Paiement direct des charges par le bailleur",
+      "texte": [
+        "Si les charges d'exploitation sont payées directement par le bailleur, l'un des comptes 462 à 464 Fonds d'administration sera crédité par le débit d'un compte de charges 6 ou 8."
+      ],
+      "comptes": [
+        "462",
+        "463",
+        "464",
+        "6",
+        "8"
+      ],
+      "mots_cles": [
+        "paiement direct",
+        "bailleur",
+        "charges exploitation",
+        "fonds administration"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2272,
+      "titre": "Fonds sans répartition entre charges et immobilisations",
+      "texte": [
+        "Les fonds envoyés à l'entité sans aucune répartition entre les charges d'exploitation et les immobilisations sont traités au §2252"
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "fonds sans répartition",
+        "renvoi",
+        "charges exploitation",
+        "immobilisations"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2273,
+      "titre": "Avance initiale pour charges d'exploitation",
+      "texte": [
+        "Si Le bailleur de fonds fait une avance initiale, pour la couverture des charges d'exploitation qui doivent être justifiées par le projet aux fins de remboursement, le compte 161 Avances de fonds à justifier sera crédité par le débit d'un compte 5 trésorerie, (en cas de non reconstitution de l'avance initiale, l'un des comptes 462 à 464 Fonds d'administration selon le cas sera crédité en lieu et place du compte 161).",
+        "Les fonds reçus en remboursement de la couverture des charges d'exploitation seront enregistrés au crédit d'un des comptes 462 à 464 Fonds d'administration selon le cas par le débit du compte 5 trésorerie."
+      ],
+      "comptes": [
+        "161",
+        "462",
+        "463",
+        "464",
+        "5"
+      ],
+      "mots_cles": [
+        "avance initiale",
+        "charges exploitation",
+        "justification",
+        "remboursement",
+        "reconstitution"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2274,
+      "titre": "Neutralisation des charges - Quote-part fonds d'administration",
+      "texte": [
+        "Le compte 46 Fonds d'administration, destiné à neutraliser les charges d'exploitation, sera repris au fur et à mesure de l'engagement des charges ou au plus tard enfin de période par le crédit du compte 702 Quote-part de fonds d'administration transférés et par le débit d'un des comptes 462 à 464 Fonds d'administration."
+      ],
+      "comptes": [
+        "46",
+        "462",
+        "463",
+        "464",
+        "702"
+      ],
+      "mots_cles": [
+        "neutralisation charges",
+        "quote-part",
+        "fonds administration",
+        "engagement charges"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2275,
+      "titre": "Charges non remboursées - Fonds d'administration à recevoir",
+      "texte": [
+        "En fin de période, les charges d'exploitation engagées par l'entité non remboursées par le bailleur doivent être neutralisées par le débit du compte 469 Fonds d'administration à recevoir et le crédit du compte 702 Quote-part de fonds d'administration transférés."
+      ],
+      "comptes": [
+        "469",
+        "702"
+      ],
+      "mots_cles": [
+        "charges non remboursées",
+        "neutralisation",
+        "fonds administration à recevoir",
+        "fin de période"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2276,
+      "titre": "Réception des fonds exercice suivant et schéma des écritures",
+      "texte": [
+        "A la réception des fonds dans le courant de l'exercice suivant le compte 469 sera soldé par le débit d'un des comptes 462 à 464 Fonds d'administration selon le cas.",
+        "Schéma des écritures",
+        "Débit 5 Comptes de trésorerie / Crédit 462 à 464 Fonds d'administration — Transfert de fonds en numéraire du bailleur",
+        "Débit 6 Comptes de charges / Crédit 462 à 464 Fonds d'administration — Paiement direct du bailleur",
+        "Débit 5 Comptes de trésorerie / Crédit 161 Avances de fonds à justifier — Avance du bailleur à justifier par le projet",
+        "Débit 5 Comptes de trésorerie / Crédit 162 à 164 Fonds affectés aux investissements / Crédit 46 Bailleurs Fonds d'administration — Affection selon budget en cas de transfert de fonds sans distinction entre immobilisations et charges d'exploitation",
+        "Débit 6 Comptes de charges / Crédit 40 Fournisseurs / Crédit 5 Comptes de trésorerie — Achats de biens",
+        "Débit 462 à 464 Fonds d'administration / Crédit 702 Quote-part de fonds d'administration transférés — Pour neutralisation des charges",
+        "Débit 469 Fonds d'administration à recevoir / Crédit 702 Quote-part de fonds d'administration transférés — Neutralisation achat à crédit en attente de transfert de fonds",
+        "Débit 462 à 464 Fonds d'administration / Crédit 469 Fonds d'administration à recevoir — Solde du compte crédité dès réception des fonds en attente"
+      ],
+      "comptes": [
+        "469",
+        "462",
+        "463",
+        "464",
+        "5",
+        "6",
+        "161",
+        "162",
+        "163",
+        "164",
+        "46",
+        "40",
+        "702"
+      ],
+      "mots_cles": [
+        "réception fonds",
+        "exercice suivant",
+        "solde compte",
+        "schéma écritures",
+        "fonds administration",
+        "neutralisation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2277,
+      "titre": "Exemple 1 : Transfert de fonds",
+      "texte": [
+        "15/02/N Le bailleur OHADA a fait un virement bancaire de FCFA 15 000 000 au projet AMSAT pour couvrir les charges d'exploitation.",
+        "31/13/N, le projet AMSAT a payé par chèques les dépenses suivantes :",
+        "- Loyer : 1 000 000 FCFA",
+        "- Electricité : 750 000 FCFA",
+        "- Fourniture de bureau : 2 000 000 FCFA",
+        "- Frais réparation véhicule : 1 500 000 FCFA",
+        "- Carburant véhicule : 250 000 FCFA",
+        "Passer les écritures",
+        "Solution",
+        "15/03/N: Débit 52 Banques 15 000 000 / Crédit 462 Fonds d'administration 15 000 000 — Virement du bailleur Afrique",
+        "31/03/N: Débit 622 Locations et charges locatives 1 000 000 / Débit 6052 Électricité 750 000 / Débit 6055 Fourniture de bureau 2 000 000 / Débit 6241 Entretien et réparation véhicule 1 500 000 / Débit 6053 Carburant 250 000 / Crédit 52 Banques 5 500 000 — Règlement diverses dépenses",
+        "d°: Débit 462 Fonds d'administration 5 500 000 / Crédit 702 Achat habillement 5 500 000 — Neutralisation des charges d'exploitation"
+      ],
+      "comptes": [
+        "52",
+        "462",
+        "622",
+        "6052",
+        "6055",
+        "6241",
+        "6053",
+        "702"
+      ],
+      "mots_cles": [
+        "exemple",
+        "transfert fonds",
+        "charges exploitation",
+        "neutralisation",
+        "loyer",
+        "électricité",
+        "carburant"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2278,
+      "titre": "Exemple 2 : Fonds non transférés",
+      "texte": [
+        "15/12/N le projet Medina a reçu la note d'honoraire de l'auditeur de FCFA 5 000 000 relative à la vérification des comptes du premier semestre de l'exercice N.",
+        "31/12/N les factures suivantes relatives aux consommations du mois de décembre ne sont pas reçues :",
+        "- Téléphone : FCFA 500 000",
+        "- Electricité : FCFA 1 200 000",
+        "15/01/N+1, le bailleur a transféré par virement bancaire de FCFA 10 000 000 pour couvrir les charges mois de janvier et le règlement des honoraires de l'auditeur, du téléphone et de l'électricité du mois de décembre.",
+        "Passer les écritures",
+        "Solution",
+        "15/12/N: Débit 6324 Honoraires auditeur 5 000 000 / Crédit 4011 Fournisseurs 5 000 000 — Note honoraire Auditeur",
+        "31/12/N: Débit 66281 Frais de téléphone 500 000 / Débit 6052 Électricité 1 200 000 / Crédit 4081 Fournisseurs factures non parvenues 1 700 000 — Règlement diverses dépenses",
+        "d°: Débit 469 Fonds d'administration à recevoir 6 700 000 / Crédit 702 Quote-part de fonds d'administration transférés 6 700 000 — Neutralisation des charges d'exploitation",
+        "15/01/N+1: Débit 52 Banques 10 000 000 / Crédit 462 Fonds d'administration 10 000 000 — Transfert de fonds du bailleur",
+        "d°: Débit 462 Fonds d'administration 6 700 000 / Crédit 469 Fonds d'administration à recevoir 6 700 000 — Pour solde du compte crédité"
+      ],
+      "comptes": [
+        "6324",
+        "4011",
+        "66281",
+        "6052",
+        "4081",
+        "469",
+        "702",
+        "52",
+        "462"
+      ],
+      "mots_cles": [
+        "exemple",
+        "fonds non transférés",
+        "honoraires auditeur",
+        "factures non parvenues",
+        "neutralisation",
+        "fonds à recevoir"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2279,
+      "titre": "Exemple 3 : Transfert de fonds sans affectation",
+      "texte": [
+        "Exemple 3 : Transfert de fonds sans affectation voir §2260"
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "exemple",
+        "renvoi",
+        "transfert fonds",
+        "sans affectation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2280,
+      "titre": "États financiers du projet de développement",
+      "texte": [
+        "La définition, et les conditions de recevabilité des états financiers ainsi que la première application du SYCEBNL sont traitées aux §§ 2170 à 2173.",
+        "Un jeu complet d'états financiers annuels comprend :",
+        "- le Tableau emplois-ressources,",
+        "- le Tableau d'exécution budgétaire,",
+        "- le Tableau de réconciliation de trésorerie,",
+        "- le Bilan,",
+        "- le Compte d'exploitation,",
+        "- les Notes annexes.",
+        "Les états financiers forment un tout indissociable et décrivent de façon régulière et sincère les événements, opérations et situations de l'exercice pour donner une image fidèle du patrimoine et de la situation financière de l'entité.",
+        "Les états financiers sont établis et présentés conformément aux modèles du Système comptable des entités à but non lucratif.",
+        "Toute entité qui applique correctement le Système comptable des entités à but non lucratif est réputée donner, dans ses états financiers, une image fidèle de sa situation et de ses opérations.",
+        "Lorsque l'application d'une prescription comptable se révèle insuffisante ou inadaptée pour donner l'image fidèle, des informations complémentaires ou des justifications nécessaires sont obligatoirement fournies dans les Notes annexes.",
+        "A notre avis, le Tableau de réconciliation de la trésorerie et le Compte d'exploitation sont redondants par rapport au Tableau emplois-ressources et au Tableau d'exécution du budget on y trouve les mêmes informations classées autrement."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "états financiers",
+        "tableau emplois-ressources",
+        "exécution budgétaire",
+        "réconciliation trésorerie",
+        "bilan",
+        "compte exploitation",
+        "notes annexes",
+        "image fidèle"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2281,
+      "titre": "1 - Tableau emplois-ressources",
+      "texte": [
+        "Le Tableau emplois-ressources est un état financier spécifique au projet de développement. Il présente les fonds reçus des bailleurs au cours de la période, la consommation de ces fonds en immobilisations et charges de fonctionnement, l'excédent ou le déficit des ressources reçues au cours de la période sur les emplois, les fonds disponibles en début d'exercice et le montant net de l'encaisse disponible en fin de période."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "tableau emplois-ressources",
+        "projet développement",
+        "fonds bailleurs",
+        "immobilisations",
+        "charges fonctionnement",
+        "encaisse"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2282,
+      "titre": "2 - Tableau d'exécution budgétaire",
+      "texte": [
+        "Le Tableau d'exécution budgétaire est un état de suivi du budget qui fait apparaitre le budget de l'exercice, les décaissements (immobilisations et charges de l'exercice payées), les engagements (immobilisations et charges de l'exercice non encore payées), les réalisations (total des emplois), le crédit disponible du budget (budget non consommé) et le taux d'exécution du budget."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "tableau exécution budgétaire",
+        "suivi budget",
+        "décaissements",
+        "engagements",
+        "réalisations",
+        "taux exécution"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2283,
+      "titre": "3 - Tableau de réconciliation de trésorerie",
+      "texte": [
+        "Le Tableau de réconciliation de trésorerie est un tableau de flux de trésorerie qui retrace la trésorerie de début d'exercice, les transferts de fonds reçus des bailleurs, les emplois de l'exercice, la trésorerie de fin d'exercice et les paiements en instance."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "tableau réconciliation trésorerie",
+        "flux trésorerie",
+        "transferts fonds",
+        "paiements en instance"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2284,
+      "titre": "4 - Bilan",
+      "texte": [
+        "Le Bilan de l'exercice fait apparaître de façon distincte :",
+        "- à l'actif : l'actif immobilisé, l'actif circulant, la trésorerie-actif et l'écart de conversion actif ;",
+        "- au passif : les ressources stables, constituées essentiellement des fonds d'investissements non repris dans les produits, le passif circulant, constitué essentiellement des fonds d'administration non utilisés pour couvrir les charges d'exploitation, la trésorerie-passif et l'écart de conversion-passif.",
+        "A notre avis, le bilan d'un projet de développement ne présente aucun intérêt dès lors que l'actif et le passif en fin du projet auront une valeur nulle, si les fonds sont consommés conformément au budget. Or le Bilan est un état financier qui fait apparaître le patrimoine de l'entité."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "bilan",
+        "actif immobilisé",
+        "actif circulant",
+        "trésorerie",
+        "écart conversion",
+        "ressources stables",
+        "passif circulant"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2285,
+      "titre": "5 - Compte d'exploitation",
+      "texte": [
+        "Le Compte d'exploitation récapitule en liste, les charges sans amortissement, ni dépréciation et une quotité des ressources équivalente aux charges pour que le solde des opérations de l'exercice soit nul.",
+        "A notre avis, ce compte d'exploitation ne présente aucun intérêt pour un projet de développement : les mêmes informations plus pertinentes figurent dans le Tableau emplois-ressources."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "compte exploitation",
+        "charges",
+        "amortissement",
+        "dépréciation",
+        "solde nul",
+        "tableau emplois-ressources"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2286,
+      "titre": "6 - Notes annexes",
+      "texte": [
+        "Les Notes annexes contiennent des informations complémentaires à celles qui sont présentées le Tableau emplois-ressources, le Tableau d'exécution budgétaire, le Tableau de réconciliation de trésorerie, le Bilan, le Compte d'exploitation. Les Notes annexes fournissent des descriptions narratives ou des décompositions d'éléments présentés dans les autres états financiers, ainsi que des informations relatives aux éléments qui ne répondent pas aux critères de comptabilisation dans les autres états financiers.",
+        "Les Notes annexes comportent tous les éléments de caractère significatif qui ne sont pas mis en évidence dans les autres états financiers et sont susceptibles d'influencer le jugement que les utilisateurs des documents peuvent porter sur le patrimoine, la situation financière et le résultat de l'entité. Il en est ainsi notamment pour le montant des engagements donnés et reçus dont le suivi doit être assuré par l'entité dans le cadre de son organisation comptable.",
+        "Les Notes annexes font partie intégrante des états financiers. Elles doivent comporter obligatoirement une déclaration explicite de conformité à l'Acte Uniforme relatif au droit comptable et à l'information financière et au Système comptable des entités à but non lucratif.",
+        "Les états financiers ne doivent être déclarés conformes au Système comptable des entités à but non lucratif que s'ils sont conformes à toutes les dispositions prévues par le présent Système comptable.",
+        "Chaque élément des états financiers de synthèse doit faire l'objet d'une référence croisée vers l'information liée figurant dans les notes."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "notes annexes",
+        "informations complémentaires",
+        "engagements",
+        "conformité",
+        "Acte Uniforme",
+        "référence croisée"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2287,
+      "titre": "7 - États financiers normalisés",
+      "texte": [
+        "Les rubriques et les postes des états financiers non chiffrés ne doivent pas être présentés.",
+        "Les modèles de Notes ci-dessous non documentés ne doivent pas être joints aux états financiers. Leur contenu peut être amélioré."
+      ],
+      "comptes": [],
+      "mots_cles": [
+        "états financiers normalisés",
+        "rubriques non chiffrées",
+        "modèles notes",
+        "contenu améliorable"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2319,
+      "titre": "Tableau de correspondance - Tableau emplois ressources",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - TABLEAU EMPLOIS RESSOURCES",
+        "REF | DESIGNATION | NUMEROS DE COMPTES A INCORPORER DANS LES POSTES N",
+        "FA | Fonds reçus, Bailleurs …. | Balance mouvement crédit : comptes 161, 162, 462 (si plusieurs bailleurs créer des sous comptes de 161, 162, 462 pour remplir FB)",
+        "FB | Fonds reçus, Bailleurs …. | Balance mouvement crédit : comptes 161, 162, 462",
+        "FC | Fonds contrepartie Etat | Balance mouvement crédit : comptes 163, 463",
+        "FD | Autres fonds reçus | Balance mouvement crédit : comptes 164, 464, 707(1), 77",
+        "GR | I. RESSOURCES |",
+        "FE | Immobilisations incorporelles | Balance mouvement débit : compte 21(2)",
+        "FF | Terrains | Balance mouvement débit : compte 22(2)",
+        "FG | Bâtiments | Balance mouvement débit : comptes 231, 232, 233, 2391, 2392, 2393, 2396(2)",
+        "FH | Aménagements, agencements et installations | Balance mouvement débit : comptes 234, 235, 238, 2394, 2395, 2398(2)",
+        "FI | Matériel, mobilier et actifs biologiques | Balance mouvement débit : comptes 24 (sauf 245 et 2495)(2)",
+        "FJ | Matériel de transport | Balance mouvement débit : comptes 245 et 2495(2)",
+        "FK | Avances et acomptes sur immobilisations | Balance mouvement débit : comptes 25",
+        "FL | Immobilisations financières | Balance mouvement débit : comptes 26, 27(3)",
+        "GS | A- TOTAL DES IMMOBILISATIONS |",
+        "FM | Achats de biens et services | Balance mouvement débit : compte 60(4)",
+        "FN | Transports | Balance mouvement débit : compte 61(4)",
+        "FO | Services extérieurs | Balance mouvement débit : comptes 62, 63(4)",
+        "FP | Impôts et taxes | Balance mouvement débit : compte 64(5)",
+        "FQ | Autres charges | Balance mouvement débit : compte 65(6)",
+        "FR | Charges de personnel | Balance mouvement débit : compte 66(7)",
+        "FS | Charges financières | Balance mouvement débit : compte 67(8)",
+        "FT | Avances sur charges (à justifier) | Balance solde débiteur : comptes 4091, 4093",
+        "GT | B- TOTAL DES CHARGES DE FONCTIONNEMENT |",
+        "GU | II. EMPLOIS (A+B) |",
+        "GV | III. EXCEDENT /DEFICIT DES FONDS RECUS SUR LES EMPLOIS (I-II) |",
+        "FU | Fonds Bailleur en début exercice N | Balance solde débiteur N-1 des fonds bailleurs : comptes 51, 52, 53, 55, 57",
+        "FV | Fonds de contrepartie Etat en début exercice N | Balance solde débiteur N-1 des fonds de contrepartie Etat : comptes 51, 52, 53, 55, 57",
+        "FW | Autres fonds en début exercice N | Balance solde débiteur N-1 des autres fonds : comptes 51, 52, 53, 55, 57",
+        "GW | IV. FONDS DISPONIBLE EN DEBUT EXERCICE |",
+        "GX | V. MONTANT NET DE L'ENCAISSE DISPONIBLE (III+IV) |",
+        "FX | Fonds Bailleur en fin exercice N | Balance solde débiteur N des fonds bailleurs : comptes 51, 52, 53, 55, 57",
+        "FY | Fonds de contrepartie Etat en fin exercice N | Balance solde débiteur N des fonds de contrepartie Etat : comptes 51, 52, 53, 55, 57",
+        "FZ | Autres fonds en fin exercice N | Balance solde débiteur N des autres fonds : comptes 51, 52, 53, 55, 57",
+        "GY | VI. FONDS DISPONIBLE EN FIN EXERCICE |",
+        "GZ | VII. CONTRÔLE : TOTAL V = TOTAL VI |",
+        "Notes :",
+        "(1) Les produits d'exploitation à recevoir en cas de vente de cahier de charges, de location de voiture, sous location de bureau, etc.",
+        "(2) déduire la variation des dettes fournisseurs d'investissements (+Solde créditeur N-1 du compte 481 concerné sauf 4813 - Solde créditeur N du compte 481 concerné sauf 4813). En sus, ne pas tenir compte des virements de compte à compte qui ne traduisent pas une acquisition d'immobilisation incorporelle et corporelle décaissée.",
+        "(3) déduire la variation des dettes rattachées aux versements restant à effectuer sur titres de participation et titres immobilisés non libérés (+Solde débiteur N-1 du compte 4813 - Solde débiteur N du compte 4813). En sus, ne pas tenir compte : du mouvement débit de la Balance du compte 276 des intérêts courus sur immobilisations financières ; des virements de compte à compte qui ne traduisent pas une acquisition d'immobilisation financière décaissée.",
+        "(4) déduire la variation des dettes fournisseurs d'exploitation (+Solde débiteur N-1 du compte 401 concerné - Solde débiteur N du compte 401 concerné). En sus, ne pas tenir compte : de la variation des stocks (compte 603) figurant dans le compte 60 Achats ; des comptes 60 Achats et dettes équivalentes qui ont été transférés en immobilisations (livraison à soi-même) afin d'éviter le double emploi.",
+        "(5) déduire la variation des dettes fiscales (+Solde débiteur N-1 du compte 44 - Solde débiteur N du compte 44).",
+        "(6) déduire la variation des dettes rattachées au compte 65 Autres charges » (+Solde débiteur N-1 du compte de tiers concernés - Solde débiteur N du compte de tiers concernés). En sus, ne pas tenir compte : des comptes « Autres charges » et dettes équivalentes qui ont été transférés en immobilisations (livraison à soi-même) afin d'éviter le double emploi ; des dépréciations et provisions à court terme, comptes 49.",
+        "(7) déduire la variation des dettes rattachées aux charges de personnel (+Solde débiteur N-1 des comptes 42 et 43 - Solde débiteur N des comptes 42 et 43). En sus, ne pas tenir compte des charges de personnel et dettes équivalentes qui ont été transférées en immobilisations (livraison à soi-même) afin d'éviter le double emploi.",
+        "(8) déduire le mouvement crédit de la Balance compte 166. En sus, ne pas tenir compte : des comptes 67 Charges financières qui ont été transférées en immobilisations (livraison à soi-même) afin d'éviter le double emploi ; des dépréciations et provisions à court terme, comptes 49."
+      ],
+      "comptes": ["161", "162", "163", "164", "462", "463", "464", "707", "77", "21", "22", "231", "232", "233", "2391", "2392", "2393", "2396", "234", "235", "238", "2394", "2395", "2398", "24", "245", "2495", "25", "26", "27", "60", "61", "62", "63", "64", "65", "66", "67", "4091", "4093", "51", "52", "53", "55", "57", "481", "4813", "276", "401", "603", "44", "49", "42", "43", "166"],
+      "mots_cles": ["tableau de correspondance", "tableau emplois ressources", "projet de développement", "fonds reçus", "bailleurs", "immobilisations", "charges de fonctionnement", "fonds disponible", "variation dettes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2320,
+      "titre": "Tableau de correspondance - Tableau d'exécution budgétaire",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - TABLEAU D'EXECUTION BUDGETAIRE",
+        "Colonnes du tableau : Code (a) | Libellé (a) | Budget de l'exercice (b) | Décaissement (c) | Engagement (d) | Réalisation 4=2+3 | Crédit Disponible 5=1-4 | Exécution budget (%) 4/1",
+        "a) Remplir, code et libellé, suivant la nomenclature budgétaire du projet.",
+        "b) Le plan comptable doit être conçu en tenant compte du budget du projet. Cette rubrique sera remplie au vu du budget de l'exercice du projet compte par compte.",
+        "c) Si le plan comptable est conçu sur la base du budget, indiquer le décaissement pour chaque item qui doit correspondre à la somme algébrique suivante :",
+        "- mouvement débit balance N des comptes immobilisations (compte 2) à l'exception des virements de compte à compte + (Solde créditeur N-1 du compte 481 - Solde créditeur N du compte 481)",
+        "- mouvement débit balance N des comptes de charges (comptes 6 et 8) + (Solde créditeur N-1 du compte 40 sauf 409 - Solde créditeur N du compte 40 sauf 409) + (Solde débiteur balance N du compte 409 - Solde débiteur balance N-1 du compte 409).",
+        "c) Le montant de l'engagement pour chaque item doit correspondre :",
+        "- (solde créditeur balance N) des comptes fournisseurs d'exploitation (compte 40, 481) d'investissement (Compte 481),",
+        "- bons de commande des biens et services remis aux fournisseurs au cours de l'exercice budgétaire non exécutés,",
+        "- contrats signés par les parties prenantes au cours de l'exercice budgétaire non exécutés."
+      ],
+      "comptes": ["2", "481", "6", "8", "40", "409"],
+      "mots_cles": ["tableau de correspondance", "exécution budgétaire", "décaissement", "engagement", "nomenclature budgétaire", "budget projet", "crédit disponible"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2321,
+      "titre": "Tableau de correspondance - Bilan",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - BILAN",
+        "ACTIF :",
+        "AA | Immobilisations incorporelles | 21",
+        "AB | Terrains et bâtiment | 22, 231, 232, 233, 2391, 2392, 2393, 2396",
+        "AC | Aménagements, agencements et installations | 234, 235, 238, 2394, 2395, 2398",
+        "AD | Matériel, mobilier et actifs biologiques | 24 (sauf 245 et 2495)",
+        "AE | Matériel de transport | 245, 2495",
+        "AF | Avances et acomptes versés sur immobilisations | 25",
+        "AG | Dépôts et cautionnements | 275",
+        "AH | Autres immobilisations corporelles et financières | 26, 27 (sauf 275)",
+        "AZ | TOTAL ACTIF IMMOBILISE |",
+        "BA | Actif circulant HAO | 485",
+        "BB | Stocks et encours | 31, 32, 33, 34, 36, 37, 38",
+        "BC | Fournisseurs débiteurs | 409",
+        "BD | Clients-usagers | 41 (sauf 411 et 419)",
+        "BE | Autres créances | Soldes débiteurs : 42, 43, 44, 47 (sauf 478)",
+        "BF | TOTAL ACTIF CIRCULANT |",
+        "BV | Valeurs à encaisser | 51",
+        "BW | Banques, établissements financiers caisses et assimilés | Soldes débiteurs : 52, 53, 55, 57",
+        "BX | TOTAL TRESORERIE ACTIF |",
+        "BY | Ecart de conversion-Actif | 478",
+        "BZ | TOTAL GENERAL |",
+        "PASSIF :",
+        "CA | Fonds affectés aux investissements | 16",
+        "CB | Report à nouveau (+ ou -) | 12",
+        "CC | Solde des opérations de l'exercice (excédent + ou déficit -) | 13 (131 ou 139)",
+        "CD | Subventions d'investissement | 14",
+        "CZ | TOTAL RESSOURCES PROPRES ET ASSIMILEES |",
+        "DA | Emprunts et dettes assimilées | 18",
+        "DB | Provisions pour risques et charges | 19",
+        "DC | TOTAL DETTES FINANCIERES ET RESSOURCES ASSIMILEES |",
+        "DD | TOTAL RESSOURCES STABLES |",
+        "DE | Dettes circulantes HAO | 481, 484, 4998",
+        "DF | Fonds d'administration | 46",
+        "DG | Fournisseurs | 40 (409)",
+        "DH | Autres dettes | 419, Soldes créditeurs : 42, 43, 44, 47 (sauf 479), 499 (sauf 4998), 599",
+        "DJ | TOTAL PASSIF CIRCULANT |",
+        "DW | Banques, établissements financiers et crédits de trésorerie | 56, Soldes créditeurs 52, 53",
+        "DX | TOTAL TRESORERIE PASSIF |",
+        "DY | Ecart de conversion-Passif | 479",
+        "DZ | TOTAL GENERAL |"
+      ],
+      "comptes": ["21", "22", "231", "232", "233", "2391", "2392", "2393", "2396", "234", "235", "238", "2394", "2395", "2398", "24", "245", "2495", "25", "275", "26", "27", "485", "31", "32", "33", "34", "36", "37", "38", "409", "41", "411", "419", "42", "43", "44", "47", "478", "51", "52", "53", "55", "57", "16", "12", "13", "131", "139", "14", "18", "19", "481", "484", "4998", "46", "40", "479", "499", "599", "56"],
+      "mots_cles": ["tableau de correspondance", "bilan", "actif", "passif", "immobilisations", "actif circulant", "trésorerie", "ressources stables", "dettes", "projet de développement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2322,
+      "titre": "Tableau de correspondance - Compte d'exploitation",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - COMPTE D'EXPLOITATION",
+        "REF | LIBELLES | +/- | NUMEROS DE COMPTES A INCORPORER DANS LES POSTES",
+        "RA | Fonds d'administration | + | 702",
+        "RB | Ventes de marchandises, produits finis et prestations de services | + | 705",
+        "RC | Subventions d'exploitation | + | 71",
+        "RD | Autres produits et transferts de charges | | 707, 72, 73 (+/-) 75, 77, 78",
+        "RE | Reprises de provisions | + | 79",
+        "XA | REVENUS (Somme RA à RD) | |",
+        "TA | Achats de biens, marchandises, matières premières et fournitures liées | - | 601, 602",
+        "TB | Autres achats | - | 604, 605, 606, 608",
+        "TC | Variation de stocks de biens, marchandises, matières et fournitures et autres | +/- | 603",
+        "TD | Transports | - | 61",
+        "TG | Services extérieurs | - | 62, 63",
+        "TH | Impôts et taxes | - | 64",
+        "TI | Autres charges | - | 65",
+        "TJ | Charges de personnel | - | 66",
+        "TK | Frais financiers et charges assimilées | - | 67",
+        "TL | Dotations aux provisions | - | 69",
+        "TM | Produits H.A.O. | + | 82, 84, 86, 88",
+        "TN | Charges H.A.O. | - | 81, 83, 85, 87",
+        "XB | CHARGES DE FONCTIONNEMENT (Somme TA à TN) | |",
+        "XC | SOLDE DES OPERATIONS DE L'EXERCICE (+excédent, -déficit) XA - XB | |"
+      ],
+      "comptes": ["702", "705", "71", "707", "72", "73", "75", "77", "78", "79", "601", "602", "604", "605", "606", "608", "603", "61", "62", "63", "64", "65", "66", "67", "69", "82", "84", "86", "88", "81", "83", "85", "87"],
+      "mots_cles": ["tableau de correspondance", "compte d'exploitation", "revenus", "charges de fonctionnement", "fonds administration", "produits HAO", "charges HAO", "solde opérations", "projet de développement"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

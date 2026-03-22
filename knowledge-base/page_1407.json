@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "II - Fonds d'administration - Exemples 2 et 3",
+    "page_source": 1407
+  },
+  "articles": [
+    {
+      "numero": 2278,
+      "titre": "Exemple 2 : Fonds non transférés",
+      "texte": [
+        "15/12/N le projet Medina a reçu la note d'honoraire de l'auditeur de FCFA 5 000 000 relative à la vérification des comptes du premier semestre de l'exercice N.",
+        "31/12/N les factures suivantes relatives aux consommations du mois de décembre ne sont pas reçues :",
+        "- Téléphone : FCFA 500 000",
+        "- Electricité : FCFA 1 200 000",
+        "15/01/N+1, le bailleur a transféré par virement bancaire de FCFA 10 000 000 pour couvrir les charges mois de janvier et le règlement des honoraires de l'auditeur, du téléphone et de l'électricité du mois de décembre.",
+        "Passer les écritures",
+        "Solution",
+        "15/12/N: Débit 6324 Honoraires auditeur 5 000 000 / Crédit 4011 Fournisseurs 5 000 000 — Note honoraire Auditeur",
+        "31/12/N: Débit 66281 Frais de téléphone 500 000 / Débit 6052 Électricité 1 200 000 / Crédit 4081 Fournisseurs factures non parvenues 1 700 000 — Règlement diverses dépenses",
+        "d°: Débit 469 Fonds d'administration à recevoir 6 700 000 / Crédit 702 Quote-part de fonds d'administration transférés 6 700 000 — Neutralisation des charges d'exploitation",
+        "15/01/N+1: Débit 52 Banques 10 000 000 / Crédit 462 Fonds d'administration 10 000 000 — Transfert de fonds du bailleur",
+        "d°: Débit 462 Fonds d'administration 6 700 000 / Crédit 469 Fonds d'administration à recevoir 6 700 000 — Pour solde du compte crédité"
+      ],
+      "comptes": ["6324", "4011", "66281", "6052", "4081", "469", "702", "52", "462"],
+      "mots_cles": ["exemple", "fonds non transférés", "honoraires auditeur", "factures non parvenues", "neutralisation", "fonds à recevoir"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2279,
+      "titre": "Exemple 3 : Transfert de fonds sans affectation",
+      "texte": [
+        "Exemple 3 : Transfert de fonds sans affectation voir §2260"
+      ],
+      "comptes": [],
+      "mots_cles": ["exemple", "renvoi", "transfert fonds", "sans affectation"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

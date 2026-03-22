@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Préambule et Chapitre 1 - Dispositions générales (Articles 1-2)",
+    "page_source": 1447
+  },
+  "articles": [
+    {
+      "numero": 2400,
+      "titre": "Préambule de l'Acte uniforme",
+      "texte": [
+        "Le Conseil des Ministres de l'Organisation pour l'Harmonisation en Afrique du Droit des Affaires (OHADA),",
+        "Vu le Traité relatif à l'harmonisation du droit des affaires en Afrique, signé à Port-Louis le 17 octobre 1993, tel que révisé à Québec le 17 octobre 2008 ;",
+        "Vu l'Acte uniforme relatif au droit comptable et à l'information financière du 26 janvier 2017 ;",
+        "Vu le Rapport du Secrétariat Permanent et les observations des Etats Parties ;",
+        "Vu l'Avis n° 001/2022/AC en date du 06/09/2022 de la Cour Commune de Justice et d'Arbitrage ;",
+        "Après en avoir délibéré, adopte à l'unanimité des Etats Parties présents et votants, l'Acte uniforme dont la teneur suit :"
+      ],
+      "comptes": [],
+      "mots_cles": ["acte uniforme", "OHADA", "SYCEBNL", "entités à but non lucratif", "harmonisation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2401,
+      "titre": "Article 1er - Champ d'application",
+      "texte": [
+        "Toute entité à but non lucratif au sens de l'article 2 ci-dessous, qui a son siège dans l'un des Etats parties au Traité relatif à l'harmonisation du droit des affaires en Afrique ou qui exerce ses activités sur le territoire dudit Etat, est soumise aux dispositions du présent Acte uniforme.",
+        "Il est institué un système comptable unique, commun à tous les Etats parties, dénommé Système comptable des entités à but non lucratif, en abrégé SYCEBNL, annexé au présent Acte uniforme."
+      ],
+      "comptes": [],
+      "mots_cles": ["champ application", "entité but non lucratif", "SYCEBNL", "Etats parties", "système comptable unique"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2401,
+      "titre": "Article 2 - Définition de l'entité à but non lucratif",
+      "texte": [
+        "L'entité à but non lucratif s'entend de toute organisation, poursuivant un but désintéressé, et dont les ressources éventuellement générées par l'activité servent au fonctionnement et à la réalisation de son objet social."
+      ],
+      "comptes": [],
+      "mots_cles": ["définition", "entité but non lucratif", "but désintéressé", "objet social"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

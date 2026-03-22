@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Chapitre 4 - Dispositions pénales (Articles 24-27) et Chapitre 5 - Dispositions finales (Article 28)",
+    "page_source": 1457
+  },
+  "articles": [
+    {
+      "numero": 2404,
+      "titre": "Article 24 - Sanctions pénales pour les dirigeants",
+      "texte": [
+        "Encourent une sanction pénale les dirigeants d'entités au sens de l'article 2 du présent Acte uniforme qui :",
+        "- n'ont pas, pour chaque exercice, dressé l'inventaire et établi les états financiers annuels, ainsi que, le rapport d'activité ;",
+        "- ont sciemment établi et communiqué des états financiers ne donnant pas une image fidèle du patrimoine, de la situation financière et du résultat de l'exercice ;",
+        "- n'ont pas tenu et mis à jour le registre des donateurs."
+      ],
+      "comptes": [],
+      "mots_cles": ["sanctions pénales", "dirigeants", "inventaire", "états financiers", "image fidèle", "registre donateurs"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2404,
+      "titre": "Article 25 - Sanction pour défaut de désignation de l'auditeur",
+      "texte": [
+        "Encourent une sanction pénale, les dirigeants d'entités au sens de l'article 2 du présent Acte uniforme qui n'ont pas provoqué la désignation de l'auditeur de l'entité ou ne l'ont pas convoqué à l'assemblée générale ou par devant l'instance qui en tient lieu statuant sur les comptes de l'entité."
+      ],
+      "comptes": [],
+      "mots_cles": ["sanction pénale", "désignation auditeur", "assemblée générale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2404,
+      "titre": "Article 26 - Obstacle aux vérifications de l'auditeur",
+      "texte": [
+        "Encourent une sanction pénale, les dirigeants d'entités au sens de l'article 2 du présent Acte uniforme ou toute personne au service de l'entité qui, sciemment, ont fait obstacle aux vérifications ou au contrôle de l'auditeur ou qui ont refusé la communication, sur place, de toutes les pièces utiles à l'exercice de leur mission et, notamment, de tous contrats, livres, documents comptables et registres."
+      ],
+      "comptes": [],
+      "mots_cles": ["obstacle vérifications", "auditeur", "contrôle", "documents comptables", "sanction pénale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2404,
+      "titre": "Article 27 - Droit pénal applicable",
+      "texte": [
+        "Les infractions prévues par le présent Acte uniforme sont punies conformément aux dispositions du droit pénal en vigueur dans chaque Etat partie."
+      ],
+      "comptes": [],
+      "mots_cles": ["infractions", "droit pénal", "Etat partie"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2405,
+      "titre": "Article 28 - Publication et entrée en vigueur",
+      "texte": [
+        "Le présent Acte uniforme, auquel est annexé le système comptable des entités à but non lucratif, sera publié au Journal Officiel de l'OHADA dans un délai de soixante (60) jours à compter de la date de son"
+      ],
+      "comptes": [],
+      "mots_cles": ["publication", "Journal Officiel", "OHADA", "entrée en vigueur"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

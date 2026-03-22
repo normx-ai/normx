@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "III - États financiers (suite)",
+    "page_source": 1409
+  },
+  "articles": [
+    {
+      "numero": 2282,
+      "titre": "2 - Tableau d'exécution budgétaire",
+      "texte": [
+        "Le Tableau d'exécution budgétaire est un état de suivi du budget qui fait apparaitre le budget de l'exercice, les décaissements (immobilisations et charges de l'exercice payées), les engagements (immobilisations et charges de l'exercice non encore payées), les réalisations (total des emplois), le crédit disponible du budget (budget non consommé) et le taux d'exécution du budget."
+      ],
+      "comptes": [],
+      "mots_cles": ["tableau exécution budgétaire", "suivi budget", "décaissements", "engagements", "réalisations", "taux exécution"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2283,
+      "titre": "3 - Tableau de réconciliation de trésorerie",
+      "texte": [
+        "Le Tableau de réconciliation de trésorerie est un tableau de flux de trésorerie qui retrace la trésorerie de début d'exercice, les transferts de fonds reçus des bailleurs, les emplois de l'exercice, la trésorerie de fin d'exercice et les paiements en instance."
+      ],
+      "comptes": [],
+      "mots_cles": ["tableau réconciliation trésorerie", "flux trésorerie", "transferts fonds", "paiements en instance"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2284,
+      "titre": "4 - Bilan",
+      "texte": [
+        "Le Bilan de l'exercice fait apparaître de façon distincte :",
+        "- à l'actif : l'actif immobilisé, l'actif circulant, la trésorerie-actif et l'écart de conversion actif ;",
+        "- au passif : les ressources stables, constituées essentiellement des fonds d'investissements non repris dans les produits, le passif circulant, constitué essentiellement des fonds d'administration non utilisés pour couvrir les charges d'exploitation, la trésorerie-passif et l'écart de conversion-passif.",
+        "A notre avis, le bilan d'un projet de développement ne présente aucun intérêt dès lors que l'actif et le passif en fin du projet auront une valeur nulle, si les fonds sont consommés conformément au budget. Or le Bilan est un état financier qui fait apparaître le patrimoine de l'entité."
+      ],
+      "comptes": [],
+      "mots_cles": ["bilan", "actif immobilisé", "actif circulant", "trésorerie", "écart conversion", "ressources stables", "passif circulant"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2285,
+      "titre": "5 - Compte d'exploitation",
+      "texte": [
+        "Le Compte d'exploitation récapitule en liste, les charges sans amortissement, ni dépréciation et une quotité des ressources équivalente aux charges pour que le solde des opérations de l'exercice soit nul.",
+        "A notre avis, ce compte d'exploitation ne présente aucun intérêt pour un projet de développement : les mêmes informations plus pertinentes figurent dans le Tableau emplois-ressources."
+      ],
+      "comptes": [],
+      "mots_cles": ["compte exploitation", "charges", "amortissement", "dépréciation", "solde nul", "tableau emplois-ressources"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+/* ========================================
+   BULLETIN DE PAIE - Style Congo
+   ======================================== */
+
+.bulletin-container {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Outfit', 'Segoe UI', Arial, sans-serif;
+  font-size: 12px;
+  color: #1a1a1a;
+}
+
+/* Boutons actions */
+.bulletin-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.btn-bulletin {
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-bulletin-print {
+  background: #D4A843;
+  color: #1A3A5C;
+}
+.btn-bulletin-print:hover { background: #C09935; }
+.btn-bulletin-back {
+  background: #fff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+.btn-bulletin-back:hover { background: #f3f4f6; }
+
+/* Zone imprimable */
+.bulletin-page {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  padding: 30px 36px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* EN-TETE */
+.bulletin-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.bulletin-entreprise {
+  font-size: 11px;
+  color: #333;
+  line-height: 1.5;
+}
+.bulletin-entreprise-nom {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A3A5C;
+  margin-bottom: 2px;
+}
+.bulletin-titre-wrapper {
+  text-align: center;
+  flex: 1;
+}
+.bulletin-titre {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c00;
+  letter-spacing: 1px;
+}
+.bulletin-periode-titre {
+  font-size: 16px;
+  font-weight: 600;
+  color: #c00;
+  margin-top: 2px;
+}
+
+.bulletin-hr {
+  border: none;
+  border-top: 2px solid #c00;
+  margin: 8px 0 12px;
+}
+
+/* INFOS SALARIE */
+.bulletin-infos {
+  border: 1px solid #333;
+  margin-bottom: 10px;
+}
+.bulletin-infos-row {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+.bulletin-infos-row:last-child {
+  border-bottom: none;
+}
+.bulletin-infos-cell {
+  flex: 1;
+  padding: 4px 8px;
+  font-size: 11px;
+  border-right: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+}
+.bulletin-infos-cell:last-child {
+  border-right: none;
+}
+.bulletin-infos-label {
+  font-weight: 600;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.bulletin-infos-value {
+  font-weight: 400;
+  color: #1a1a1a;
+}
+.bulletin-infos-cell.large {
+  flex: 2;
+}
+
+/* TABLEAU PRINCIPAL */
+.bulletin-table-wrapper {
+  display: flex;
+  gap: 0;
+  margin-bottom: 10px;
+}
+
+.bulletin-main-table {
+  flex: 1;
+  border-collapse: collapse;
+  font-size: 11px;
+  border: 1px solid #333;
+}
+.bulletin-main-table th {
+  background: #f0f0f0;
+  border: 1px solid #999;
+  padding: 3px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  color: #1a1a1a;
+}
+.bulletin-main-table th.section-header {
+  background: #e8e8e8;
+  font-size: 10px;
+  text-align: center;
+  border-bottom: 1px solid #999;
+}
+.bulletin-main-table td {
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  vertical-align: middle;
+  height: 20px;
+}
+.bulletin-main-table td.text-right {
+  text-align: right;
+}
+.bulletin-main-table td.text-center {
+  text-align: center;
+}
+.bulletin-main-table td.bold {
+  font-weight: 700;
+}
+
+.bulletin-main-table tr.total-row td {
+  font-weight: 700;
+  font-style: italic;
+  border-top: 2px solid #333;
+}
+.bulletin-main-table tr.section-total td {
+  font-weight: 700;
+  border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
+}
+.bulletin-main-table tr.grand-total td {
+  font-weight: 700;
+  font-size: 12px;
+  border-top: 3px double #333;
+}
+
+/* Colonne variables du mois */
+.bulletin-variables-table {
+  width: 200px;
+  border-collapse: collapse;
+  font-size: 10px;
+  border: 1px solid #333;
+  border-left: none;
+  flex-shrink: 0;
+}
+.bulletin-variables-table th {
+  background: #f0f0f0;
+  border: 1px solid #999;
+  padding: 3px 4px;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+}
+.bulletin-variables-table td {
+  border: 1px solid #ccc;
+  padding: 1px 4px;
+  font-size: 10px;
+  text-align: center;
+  height: 20px;
+}
+
+/* CUMULS */
+.bulletin-cumuls {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 11px;
+  margin-bottom: 10px;
+  border: 1px solid #333;
+}
+.bulletin-cumuls th {
+  background: #1A3A5C;
+  color: #fff;
+  padding: 5px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid #333;
+}
+.bulletin-cumuls td {
+  padding: 4px 8px;
+  text-align: right;
+  border: 1px solid #ccc;
+  font-size: 11px;
+}
+.bulletin-cumuls td:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+.bulletin-net-a-payer {
+  background: #1A3A5C;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 12px;
+  border: 1px solid #333;
+}
+.bulletin-net-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  background: #1A3A5C;
+  padding: 3px;
+  border: 1px solid #333;
+  border-bottom: none;
+}
+
+/* PIED DE PAGE */
+.bulletin-footer {
+  margin-top: 6px;
+  font-size: 10px;
+  color: #555;
+  margin-bottom: 10px;
+}
+.bulletin-signatures {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #ccc;
+}
+.bulletin-signature-block {
+  width: 30%;
+}
+.bulletin-signature-block h5 {
+  font-size: 10px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+.bulletin-conges-pointage {
+  display: flex;
+  gap: 20px;
+  width: 40%;
+  justify-content: center;
+}
+.bulletin-conges, .bulletin-pointage {
+  font-size: 10px;
+}
+.bulletin-conges h5, .bulletin-pointage h5 {
+  font-size: 10px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  text-decoration: underline;
+}
+.bulletin-conges-row, .bulletin-pointage-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+/* IMPRESSION */
+@media print {
+  body * { visibility: hidden; }
+  .bulletin-page, .bulletin-page * { visibility: visible; }
+  .bulletin-page { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; padding: 20px; }
+  .bulletin-actions { display: none; }
+  .bulletin-container { padding: 0; }
+}

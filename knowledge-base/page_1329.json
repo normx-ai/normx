@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1329
+  },
+  "articles": [
+    {
+      "numero": 2140,
+      "titre": "Cotisations — Définition (suite)",
+      "texte": [
+        "- aux activités et respecter les conditions fixées par le règlement intérieur ;",
+        "Le défaut de paiement des cotisations peut priver le membre de son droit de participation à l'assemblée générale.",
+        "Les membres ont l'obligation de verser la cotisation, de se conformer aux textes réglementaires et de veiller aux intérêts de l'entité."
+      ],
+      "comptes": [],
+      "mots_cles": ["cotisations", "défaut paiement", "assemblée générale", "obligations membres"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1328"
+    },
+    {
+      "numero": 2141,
+      "titre": "Cotisations — Comptabilisation",
+      "texte": [
+        "Les cotisations sont en principe versées dès réception de l'appel de cotisation par courrier ou par tout autre moyen prévu par les statuts et/ou le règlement intérieur. Si l'entité :",
+        "- peut justifier le droit d'agir pour recouvrer l'appel de cotisations, celles-ci sont enregistrées dès l'appel au crédit du compte 701 Cotisations des adhérents par le débit du compte 411 Adhérents ;",
+        "- ne peut justifier aucun moyen de recouvrement de la créance, il est préférable de constater le produit lors de l'encaissement effectif de la cotisation au crédit du compte 701 Cotisations des adhérents par le débit d'un compte 5 Comptes de trésorerie.",
+        "L'entité qui perçoit les cotisations des adhérents peut avoir une obligation de reverser une quote part à une autre entité (faîtière) dans laquelle elle est adhérente comme une fédération par exemple. La quote part est enregistrée à la réception de l'appel de cotisation :",
+        "- au débit du compte 701 Cotisations des adhérents par le crédit du compte 4712 Créditeurs divers, si l'entité agit en tant que mandataire ;",
+        "- au débit du compte 6351 Cotisations par le crédit du compte 4712 Créditeurs divers si l'entité n'a aucun mandat de reversement d'une quote part de la cotisation de ses membres à une autre structure.",
+        "La comptabilisation des droits d'entrée est traitée au §2115."
+      ],
+      "comptes": ["701", "411", "5", "4712", "6351"],
+      "mots_cles": ["cotisations comptabilisation", "appel cotisation", "adhérents", "recouvrement", "encaissement", "quote part", "faîtière", "fédération", "mandataire", "créditeurs divers"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2142,
+      "titre": "Cotisations — Schéma des écritures",
+      "texte": [
+        "Schéma des écritures de comptabilisation des cotisations."
+      ],
+      "ecritures": [
+        {
+          "description": "Appel de cotisation",
+          "lignes": [
+            {"compte": "411", "libelle": "Adhérents", "debit": "x", "credit": ""},
+            {"compte": "701", "libelle": "Cotisations des adhérents", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["411", "701"],
+      "mots_cles": ["écritures cotisations", "appel cotisation", "adhérents"],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1330"
+    }
+  ]
+}

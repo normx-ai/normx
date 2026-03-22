@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1334
+  },
+  "articles": [
+    {
+      "numero": 2171,
+      "titre": "Première année d'application du Système comptable des entités à but non lucratif",
+      "texte": [
+        "Toute entité visée par les dispositions de l'Acte uniforme relatif au système comptable des entités à but non lucratif doit préparer et présenter son Bilan d'ouverture au premier jour de l'entrée en vigueur de l'Acte uniforme. C'est le point de départ de sa comptabilité. Pour se faire l'entité :",
+        "- doit faire l'inventaire et comptabiliser tous les actifs et passifs suivant le plan des comptes du Système comptable des entités à but non lucratif ;",
+        "- ne doit pas comptabiliser des éléments en tant qu'actifs ou passifs si le Système comptable des entités à but non lucratif n'autorise pas une telle comptabilisation.",
+        "Sont considérés comme « premiers états financiers, ceux qui sont confirmés par une déclaration explicite et sans réserve de conformité au Système comptable des entités à but non lucratif »."
+      ],
+      "comptes": [],
+      "mots_cles": ["première année application", "bilan ouverture", "inventaire", "actifs passifs", "premiers états financiers", "conformité"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2172,
+      "titre": "Conditions de recevabilité",
+      "texte": [
+        "Les conditions de recevabilité des états financiers sont traitées au § 1251."
+      ],
+      "comptes": [],
+      "mots_cles": ["recevabilité", "états financiers"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2173,
+      "titre": "Modèles de présentation",
+      "texte": [
+        "Les présentations des états financiers annuels et la tenue des comptes admises sont le Système normal et le Système minimal de trésorerie, selon le cas.",
+        "Toute entité est, sauf exception liée à sa taille, soumise au Système normal de présentation des états financiers et de tenue des comptes.",
+        "Le régime juridique du dépôt des états financiers est soumis à la législation interne de chaque État partie (art. 5 de l'Acte uniforme)."
+      ],
+      "comptes": [],
+      "mots_cles": ["modèles présentation", "système normal", "système minimal trésorerie", "taille entité", "dépôt états financiers"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2174,
+      "titre": "Système normal — Jeu complet d'états financiers annuels",
+      "texte": [
+        "Un jeu complet d'états financiers annuels comprend :",
+        "- le Bilan ;",
+        "- le Compte de résultat ;",
+        "- le Tableau des flux de trésorerie ;",
+        "- les Notes annexes."
+      ],
+      "comptes": [],
+      "mots_cles": ["système normal", "bilan", "compte de résultat", "tableau flux trésorerie", "notes annexes", "états financiers annuels"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

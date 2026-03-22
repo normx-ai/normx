@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "Introduction et I - Fonds affectés aux investissements",
+    "page_source": 1397
+  },
+  "articles": [
+    {
+      "numero": 2250,
+      "titre": "Règles de comptabilisation du projet de développement",
+      "texte": [
+        "Les règles de comptabilisation des comptes d'actif immobilisé, de stocks, de tiers, de trésorerie, de charges et de produits du SYCEBNL relatives au projet de développement sont similaires à celles du SYSCOHADA traitées dans la première partie de cet ouvrage. Ne seront abordés dans cette partie que les points spécifiques au projet de développement, défini au §2004. Il s'agit :",
+        "- des fonds affectés aux immobilisations appelés fonds d'investissements ;",
+        "- des fonds affectés aux charges appelés fonds d'administration.",
+        "Dans un projet de développement, le bailleur élabore en principe un document projet qui détermine le budget nécessaire à l'atteinte de ses objectifs. Ce budget permet de distinguer les fonds alloués aux immobilisations et ceux affectés aux frais de fonctionnement du projet."
+      ],
+      "comptes": [],
+      "mots_cles": ["projet développement", "fonds investissements", "fonds administration", "bailleur", "budget projet", "SYCEBNL"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2251,
+      "titre": "Fonds affectés aux investissements - Enregistrement",
+      "texte": [
+        "Les fonds, que le bailleur met à la disposition du projet relatifs aux immobilisations traitées aux §§ 80 et suivants, sont enregistrés dès leur réception au crédit de l'un des comptes 162 à 164 Fonds affectés aux investissements selon le cas par le débit d'un compte 5 Comptes de trésorerie.",
+        "Aucune écriture comptable ne doit être enregistrée si les ressources ne sont pas réceptionnées par le projet."
+      ],
+      "comptes": ["162", "163", "164", "5"],
+      "mots_cles": ["fonds investissements", "immobilisations", "bailleur", "trésorerie", "réception fonds"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2252,
+      "titre": "Fonds sans répartition - Affectation selon budget",
+      "texte": [
+        "Il peut arriver que le bailleur mette les fonds à la disposition du projet sans indiquer la répartition entre les fonds affectés aux immobilisations et ceux destinés à la couverture des frais de fonctionnement, dans ce cas le projet doit se référer au budget du projet pour répartir les fonds entre :",
+        "- les immobilisations qui seront enregistrés au crédit de l'un des comptes 162 à 164 Fonds affectés aux investissements ;",
+        "- et les frais (charges) qui seront inscrits au crédit du compte 46 Bailleurs Fonds d'administration.",
+        "En fin de période, un réajustement sera effectué pour se conformer à la réalité des dépenses engagées entre les immobilisations, comptes 162 à 164, et les frais de fonctionnement (charges), compte 46."
+      ],
+      "comptes": ["162", "163", "164", "46"],
+      "mots_cles": ["répartition fonds", "budget", "immobilisations", "charges fonctionnement", "réajustement"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

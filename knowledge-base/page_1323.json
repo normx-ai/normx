@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1323
+  },
+  "articles": [
+    {
+      "numero": 2120,
+      "titre": "Réserves",
+      "texte": [
+        "Les réserves sont constituées exclusivement par l'affectation des excédents de l'exercice. Elles sont appelées :",
+        "- réserves statutaires ou contractuelles, compte 112, si l'affectation résulte des statuts ou d'une clause contractuelle ;",
+        "- autres réserves, compte 118, si l'affectation est décidée par les organes délibérants.",
+        "Ces réserves peuvent, sur décision des organes délibérants, être incorporées uniquement au fonds de dotation non consomptible sans droit de reprises, compte 101.",
+        "Le déficit de l'exercice peut être affecté aux réserves si celles-ci restent créditrices ou nulles après imputation du déficit."
+      ],
+      "comptes": ["112", "118", "101"],
+      "mots_cles": ["réserves", "réserves statutaires", "réserves contractuelles", "autres réserves", "affectation excédents", "organes délibérants", "dotation non consomptible"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2121,
+      "titre": "Schéma des écritures des réserves",
+      "texte": [
+        "Écritures d'affectation du résultat aux réserves et d'affectation des réserves à la dotation."
+      ],
+      "ecritures": [
+        {
+          "description": "Affectation du Résultat",
+          "lignes": [
+            {"compte": "131", "libelle": "Excédent de l'exercice", "debit": "x", "credit": ""},
+            {"compte": "112", "libelle": "Réserves statutaires ou contractuelle", "debit": "", "credit": "x"},
+            {"compte": "118", "libelle": "Autres réserves", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Affectation des réserves à la dotation",
+          "lignes": [
+            {"compte": "112", "libelle": "Réserves statutaires ou contractuelle", "debit": "x", "credit": ""},
+            {"compte": "118", "libelle": "Autres réserves", "debit": "x", "credit": ""},
+            {"compte": "101", "libelle": "Dotation non consomptible sans droit de reprise", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["131", "112", "118", "101"],
+      "mots_cles": ["affectation résultat", "excédent exercice", "réserves statutaires", "incorporation dotation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2122,
+      "titre": "Report à nouveau",
+      "texte": [
+        "Le report à nouveau correspond au montant des excédents d'exercices antérieurs dont l'affectation a été reportée sur les exercices ultérieurs ou des déficits constatés à la clôture d'exercices antérieurs qui n'ont pas été compensés par des prélèvements opérés sur les excédents.",
+        "Le report à nouveau est inscrit au passif du bilan où il doit figurer sur une ligne distincte : « en signe moins » si son solde est débiteur, et « en signe plus » si son solde est créditeur. Il constitue un élément des fonds propres. La décision d'affection du résultat de l'exercice est prise par les organes délibérants. En fin d'exercice, le résultat net de l'exercice précédent non affecté à un compte de réserves sera viré au compte 12 Report à nouveau."
+      ],
+      "comptes": ["12"],
+      "mots_cles": ["report à nouveau", "excédents antérieurs", "déficits", "fonds propres", "passif bilan", "affectation résultat"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

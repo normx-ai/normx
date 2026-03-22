@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1327
+  },
+  "articles": [
+    {
+      "numero": 2134,
+      "titre": "Fonds affectés — Exemple pratique (entité SECOURS / protection bonobos)",
+      "texte": [
+        "Exemple : 15/04/N, Monsieur AFRIC a remis à l'entité SECOURS un chèque de FCFA 30 000 000 pour la soutenir dans la réalisation de ses activités dans le domaine de la protection des singes bonobos. Monsieur AFRIC a accepté l'affectation de 25% des fonds à l'apurement d'un emprunt contracté le 1/02/N-5 auprès d'une institution financière pour équiper la clinique des singes.",
+        "30/06/N, SECOURS a réceptionné et réglé par chèque de FCFA 5 000 000 un véhicule équipé pour les soins des bonobos. La durée d'utilité du véhicule est de 10 ans.",
+        "30/07/N, SECOURS a fait un achat de médicaments pour les Bonobos réglé par virement bancaire de FCFA 500 000.",
+        "30/08/N, SECOURS a fait un achat de nourritures des bonobos payé par chèque FCFA 350 000 et a payé les honoraires du vétérinaire par chèque de FCFA 480 000."
+      ],
+      "ecritures": [
+        {
+          "date": "15/04/N",
+          "description": "Fonds reçus de M. Afric pour les BONOBOS",
+          "lignes": [
+            {"compte": "52", "libelle": "Banques", "debit": 30000000, "credit": ""},
+            {"compte": "1651", "libelle": "Fonds affectés aux bonobos", "debit": "", "credit": 22500000},
+            {"compte": "843", "libelle": "Contributions volontaires en numéraires", "debit": "", "credit": 7500000}
+          ]
+        },
+        {
+          "date": "30/06/N",
+          "description": "Véhicule ambulance Bonobos",
+          "lignes": [
+            {"compte": "2451", "libelle": "Matériel de transport bonobos", "debit": 5000000, "credit": ""},
+            {"compte": "52", "libelle": "Banques", "debit": "", "credit": 5000000}
+          ]
+        },
+        {
+          "date": "30/07/N",
+          "description": "Médicaments Bonobos",
+          "lignes": [
+            {"compte": "60111", "libelle": "Achats de médicaments des bonobos", "debit": 500000, "credit": ""},
+            {"compte": "52", "libelle": "Banques", "debit": "", "credit": 500000}
+          ]
+        },
+        {
+          "date": "30/08/N",
+          "description": "Nourriture Bonobos",
+          "lignes": [
+            {"compte": "60112", "libelle": "Achat nourriture Bonobos", "debit": 350000, "credit": ""},
+            {"compte": "52", "libelle": "Banques", "debit": "", "credit": 350000}
+          ]
+        }
+      ],
+      "comptes": ["52", "1651", "843", "2451", "60111", "60112"],
+      "mots_cles": ["exemple pratique", "fonds affectés", "contributions volontaires", "matériel transport", "achats médicaments", "nourriture", "bonobos"],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1328 (honoraires vétérinaire et écritures de clôture)"
+    }
+  ]
+}

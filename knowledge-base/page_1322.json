@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1322
+  },
+  "articles": [
+    {
+      "numero": 2119,
+      "titre": "Schéma des écritures des apports sans souscription préalable (suite et fin)",
+      "texte": [
+        "Écritures complémentaires pour le solde du compte débité si option renouvellement et la reprise des apports avec droit de reprise si pas d'option de renouvellement.",
+        "NB : les biens apportés avec droit de reprise ne feront l'objet d'aucun amortissement si l'entité ne renouvelle pas le bien au terme de l'apport temporaire."
+      ],
+      "ecritures": [
+        {
+          "description": "Pour solde du compte débité si option renouvellement du bien apporté avec droit de reprise",
+          "lignes": [
+            {"compte": "102", "libelle": "Dotation non consomptible avec droit de reprise", "debit": "x", "credit": ""},
+            {"compte": "101", "libelle": "Dotation non consomptible sans droit de reprise", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Reprise des apports avec droit de reprise si pas d'option de renouvellement des apports avec droit de reprise",
+          "lignes": [
+            {"compte": "102", "libelle": "Dotation non consomptible avec droit de reprise", "debit": "x", "credit": ""},
+            {"compte": "2", "libelle": "Comptes d'actif immobilisé", "debit": "", "credit": "x"},
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["102", "101", "2", "5"],
+      "mots_cles": ["renouvellement bien", "reprise apport", "droit de reprise", "amortissement", "apport temporaire"],
+      "statut": "en_vigueur",
+      "note": "Suite et fin de l'article commencé page 1320"
+    },
+    {
+      "numero": 2121,
+      "titre": "Schéma des écritures des apports avec souscription et libération",
+      "texte": [
+        "Schéma des écritures des apports avec souscription et libération. NB : voir plan comptable pour le numéro spécifique du compte 45 selon l'entité."
+      ],
+      "ecritures": [
+        {
+          "description": "Souscription des apports",
+          "lignes": [
+            {"compte": "45", "libelle": "Apporteurs en nature", "debit": "x", "credit": ""},
+            {"compte": "45", "libelle": "Apporteurs en numéraire", "debit": "x", "credit": ""},
+            {"compte": "101", "libelle": "Dotation non consomptible sans droit de reprise", "debit": "", "credit": "x"},
+            {"compte": "102", "libelle": "Dotation non consomptible avec droit de reprise", "debit": "", "credit": "x"},
+            {"compte": "104", "libelle": "Dotation consomptible", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Réalisation des apports",
+          "lignes": [
+            {"compte": "2", "libelle": "Comptes d'actif immobilisé (sauf compte 20)", "debit": "x", "credit": ""},
+            {"compte": "3", "libelle": "Comptes de stocks", "debit": "x", "credit": ""},
+            {"compte": "4", "libelle": "Comptes de tiers", "debit": "x", "credit": ""},
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "x", "credit": ""},
+            {"compte": "45", "libelle": "Apporteurs en nature", "debit": "", "credit": "x"},
+            {"compte": "45", "libelle": "Apporteurs en numéraire", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["45", "101", "102", "104", "2", "3", "4", "5"],
+      "mots_cles": ["apports avec souscription", "libération", "apporteurs nature", "apporteurs numéraire", "réalisation apports"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

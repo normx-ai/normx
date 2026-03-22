@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Articles 8, 9, 10, 11 et 12 - Structure des états financiers",
+    "page_source": 1451
+  },
+  "articles": [
+    {
+      "numero": 2402,
+      "titre": "Article 7 (suite) - Notes annexes",
+      "texte": [
+        "Les Notes annexes complètent et précisent l'information donnée par les autres états financiers annuels."
+      ],
+      "comptes": [],
+      "mots_cles": ["notes annexes", "informations complémentaires"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 8 - Structure du Bilan",
+      "texte": [
+        "Le Bilan de l'exercice fait apparaître de façon distincte :",
+        "- à l'actif : l'actif immobilisé, l'actif circulant, la trésorerie-actif et l'écart de conversion-actif ;",
+        "- au passif : les ressources stables, le passif circulant, la trésorerie-passif et l'écart de conversion-passif."
+      ],
+      "comptes": [],
+      "mots_cles": ["bilan", "actif immobilisé", "actif circulant", "trésorerie", "écart conversion", "ressources stables", "passif circulant"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 9 - Compte de résultat et Compte d'exploitation",
+      "texte": [
+        "Le Compte de résultat de l'exercice fait apparaître au crédit les produits et au débit les charges, distingués selon leur nature. S'agissant des projets de développement, le Compte d'exploitation fait apparaître au débit les charges sans amortissement ni dépréciation et au crédit une quotité des ressources équivalente au total des charges pour obtenir un solde de l'exercice nul."
+      ],
+      "comptes": [],
+      "mots_cles": ["compte résultat", "compte exploitation", "produits", "charges", "solde nul", "projet développement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 10 - Tableau des flux de trésorerie",
+      "texte": [
+        "Le Tableau des flux de trésorerie de l'exercice fait apparaître la trésorerie nette en début d'exercice, les flux de trésorerie provenant des activités opérationnelles, les flux de trésorerie provenant des opérations d'investissement, les flux de trésorerie provenant des fonds propres, les flux de trésorerie provenant des fonds extérieurs et la trésorerie nette en fin d'exercice."
+      ],
+      "comptes": [],
+      "mots_cles": ["flux trésorerie", "activités opérationnelles", "investissement", "fonds propres", "fonds extérieurs", "trésorerie nette"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 11 - Tableau emplois-ressources",
+      "texte": [
+        "Le Tableau emplois-ressources, fait apparaître les emplois (immobilisations et charges) sans amortissement ni dépréciation, les fonds reçus, l'excédent ou le déficit des fonds reçus sur les emplois, le montant de l'encaisse disponible."
+      ],
+      "comptes": [],
+      "mots_cles": ["emplois-ressources", "immobilisations", "charges", "fonds reçus", "encaisse disponible"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 12 - Tableau d'exécution budgétaire",
+      "texte": [
+        "Le Tableau d'exécution budgétaire fait apparaitre le budget de l'exercice, les décaissements, les engagements non encore payés, les réalisations, le crédit disponible du budget et l'exécution du budget en valeur relative."
+      ],
+      "comptes": [],
+      "mots_cles": ["exécution budgétaire", "budget", "décaissements", "engagements", "réalisations", "crédit disponible"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

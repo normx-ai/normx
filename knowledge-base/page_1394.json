@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Système Minimal de Trésorerie (SMT)",
+    "section": "§2247 - Note 4 : Journal unique de trésorerie",
+    "page_source": 1394
+  },
+  "articles": [
+    {
+      "numero": 2247,
+      "titre": "§2247 - Note 4 : Journal unique de trésorerie",
+      "texte": [
+        "Le journal unique de trésorerie est le document de base du SMT. Il enregistre chronologiquement tous les encaissements et décaissements de l'entité.",
+        "Le journal comprend les colonnes suivantes :",
+        "- Date de l'opération ;",
+        "- Libellé de l'opération ;",
+        "- Référence de la pièce justificative ;",
+        "- Encaissements (entrées de fonds) : Caisse et Banque ;",
+        "- Décaissements (sorties de fonds) : Caisse et Banque ;",
+        "- Solde : Caisse et Banque.",
+        "En fin d'exercice, un récapitulatif par nature d'opération est établi pour alimenter le Compte de résultat.",
+        "Les totaux des encaissements et des décaissements permettent de justifier les soldes de trésorerie (caisse et banque) figurant au Bilan."
+      ],
+      "comptes": ["52", "53", "57"],
+      "mots_cles": ["Note 4", "journal unique de trésorerie", "encaissements", "décaissements", "caisse", "banque", "pièce justificative", "récapitulatif"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

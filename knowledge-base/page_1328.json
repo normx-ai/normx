@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1328
+  },
+  "articles": [
+    {
+      "numero": 2134,
+      "titre": "Fonds affectés — Exemple pratique (suite et fin)",
+      "texte": [
+        "Suite des écritures de l'exemple SECOURS / bonobos : honoraires vétérinaire, dotation annuelle aux amortissements et reprises des fonds affectés en fin d'exercice."
+      ],
+      "ecritures": [
+        {
+          "date": "30/08/N",
+          "description": "Règlement salaires personnel des bonobos",
+          "lignes": [
+            {"compte": "6324", "libelle": "Honoraires vétérinaire", "debit": 480000, "credit": ""},
+            {"compte": "52", "libelle": "Banques", "debit": "", "credit": 480000}
+          ]
+        },
+        {
+          "date": "31/12/N",
+          "description": "Dotation annuelle (5 000 000 x 10% x 6/12)",
+          "lignes": [
+            {"compte": "681", "libelle": "Dotation aux amortissements", "debit": 250000, "credit": ""},
+            {"compte": "28451", "libelle": "Amortissement matériel transport bonobos", "debit": "", "credit": 250000}
+          ]
+        },
+        {
+          "date": "31/12/N",
+          "description": "Reprises des fonds affectés aux bonobos relatifs à l'emprunt, aux médicaments, à la nourriture, au personnel et à la dotation du véhicule des bonobos (500 000 + 350 000 + 480 000 + 250 000)",
+          "lignes": [
+            {"compte": "1651", "libelle": "Fonds affectés aux bonobos", "debit": 1580000, "credit": ""},
+            {"compte": "7925", "libelle": "Reprises de fonds affectés aux bonobos", "debit": "", "credit": 1580000}
+          ]
+        }
+      ],
+      "comptes": ["6324", "52", "681", "28451", "1651", "7925"],
+      "mots_cles": ["honoraires vétérinaire", "dotation amortissements", "reprises fonds affectés", "clôture exercice"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1327"
+    },
+    {
+      "numero": 2135,
+      "titre": "Fonds reportés — Définition",
+      "texte": [
+        "Les fonds reportés sont des donations ou des legs d'immobilisations non encore reçus destinés à la vente ou encore des donations temporaires d'usufruit.",
+        "Ils se traduisent en entrées de trésorerie pour l'entité lors de la cession des biens ou à l'échéance des revenus provenant des usufruits reçus par l'entité.",
+        "La comptabilisation des fonds reportés est traitée aux §§ 2051 à 2068 et aux §§ 2098 et suivants."
+      ],
+      "comptes": [],
+      "mots_cles": ["fonds reportés", "donations", "legs immobilisations", "donations temporaires usufruit", "cession biens"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2140,
+      "titre": "Cotisations — Définition",
+      "texte": [
+        "Les cotisations sont des fonds versés périodiquement par les membres conformément aux dispositions réglementaires pour assurer le fonctionnement de l'entité à but non lucratif et donnent généralement droit à l'exercice des droits et obligations attachées.",
+        "Les membres ont le droit de participer :",
+        "- à l'assemblée générale, et prendre part aux votes, aux élections, ainsi qu'aux débats ;"
+      ],
+      "comptes": [],
+      "mots_cles": ["cotisations", "membres", "fonctionnement", "droits obligations", "assemblée générale"],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1329"
+    }
+  ]
+}

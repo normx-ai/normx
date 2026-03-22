@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "I - Fonds affectés aux investissements - Exemples 3 (suite), 4 et 5",
+    "page_source": 1403
+  },
+  "articles": [
+    {
+      "numero": 2261,
+      "titre": "Exemple 3 : Avance de fonds à justifier (suite - Solution)",
+      "texte": [
+        "Solution",
+        "03/01/N: Débit 52 Banques 10 000 000 / Crédit 161 Avances de fonds à justifier 10 000 000 — Avance à justifier",
+        "15/04/N: Débit 52 Banques 8 550 000 / Crédit 162 Fonds affectés aux investissements 1 500 000 / Crédit 462 Fonds d'administration 7 050 000 — Remboursement des dépenses du premier trimestre"
+      ],
+      "comptes": ["52", "161", "162", "462"],
+      "mots_cles": ["exemple", "avance à justifier", "remboursement", "solution"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1402"
+    },
+    {
+      "numero": 2262,
+      "titre": "Exemple 4 : Mise à disposition de biens par le bailleur",
+      "texte": [
+        "30/08/N, le bailleur Europe a remis au projet Taf, un véhicule SUV d'occasion qu'il a retiré d'un autre projet.",
+        "Le projet a évalué le véhicule à sa valeur argus, soit FCFA 4 500 000.",
+        "Passer les écritures",
+        "Solution",
+        "30/01/N: Débit 2451 Matériel automobile 4 500 000 / Crédit 162 Fonds affectés aux investissements 4 500 000 — Remise du véhicule SUV par le bailleur"
+      ],
+      "comptes": ["2451", "162"],
+      "mots_cles": ["exemple", "mise à disposition", "véhicule", "valeur argus", "bailleur"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2263,
+      "titre": "Exemple 5 : Reprise des biens fin de projet",
+      "texte": [
+        "30/11/N, le bailleur Asie a donné, au projet PES arrivé à terme, des instructions relatives au transfert du matériel à l'Etat partie.",
+        "Le 15/12/N le Projet PES a transféré le matériel suivant à l'Etat partie :",
+        "- Voiture 10 000 000",
+        "- Mobilier de bureau : 5 000 000",
+        "Passer les écritures"
+      ],
+      "comptes": ["162", "2441", "2451"],
+      "mots_cles": ["exemple", "reprise biens", "fin de projet", "transfert", "Etat partie"],
+      "statut": "en_vigueur",
+      "note": "Suite page 1404"
+    }
+  ]
+}

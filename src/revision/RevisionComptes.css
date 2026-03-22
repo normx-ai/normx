@@ -1,0 +1,205 @@
+/* RevisionComptes */
+.revision-comptes { padding: 20px 24px; }
+.revision-header { margin-bottom: 16px; }
+.revision-header h2 { font-size: 17px; font-weight: 600; color: #1a1a1a; display: flex; align-items: center; gap: 8px; }
+.revision-loading, .revision-empty, .revision-placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 60px 20px; color: #888; gap: 12px; text-align: center;
+}
+.revision-empty h3, .revision-placeholder h3 { color: #555; font-size: 16px; }
+
+/* Tabs */
+.revision-tabs {
+  display: flex; gap: 2px; border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 20px; overflow-x: auto;
+}
+.revision-tab {
+  display: flex; align-items: center; gap: 5px;
+  padding: 8px 14px; border: none; background: none; cursor: pointer;
+  font-size: 12.5px; font-weight: 500; color: #666;
+  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  white-space: nowrap; transition: all 0.15s;
+}
+.revision-tab:hover { color: #333; background: #f5f5f5; }
+.revision-tab.active { color: #D4A843; border-bottom-color: #D4A843; font-weight: 600; }
+
+/* Content */
+.revision-content { }
+
+/* Section */
+.revision-section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.revision-section-header h3 { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+.revision-save-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 14px; border: 1px solid #D4A843; background: #D4A843; color: #fff;
+  border-radius: 6px; font-size: 12.5px; font-weight: 500; cursor: pointer;
+}
+.revision-save-btn:hover { background: #C09935; }
+
+/* Control block */
+.revision-control {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+  padding: 16px; margin-bottom: 16px;
+}
+.revision-control-title {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13.5px; font-weight: 600; color: #333;
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0;
+}
+.revision-control-footer {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 10px; font-size: 12px; color: #666;
+}
+.revision-ref { font-style: italic; color: #999; font-size: 11px; }
+
+/* Badge */
+.revision-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 600;
+}
+.revision-badge.ok { background: #dcfce7; color: #166534; }
+.revision-badge.ko { background: #fee2e2; color: #991b1b; }
+
+/* Alerte */
+.revision-alerte {
+  background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px;
+  font-size: 13px; color: #991b1b; line-height: 1.6;
+}
+.revision-alerte ul {
+  margin: 6px 0 0 0; padding-left: 20px;
+}
+.revision-alerte li { margin-bottom: 2px; }
+
+.revision-guide-info {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: #FDF8EE; border: 1px solid #F5E6C0; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px;
+  font-size: 13px; color: #B08A2E; line-height: 1.6;
+}
+.revision-guide-info ul { margin: 4px 0 0 0; padding-left: 20px; }
+.revision-guide-info li { margin-bottom: 2px; }
+
+/* Objectif */
+.revision-objectif {
+  background: #FDF8EE; border: 1px solid #F5E6C0; border-radius: 8px;
+  padding: 12px 16px; margin-bottom: 12px;
+  font-size: 13px; color: #B08A2E; line-height: 1.6;
+}
+.revision-objectif ul {
+  margin: 6px 0 0 0; padding-left: 20px;
+}
+.revision-objectif li { margin-bottom: 2px; }
+
+/* Travaux */
+.revision-travaux {
+  background: #fffbeb; border: 1px solid #f59e0b33; border-radius: 8px;
+  margin-bottom: 16px; overflow: hidden;
+}
+.revision-travaux-toggle {
+  display: flex; align-items: center; gap: 6px; width: 100%;
+  padding: 10px 14px; border: none; background: none; cursor: pointer;
+  font-size: 13px; font-weight: 600; color: #92400e; text-align: left;
+}
+.revision-travaux-toggle:hover { background: #fef3c740; }
+.revision-travaux-list {
+  padding: 0 14px 12px 34px; margin: 0;
+  font-size: 12.5px; color: #78350f; line-height: 1.7;
+}
+.revision-travaux-list li { margin-bottom: 2px; }
+.revision-badge.info { background: #FAF0D8; color: #B08A2E; }
+
+/* Tables */
+.revision-table-wrapper { overflow-x: auto; }
+.revision-table {
+  width: 100%; border-collapse: collapse; font-size: 12px;
+}
+.revision-table th {
+  background: #f8f9fa; padding: 7px 8px; text-align: left;
+  font-weight: 600; color: #555; border-bottom: 2px solid #e5e7eb;
+  font-size: 11px; white-space: nowrap;
+}
+.revision-table td {
+  padding: 5px 8px; border-bottom: 1px solid #f0f0f0;
+}
+.revision-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.revision-table .compte { font-family: monospace; font-size: 11.5px; color: #555; white-space: nowrap; }
+.revision-table tfoot td { border-top: 2px solid #e5e7eb; background: #fafafa; }
+.revision-table .ecart-row { background: #fff5f5; }
+.revision-table .ecart-val { color: #dc2626; font-weight: 600; }
+.revision-table .ok-val { color: #16a34a; }
+.revision-table .subtotal-row { background: #f8f9fa; }
+
+/* Editable cells */
+.revision-table th.editable-col { background: #FDF8EE; color: #B08A2E; }
+.revision-table .editable-cell input {
+  width: 100%; max-width: 110px; padding: 3px 6px;
+  border: 1px solid #ddd; border-radius: 4px; font-size: 11.5px;
+  text-align: right; background: #fff;
+  font-variant-numeric: tabular-nums;
+}
+.revision-table .editable-cell input:focus {
+  outline: none; border-color: #D4A843; box-shadow: 0 0 0 2px rgba(212, 168, 67, 0.15);
+}
+
+/* Small tables (contrôle 2 & 3) */
+.revision-table-small { max-width: 500px; }
+.revision-table-small td:first-child { font-weight: 500; color: #444; }
+
+/* Montants calculés */
+.revision-table .computed {
+  background: #f0f7ff; color: #B08A2E; font-weight: 600;
+  border-left: 3px solid #D4A843; padding-left: 5px;
+}
+
+/* Impact OD */
+.revision-table .od-val { color: #7c3aed; font-weight: 600; }
+.revision-table .revised-val {
+  background: #f0fdf4; color: #166534; font-weight: 600;
+  border-left: 3px solid #16a34a; padding-left: 5px;
+}
+
+/* Journal OD */
+.revision-od { border-color: #c4b5fd; background: #faf5ff; }
+.revision-od .revision-control-title { color: #5b21b6; }
+.revision-od .revision-table .editable-cell input { max-width: none; }
+.revision-od .revision-table .editable-cell input[type="date"] { width: 120px; }
+.revision-od-delete {
+  border: none; background: none; cursor: pointer; color: #999;
+  padding: 4px; border-radius: 4px;
+}
+.revision-od-delete:hover { color: #dc2626; background: #fee2e2; }
+.revision-od-actions {
+  display: flex; gap: 8px; margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid #e9e5f5;
+}
+.revision-od-add, .revision-od-auto {
+  display: flex; align-items: center; gap: 5px;
+  padding: 6px 14px; border-radius: 6px; font-size: 12.5px;
+  font-weight: 500; cursor: pointer; border: 1px solid;
+}
+.revision-od-add {
+  background: #fff; color: #5b21b6; border-color: #c4b5fd;
+}
+.revision-od-add:hover { background: #f5f3ff; }
+/* Suggestions */
+.revision-suggestions { border-color: #fbbf24; background: #fffbeb; }
+.revision-suggestions .revision-control-title { color: #92400e; }
+.suggestion-row { background: #fefce8; }
+.suggestion-row:hover { background: #fef9c3; }
+.revision-od-accept {
+  display: flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 5px; font-size: 11.5px;
+  font-weight: 500; cursor: pointer;
+  background: #16a34a; color: #fff; border: none;
+  white-space: nowrap;
+}
+.revision-od-accept:hover { background: #15803d; }
+
+/* Balance révisée */
+.revision-balance-revisee { }
+.revision-balance-filtres { display: flex; gap: 4px; }
+.revision-modified-row { background: #f0fdf4; }

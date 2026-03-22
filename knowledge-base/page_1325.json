@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1325
+  },
+  "articles": [
+    {
+      "numero": 2124,
+      "titre": "Résultat de l'exercice (suite)",
+      "texte": [
+        "Le compte de résultat est subdivisé en 2 comptes :",
+        "131 résultat net de l'exercice : excédent",
+        "139 résultat net de l'exercice : déficit"
+      ],
+      "comptes": ["131", "139"],
+      "mots_cles": ["résultat exercice", "excédent", "déficit"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1324"
+    },
+    {
+      "numero": 2125,
+      "titre": "Subventions d'investissement",
+      "texte": [
+        "Les subventions d'investissements sont traitées aux §§ 733 et suivants."
+      ],
+      "comptes": [],
+      "mots_cles": ["subventions investissement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2126,
+      "titre": "Provisions réglementées",
+      "texte": [
+        "Les provisions réglementées sont des provisions à caractère purement réglementaire, comptabilisées non pas en application de principes comptables, mais suivant des dispositions légales et réglementaires (lois de finances, par exemple).",
+        "Elles sont rarement rencontrées dans les entités à but non lucratif parce qu'elles ne sont pas en principe motivées par le souci de faire bénéficier aux entités d'un avantage fiscal.",
+        "Les provisions réglementées sont traitées aux 738 et suivants §§."
+      ],
+      "comptes": [],
+      "mots_cles": ["provisions réglementées", "dispositions légales", "lois de finances", "avantage fiscal"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2130,
+      "titre": "Fonds affectés — Définition",
+      "texte": [
+        "Les fonds affectés, appelés aussi fonds dédiés, sont des ressources reçues par les entités à but non lucratif affectées à un projet précis, dont on ne saurait se détourner de l'intention du donateur. On distingue notamment les fonds affectés aux charges, à l'achat d'immobilisations.",
+        "Il s'agit aussi de fonds que les tiers financeurs ont affecté à un but ou objet bien déterminé qui ne sont pas entièrement consommés en fin d'exercice conformément à l'engagement pris à leur égard."
+      ],
+      "comptes": [],
+      "mots_cles": ["fonds affectés", "fonds dédiés", "ressources", "projet précis", "donateur", "tiers financeurs"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2131,
+      "titre": "Fonds affectés — Subdivision",
+      "texte": [
+        "Le compte de Fonds affectés est subdivisé comme suit :",
+        "165 Fonds affectés à un projet spécifique",
+        "167 Fonds provenant de dons et legs d'immobilisation",
+        "  1671 affectés",
+        "  1672 non affectés",
+        "  1679 Engagements auprès donateur",
+        "168 Autres fonds affectés",
+        "169 Fonds affectés à recevoir"
+      ],
+      "comptes": ["165", "167", "1671", "1672", "1679", "168", "169"],
+      "mots_cles": ["fonds affectés", "projet spécifique", "dons et legs", "immobilisation", "engagements donateur", "fonds à recevoir"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

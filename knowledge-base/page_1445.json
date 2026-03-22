@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Projet de développement",
+    "section": "Tableau de correspondance - Compte d'exploitation",
+    "page_source": 1445
+  },
+  "articles": [
+    {
+      "numero": 2322,
+      "titre": "Tableau de correspondance - Compte d'exploitation",
+      "texte": [
+        "TABLEAU DE CORRESPONDANCE - COMPTE D'EXPLOITATION",
+        "REF | LIBELLES | +/- | NUMEROS DE COMPTES A INCORPORER DANS LES POSTES",
+        "RA | Fonds d'administration | + | 702",
+        "RB | Ventes de marchandises, produits finis et prestations de services | + | 705",
+        "RC | Subventions d'exploitation | + | 71",
+        "RD | Autres produits et transferts de charges | | 707, 72, 73 (+/-) 75, 77, 78",
+        "RE | Reprises de provisions | + | 79",
+        "XA | REVENUS (Somme RA à RD) | |",
+        "TA | Achats de biens, marchandises, matières premières et fournitures liées | - | 601, 602",
+        "TB | Autres achats | - | 604, 605, 606, 608",
+        "TC | Variation de stocks de biens, marchandises, matières et fournitures et autres | +/- | 603",
+        "TD | Transports | - | 61",
+        "TG | Services extérieurs | - | 62, 63",
+        "TH | Impôts et taxes | - | 64",
+        "TI | Autres charges | - | 65",
+        "TJ | Charges de personnel | - | 66",
+        "TK | Frais financiers et charges assimilées | - | 67",
+        "TL | Dotations aux provisions | - | 69",
+        "TM | Produits H.A.O. | + | 82, 84, 86, 88",
+        "TN | Charges H.A.O. | - | 81, 83, 85, 87",
+        "XB | CHARGES DE FONCTIONNEMENT (Somme TA à TN) | |",
+        "XC | SOLDE DES OPERATIONS DE L'EXERCICE (+excédent, -déficit) XA - XB | |"
+      ],
+      "comptes": ["702", "705", "71", "707", "72", "73", "75", "77", "78", "79", "601", "602", "604", "605", "606", "608", "603", "61", "62", "63", "64", "65", "66", "67", "69", "82", "84", "86", "88", "81", "83", "85", "87"],
+      "mots_cles": ["tableau de correspondance", "compte d'exploitation", "revenus", "charges de fonctionnement", "fonds administration", "produits HAO", "charges HAO", "solde opérations", "projet de développement"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

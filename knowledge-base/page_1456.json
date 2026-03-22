@@ -1,0 +1,54 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Articles 20, 21, 22 et 23 - Choix, nomination, mandat et mise à jour",
+    "page_source": 1456
+  },
+  "articles": [
+    {
+      "numero": 2403,
+      "titre": "Article 20 - Choix de l'auditeur",
+      "texte": [
+        "L'auditeur est choisi parmi les experts-comptables inscrits au tableau de l'ordre des experts-comptables ou de l'organe qui en tient lieu, dans chaque Etat partie par les membres de l'association ou de l'ordre ou le bailleur de fonds et/ou l'Etat bénéficiaire du Projet de développement."
+      ],
+      "comptes": [],
+      "mots_cles": ["auditeur", "experts-comptables", "ordre", "bailleur fonds", "Etat bénéficiaire"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2403,
+      "titre": "Article 21 - Nomination de l'auditeur",
+      "texte": [
+        "L'auditeur est nommé pour trois (3) exercices renouvelables une fois par l'assemblée générale de l'entité ou l'instance qui en tient lieu, représentant plus de la moitié des membres présents ou représentés, ou par le bailleur de fonds et/ou l'Etat bénéficiaire du Projet de développement. Toutefois, si l'entité a une existence inférieure à trois exercices, le mandat de l'auditeur est ramené à cette durée.",
+        "Si cette majorité n'est pas obtenue et sauf clause contraire des statuts, un quorum d'un dixième (1/10) des membres présents ou représentés est requis pour que l'assemblée générale réunie sur deuxième convocation puisse valablement désigner l'auditeur.",
+        "Si l'assemblée générale ou l'instance qui en tient lieu n'atteint pas le quorum du deuxième alinéa ci-dessus, ou omet d'élire un auditeur, tout membre peut demander à la juridiction compétente, la désignation d'un auditeur."
+      ],
+      "comptes": [],
+      "mots_cles": ["nomination auditeur", "3 exercices", "renouvelable", "assemblée générale", "quorum", "majorité"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2403,
+      "titre": "Article 22 - Prorogation du mandat de l'auditeur",
+      "texte": [
+        "Si l'assemblée ou l'instance qui en tient lieu omet de renouveler le mandat de l'auditeur ou de le remplacer à l'expiration de son mandat et, sauf refus exprès de l'auditeur, sa mission est prorogée jusqu'à la plus prochaine assemblée générale ou à la prochaine réunion de l'instance qui en tient lieu des membres, statuant sur les comptes de l'entité ou à la prochaine approbation des comptes du projet par le bailleur de fonds ou l'Etat Partie."
+      ],
+      "comptes": [],
+      "mots_cles": ["prorogation mandat", "auditeur", "renouvellement", "assemblée générale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2403,
+      "titre": "Article 23 - Mise à jour du SYCEBNL",
+      "texte": [
+        "Il est procédé régulièrement, par voie de Décision, à la mise à jour du Système comptable des entités à but non lucratif, sur recommandation de la Commission de normalisation comptable de l'OHADA conformément au Règlement portant création, organisation et fonctionnement de ladite Commission."
+      ],
+      "comptes": [],
+      "mots_cles": ["mise à jour", "SYCEBNL", "Commission normalisation comptable", "OHADA", "Décision"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

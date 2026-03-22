@@ -1,0 +1,88 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1321
+  },
+  "articles": [
+    {
+      "numero": 2119,
+      "titre": "Schéma des écritures des apports sans souscription préalable (suite)",
+      "texte": [
+        "Schéma des écritures pour la dotation consomptible, le droit d'entrée et la couverture des charges de l'exercice par la dotation."
+      ],
+      "ecritures": [
+        {
+          "description": "Dotation consomptible",
+          "lignes": [
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "x", "credit": ""},
+            {"compte": "104", "libelle": "Dotation consomptible", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Droit d'entrée",
+          "lignes": [
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "x", "credit": ""},
+            {"compte": "103", "libelle": "Droit d'entrée", "debit": "", "credit": "x"},
+            {"compte": "18511", "libelle": "Droit d'entrée dépôt restituable", "debit": "", "credit": "x"},
+            {"compte": "701", "libelle": "Cotisations des adhérents", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Couverture des charges de l'exercice par la dotation (au 31/12)",
+          "lignes": [
+            {"compte": "1049", "libelle": "Dotation consomptible inscrite au compte de résultat", "debit": "x", "credit": ""},
+            {"compte": "703", "libelle": "Quote part de dotation consomptible transférée", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Solde du fonds consomptible épuisé",
+          "lignes": [
+            {"compte": "104", "libelle": "Dotation consomptible", "debit": "x", "credit": ""},
+            {"compte": "1049", "libelle": "Dotation consomptible inscrite au compte de résultat", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["5", "104", "103", "18511", "701", "1049", "703"],
+      "mots_cles": ["dotation consomptible", "droit d'entrée", "dépôt restituable", "cotisations adhérents", "couverture charges"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1320"
+    },
+    {
+      "numero": 2120,
+      "titre": "Schéma des écritures relatives aux charges sur les apports avec droit de reprise",
+      "texte": [
+        "Écritures relatives aux charges engagées pour l'entretien des biens apportés avec droit de reprise, aux dotations aux amortissements et à la reprise de l'apport."
+      ],
+      "ecritures": [
+        {
+          "description": "Charges engagées pour l'entretien des biens apportés avec droit de reprise",
+          "lignes": [
+            {"compte": "6", "libelle": "Comptes de charges", "debit": "x", "credit": ""},
+            {"compte": "4", "libelle": "Comptes de tiers", "debit": "", "credit": "x"},
+            {"compte": "5", "libelle": "Comptes de trésorerie", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Dotation annuelle des apports avec droit de reprise si option renouvellement du bien",
+          "lignes": [
+            {"compte": "681", "libelle": "Dotations aux amortissements", "debit": "x", "credit": ""},
+            {"compte": "28", "libelle": "Amortissements", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Reprise de l'apport avec droit de reprise si option renouvellement du bien",
+          "lignes": [
+            {"compte": "28", "libelle": "Amortissements", "debit": "x", "credit": ""},
+            {"compte": "2", "libelle": "Comptes d'actif immobilisé", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["6", "4", "5", "681", "28", "2"],
+      "mots_cles": ["charges entretien", "apports droit de reprise", "amortissements", "renouvellement bien", "reprise apport"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

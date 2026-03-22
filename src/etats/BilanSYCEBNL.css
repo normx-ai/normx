@@ -1,0 +1,585 @@
+/* A4 Page Container */
+.bilan-wrapper {
+  padding: 24px 30px;
+}
+.bilan-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.bilan-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bilan-back-btn {
+  background: none;
+  border: none;
+  color: #D4A843;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 0;
+}
+.bilan-toolbar h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+.bilan-export-btn {
+  background: #D4A843;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bilan-toolbar-right {
+  display: flex;
+  gap: 8px;
+}
+.bilan-export-btn:hover { background: #C09935; }
+.bilan-export-btn.secondary {
+  background: #fff;
+  color: #D4A843;
+  border: 1px solid #D4A843;
+}
+.bilan-export-btn.secondary:hover {
+  background: #FDF8EE;
+}
+
+.bilan-exercice-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #555;
+}
+.bilan-exercice-select select {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* A4 Page */
+.a4-page {
+  width: 210mm;
+  min-height: 297mm;
+  background: #fff;
+  margin: 0 auto 20px;
+  padding: 12mm 12mm 15mm;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  font-family: 'Outfit', 'Segoe UI', Arial, sans-serif;
+  font-size: 11px;
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header officiel SYCEBNL */
+.etat-header-officiel {
+  margin-bottom: 10px;
+}
+.etat-header-titre {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 0;
+  margin-bottom: 6px;
+  background: none;
+}
+.etat-sub-titre {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+.etat-header-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.etat-header-row {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+}
+.etat-header-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  padding: 3px 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.etat-header-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  padding: 3px 6px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.etat-header-value-right {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  padding: 3px 6px;
+  white-space: nowrap;
+}
+
+/* Ancien header (conserve pour compat) */
+.bilan-header {
+  text-align: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #1A3A5C;
+}
+.bilan-header-entite {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.bilan-header-type {
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 6px;
+}
+.bilan-header-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 6px 0 2px;
+}
+.bilan-header-subtitle {
+  font-size: 10px;
+  color: #555;
+}
+.bilan-header-exercice {
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.bilan-header-ref {
+  font-size: 9px;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* Table */
+.bilan-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  font-size: 11px;
+  flex: 1;
+}
+.bilan-table th,
+.bilan-table td {
+  border: 1px solid #333;
+  padding: 4px 8px;
+  text-align: left;
+  vertical-align: middle;
+  line-height: 1.5;
+}
+.bilan-table th {
+  background: #1A3A5C;
+  color: #fff;
+  font-weight: 600;
+  font-size: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 9px 8px;
+}
+.bilan-table .col-ref {
+  width: 32px;
+  text-align: center;
+}
+.bilan-table .col-libelle {
+  width: auto;
+}
+.bilan-table .col-note {
+  width: 36px;
+  text-align: center;
+}
+.bilan-table .col-montant {
+  width: 85px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Row styles */
+.bilan-table .row-section td {
+  background: #e8edf5;
+  font-weight: 700;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 9px 8px;
+}
+.bilan-table .col-montant-group {
+  text-align: center;
+}
+.bilan-table .row-subsection td {
+  background: #d9e2f0;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+.bilan-table .col-section-label {
+  text-align: left;
+  padding-left: 10px;
+}
+.bilan-table .row-label td {
+  background: none;
+  font-size: 9px;
+  color: #555;
+  padding: 2px 8px;
+}
+.bilan-table .row-total td {
+  background: #1A3A5C;
+  color: #fff;
+  font-weight: 700;
+  font-size: 11.5px;
+  padding: 9px 8px;
+}
+.bilan-table .row-subtotal td {
+  font-weight: 700;
+  border-top: 1.5px solid #333;
+  padding: 4px 8px;
+}
+.bilan-table .row-indent td:nth-child(2) {
+  padding-left: 18px;
+}
+.bilan-table .row-indent2 td:nth-child(2) {
+  padding-left: 30px;
+}
+
+.bilan-table input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: right;
+  font-size: 11px;
+  font-family: inherit;
+  padding: 0;
+  outline: none;
+  font-variant-numeric: tabular-nums;
+}
+.bilan-table input:focus {
+  background: #fffde7;
+}
+
+.bilan-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 16px 0 6px;
+  color: #1A3A5C;
+  padding-bottom: 4px;
+  border-bottom: 1.5px solid #1A3A5C;
+}
+
+/* Footer */
+.bilan-footer {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #888;
+}
+
+/* Alert */
+.bilan-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+/* Note input */
+.note-input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 10px;
+  font-family: inherit;
+  padding: 0;
+  outline: none;
+  text-align: center;
+}
+.note-input:focus {
+  background: #fffde7;
+}
+
+/* Equilibre check */
+.bilan-equilibre {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 0;
+}
+.equilibre-ok { color: #059669; }
+.equilibre-ko { color: #dc2626; }
+
+/* PDF Preview Modal */
+.pdf-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pdf-preview-modal {
+  background: #fff;
+  width: 90vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+}
+.pdf-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #1A3A5C;
+  color: #fff;
+}
+.pdf-preview-header h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+.pdf-preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pdf-action-btn {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.pdf-action-btn:hover { background: rgba(255,255,255,0.25); }
+.pdf-action-btn.primary {
+  background: #D4A843;
+  border-color: #D4A843;
+}
+.pdf-action-btn.primary:hover { background: #C09935; }
+.pdf-close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-left: 8px;
+}
+.pdf-close-btn:hover { color: #ef4444; }
+.pdf-preview-body {
+  flex: 1;
+  overflow: hidden;
+}
+.pdf-preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* N-1 detail columns */
+.n1-detail {
+  background: #f0f4fa;
+}
+
+/* No-print utility */
+.no-print { }
+
+/* ============================================
+   ETAT TOOLBAR — Notes annexes, Fiches R3/R4
+   ============================================ */
+.etat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding: 10px 16px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 6px 6px 0 0;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.etat-toolbar-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a1a;
+  flex: 1;
+  text-align: center;
+}
+.etat-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.etat-back-btn {
+  background: none;
+  border: none;
+  color: #D4A843;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+.etat-back-btn:hover {
+  background: #FDF8EE;
+}
+.etat-action-btn {
+  border: 1px solid #D4A843;
+  background: #fff;
+  color: #D4A843;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s;
+}
+.etat-action-btn:hover {
+  background: #FDF8EE;
+}
+.etat-action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.etat-exercice-select {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  background: #fff;
+}
+
+/* Preview modal */
+.etat-preview-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.etat-preview-modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 90vw;
+  max-width: 900px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.etat-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: #1A3A5C;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+.etat-preview-actions {
+  display: flex;
+  gap: 8px;
+}
+.etat-preview-actions button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s;
+}
+.etat-preview-actions button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.etat-preview-iframe {
+  flex: 1;
+  border: none;
+  width: 100%;
+}
+
+/* Print styles */
+@media print {
+  .bilan-wrapper { padding: 0; }
+  .bilan-toolbar { display: none; }
+  .bilan-exercice-select { display: none; }
+  .etat-toolbar { display: none; }
+  .no-print { display: none !important; }
+  .n1-detail { display: none !important; }
+  .a4-page {
+    box-shadow: none;
+    margin: 0;
+    padding: 10mm;
+    page-break-after: always;
+  }
+}

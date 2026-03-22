@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "titre": "Système Comptable des Entités à But Non Lucratif (SYCEBNL)",
+    "page_source": 1286
+  },
+  "articles": [
+    {
+      "numero": 2000,
+      "titre": "Adoption de l'Acte uniforme SYCEBNL",
+      "texte": [
+        "Le Conseil des Ministres de l'OHADA a adopté, au cours de sa 53ème session tenue à Niamey les 21 et 22 décembre 2022, l'Acte uniforme relatif au Système comptable des entités à but non lucratif."
+      ],
+      "mots_cles": ["OHADA", "Acte uniforme", "SYCEBNL", "Niamey", "décembre 2022", "53ème session"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2001,
+      "titre": "Définition de l'entité à but non lucratif",
+      "texte": [
+        "L'entité à but non lucratif s'entend de toute organisation, poursuivant un but désintéressé, et dont les ressources éventuellement générées par l'activité servent au fonctionnement et à la réalisation de son objet social.",
+        "Les entités à but non lucratif, lorsqu'elles ne sont pas soumises au système de la comptabilité publique, au système de comptabilité soumis à un régime particulier, ou à des dispositions nationales spécifiques, sont tenues de mettre en place une comptabilité, dite comptabilité financière, conformément aux règles applicables au Système comptable des entités à but non lucratif (art. 2)."
+      ],
+      "mots_cles": ["entité à but non lucratif", "définition", "objet social", "comptabilité financière", "article 2"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2002,
+      "titre": "Champ d'application — L'association",
+      "texte": [
+        "Entrent dans le champ d'application de l'Acte uniforme :",
+        "L'association : une convention par laquelle plusieurs personnes physiques ou morales mettent en commun leurs connaissances ou leurs activités dans un but autre que de partager des bénéfices. Une association est constituée suivant les dispositions législatives de chaque État partie de l'espace OHADA.",
+        "Les entités à but non lucratif que le SYCEBNL appelle association sont, sauf dispositions nationales spécifiques : associations ; fondations ; organisations religieuses ; syndicats ; partis politiques ; toute autre entité de droit ou de fait qui entre dans le champ d'application de l'Acte uniforme voir § 2001."
+      ],
+      "mots_cles": ["association", "fondation", "organisation religieuse", "syndicat", "parti politique", "champ d'application"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2003,
+      "titre": "Champ d'application — L'ordre professionnel",
+      "texte": [
+        "L'ordre professionnel : un organisme de caractère corporatif institué par une loi et regroupant obligatoirement les membres de certaines professions libérales qui exercent outre une fonction de"
+      ],
+      "mots_cles": ["ordre professionnel", "professions libérales", "organisme corporatif"],
+      "statut": "en_vigueur",
+      "note": "Article tronqué — suite page 1286"
+    }
+  ]
+}

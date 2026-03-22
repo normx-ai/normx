@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Articles 2 (suite), 3 et 4 - Entités visées, dispositions applicables, états financiers annuels",
+    "page_source": 1448
+  },
+  "articles": [
+    {
+      "numero": 2401,
+      "titre": "Article 2 (suite) - Types d'entités à but non lucratif",
+      "texte": [
+        "Constituent, notamment, des entités à but non lucratif :",
+        "- les associations et les ordres professionnels ;",
+        "- les entités ayant pour objet la gestion ou l'administration de projets de développement financés en général par les bailleurs bilatéraux, multilatéraux, privés ou étatiques.",
+        "Les entités visées ci-dessus, lorsqu'elles ne sont pas soumises au système de la comptabilité publique, au système de comptabilité soumis à un régime particulier, ou à des dispositions nationales spécifiques, sont tenues de mettre en place une comptabilité, dite comptabilité financière, conformément aux règles applicables au Système comptable des entités à but non lucratif et prévues par les dispositions ci-après."
+      ],
+      "comptes": [],
+      "mots_cles": ["associations", "ordres professionnels", "projets développement", "bailleurs", "comptabilité financière"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2401,
+      "titre": "Article 3 - Dispositions de l'AUDCIF applicables",
+      "texte": [
+        "Les dispositions de l'Acte uniforme relatif au droit comptable et à l'information financière (AUDCIF) sont applicables aux entités visées à l'article 2 ci-dessus, à l'exception des articles 5, 8, 10 à 13, 17 alinéas 7 et 8, 18, 19 quatrième tiret, 21, 25 à 34, 49, 69, 70, 71, 73 à 113."
+      ],
+      "comptes": [],
+      "mots_cles": ["AUDCIF", "dispositions applicables", "exceptions", "droit comptable"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 4 - Etats financiers annuels",
+      "texte": [
+        "Un jeu complet d'états financiers annuels comprend :",
+        "- pour les associations et les ordres professionnels, le Bilan, le Compte de résultat, le Tableau des flux de trésorerie ainsi que les Notes annexes ;",
+        "- pour les projets de développement, le Tableau emplois-ressources, le Tableau d'exécution budgétaire, le Tableau de réconciliation de trésorerie, le Bilan, le Compte d'exploitation, et les Notes annexes.",
+        "Les états financiers forment un tout indissociable et décrivent de façon régulière et sincère les événements, opérations et situations de l'exercice pour donner une image fidèle du patrimoine et de la situation financière de l'entité.",
+        "Les états financiers sont établis et présentés conformément aux modèles du Système comptable des entités à but non lucratif.",
+        "Toute entité qui applique correctement le Système comptable des entités à but non lucratif est réputée donner, dans ses états financiers, une image fidèle de sa situation et de ses opérations."
+      ],
+      "comptes": [],
+      "mots_cles": ["états financiers", "bilan", "compte résultat", "tableau emplois-ressources", "exécution budgétaire", "réconciliation trésorerie", "compte exploitation", "notes annexes", "image fidèle"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

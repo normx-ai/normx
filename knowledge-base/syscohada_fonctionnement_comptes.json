@@ -1,0 +1,837 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYSCOHADA",
+    "partie": "Première partie",
+    "titre": "Fonctionnement des comptes — Système Comptable OHADA (SYSCOHADA révisé)",
+    "pages_source": "100-110",
+    "date_extraction": "2026-03-17"
+  },
+  "articles": [
+    {
+      "numero": 80,
+      "titre": "Définition des immobilisations",
+      "texte": [
+        "Le Système Comptable OHADA définit les immobilisations comme les biens ou valeurs destinés à rester durablement dans l'entité. Ils ne se consomment pas par le premier usage. A priori leur durée de vie est supérieure à une année.",
+        "Certains biens de faible valeur ou dont la consommation est très rapide peuvent être considérés comme entièrement consommés dans l'exercice de leur mise en service et, par conséquent ne peuvent être classés dans les immobilisations. Le Système Comptable OHADA ne fixe aucun seuil de valeur ; il appartient à chaque entité d'apprécier, en vertu du principe de l'importance significative, le seuil de la valeur unitaire des biens (voir § 156), lorsqu'il n'existe pas de mesures fiscales dans ce sens.",
+        "Le Système Comptable OHADA classe les immobilisations en trois catégories auxquelles s'ajoutent les avances et acomptes versés sur immobilisations :"
+      ],
+      "mots_cles": [
+        "immobilisations",
+        "définition",
+        "actif immobilisé",
+        "durée de vie",
+        "seuil de valeur",
+        "importance significative",
+        "classe 2"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "80-2",
+      "titre": "Classification des immobilisations — Immobilisations incorporelles",
+      "texte": [
+        "a) Immobilisations incorporelles : Elles sont des actifs non monétaires identifiables sans substance physique, contrôlés par l'entité qui a le pouvoir d'obtenir des avantages économiques futurs et peut restreindre l'accès des tiers à ces avantages.",
+        "Un actif est identifiable s'il : est séparable, c'est-à-dire qu'il peut être séparé de l'entité et être vendu, transféré, concédé par licence, loué ou échangé, soit de façon individuelle, soit dans le cadre d'un contrat, avec un actif ou un passif liés ; ou résulte de droits contractuels ou d'autres droits légaux, que ces droits soient ou non cessibles ou séparables de l'entité ou d'autres droits et obligations."
+      ],
+      "mots_cles": [
+        "immobilisations incorporelles",
+        "actif non monétaire",
+        "identifiable",
+        "séparable",
+        "droits contractuels",
+        "avantages économiques"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "80-3",
+      "titre": "Classification des immobilisations — Immobilisations incorporelles (suite)",
+      "texte": [
+        "Une entité contrôle ses avantages si ces connaissances sont protégées par des droits légaux.",
+        "Les avantages économiques futurs résultent des produits découlant de la vente de biens ou services, des économies de coûts ou d'autres avantages résultant de l'utilisation de l'actif par l'entité.",
+        "Elles ont la nature de biens acquis ou créés par l'entité, non pour être vendus ou transformés, mais pour être utilisés de manière durable directement ou indirectement pour la réalisation des opérations professionnelles ou non."
+      ],
+      "mots_cles": [
+        "immobilisations incorporelles",
+        "droits légaux",
+        "avantages économiques",
+        "biens acquis",
+        "utilisation durable"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "80-4",
+      "titre": "Classification des immobilisations — Immobilisations corporelles",
+      "texte": [
+        "b) Immobilisations corporelles : Elles sont des éléments d'actif physique :",
+        "- qui sont détenus par une entité soit, pour être utilisés dans la production de biens et/ou de services, soit pour être loués à des tiers, soit à des fins de gestion interne et dont l'entité attend qu'il soit utilisé sur plus d'un exercice. Ils peuvent comprendre des éléments détenus en vue de leur entretien ou de leur réparation ;",
+        "- qui ont été acquis ou construits dans le but d'être utilisés de manière permanente ;",
+        "- qui ne sont pas destinés à la vente dans le cycle normal d'exploitation de l'entité ; par exemple voiture de démonstration."
+      ],
+      "mots_cles": [
+        "immobilisations corporelles",
+        "actif physique",
+        "production",
+        "location",
+        "gestion interne",
+        "utilisation permanente"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 81,
+      "titre": "Critères de classement des immobilisations",
+      "texte": [
+        "Les critères permettant de s'assurer qu'il s'agit d'immobilisation, d'actif circulant ou de charges sont les suivants :",
+        "- l'affectation ou la destination ;",
+        "- la durée du séjour dans l'entité ;",
+        "- la liquidité."
+      ],
+      "mots_cles": [
+        "critères de classement",
+        "immobilisation",
+        "actif circulant",
+        "charges",
+        "affectation",
+        "destination",
+        "durée",
+        "liquidité"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "81-1",
+      "titre": "Classification des immobilisations — Immobilisations financières",
+      "texte": [
+        "Le schéma ci-dessous permet de mieux appréhender la distinction : Biens destinés à la production, aux prestations de services, à la location → Oui → Biens à utiliser sur plus d'un exercice → Oui → Biens destinés à être revendus dans le cycle d'exploitation → Non → Immobilisations. Si Non à l'une des étapes → Actif circulant ou charges.",
+        "c) Immobilisations financières : Elles sont constituées par les titres de participations, les autres titres immobilisés, les prêts contractuels et les créances non commerciales assimilées à des prêts. Pour les avances et acomptes versés sur immobilisations : voir § 164."
+      ],
+      "mots_cles": [
+        "immobilisations financières",
+        "titres de participation",
+        "prêts contractuels",
+        "créances non commerciales",
+        "schéma de classement",
+        "avances et acomptes"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "81-2",
+      "titre": "Immobilisations HAO",
+      "texte": [
+        "Les immobilisations HAO : les emplois immobilisés non productifs, ne participant pas au processus de production sont considérés comme des actifs immobilisés HAO (exemple : terrains, bâtiments inutiles pour l'objet économique de l'entité, œuvre d'art sans lien avec l'activité économique, matériel relatif à une ligne de production abandonnée)."
+      ],
+      "mots_cles": [
+        "immobilisations HAO",
+        "hors activités ordinaires",
+        "emplois non productifs",
+        "actifs improductifs",
+        "terrains inutiles",
+        "œuvre d'art"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 82,
+      "titre": "Application du postulat de la prééminence de la réalité économique sur l'apparence juridique",
+      "texte": [
+        "Selon ce postulat, pour que l'information représente d'une manière pertinente les transactions et autres événements qu'elle vise à représenter, il est nécessaire qu'ils soient enregistrés et présentés en accord avec leur substance et la réalité économique et non pas seulement selon leur forme juridique.",
+        "Le Système comptable OHADA opte pour une application limitée de ce postulat comptable. Les quatre applications qui sont faites du principe de prééminence de la réalité sur l'apparence sont les suivantes :",
+        "- inscription à l'actif du bilan (comme si l'entité en était propriétaire) des biens détenus avec clause de « réserve de propriété » ;",
+        "- inscription à l'actif du bilan du locataire des biens utilisés dans le cadre d'un contrat de location acquisition (côté preneur) et d'une créance de location financement (côté bailleur). Ces dispositions sont limitées aux contrats de crédit-bail, de location-vente ou tout autre contrat de location assortie d'une option d'achat dont le preneur est raisonnablement certain d'exercer ;",
+        "- inscription à l'actif du bilan des effets remis à l'escompte et non encore échus ou honorés ;",
+        "- inscription dans les « charges de personnel » du personnel facturé par d'autres entités.",
+        "Dans ces quatre cas, les conséquences comptables de ces solutions sont les suivantes :",
+        "- inscription au passif, en contrepartie des valeurs d'actif, de comptes de dettes financières spécifiques (crédit-bail et location-vente, réserve de propriété...), de dettes de trésorerie (crédits d'escompte...) ;",
+        "- inscription dans les charges et les produits des éléments correspondants : dotations aux amortissements, charges financières (crédit-bail, location-vente), charges de personnel (personnel intérimaire)."
+      ],
+      "mots_cles": [
+        "prééminence de la réalité",
+        "substance économique",
+        "forme juridique",
+        "réserve de propriété",
+        "crédit-bail",
+        "location-vente",
+        "location acquisition",
+        "effets à l'escompte",
+        "personnel intérimaire",
+        "postulat comptable"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "82-1",
+      "titre": "Cas particulier : entité individuelle — Inscription au Bilan",
+      "texte": [
+        "Contrairement aux sociétés dans lesquelles toutes les immobilisations qui sont leur propriété doivent figurer à l'actif du Bilan, celles appartenant à l'entrepreneur individuel peuvent, sur décision de ce dernier ne pas être inscrites à son Bilan.",
+        "Il s'agit là de l'application du principe de la liberté d'affectation comptable qui constitue une décision de gestion dont l'entrepreneur individuel devra assumer toutes les conséquences. Dans certains Etats parties de l'espace OHADA comme au Sénégal :",
+        "- Si l'immeuble est inscrit à l'actif du Bilan, il relève du régime des Bénéfices Industriels et Commerciaux (BIC) sans qu'il y ait lieu de faire la distinction entre la partie affectée à l'exploitation et celle réservée à l'habitation. Il en résulte que la totalité des charges concernant l'immeuble est déductible (frais d'acquisition, intérêts des emprunts, réparations, amortissements…) même si de tels frais ne sont pas en principe par nature déductibles lorsqu'ils se rapportent à la partie réservée à l'habitation, à condition de déterminer un revenu foncier imposable correspondant à la jouissance à titre privé. L'élément déterminant est la simple inscription au Bilan.",
+        "Par ailleurs, en cas de cession du bien inscrit au Bilan toute la plus-value réalisée tombe sous le coup de l'imposition.",
+        "- Si l'immeuble n'est pas inscrit à l'actif du Bilan, les frais d'acquisition ne peuvent faire l'objet d'aucune déduction. D'un autre côté, il n'existe pas de revenus imposables dans la mesure où l'entrepreneur individuel ne peut déclarer l'avantage en nature dont il bénéficie.",
+        "De plus, le principe de l'unicité de patrimoine ne permet pas qu'un entrepreneur individuel se facture à lui-même des loyers à raison des locaux qu'il met à la disposition de son entité.",
+        "Enfin, et comme conséquence de l'absence de revenus imposables, il n'existe aucune charge déductible.",
+        "Il convient surtout de préciser que la décision d'inscrire ou non le bien à l'actif du Bilan, dès lors qu'elle a été prise, ne peut plus être remise en cause."
+      ],
+      "mots_cles": [
+        "entité individuelle",
+        "entrepreneur individuel",
+        "liberté d'affectation",
+        "inscription au bilan",
+        "BIC",
+        "immeuble",
+        "plus-value",
+        "charges déductibles",
+        "unicité de patrimoine",
+        "décision de gestion"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 83,
+      "titre": "Subdivision des comptes d'actif immobilisé",
+      "texte": [
+        "Les comptes d'actif immobilisé comprennent, pour l'essentiel :",
+        "21 - IMMOBILISATIONS INCORPORELLES",
+        "22 - TERRAINS",
+        "23 - BÂTIMENTS, INSTALLATIONS TECHNIQUES ET AGENCEMENTS",
+        "24 - MATÉRIEL, MOBILIER ET ACTIFS BIOLOGIQUES",
+        "25 - AVANCES ET ACOMPTES VERSÉS SUR IMMOBILISATIONS",
+        "26 - TITRES DE PARTICIPATION",
+        "27 - AUTRES IMMOBILISATIONS FINANCIÈRES",
+        "28 - AMORTISSEMENTS",
+        "29 - DÉPRÉCIATIONS DES IMMOBILISATIONS"
+      ],
+      "mots_cles": [
+        "subdivision",
+        "comptes classe 2",
+        "immobilisations incorporelles",
+        "terrains",
+        "bâtiments",
+        "matériel",
+        "titres de participation",
+        "amortissements",
+        "dépréciations"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 84,
+      "titre": "Distinction entre immobilisations et stocks et immobilisations et charges",
+      "texte": [
+        "Selon le Système Comptable OHADA :",
+        "- les comptes d'actif immobilisé enregistrent les biens ou valeurs destinés à rester durablement dans l'entité (durée supérieure à 1 an) ; ces biens contribuent à l'amélioration ou au maintien des résultats de l'exercice ;",
+        "- les stocks sont constitués par : des objets, matières et fournitures destinés à être revendus en l'état sans transformation notable ni intégration à d'autres biens et services (marchandises, emballages perdus) ; des objets et substances plus ou moins élaborés destinés à être incorporés aux produits fabriqués (matières premières et fournitures consommables) ; des biens ou produits découlant accessoirement de la fabrication d'une autre substance principale du fait de la mise en œuvre d'un procédé de fabrication ; un sous produit peut également être issu du traitement des déchets et des rebuts ; des biens ayant atteint un stade d'achèvement définitif dans un cycle de production. Ce bien est destiné à la vente.",
+        "- les charges sont des emplois définitifs ou consommations de valeurs décaissées ou à décaisser par l'entité et sont constituées des éléments entrant dans la composition des coûts et prix de revient des produits, autres que les éléments supplétifs. Il s'agit :"
+      ],
+      "mots_cles": [
+        "distinction",
+        "immobilisations",
+        "stocks",
+        "charges",
+        "marchandises",
+        "matières premières",
+        "fournitures consommables",
+        "sous-produits",
+        "coûts",
+        "prix de revient"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "84-1",
+      "titre": "Distinction entre immobilisations et stocks et charges (suite)",
+      "texte": [
+        "Les charges sont constituées : de marchandises, approvisionnements, travaux et services consommés par l'entité, ainsi que des avantages qui lui ont été consentis ; d'une obligation légale que l'entité doit remplir ; ou exceptionnellement, d'un emploi sans contrepartie directe.",
+        "En pratique, la distinction ne se fait pas de manière aussi précise et systématique. En effet, la frontière est souvent difficile à trouver. L'inscription dans les comptes appropriés d'un certain nombre de dépenses peut faire souvent l'objet d'hésitation."
+      ],
+      "mots_cles": [
+        "charges",
+        "marchandises",
+        "approvisionnements",
+        "obligation légale",
+        "emploi sans contrepartie",
+        "frontière comptable"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 85,
+      "titre": "Distinction entre immobilisations et stocks",
+      "texte": [
+        "Il est généralement admis que les immobilisations sont destinées à rester de façon durable dans l'entité, alors que les stocks sont des matières et produits devant entrer dans le cycle de production ou de commercialisation.",
+        "Outre le critère de durée, c'est donc le caractère fixe ou circulant de l'élément qui est à prendre en considération.",
+        "La distinction a son intérêt tant au plan comptable qu'au plan fiscal."
+      ],
+      "mots_cles": [
+        "distinction",
+        "immobilisations",
+        "stocks",
+        "caractère fixe",
+        "circulant",
+        "durée",
+        "fiscal"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 86,
+      "titre": "Traitement comptable — Distinction immobilisations et stocks",
+      "texte": [
+        "Si en théorie la frontière entre immobilisations et stocks est nettement précisée, en pratique un certain nombre de cas pose souvent problème.",
+        "Il n'est pas rare en effet que des produits ayant le caractère de stocks s'apparentent aux éléments de l'actif immobilisé, et vice-versa. Face à de telles difficultés, les solutions ci-après ont été préconisées et tendent à s'imposer dans la pratique."
+      ],
+      "mots_cles": [
+        "traitement comptable",
+        "frontière",
+        "immobilisations",
+        "stocks",
+        "pratique"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 87,
+      "titre": "Cas des emballages",
+      "texte": [
+        "Le Système Comptable OHADA inclut dans les stocks les emballages commerciaux qui ne sont pas récupérables ou qui, bien qu'étant récupérables, ne sont pas identifiables par nature. Il s'agit de tous les emballages perdus et de certains emballages récupérables destinés à être consignés chez les clients, à condition que leur durée de séjour dans le patrimoine de l'entité soit estimée à moins d'un an."
+      ],
+      "mots_cles": [
+        "emballages",
+        "emballages perdus",
+        "emballages récupérables",
+        "stocks",
+        "consignation",
+        "durée de séjour"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 88,
+      "titre": "Emballages récupérables identifiables — Compte 243",
+      "texte": [
+        "A contrario, les emballages récupérables identifiables, qui constituent des outils de travail destinés à servir durablement dans l'entité, sont à enregistrer au compte 243 Matériel d'emballage récupérable et identifiable."
+      ],
+      "mots_cles": [
+        "emballages récupérables identifiables",
+        "compte 243",
+        "matériel d'emballage",
+        "immobilisation",
+        "outils de travail"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "88-1",
+      "titre": "Emballages récupérables identifiables (suite) — Commercialisation d'emballages",
+      "texte": [
+        "Sont identifiables, les emballages qui portent un numéro de série, ou que l'on peut différencier par tout autre moyen comme la date d'acquisition, la date de fabrication, etc.",
+        "Dans le cas d'une entité ayant pour objet la commercialisation d'emballages, ceux-ci, quelle que soit leur nature, identifiables ou non, récupérables ou non, doivent être considérés comme des marchandises ou comme des produits finis, selon qu'ils aient été achetés en vue de la revente, ou produits par l'entité. Ces emballages seront, selon le cas, enregistrés dans le compte 31 Marchandises ou 36 Produits finis."
+      ],
+      "mots_cles": [
+        "emballages identifiables",
+        "numéro de série",
+        "commercialisation",
+        "marchandises",
+        "produits finis",
+        "compte 31",
+        "compte 36"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 89,
+      "titre": "Cas des pièces de rechange",
+      "texte": [
+        "La pièce de rechange sert à l'entretien et à la réparation des immobilisations.",
+        "Lorsqu'une pièce de rechange est destinée à servir à plusieurs immobilisations de l'entité, elle doit être enregistrée dans les stocks.",
+        "Dans ce cas, si la consommation est régulière, les pièces de rechange doivent être inscrites dans les charges au compte 624 Entretien, réparations remise en état et maintenance.",
+        "Deux cas peuvent être retenus pour le traitement comptable en fin d'exercice :",
+        "- soit la pièce a été acquise pour une consommation immédiate. En fin d'exercice, si le bien n'est pas utilisé, le compte 476 Charges constatées d'avance doit intervenir pour annuler la charge inscrite dans le compte 624 Entretien, réparations, remise en état et maintenance ;",
+        "- soit la pièce de rechange est un stock puisque ne répondant pas à la définition d'une immobilisation corporelle. En fin d'exercice, le stock doit être inventorié et évalué avant d'être inscrit au compte 332 Fournitures d'atelier et d'usine par le biais du compte 6033 Variations des stocks d'autres approvisionnements.",
+        "Si la pièce de rechange ne peut être utilisée que pour une immobilisation bien déterminée, sa durée d'utilité est liée à celle de l'immobilisation, dans ce cas la pièce de rechange doit être enregistrée dans les immobilisations en faisant la distinction entre la pièce rechange principale et la pièce de rechange de sécurité."
+      ],
+      "mots_cles": [
+        "pièces de rechange",
+        "entretien",
+        "réparation",
+        "immobilisations",
+        "stocks",
+        "compte 624",
+        "compte 476",
+        "charges constatées d'avance",
+        "compte 332",
+        "compte 6033",
+        "pièce de sécurité"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "89-1",
+      "titre": "Pièce de rechange principale et pièce de rechange de sécurité",
+      "texte": [
+        "La pièce de rechange principale est destinée à remplacer totalement ou partiellement un composant de l'immobilisation principale dont la durée d'utilité est connue le jour de l'acquisition de l'immobilisation.",
+        "Cette pièce de rechange doit être enregistrée comme un composant du bien principal si sa durée d'utilité est supérieure à un an. En cas d'acquisition d'une nouvelle pièce de rechange celle-ci doit être immobilisée mais son amortissement débutera qu'à compter de sa date d'utilisation (date de mise en service).",
+        "La pièce de rechange de sécurité est une pièce destinée à être utilisée en cas de panne ou d'accident imprévisible. Cette pièce peut être utilisée en cas de besoin comme elle peut ne pas l'être jusqu'à la fin de la durée d'utilité d'une immobilisation bien déterminée.",
+        "En conséquence, cette pièce de rechange de sécurité doit être immobilisée est amortie dès son acquisition sur la durée d'utilité restant de l'immobilisation.",
+        "En tout état de cause, la pièce de rechange de sécurité ou principale ne doit être Immobilisée, que si elle répond à la définition de l'immobilisation corporelle avec une durée d'utilité supérieure à un an."
+      ],
+      "mots_cles": [
+        "pièce de rechange principale",
+        "pièce de rechange de sécurité",
+        "composant",
+        "immobilisation",
+        "amortissement",
+        "durée d'utilité",
+        "date de mise en service"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 92,
+      "titre": "Cas des entretiens et réparations",
+      "texte": [
+        "Il est souvent difficile d'apprécier si les dépenses engagées après la mise en service des biens doivent être immobilisées ou non. Le matériel d'entretien a été traité aux §§ 89 et 89-2."
+      ],
+      "mots_cles": [
+        "entretien",
+        "réparations",
+        "dépenses ultérieures",
+        "immobilisation",
+        "mise en service"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "92-1",
+      "titre": "Entretien courant",
+      "texte": [
+        "Une entité ne comptabilise pas, dans les immobilisations corporelles, les coûts d'entretien courant de l'immobilisation. Ces coûts sont, au contraire, comptabilisés en charges, au compte 624 Entretien, réparations remise en état et maintenance, lorsqu'ils sont engagés.",
+        "Les coûts d'entretien courant sont essentiellement les coûts de main-d'œuvre et des consommables, et peuvent inclure le coût de petites pièces. En revanche, si les coûts d'entretien répondent à la définition des immobilisations corporelles (voir §80-4), ils seront enregistrés dans les immobilisations."
+      ],
+      "mots_cles": [
+        "entretien courant",
+        "charges",
+        "compte 624",
+        "main-d'œuvre",
+        "consommables",
+        "immobilisations corporelles"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "92-2",
+      "titre": "Remplacement à intervalles réguliers",
+      "texte": [
+        "Des parties de certaines immobilisations corporelles peuvent exiger un remplacement à intervalles réguliers. Il peut être nécessaire par exemple au bout d'un certain temps d'utilisation, une chambre froide peut avoir besoin d'un nouveau revêtement intérieur ou bien les intérieurs d'avions tels que les sièges et les cuisines peuvent imposer d'être renouvelés plusieurs fois au cours de la vie de l'appareil.",
+        "Ces éléments sont comptabilisés comme des actifs distincts (composants) parce qu'ils ont des durées d'utilité et d'utilisation différentes de celles des immobilisations corporelles auxquelles ils sont liés. En conséquence, les dépenses engagées pour remplacer ou renouveler un tel élément sont comptabilisées comme l'acquisition d'un bien distinct et le bien remplacé est décomptabilisé de l'actif lorsque les critères de la prise en compte des immobilisations corporelles sont satisfaites (IAS 16 §13).",
+        "Il va de soi que l'amortissement de ces éléments ne peut se faire sur une durée supérieure à celle de l'immobilisation principale."
+      ],
+      "mots_cles": [
+        "remplacement",
+        "intervalles réguliers",
+        "composants",
+        "actifs distincts",
+        "durée d'utilité",
+        "décomptabilisation",
+        "IAS 16",
+        "amortissement"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "92-3",
+      "titre": "Inspections ou révisions majeures",
+      "texte": [
+        "Selon l'article 38-2 de l'Acte uniforme, la poursuite de l'exploitation d'une immobilisation corporelle peut être subordonnée à la réalisation régulière de révisions ou d'inspections majeures destinées à identifier d'éventuelles défaillances, avec ou sans remplacement de pièces.",
+        "Lorsqu'une inspection ou une révision majeure est réalisée, son coût est comptabilisé dans la valeur comptable de l'immobilisation corporelle comme un composant à titre de remplacement, si les critères de comptabilisation sont satisfaits, voir § 80-4. Toute valeur comptable résiduelle du coût de la précédente révision est décomptabilisée.",
+        "Cette disposition ne prévoit aucune anticipation du coût de la révision ou de l'inspection, il est comptabilisé lorsqu'il est réalisé. Il n'y a pas lieu de faire une estimation systématique lors de l'acquisition du bien. En revanche si le coût de la révision ou l'inspection est un élément distinct du coût global d'acquisition, il faudra le comptabiliser comme un composant. Aussi le SYSCOHADA autorise si nécessaire que le coût d'inspections ou de révisions majeures soit estimé, comme si cette révision avait été réalisée à la date d'acquisition de l'immobilisation ou d'achèvement de sa production."
+      ],
+      "mots_cles": [
+        "inspections majeures",
+        "révisions majeures",
+        "article 38-2",
+        "Acte uniforme",
+        "composant",
+        "décomptabilisation",
+        "valeur comptable résiduelle",
+        "coût de révision",
+        "immobilisation corporelle"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "92-4",
+      "titre": "Dépenses de sécurité ou d'environnement et autres mises en conformité",
+      "texte": [
+        "Les dépenses effectuées pour des raisons de sécurité ou pour des raisons liées à l'environnement rattachées à une immobilisation corporelle donnée sont immobilisées si, elles se révèlent nécessaires pour que l'entité puisse obtenir les avantages économiques futurs de ses autres immobilisations. Ces dépenses remplissent les conditions de comptabilisation en tant qu'immobilisations parce qu'elles permettent à l'entité d'obtenir des avantages économiques futurs des immobilisations liées. L'appréciation des avantages économiques n'est plus limitée au niveau de l'actif existant mais étendue au groupe d'éléments d'actifs liés.",
+        "Ces dépenses doivent répondre de manière cumulative au trois conditions suivantes : dépenses engagées pour des raisons de sécurité des personnes ou environnementales ; imposées par des obligations légales ; et dont la non-réalisation entraînerait l'arrêt de l'activité ou de l'installation de l'entité.",
+        "Ces dépenses enregistrées comme un composant de l'immobilisation corporelle à laquelle elles sont rattachées ne doivent pas faire l'objet d'un amortissement mais d'une dépréciation en cas de perte de valeur.",
+        "Par exemple, un fabricant de produits chimiques peut installer de nouveaux processus de manipulation de produits chimiques afin de se conformer à des dispositions environnementales sur la production et le stockage de produits chimiques dangereux ; les améliorations d'installations correspondantes sont comptabilisées en tant qu'immobilisations car, sans elles, l'entité n'est pas en mesure de fabriquer et de vendre des produits chimiques.",
+        "La comptabilisation du coût des actifs de sécurité ou d'environnement doit généralement être effectuée lors de l'acquisition des actifs comme un composant de l'immobilisation corporelle. Ce composant ne doit pas faire l'objet d'un amortissement mais d'une dépréciation en cas de perte de valeur."
+      ],
+      "mots_cles": [
+        "dépenses de sécurité",
+        "environnement",
+        "mise en conformité",
+        "composant",
+        "obligations légales",
+        "dépréciation",
+        "pas d'amortissement",
+        "avantages économiques",
+        "actifs liés"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "92-4-1",
+      "titre": "Dépenses de sécurité et d'environnement (suite) — Provisions et mise en conformité",
+      "texte": [
+        "Les dépenses de sécurité et d'environnement qui ne répondent pas aux conditions visées ci-dessus et les autres dépenses de mise en conformité sont comptabilisées en immobilisations ou en charges, selon les critères généraux de distinction entre charges et immobilisations. Une analyse au cas par cas doit être systématiquement effectuée.",
+        "Ces dépenses d'adaptation ne peuvent généralement pas donner lieu à provision avant leur engagement en l'absence d'obligation de les effectuer (l'entité peut en effet décider de racheter un bien neuf intégrant les fonctionnalités requises).",
+        "Toutefois, une provision doit être constituée : si le délai de mise en conformité est déjà expiré, le montant des pénalités devant alors faire l'objet d'une provision, si le paiement effectif est probable ; ou si l'entité a une obligation actuelle de réaliser la mise en conformité et qu'elle ne peut pas se soustraire à cette obligation, indépendamment de ses actions futures. Tel est le cas de certaines dépenses de remise en état de site, suite à une dégradation de l'environnement."
+      ],
+      "mots_cles": [
+        "dépenses de sécurité",
+        "mise en conformité",
+        "provision",
+        "pénalités",
+        "obligation actuelle",
+        "remise en état de site",
+        "environnement"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "92-5",
+      "titre": "Travaux de réaménagement",
+      "texte": [
+        "Le coût de travaux de réaménagement d'une immobilisation corporelle est porté à l'actif dès lors que les critères généraux sont respectés, à savoir :",
+        "- qu'il est probable que des avantages économiques futurs liés à cet élément bénéficieront à l'entité ; et",
+        "- que le coût de ces travaux peut être estimé de manière fiable."
+      ],
+      "mots_cles": [
+        "travaux de réaménagement",
+        "immobilisation corporelle",
+        "avantages économiques futurs",
+        "coût fiable",
+        "activation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 94,
+      "titre": "Traitement fiscal — Distinction immobilisations et stocks",
+      "texte": [
+        "L'intérêt fiscal de la distinction Immobilisations - Stocks porte sur la TVA, la dépréciation et le sort des résultats de cession."
+      ],
+      "mots_cles": [
+        "traitement fiscal",
+        "distinction",
+        "immobilisations",
+        "stocks",
+        "TVA",
+        "dépréciation",
+        "cession"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "94-1",
+      "titre": "TVA sur immobilisations et stocks",
+      "texte": [
+        "Selon le Code Général des Impôts de certains Etats parties OHADA, les biens et services ouvrant droit à déduction doivent être inscrits dans la comptabilité de l'entité pour le prix d'achat ou de revient diminué de la TVA récupérable. Lorsqu'il s'agit de biens amortissables, les amortissements sont calculés sur la base du prix d'achat ou de revient."
+      ],
+      "mots_cles": [
+        "TVA",
+        "déduction",
+        "prix d'achat",
+        "prix de revient",
+        "TVA récupérable",
+        "biens amortissables",
+        "Code Général des Impôts"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 95,
+      "titre": "Reversement de TVA sur immobilisations",
+      "texte": [
+        "hors TVA si elle est récupérable et TVA comprise si elle n'est pas récupérable.",
+        "En revanche, la TVA initialement déduite doit être reversée dans les différents cas suivants : cessation d'activités ; cession partielle d'éléments d'actif ; destruction du bien ; abandon de la qualité d'assujetti ou de l'activité de production ayant motivé la déduction ; exonération accordée aux produits fabriqués ; affectation du bien à une destination n'ouvrant pas droit à déduction.",
+        "La régularisation diffère selon qu'il s'agit de biens amortissables (immobilisations) ou de biens non amortissables (en particulier stocks).",
+        "Pour les biens soumis à amortissement, en cas de cession : avant deux ans d'utilisation, la TVA initialement déduite doit être reversée au prorata du temps d'amortissement restant à courir ; après deux ans d'utilisation, la TVA est calculée au taux normal des ventes sur la valeur hors taxes de cession.",
+        "Un exemple : Une machine acquise le 1er janvier N à FCFA HT 10 000 000 est amortissable sur 10 ans. La TVA acquittée au taux de 20% s'élève à FCFA 2 000 000. L'entité ayant un prorata de déduction de 60% n'a déduit que 2 000 000 x 60% = FCFA 1 200 000. a) Si le 30 juin N+1, la machine est revendue à FCFA 8 000 000, la TVA à reverser est de : 1 200 000 x (10 - 1,5) / 10 soit : 1 200 000 x 8,5 / 10 = FCFA 1 020 000."
+      ],
+      "mots_cles": [
+        "TVA",
+        "reversement",
+        "cession",
+        "prorata",
+        "déduction",
+        "biens amortissables",
+        "régularisation",
+        "cessation d'activités",
+        "destruction",
+        "FCFA"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "95-1",
+      "titre": "Reversement de TVA — Écritures comptables et exemple (suite)",
+      "texte": [
+        "Solution — Le schéma des écritures comptables est le suivant :",
+        "Décompte TVA à reverser : Débit 2411 Matériel industriel 1 020 000 / Crédit 4451 Etat, TVA récupérable sur immobilisations 1 020 000.",
+        "Paiement TVA : Débit 4451 Etat, TVA récupérable sur immobilisations 1 020 000 / Crédit 4441 Etat, TVA due 1 020 000. Puis Débit 4441 Etat, TVA due 1 020 000 / Crédit 521 Banques locales 1 020 000.",
+        "Sortie immobilisation : Débit 812 Valeurs comptables des cessions d'immobilisations 11 020 000 / Crédit 2411 Matériel industriel 11 020 000. Puis Débit 2841 Amortissement du matériel et outillage 1 500 000 / Crédit 812 Valeurs comptables des cessions d'immobilisation 1 500 000.",
+        "NB : La réintégration de la TVA de la valeur du matériel n'augmente pas la base de la dotation complémentaire des amortissements du fait de la concomitance des 2 opérations.",
+        "b) Si la cession de la machine intervient après le 31 décembre N+1, au prix de FCFA 8 000 000 la TVA à facturer s'établira à FCFA 8 000 000 x 20% = FCFA 1 600 000. Pour les biens non soumis à amortissement, la cession est taxée au taux de TVA en vigueur."
+      ],
+      "mots_cles": [
+        "TVA",
+        "écritures comptables",
+        "reversement",
+        "cession",
+        "matériel industriel",
+        "amortissement",
+        "compte 2411",
+        "compte 4451",
+        "compte 4441",
+        "compte 812",
+        "compte 2841"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 96,
+      "titre": "Dépréciations des immobilisations",
+      "texte": [
+        "L'enregistrement en immobilisations d'un élément a pour effet, dans la plupart des cas, de lui conférer le caractère de bien amortissable, lequel n'est pas reconnu aux stocks.",
+        "Toutefois, lorsque les dépréciations sont afférentes à des immobilisations, il s'agit généralement d'immobilisations non amortissables tels les terrains. Elles peuvent également concerner les dépréciations exceptionnelles subies par les immobilisations amortissables lorsque ces dépréciations ne peuvent raisonnablement"
+      ],
+      "mots_cles": [
+        "dépréciations",
+        "immobilisations",
+        "amortissable",
+        "non amortissable",
+        "terrains",
+        "dépréciations exceptionnelles",
+        "stocks"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "96-1",
+      "titre": "Dépréciations des immobilisations (suite) — Test de dépréciation",
+      "texte": [
+        "être inscrites au compte d'amortissement en raison de leur caractère non définitif.",
+        "A la clôture de chaque exercice une entité doit apprécier s'il existe un quelconque indice qu'un actif a subi une perte de valeur. S'il existe un tel indice, l'entité doit estimer la valeur actuelle et la comparer avec la valeur nette comptable. L'actif doit être déprécié lorsque sa valeur nette comptable est supérieure à sa valeur actuelle. Pour les immobilisations incorporelles et corporelles, cette dépréciation est constatée par une dotation pour dépréciation (art. 46 Acte uniforme).",
+        "Selon l'article 42 de l'Acte uniforme, à la clôture de chaque exercice, l'entité doit procéder au recensement et à l'évaluation de ses biens, créances et dettes à leur valeur effective du moment, dite valeur actuelle. La valeur actuelle est une valeur d'estimation du moment, qui s'apprécie en fonction du marché et de l'utilité de l'élément pour l'entité. L'utilité de l'élément pour l'entité est à déterminer dans le cadre de la continuité de l'exploitation ou d'utilisation, telle que définie à l'article 39 de l'Acte uniforme, ou, le cas échéant, dans l'hypothèse de non-continuité.",
+        "L'amortissement est une notion différente de la notion de perte de valeur (dépréciation). L'amortissement consiste pour l'entité à répartir systématiquement le montant amortissable du coût du bien sur sa durée d'utilité selon un plan prédéfini (approche économique retenue par le Système comptable OHADA). La perte de valeur vient s'ajouter à l'amortissement déjà pratiqué."
+      ],
+      "mots_cles": [
+        "dépréciation",
+        "test de dépréciation",
+        "valeur actuelle",
+        "valeur nette comptable",
+        "perte de valeur",
+        "article 42",
+        "article 46",
+        "Acte uniforme",
+        "amortissement",
+        "continuité d'exploitation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "96-2",
+      "titre": "Indices de perte de valeur — Sources d'information externes",
+      "texte": [
+        "Pour apprécier s'il existe un quelconque indice qu'un actif a pu perdre de la valeur, une entité doit au minimum considérer les indices suivants :",
+        "Sources d'information externes :",
+        "- durant l'exercice, la valeur de marché d'un actif a diminué de façon plus importante que du seul effet attendu du passage du temps ou de l'utilisation normale de l'actif ;",
+        "- des changements importants, ayant un effet négatif sur l'entité, sont survenus au cours de l'exercice ou surviendront dans un proche avenir, dans l'environnement technologique, économique ou juridique ou du marché dans lequel l'entité opère ou dans le marché auquel l'actif est dévolu ;"
+      ],
+      "mots_cles": [
+        "indices de perte de valeur",
+        "sources externes",
+        "valeur de marché",
+        "environnement technologique",
+        "environnement économique",
+        "changements importants"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "96-3",
+      "titre": "Indices de perte de valeur — Sources d'information externes (suite) et internes",
+      "texte": [
+        "- les taux d'intérêt du marché ou autres taux de rendement du marché ont augmenté durant l'exercice et il est probable que ces augmentations affectent le taux d'actualisation utilisé dans le calcul de la valeur d'utilité d'un actif et diminuent de façon significative la valeur actuelle de l'actif ;",
+        "- la valeur comptable de l'actif net de l'entité présentant les états financiers est supérieure à sa capitalisation boursière ;",
+        "Sources d'informations internes :",
+        "- il existe un indice d'obsolescence ou de dégradation physique d'un actif ;",
+        "- des changements importants, ayant un effet négatif sur l'entité, sont survenus au cours de l'exercice ou sont susceptibles de survenir dans un proche avenir, dans le degré ou le mode d'utilisation d'un actif tel qu'il est utilisé ou qu'on s'attend à l'utiliser. Ces changements incluent des plans d'abandon ou de restructuration du secteur d'activité auquel un actif appartient ou des plans de sortie d'un actif avant la date prévue préalablement ; et",
+        "- des indications provenant du système d'information interne montrent que la performance économique d'un actif est ou sera moins bonne que celle attendue.",
+        "La liste ci-dessus n'est pas exhaustive. Une entité peut identifier d'autres indices qu'un actif a pu perdre de la valeur. Ces indices imposeraient également à l'entité de déterminer la valeur actuelle de l'actif (IAS 36, § 13).",
+        "Des indices du système d'information interne montrant qu'un actif a pu perdre de la valeur incluent l'existence :",
+        "- de flux de trésorerie pour l'acquisition de l'actif, ou de besoins de trésorerie ultérieurs pour assurer son fonctionnement ou sa maintenance, sensiblement plus importants que ceux budgétés à l'origine ;",
+        "- de flux de trésorerie nets ou d'un résultat (positif ou négatif) opérationnel générés par l'actif sensiblement plus mauvais que ceux budgétés ;",
+        "- d'une diminution importante des flux de trésorerie nets budgétés ou du résultat opérationnel budgété générés par l'actif ou d'une"
+      ],
+      "mots_cles": [
+        "indices de perte de valeur",
+        "sources internes",
+        "obsolescence",
+        "dégradation physique",
+        "restructuration",
+        "performance économique",
+        "flux de trésorerie",
+        "taux d'actualisation",
+        "capitalisation boursière",
+        "IAS 36"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "96-4",
+      "titre": "Comptabilisation de la perte de valeur et reprise de dépréciation",
+      "texte": [
+        "augmentation importante de la perte budgétée générée par l'actif ; ou de pertes opérationnelles ou de sorties nettes de trésorerie pour l'actif lorsqu'on additionne les chiffres de l'exercice aux chiffres budgétés pour le futur (IAS 36, § 14).",
+        "Si et seulement si la valeur actuelle d'un actif est inférieure à sa valeur comptable, la valeur comptable de l'actif doit être ramenée à sa valeur actuelle. Cette réduction est une perte de valeur (IAS 36, § 59).",
+        "La perte de valeur doit être comptabilisée en charges par le biais des comptes 6913, 6914, 6972 ou du compte 853 selon le cas.",
+        "Le schéma de comptabilisation se présente ainsi : Débit 69 Dotations aux dépréciations (ou Débit 853 Dotations aux dépréciations HAO) / Crédit 29 Dépréciations des immobilisations.",
+        "Une perte de valeur comptabilisée pour un actif au cours d'exercices antérieurs doit être reprise si, et seulement si, il y a eu un changement dans les estimations utilisées pour déterminer la valeur actuelle de l'actif depuis la dernière comptabilisation d'une perte de valeur. Si tel est le cas, la valeur comptable de l'actif doit être augmentée à hauteur de sa valeur actuelle. Cette augmentation est une reprise de perte.",
+        "Cette reprise de valeur doit être comptabilisée en produits par le biais des comptes 7913, 7914, 7972 ou 863 selon le cas.",
+        "Schéma d'écritures : Débit 29 Dépréciations des immobilisations / Crédit 79 Reprises de dépréciations (ou Crédit 863 Reprises de dépréciations H.A.O.)."
+      ],
+      "mots_cles": [
+        "perte de valeur",
+        "dépréciation",
+        "reprise de dépréciation",
+        "compte 6913",
+        "compte 6914",
+        "compte 6972",
+        "compte 853",
+        "compte 7913",
+        "compte 7914",
+        "compte 7972",
+        "compte 863",
+        "compte 29",
+        "IAS 36",
+        "dotation",
+        "reprise"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "96-5",
+      "titre": "Schéma de constatation d'une dépréciation d'immobilisation incorporelle ou corporelle",
+      "texte": [
+        "Le schéma ci-dessous résume le mode opératoire de la constatation d'une dépréciation d'une immobilisation incorporelle ou corporelle :",
+        "1. Immobilisations incorporelles et corporelles : Existe-t-il un indice de perte de valeur ? Si Non → Pas de dépréciation. Si Oui → Étape suivante.",
+        "2. Détermination de la valeur actuelle (Valeur actuelle = Coût actuel).",
+        "3. Continuité de l'exploitation, de l'utilisation du bien ou bien cessible sur un marché très actif ? Si Oui → Valeur actuelle = Prix actuel d'achat corrigé en baisse en fonction de l'âge de l'immobilisation. Si Non → Valeur actuelle = Prix probable de revente du bien isolé (net des frais de revente).",
+        "4. Valeur actuelle < VNC ? Si Non → Pas de dépréciation. Si Oui → Étape suivante.",
+        "5. Écart entre VNC et valeur actuelle significatif ? Si Non → Pas de dépréciation. Si Oui → Constatation d'une dépréciation (Dépréciation = VNC – Valeur actuelle)."
+      ],
+      "mots_cles": [
+        "dépréciation",
+        "immobilisation incorporelle",
+        "immobilisation corporelle",
+        "perte de valeur",
+        "valeur actuelle",
+        "VNC",
+        "valeur nette comptable",
+        "coût actuel",
+        "indice de perte"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "98",
+      "titre": "Distinction entre immobilisations et charges",
+      "texte": [
+        "Il est admis qu'une dépense d'immobilisation doit conduire à l'entrée dans le patrimoine de l'entité d'un nouvel élément destiné à y rester durablement, ou à l'augmentation de la valeur d'un bien y figurant déjà.",
+        "Dans la pratique, le caractère ambivalent de certaines dépenses conduit souvent à des hésitations relatives à leur inscription en immobilisations ou en charges."
+      ],
+      "mots_cles": [
+        "immobilisation",
+        "charge",
+        "distinction",
+        "dépense",
+        "patrimoine",
+        "inscription",
+        "activation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "99",
+      "titre": "Aspect comptable de la distinction immobilisations et charges",
+      "texte": [
+        "L'aspect comptable de la distinction peut être envisagé à travers :",
+        "- le petit matériel et outillage, et le petit matériel de bureau ;",
+        "- les agencements, aménagements et installations."
+      ],
+      "mots_cles": [
+        "distinction",
+        "immobilisation",
+        "charge",
+        "petit matériel",
+        "outillage",
+        "agencement",
+        "aménagement",
+        "installation"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "100",
+      "titre": "Petit matériel et outillage, petit matériel de bureau",
+      "texte": [
+        "Le matériel et l'outillage ainsi que le matériel de bureau sont en principe des immobilisations. Cependant les entités ont la possibilité de comprendre dans leurs charges déductibles pour la détermination des bénéfices imposables, le prix d'acquisition des matériels et outillage de faible valeur ainsi que celui du petit matériel de bureau (voir § 156)."
+      ],
+      "mots_cles": [
+        "petit matériel",
+        "outillage",
+        "matériel de bureau",
+        "immobilisation",
+        "charge déductible",
+        "faible valeur",
+        "compte 156"
+      ],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "101",
+      "titre": "Agencements, aménagements",
+      "texte": [
+        "Le Système Comptable OHADA définit les agencements et aménagements comme les organes ou travaux destinés à établir une liaison entre les diverses immobilisations de l'entité, ou à mettre ces immobilisations en état d'usage. Les dépenses entrant dans cette catégorie sont elles-mêmes des immobilisations à rattacher à chacune des rubriques concernées, terrains, bâtiments, matériels.",
+        "La difficulté vient de ce qu'elles sont souvent fortement apparentées à des dépenses ayant le caractère de charges. Il est fréquent, en particulier que des interférences existent entre d'une part les agencements et aménagements, et d'autre part les charges d'entretien et de réparations, à porter au compte 624 Entretien, réparations, remise en état et maintenance.",
+        "Dans la pratique la solution suivante semble pouvoir être retenue. Seuls seront considérés comme agencements et aménagements :",
+        "- les dépenses visant à mettre les immobilisations en état de fonctionner ; ces dépenses pourront être amorties au même taux que l'immobilisation sur laquelle elles ont porté ;",
+        "- les travaux qui, appliqués à un bien, ont pour effet de lui ajouter de la plus-value ;",
+        "- les adjonctions d'installations ;",
+        "- les améliorations apportées par des équipements plus modernes, voir aussi § 92."
+      ],
+      "mots_cles": [
+        "agencement",
+        "aménagement",
+        "immobilisation",
+        "charge",
+        "entretien",
+        "réparation",
+        "compte 624",
+        "terrain",
+        "bâtiment",
+        "matériel",
+        "plus-value",
+        "installation"
+      ],
+      "statut": "en_vigueur"
+    }
+  ]
+}

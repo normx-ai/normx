@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 3 - Acte uniforme relatif au système comptable des entités à but non lucratif",
+    "section": "Articles 4 (suite), 5 et 6 - Image fidèle, obligations, système minimal de trésorerie",
+    "page_source": 1449
+  },
+  "articles": [
+    {
+      "numero": 2402,
+      "titre": "Article 4 (suite) - Image fidèle et Notes annexes",
+      "texte": [
+        "Lorsque l'application d'une prescription comptable se révèle insuffisante ou inadaptée pour donner l'image fidèle, des informations complémentaires ou des justifications nécessaires sont obligatoirement fournies dans les Notes annexes."
+      ],
+      "comptes": [],
+      "mots_cles": ["image fidèle", "notes annexes", "informations complémentaires"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 5 - Obligations de présentation",
+      "texte": [
+        "Les états financiers annuels visés à l'article 4 sont rendus obligatoires, en tout ou en partie, en fonction de la taille des entités appréciée selon des critères mentionnés à l'article 6.",
+        "Les présentations des états financiers annuels et la tenue des comptes admises sont le Système normal et le Système minimal de trésorerie, selon le cas.",
+        "Toute entité est, sauf exception liée à sa taille, soumise au Système normal de présentation des états financiers et de tenue des comptes.",
+        "Le régime juridique du dépôt des états financiers est soumis à la législation interne de chaque Etat partie."
+      ],
+      "comptes": [],
+      "mots_cles": ["système normal", "système minimal trésorerie", "obligations", "taille entité", "dépôt états financiers"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2402,
+      "titre": "Article 6 - Système minimal de trésorerie (SMT)",
+      "texte": [
+        "Les petites entités sont assujetties, sauf option, au Système minimal de trésorerie en abrégé SMT.",
+        "Sont éligibles au Système minimal de trésorerie, les entités dont les ressources annuelles sont inférieures ou égales aux seuils suivants :",
+        "- subventions : trente (30) millions de F CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie ;",
+        "- cotisations et autres revenus : trente (30) millions de F CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie ;",
+        "- dons et/ou legs : trente (30) millions de F CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie ;",
+        "- ressources du projet de développement : trente (30) millions de F CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie ;",
+        "- autres ressources : trente (30) millions de F CFA ou l'équivalent dans l'unité monétaire ayant cours légal dans l'Etat partie."
+      ],
+      "comptes": [],
+      "mots_cles": ["SMT", "système minimal trésorerie", "seuils", "30 millions FCFA", "petites entités", "subventions", "cotisations", "dons"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

@@ -1,0 +1,301 @@
+.import-balance { padding: 20px 30px; }
+
+.ib-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.ib-header h2 {
+  font-size: 18px; font-weight: 600; color: #1a1a1a;
+  display: flex; align-items: center; gap: 8px;
+}
+.ib-annee { display: flex; align-items: center; gap: 8px; }
+.ib-annee label { font-size: 14px; font-weight: 600; color: #333; }
+.ib-annee select {
+  padding: 8px 12px; border: 1px solid #ccc; font-size: 14px;
+  font-family: inherit; background: white; cursor: pointer;
+}
+.ib-annee select:focus { outline: none; border-color: #D4A843; }
+
+.ib-message {
+  padding: 10px 14px; margin-bottom: 16px; font-size: 13px;
+}
+.ib-message.success { background: #FDF8EE; color: #C09935; border: 1px solid #D4A843; }
+.ib-message.error { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+/* Onglets */
+.ib-tabs { display: flex; gap: 0; margin-bottom: 16px; border-bottom: 2px solid #e5e7eb; }
+.ib-tab {
+  padding: 10px 20px; border: none; background: none; cursor: pointer;
+  font-size: 14px; font-weight: 600; color: #666; font-family: inherit;
+  border-bottom: 2px solid transparent; margin-bottom: -2px;
+  display: flex; align-items: center; gap: 8px;
+}
+.ib-tab:hover { color: #D4A843; }
+.ib-tab.active { color: #D4A843; border-bottom-color: #D4A843; }
+
+.ib-statut-badge {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase;
+}
+.ib-statut-badge.brut { background: #f3f4f6; color: #6b7280; }
+.ib-statut-badge.revise { background: #fef3c7; color: #92400e; }
+.ib-statut-badge.valide { background: #d1fae5; color: #065f46; }
+
+/* Actions */
+.ib-actions {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.ib-upload-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 16px; background: #D4A843; color: white; border: none;
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.ib-upload-btn:hover { background: #C09935; }
+
+.ib-revision-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 16px; background: white; color: #333; border: 1px solid #ccc;
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.ib-revision-btn:hover { border-color: #D4A843; color: #D4A843; }
+.ib-revision-btn.active { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+
+.ib-validate-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 16px; background: #f59e0b; color: #fff; border: none;
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.ib-validate-btn:hover:not(:disabled) { background: #d97706; }
+.ib-validate-btn:disabled { background: #ccc; color: #888; cursor: not-allowed; opacity: 0.6; }
+.ib-validate-btn.valide { background: #22c55e; }
+.ib-validate-btn.valide:hover { background: #16a34a; }
+
+.ib-file-info { font-size: 12px; color: #888; display: flex; align-items: center; gap: 6px; }
+.ib-delete-btn {
+  background: none; border: none; color: #d44; cursor: pointer; padding: 2px 4px; border-radius: 4px;
+  display: inline-flex; align-items: center;
+}
+.ib-delete-btn:hover { background: #fee; color: #b00; }
+
+/* Format info */
+.ib-format-info {
+  background: #f9fafb; border: 1px dashed #d1d5db; padding: 20px;
+  margin-bottom: 16px;
+}
+.ib-format-info h4 { font-size: 13px; color: #555; margin: 0 0 8px; }
+.ib-format-info code {
+  display: block; font-size: 12px; color: #D4A843; background: #FDF8EE;
+  padding: 8px 12px;
+}
+
+/* Tableau */
+.ib-table-wrapper { overflow-x: auto; }
+.ib-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+.ib-table thead { background: #1A3A5C; color: #e8e6e1; }
+.ib-table th {
+  padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px;
+  text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
+}
+.ib-table th.num { text-align: right; }
+.ib-table td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; }
+.ib-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.ib-table td.compte { font-weight: 600; color: #D4A843; }
+
+.ib-table tr:hover { background: #f9fafb; }
+.ib-table tr.revised { background: #fffbeb; }
+
+.ib-table tfoot td { padding: 10px 12px; background: #f3f4f6; border-top: 2px solid #1A3A5C; }
+.ib-table .equilibre-row td { background: #f9fafb; font-size: 12px; }
+.ib-table .ok { color: #22c55e; font-weight: 700; }
+.ib-table .ko { color: #ef4444; font-weight: 700; }
+
+.revised-val { color: #f59e0b; font-weight: 600; }
+.note-cell { font-size: 11px; color: #888; max-width: 150px; }
+
+/* Inputs revision */
+.ib-table input[type="number"],
+.ib-table input[type="text"] {
+  width: 90px; padding: 4px 6px; border: 1px solid #ccc; font-size: 12px;
+  font-family: inherit;
+}
+.ib-table input[type="text"] { width: 120px; }
+.ib-table input:focus { outline: none; border-color: #D4A843; }
+
+.ib-icon-btn {
+  background: none; border: none; cursor: pointer; padding: 4px; font-size: 14px;
+}
+.ib-icon-btn.save { color: #22c55e; }
+.ib-icon-btn.cancel { color: #ef4444; }
+.ib-icon-btn.edit { color: #D4A843; }
+
+/* ===================== ANOMALIES ===================== */
+
+/* Bandeau récapitulatif */
+.ib-anomalies-banner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px; margin-bottom: 16px; font-size: 13px; font-weight: 600;
+  border-left: 4px solid;
+}
+.ib-anomalies-banner.clean {
+  background: #f0fdf4; border-color: #22c55e; color: #166534;
+}
+.ib-anomalies-banner.has-errors {
+  background: #fef2f2; border-color: #ef4444; color: #991b1b;
+}
+.ib-anomalies-banner.has-warnings {
+  background: #fffbeb; border-color: #f59e0b; color: #92400e;
+}
+.ib-anomaly-ok { display: flex; align-items: center; gap: 6px; }
+.ib-anomaly-count { display: flex; align-items: center; gap: 8px; }
+.ib-badge-error {
+  background: #ef4444; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px;
+}
+.ib-badge-warning {
+  background: #f59e0b; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px;
+}
+.ib-filter-anomalies {
+  padding: 5px 12px; border: 1px solid currentColor; background: transparent;
+  color: inherit; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.ib-filter-anomalies:hover { opacity: 0.8; }
+.ib-filter-anomalies.active { background: currentColor; color: white; }
+.ib-anomalies-banner.has-errors .ib-filter-anomalies.active { background: #ef4444; color: white; }
+.ib-anomalies-banner.has-warnings .ib-filter-anomalies.active { background: #f59e0b; color: white; }
+
+/* Lignes anomalies dans le tableau */
+.ib-table tr.anomaly-error { background: #fef2f2; }
+.ib-table tr.anomaly-error:hover { background: #fee2e2; }
+.ib-table tr.anomaly-warning { background: #fffbeb; }
+.ib-table tr.anomaly-warning:hover { background: #fef3c7; }
+
+/* Icône anomalie dans la 1ère colonne */
+.ib-table td.anomaly-icon { text-align: center; width: 30px; padding: 8px 4px; }
+.ib-icon-error { color: #ef4444; font-size: 16px; font-weight: 700; cursor: help; }
+.ib-icon-warning { color: #f59e0b; font-size: 16px; font-weight: 700; cursor: help; }
+.ib-icon-ok { color: #d1d5db; font-size: 12px; }
+
+/* Indicateur solde attendu à côté du numéro de compte */
+.ib-solde-hint {
+  display: inline-block; margin-left: 4px; font-size: 9px; font-weight: 700;
+  padding: 1px 4px; border-radius: 3px; vertical-align: middle;
+}
+.ib-solde-hint.debiteur { background: #FAF0D8; color: #B08A2E; }
+.ib-solde-hint.crediteur { background: #fce7f3; color: #9d174d; }
+.ib-solde-hint.les_deux { background: #f3f4f6; color: #6b7280; }
+
+/* Solde anormal en rouge gras */
+.ib-table td.solde-anormal {
+  color: #ef4444; font-weight: 700; background: #fef2f2;
+}
+
+/* ===================== ANALYSE DES IMPUTATIONS ===================== */
+
+.ib-analyse-banner {
+  padding: 10px 16px; margin-bottom: 12px; font-size: 13px; font-weight: 600;
+  border-left: 4px solid; border-radius: 0 4px 4px 0;
+}
+.ib-analyse-banner.clean { background: #f0fdf4; border-color: #22c55e; color: #166534; }
+.ib-analyse-banner.has-errors { background: #fef2f2; border-color: #ef4444; color: #991b1b; }
+.ib-analyse-banner.has-warnings { background: #fffbeb; border-color: #f59e0b; color: #92400e; }
+.ib-analyse-banner.has-infos { background: #FDF8EE; border-color: #D4A843; color: #B08A2E; }
+
+.ib-analyse-header {
+  display: flex; align-items: center; justify-content: space-between;
+}
+
+.ib-badge-info {
+  background: #D4A843; color: white; padding: 2px 8px; border-radius: 10px; font-size: 11px;
+}
+
+.ib-analyse-detail {
+  margin-top: 12px; font-weight: 400;
+}
+.ib-analyse-section { margin-bottom: 12px; }
+.ib-analyse-section h4 {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;
+  margin: 0 0 8px; padding-bottom: 4px; border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.ib-analyse-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 8px 12px; margin-bottom: 6px; border-radius: 6px;
+  font-size: 13px; line-height: 1.5;
+}
+.ib-analyse-item.error { background: #fee2e2; }
+.ib-analyse-item.warning { background: #fef3c7; }
+.ib-analyse-item.info { background: #FAF0D8; }
+
+.ib-icon-info { color: #D4A843; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+
+.ib-analyse-suggestion {
+  margin-top: 4px; padding: 4px 8px; background: rgba(255,255,255,0.6);
+  border-radius: 4px; font-size: 12px; color: #B08A2E;
+}
+.ib-analyse-correction {
+  margin-top: 4px; font-size: 12px; color: #555;
+}
+
+/* Tableau analyse plan comptable */
+.ib-analyse-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 8px;
+}
+.ib-analyse-table th {
+  background: #f5f0e0;
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  border-bottom: 1px solid #e5d9b5;
+}
+.ib-analyse-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid #f0ead4;
+  vertical-align: middle;
+}
+.ib-analyse-table tr.corrected td {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+.ib-analyse-table .compte-anomalie {
+  font-weight: 600;
+  color: #b45309;
+  font-family: monospace;
+}
+.ib-suggestion-select {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 11px;
+  background: #fff;
+}
+.ib-suggestion {
+  font-size: 11px;
+  color: #555;
+}
+.ib-no-suggestion {
+  font-size: 11px;
+  color: #999;
+  font-style: italic;
+}
+.ib-correct-btn {
+  background: #D4A843;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.ib-correct-btn:hover { background: #C09935; }
+.ib-corrected {
+  color: #16a34a;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}

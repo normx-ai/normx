@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "section": "Association et ordre professionnel",
+    "page_source": 1324
+  },
+  "articles": [
+    {
+      "numero": 2122,
+      "titre": "Report à nouveau (suite)",
+      "texte": [
+        "Le report à nouveau peut être affecté, sur décision des organes délibérants, en réserves ou au fonds de dotation non consomptible sans droit de reprise.",
+        "Le Report à nouveau est subdivisé comme suit :",
+        "121 Report à nouveau des excédents",
+        "128 Résultat en instance d'affectation",
+        "129 Report à nouveau des déficits"
+      ],
+      "comptes": ["121", "128", "129"],
+      "mots_cles": ["report à nouveau", "excédents", "déficits", "résultat instance affectation", "organes délibérants"],
+      "statut": "en_vigueur",
+      "note": "Suite de l'article commencé page 1323"
+    },
+    {
+      "numero": 2123,
+      "titre": "Schéma des écritures du report à nouveau",
+      "texte": [
+        "Écritures d'affectation du résultat excédentaire, du résultat déficitaire et d'affectation du report à nouveau à la dotation."
+      ],
+      "ecritures": [
+        {
+          "description": "Affectation du Résultat excédentaire",
+          "lignes": [
+            {"compte": "131", "libelle": "Excédent de l'exercice", "debit": "x", "credit": ""},
+            {"compte": "121", "libelle": "Report à nouveau des excédents", "debit": "", "credit": "x"},
+            {"compte": "128", "libelle": "Résultat en instance d'affectation", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Affectation du résultat déficitaire",
+          "lignes": [
+            {"compte": "128", "libelle": "Résultat en instance d'affectation", "debit": "x", "credit": ""},
+            {"compte": "129", "libelle": "Report à nouveau des déficits", "debit": "x", "credit": ""},
+            {"compte": "139", "libelle": "Déficit de l'exercice", "debit": "", "credit": "x"}
+          ]
+        },
+        {
+          "description": "Affectation du report à nouveau à la dotation",
+          "lignes": [
+            {"compte": "121", "libelle": "Report à nouveau des excédents", "debit": "x", "credit": ""},
+            {"compte": "128", "libelle": "Résultat en instance d'affectation", "debit": "x", "credit": ""},
+            {"compte": "118", "libelle": "Autres réserves", "debit": "", "credit": "x"},
+            {"compte": "101", "libelle": "Dotation non consomptible sans droit de reprise", "debit": "", "credit": "x"}
+          ]
+        }
+      ],
+      "comptes": ["131", "121", "128", "129", "139", "118", "101"],
+      "mots_cles": ["écritures report à nouveau", "affectation résultat", "excédentaire", "déficitaire", "dotation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 2124,
+      "titre": "Résultat de l'exercice",
+      "texte": [
+        "Le résultat net de l'exercice peut être défini comme la différence entre les revenus (reçus ou à recevoir) et les charges (payées ou à payer) de la période.",
+        "Le résultat est qualifié d'excédent si les revenus l'emportent sur les charges (solde créditeur) ou de déficit si les charges l'emportent sur les revenus (solde débiteur).",
+        "Aucun résultat ne peut être distribué aux adhérents. Il est définitivement acquis à l'entité qui peut décider de l'affecter en réserves, en report à nouveau ou en dotation non consomptible sans droit de reprise.",
+        "Quel que soit son signe, le résultat net de l'exercice est inscrit au passif du bilan sur la ligne correspondante, parmi les fonds propres."
+      ],
+      "comptes": [],
+      "mots_cles": ["résultat exercice", "excédent", "déficit", "revenus", "charges", "non distribution", "fonds propres", "passif bilan"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

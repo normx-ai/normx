@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYCEBNL",
+    "partie": "Deuxième partie",
+    "chapitre": "Chapitre 2 - Système Minimal de Trésorerie (SMT)",
+    "section": "§2242 - Compte de résultat SMT",
+    "page_source": 1391
+  },
+  "articles": [
+    {
+      "numero": 2242,
+      "titre": "§2242 - Compte de résultat du Système Minimal de Trésorerie",
+      "texte": [
+        "Le Compte de résultat du SMT retrace les revenus et les charges de l'exercice.",
+        "REVENUS :",
+        "KA - Revenus encaissés : cotisations, dons, subventions d'exploitation, recettes des activités.",
+        "KB - Autres recettes : produits financiers, produits exceptionnels et autres recettes.",
+        "KX - TOTAL DES REVENUS (A) = KA + KB.",
+        "CHARGES :",
+        "JA - Achats : achats de biens et services liés à l'activité, de marchandises et matières premières.",
+        "JB - Loyers et charges locatives : loyers des locaux, charges locatives.",
+        "JC - Salaires et charges sociales : rémunérations du personnel, charges sociales patronales.",
+        "JD - Impôts et taxes : impôts, taxes et versements assimilés.",
+        "JE - Intérêts et frais bancaires : intérêts sur emprunts, frais et services bancaires.",
+        "JF - Autres dépenses : transports, services extérieurs, autres charges de gestion.",
+        "JX - TOTAL DES CHARGES (B) = JA + JB + JC + JD + JE + JF.",
+        "KZ - SOLDE : REVENUS - CHARGES = A - B (KX - JX).",
+        "RETRAITEMENTS :",
+        "VA - Variation de stocks (stock final - stock initial).",
+        "VB - Variation de créances (créances initiales - créances finales).",
+        "VC - Variation de dettes (dettes finales - dettes initiales).",
+        "JG - Dotations aux amortissements.",
+        "KZC - RESULTAT NET = KZ + VA + VB + VC - JG."
+      ],
+      "comptes": ["70", "71", "75", "77", "60", "61", "62", "63", "64", "65", "66", "67", "68"],
+      "mots_cles": ["compte de résultat SMT", "revenus", "charges", "solde", "retraitements", "variation stocks", "variation créances", "variation dettes", "amortissements", "résultat net", "KA", "KB", "KX", "JA", "JB", "JC", "JD", "JE", "JF", "JX", "KZ", "VA", "VB", "VC", "JG", "KZC"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
