@@ -296,7 +296,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
         </div>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
           <li><strong>Montant brut :</strong> Renseigner la valeur initiale brute de chaque emprunt (montant emprunté à l'origine), pas le solde restant dû. La balance (comptes 16x) est utilisée comme pré-remplissage à titre indicatif.</li>
-          <li><strong>Sûretés réelles :</strong> Indiquer la référence du contrat et les montants des hypothèques, nantissements et gages/autres garanties. Ces informations sont extra-comptables (contrats de prêt, actes notariés, conventions de garantie).</li>
+          <li><strong>Sûretés réelles :</strong> Indiquer la référence des hypothèques, nantissements et gages accordés en garantie des emprunts (actes notariés, conventions de garantie, contrats de nantissement).</li>
           <li><strong>Crédit-bail (17x) :</strong> Les biens en crédit-bail n'appartiennent pas à l'entité et ne sont donc pas concernés par cette note.</li>
           <li>Cliquer sur <strong>Modifier</strong> pour saisir les montants, puis <strong>Sauvegarder</strong>.</li>
         </ul>

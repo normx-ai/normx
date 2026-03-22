@@ -483,6 +483,32 @@ function MainContent(props: MainContentProps): React.ReactElement {
       {activeTab === 'fiche_r2_sys' && <FicheIdentification {...etatBaseProps} page="R2" onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'fiche_r3_sys' && <FicheR3 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'fiche_r4_sys' && <FicheR4 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
+      {/* Navigation entre notes */}
+      {NOTES_ANNEXES.some(n => n.id === activeTab) && (() => {
+        const idx = NOTES_ANNEXES.findIndex(n => n.id === activeTab);
+        const prev = idx > 0 ? NOTES_ANNEXES[idx - 1] : null;
+        const next = idx < NOTES_ANNEXES.length - 1 ? NOTES_ANNEXES[idx + 1] : null;
+        const current = NOTES_ANNEXES[idx];
+        return (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 20px', background: '#f8f9fb', borderBottom: '1px solid #e5e7eb' }}>
+            <button
+              onClick={() => prev && openTab(prev.id)}
+              disabled={!prev}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', border: '1px solid #d1d5db', borderRadius: 6, background: prev ? '#fff' : '#f3f4f6', color: prev ? '#1e40af' : '#9ca3af', fontSize: 12, fontWeight: 600, cursor: prev ? 'pointer' : 'default' }}
+            >
+              <span style={{ fontSize: 16 }}>&larr;</span> {prev ? prev.titre + ' — ' + prev.desc : ''}
+            </button>
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#334155' }}>{current?.titre}</span>
+            <button
+              onClick={() => next && openTab(next.id)}
+              disabled={!next}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', border: '1px solid #d1d5db', borderRadius: 6, background: next ? '#fff' : '#f3f4f6', color: next ? '#1e40af' : '#9ca3af', fontSize: 12, fontWeight: 600, cursor: next ? 'pointer' : 'default' }}
+            >
+              {next ? next.titre + ' — ' + next.desc : ''} <span style={{ fontSize: 16 }}>&rarr;</span>
+            </button>
+          </div>
+        );
+      })()}
       {activeTab === 'note_1_sys' && <Note1 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'note_2_sys' && <Note2 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'note_3a_sys' && <Note3A {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
