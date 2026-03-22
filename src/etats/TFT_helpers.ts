@@ -540,8 +540,8 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     '50','51','52','53','54','55','57','581','582','564','565','561','566','590','591','592','593','594',
     // Affectation resultat -> implicitement capte par FA + FN
     '11','12','13',
-    // Provisions -> non-cash, neutralise par CAFG (dotation/reprise dans CR)
-    '15','19',
+    // Provisions et depreciations -> non-cash, neutralise par CAFG (dotation/reprise dans CR)
+    '15','19','29',
     // FB (actif circ HAO)
     '488','498',
     // FC (stocks)
