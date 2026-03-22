@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { LuAlertTriangle, LuCheckCircle, LuXCircle, LuInfo } from 'react-icons/lu';
+import { LuTriangleAlert, LuCircleCheck, LuCircleX, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
 import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from '../etats/anomaliesComptes';
 import type { AnomalieCompte } from '../etats/anomaliesComptes';
@@ -121,7 +121,7 @@ function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElemen
   if (totalProblemes === 0) {
     return (
       <div style={{ margin: '8px 0', padding: '8px 14px', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 6, display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: '#166534' }}>
-        <LuCheckCircle size={14} />
+        <LuCircleCheck size={14} />
         <span>Aucune anomalie de sens détectée sur les comptes {titre.toLowerCase()}</span>
       </div>
     );
@@ -133,7 +133,7 @@ function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElemen
       {alertes.length > 0 && (
         <div style={{ marginBottom: 8, padding: '10px 14px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 6 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600, fontSize: 13, color: '#991b1b', marginBottom: 8 }}>
-            <LuXCircle size={14} />
+            <LuCircleX size={14} />
             {alertes.length} compte{alertes.length > 1 ? 's' : ''} avec solde inversé
           </div>
           {alertes.map(a => (
@@ -149,7 +149,7 @@ function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElemen
       {exclusions.length > 0 && (
         <div style={{ marginBottom: 8, padding: '10px 14px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 6 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600, fontSize: 13, color: '#92400e', marginBottom: 8 }}>
-            <LuAlertTriangle size={14} />
+            <LuTriangleAlert size={14} />
             {exclusions.length} point{exclusions.length > 1 ? 's' : ''} d'attention (exclusions OHADA)
           </div>
           {exclusions.map((e, i) => (
