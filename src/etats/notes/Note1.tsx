@@ -318,7 +318,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
 
         {/* Titre */}
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '20px 0 6px', textDecoration: 'underline' }}>
-          NOTE 1 — DETTES GARANTIES PAR DES SURETES REELLES DONNEES PAR L'ENTITE
+          NOTE 1 — DETTES GARANTIES PAR DES SURETES REELLES
         </h3>
 
         {/* Tableau */}
