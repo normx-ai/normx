@@ -4,6 +4,8 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import type { BalanceLigne } from '../types';
+import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from '../etats/anomaliesComptes';
+import type { AnomalieCompte } from '../etats/anomaliesComptes';
 
 /* -- Shared inline components -- */
 
@@ -331,34 +333,83 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
             <table style={tableStyle}>
               <thead>
                 <tr>
+                  <th style={{ ...thStyle, width: 40, textAlign: 'center' }}>Statut</th>
                   <th style={thStyle}>Compte</th>
                   <th style={{ ...thStyle, textAlign: 'right' }}>Débit</th>
                   <th style={{ ...thStyle, textAlign: 'right' }}>Crédit</th>
                   <th style={{ ...thStyle, textAlign: 'right' }}>Solde</th>
+                  <th style={{ ...thStyle, fontSize: 11, textAlign: 'center', width: 90 }}>Sens attendu</th>
                 </tr>
               </thead>
               <tbody>
                 {balance.map(l => {
                   const solde = computeSolde(l);
+                  const anomalies: AnomalieCompte[] = detectAnomalies(l);
+                  const hasError = anomalies.some(a => a.severity === 'error');
+                  const hasWarning = anomalies.some(a => a.severity === 'warning');
+                  const isOk = anomalies.length === 0;
+                  const soldeAttendu = getSoldeAttendu(l.numero_compte);
+                  const tooltipText = anomalies.map(a => a.message).join('\n');
+                  const isClassRow = l.numero_compte.length <= 2;
+
                   return (
-                    <tr key={l.numero_compte} style={l.numero_compte.length <= 2 ? { background: '#f8f9fb', fontWeight: 600 } : {}}>
+                    <tr key={l.numero_compte} style={isClassRow ? { background: '#f8f9fb', fontWeight: 600 } : {}}>
+                      <td style={{ ...tdStyle, textAlign: 'center', position: 'relative' }} title={tooltipText || 'OK'}>
+                        {isClassRow ? '' : isOk ? (
+                          <span style={{ color: '#059669', fontSize: 18, fontWeight: 700 }}>&#10003;</span>
+                        ) : hasError ? (
+                          <span style={{ color: '#dc2626', fontSize: 18, fontWeight: 700, cursor: 'help' }}>&#10007;</span>
+                        ) : hasWarning ? (
+                          <span style={{ color: '#f59e0b', fontSize: 16, fontWeight: 700, cursor: 'help' }}>&#9888;</span>
+                        ) : null}
+                      </td>
                       <td style={tdStyle}>{l.numero_compte} {l.libelle_compte ? '- ' + l.libelle_compte : ''}</td>
                       <td style={{ ...tdStyle, textAlign: 'right' }}>{fmt(l.debit)}</td>
                       <td style={{ ...tdStyle, textAlign: 'right' }}>{fmt(l.credit)}</td>
                       <td style={{ ...tdStyle, textAlign: 'right', color: solde < 0 ? '#dc2626' : '#333' }}>{fmt(solde)}</td>
+                      <td style={{ ...tdStyle, textAlign: 'center', fontSize: 11, color: '#888' }}>
+                        {isClassRow ? '' : soldeAttendu === 'debiteur' ? 'D' : soldeAttendu === 'crediteur' ? 'C' : 'D/C'}
+                      </td>
                     </tr>
                   );
                 })}
               </tbody>
               <tfoot>
                 <tr style={{ fontWeight: 700, background: '#f1f3f8' }}>
+                  <td style={{ ...tdStyle, fontWeight: 700 }}></td>
                   <td style={{ ...tdStyle, fontWeight: 700 }}>TOTAUX</td>
                   <td style={{ ...tdStyle, textAlign: 'right', fontWeight: 700 }}>{fmt(totaux.debit)}</td>
                   <td style={{ ...tdStyle, textAlign: 'right', fontWeight: 700 }}>{fmt(totaux.credit)}</td>
                   <td style={{ ...tdStyle, textAlign: 'right', fontWeight: 700, color: totalSolde < 0 ? '#dc2626' : '#333' }}>{fmt(totalSolde)}</td>
+                  <td style={{ ...tdStyle }}></td>
                 </tr>
               </tfoot>
             </table>
+
+            {/* -- Résumé anomalies -- */}
+            {(() => {
+              const allAnomalies = balance.filter(l => l.numero_compte.length > 2).map(l => ({ compte: l.numero_compte, libelle: l.libelle_compte, anomalies: detectAnomalies(l) })).filter(a => a.anomalies.length > 0);
+              const errors = allAnomalies.filter(a => a.anomalies.some(x => x.severity === 'error'));
+              const warnings = allAnomalies.filter(a => a.anomalies.some(x => x.severity === 'warning') && !a.anomalies.some(x => x.severity === 'error'));
+              if (allAnomalies.length === 0) return null;
+              return (
+                <div style={{ marginTop: 16, padding: '12px 16px', background: '#fef2f2', borderRadius: 8, border: '1px solid #fecaca' }}>
+                  <div style={{ fontWeight: 700, fontSize: 14, color: '#991b1b', marginBottom: 8 }}>
+                    Anomalies détectées : {errors.length} erreur{errors.length > 1 ? 's' : ''}, {warnings.length} avertissement{warnings.length > 1 ? 's' : ''}
+                  </div>
+                  {errors.map(a => (
+                    <div key={a.compte} style={{ fontSize: 13, color: '#dc2626', marginBottom: 4 }}>
+                      <span style={{ fontWeight: 600 }}>&#10007; {a.compte}</span> {a.libelle} — {a.anomalies.map(x => x.message).join(' ; ')}
+                    </div>
+                  ))}
+                  {warnings.map(a => (
+                    <div key={a.compte} style={{ fontSize: 13, color: '#b45309', marginBottom: 4 }}>
+                      <span style={{ fontWeight: 600 }}>&#9888; {a.compte}</span> {a.libelle} — {a.anomalies.map(x => x.message).join(' ; ')}
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
 
             <div style={{ marginTop: 12, fontSize: 13 }}>
               {Math.abs(totaux.debit - totaux.credit) < 0.01 ? (
