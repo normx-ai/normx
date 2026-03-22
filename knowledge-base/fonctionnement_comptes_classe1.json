@@ -312,6 +312,123 @@
       "sens": "crediteur",
       "mots_cles": ["provisions réglementées", "fonds assimilés", "compte 15", "fiscal", "amortissements dérogatoires", "plus-values de cession", "dotations HAO", "reprises HAO", "capitaux propres"],
       "statut": "en_vigueur"
+    },
+    {
+      "numero": "16",
+      "titre": "COMPTE 16 Emprunts et dettes assimilées",
+      "contenu": "Les emprunts et les dettes assimilées sont des ressources financières externes, contractées auprès d'établissements de crédit et/ou de tiers divers, affectées de façon durable au financement des moyens d'exploitation ou de production. Remboursables à terme, ils participent concurremment avec les capitaux propres à la couverture des besoins durables de l'entreprise. Les emprunts et dettes assimilées ne sont pas distingués en fonction du terme d'exigibilité. Toutefois, à la clôture de l'exercice, les fractions devenues exigibles à un an au plus, à deux ans au plus, et à plus de deux ans sont isolées dans le tableau des créances et dettes.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 16 est crédité du montant à rembourser des emprunts et avances diverses — par le débit des comptes de trésorerie concernés et du compte 206 Primes de remboursement des obligations le cas échéant",
+          "Le compte 16 est crédité, à la clôture de l'exercice, des intérêts courus jusqu'au jour de la clôture — par le débit du compte 671 Intérêts des emprunts",
+          "Le compte 16 est crédité du montant des dépôts et cautionnements reçus — par le débit des comptes de trésorerie intéressés"
+        ],
+        "debit": [
+          "Le compte 16 est débité, à la date d'échéance de remboursement, du montant du principal remboursé — par le crédit d'un compte de tiers ou d'un compte de trésorerie",
+          "Le compte 16 est débité, à l'ouverture de l'exercice, du montant des intérêts courus pris en compte à la clôture de l'exercice précédent — par le crédit du compte 671 Intérêts des emprunts",
+          "Le compte 16 est débité du montant des dépôts et cautionnements restitués — par le crédit des comptes de trésorerie concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les emprunts et dettes liées à des participations", "utiliser": "181 Dettes liées à des participations"},
+        {"ne_pas_enregistrer": "les emprunts équivalents de crédit-bail et contrats assimilés", "utiliser": "17 Dettes de crédit-bail et contrats assimilés"}
+      ],
+      "controles": [
+        "des contrats de prêts signés par l'entreprise",
+        "des virements (réception et remboursements)",
+        "du tableau d'amortissement des emprunts",
+        "du calcul des intérêts courus",
+        "des contrats de dépôts et cautionnements",
+        "des contrats d'avances-engagements de l'État et des organismes internationaux"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["emprunts", "dettes assimilées", "compte 16", "emprunts obligataires", "établissements de crédit", "intérêts courus", "dépôts", "cautionnements", "primes de remboursement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "17",
+      "titre": "COMPTE 17 Dettes de crédit-bail et contrats assimilés",
+      "contenu": "Ce compte enregistre le montant correspondant à la valeur d'entrée du bien acquis par contrats de crédit-bail et assimilés. Cette valeur est celle figurant dans le contrat ou la somme actualisée des redevances de crédit-bail. Ne sont visés par ce compte que les contrats de crédit-bail d'importance significative ou de locations renouvelables sans limitations.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 17 est crédité à l'entrée du bien sous le contrôle de l'entreprise du montant stipulé au contrat ou de la somme actualisée des redevances — par le débit du compte d'immobilisation concerné",
+          "Le compte 17 est crédité, à la clôture de l'exercice, des intérêts courus de l'emprunt équivalent — par le débit du compte 672 Intérêts dans loyers de crédit-bail et contrats assimilés"
+        ],
+        "debit": [
+          "Le compte 17 est débité à la clôture de l'exercice de la fraction des redevances payées durant l'exercice correspondant au remboursement de la dette de crédit-bail — par le crédit du compte 623 Redevances de crédit-bail et contrats assimilés",
+          "Le compte 17 est débité, à l'ouverture de l'exercice, du montant des intérêts courus pris en compte à la clôture de l'exercice précédent — par le crédit du compte 672 Intérêts dans loyers de crédit-bail et contrats assimilés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dettes autres que celles relatives aux contrats de crédit-bail et assimilés", "utiliser": "16 ou 18 selon le cas"},
+        {"ne_pas_enregistrer": "les redevances non retraitées", "utiliser": "622 Locations et charges locatives"}
+      ],
+      "controles": [
+        "des factures de redevances",
+        "des contrats de crédit-bail et assimilés",
+        "des échéanciers de remboursement"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["crédit-bail", "leasing", "compte 17", "redevances", "contrats assimilés", "valeur d'entrée", "intérêts courus", "compte 672", "compte 623"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "18",
+      "titre": "COMPTE 18 Dettes liées à des participations et comptes de liaison des établissements et sociétés en participation",
+      "contenu": "Les dettes liées à des participations sont des emprunts contractés auprès d'entreprises liées ou avec lesquelles elles ont un lien de participation. Les dettes liées à des participations figurent au passif du bilan parmi les dettes financières diverses. Le compte de liaison des établissements et succursales est un compte de bilan ouvert au nom de l'établissement. Il fonctionne comme un compte courant, de sorte que toutes les opérations réalisées entre le siège et l'établissement y soient enregistrées comme s'il s'agissait d'un tiers. Les comptes de liaison sont égaux et de sens contraire dans la comptabilité du siège et dans celle de l'établissement ou la succursale.",
+      "fonctionnement": {
+        "credit": [
+          "Les comptes 181, 182 sont crédités de la valeur à rembourser des emprunts contractés — par le débit des comptes de trésorerie ou des comptes de tiers concernés",
+          "Le compte 183 Intérêts courus sur dettes liées à des participations est crédité, à la clôture de l'exercice, du montant des intérêts courus depuis la dernière échéance — par le débit du compte 671 Intérêts des emprunts",
+          "Les comptes 184 à 187 Comptes de liaison des établissements et succursales sont crédités des opérations effectuées entre le siège d'une entreprise et ses établissements ou succursales — par le débit des comptes concernés"
+        ],
+        "debit": [
+          "Les comptes 181, 182 sont débités à la date d'échéance des dettes — par le crédit des comptes de trésorerie concernés",
+          "Les comptes 184 à 187 sont débités des opérations effectuées entre le siège d'une entreprise et ses établissements ou succursales (y compris le montant antérieurement apporté à titre permanent) — par le crédit des comptes concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dettes résultant d'opérations commerciales courantes entre les sociétés du groupe", "utiliser": "40 Fournisseurs et comptes rattachés"},
+        {"ne_pas_enregistrer": "les dettes financières à l'égard de tiers non liés à l'entreprise par des liens de participation ou celles contractées auprès d'autres établissements de crédit mais à des conditions de droit commun", "utiliser": "16 Emprunts et dettes assimilées"},
+        {"ne_pas_enregistrer": "les comptes bloqués d'associés", "utiliser": "164 Avances reçues et comptes courants bloqués"}
+      ],
+      "controles": [
+        "de la vérification du lien de participation",
+        "du contrat de prêt",
+        "du tableau de remboursement ou d'amortissement de l'emprunt",
+        "du calcul des intérêts courus",
+        "de la vérification des conditions d'octroi lorsque l'entreprise liée est un établissement de crédit",
+        "des virements"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["dettes liées à des participations", "compte 18", "comptes de liaison", "établissements", "succursales", "sociétés en participation", "entreprises liées", "intérêts courus"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "19",
+      "titre": "COMPTE 19 Provisions financières pour risques et charges",
+      "contenu": "Les provisions financières pour risques et charges sont des provisions destinées à couvrir des charges, des risques et pertes nettement précisés quant à leur objet que des événements survenus ou en cours rendent probables, mais comportant un élément d'incertitude quant à leur montant ou leur réalisation prévisible à plus d'un an. Les provisions financières pour risques et charges sont inscrites au passif du bilan dans les dettes financières et ressources assimilées. Le compte 19 est réajusté à la clôture de chaque exercice soit par dotations supplémentaires, soit par reprises des provisions antérieures.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 19 est crédité, à la clôture de l'exercice, des charges et pertes prévisibles — par le débit du compte 69 (compte 691 Dotations aux provisions d'exploitation, ou 697 Dotations aux provisions financières), ou par le débit du compte 85 Dotations H.A.O."
+        ],
+        "debit": [
+          "Le compte 19 est débité, à la clôture de l'exercice, de la reprise des provisions pour charges et pertes constatées à la clôture d'un exercice antérieur dont les raisons qui les ont motivées ont cessé d'exister — par le crédit du compte 79 Reprises de provisions, ou par le crédit du compte 86 Reprises H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les charges certaines d'un montant déterminé, qui sont à comptabiliser dans les comptes de charges par nature avec contrepartie dans les comptes de tiers ou de trésorerie concernés", "utiliser": "classes 6 et 8 de Charges"},
+        {"ne_pas_enregistrer": "les provisions qui ont pour origine une réglementation particulière, souvent d'ordre fiscal, sans charges ou pertes réellement prévisibles", "utiliser": "15 Provisions réglementées et fonds assimilés"},
+        {"ne_pas_enregistrer": "les provisions correspondant à des risques à moins d'un an", "utiliser": "499 Risques provisionnés"}
+      ],
+      "controles": [
+        "vérification du calcul des provisions",
+        "recherche de la réalité du risque ou de l'éventualité de la charge",
+        "appréciation de l'échéance du risque ou de la charge"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["provisions financières", "risques et charges", "compte 19", "litiges", "garanties", "pertes de change", "pensions", "charges à répartir", "dotations aux provisions", "reprises de provisions", "plus d'un an"],
+      "statut": "en_vigueur"
     }
   ]
 }

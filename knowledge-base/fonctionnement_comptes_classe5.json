@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 5 — Classe 5 : Comptes de Trésorerie",
+    "pages_source": "153-155+",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "50",
+      "titre": "COMPTE 50 Titres de placement",
+      "contenu": "Ce sont des titres cessibles, acquis en vue d'en retirer un revenu direct ou une plus-value à brève échéance. Les titres de placement comprennent les actions et parts sociales, les obligations et les bons aisément négociables sur un marché réglementé. Représentatifs de créances souscrites, ils sont réalisables immédiatement, en cas de nécessité. Productifs d'intérêts, ils constituent des placements financiers. A leur entrée les titres de placement sont comptabilisés au prix d'achat, à l'exclusion des frais d'achat inscrits au compte 6311. A l'inventaire, ils sont évalués au cours en Bourse ou, pour les titres non cotés, à leur valeur probable de négociation. En cas de cession, la différence entre le prix de cession et la valeur d'entrée des titres est enregistrée au débit du compte 677 Pertes sur cessions de titres de placement ou au crédit du compte 777 Gains sur cessions de titres de placement.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 50 est crédité, en cas de cession des titres, de la valeur d'entrée — par le débit d'un compte de tiers ou de trésorerie pour le prix de cession, par le débit du compte 677 Pertes sur cessions de titres de placement (cas de cession avec perte), ou par le débit du compte 777 Gains sur cessions de titres de placement (cas de cession avec bénéfice)"
+        ],
+        "debit": [
+          "Le compte 50 est débité de la valeur d'apport ou d'acquisition des titres — par le crédit des comptes de tiers ou de trésorerie concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les titres dont la cession n'est pas facilement réalisable", "utiliser": "26 Titres de participation"},
+        {"ne_pas_enregistrer": "les titres dont la cession n'est pas facilement réalisable", "utiliser": "274 Titres immobilisés"},
+        {"ne_pas_enregistrer": "les frais accessoires d'achat des titres (impôts, courtages, commissions, honoraires)", "utiliser": "6311 Frais sur achats de titres"}
+      ],
+      "controles": [
+        "des ordres d'achat",
+        "des ordres de vente des titres",
+        "des bordereaux de banque",
+        "des contrats",
+        "des relevés de titres en portefeuille"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["titres de placement", "compte 50", "actions", "obligations", "bons", "cession", "plus-value", "moins-value", "cours en Bourse", "compte 677", "compte 777"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "51",
+      "titre": "COMPTE 51 Valeurs à encaisser",
+      "contenu": "Les valeurs à encaisser sont les effets, chèques et autres valeurs transmis à la banque et dont l'entreprise attend l'encaissement à l'échéance.",
+      "fonctionnement": {
+        "credit": [],
+        "debit": []
+      },
+      "exclusions": [],
+      "controles": [],
+      "sens": "debiteur",
+      "mots_cles": ["valeurs à encaisser", "compte 51", "effets", "chèques", "encaissement", "banque"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

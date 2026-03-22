@@ -1,0 +1,256 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 4 — Classe 4 : Comptes de Tiers",
+    "pages_source": "136-153",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "41",
+      "titre": "COMPTE 41 Clients et comptes rattachés",
+      "contenu": "Le compte 41 enregistre les créances liées à la vente de biens et services par l'entreprise. Les comptes clients sont ventilés selon : la répartition géographique (État-partie, autres États de la Région, hors Région), la nature du client (entreprise, particulier, État, institution financière), les relations (groupe, autres), l'identité du client, la nature du produit ou service vendu. Aucune compensation ne doit être établie entre les comptes clients à solde débiteur et les comptes clients à solde créditeur.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 41 est crédité des avances et acomptes ainsi que des règlements reçus des clients — par le débit des comptes de trésorerie ou effets à recevoir",
+          "Le compte 41 est crédité pour le montant des factures d'avoir émises pour retour de marchandises — par le débit des comptes de la classe 7 et des autres comptes ayant joué lors de l'enregistrement initial des ventes",
+          "Le compte 41 est crédité des rabais, ristournes et remises accordés sur ventes hors factures — par le débit des comptes 70 Ventes",
+          "Le compte 41 est crédité des créances litigieuses ou douteuses — par le débit du compte 416 Créances clients litigieuses ou douteuses",
+          "Le compte 41 est crédité des escomptes de règlement accordés aux clients — par le débit du compte 673 Escomptes accordés"
+        ],
+        "debit": [
+          "Le compte 41 est débité du montant des factures de ventes de biens ou de prestations de services — par le crédit des comptes concernés de la classe 7 (montant hors taxes récupérables), par le crédit du compte 4194 Clients dettes pour emballages et matériels consignés, par le crédit du compte 443 État TVA facturée"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les créances sur des tiers nées des opérations autres que la vente des marchandises, biens ou services", "utiliser": "485 Créances sur cessions d'immobilisations"}
+      ],
+      "controles": [
+        "des factures, chèques de règlement",
+        "des effets, impayés, relances clients",
+        "des dossiers contentieux"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["clients", "compte 41", "créances", "ventes", "factures", "avoirs", "rabais", "ristournes", "escomptes", "créances douteuses", "créances litigieuses"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "42",
+      "titre": "COMPTE 42 Personnel",
+      "contenu": "Le compte Personnel enregistre l'ensemble des opérations qui interviennent entre l'entreprise et les personnes qui lui sont liées par un contrat de travail. Par extension, les opérations qui concernent les représentants du personnel ou les organismes similaires lui sont rattachées. Le personnel de l'entreprise comprend : le personnel de direction et d'encadrement, les employés, les ouvriers et les occasionnels indépendamment de leur situation ou de leurs fonctions ; les représentants salariés ; les associés et les dirigeants de société qui exercent des fonctions techniques ; les membres de la famille de l'exploitant exerçant un emploi salarié.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 42 est crédité des rémunérations brutes à payer au personnel (ou au comité d'entreprise) — par le débit des comptes de charges intéressés 66 Charges de personnel"
+        ],
+        "debit": [
+          "Le compte 42 est débité du montant des avances et acomptes faits au personnel (ou au comité d'entreprise) ainsi que des rémunérations versées au personnel — par le crédit des comptes de trésorerie",
+          "Le compte 42 est débité des sommes dues par le personnel — par le crédit des comptes de produits (services exploités dans l'intérêt du personnel, etc.)",
+          "Le compte 42 est débité des versements effectués aux organismes sociaux pour le compte du personnel (cotisations salariales) — par le crédit du compte 43 Organismes sociaux",
+          "Le compte 42 est débité, en cas d'opposition de tiers sur salaires, du versement de la fraction de salaire soumise à saisie — par le crédit des comptes de trésorerie"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les prêts consentis au personnel", "utiliser": "272 Prêts au personnel"},
+        {"ne_pas_enregistrer": "les opérations en comptes courants des associés et administrateurs pour les mouvements de fonds n'intéressant pas la rémunération de leur travail", "utiliser": "46 Associés et Groupe"}
+      ],
+      "controles": [
+        "des fiches de paie",
+        "des déclarations sociales",
+        "des contrats de prêts",
+        "des procès-verbaux de saisie-arrêt",
+        "des avis à tiers détenteur"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["personnel", "compte 42", "rémunérations", "salaires", "avances", "acomptes", "cotisations salariales", "saisie-arrêt", "charges de personnel"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "43",
+      "titre": "COMPTE 43 Organismes sociaux",
+      "contenu": "Ce compte enregistre, d'une part, le montant des cotisations sociales salariales et patronales dues aux organismes sociaux et, d'autre part, les règlements de cotisations effectués à leur profit. Les obligations de l'entreprise vis-à-vis des organismes sociaux sont remplies à partir des procédures comptables définies dans le Système Comptable OHADA.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 43 est crédité du montant des cotisations sociales, salariales et patronales dues aux organismes sociaux — par le débit du compte 664 Charges sociales pour la part patronale, et par le débit du compte 422 Personnel, rémunérations dues pour la part salariale"
+        ],
+        "debit": [
+          "Le compte 43 est débité des règlements de cotisations effectués aux organismes sociaux — par le crédit des comptes de trésorerie concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les opérations faites avec les organismes sociaux en tant que clients", "utiliser": "41 Clients et comptes rattachés"}
+      ],
+      "controles": [
+        "des fiches de paie",
+        "des bordereaux de déclarations sociales",
+        "des livres de paie"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["organismes sociaux", "compte 43", "cotisations sociales", "salariales", "patronales", "sécurité sociale", "caisse de retraite"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "44",
+      "titre": "COMPTE 44 État et Collectivités publiques",
+      "contenu": "Les opérations à inscrire à ce compte concernent d'une manière générale les opérations qui sont faites avec l'État et avec les diverses collectivités publiques en tant que pouvoirs publics. Les opérations d'achats et de ventes de biens ou de services avec l'État et les collectivités publiques s'inscrivent aux comptes 40 Fournisseurs et comptes rattachés et 41 Clients et comptes rattachés, au même titre que les opérations faites avec les fournisseurs et les autres clients. Les dettes du compte 442 État, autres impôts et taxes comprennent non seulement les impôts et taxes d'État proprement dits (droits de douane à l'exportation), mais aussi les impôts et taxes perçus pour le compte des collectivités locales.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 44 est crédité lors de la constatation par l'entreprise des dettes d'impôts dont elle est redevable envers l'État — par le débit des comptes de charges intéressés",
+          "Le compte 44 est crédité lors du règlement par l'État des sommes dues à l'entreprise — par le débit des comptes de trésorerie"
+        ],
+        "debit": [
+          "Le compte 44 est débité des sommes versées lors du règlement par l'entreprise à l'État — par le crédit des comptes de trésorerie concernés",
+          "Le compte 44 est débité lors de la constatation de la dette de l'État envers l'entreprise (fonds de dotation, subventions, etc.) — par le crédit des comptes concernés des classes 1 et 4 ou des classes 7 et 8, selon la qualification des fonds alloués"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les opérations faites avec l'État en tant que fournisseur", "utiliser": "40 Fournisseurs et comptes rattachés"},
+        {"ne_pas_enregistrer": "les opérations faites avec l'État en tant que client", "utiliser": "41 Clients et comptes rattachés"},
+        {"ne_pas_enregistrer": "les droits de douane acquittés à l'entrée des biens sur le territoire national faisant partie du prix d'achat du bien", "utiliser": "comptes de la classe 2 ou 6 concernés"}
+      ],
+      "controles": [
+        "des avis d'imposition",
+        "des déclarations fiscales",
+        "des relevés bancaires"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["État", "collectivités publiques", "compte 44", "impôts", "taxes", "TVA", "TVA facturée", "TVA récupérable", "droits de douane", "subventions"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "45",
+      "titre": "COMPTE 45 Organismes internationaux",
+      "contenu": "Les opérations à inscrire à ce compte concernent les dettes et créances autres que celles liées à l'activité de l'entreprise. Elles concernent exclusivement le montant des dépenses dont l'entreprise doit assumer la charge, les dettes des organismes internationaux vis-à-vis de l'entreprise et, d'autre part, les dettes de l'entreprise vis-à-vis des organismes internationaux et le règlement par ces derniers des sommes dues à l'entreprise.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 45 est crédité lors de la constatation par l'entreprise des dettes dont elle est redevable envers les organismes internationaux — par le débit des comptes de charges concernés",
+          "Le compte 45 est crédité lors du règlement par les organismes internationaux de sommes dues à l'entreprise — par le débit des comptes de trésorerie"
+        ],
+        "debit": [
+          "Le compte 45 est débité des dépenses dont l'entreprise doit assumer la charge — par le crédit des comptes de trésorerie concernés lors du règlement par l'entreprise aux organismes internationaux",
+          "Le compte 45 est débité lors de la constatation de la dette des organismes internationaux envers l'entreprise (fonds de dotation, subventions, etc.) — par le crédit des comptes concernés des classes 1 et 4 ou des classes 7 et 8, selon la qualification des fonds alloués"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les opérations faites avec les organismes internationaux en tant que fournisseurs", "utiliser": "40 Fournisseurs et comptes rattachés"},
+        {"ne_pas_enregistrer": "les opérations faites avec les organismes internationaux en tant que clients", "utiliser": "41 Clients et comptes rattachés"}
+      ],
+      "controles": [
+        "des relevés bancaires",
+        "des avis de versement",
+        "des avis d'octroi de subventions"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["organismes internationaux", "compte 45", "dettes", "créances", "subventions", "fonds de dotation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "46",
+      "titre": "COMPTE 46 Associés et Groupe",
+      "contenu": "Le compte 46 enregistre d'une part les créances/dettes envers les associés résultant des divers mouvements du capital social, et d'autre part les créances/dettes temporaires en comptes courants. Le plan de comptes distingue les associés ordinaires et, dans le cas d'appartenance à un groupe, les autres sociétés du groupe. Les mouvements du compte 461 concernent tous les associés, y compris les autres sociétés du groupe associées de l'entreprise. Les créances/dettes envers les sociétés du groupe, autres que celles enregistrées dans le compte 466 Groupe comptes courants, sont comptabilisées dans les comptes de tiers 40 Fournisseurs et 41 Clients pour les opérations commerciales, dans les comptes 16, 18 et 27 pour les opérations financières.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 46 est crédité des sommes dues à titre de dividendes — par le débit des comptes Résultat",
+          "Le compte 46 est crédité des fonds mis ou laissés temporairement à la disposition de la société — par le débit des comptes de trésorerie (ou de charges, s'il s'agit de frais réglés pour le compte de l'entreprise)"
+        ],
+        "debit": [
+          "Le compte 46 est débité des sommes réglées au titre des dividendes — par le crédit des comptes de trésorerie (ou des comptes courants)",
+          "Le compte 46 est débité des fonds prélevés par les associés ou des règlements effectués pour leur compte par l'entreprise — par le crédit des comptes de trésorerie (ou de charges)"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dettes et créances des associés contractées ou consenties", "utiliser": "16 Emprunts et dettes assimilées"},
+        {"ne_pas_enregistrer": "les emprunts et les prêts des associés", "utiliser": "27 Autres immobilisations financières"},
+        {"ne_pas_enregistrer": "la dette des associés, représentative du capital souscrit non appelé", "utiliser": "109 Actionnaires, capital souscrit, non appelé"}
+      ],
+      "controles": [
+        "des décisions des Assemblées d'actionnaires"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["associés", "groupe", "compte 46", "dividendes", "comptes courants", "capital social", "opérations sur le capital"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "47",
+      "titre": "COMPTE 47 Débiteurs et créditeurs divers",
+      "contenu": "Ce compte enregistre les opérations en instance de régularisation et relatives aux créances et dettes liées à l'acquisition de titres, des charges non consommées, des produits constatés d'avance, des écarts sur opérations libellées en monnaies étrangères, et des créances sur travaux non encore facturables. Le compte 471 Comptes d'attente est utilisé au cours de l'exercice pour permettre l'enregistrement d'opérations qui n'ont pu être imputées de manière certaine à un compte déterminé. Dès que possible, et au plus tard à la clôture de l'exercice, les opérations sont reclassées et les comptes d'attente ne doivent pas figurer au bilan. Les comptes 478 Écarts de conversion Actif et 479 Écarts de conversion Passif permettent de constater, à la clôture de l'exercice, les écarts entre créances et dettes en devises converties en unités monétaires légales du pays et leur évaluation en unités monétaires légales à la date de clôture de l'exercice.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 47 est crédité des dettes contractées ou des remboursements de créances — par le débit des comptes de trésorerie concernés",
+          "Le compte 47 est crédité des apports effectués par l'exploitant en cours d'exercice — par le débit des comptes de trésorerie concernés",
+          "Le compte 47 est crédité des virements restant à effectuer sur des titres non encore totalement libérés — par le débit du compte 26 Titres de participation, ou du compte 274 Titres immobilisés, ou du compte 50 Titres de placement",
+          "Le compte 47 est crédité, à la clôture de l'exercice, des produits perçus pendant l'exercice et se rattachant à l'exercice à venir (produits constatés d'avance) — par le débit des comptes de produits concernés"
+        ],
+        "debit": [
+          "Le compte 47 est débité des créances sur les tiers ou du remboursement des dettes contractées — par le crédit d'un compte de tiers ou des comptes de trésorerie concernés",
+          "Le compte 47 est débité des retraits effectués par l'exploitant en cours d'exercice — par le crédit d'un compte de trésorerie",
+          "Le compte 47 est débité, à la clôture de l'exercice, des charges payées pendant l'exercice et se rattachant à l'exercice à venir (charges payées d'avance) — par le crédit des comptes de charges concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les charges imputables au compte Fournisseurs", "utiliser": "40 Fournisseurs et comptes rattachés"},
+        {"ne_pas_enregistrer": "les produits imputables au compte Clients", "utiliser": "41 Clients et comptes rattachés"}
+      ],
+      "controles": [
+        "des contrats",
+        "des conventions",
+        "des décomptes de régularisation",
+        "des chèques",
+        "des relevés de banque"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["débiteurs", "créditeurs divers", "compte 47", "comptes d'attente", "charges constatées d'avance", "produits constatés d'avance", "écarts de conversion", "régularisation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "48",
+      "titre": "COMPTE 48 Créances et dettes hors activités ordinaires",
+      "contenu": "Ce sont des créances et des dettes consécutives à des opérations effectuées par l'entreprise mais n'ayant pas de lien direct avec l'activité ordinaire de l'entreprise. La mise en évidence au bilan des créances et des dettes hors activités ordinaires par l'intermédiaire du compte 48 permet de mesurer directement le besoin ou la ressource de financement H.A.O., en parallèle avec le besoin ou la ressource de financement de l'exploitation. Les créances sur cessions d'immobilisations sont considérées comme H.A.O. dans tous les cas où elles concernent des opérations n'entrant pas dans l'activité normale et courante de l'entreprise. Dans le cas contraire, elles constituent des créances rattachées au compte Client (compte 414) et sont débitées par le crédit du compte 754 Produits des cessions courantes d'immobilisations.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 48 est crédité des dettes H.A.O. contractées ou des remboursements de créances H.A.O. — par le débit des comptes de trésorerie concernés ou des comptes de la classe 8"
+        ],
+        "debit": [
+          "Le compte 48 est débité des créances H.A.O. sur les tiers ou des remboursements de dettes H.A.O. — par le crédit des comptes de trésorerie concernés ou des comptes de la classe 8"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dettes ou les créances ayant pour origine les activités ordinaires de l'entreprise", "utiliser": "40 Fournisseurs et comptes rattachés ou 41 Clients et comptes rattachés"}
+      ],
+      "controles": [
+        "des chèques",
+        "des effets de commerce",
+        "des contrats d'acquisition d'immobilisations",
+        "des factures",
+        "des ordres de mouvements en Bourse"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["créances HAO", "dettes HAO", "compte 48", "hors activités ordinaires", "cessions d'immobilisations", "fournisseurs d'investissements"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "49",
+      "titre": "COMPTE 49 Dépréciations et risques provisionnés (Tiers)",
+      "contenu": "Ce sont des dépréciations subies par des comptes de tiers résultant de causes diverses dont les effets ne sont pas jugés irréversibles. La dépréciation doit être certaine quant à sa nature et l'élément d'actif en cause doit être individualisé. La provision pour dépréciation doit être constituée même en l'absence ou en cas d'insuffisance de bénéfices, conformément au principe de prudence. La dépréciation traduit une baisse non définitive et non irréversible de l'évaluation des éléments d'actif par rapport à leur valeur comptable. Les risques à court terme provisionnés sont liés au mécanisme des charges provisionnées et représentent une dette probable à moins d'un an. Les dépréciations provisionnées et les risques à court terme provisionnés correspondent à des charges d'exploitation ou H.A.O. selon leur nature.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 49 est crédité à la clôture de l'exercice des dépréciations constatées sur les éléments d'actif de la classe 4 (comptes 41 à 48) ou des provisions pour risques à court terme (compte 499) — par le débit du compte 659 Charges provisionnées d'exploitation, ou par le débit du compte 839 Charges provisionnées H.A.O."
+        ],
+        "debit": [
+          "Le compte 49 est débité à la clôture de l'exercice de la reprise des dépréciations constatées à la clôture d'un exercice antérieur sur les éléments d'actif de la classe 4 (comptes 41 à 48) ou des provisions pour risques à court terme (compte 499) dont les raisons qui les ont motivées ont cessé d'exister — par le crédit du compte 759 Reprises de charges provisionnées d'exploitation, ou par le crédit du compte 849 Reprises de charges provisionnées H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions pour risques et charges à plus d'un an", "utiliser": "19 Provisions financières pour risques et charges"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des éléments de l'actif immobilisé (classe 2)", "utiliser": "29 Provisions pour dépréciation"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des comptes de trésorerie (classe 5)", "utiliser": "59 Dépréciations et risques provisionnés (Trésorerie)"}
+      ],
+      "controles": [
+        "de tous documents à même de justifier les motifs qui rendent la créance douteuse ou litigieuse (courriers et autres protêts, justificatifs du caractère douteux ou litigieux de la créance)"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["dépréciations", "risques provisionnés", "compte 49", "créances douteuses", "créances litigieuses", "provisions", "charges provisionnées", "reprises", "principe de prudence"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 2 — Classe 2 : Comptes d'Actif Immobilisé",
+    "pages_source": "90-100+",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "20",
+      "titre": "COMPTE 20 Charges immobilisées",
+      "contenu": "Les charges immobilisées sont des charges à caractère général ayant une incidence sur le résultat de l'entreprise. Elles sont non répétitives et peuvent engendrer soit des économies, soit des gains sur les exercices ultérieures. Les charges immobilisées constituent des actifs fictifs. Elles figurent à l'actif du bilan et comprennent : les frais d'établissement (dépenses engagées à la constitution de l'entreprise), les charges à répartir sur plusieurs exercices, et les primes de remboursement des obligations. Les charges immobilisées sont préalablement comptabilisées dans des comptes de charges par nature puis transférées au compte 20 par le crédit du compte 78 Transferts de charges. L'étalement se fait par amortissement direct (2 à 5 ans). Aucune distribution de bénéfice ne peut intervenir avant amortissement complet des frais d'établissement.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 20 est crédité de la part de la charge imputée à l'exercice — par le débit du compte 6811 Dotations aux amortissements des charges immobilisées",
+          "Le compte 20 est crédité — par le débit du compte 6872 Dotations aux amortissements des primes de remboursement des obligations"
+        ],
+        "debit": [
+          "Le compte 20 est débité des frais à immobiliser ne constituant pas des immobilisations incorporelles — par le crédit du compte 78 Transferts de charges",
+          "Le compte 20 est débité — par le crédit du compte 16 Emprunts et dettes assimilées dans le cas d'emprunts obligataires à primes"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les charges courantes qui ne présentent pas le caractère de charges immobilisées", "utiliser": "comptes de la classe 6"},
+        {"ne_pas_enregistrer": "les frais de transport, d'installation et de montage des installations à rattacher à la valeur d'entrée des immobilisations concernées", "utiliser": "comptes de la classe 2"}
+      ],
+      "controles": [
+        "des factures",
+        "de la justification de leur étalement",
+        "des bons de souscription des obligations"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["charges immobilisées", "compte 20", "frais d'établissement", "charges à répartir", "primes de remboursement", "amortissement direct", "transfert de charges", "actifs fictifs"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "21",
+      "titre": "COMPTE 21 Immobilisations incorporelles",
+      "contenu": "Les immobilisations incorporelles sont des immobilisations immatérielles et tous les autres éléments susceptibles de générer des avantages futurs. Elles ont la nature de biens acquis ou créés par l'entreprise, non pour être vendus ou transformés, mais pour être utilisés de manière durable, directement ou indirectement, pour la réalisation des opérations professionnelles ou non. S'agissant des frais de recherche et de développement, ne peuvent être immobilisées que les dépenses relatives à des projets qui ont de sérieuses chances de réalisation technique et de rentabilité commerciale. Le compte 212 enregistre les dépenses pour obtenir la protection des brevets, modèles, dessins, procédés, propriétés littéraire et artistique. Le compte 213 Logiciels enregistre les dépenses pour acquérir ou produire un logiciel. Le compte 215 Fonds commercial est constitué par les éléments incorporels qui ne font pas l'objet d'une évaluation et d'une comptabilisation séparées. Le compte 216 Droit au bail est constitué par le montant versé ou dû au locataire précédent. Le compte 219 Immobilisations incorporelles en cours enregistre le coût de production des brevets, investissements de création et logiciels élaborés par l'entreprise elle-même.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 21 est crédité en cas de cession, disparition, destruction ou mise au rebut — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations (ou du compte 654 Valeurs comptables des cessions courantes d'immobilisations)",
+          "Le compte 21 est crédité — et/ou par le débit du compte 281 Amortissements des immobilisations incorporelles (pour solde de ce compte)"
+        ],
+        "debit": [
+          "Le compte 21 est débité de la valeur d'apport, d'acquisition ou de création par l'entreprise de l'immobilisation incorporelle — par le crédit du compte 10 Capital",
+          "Le compte 21 est débité — par le crédit du compte 46 Associés et Groupe",
+          "Le compte 21 est débité — par le crédit des comptes de tiers",
+          "Le compte 21 est débité — par le crédit des comptes de trésorerie",
+          "Le compte 21 est débité — par le crédit du compte 72 Production immobilisée"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les frais d'établissement", "utiliser": "201 Frais d'établissement"},
+        {"ne_pas_enregistrer": "les frais de recherche fondamentale", "utiliser": "charges de la classe 6"},
+        {"ne_pas_enregistrer": "les frais de préexploitation portés en classe 6 et à transférer éventuellement au compte", "utiliser": "20 Charges immobilisées"}
+      ],
+      "controles": [
+        "des factures",
+        "des promesses d'apport",
+        "des actes d'acquisition",
+        "des récépissés de dépôt de brevets, de marques",
+        "des contrats de concession"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["immobilisations incorporelles", "compte 21", "brevets", "licences", "logiciels", "fonds commercial", "droit au bail", "marques", "recherche et développement", "production immobilisée"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "22",
+      "titre": "COMPTE 22 Terrains",
+      "contenu": "Ce compte enregistre la valeur des terrains dont l'entreprise est propriétaire et de ceux qui sont mis à sa disposition par des tiers. Les terrains nus sont des terrains pouvant constituer le sol de bâtiments ou d'ouvrages, sans construction. Les terrains bâtis sont ceux sur lesquels des constructions sont édifiées ; la valeur d'entrée de ces terrains doit toujours être distinguée de celle du bâtiment correspondant. Les terrains de gisement sont des terrains d'extraction de matières. Les travaux de mise en valeur des terrains (défrichage, drainage, irrigation, nivellement, plantation d'arbres et d'arbustes) peuvent être isolés dans un compte et amortis s'ils ont été effectués par l'entreprise ou sous ses ordres.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 22 est crédité en cas de cession — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations",
+          "Le compte 22 est crédité — et le débit du compte 282 Amortissements des terrains, pour le montant des amortissements pratiqués sur les terrains agricoles ou forestiers et sur les travaux de mise en valeur des terrains"
+        ],
+        "debit": [
+          "Le compte 22 est débité de la valeur d'apport ou d'acquisition des terrains — par le crédit du compte 10 Capital",
+          "Le compte 22 est débité — par le crédit du compte 46 Associés et Groupe",
+          "Le compte 22 est débité — ou par le crédit des comptes de tiers et des comptes de trésorerie concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dépenses de construction qui constituent des composantes du coût des bâtiments", "utiliser": "23 Bâtiments, installations techniques et agencements"}
+      ],
+      "controles": [
+        "des actes d'acquisition",
+        "des titres de propriété"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["terrains", "compte 22", "terrains nus", "terrains bâtis", "terrains de gisement", "mise en valeur", "amortissement des terrains"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "23",
+      "titre": "COMPTE 23 Bâtiments, installations techniques et agencements",
+      "contenu": "Ce compte enregistre le montant des opérations ayant trait aux apports effectués par les associés ou à l'acquisition et à la création par l'entreprise de bâtiments, installations et agencements, de même que leur cession, disparition et mise au rebut. La valeur des terrains n'est pas comprise dans celle des bâtiments. Les terrains et les bâtiments doivent faire l'objet d'évaluations distinctes. Il faut en revanche inclure dans la valeur des bâtiments : le coût de la peinture extérieure et intérieure des constructions neuves, le coût de tous les aménagements permanents (chauffage, climatisation, conduites d'eau, gaz, électricité), le coût du matériel normalement installé avant que le bâtiment soit occupé. Les bâtiments et installations en cours sont ceux qui ne sont pas encore terminés à la clôture de l'exercice. L'amortissement des bâtiments ou installations en cours ne peut avoir lieu qu'à partir de leur mise en service effective.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 23 est crédité en cas de cession, disparition, mise au rebut — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations",
+          "Le compte 23 est crédité — ou par le débit du compte 283 Amortissements des bâtiments, installations techniques et agencements, à concurrence du montant des amortissements pratiqués sur les éléments cédés ou disparus"
+        ],
+        "debit": [
+          "Le compte 23 est débité de la valeur d'apport, d'acquisition ou de création par l'entreprise des bâtiments, installations et agencements — par le crédit du compte 10 Capital",
+          "Le compte 23 est débité — par le crédit du compte 46 Associés et Groupe",
+          "Le compte 23 est débité — ou par le crédit des comptes de tiers et des comptes de trésorerie concernés",
+          "Le compte 23 est débité — par le crédit du compte 72 Production immobilisée",
+          "Le compte 23 est débité — ou par le crédit du compte 239, lorsque les éléments des comptes 231 à 238 ayant trait à des travaux en cours sont terminés"
+        ]
+      },
+      "exclusions": [],
+      "controles": [],
+      "sens": "debiteur",
+      "mots_cles": ["bâtiments", "installations techniques", "agencements", "compte 23", "constructions", "ouvrages d'infrastructure", "installations en cours", "production immobilisée"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

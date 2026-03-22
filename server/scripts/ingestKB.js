@@ -205,7 +205,34 @@ async function main() {
     console.log(`Fonctionnement Comptes Classe 1: ${docs.length} articles`);
   }
 
-  // Source 7: Ressources Durables (Chapitre 6)
+  // Source 7: Fonctionnement des comptes — Classe 2
+  const fonctC2KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe2.json'));
+  if (fonctC2KB) {
+    const articles = fonctC2KB.articles || fonctC2KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe2');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 2: ${docs.length} articles`);
+  }
+
+  // Source 8: Fonctionnement des comptes — Classe 4
+  const fonctC4KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe4.json'));
+  if (fonctC4KB) {
+    const articles = fonctC4KB.articles || fonctC4KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe4');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 4: ${docs.length} articles`);
+  }
+
+  // Source 9: Fonctionnement des comptes — Classe 5
+  const fonctC5KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe5.json'));
+  if (fonctC5KB) {
+    const articles = fonctC5KB.articles || fonctC5KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe5');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 5: ${docs.length} articles`);
+  }
+
+  // Source 10: Ressources Durables (Chapitre 6)
   const resDurKB = loadJSON(path.join(kbDir, 'ressources_durables_chapitre_6.json'));
   if (resDurKB) {
     const articles = resDurKB.articles || resDurKB;
