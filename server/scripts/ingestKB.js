@@ -250,7 +250,25 @@ async function main() {
     console.log(`Fonctionnement Comptes Classe 6: ${docs.length} articles`);
   }
 
-  // Source 11: Ressources Durables (Chapitre 6)
+  // Source 11: Fonctionnement des comptes — Classe 7
+  const fonctC7KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe7.json'));
+  if (fonctC7KB) {
+    const articles = fonctC7KB.articles || fonctC7KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe7');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 7: ${docs.length} articles`);
+  }
+
+  // Source 12: Fonctionnement des comptes — Classe 8
+  const fonctC8KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe8.json'));
+  if (fonctC8KB) {
+    const articles = fonctC8KB.articles || fonctC8KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe8');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 8: ${docs.length} articles`);
+  }
+
+  // Source 13: Ressources Durables (Chapitre 6)
   const resDurKB = loadJSON(path.join(kbDir, 'ressources_durables_chapitre_6.json'));
   if (resDurKB) {
     const articles = resDurKB.articles || resDurKB;

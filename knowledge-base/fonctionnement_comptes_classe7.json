@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 7 — Classe 7 : Comptes de Produits des Activités Ordinaires",
+    "pages_source": "190-204",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "70",
+      "titre": "COMPTE 70 Ventes",
+      "contenu": "Ce compte enregistre les ressources de l'entreprise provenant de la vente des marchandises, des travaux effectués et des services rendus à des tiers. Le prix de vente facturé s'entend du prix facturé, le cas échéant, net de taxes collectées, déductions faites des rabais et remises lorsqu'ils sont déduits sur la facture elle-même. Les escomptes de règlement sont comptabilisés au débit du compte 673 Escomptes accordés.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 70 est crédité du montant des facturations — par le débit du compte 41 Clients et comptes rattachés, ou par le débit d'un compte de trésorerie"
+        ],
+        "debit": [
+          "Le compte 70 est débité des retours sur ventes et des rabais, remises et ristournes accordés hors factures aux clients — par le crédit du compte client 41 Clients et comptes rattachés",
+          "Le compte 70 est débité pour solde du compte 70 à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les subventions d'exploitation compensatrices d'insuffisances de tarifs", "utiliser": "71 Subventions d'exploitation"}
+      ],
+      "controles": ["des factures de ventes", "des factures d'avoirs", "de la vérification des marges"],
+      "sens": "crediteur",
+      "mots_cles": ["ventes", "compte 70", "marchandises", "produits finis", "services vendus", "travaux facturés", "chiffre d'affaires", "rabais", "remises", "ristournes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "71",
+      "titre": "COMPTE 71 Subventions d'exploitation",
+      "contenu": "Ce sont des aides financières accordées par l'État, des collectivités publiques ou des tiers, qui ne sont ni des fonds de dotation, ni des subventions d'investissement. Elles sont destinées à compenser l'insuffisance du prix de vente administré, ou à faire face à des charges d'exploitation. Les abandons de créances à caractère commercial consentis en faveur de l'entreprise sont assimilés à des subventions d'exploitation.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 71 est crédité des subventions acquises — par le débit du compte 4495 État, subventions d'exploitation à recevoir, ou par le débit du compte 4582 Organismes internationaux, subventions à recevoir, et par le débit des comptes de trésorerie concernés à la date de l'encaissement"
+        ],
+        "debit": [
+          "Le compte 71 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les aides accordées par les collectivités publiques et organismes internationaux ayant le caractère de fonds de dotation", "utiliser": "102 Capital par dotation"},
+        {"ne_pas_enregistrer": "les subventions accordées en vue d'acquérir, de créer, de remplacer et de mettre en état des immobilisations", "utiliser": "14 Subventions d'investissement"}
+      ],
+      "controles": ["des courriers d'octroi des subventions"],
+      "sens": "crediteur",
+      "mots_cles": ["subventions d'exploitation", "compte 71", "aides financières", "État", "collectivités publiques", "insuffisance de tarifs", "abandons de créances"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "72",
+      "titre": "COMPTE 72 Production immobilisée",
+      "contenu": "Ce compte enregistre le coût de production des travaux faits par l'entreprise pour elle-même. Le coût de production doit intégrer tous les intrants : coût d'acquisition des matériaux consommés, autres coûts engagés sous forme de charges directes de production et charges indirectes rattachables, ainsi que les frais financiers supportés sur les emprunts exclusivement affectés au financement de la fabrication des biens concernant la période de fabrication.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 72 est crédité — par le débit du compte 21 Immobilisations incorporelles, ou par le débit du compte 23 Bâtiments, installations techniques et agencements, ou 24 Matériel"
+        ],
+        "debit": [
+          "Le compte 72 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les frais d'établissement et les charges à répartir", "utiliser": "comptes 78 ou 848"}
+      ],
+      "controles": ["des immobilisations portées à l'actif", "des charges saisies par la comptabilité analytique"],
+      "sens": "crediteur",
+      "mots_cles": ["production immobilisée", "compte 72", "travaux pour soi-même", "coût de production", "immobilisations", "frais financiers rattachables"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "73",
+      "titre": "COMPTE 73 Variations des stocks de biens et services produits",
+      "contenu": "Ce compte enregistre les variations de stocks de biens et de services produits en retraçant les opérations relatives aux entrées en stocks, aux sorties de stocks, et aux différences constatées à la clôture de l'exercice entre l'inventaire comptable permanent et l'inventaire physique, ou en cas d'inventaire intermittent entre le stock initial et le stock final. Le compte 73 donne par son solde la variation des stocks de produits fabriqués. Créditeur, il représente l'augmentation globale de ces stocks ; débiteur, il représente la diminution de ces stocks (déstockage).",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 73 est crédité de la valeur du stock final — par le débit des comptes de stocks concernés",
+          "Inventaire permanent — Le compte 73 est crédité, en cours d'exercice, des entrées en stocks (en-cours, produits fabriqués) — par le débit des comptes de stocks concernés",
+          "Inventaire permanent — Le compte 73 est crédité des différences en plus constatées entre l'inventaire comptable et l'inventaire physique — par le débit des comptes de stocks concernés"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 73 est débité de la valeur du stock initial, pour solde — par le crédit des comptes de stocks concernés",
+          "Inventaire permanent — Le compte 73 est débité, en cours d'exercice, des sorties de stocks (virements d'en-cours en produits fabriqués ou du fait de ventes) — par le crédit des comptes de stocks concernés",
+          "Inventaire permanent — Le compte 73 est débité des différences en moins constatées entre l'inventaire comptable et l'inventaire physique — par le crédit des comptes de stocks concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "la variation de la période afférente aux stocks de marchandises, de matières, de fournitures et d'emballages commerciaux", "utiliser": "comptes 603 Variations des stocks de biens achetés"}
+      ],
+      "controles": ["des fiches d'inventaire", "de l'évaluation des stocks", "de la comptabilité analytique"],
+      "sens": "mixte",
+      "mots_cles": ["variations des stocks", "compte 73", "produits en cours", "produits finis", "services en cours", "produits intermédiaires", "produits résiduels", "inventaire permanent", "inventaire intermittent"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "75",
+      "titre": "COMPTE 75 Autres produits",
+      "contenu": "Ce sont tous les produits divers qui ne proviennent pas directement de l'activité productrice ou commerciale de l'entreprise, ni de son activité financière ou de ses relations avec l'État (subventions) mais qui relèvent néanmoins de ses activités ordinaires. Comprend les quote-parts de résultat sur opérations faites en commun (752), les quote-parts de résultat sur exécution partielle de contrats pluri-exercices (753), les produits des cessions courantes d'immobilisations (754), et les produits divers (758). Le compte 759 Reprises de charges provisionnées d'exploitation enregistre les annulations ou les régularisations en baisse des provisions à court terme sur éléments de l'actif circulant et des risques provisionnés.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 75 est crédité du montant des produits — par le débit des comptes de tiers concernés ou des comptes de trésorerie",
+          "Le compte 759 est crédité du montant des dépréciations d'actif circulant et des risques provisionnés existant à l'ouverture de l'exercice — par le débit du compte 39 Dépréciations des stocks ou par le débit du compte 49 Dépréciations et risques provisionnés (Tiers)"
+        ],
+        "debit": [
+          "Le compte 75 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les rabais, remises et ristournes accordés hors factures aux clients", "utiliser": "compte 70 Ventes"},
+        {"ne_pas_enregistrer": "les reprises de provisions pour dépréciation d'éléments de l'actif immobilisé", "utiliser": "791 Reprises de provisions d'exploitation"},
+        {"ne_pas_enregistrer": "les reprises de provisions pour dépréciation d'éléments à caractère financier", "utiliser": "797 Reprises de provisions financières"}
+      ],
+      "controles": ["des factures", "des avis bancaires", "des correspondances échangées"],
+      "sens": "crediteur",
+      "mots_cles": ["autres produits", "compte 75", "quote-part de résultat", "cessions courantes", "produits divers", "reprises de charges provisionnées", "compte 759", "compte 754"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "77",
+      "titre": "COMPTE 77 Revenus financiers et produits assimilés",
+      "contenu": "Ce sont les ressources que tire l'entreprise de ses activités financières. Comprend les intérêts de prêts (771), les revenus de participations (772), les escomptes obtenus (773), les revenus de titres de placement (774), les gains de change (776), les gains sur cessions de titres de placement (777), les gains sur risques financiers (778), et les reprises de charges provisionnées financières (779). Les intérêts et dividendes reçus de l'étranger sont comptabilisés distinctement de ceux acquis dans l'État.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 77 est crédité du montant des produits financiers acquis — par le débit des comptes de tiers concernés ou des comptes de trésorerie",
+          "Le compte 77 est crédité (compte 779) de la reprise des dépréciations des comptes de trésorerie et des risques provisionnés à caractère financier existant au début de l'exercice — par le débit du compte 59 Dépréciations et risques provisionnés (Trésorerie), pour solde ou pour rajustement"
+        ],
+        "debit": [
+          "Le compte 77 est débité pour solde du compte 77 en fin d'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les récupérations de prêts ou d'avances consenties", "utiliser": "27 Autres immobilisations financières"}
+      ],
+      "controles": ["de virements bancaires", "de décompte d'intérêts", "de factures avec escompte", "de bordereaux de cession de titres", "d'encaissement des coupons"],
+      "sens": "crediteur",
+      "mots_cles": ["revenus financiers", "produits assimilés", "compte 77", "intérêts de prêts", "revenus de participations", "escomptes obtenus", "revenus de titres", "gains de change", "gains sur cessions", "reprises de charges provisionnées financières"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "78",
+      "titre": "COMPTE 78 Transferts de charges",
+      "contenu": "Ce compte sert à l'imputation de charges d'exploitation ou financières qui doivent être, en raison de leur nature, affectées à un compte de bilan, à l'exception des immobilisations pour lesquelles le compte 72 Production immobilisée est utilisé. Le transfert peut concerner les charges immobilisées, les stocks, les comptes de tiers. Il sert aussi, exceptionnellement, à des transferts de charges à charges (exemple : avantages en nature accordés au personnel). Les transferts de charges sont à mentionner dans l'État annexé.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 78 est crédité du montant des charges d'exploitation ou financières à transférer — par le débit des comptes de bilan concernés (autre que les comptes d'immobilisation), ou par le débit des comptes de charges concernés (en cas de transfert de charges à charges)"
+        ],
+        "debit": [
+          "Le compte 78 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les transferts de charges en actif immobilisé autres qu'en charges immobilisées", "utiliser": "72 Production immobilisée"},
+        {"ne_pas_enregistrer": "les transferts de charges H.A.O.", "utiliser": "848 Transferts de charges H.A.O."}
+      ],
+      "controles": ["du relevé des décisions de gestion des organes compétents"],
+      "sens": "crediteur",
+      "mots_cles": ["transferts de charges", "compte 78", "charges immobilisées", "charges d'exploitation", "charges financières", "comptes de bilan", "avantages en nature"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "79",
+      "titre": "COMPTE 79 Reprises de provisions",
+      "contenu": "Ce compte enregistre les annulations et les rajustements en baisse des provisions financières pour risques et charges, ainsi que des provisions pour dépréciation des éléments de l'actif immobilisé. Les reprises de provisions constatent soit la diminution de la provision ramenée à un montant inférieur, soit l'intégration dans les résultats de l'entreprise de la provision existante par suite de la réalisation ou de l'annulation de la charge ou de la disparition du risque. Dans le cas exceptionnel d'une révision rétroactive du plan d'amortissement initial, la réduction du cumul des amortissements est opérée par le crédit du compte 798 Reprises d'amortissements.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 79 est crédité — par le débit des comptes (19, 29) pour le montant des diminutions de provisions, par suite d'annulation ou de réduction"
+        ],
+        "debit": [
+          "Le compte 79 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les reprises HAO", "utiliser": "86 Reprises HAO"},
+        {"ne_pas_enregistrer": "les reprises de charges provisionnées", "utiliser": "759 Reprises de charges provisionnées d'exploitation, 779 Reprises de charges provisionnées financières, 849 Reprises de charges provisionnées HAO"}
+      ],
+      "controles": ["du relevé des décisions des organes compétents"],
+      "sens": "crediteur",
+      "mots_cles": ["reprises de provisions", "compte 79", "annulation", "rajustement en baisse", "provisions financières", "provisions pour dépréciation", "reprises d'amortissements", "compte 798"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

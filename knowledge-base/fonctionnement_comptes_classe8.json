@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 8 — Classe 8 : Comptes des Autres Charges et des Autres Produits",
+    "pages_source": "204-215",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "81",
+      "titre": "COMPTE 81 Valeurs comptables des cessions d'immobilisations",
+      "contenu": "Ce compte sert à déterminer la valeur comptable nette des éléments de l'actif immobilisé cédés. Pour les biens non amortissables, cette valeur est la valeur d'entrée, sans déduction des éventuelles provisions pour dépréciation. Pour les biens amortissables, elle est la différence entre la valeur d'entrée brute des immobilisations cédées et le cumul des amortissements pratiqués depuis l'entrée du bien dans le patrimoine de l'entreprise jusqu'à la date de sa cession. Les cessions d'immobilisations considérées comme courantes (fréquentes et récurrentes) ne sont pas enregistrées ici, mais dans les comptes 654 (Valeur comptable) et 754 (Prix de cession).",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 81 est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"
+        ],
+        "debit": [
+          "Le compte 81 est débité de la valeur d'entrée des éléments sortis sous déduction des amortissements pratiqués — par le crédit du compte d'immobilisation concerné (classe 2)"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions pour dépréciation afférentes aux éléments d'actif immobilisé cédés", "utiliser": "29 Provisions pour dépréciation"},
+        {"ne_pas_enregistrer": "les cessions considérées comme courantes compte tenu de l'activité de l'entreprise", "utiliser": "654 Valeurs comptables des cessions courantes d'immobilisations"}
+      ],
+      "controles": ["des documents attestant la valeur de sortie de l'immobilisation", "des factures de vente", "d'un procès-verbal de destruction", "des tableaux d'amortissement"],
+      "sens": "debiteur",
+      "mots_cles": ["valeurs comptables", "cessions d'immobilisations", "compte 81", "sortie d'actif", "valeur nette comptable", "amortissements cumulés"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "82",
+      "titre": "COMPTE 82 Produits des cessions d'immobilisations",
+      "contenu": "Ce compte enregistre le produit net de la cession : dans le cas de vente, prix résultant de l'accord entre les cocontractants et figurant sur l'acte de vente diminué des commissions et des frais de vente ; dans le cas d'apport, montant contractuel, etc. En cas de versement d'indemnité d'assurance pour réparation, celle-ci figurera au crédit du compte 82, même si l'entreprise prend la décision de ne pas effectuer de réparation. L'indemnité d'assurance perçue au cas où le bien est détruit est assimilée au prix de cession. Le produit des cessions considérées comme courantes est enregistré au crédit du compte 754.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 82 est crédité des produits de cession d'actif, nets de commissions et des frais de vente — par le débit du compte de tiers 485 Créances sur cessions d'immobilisations ou par le débit d'un compte de trésorerie",
+          "Le compte 82 est crédité de l'indemnité d'assurance perçue pour indemnisation d'une destruction d'immobilisation — par le débit du compte de tiers 485 ou d'un compte de trésorerie"
+        ],
+        "debit": [
+          "Le compte 82 est débité pour solde du compte à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les indemnités d'assurances autres que celles représentatives de l'indemnisation du bien détruit", "utiliser": "7582 Indemnités d'assurances reçues"},
+        {"ne_pas_enregistrer": "les produits des cessions courantes d'immobilisations", "utiliser": "754 Produits des cessions courantes d'immobilisations"}
+      ],
+      "controles": ["des factures de cession d'immobilisations", "des commissions et frais de vente"],
+      "sens": "crediteur",
+      "mots_cles": ["produits des cessions", "immobilisations", "compte 82", "prix de cession", "indemnité d'assurance", "plus-value", "moins-value"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "83",
+      "titre": "COMPTE 83 Charges hors activités ordinaires",
+      "contenu": "Ce sont les charges qui ne sont pas liées à l'activité ordinaire de l'entreprise et qui, de ce fait, n'ont généralement pas de caractère récurrent. Elles comprennent des charges constatées (831) et des charges provisionnées (839). Seules les charges liées à la restructuration de l'entreprise ou à des événements extraordinaires (phénomènes naturels : tempêtes, tremblements de terre, vols, etc.) doivent être considérées comme relevant des activités autres que ordinaires. Toute autre charge est ordinaire, y compris les amendes fiscales ou pénales et les charges sur exercices antérieurs liées aux activités courantes.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 83 est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"
+        ],
+        "debit": [
+          "Le compte 83 est débité des charges constatées ne concernant pas l'activité ordinaire de l'entreprise — par le crédit d'un compte de tiers ou de trésorerie",
+          "Le compte 83 est débité des charges hors activités ordinaires non encore engagées, mais dont la survenance à moins d'un an est probable et mesurable — par le crédit du compte 48 Créances et dettes H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions pour risques et charges hors activités ordinaires à plus d'un an", "utiliser": "854 Dotations aux provisions pour risques et charges H.A.O."}
+      ],
+      "controles": ["des factures", "des évaluations", "des tableaux d'amortissements", "des calculs de plus-values"],
+      "sens": "debiteur",
+      "mots_cles": ["charges HAO", "hors activités ordinaires", "compte 83", "restructuration", "événements extraordinaires", "charges constatées", "charges provisionnées HAO"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "84",
+      "titre": "COMPTE 84 Produits hors activités ordinaires",
+      "contenu": "Ce sont des produits qui ne sont pas liés à l'activité ordinaire de l'entreprise et sont donc dépourvus de caractère récurrent. Ils comprennent des produits constatés (841), des reprises de charges provisionnées (849) et des transferts de charges (848). Les produits sont considérés comme H.A.O. lorsqu'ils relèvent d'événements extraordinaires, liés à des phénomènes naturels ou à des modifications de structure de l'entreprise.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 84 est crédité du montant des produits constatés — par le débit d'un compte de tiers ou de trésorerie",
+          "Le compte 84 est crédité des reprises de charges provisionnées — par le débit du compte 4998 Risques provisionnés sur opérations H.A.O.",
+          "Le compte 84 est crédité du montant des charges dont l'inscription à l'actif a été décidée (transferts de charges) — par le débit du compte 20 Charges immobilisées"
+        ],
+        "debit": [
+          "Le compte 84 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les reprises de provisions H.A.O. antérieurement constituées", "utiliser": "86 Reprises H.A.O."}
+      ],
+      "controles": ["de l'analyse des charges immobilisées, des factures, des évaluations et des tableaux de provisions"],
+      "sens": "crediteur",
+      "mots_cles": ["produits HAO", "hors activités ordinaires", "compte 84", "produits constatés", "reprises de charges provisionnées HAO", "transferts de charges HAO"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "85",
+      "titre": "COMPTE 85 Dotations hors activités ordinaires",
+      "contenu": "Ce compte enregistre les dotations aux amortissements et aux provisions qui ne concernent pas l'activité ordinaire de l'entreprise. Le compte 85 est aussi utilisé dans les États-parties pour enregistrer les opérations liées à l'application de dispositions fiscales (provisions réglementées). Comprend les dotations aux provisions réglementées (851), les dotations aux amortissements H.A.O. (852), les dotations aux provisions pour dépréciation H.A.O. (853), les dotations aux provisions pour risques et charges H.A.O. (854).",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 85 est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"
+        ],
+        "debit": [
+          "Le compte 85 est débité du montant de la provision pour risques ou charges H.A.O. ou de l'amortissement — par le crédit du compte 15 Provisions réglementées et Fonds assimilés",
+          "Le compte 85 est débité — par le crédit du compte 19 Provisions financières pour risques et charges ou du compte 29 Provisions pour dépréciation",
+          "Le compte 85 est débité — par le crédit du compte 28 Amortissements"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les charges calculées H.A.O. à court terme (moins d'un an)", "utiliser": "839 Charges provisionnées H.A.O."}
+      ],
+      "controles": ["de l'évaluation de la provision"],
+      "sens": "debiteur",
+      "mots_cles": ["dotations HAO", "hors activités ordinaires", "compte 85", "provisions réglementées", "amortissements dérogatoires", "provisions pour dépréciation HAO", "provisions pour risques et charges HAO"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "86",
+      "titre": "COMPTE 86 Reprises hors activités ordinaires",
+      "contenu": "Ce compte enregistre les annulations et rajustements en baisse des provisions, amortissements et subventions qui ne sont pas liés à l'activité ordinaire de l'entreprise. Comprend les reprises de provisions réglementées (861), les reprises d'amortissements H.A.O. (862), les reprises de provisions pour dépréciation H.A.O. (863), les reprises de provisions pour risques et charges H.A.O. (864), les reprises de subventions d'investissement (865). Toute provision constituée par l'intermédiaire du compte 85 doit être reprise au cours de l'un des exercices suivants par le compte 86. Le compte 865 Reprises de subventions d'investissement enregistre à son crédit soit un montant égal à celui de la dotation de l'exercice aux comptes d'amortissements des immobilisations acquises au moyen de la subvention, soit une somme déterminée en fonction du nombre d'années pendant lesquelles les immobilisations non amortissables sont inaliénables, ou à défaut un dixième du montant de la subvention.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 86 est crédité de l'annulation ou de la réduction de la provision concernée — par le débit du compte 15 Provisions réglementées et Fonds assimilés, du compte 19 Provisions financières pour risques et charges ou par le débit du compte 29 Provisions pour dépréciation",
+          "Le compte 86 est crédité du montant de la subvention d'investissement reprise au résultat — par le débit du compte 14 Subventions d'investissement"
+        ],
+        "debit": [
+          "Le compte 86 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les reprises de charges provisionnées", "utiliser": "759, 779, 849"},
+        {"ne_pas_enregistrer": "les reprises de provisions pour dépréciation d'éléments de l'actif immobilisé", "utiliser": "791 Reprises de provisions d'exploitation"},
+        {"ne_pas_enregistrer": "les reprises de dotations à caractère financier", "utiliser": "797 Reprises de provisions financières"},
+        {"ne_pas_enregistrer": "les dotations aux provisions d'exploitation ou à caractère financier", "utiliser": "691/697 Dotations aux provisions"}
+      ],
+      "controles": ["des tableaux d'amortissements", "des décisions de subventions", "des tableaux de reprises de subvention", "des tableaux de reprises des écarts de réévaluation", "des tableaux de reprises de la plus-value de cession à réinvestir"],
+      "sens": "crediteur",
+      "mots_cles": ["reprises HAO", "hors activités ordinaires", "compte 86", "reprises de provisions réglementées", "reprises d'amortissements HAO", "reprises de subventions d'investissement", "compte 865"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "87",
+      "titre": "COMPTE 87 Participation des travailleurs",
+      "contenu": "Ce compte enregistre les montants prélevés sur les bénéfices réalisés et affectés par l'entreprise à un fonds légal ou contractuel à l'avantage des travailleurs. En raison de son assiette de calcul, la participation n'est pas considérée comme une charge de personnel mais comme un élément de répartition du résultat.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 87 est crédité pour solde de ce compte à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"
+        ],
+        "debit": [
+          "Le compte 87 est débité de la part de bénéfices affectée aux salariés au titre de la participation — par le crédit du compte 426 Personnel, participation aux bénéfices"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "la participation du personnel au capital de l'entreprise", "utiliser": "10 Capital"},
+        {"ne_pas_enregistrer": "les rémunérations diverses versées au personnel (intéressement)", "utiliser": "66 Charges de personnel"}
+      ],
+      "controles": ["des conventions, des accords d'entreprises"],
+      "sens": "debiteur",
+      "mots_cles": ["participation des travailleurs", "compte 87", "bénéfices", "répartition du résultat", "fonds légal", "fonds contractuel", "compte 426"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "88",
+      "titre": "COMPTE 88 Subventions d'équilibre",
+      "contenu": "Ce compte enregistre le montant des subventions allouées par l'État ou l'un de ses démembrements à l'entreprise, pour lui permettre de compenser, en totalité ou partiellement, des pertes survenues dans des circonstances exceptionnelles. Les subventions d'équilibre se distinguent des subventions d'exploitation en ce qu'elles ne sont pas directement liées à une insuffisance des prix de vente imposés.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 88 est crédité du montant des subventions d'équilibre allouées à l'entreprise — par le débit d'un compte de tiers ou de trésorerie"
+        ],
+        "debit": [
+          "Le compte 88 est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les subventions d'investissement", "utiliser": "14 Subventions d'investissement"},
+        {"ne_pas_enregistrer": "les subventions d'exploitation", "utiliser": "71 Subventions d'exploitation"}
+      ],
+      "controles": ["de décrets ou d'arrêtés ministériels", "de décisions de collectivités publiques accordant la subvention"],
+      "sens": "crediteur",
+      "mots_cles": ["subventions d'équilibre", "compte 88", "État", "pertes exceptionnelles", "circonstances exceptionnelles"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "89",
+      "titre": "COMPTE 89 Impôts sur le résultat",
+      "contenu": "C'est la part de bénéfice affectée obligatoirement à l'État au titre de l'impôt sur le résultat. Le montant de l'impôt sur le résultat doit être calculé sur la base du résultat comptable retraité selon les règles fiscales. Le compte 891 doit correspondre au montant total de l'impôt dû de l'exercice, quelles que soient les modalités de règlement, éventuellement augmenté des rappels d'impôts et diminué des dégrèvements et annulations sur des exercices antérieurs.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 89 est crédité pour solde de ce compte à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"
+        ],
+        "debit": [
+          "Le compte 89 est débité de l'impôt exigible — par le crédit du compte 441 État, impôt sur les bénéfices"
+        ]
+      },
+      "exclusions": [],
+      "controles": [],
+      "sens": "debiteur",
+      "mots_cles": ["impôts sur le résultat", "compte 89", "impôt sur les bénéfices", "résultat comptable", "résultat fiscal", "IMF", "impôt minimum forfaitaire", "dégrèvements", "rappels d'impôts"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
