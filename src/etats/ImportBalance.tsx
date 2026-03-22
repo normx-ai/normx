@@ -3,6 +3,8 @@ import { LuUpload, LuFileSpreadsheet, LuTrash2, LuTriangleAlert, LuChevronDown, 
 import { BalanceLigne } from '../types';
 import ConfirmModal from '../components/ConfirmModal';
 import { parseCSV, parseExcel, formatMontant, PlanCompte, CompteAnomalie, isCompteInEtats, findSuggestionByNumero, findSimilarByLibelle } from './ImportBalance.parsers';
+import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from './anomaliesComptes';
+import type { AnomalieCompte, SoldeAttendu } from './anomaliesComptes';
 import './ImportBalance.css';
 
 interface ImportBalanceProps {
@@ -455,6 +457,69 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
         </div>
       )}
 
+      {/* Anomalies de sens — comptes à solde inversé pouvant affecter le TFT */}
+      {(() => {
+        if (currentLignes.length === 0) return null;
+        const sensAnomalies = currentLignes
+          .filter(l => (l.numero_compte || '').length > 2)
+          .map(l => {
+            const a = detectAnomalies(l);
+            const sensErr = a.find(x => x.type === 'solde_inverse');
+            if (!sensErr) return null;
+            const sa = getSoldeAttendu(l.numero_compte);
+            const sd = parseFloat(String(l.solde_debiteur)) || 0;
+            const sc = parseFloat(String(l.solde_crediteur)) || 0;
+            return { id: l.id, numero: l.numero_compte, libelle: l.libelle_compte || '', message: sensErr.message, sensAttendu: sa, sd, sc };
+          })
+          .filter(Boolean) as { id: number; numero: string; libelle: string; message: string; sensAttendu: SoldeAttendu; sd: number; sc: number }[];
+
+        if (sensAnomalies.length === 0) return null;
+        return (
+          <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#dc2626', background: '#fef2f2' }}>
+            <div className="ib-analyse-header" onClick={() => setShowAnalyse(!showAnalyse)} style={{ cursor: 'pointer' }}>
+              <span className="ib-anomaly-count" style={{ color: '#dc2626' }}>
+                <LuTriangleAlert size={16} />
+                {sensAnomalies.length} compte{sensAnomalies.length > 1 ? 's' : ''} avec solde inversé — impact probable sur le TFT
+              </span>
+              <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
+            </div>
+            {showAnalyse && (
+              <div className="ib-analyse-detail">
+                <p style={{ fontSize: 12, color: '#991b1b', margin: '4px 0 8px', lineHeight: 1.4 }}>
+                  Ces comptes ont un solde contraire au sens normal SYSCOHADA. Cela peut fausser le calcul du TFT (Tableau des Flux de Trésorerie) si le solde est interprété dans le mauvais sens.
+                </p>
+                <table className="ib-analyse-table">
+                  <thead>
+                    <tr>
+                      <th>Statut</th>
+                      <th>Compte</th>
+                      <th>Libellé</th>
+                      <th>SF Débit</th>
+                      <th>SF Crédit</th>
+                      <th>Sens attendu</th>
+                      <th>Anomalie</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sensAnomalies.map(a => (
+                      <tr key={a.id}>
+                        <td style={{ textAlign: 'center', color: '#dc2626', fontWeight: 700, fontSize: 16 }}>&#10007;</td>
+                        <td className="compte-anomalie">{a.numero}</td>
+                        <td>{a.libelle}</td>
+                        <td className="num">{formatMontant(a.sd)}</td>
+                        <td className="num">{formatMontant(a.sc)}</td>
+                        <td style={{ textAlign: 'center', fontSize: 12 }}>{a.sensAttendu === 'debiteur' ? 'Débiteur' : a.sensAttendu === 'crediteur' ? 'Créditeur' : 'Variable'}</td>
+                        <td style={{ fontSize: 12, color: '#dc2626' }}>{a.message}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
       {currentLignes.length > 0 && anomalies.length === 0 && comptesNonMappes.length === 0 && comptesTooLong.length === 0 && planComptable.length > 0 && (
         <div className="ib-analyse-banner clean">
           <span className="ib-anomaly-count">
@@ -559,6 +624,7 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
           <table className="ib-table">
             <thead>
               <tr>
+                <th style={{ width: 36, textAlign: 'center' }}>St.</th>
                 <th>Compte</th>
                 <th>Libellé</th>
                 <th className="num">SI Débit</th>
@@ -570,8 +636,22 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
               </tr>
             </thead>
             <tbody>
-              {displayedLignes.map((l: BalanceLigneWithMeta) => (
-                <tr key={l.id}>
+              {displayedLignes.map((l: BalanceLigneWithMeta) => {
+                const compteAnomalies: AnomalieCompte[] = (l.numero_compte || '').length > 2 ? detectAnomalies(l) : [];
+                const hasError = compteAnomalies.some(a => a.severity === 'error');
+                const hasWarning = compteAnomalies.some(a => a.severity === 'warning');
+                const tooltipText = compteAnomalies.map(a => a.message).join('\n');
+                return (
+                <tr key={l.id} style={hasError ? { background: '#fef2f2' } : hasWarning ? { background: '#fffbeb' } : {}}>
+                  <td style={{ textAlign: 'center' }} title={tooltipText || 'OK'}>
+                    {(l.numero_compte || '').length <= 2 ? '' : compteAnomalies.length === 0 ? (
+                      <span style={{ color: '#059669', fontSize: 15, fontWeight: 700 }}>&#10003;</span>
+                    ) : hasError ? (
+                      <span style={{ color: '#dc2626', fontSize: 15, fontWeight: 700, cursor: 'help' }}>&#10007;</span>
+                    ) : (
+                      <span style={{ color: '#f59e0b', fontSize: 14, fontWeight: 700, cursor: 'help' }}>&#9888;</span>
+                    )}
+                  </td>
                   <td className="compte">{l.numero_compte}</td>
                   <td>{l.libelle_compte}</td>
                   <td className="num">{formatMontant(parseFloat(String(l.si_debit)))}</td>
@@ -581,10 +661,12 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
                   <td className="num">{formatMontant(parseFloat(String(l.solde_debiteur)))}</td>
                   <td className="num">{formatMontant(parseFloat(String(l.solde_crediteur)))}</td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
             <tfoot>
               <tr>
+                <td></td>
                 <td colSpan={2}><strong>TOTAUX</strong></td>
                 <td className="num"><strong>{formatMontant(totalSID)}</strong></td>
                 <td className="num"><strong>{formatMontant(totalSIC)}</strong></td>
@@ -594,7 +676,7 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
                 <td className="num"><strong>{formatMontant(totalSC)}</strong></td>
               </tr>
               <tr className="equilibre-row">
-                <td colSpan={2}>Équilibre</td>
+                <td colSpan={3}>Équilibre</td>
                 <td colSpan={2} className={`num ${Math.abs(totalSID - totalSIC) < 0.01 ? 'ok' : 'ko'}`}>
                   {Math.abs(totalSID - totalSIC) < 0.01 ? 'OK' : `Écart: ${formatMontant(totalSID - totalSIC)}`}
                 </td>
