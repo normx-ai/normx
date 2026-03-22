@@ -323,9 +323,11 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // 2. Decaissement = investissement - variation fournisseurs invest incorp
   //    - variation avances versees (251)
   //
-  // AD net = brut(21) - amort(281) - deprec(291)
-  const adNet_N = actifNet(lN, ['21'], ['281', '291']);
-  const adNet_N1 = actifNet(lN1, ['21'], ['281', '291']);
+  // AD net = brut(21, 4751) - amort(281, 291, 4752)
+  // 4751 = ancien compte 20 (charges immobilisees) transfere lors de la revision SYSCOHADA
+  // 4752 = ancien compte 2801 (amort charges immob) transfere lors de la revision SYSCOHADA
+  const adNet_N = actifNet(lN, ['21', '4751'], ['281', '291', '4752']);
+  const adNet_N1 = actifNet(lN1, ['21', '4751'], ['281', '291', '4752']);
   const dotAmortIncorp = sumMvtCredit(lN, ['281', '291']);
   const vncCessIncorp = rawSD(lN, ['811']);
   const reevalIncorp = sumMvtCredit(lN, ['1061']);
