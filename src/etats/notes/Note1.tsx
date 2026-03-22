@@ -139,12 +139,12 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     return num.startsWith('17'); // Dettes crédit-bail
   });
 
+  // Valeur brute = solde créditeur uniquement (pas le net SC-SD)
   const calcMontant = (lignes: BalanceLigne[]): number => {
     let total = 0;
     lignes.forEach(l => {
       const sc = parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0;
-      const sd = parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0;
-      total += sc - sd;
+      total += sc;
     });
     return total;
   };
@@ -365,7 +365,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
             {emprunts16.length > 0 && (
               <tr>
                 <td colSpan={6} style={{ ...tdStyle, fontSize: 10, color: '#888', fontStyle: 'italic', paddingLeft: 20, background: '#fafafa' }}>
-                  Détail 16x : {emprunts16.map(l => (l.numero_compte || '') + ' = ' + fmtMontant((parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0))).join(' | ')}
+                  Détail 16x : {emprunts16.map(l => (l.numero_compte || '') + ' = ' + fmtMontant(parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0)).join(' | ')}
                 </td>
               </tr>
             )}
