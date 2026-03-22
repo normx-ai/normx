@@ -320,9 +320,6 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '20px 0 6px', textDecoration: 'underline' }}>
           NOTE 1 — DETTES GARANTIES PAR DES SURETES REELLES DONNEES PAR L'ENTITE
         </h3>
-        <p style={{ textAlign: 'center', fontSize: 11, color: '#666', marginBottom: 20 }}>
-          (montants en FCFA)
-        </p>
 
         {/* Tableau */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 20 }}>
