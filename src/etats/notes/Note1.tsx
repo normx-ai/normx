@@ -317,7 +317,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
         </div>
 
         {/* Titre */}
-        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '20px 0 6px', textDecoration: 'underline' }}>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '40px 0 24px', textDecoration: 'underline' }}>
           NOTE 1 — DETTES GARANTIES PAR DES SURETES REELLES
         </h3>
 
