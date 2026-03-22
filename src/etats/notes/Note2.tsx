@@ -227,7 +227,7 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
         </div>
 
         {/* Titre */}
-        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '10px 0 20px', textDecoration: 'underline' }}>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 24px', textDecoration: 'underline' }}>
           NOTE 2 — INFORMATIONS OBLIGATOIRES
         </h3>
 
