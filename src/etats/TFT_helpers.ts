@@ -271,13 +271,151 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // FA — CAFG
   data.FA = computeCAFG(lN);
 
-  // TODO: FB a FQ — a reimplementer avec comptes OHADA 6 chiffres
+  // FB — Variation actif circulant HAO
+  // 488000 = autres creances HAO (brut)
+  // 498800 = depreciation autres creances HAO
+  // Exclu: 485xxx (creances cessions immob → capte par FI/FJ)
+  data.FB = -(actifNet(lN, ['488'], ['4988']) - actifNet(lN1, ['488'], ['4988']));
 
-  data.ZB = data.FA;
-  data.ZC = 0;
-  data.ZD = 0;
-  data.ZE = 0;
-  data.ZF = 0;
+  // FC — Variation des stocks
+  data.FC = -(bilanBB(lN) - bilanBB(lN1));
+
+  // FD — Variation des creances et emplois assimiles
+  // Poste BG = BH + BI + BJ
+  // Exclusions (non exploitation — captes dans investissement ou financement):
+  //   414 = creances cessions immob (→ FI)
+  //   461 = capital appele non verse (→ FK)
+  //   467 = apporteurs restant du (→ FK)
+  //   458 = organismes internationaux (→ FL)
+  //   4494 = Etat subvention invest (→ FL)
+  //   4751 = compte transitoire SYSCOHADA (non-cash)
+  // Ecarts conversion exploitation: 4781 (actif), 4791 (passif)
+  // Creances location-financement: MvtD(2714, 2766)
+  const fdExcl = ['414', '461', '467', '458', '4494', '4751'];
+  const FD_raw = (bilanBH(lN) + bilanBI(lN) + bilanBJ(lN))
+    - (bilanBH(lN1) + bilanBI(lN1) + bilanBJ(lN1))
+    - rawSD(lN, fdExcl) + rawSD(lN1, fdExcl)
+    + sumMvtDebit(lN, ['2714', '2766'])
+    + rawSD(lN, ['4781']) - rawSD(lN1, ['4781'])
+    - rawSC(lN, ['4791']) + rawSC(lN1, ['4791']);
+  data.FD = -FD_raw;
+
+  // FE — Variation du passif circulant
+  // Exclusions (non exploitation — captes dans investissement ou financement):
+  //   404 = fournisseurs immobilisations (→ FF/FG)
+  //   465 = dividendes a payer (→ FN)
+  //   467 = apporteurs restant du (→ FK)
+  //   472 = versements titres non liberes (tresorerie)
+  //   481 = fournisseurs investissements (→ FF/FG)
+  //   482 = fournisseurs invest effets a payer (→ FF/FG)
+  //   4752 = compte transitoire SYSCOHADA (non-cash)
+  // Ecarts conversion dettes: 4793 (diminution), 4783 (augmentation)
+  const feExcl = ['404', '465', '467', '472', '4726', '481', '482', '4752'];
+  data.FE = (bilanDP(lN) - bilanDP(lN1))
+    - rawSC(lN, feExcl) + rawSC(lN1, feExcl)
+    + rawSC(lN, ['4793']) - rawSC(lN1, ['4793'])
+    - rawSD(lN, ['4783']) + rawSD(lN1, ['4783']);
+
+  // FF — Decaissements acquisitions immob incorporelles
+  // AD net = brut(21, 4751) - amort(281) - deprec(291)
+  // 4751 = ancien compte 20 (charges immobilisees transitoires SYSCOHADA)
+  // Investissement = variation AD nette + dotations amort + VNC(811)
+  //   - reevaluation(1061) - provisions demantelement(1984)
+  // Decaissement = investissement - variation fournisseurs(4041,4046,4811) - variation avances(251)
+  const adNet_N = actifNet(lN, ['21', '4751'], ['281', '291']);
+  const adNet_N1 = actifNet(lN1, ['21', '4751'], ['281', '291']);
+  const dotAmortIncorp = sumMvtCredit(lN, ['281', '291']);
+  const vncCessIncorp = rawSD(lN, ['811']);
+  const reevalIncorp = sumMvtCredit(lN, ['1061']);
+  const provDemantelIncorp = sumMvtCredit(lN, ['1984']);
+  const investIncorp = (adNet_N - adNet_N1) + dotAmortIncorp + vncCessIncorp
+    - reevalIncorp - provDemantelIncorp;
+  const ffFourPfx = ['4041', '4046', '4811'];
+  const varFourIncorp = rawSC(lN, ffFourPfx) - rawSC(lN1, ffFourPfx);
+  const varAvancesIncorp = rawSD(lN, ['251']) - rawSD(lN1, ['251']);
+  data.FF = -(investIncorp - varFourIncorp + varAvancesIncorp);
+
+  // FG — Decaissements acquisitions immob corporelles
+  // AI net = brut(22,23,24) - amort(282,283,284) - deprec(292,293,294)
+  // Investissement = variation AI nette + dotations amort + VNC(812)
+  //   - reevaluation(106,154) - provisions demantelement(19842)
+  //   - location-acquisition(17) - creances LT(2714)
+  // Decaissement = investissement - variation fournisseurs(4042,4047,481,482 sauf 4811,4813)
+  //   - variation avances(252)
+  // NB: 481/482 capte TOUT ce qui est exclu de FE (sauf 4811=incorp dans FF et 4813=financ dans FH)
+  const aiNet_N = actifNet(lN, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
+  const aiNet_N1 = actifNet(lN1, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
+  const dotAmortCorp = sumMvtCredit(lN, ['282', '283', '284', '292', '293', '294']);
+  const vncCessCorp = rawSD(lN, ['812']);
+  const reevalCorp = sumMvtCredit(lN, ['106', '154']);
+  const provDemantelCorp = sumMvtCredit(lN, ['19842']);
+  const locationAcquisCorp = sumMvtCredit(lN, ['17']);
+  const creancesLT = sumMvtDebit(lN, ['2714']);
+  const investCorp = (aiNet_N - aiNet_N1) + dotAmortCorp + vncCessCorp
+    - reevalCorp - provDemantelCorp - locationAcquisCorp - creancesLT;
+  const fgFourPfx = ['4042', '4047', '481', '482'];
+  const fgFourExcl = ['4811', '4813'];
+  const varFourCorp = rawSC(lN, fgFourPfx, fgFourExcl) - rawSC(lN1, fgFourPfx, fgFourExcl);
+  const varAvancesCorp = rawSD(lN, ['252']) - rawSD(lN1, ['252']);
+  data.FG = -(investCorp - varFourCorp + varAvancesCorp);
+
+  // FH — Decaissements acquisitions immob financieres
+  // MvtD(26,27 sauf 2714,2766) + MvtD(4813) - MvtC(4813)
+  // + SD(4782) ecart conversion actif - SC(4792) ecart conversion passif
+  const FH_raw = sumMvtDebit(lN, ['26', '27'], ['2714', '2766'])
+    + sumMvtDebit(lN, ['4813']) - sumMvtCredit(lN, ['4813'])
+    + rawSD(lN, ['4782']) - rawSC(lN, ['4792']);
+  data.FH = -FH_raw;
+
+  // FI — Encaissements cessions immob incorp et corp
+  // SC(754,821,822) - MvtD(414,485 sauf 4856) + MvtC(414,485 sauf 4856)
+  data.FI = rawSC(lN, ['754', '821', '822'])
+    - sumMvtDebit(lN, ['414', '485'], ['4856'])
+    + sumMvtCredit(lN, ['414', '485'], ['4856']);
+
+  // FJ — Encaissements cessions immob financieres
+  // SC(826) + MvtC(27 sauf 2714,2766) - MvtD(4856) + MvtC(4856)
+  data.FJ = rawSC(lN, ['826'])
+    + sumMvtCredit(lN, ['27'], ['2714', '2766'])
+    - sumMvtDebit(lN, ['4856']) + sumMvtCredit(lN, ['4856']);
+
+  data.ZC = data.FF + data.FG + data.FH + data.FI + data.FJ;
+
+  // FK — Augmentation de capital par apport nouveau
+  // Variation classe 10 (excl 106,109) - SD(461,467,4581)
+  const varCapital = rawSC(lN, ['101', '102', '103', '104', '105', '1051'])
+    - rawSC(lN1, ['101', '102', '103', '104', '105', '1051']);
+  data.FK = varCapital - rawSD(lN, ['109', '461', '467', '4581']);
+
+  // FL — Subventions d'investissement recues
+  // Variation 14 - variation SD(4494,4582)
+  data.FL = rawSC(lN, ['14']) - rawSC(lN1, ['14'])
+    - (rawSD(lN, ['4494', '4582']) - rawSD(lN1, ['4494', '4582']));
+
+  // FM — Prelevement sur le capital
+  data.FM = 0;
+
+  // FN — Dividendes verses
+  data.FN = -sumMvtDebit(lN, ['465']);
+
+  data.ZD = data.FK + data.FL + data.FM + data.FN;
+
+  // FO — Emprunts
+  // FO — Emprunts
+  // MvtC(161,162,1661,1662) + SD(4784) ecart conversion
+  // NB: 4713 (crediteurs divers) retire car deja dans FE via DP
+  data.FO = sumMvtCredit(lN, ['161', '162', '1661', '1662'])
+    + rawSD(lN, ['4784']);
+
+  // FP — Autres dettes financieres
+  data.FP = sumMvtCredit(lN, ['163', '164', '165', '166', '167', '168', '181', '182', '183'], ['1661', '1662']);
+
+  // FQ — Remboursements emprunts et dettes financieres
+  data.FQ = -(sumMvtDebit(lN, ['16', '17', '181', '182', '183']) - rawSC(lN, ['4794']));
+
+  data.ZE = data.FO + data.FP + data.FQ;
+  data.ZF = data.ZD + data.ZE;
+  data.ZB = data.FA + data.FB + data.FC + data.FD + data.FE;
   data.ZG = data.ZB + data.ZC + data.ZF;
   data.ZH = data.ZG + data.ZA;
 
