@@ -627,6 +627,7 @@ function Dashboard({ userName, cabinetName = '', cabinetId = 0, isCabinet = fals
           etats={etats}
           moduleLabel={moduleLabel}
           openTab={openTab}
+          onEntiteUpdated={onEntiteUpdated}
           {...exerciceSelectorProps}
         />
       </div>

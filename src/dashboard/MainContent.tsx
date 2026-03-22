@@ -86,7 +86,7 @@ import RepartitionCharges from '../rapports/RepartitionCharges';
 import SuiviTresorerie from '../rapports/SuiviTresorerie';
 import ComparatifNN1 from '../rapports/ComparatifNN1';
 import DeclarationTVA from '../comptabilite/DeclarationTVA';
-import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice } from '../types';
+import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';
 import { ExerciceSelector } from './ExerciceManager';
 import RevisionComptes from '../revision/RevisionComptes';
 import BalanceRevisee from '../revision/BalanceRevisee';
@@ -125,6 +125,7 @@ interface MainContentProps {
   onCloturerExercice: (id: number) => void;
   onRouvrirExercice: (id: number) => void;
   openTab: (id: string) => void;
+  onEntiteUpdated?: (entite: Entite) => void;
 }
 
 function MainContent(props: MainContentProps): React.ReactElement {
@@ -135,6 +136,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
     exerciceId, exercices, exerciceLoading, currentExStatut, moduleLabel,
     onSelectExercice, onOpenExerciceModal, onCloturerExercice, onRouvrirExercice,
     openTab,
+    onEntiteUpdated,
   } = props;
 
   const exerciceSelectorProps = {
@@ -607,7 +609,19 @@ function MainContent(props: MainContentProps): React.ReactElement {
       )}
       {activeTab === 'aide_videos' && <AideVideos />}
       {activeTab === 'parametres' && (
-        <ParametresEntite entiteId={entiteId} onUpdate={(_data: Record<string, string>) => {}} />
+        <ParametresEntite entiteId={entiteId} onUpdate={(data: Record<string, string>) => {
+          if (onEntiteUpdated) {
+            onEntiteUpdated({
+              id: entiteId,
+              nom: data.nom || entiteName,
+              sigle: data.sigle || entiteSigle,
+              adresse: data.adresse || entiteAdresse,
+              nif: data.nif || entiteNif,
+              type_activite: typeActivite,
+              offre,
+            } as Entite);
+          }
+        }} />
       )}
     </main>
   );
