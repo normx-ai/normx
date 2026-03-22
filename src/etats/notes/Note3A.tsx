@@ -27,13 +27,14 @@ const ALL_RUBRIQUES: Rubrique[] = [
   { label: 'Autres immobilisations incorporelles', prefixes: ['214', '217', '218', '219'] },
   // CORPORELLES
   { label: 'IMMOBILISATIONS CORPORELLES', prefixes: ['22', '23', '24'], bold: true },
-  { label: 'Terrains hors immeuble de placement', prefixes: ['221', '222', '223'] },
+  { label: 'Terrains hors immeuble de placement', prefixes: ['221', '222', '223', '225', '226', '227', '228', '229'] },
   { label: 'Terrains - immeuble de placement', prefixes: ['224'] },
   { label: 'Bâtiments hors immeuble de placement', prefixes: ['231', '232', '233'] },
   { label: 'Bâtiments - immeuble de placement', prefixes: ['234'] },
-  { label: 'Aménagements, agencements et installations', prefixes: ['235', '236', '237', '238'] },
-  { label: 'Matériel, mobilier et actifs biologiques', prefixes: ['241', '242', '243', '244'] },
+  { label: 'Aménagements, agencements et installations', prefixes: ['235', '236', '237', '238', '239'] },
+  { label: 'Matériel, mobilier et actifs biologiques', prefixes: ['241', '242', '243', '244', '246'] },
   { label: 'Matériel de transport', prefixes: ['245'] },
+  { label: 'Agencements, aménagements matériel et autres', prefixes: ['247', '248', '249'] },
   // AVANCES
   { label: 'AVANCES ET ACOMPTES VERSES SUR IMMOBILISATIONS', prefixes: ['25'], bold: true },
   { label: 'Immobilisations incorporelles', prefixes: ['251'] },
