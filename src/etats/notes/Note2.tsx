@@ -226,9 +226,14 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
           </div>
         </div>
 
+        {/* Titre */}
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '10px 0 20px', textDecoration: 'underline' }}>
+          NOTE 2 — INFORMATIONS OBLIGATOIRES
+        </h3>
+
         {/* Sections */}
         {SECTIONS.map(s => (
-          <div key={s.key} style={{ marginBottom: 16 }}>
+          <div key={s.key} style={{ marginBottom: 30 }}>
             <div style={{
               textAlign: 'center',
               fontWeight: 700,
@@ -239,7 +244,7 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
             }}>
               {s.title}
             </div>
-            <div style={{ padding: '14px 10px', minHeight: 60 }}>
+            <div style={{ padding: '16px 10px', minHeight: 100 }}>
               {editing ? (
                 <textarea
                   value={texts[s.key] || ''}
