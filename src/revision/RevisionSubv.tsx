@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionSubvProps {
   balanceN: BalanceLigne[];
@@ -252,6 +253,8 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['14']} titre="Subventions d'investissement" />
 
       {/* Note d'information si comptes 14x présents en balance */}
       {comptesSubv.length > 0 && subvAmort.length === 0 && subvNonAmort.length === 0 && (

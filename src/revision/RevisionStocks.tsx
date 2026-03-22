@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionStocksProps {
   balanceN: BalanceLigne[];
@@ -277,6 +278,8 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['31','32','33','34','35','36','37','38','39']} titre="Stocks" />
 
       {/* Note si comptes stocks en balance */}
       {comptesStock.length > 0 && invLignes.length === 0 && (

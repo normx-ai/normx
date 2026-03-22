@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionEtatProps {
   balanceN: BalanceLigne[];
@@ -460,6 +461,8 @@ function RevisionEtat({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['44','43']} titre="État et organismes sociaux" />
 
       {/* Note si comptes 44x en balance */}
       {comptes44.length > 0 && (

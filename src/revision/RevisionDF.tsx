@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionDFProps {
   balanceN: BalanceLigne[];
@@ -300,6 +301,8 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['16','17','18','19']} titre="Dettes financières" />
 
       {/* Note d'information si comptes 16x présents */}
       {comptes16.length > 0 && prets.length === 0 && (

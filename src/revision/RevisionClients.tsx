@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionClientsProps {
   balanceN: BalanceLigne[];
@@ -362,6 +363,8 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['41','49']} titre="Clients" />
 
       {/* Note si comptes 41x en balance */}
       {comptes41.length > 0 && recouvLignes.length === 0 && (

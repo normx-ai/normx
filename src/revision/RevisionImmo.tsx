@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionImmoProps {
   balanceN: BalanceLigne[];
@@ -288,6 +289,8 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['20','21','22','23','24','25','26','27','28','29']} titre="Immobilisations" />
 
       {/* Note si comptes immo présents en balance */}
       {comptesImmo.length > 0 && invLignes.length === 0 && rapprochLignes.every(l => l.fichierImmo === 0) && (

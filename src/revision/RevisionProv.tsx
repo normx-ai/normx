@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionProvProps {
   balanceN: BalanceLigne[];
@@ -394,6 +395,8 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['15']} titre="Provisions réglementées" />
 
       {/* Guide comptes de contrepartie — Provisions réglementées (15x) */}
       {lignes.length > 0 && (

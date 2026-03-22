@@ -605,4 +605,57 @@ router.get('/qdrant/status', async (req, res) => {
   }
 });
 
+// ===================== FONCTIONNEMENT DES COMPTES (pour la revision) =====================
+
+router.post('/fonctionnement-comptes', async (req, res) => {
+  try {
+    const { prefixes } = req.body;
+    if (!prefixes || !Array.isArray(prefixes) || prefixes.length === 0) {
+      return res.json([]);
+    }
+
+    // Charger les fichiers de fonctionnement
+    const fs = require('fs');
+    const result = [];
+    const kbDir = path.join(__dirname, '..', '..', 'knowledge-base');
+    const files = fs.readdirSync(kbDir).filter(f => f.startsWith('fonctionnement_comptes_classe') && f.endsWith('.json'));
+
+    for (const file of files) {
+      try {
+        const raw = fs.readFileSync(path.join(kbDir, file), 'utf-8');
+        const data = JSON.parse(raw);
+        const articles = data.articles || [];
+        for (const a of articles) {
+          const num = String(a.numero || '');
+          if (prefixes.some(p => num === p || num.startsWith(p) || p.startsWith(num))) {
+            result.push({
+              numero: num,
+              titre: a.titre || '',
+              contenu: a.contenu || '',
+              fonctionnement: a.fonctionnement || null,
+              exclusions: a.exclusions || [],
+              controles: a.controles || [],
+              commentaires: a.commentaires || [],
+              sens: a.sens || '',
+            });
+          }
+        }
+      } catch (_) {}
+    }
+
+    // Dédupliquer et trier
+    const seen = new Set();
+    const unique = result.filter(r => {
+      if (seen.has(r.numero)) return false;
+      seen.add(r.numero);
+      return true;
+    }).sort((a, b) => a.numero.localeCompare(b.numero));
+
+    res.json(unique);
+  } catch (err) {
+    logger.error('Erreur fonctionnement-comptes', { error: err.message });
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

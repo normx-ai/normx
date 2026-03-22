@@ -3,6 +3,7 @@ import { LuUsers, LuChevronDown, LuChevronRight, LuSave, LuPlus, LuTrash2, LuCli
 import { BalanceLigne } from '../types';
 import { fmt, fmtInput, parseInputValue, ODEcriture, Suggestion } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionPersonnelProps {
   balanceN: BalanceLigne[];
@@ -336,6 +337,8 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['42','66']} titre="Personnel" />
 
       {/* ============================== */}
       {/* Contr\u00f4le 1 : Cadrage charges de personnel */}

@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionFournProps {
   balanceN: BalanceLigne[];
@@ -276,6 +277,8 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['40']} titre="Fournisseurs" />
 
       {/* Note si comptes 40x en balance */}
       {comptes40.length > 0 && reconLignes.length === 0 && (

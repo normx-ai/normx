@@ -6,6 +6,7 @@ import ControleAffectation from './ControleAffectation';
 import ControleReserveLegale from './ControleReserveLegale';
 import ControleNiveauKP from './ControleNiveauKP';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionKPProps {
   balanceN: BalanceLigne[];
@@ -559,6 +560,8 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['10','11','12','13']} titre="Capitaux propres" />
 
       <ControleAffectation
         lignes={lignes}

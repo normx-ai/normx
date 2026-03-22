@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionTresoProps {
   balanceN: BalanceLigne[];
@@ -441,6 +442,8 @@ function RevisionTreso({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['50','51','52','53','54','56','57','58','59']} titre="Trésorerie" />
 
       {/* Note si comptes 5x en balance */}
       {comptes5.length > 0 && rapprochLignes.length === 0 && caisseLignes.length === 0 && (

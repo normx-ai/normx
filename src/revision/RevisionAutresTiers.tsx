@@ -3,6 +3,7 @@ import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash
 import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
+import FonctionnementCompte from './FonctionnementCompte';
 
 interface RevisionAutresTiersProps {
   balanceN: BalanceLigne[];
@@ -401,6 +402,8 @@ function RevisionAutresTiers({ balanceN, exerciceAnnee, entiteId, exerciceId }: 
           </ul>
         )}
       </div>
+
+      <FonctionnementCompte prefixes={['45','46','47','48']} titre="Autres tiers" />
 
       {/* Information generale */}
       {(comptes476.length > 0 || comptes477.length > 0 || comptes471.length > 0 || comptesDivers.length > 0 || comptes478.length > 0 || comptes479.length > 0) && (
