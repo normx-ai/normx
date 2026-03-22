@@ -155,7 +155,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
   const balRef16 = calcMontant(emprunts16);
 
   // Montant affiché : valeur saisie si existante, sinon balance comme référence
-  const val16 = montantBrutEmprunts ? parseFloat(montantBrutEmprunts) || 0 : balRef16;
+  const val16 = montantBrutEmprunts ? parseFloat(montantBrutEmprunts.replace(/\s/g, '').replace(/,/g, '.')) || 0 : balRef16;
   const totalMontant = val16;
 
   const generatePDF = async (): Promise<jsPDF> => {
