@@ -283,7 +283,14 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // Exclusions: 414, 467, 458, 4494, 4751 (variation retiree N et N-1)
   // + ecarts de conversion exploitation: 4781 (actif, exclu de BI via 478)
   // + creances location-financement: MvtD(2714, 2766)
-  const fdExcl = ['414', '467', '458', '4494', '4751'];
+  // Exclusions FD : comptes non exploitation dans BI
+  // 414 = creances cessions immob (investissement)
+  // 461 = capital appele non verse (financement, meme nature que 467)
+  // 467 = apporteurs restant du sur capital (financement)
+  // 458 = organismes internationaux, fonds dotation (financement)
+  // 4494 = Etat subvention invest a recevoir (financement)
+  // 4751 = compte transitoire SYSCOHADA (non-cash)
+  const fdExcl = ['414', '461', '467', '458', '4494', '4751'];
   const FD_raw = (bilanBH(lN) + bilanBI(lN) + bilanBJ(lN))
     - (bilanBH(lN1) + bilanBI(lN1) + bilanBJ(lN1))
     - rawSD(lN, fdExcl) + rawSD(lN1, fdExcl)
@@ -375,11 +382,14 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // FK — Augmentation de capital par apport nouveau (guide t7)
   // Variation classe 10 (excl 106 reevaluation, excl 109 non appele)
   // - SD(467) apporteurs restant du sur capital appele
+  // - SD(109) capital souscrit non appele
+  // - SD(461) capital appele non verse (exclu de FD)
+  // - SD(467) apporteurs restant du (exclu de FD)
   // - SD(4581) fonds de dotation a recevoir
   const varCapital = rawSC(lN, ['101', '102', '103', '104', '105', '1051'])
     - rawSC(lN1, ['101', '102', '103', '104', '105', '1051']);
   data.FK = varCapital
-    - rawSD(lN, ['109', '467', '4581']);
+    - rawSD(lN, ['109', '461', '467', '4581']);
 
   // FL — Subventions d'investissement recues (guide t7)
   // Variation compte 14 (excl quote-part viree au resultat)
