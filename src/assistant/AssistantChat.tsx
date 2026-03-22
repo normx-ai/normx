@@ -308,8 +308,8 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
       {/* Main Chat */}
       <div className="assistant-container">
         <div className="assistant-header">
-          <h2>Assistant IA SYCEBNL</h2>
-          <p>Posez vos questions sur les normes comptables SYCEBNL. Dites "retiens que..." pour memoriser des informations.</p>
+          <h2>Assistant IA {typeActivite === 'entreprise' ? 'SYSCOHADA' : typeActivite === 'smt' ? 'SMT' : typeActivite === 'projet_developpement' ? 'Projets' : 'SYCEBNL'}</h2>
+          <p>Posez vos questions sur les normes comptables {typeActivite === 'entreprise' ? 'SYSCOHADA' : typeActivite === 'smt' ? 'SMT' : typeActivite === 'projet_developpement' ? 'des projets de développement' : 'SYCEBNL'}. Dites "retiens que..." pour memoriser des informations.</p>
         </div>
 
         {messages.length === 0 && !loading ? (
@@ -317,7 +317,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
             <div className="chat-welcome-icon"><LuMessageSquare /></div>
             <h3>Comment puis-je vous aider ?</h3>
             <p>
-              Je suis specialise dans le SYCEBNL. Je peux aussi memoriser des informations
+              Je suis specialise dans le {typeActivite === 'entreprise' ? 'SYSCOHADA' : typeActivite === 'smt' ? 'SMT' : typeActivite === 'projet_developpement' ? 'SYCEBNL (projets)' : 'SYCEBNL'}. Je peux aussi memoriser des informations
               pour vos prochaines conversations.
             </p>
             <div className="chat-suggestions">
@@ -372,7 +372,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
             value={input}
             onChange={handleInput}
             onKeyDown={handleKeyDown}
-            placeholder="Posez votre question sur le SYCEBNL..."
+            placeholder={`Posez votre question sur le ${typeActivite === 'entreprise' ? 'SYSCOHADA' : typeActivite === 'smt' ? 'SMT' : 'SYCEBNL'}...`}
             rows={1}
           />
           <button
