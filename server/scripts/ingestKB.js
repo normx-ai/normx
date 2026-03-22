@@ -31,11 +31,29 @@ function loadJSON(filePath) {
 
 function prepareKBArticles(articles, source) {
   // KB classique : { numero, titre, texte[], mots_cles[], statut }
+  // KB fonctionnement : { numero, titre, contenu, fonctionnement{credit[], debit[]}, exclusions[], controles[] }
   return articles.map((a, i) => {
     const texteStr = Array.isArray(a.texte) ? a.texte.join('\n') : (a.texte || '');
     const motsCles = (a.mots_cles || []).join(', ');
-    // Texte pour embedding : titre + mots-clés + contenu
-    const embeddingText = `${a.titre || ''}\n${motsCles}\n${texteStr}`.substring(0, 2000);
+
+    // Construire le texte enrichi pour embedding
+    let fullText = `${a.titre || ''}\n${motsCles}\n`;
+    if (a.contenu) fullText += `Contenu: ${a.contenu}\n`;
+    if (texteStr) fullText += texteStr + '\n';
+    if (a.fonctionnement) {
+      if (Array.isArray(a.fonctionnement.credit)) {
+        fullText += 'CREDIT: ' + a.fonctionnement.credit.join('; ') + '\n';
+      }
+      if (Array.isArray(a.fonctionnement.debit)) {
+        fullText += 'DEBIT: ' + a.fonctionnement.debit.join('; ') + '\n';
+      }
+    }
+    if (Array.isArray(a.exclusions) && a.exclusions.length > 0) {
+      fullText += 'EXCLUSIONS: ' + a.exclusions.map(e => typeof e === 'string' ? e : `${e.ne_pas_enregistrer} → ${e.utiliser}`).join('; ') + '\n';
+    }
+
+    const embeddingText = fullText.substring(0, 2000);
+
     return {
       id: `${source}_${a.numero || i}`,
       text: embeddingText,
@@ -43,10 +61,15 @@ function prepareKBArticles(articles, source) {
         source,
         numero: a.numero || '',
         titre: a.titre || '',
-        texte: texteStr.substring(0, 2000),
+        texte: (a.contenu || texteStr).substring(0, 2000),
+        contenu: a.contenu || '',
+        fonctionnement: a.fonctionnement || null,
+        exclusions: a.exclusions || [],
+        controles: a.controles || [],
+        sens: a.sens || '',
         mots_cles: a.mots_cles || [],
         statut: a.statut || 'actif',
-        type: 'article_kb',
+        type: a.fonctionnement ? 'fonctionnement_compte' : 'article_kb',
       },
     };
   });
@@ -173,7 +196,16 @@ async function main() {
     console.log(`SIG KB: ${docs.length} articles`);
   }
 
-  // Source 6: Ressources Durables (Chapitre 6)
+  // Source 6: Fonctionnement des comptes — Classe 1
+  const fonctC1KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe1.json'));
+  if (fonctC1KB) {
+    const articles = fonctC1KB.articles || fonctC1KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe1');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 1: ${docs.length} articles`);
+  }
+
+  // Source 7: Ressources Durables (Chapitre 6)
   const resDurKB = loadJSON(path.join(kbDir, 'ressources_durables_chapitre_6.json'));
   if (resDurKB) {
     const articles = resDurKB.articles || resDurKB;

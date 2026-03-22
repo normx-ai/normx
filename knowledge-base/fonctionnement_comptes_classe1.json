@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 1 — Classe 1 : Comptes de Ressources Durables",
+    "pages_source": "61-80",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "101",
+      "titre": "COMPTE 101 Capital social",
+      "contenu": "Le Capital social traduit le montant des valeurs apportées par les associés. Dans les sociétés, le capital initial correspond à la valeur des apports (nature ou espèces) effectués par les associés à la création de l'entreprise tels qu'ils figurent dans les statuts. Il est divisé en actions ou parts d'une même valeur nominale. Au cours de la vie sociale, le capital peut, sur décision des organes compétents, être augmenté ou diminué pour diverses raisons, notamment : apports et/ou retraits de capital, affectation de résultats et incorporation de réserves. Pour certaines sociétés, la loi prévoit la limitation de la responsabilité des associés à l'égard des créanciers sociaux en fixant le montant minimum du capital social.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 101 est crédité du montant des apports initiaux — par le débit du compte 46 Associés et Groupe, pour les apports en espèces ou en nature",
+          "Le compte 101 est crédité des augmentations de capital en espèces ou en nature (déduction faite des primes liées au capital social) — par le débit du compte 46 Associés et Groupe",
+          "Le compte 101 est crédité de l'incorporation de réserves au capital — par le débit du compte 11 Réserves",
+          "Le compte 101 est crédité de l'incorporation du résultat net au capital — par le débit du compte 13 Résultat net de l'exercice"
+        ],
+        "debit": [
+          "Le compte 101 est débité des réductions de capital décidées par les Assemblées générales d'associés — par le crédit du compte 12 Report à nouveau, pour l'absorption des pertes antérieures reportées",
+          "Le compte 101 est débité des réductions de capital — par le crédit du compte 13 Résultat net de l'exercice, pour l'absorption des pertes de l'exercice",
+          "Le compte 101 est débité des réductions de capital — par le crédit du compte 46 Associés et Groupe, dans le cas du remboursement d'une partie du capital"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les versements et/ou retraits temporaires de fonds effectués par les associés", "utiliser": "46 Associés et Groupe"},
+        {"ne_pas_enregistrer": "les apports effectués par l'exploitant individuel", "utiliser": "103 Capital personnel"},
+        {"ne_pas_enregistrer": "les apports non remboursables effectués par la puissance publique", "utiliser": "102 Capital par dotation"}
+      ],
+      "controles": [
+        "des statuts de la société",
+        "des virements bancaires et relevés de banque",
+        "du procès-verbal de l'Assemblée des associés"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["capital social", "compte 101", "apports", "augmentation de capital", "réduction de capital", "associés", "actions", "parts sociales", "valeur nominale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "102",
+      "titre": "COMPTE 102 Capital par dotation",
+      "contenu": "Le Capital par dotation représente la contrepartie de l'intégration au patrimoine des entreprises publiques, des immobilisations et fonds affectés, sur décision de l'Autorité publique, au fonctionnement de ces entreprises. Cette dotation peut aussi se réaliser par transformation de dettes.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 102 est crédité des dotations en numéraire et en nature accordées par une collectivité publique — par le débit du compte 4493 État, fonds de dotation à recevoir",
+          "Le compte 102 est crédité — par le débit du compte 45 Organismes internationaux",
+          "Le compte 102 est crédité — par le débit du compte 47 Débiteurs et créditeurs divers",
+          "Le compte 102 est crédité — par le débit des comptes d'actifs concernés (immobilisations, stocks, créances)"
+        ],
+        "debit": [
+          "Le compte 102 est débité en cas de reprise contractuelle de dettes — par le crédit des comptes de passif concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les sommes reçues à titre de prêts ou d'avances remboursables par les entreprises publiques", "utiliser": "163 Avances reçues de l'État"},
+        {"ne_pas_enregistrer": "les sommes reçues à titre de prêts ou d'avances remboursables assorties de conditions particulières", "utiliser": "167 Avances assorties de conditions particulières"},
+        {"ne_pas_enregistrer": "les sommes reçues à titre de subventions d'investissement dans la mesure où elles ne sont pas transformées en capital par dotation", "utiliser": "14 Subventions d'investissement"}
+      ],
+      "controles": [
+        "de décret, arrêté ou lettre officielle d'octroi ou de déblocage des fonds",
+        "de procès-verbal de remise d'un bien cédé en guise d'apport en nature",
+        "de pièces justificatives de virements correspondants"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["capital par dotation", "compte 102", "entreprises publiques", "collectivité publique", "dotation", "fonds affectés"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "103",
+      "titre": "COMPTE 103 Capital personnel",
+      "contenu": "A la création de l'entreprise exploitée sous la forme individuelle, le capital initial représente le montant des apports en nature ou en espèces effectués par l'entrepreneur à titre définitif et des dettes qu'il décide d'inscrire au bilan. Ce capital initial est modifié ultérieurement par les apports et les retraits de capital ainsi que par l'affectation des résultats.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 103 est crédité des apports effectués par l'exploitant à titre définitif, en début ou en cours d'activité — par le débit des comptes d'actifs concernés (immobilisations, stocks, trésorerie)",
+          "Le compte 103 est crédité à la clôture de l'exercice, de l'apport net issu du solde du Compte de l'exploitant — par le débit du compte 104 Compte de l'exploitant",
+          "Le compte 103 est crédité à l'ouverture de l'exercice, du montant de l'affectation du résultat de l'exercice précédent — par le débit du compte 131 Résultat net : Bénéfice"
+        ],
+        "debit": [
+          "Le compte 103 est débité à l'ouverture de l'exercice, du montant de l'affectation du résultat de l'exercice précédent — par le crédit du compte 139 Résultat net : Perte",
+          "Le compte 103 est débité à la clôture de l'exercice, du solde du compte de l'exploitant (retraits nets) — par le crédit du compte 104 Compte de l'exploitant"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les prélèvements et versements effectués dans les entreprises non individuelles", "utiliser": "462 Associés, comptes courants"},
+        {"ne_pas_enregistrer": "les prélèvements et apports effectués par l'exploitant à titre temporaire", "utiliser": "104 Compte de l'exploitant"}
+      ],
+      "controles": [
+        "du compte de résultat de l'exercice précédent",
+        "des virements",
+        "des fiches de caisse",
+        "des relevés de banque"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["capital personnel", "compte 103", "entreprise individuelle", "exploitant", "apports définitifs"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "104",
+      "titre": "COMPTE 104 Compte de l'exploitant",
+      "contenu": "Ce compte sert à établir la situation de l'entrepreneur en ce qui concerne : les apports et compléments d'apports financiers et/ou de biens et services effectués à titre temporaire en cours d'exercice ; les retraits effectués au cours de l'exercice pour son usage personnel ou celui de sa famille et dans le cadre de l'exploitation (prélèvements en nature de biens et services, prélèvements financiers directs ou indirects). Le compte 104 est en fait un démembrement du compte 103 Capital personnel. A ce titre, il est systématiquement soldé à la clôture de l'exercice.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 104 est crédité, en cours d'exercice, des apports et compléments d'apports financiers et/ou de biens et services effectués par l'exploitant à titre temporaire — par le débit d'un compte de trésorerie ou des comptes d'actifs correspondants",
+          "Le compte 104 est crédité, à la clôture de l'exercice, du montant débiteur de son solde — par le débit du compte 103 Capital personnel"
+        ],
+        "debit": [
+          "Le compte 104 est débité, en cours d'exercice, des retraits de fonds ou des prélèvements de biens et services effectués par l'exploitant, pour son usage personnel ou celui de sa famille et de l'exploitation — par le crédit des comptes d'actifs correspondants",
+          "Le compte 104 est débité, à la clôture de l'exercice, du montant de son solde créditeur — par le crédit du compte 103 Capital personnel"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les prélèvements et versements effectués dans des entreprises non individuelles", "utiliser": "462 Associés, comptes courants"}
+      ],
+      "controles": [
+        "des virements",
+        "des fiches de caisse",
+        "des relevés de banque"
+      ],
+      "sens": "mixte",
+      "mots_cles": ["compte de l'exploitant", "compte 104", "prélèvements", "apports temporaires", "entreprise individuelle", "soldé à la clôture"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "105",
+      "titre": "COMPTE 105 Primes liées aux capitaux propres",
+      "contenu": "Les primes liées aux capitaux propres doivent figurer distinctement au passif du bilan dans les rubriques appropriées. Selon la nature des opérations d'augmentation de capital, en nature ou en espèces, il y a lieu de distinguer quatre catégories de primes : d'émission, de fusion, d'apport et de conversion.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 105 est crédité lors des augmentations de capital — par le débit des comptes d'associés, de comptes de tiers ou de comptes de trésorerie"
+        ],
+        "debit": [
+          "Le compte 105 est débité en cas d'incorporation des primes au capital — par le crédit du compte 101 Capital social",
+          "Le compte 105 est débité en cas d'absorption de pertes — par le crédit du compte 12 Report à nouveau ou 139 Résultat net : pertes",
+          "Le compte 105 est débité en cas de remboursement du capital — par le crédit du compte 462 Associés, comptes courants",
+          "Le compte 105 est débité, en cas d'augmentation du capital, du montant des frais de cette augmentation — par le crédit du compte 78 Transferts de charges, en cas d'imputation des frais d'augmentation de capital"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "certaines sommes qualifiées de primes (primes de remboursement des obligations, primes d'assurance, primes de création d'emplois, primes de développement)", "utiliser": "206 Primes de remboursement des obligations, 625 Primes d'assurance, 7078 Autres produits accessoires, etc."}
+      ],
+      "controles": [
+        "des décisions de l'Assemblée des associés portant augmentation du capital social",
+        "des textes relatifs au protocole de fusion",
+        "des textes relatifs au protocole d'apport",
+        "des factures de frais ou du calcul analytique des frais d'augmentation de capital"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["primes liées aux capitaux propres", "compte 105", "prime d'émission", "prime de fusion", "prime d'apport", "prime de conversion", "augmentation de capital"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "106",
+      "titre": "COMPTE 106 Écarts de réévaluation",
+      "contenu": "L'écart de réévaluation représente la contrepartie au passif du bilan des augmentations de valeur d'éléments actifs soit dans le cadre d'une réévaluation légale, soit dans celui d'une réévaluation libre. La différence entre les valeurs réévaluées et les valeurs nettes précédemment comptabilisées constitue l'écart de réévaluation. L'écart de réévaluation s'inscrit distinctement au passif du bilan dans les capitaux propres. L'écart de réévaluation n'a pas la nature d'un résultat et ne peut être utilisé à compenser les pertes de l'exercice de réévaluation. Il n'est pas distribuable ; il peut être incorporé en tout ou partie au capital.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 106 est crédité du montant de la réévaluation des éléments d'actif réévalués — par le débit des comptes d'actifs concernés"
+        ],
+        "debit": [
+          "Le compte 106 est débité des incorporations directes au capital — par le crédit du compte 10 Capital"
+        ]
+      },
+      "exclusions": [],
+      "controles": [
+        "de l'évaluation des actifs à la date de la réévaluation",
+        "des décisions de l'Assemblée générale des actionnaires portant augmentation de capital par incorporation de tout ou partie de l'écart de réévaluation"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["écarts de réévaluation", "compte 106", "réévaluation légale", "réévaluation libre", "augmentation de valeur", "capitaux propres", "non distribuable"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "109",
+      "titre": "COMPTE 109 Actionnaires, capital souscrit, non appelé",
+      "contenu": "Ce compte retrace la créance de la société sur les actionnaires, pour la fraction du capital non encore appelé par les organes compétents en cas de libération partielle. Celle-ci peut être consécutive aux opérations de constitution d'une société ou d'augmentation de capital. Le montant inscrit au compte 109 représente en fait la créance globale de la société sur les actionnaires. Le compte 109 figure au passif du bilan, en moins parmi les capitaux propres.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 109 est crédité lors des appels successifs du capital — par le débit du compte 467 Actionnaires, restant dû sur capital appelé"
+        ],
+        "debit": [
+          "Le compte 109 est débité, lors de la création d'une société ou lors d'une augmentation de capital, du montant non appelé immédiatement — par le crédit du compte 101 Capital social"
+        ]
+      },
+      "exclusions": [],
+      "controles": [
+        "des statuts",
+        "des décisions des Assemblées générales ordinaires et extraordinaires",
+        "du compte 1011 Capital souscrit, non appelé, de solde opposé et de montant identique"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["actionnaires", "capital souscrit non appelé", "compte 109", "créance", "libération partielle", "appel de capital"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "11",
+      "titre": "COMPTE 11 Réserves",
+      "contenu": "Les réserves correspondent à des bénéfices laissés à la disposition de l'entreprise et non incorporés au capital. L'obligation de constituer des réserves résulte des dispositions statutaires ou réglementaires et des décisions des organes compétents. Le compte 111 Réserve légale est destiné à constater l'obligation annuelle d'alimentation ou de constitution d'un fonds de réserves, en application de dispositions juridiques régissant certains types de sociétés (SA et SARL, notamment). La réserve légale cesse d'être obligatoire lorsque son montant atteint 20% du montant du capital.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 11 est crédité du montant affecté aux réserves — par le débit du compte 131 Résultat net : Bénéfice ou le débit du compte 1301 Résultat en instance d'affectation : Bénéfice"
+        ],
+        "debit": [
+          "Le compte 11 est débité des incorporations directes au capital — par le crédit du compte 101 Capital social",
+          "Le compte 11 est débité des distributions aux associés — par le crédit du compte 465 Associés, dividendes à payer",
+          "Le compte 11 est débité des prélèvements pour l'amortissement des pertes — par le crédit des comptes 129 Report à nouveau débiteur ou 139 Résultat net : Perte"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions pour pertes et charges", "utiliser": "19 Provisions financières pour risques et charges"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des immobilisations", "utiliser": "29 Provisions pour dépréciation"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des comptes de stocks", "utiliser": "39 Dépréciations des stocks"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des comptes clients", "utiliser": "49 Dépréciations et risques provisionnés (Tiers)"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des comptes de trésorerie", "utiliser": "59 Dépréciations et risques provisionnés (Trésorerie)"}
+      ],
+      "controles": [
+        "de dispositions législatives, statutaires ou contractuelles obligatoires concernant la répartition des résultats",
+        "des décisions de l'Assemblée générale des actionnaires portant répartition des résultats"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["réserves", "compte 11", "réserve légale", "20% du capital", "bénéfices", "incorporation au capital", "distribution", "amortissement des pertes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "12",
+      "titre": "COMPTE 12 Report à nouveau",
+      "contenu": "Le report à nouveau correspond au montant soit des bénéfices d'exercices antérieurs dont l'affectation a été reportée sur les exercices ultérieurs, soit des pertes constatées à la clôture d'exercices antérieurs qui n'ont pas été compensées par des prélèvements opérés sur les bénéfices, les réserves ou le capital. Le report à nouveau est inscrit au passif du bilan où il doit figurer sur une ligne distincte : en moins si son solde est débiteur, et en plus si son solde est créditeur. Il constitue un élément des capitaux propres.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 12 est crédité lors de la répartition des bénéfices — par le débit du compte 131 Résultat net : Bénéfice, pour la partie non distribuée, ou non affectée à un compte de réserves"
+        ],
+        "debit": [
+          "Le compte 12 est débité lors de l'affectation du résultat — par le crédit du compte 139 Résultat net : Perte, pour le montant des pertes non compensées par des prélèvements opérés sur des réserves ou sur le capital",
+          "Le compte 12 est débité — par le crédit du compte 465 Associés, dividendes à payer, pour le report à nouveau mis en distribution"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les sommes à porter en réserves par décision de l'Assemblée générale ordinaire", "utiliser": "11 Réserves"}
+      ],
+      "controles": [
+        "des décisions des assemblées sur la répartition des résultats"
+      ],
+      "sens": "mixte",
+      "mots_cles": ["report à nouveau", "compte 12", "bénéfices reportés", "pertes reportées", "affectation du résultat", "capitaux propres"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "13",
+      "titre": "COMPTE 13 Résultat net de l'exercice",
+      "contenu": "Le résultat net de l'exercice peut être défini de deux façons : 1. différence entre les produits (reçus ou à recevoir) et les charges (payées ou à payer) de la période ; 2. variation des capitaux propres entre le début et la clôture de l'exercice, hors nouveaux apports et retraits d'apports et hors réévaluation. Quel que soit son signe, le résultat net de l'exercice est inscrit au passif du bilan sur la ligne correspondante, parmi les capitaux propres. Dans les entreprises individuelles, le solde du compte 13 est viré au compte 103 Capital personnel.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 13 est crédité, à la clôture de l'exercice — par le débit des comptes de la classe 7 et des comptes créditeurs de la classe 8 pour solde",
+          "Le compte 13 est crédité, après la clôture de l'exercice et décision d'imputation des pertes, du montant du résultat déficitaire — par le débit des comptes 12 Report à nouveau, ou 11 Réserves, ou 101 Capital social, ou 103 Capital personnel"
+        ],
+        "debit": [
+          "Le compte 13 est débité à la clôture de l'exercice du montant des charges de l'exercice — par le crédit des comptes de la classe 6 et des comptes débiteurs de la classe 8 pour solde",
+          "Le compte 13 est débité après la clôture de l'exercice et décision d'affectation des résultats du montant du résultat déficitaire — par le crédit des comptes 12 Report à nouveau ou 11 Réserves ou 101 Capital social ou 103 Capital personnel ou 465 Associés, dividendes à payer"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les charges ou produits qui n'auraient pas au préalable transité par les comptes de gestion", "utiliser": "classes 6, 7 et 8"}
+      ],
+      "controles": [
+        "de recoupements issus des soldes des comptes de gestion"
+      ],
+      "sens": "mixte",
+      "mots_cles": ["résultat net", "compte 13", "bénéfice", "perte", "clôture de l'exercice", "affectation du résultat", "capitaux propres", "comptes de gestion"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "14",
+      "titre": "COMPTE 14 Subventions d'investissement",
+      "contenu": "Les subventions d'investissement sont des aides financières non remboursables accordées aux entreprises (publiques ou privées), pour différentes raisons : acquisition, création de valeurs immobilisées (subventions d'équipement) ou financement d'activités à long terme, afin de pourvoir au remplacement ou à la remise en état des immobilisations. Elles peuvent également consister en l'octroi de biens et services. Les subventions d'investissement figurent pour leur montant net au passif du bilan, parmi les capitaux propres, jusqu'à ce qu'elles aient rempli leur objet. La quote-part de subvention reprise dans le résultat de l'exercice est égale soit au montant de la dotation de l'exercice aux comptes d'amortissements des immobilisations amortissables acquises ou créées au moyen de la subvention, soit à un montant déterminé en fonction du nombre d'années pendant lesquelles les immobilisations non amortissables sont inaliénables, ou à défaut d'une clause d'inaliénabilité, d'une somme égale au dixième du montant de la subvention.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 14 est crédité du montant de l'aide obtenue — par le débit du compte approprié de la classe 2, sur la base de l'évaluation des immobilisations transférées gratuitement à l'entreprise",
+          "Le compte 14 est crédité du montant de la subvention — par le débit du compte approprié de la classe 4 tel que 4494 État, subventions d'équipement à recevoir ou 4582 Organismes internationaux, subventions à recevoir"
+        ],
+        "debit": [
+          "Le compte 14 est débité à la clôture de l'exercice — par le crédit des comptes 865 Reprises de subventions d'investissement, pour la partie de la subvention rapportée au résultat de la période",
+          "Le compte 14 est débité à la date de cession de l'actif acquis à l'aide de la subvention — par le crédit du compte 865 Reprises de subventions d'investissement, pour la partie de la subvention non encore rapportée au résultat"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les subventions d'exploitation reçues", "utiliser": "71 Subventions d'exploitation"},
+        {"ne_pas_enregistrer": "les subventions d'équilibre reçues", "utiliser": "88 Subventions d'équilibre"}
+      ],
+      "controles": [
+        "des décisions d'octroi de la subvention ou d'affectation à l'entreprise d'un bien de façon définitive et à titre gratuit",
+        "du tableau d'amortissement des biens acquis ou créés à l'aide de la subvention pour vérification de la reprise au résultat de la subvention selon le même rythme que les amortissements"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["subventions d'investissement", "compte 14", "aides financières", "non remboursables", "immobilisations", "reprise de subvention", "quote-part", "compte 865"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "15",
+      "titre": "COMPTE 15 Provisions réglementées et fonds assimilés",
+      "contenu": "Les provisions réglementées sont des provisions à caractère purement fiscal ou réglementaire, comptabilisées non pas en application de principes comptables, mais suivant des dispositions légales et réglementaires (lois de finances, par exemple). Peuvent être classées dans cette catégorie, les provisions : autorisées spécialement pour certaines professions (reconstitution de gisements miniers et pétroliers) ; pour hausse des prix et fluctuation des cours ; pour investissement. Ont notamment le caractère de fonds assimilés, lorsqu'ils sont prévus par la législation fiscale : les amortissements dérogatoires ; les plus-values de cession à réinvestir ; les fonds réglementés ; la provision spéciale de réévaluation. Du fait de leur caractère de réserves non libérées d'impôt, les provisions réglementées et fonds assimilés sont inscrits au passif du bilan parmi les capitaux propres. Elles sont créées ou augmentées exclusivement par Dotations H.A.O., et sont réduites ou annulées exclusivement par Reprises H.A.O.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 15 est crédité de la création ou de la variation en augmentation des provisions réglementées — par le débit du compte 85 Dotations H.A.O."
+        ],
+        "debit": [
+          "Le compte 15 est débité de l'annulation ou de la variation en diminution des provisions réglementées — par le crédit du compte 86 Reprises H.A.O."
+        ]
+      },
+      "exclusions": [],
+      "controles": [],
+      "sens": "crediteur",
+      "mots_cles": ["provisions réglementées", "fonds assimilés", "compte 15", "fiscal", "amortissements dérogatoires", "plus-values de cession", "dotations HAO", "reprises HAO", "capitaux propres"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
