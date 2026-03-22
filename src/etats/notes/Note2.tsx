@@ -231,9 +231,10 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
           NOTE 2 — INFORMATIONS OBLIGATOIRES
         </h3>
 
-        {/* Sections */}
-        {SECTIONS.map(s => (
-          <div key={s.key} style={{ marginBottom: 20, border: '1px solid #000' }}>
+        {/* Sections — un seul bloc */}
+        <div style={{ border: '1px solid #000' }}>
+        {SECTIONS.map((s, i) => (
+          <div key={s.key} style={{ borderTop: i > 0 ? '1px solid #000' : 'none' }}>
             <div style={{
               textAlign: 'center',
               fontWeight: 700,
@@ -271,6 +272,7 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
             </div>
           </div>
         ))}
+        </div>
       </div>
     </div>
   );
