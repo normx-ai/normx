@@ -173,6 +173,15 @@ async function main() {
     console.log(`SIG KB: ${docs.length} articles`);
   }
 
+  // Source 6: Ressources Durables (Chapitre 6)
+  const resDurKB = loadJSON(path.join(kbDir, 'ressources_durables_chapitre_6.json'));
+  if (resDurKB) {
+    const articles = resDurKB.articles || resDurKB;
+    const docs = prepareKBArticles(articles, 'ressources_durables');
+    sources.push(...docs);
+    console.log(`Ressources Durables KB: ${docs.length} articles`);
+  }
+
   // Source 5: Comptes enrichis (RAG)
   const enriched = loadJSON(path.join(dataDir, 'fonctionnement_comptes_syscohada.json'));
   if (enriched) {

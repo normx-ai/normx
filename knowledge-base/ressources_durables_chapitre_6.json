@@ -1,0 +1,1250 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA",
+    "referentiel": "SYSCOHADA",
+    "partie": "Chapitre 6 — Ressources Durables",
+    "page_source": "565-605+ (§700 à §760+)",
+    "pdf_sources": ["6.1.pdf", "6.2.pdf", "6.3.pdf", "6.4.pdf", "6.5.pdf", "6.6.pdf", "6.7.pdf", "6.8.pdf", "6.9.pdf", "6.10.pdf", "6.11.pdf", "6.12.pdf", "6.13.pdf", "6.14.pdf", "6.15.pdf", "6.16.pdf", "6.17.pdf", "6.18.pdf", "6.19.pdf", "6.20.pdf", "6.21.pdf", "6.22.pdf", "6.23.pdf", "6.24.pdf", "6.25.pdf", "6.26.pdf", "6.27.pdf", "6.28.pdf", "6.29.pdf", "6.30.pdf", "6.31.pdf", "6.32.pdf", "6.33.pdf", "6.34.pdf", "6.35.pdf", "6.36.pdf", "6.37.pdf", "6.38.pdf", "6.39.pdf", "6.40.pdf"],
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": 700,
+      "titre": "I. Définition des ressources durables",
+      "texte": [
+        "Les comptes de ressources durables sont constitués par les moyens de financement dont dispose l'entité de façon permanente ou durable."
+      ],
+      "mots_cles": ["ressources durables", "financement permanent", "passif", "classe 1"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 701,
+      "titre": "Capitaux propres et capitaux empruntés",
+      "texte": [
+        "Il s'agit des capitaux propres et des capitaux empruntés. Les capitaux propres résultent de la somme algébrique des comptes de capital (y compris les primes s'y rapportant et les écarts de réévaluation), de réserves, de report à nouveau, de résultat net de l'exercice, de subventions d'investissement et de provisions réglementées et fonds assimilés.",
+        "Les capitaux propres englobent la situation nette de l'entité."
+      ],
+      "mots_cles": ["capitaux propres", "capitaux empruntés", "situation nette", "capital", "réserves", "report à nouveau", "résultat net", "subventions d'investissement", "provisions réglementées"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 702,
+      "titre": "Capitaux empruntés — Dettes financières",
+      "texte": [
+        "Les capitaux empruntés sont constitués par les dettes financières auxquelles l'entité a recours pour assurer le financement d'une partie au moins de ses activités."
+      ],
+      "mots_cles": ["capitaux empruntés", "dettes financières", "financement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 703,
+      "titre": "Composition des comptes de ressources stables",
+      "texte": [
+        "Les comptes de ressources stables comprennent :",
+        "- le capital ;",
+        "- les primes d'émission, d'apport, de fusion etc. ;",
+        "- les réserves ;",
+        "- les reports à nouveau (débiteur ou créditeur) ;",
+        "- le résultat net de l'exercice ;",
+        "- les subventions d'investissement ;",
+        "- les provisions réglementées et fonds assimilés ;",
+        "- les emprunts et dettes assimilées ;",
+        "- les dettes de location-acquisition ;",
+        "- les dettes liées à des participations et comptes de liaison des établissements et sociétés en participation ;",
+        "- les provisions pour risques et charges.",
+        "Les montants inscrits dans ces comptes sont caractérisés par leur aspect financier supérieur à un an à leur origine, ce qui leur confère un caractère relativement stable.",
+        "L'échéance des dettes est suivie par la Note annexe 16 A intitulé Dettes financières et ressources assimilées qui fait ressortir distinctement à la clôture de l'exercice les fractions des dettes devenues exigibles :",
+        "- à un an au plus ;",
+        "- à plus d'un an et à deux ans au plus ;",
+        "- à plus de deux ans."
+      ],
+      "mots_cles": ["ressources stables", "capital", "primes", "réserves", "report à nouveau", "emprunts", "dettes", "location-acquisition", "provisions pour risques et charges", "Note annexe 16 A"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 705,
+      "titre": "II. Étude des principaux comptes — 1. Capital — A. Principe",
+      "texte": [
+        "Selon l'article 40 de l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, chaque associé peut apporter à la société :",
+        "- de l'argent, par apport en numéraire ;",
+        "- des droits portant sur des biens en nature, mobiliers ou immobiliers, corporels ou incorporels, par apport en nature ;",
+        "- des connaissances techniques ou professionnelles ou des services, par apport en industrie.",
+        "Tout autre apport est interdit.",
+        "Les apports en numéraire ou en nature forment le capital social inscrit au compte 101."
+      ],
+      "comptes": ["101"],
+      "mots_cles": ["capital", "apport en numéraire", "apport en nature", "apport en industrie", "capital social", "compte 101", "Acte uniforme", "associés"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 706,
+      "titre": "Évaluation des apports en nature — SARL et SA",
+      "texte": [
+        "Si les apports en numéraire ne posent pas problème quant à leur évaluation, il n'en est pas de même pour les apports en nature. Les principaux risques sont relatifs notamment à la tentation de surévaluer les apports. C'est la raison pour laquelle l'Acte uniforme précité a pris les dispositions ci-après pour les apports en nature dans les sociétés à responsabilité limitée (SARL) et les sociétés anonymes (SA) :",
+        "- Les statuts doivent contenir l'évaluation de chaque apport en nature. Il y est procédé, au vu d'un rapport annexé aux statuts sous sa responsabilité par un commissaire aux apports désigné à la constitution, à l'unanimité des futurs associés ou à défaut, par une décision de justice, à la demande du futur associé le plus diligent ;",
+        "- Pour la SARL, l'intervention d'un commissaire aux apports est nécessaire dès lors que la valeur de l'apport ou l'avantage considéré, ou que la valeur de l'ensemble des apports ou avantages considérés est supérieure à FCFA 5 000 000. Si le commissaire aux apports n'intervient pas, les associés sont indéfiniment et solidairement responsables de la valeur attribuée aux apports en nature ou aux avantages particuliers ;",
+        "- La responsabilité du commissaire aux apports est engagée en cas de majoration frauduleuse des apports ;",
+        "- Selon l'article 403 de l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, le rapport du commissaire aux apports est annexé aux statuts. Lorsque la valeur retenue est différente de celle proposée par le commissaire aux apports, les actionnaires sont solidairement responsables pendant cinq (5) ans, à l'égard des tiers, de la valeur attribuée aux apports en nature."
+      ],
+      "comptes": ["101"],
+      "mots_cles": ["apports en nature", "évaluation", "commissaire aux apports", "SARL", "SA", "surévaluation", "responsabilité solidaire", "article 403", "FCFA 5 000 000"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 707,
+      "titre": "Augmentation de capital — Droit préférentiel de souscription",
+      "texte": [
+        "La réalisation d'une augmentation de capital entraîne la nécessité de constater un droit préférentiel de souscription pour les titulaires d'actions anciennes en cas d'apports nouveaux, ou un droit d'attribution lorsque l'augmentation de capital a lieu par incorporation de réserves, bénéfices ou primes d'émission.",
+        "Le titulaire de l'action ancienne peut donc soit exercer son droit de souscription, soit accepter à titre gratuit les titres que lui confère son droit d'attribution, soit enfin céder son droit (de souscription ou d'attribution). Généralement, la souscription d'actions nouvelles ou l'attribution d'actions gratuites entraînent la diminution de la valeur de l'action ancienne. La baisse de la valeur théorique de l'action ancienne correspond à la valeur théorique du droit de souscription ou du droit d'attribution, voir §§ 499-3 ; 499-6 ; 499-14.",
+        "Des actions et des parts sociales sont émises en contrepartie des apports."
+      ],
+      "mots_cles": ["augmentation de capital", "droit préférentiel de souscription", "droit d'attribution", "actions nouvelles", "actions gratuites", "incorporation de réserves"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 708,
+      "titre": "Capital — Financement permanent",
+      "texte": [
+        "Le capital est un moyen de financement qui reste, en principe, à la disposition de l'entité jusqu'à la dissolution ou la liquidation des sociétés de capitaux."
+      ],
+      "mots_cles": ["capital", "financement permanent", "dissolution", "liquidation", "sociétés de capitaux"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 709,
+      "titre": "Capital — Garantie aux créanciers",
+      "texte": [
+        "Le capital est représenté par une écriture qui figure au Bilan de l'entité pour servir de garantie aux créanciers. Il doit être régulièrement comparé aux capitaux propres pour s'assurer que ces derniers ne sont pas devenus inférieurs à la 1/2 du capital social."
+      ],
+      "comptes": ["101"],
+      "mots_cles": ["capital", "bilan", "garantie créanciers", "capitaux propres", "moitié du capital social"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 710,
+      "titre": "Capital minimum selon la forme juridique",
+      "texte": [
+        "Le montant du capital de la société commerciale est fonction de sa forme juridique. Aucun minimum n'est fixé par l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, pour les sociétés en nom collectif (SNC) et la société en commandite simple (SCS) du fait même de la responsabilité solidaire et indéfinie des associés.",
+        "Par contre, pour la société à responsabilité limitée (SARL) et la société anonyme (SA), le capital minimum est respectivement de FCFA 1 000 000 sauf dispositions nationales contraires et FCFA 10 000 000 si la SA ne fait pas appel public à l'épargne et FCFA 100 000 000 si la SA fait appel public à l'épargne."
+      ],
+      "mots_cles": ["capital minimum", "SNC", "SCS", "SARL", "SA", "FCFA 1 000 000", "FCFA 10 000 000", "FCFA 100 000 000", "appel public à l'épargne", "forme juridique"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 711,
+      "titre": "Libération du capital — SARL et SA",
+      "texte": [
+        "Les parts sociales de la SARL doivent être souscrites en totalité par les associés. Elles doivent être intégralement libérées lorsqu'elles représentent des apports en nature.",
+        "Les parts représentant des apports en numéraire sont libérées lors de la souscription du capital de la moitié au moins de leur valeur nominale.",
+        "La libération du surplus intervient en une ou plusieurs fois dans un délai de deux (2) ans à compter de l'immatriculation de la société au registre du commerce et du crédit mobilier, selon les modalités définies par les statuts (art. 311-1 AUSCGIE).",
+        "S'agissant de la société anonyme, les actions représentant des apports en numéraire sont libérées, lors de la souscription du capital, d'un quart au moins de leur valeur nominale.",
+        "La libération du surplus intervient dans un délai qui ne peut excéder trois (3) ans à compter de l'immatriculation au registre du commerce et du crédit mobilier, selon les modalités définies par les statuts ou par une décision du conseil d'administration ou de l'administrateur général.",
+        "Tant que le capital n'est pas entièrement libéré, la société ne peut ni augmenter son capital sauf si cette augmentation de capital est réalisée par des apports en nature, ni émettre des obligations (art. 389 AUSCGIE).",
+        "Lorsqu'une augmentation de capital est effectuée par création d'actions nouvelles, celles-ci sont émises soit à leur montant nominal, soit à ce montant majoré d'une prime d'émission, voir § 499-2.",
+        "La prime d'émission (compte 1051) représente l'excédent du prix d'émission sur la valeur nominale des actions ou des parts sociales. On parle de prime d'émission dans le cadre d'apports effectués en numéraire.",
+        "La prime d'apport (compte 1052) est la différence entre la valeur réelle des biens apportés et la valeur nominale des actions ou parts sociales rémunérant l'apport. Elle s'applique aux apports en nature."
+      ],
+      "comptes": ["101", "1051", "1052"],
+      "mots_cles": ["libération du capital", "SARL", "SA", "parts sociales", "actions", "valeur nominale", "prime d'émission", "prime d'apport", "compte 1051", "compte 1052", "AUSCGIE", "art. 311-1", "art. 389"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "714-0",
+      "titre": "Prime de fusion et prime de conversion",
+      "texte": [
+        "La prime de fusion (compte 1053) est l'excédent de la valeur réelle des apports sur la valeur nominale des actions ou parts sociales de l'entité absorbante rémunérant l'apport. Elle représente le droit d'entrée des nouveaux associés dans l'entité absorbante.",
+        "La prime de conversion (compte 1054) est la différence entre la valeur de conversion du ou des titres de créances et la valeur nominale des actions ou des parts sociales rémunérant l'apport."
+      ],
+      "comptes": ["1053", "1054"],
+      "mots_cles": ["prime de fusion", "prime de conversion", "compte 1053", "compte 1054", "entité absorbante", "valeur réelle", "valeur nominale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "714-2",
+      "titre": "Amortissement du capital",
+      "texte": [
+        "Les organes compétents peuvent décider de rembourser aux associés tout ou partie du montant nominal de leurs actions à titre d'avances sur le produit de la liquidation future de la société, cette opération est appelée amortissement du capital, voir § 500-1."
+      ],
+      "mots_cles": ["amortissement du capital", "remboursement", "liquidation future", "avances"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "714-3",
+      "titre": "Actions de jouissance — Compte 1014",
+      "texte": [
+        "Le capital demeure inchangé, les actions amorties sont appelées actions de jouissance et sont isolées dans le compte 1014 Capital souscrit, appelé, versé, amorti. Les actions dont le capital est partiellement ou totalement amorti donnent les mêmes droits que les actions non amorties à l'exception du premier dividende appelé intérêt statutaire."
+      ],
+      "comptes": ["1014"],
+      "mots_cles": ["actions de jouissance", "compte 1014", "capital souscrit appelé versé amorti", "intérêt statutaire", "actions amorties"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "714-4",
+      "titre": "Capital souscrit soumis à des conditions particulières — Compte 1018",
+      "texte": [
+        "Le compte 1018 Capital souscrit soumis à des conditions particulières enregistre à son crédit le montant du capital provenant d'opérations particulières telles que :",
+        "- l'incorporation de plus-value nette à long terme lorsque les dispositions législatives et réglementaires le prévoient ;",
+        "- l'émission de certificat d'investissement, d'actions préférentielles et d'actions à dividende prioritaire sans droit de vote."
+      ],
+      "comptes": ["1018"],
+      "mots_cles": ["compte 1018", "conditions particulières", "plus-value nette", "certificat d'investissement", "actions préférentielles", "dividende prioritaire"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 715,
+      "titre": "Capital par dotation — Compte 102",
+      "texte": [
+        "Selon le SYSCOHADA, le compte 102 Capital par dotation reçoit les fonds de dotation des entités publiques ainsi que certaines subventions d'équipement dans le cas où l'organisme qui octroie la subvention et l'entité qui reçoit la subvention sont des émanations de la même personne morale publique."
+      ],
+      "comptes": ["102"],
+      "mots_cles": ["capital par dotation", "compte 102", "entités publiques", "fonds de dotation", "subventions d'équipement", "personne morale publique"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 716,
+      "titre": "Capital personnel — Compte 103",
+      "texte": [
+        "Le compte 103 Capital personnel est un compte ouvert uniquement dans les entités individuelles. Il permet de constater le capital initial représenté par des apports en numéraire ou en nature effectués par l'entrepreneur à titre définitif et des dettes qu'il décide d'inscrire au Bilan.",
+        "Le capital initial est modifié ultérieurement par les apports et les retraits de capital ainsi que par l'affectation des résultats.",
+        "Lorsque le solde de ce compte est débiteur il reste au passif précédé du signe moins.",
+        "Ce compte ne doit pas être confondu avec le compte 104 Compte de l'exploitant qui sert à établir la situation de l'entrepreneur en ce qui concerne :",
+        "- les apports et compléments d'apports financiers et/ou de biens et services effectués à titre temporaire en cours d'exercice ;",
+        "- les retraits effectués au cours de l'exercice pour son usage personnel ou celui de sa famille : prélèvements en nature de biens et services, prélèvements financiers directs (retrait de fonds) ou indirects (paiement d'une dépense privée).",
+        "Le compte 104 est en fait un démembrement du compte 103 Capital personnel. A ce titre, il est systématiquement soldé à la clôture de l'exercice. Le résultat net de l'exercice est enregistré dans le compte 103 Capital personnel.",
+        "Pour les Écarts de réévaluation (compte 106), voir § 203 et suivants.",
+        "Le compte 109 Apporteurs, capital souscrit, non appelé retrace globalement la créance de la société sur les actionnaires, pour la fraction du capital non encore appelée par les organes compétents en cas de libération partielle. Il peut être utilisé aussi bien lors de la constitution que lors d'une augmentation de capital. Pour la comptabilisation, voir §§ 488 ; 499."
+      ],
+      "comptes": ["103", "104", "106", "109"],
+      "mots_cles": ["capital personnel", "compte 103", "entité individuelle", "entrepreneur", "compte de l'exploitant", "compte 104", "prélèvements", "apports temporaires", "écarts de réévaluation", "compte 106", "compte 109", "capital souscrit non appelé"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 717,
+      "titre": "B. Subdivision du compte 10 Capital",
+      "texte": [
+        "Le compte 10 Capital est subdivisé comme suit :",
+        "101 - Capital social : 1011 Capital souscrit, non appelé ; 1012 Capital souscrit, appelé, non versé ; 1013 Capital souscrit, appelé, versé, non amorti ; 1014 Capital souscrit, appelé, versé, amorti ; 1018 Capital souscrit, soumis à des conditions particulières.",
+        "102 - Capital par dotation : 1021 Dotation initiale ; 1022 Dotations complémentaires ; 1028 Autres dotations.",
+        "103 - Capital personnel.",
+        "104 - Compte de l'exploitant : 1041 Apports temporaires ; 1042 Opérations courantes ; 1043 Rémunérations, impôts et autres charges personnelles ; 1047 Prélèvements d'autoconsommation ; 1048 Autres prélèvements.",
+        "105 - Primes liées aux capitaux propres : 1051 Primes d'émission ; 1052 Primes d'apport ; 1053 Primes de fusion ; 1054 Primes de conversion ; 1058 Autres primes.",
+        "106 - Écarts de réévaluation : 1061 Écarts de réévaluation légale ; 1062 Écarts de réévaluation libre.",
+        "109 - Apporteurs, capital souscrit, non appelé."
+      ],
+      "comptes": ["10", "101", "1011", "1012", "1013", "1014", "1018", "102", "1021", "1022", "1028", "103", "104", "1041", "1042", "1043", "1047", "1048", "105", "1051", "1052", "1053", "1054", "1058", "106", "1061", "1062", "109"],
+      "mots_cles": ["subdivision", "plan comptable", "compte 10", "capital social", "capital par dotation", "capital personnel", "compte de l'exploitant", "primes", "écarts de réévaluation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 718,
+      "titre": "C. Comptabilisation du compte 101 Capital social",
+      "texte": [
+        "Le compte 101 Capital social enregistre essentiellement :",
+        "- à son crédit, les apports initiaux et les augmentations de capital, en contrepartie des comptes d'apporteurs (pour les apports effectués par ces derniers), et des comptes de réserves, de reports à nouveau ou de résultats (lorsqu'il s'agit d'incorporer ces postes au capital), et des comptes de tiers s'il s'agit d'une incorporation de créances ;",
+        "- à son débit, les réductions de capital décidées par les assemblées générales extraordinaires, en contrepartie des comptes de résultats ou de reports à nouveau (en cas d'absorption des pertes) et des comptes d'apporteurs (en cas de remboursement du capital).",
+        "Voir schéma des écritures et exemple aux § 488 s."
+      ],
+      "comptes": ["101"],
+      "mots_cles": ["comptabilisation", "capital social", "compte 101", "augmentation de capital", "réduction de capital", "apports initiaux", "incorporation de créances"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 719,
+      "titre": "Amortissement du capital — Compte 1014",
+      "texte": [
+        "Le remboursement aux apporteurs d'une partie du capital par prélèvement sur les réserves, est dénommé amortissement du capital. Cette opération est enregistrée au crédit du compte 1014 Capital souscrit, appelé, versé, amorti, qui constitue en fait une réserve indisponible assimilable au capital lui-même, et ne pouvant être distribuée que si les mêmes conditions de fond et de forme applicables au remboursement de capital sont respectées.",
+        "Voir schéma des écritures aux § 500-4 s."
+      ],
+      "comptes": ["1014"],
+      "mots_cles": ["amortissement du capital", "compte 1014", "réserve indisponible", "remboursement", "prélèvement sur réserves"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 720,
+      "titre": "Comptabilisation du compte 103 Capital personnel",
+      "texte": [
+        "Le compte 103 Capital personnel enregistre :",
+        "- à son crédit : les apports effectués à titre définitif par l'exploitant ; le solde créditeur du compte 104 Compte de l'exploitant, à la clôture de l'exercice ; le bénéfice résultant de l'exercice antérieur.",
+        "- à son débit : le solde débiteur du compte 104 Compte de l'exploitant, à la clôture de l'exercice ; les pertes de l'exercice antérieur.",
+        "Pour les primes d'émission, d'apport, de fusion ou de scission, le schéma général d'enregistrement des écritures est le suivant :",
+        "Augmentation du capital : Débit comptes d'actif immobilisé (2), comptes de stocks (3), comptes de tiers (4), comptes de trésorerie (5), Apporteurs capital souscrit non appelé (109) — Crédit Capital social (101), Primes liées aux capitaux propres (105).",
+        "Incorporation de la prime au capital : Débit Primes liées aux capitaux propres (105) — Crédit Capital social (101).",
+        "Absorption de pertes : Débit Primes liées aux capitaux propres (105) — Crédit Report à nouveau (12), Résultat net : Perte (139).",
+        "Remboursement du capital : Débit Primes liées aux capitaux propres (105) — Crédit Apporteurs, capital à rembourser (4619)."
+      ],
+      "comptes": ["103", "104", "101", "105", "109", "2", "3", "4", "5", "12", "139", "4619"],
+      "mots_cles": ["comptabilisation", "capital personnel", "compte 103", "écritures comptables", "augmentation de capital", "incorporation de primes", "absorption de pertes", "remboursement du capital"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 721,
+      "titre": "Comptabilisation du compte 102 Capital par dotation",
+      "texte": [
+        "Le compte 102 Capital par dotation enregistre comme suit les dotations accordées par l'État ou par une autre Collectivité publique :",
+        "Débit : Comptes d'actif immobilisé (2), Stocks (3), Comptes de tiers (4), État fonds de dotation à recevoir (4493), Organismes internationaux (45), Débiteurs et créditeurs divers (47) — Crédit : Capital par dotation (102)."
+      ],
+      "comptes": ["102", "2", "3", "4", "4493", "45", "47"],
+      "mots_cles": ["comptabilisation", "capital par dotation", "compte 102", "dotations", "État", "collectivité publique", "compte 4493"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "721-1",
+      "titre": "Comptabilisation du compte 104 Compte de l'exploitant",
+      "texte": [
+        "Le compte 104 Compte de l'exploitant est mouvementé selon le schéma suivant :",
+        "Pour les prélèvements de liquidités et retraits de biens et services : Débit Compte de l'exploitant (104) — Crédit Banques (52), Caisse (57).",
+        "Pour les versements de liquidités et paiement de charges sur fonds propres : Débit Comptes de tiers (4), Banques (52), Caisse (57), Comptes de charges (6) — Crédit Compte de l'exploitant (104).",
+        "Fin d'exercice : Débit Capital personnel (103) — Crédit Compte de l'exploitant débiteur (104). Ou : Débit Compte de l'exploitant créditeur (104) — Crédit Capital personnel (103)."
+      ],
+      "comptes": ["104", "52", "57", "4", "6", "103"],
+      "mots_cles": ["compte de l'exploitant", "compte 104", "prélèvements", "versements", "fin d'exercice", "solde", "capital personnel"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "721-2",
+      "titre": "Affectation du résultat — Capital personnel",
+      "texte": [
+        "Affectation du résultat au début de l'exercice suivant par le biais du compte 103 Capital personnel :",
+        "Affectation bénéfice : Débit Résultat net : bénéfice (131) — Crédit Capital personnel (103).",
+        "Affectation perte : Débit Capital personnel (103) — Crédit Résultat net : Perte (139)."
+      ],
+      "comptes": ["103", "131", "139"],
+      "mots_cles": ["affectation du résultat", "capital personnel", "bénéfice", "perte", "compte 131", "compte 139"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 722,
+      "titre": "2. Réserves — A. Principe",
+      "texte": [
+        "Les réserves sont représentées par la fraction des bénéfices conservée à la disposition de l'entité sans être incorporée au capital, conformément aux délibérations de l'assemblée générale ordinaire ou aux décisions du propriétaire unique de l'entité.",
+        "La constitution des réserves se fait en vertu des dispositions de l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, des statuts, des dispositions réglementaires ou de la volonté des associés ou actionnaires.",
+        "Les réserves figurent au bilan jusqu'à décision contraire des organes compétents. Cette décision est du ressort de l'assemblée générale extraordinaire s'il s'agit de réserves statutaires, alors que l'assemblée générale ordinaire est compétente pour le report à nouveau et les autres réserves sauf la réserve légale."
+      ],
+      "comptes": ["11"],
+      "mots_cles": ["réserves", "bénéfices conservés", "assemblée générale", "réserves statutaires", "réserve légale", "compte 11"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 723,
+      "titre": "Réserve légale — Prélèvement de 10%",
+      "texte": [
+        "Selon l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, les sociétés à responsabilité limitée (SARL) et les sociétés anonymes (SA), sont tenues de pratiquer un prélèvement de 10%, au titre de la réserve légale, sur les bénéfices de l'exercice diminués, le cas échéant, des pertes antérieures.",
+        "Ce prélèvement cesse d'être obligatoire lorsque son montant atteint 20% du capital."
+      ],
+      "comptes": ["111"],
+      "mots_cles": ["réserve légale", "prélèvement 10%", "SARL", "SA", "20% du capital", "bénéfices", "compte 111"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 724,
+      "titre": "Réserves statutaires et contractuelles",
+      "texte": [
+        "Les réserves statutaires et contractuelles sont obligatoirement constituées en vertu des statuts de la société ou des clauses contractuelles."
+      ],
+      "comptes": ["112"],
+      "mots_cles": ["réserves statutaires", "réserves contractuelles", "statuts", "clauses contractuelles", "compte 112"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 725,
+      "titre": "Réserves facultatives",
+      "texte": [
+        "Les réserves facultatives sont celles dont la constitution n'est pas prévue par l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, les statuts ou par des clauses contractuelles."
+      ],
+      "comptes": ["1181"],
+      "mots_cles": ["réserves facultatives", "compte 1181"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 726,
+      "titre": "Écarts de réévaluation et réserves fiscalement réglementées",
+      "texte": [
+        "Les écarts de réévaluation correspondent aux plus-values constatées lors des opérations de réévaluation.",
+        "Parmi les réserves fiscalement réglementées, on relève les réserves constituées par des prélèvements effectués sur le bénéfice en application des dispositions légales ou réglementaires."
+      ],
+      "comptes": ["106", "113"],
+      "mots_cles": ["écarts de réévaluation", "plus-values", "réserves réglementées", "compte 106", "compte 113"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "726-0",
+      "titre": "Attribution d'actions gratuites au personnel salarié et aux dirigeants",
+      "texte": [
+        "Selon les articles 626-1 à 626-6, 640 et 640-1 de l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, la société anonyme et la société par actions simplifiée peuvent attribuer des actions gratuites au personnel salarié et aux dirigeants dans les conditions suivantes :",
+        "a) Personnes éligibles : Selon l'article 626-1, l'assemblée générale extraordinaire, sur le rapport du conseil d'administration ou de l'administrateur général, et sur le rapport spécial du commissaire aux comptes, peut autoriser le conseil d'administration à procéder, au profit des membres du personnel salarié, à une attribution gratuite d'actions existantes ou à émettre. Selon l'article 626-2, des actions peuvent être attribuées gratuitement aux membres du personnel salarié des sociétés ou des groupements d'intérêt économique dont dix pour cent (10%) au moins du capital ou des droits de vote sont détenus, directement ou indirectement, par la société qui attribue les actions.",
+        "Selon l'article 626-1-2, le président du conseil d'administration, l'administrateur général, les administrateurs généraux adjoints, le directeur général, les directeurs généraux adjoints d'une société anonyme, le président personne physique, le directeur général, les directeurs généraux délégués d'une société par actions simplifiée peuvent se voir attribuer des actions de la société dans les mêmes conditions que les membres du personnel salarié si : les titres de la société sont admis aux négociations sur une bourse des valeurs ; et la société procède à une attribution gratuite d'actions au bénéfice de l'ensemble de ses salariés et d'au moins quatre-vingt-dix pour cent (90%) de l'ensemble des salariés de ses filiales situées dans les États parties.",
+        "b) Nombre d'actions : L'assemblée générale extraordinaire fixe le pourcentage maximal du nombre total des actions à attribuer gratuitement qui ne peut excéder dix pour cent (10%) du capital social à la date de la décision de leur attribution par le conseil d'administration ou l'administrateur général.",
+        "c) Délai de réalisation : L'assemblée générale extraordinaire fixe le délai pendant lequel cette autorisation peut être utilisée par le conseil d'administration. Ce délai ne peut excéder trente-six (36) mois. Lorsque l'attribution porte sur des actions à émettre, l'autorisation emporte de plein droit, au profit des bénéficiaires des actions attribuées gratuitement, renonciation des actionnaires à leur droit préférentiel de souscription (art 626-1 AUSCGIE).",
+        "d) Procédures d'attribution des actions gratuites :",
+        "I. Attribution d'actions gratuites par rachat de ses propres actions : Les sociétés peuvent souscrire ou acquérir 10% du total de leurs propres actions. Les actions ainsi acquises doivent être attribuées dans le délai d'un an à compter de l'acquisition (art 640). Les actions acquises en vue d'être attribuées aux bénéficiaires sont inscrites pour leur prix de rachat au débit du compte 5021 Actions ou parts propres par le crédit d'un compte de Trésorerie. En cas de baisse du cours des actions acquises et non encore attribuées à la clôture de l'exercice, aucune dépréciation de titre n'est constatée. L'attribution gratuite des actions aux personnes éligibles est enregistrée au débit du compte 6772 Malis provenant d'attribution gratuite d'actions au personnel salarié et aux dirigeants par le crédit du compte 5021 Actions ou parts propres.",
+        "II. Attribution d'actions gratuites : La libération des actions souscrites ou le paiement des actions acquises en vue d'une attribution gratuite est réalisée par un prélèvement obligatoire, à concurrence du montant des actions à attribuer, sur la part des bénéfices d'un ou de plusieurs exercices ainsi que des réserves, à l'exception de la réserve légale.",
+        "Les sommes prélevées sur les bénéfices en vue de la libération ou l'acquisition de actions sont inscrites à un compte de réserves jusqu'à l'attribution définitive de ces actions.",
+        "Lorsque le montant d'un compte de réserves constitué par prélèvement sur les profits sociaux est égal au montant des actions attribuées, l'attribution définitive peut être réalisée.",
+        "A l'issue de l'assemblée générale ordinaire, la quote-part du résultat et/ou des réserves que les actionnaires affectent à l'attribution gratuite d'actions au personnel salarié et aux dirigeants, est enregistrée au débit du compte 1301 Résultat en instance d'affectation, ou 11 Réserves (sauf réserve légale), ou 12 Report à nouveau ; par le crédit du compte 1132 Réserves d'attribution gratuite d'actions au personnel salarié et aux dirigeants.",
+        "Dès que la réserve est constituée suivant la décision de l'assemblée générale, le conseil d'administration peut réaliser l'augmentation de capital par attribution gratuite d'actions au personnel salarié et aux dirigeants qui sera enregistrée au débit du compte 1132 par le crédit du compte 1013 Capital, souscrit, appelé, versé, non amorti."
+      ],
+      "comptes": ["5021", "6772", "1132", "1013", "1301", "11", "12"],
+      "mots_cles": ["actions gratuites", "personnel salarié", "dirigeants", "SA", "SAS", "compte 5021", "compte 6772", "compte 1132", "attribution gratuite", "article 626-1", "article 626-2", "10% du capital", "36 mois", "rachat d'actions"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "726-1",
+      "titre": "Réserves indisponibles et réserves libres",
+      "texte": [
+        "Les réserves indisponibles sont constituées par les réserves non distribuables par l'assemblée générale ordinaire, il s'agit de la réserve légale, des réserves statutaires ou contractuelles, des réserves d'attribution gratuite d'actions au personnel salarié et dirigeants, des réserves de valeurs mobilières donnant accès au capital et des réserves réglementées, si les textes en disposent ainsi.",
+        "Les réserves libres sont constituées par les réserves dont l'assemblée générale ordinaire a la disposition (réserves facultatives par exemple). L'assemblée générale peut ainsi prélever des dividendes sur ces réserves en indiquant expressément les postes sur lesquels les prélèvements sont effectués."
+      ],
+      "comptes": ["111", "112", "1132", "1134", "113", "1181"],
+      "mots_cles": ["réserves indisponibles", "réserves libres", "réserve légale", "réserves statutaires", "réserves facultatives", "dividendes", "assemblée générale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "726-2",
+      "titre": "Réserves de valeurs mobilières donnant accès au capital — Compte 1134",
+      "texte": [
+        "Selon l'article 822-10-3 de l'AUDSCGIE, lorsqu'il existe des valeurs mobilières donnant accès au capital, la société qui procède à l'attribution gratuite d'actions vire à un compte de réserve indisponible, 1134 Réserves de valeurs mobilières donnant accès au capital, la somme nécessaire pour attribuer lesdites actions aux titulaires des droits attachés aux valeurs mobilières donnant accès au capital qui exerceraient leur droit ultérieurement en nombre égal à celui qu'ils auraient reçu s'ils avaient été actionnaires au moment de l'attribution principale.",
+        "Les comptes de réserves, de primes et de report à nouveau utilisés pour l'attribution gratuite d'actions doivent être débités par le crédit du compte 1134 Réserves de valeurs mobilières donnant accès au capital."
+      ],
+      "comptes": ["1134"],
+      "mots_cles": ["réserves de valeurs mobilières", "compte 1134", "AUDSCGIE", "article 822-10-3", "réserve indisponible", "droits attachés"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 727,
+      "titre": "B. Subdivision du compte 11 Réserves",
+      "texte": [
+        "Le SYSCOHADA a adopté la subdivision suivante du compte 11 Réserves :",
+        "111 - Réserve légale.",
+        "112 - Réserves statutaires ou contractuelles.",
+        "113 - Réserves réglementées : 1131 Réserves de plus-values nettes à long terme ; 1132 Réserves d'attribution gratuite d'actions au personnel salarié et aux dirigeants ; 1133 Réserves consécutives à l'octroi de subventions d'investissement ; 1134 Réserves des valeurs mobilières donnant accès au capital ; 1138 Autres réserves réglementées.",
+        "118 - Autres réserves : 1181 Réserves facultatives ; 1188 Réserves diverses."
+      ],
+      "comptes": ["11", "111", "112", "113", "1131", "1132", "1133", "1134", "1138", "118", "1181", "1188"],
+      "mots_cles": ["subdivision", "compte 11", "réserves", "réserve légale", "réserves statutaires", "réserves réglementées", "réserves facultatives"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 728,
+      "titre": "C. Comptabilisation du compte 11 Réserves",
+      "texte": [
+        "Le compte 11 Réserves est mouvementé :",
+        "- à la constitution des réserves, par le bénéfice réparti suivant la résolution approuvée par l'assemblée générale ordinaire ;",
+        "- à l'utilisation des réserves pour incorporation au capital, distributions aux associés ou aux actionnaires, prélèvements pour amortissements du capital, absorption des pertes suivant la résolution approuvée par l'assemblée générale ordinaire ou extraordinaire.",
+        "Le schéma des écritures est le suivant :",
+        "Constitution des réserves : Débit Résultat net : Bénéfice (131) ou Résultat en instance d'affectation (1301) — Crédit Réserves (11).",
+        "Incorporation de réserves au capital : Débit Réserves (11) — Crédit Capital social (101).",
+        "Distribution de réserves : Débit Réserves (11) — Crédit Associés, dividendes à payer (465).",
+        "Apurement des pertes : Débit Réserves (11) — Crédit Report à nouveau débiteur (129), Résultat net : Perte (139)."
+      ],
+      "comptes": ["11", "131", "1301", "101", "465", "129", "139"],
+      "mots_cles": ["comptabilisation", "réserves", "constitution", "incorporation au capital", "distribution", "apurement des pertes", "écritures comptables"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 729,
+      "titre": "3. Report à nouveau — A. Principe",
+      "texte": [
+        "Le compte 12 Report à nouveau est constitué par :",
+        "- tout ou partie des bénéfices des exercices antérieurs non distribués ou non affectés à un compte de réserves ;",
+        "- les pertes non compensées par des prélèvements opérés sur les bénéfices, les réserves ou le capital ;",
+        "- les sommes provenant des arrondis des dividendes distribués.",
+        "Le report à nouveau influence la situation nette : celle-ci augmente s'il est créditeur, elle diminue dans le cas contraire.",
+        "Le report à nouveau est constitué sur la base d'une résolution approuvée par l'assemblée générale ordinaire. Toute utilisation ultérieure du report à nouveau est subordonnée à l'approbation d'une résolution de l'assemblée générale ordinaire.",
+        "Le report à nouveau est inscrit au passif du Bilan où il doit figurer sur une ligne distincte, en moins si son solde est débiteur et en plus si son solde est créditeur."
+      ],
+      "comptes": ["12"],
+      "mots_cles": ["report à nouveau", "compte 12", "bénéfices non distribués", "pertes", "situation nette", "assemblée générale ordinaire", "passif du bilan"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 730,
+      "titre": "B. Subdivision du compte 12 Report à nouveau",
+      "texte": [
+        "Le SYSCOHADA a prévu la subdivision suivante du compte 12 Report à nouveau :",
+        "121 - Report à nouveau créditeur.",
+        "129 - Report à nouveau débiteur : 1291 Perte nette à reporter ; 1292 Perte — Amortissements réputés différés."
+      ],
+      "comptes": ["12", "121", "129", "1291", "1292"],
+      "mots_cles": ["subdivision", "compte 12", "report à nouveau créditeur", "report à nouveau débiteur", "perte nette à reporter", "amortissements réputés différés"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 731,
+      "titre": "C. Comptabilisation du compte 12 Report à nouveau",
+      "texte": [
+        "Le compte 12 Report à nouveau est mouvementé selon le schéma suivant :",
+        "Bénéfices reportés à nouveau : Débit Résultat net : Bénéfice (131) — Crédit Report à nouveau créditeur (121).",
+        "Pertes reportées à nouveau : Débit Report à nouveau débiteur (129) — Crédit Résultat net : Perte (139).",
+        "Distribution de sommes portées en report à nouveau : Débit Report à nouveau créditeur (121) — Crédit Associés et groupe (46)."
+      ],
+      "comptes": ["12", "121", "129", "131", "139", "46"],
+      "mots_cles": ["comptabilisation", "report à nouveau", "écritures comptables", "bénéfices reportés", "pertes reportées", "distribution"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 732,
+      "titre": "Résultat net de l'exercice — Renvoi",
+      "texte": [
+        "Le compte 13 Résultat net de l'exercice est étudié aux §§ 1100 et suivants consacrés aux soldes significatifs de gestion."
+      ],
+      "comptes": ["13"],
+      "mots_cles": ["résultat net", "compte 13", "soldes intermédiaires de gestion", "SIG"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 733,
+      "titre": "4. Subventions d'investissement — A. Principe",
+      "texte": [
+        "Une subvention est une aide. Il s'agit d'espèces ou de biens remis à fonds perdus à un individu, ou une société ou un organisme par l'État, un organisme ou un mécène.",
+        "Dans certains cas, l'entité reçoit ladite subvention d'investissement sous la forme d'un transfert d'immobilisations à titre gratuit.",
+        "Lorsque la subvention prend la forme d'un transfert direct et gratuit d'une immobilisation à l'entité, la valeur à retenir est celle de la valeur actuelle définie à l'article 36 de l'Acte uniforme. Cette valeur actuelle est définie à l'article 42 comme une « valeur d'estimation du moment qui s'apprécie en fonction du marché et de l'utilité de l'élément pour l'entité ».",
+        "Les subventions d'investissement sont accordées à l'entité pour lui permettre d'acquérir ou de créer des immobilisations, amortissables ou non.",
+        "Le compte de subvention d'investissement permet de constater, au Bilan de l'entité, l'enrichissement provenant de la subvention."
+      ],
+      "comptes": ["14"],
+      "mots_cles": ["subventions d'investissement", "aide", "transfert d'immobilisations", "valeur actuelle", "article 36", "article 42", "Acte uniforme", "compte 14"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 734,
+      "titre": "Rapportement de la subvention aux résultats",
+      "texte": [
+        "La subvention est rapportée aux résultats de chaque exercice comme suit :",
+        "- si l'immobilisation, dont l'acquisition ou la création a été rendue possible par la subvention, est non amortissable, la subvention est étalée sur la durée d'inaliénabilité de l'immobilisation lorsqu'elle est inaliénable. Par contre, si le contrat ne prévoit pas de clause d'inaliénabilité, la subvention est amortie pour une somme égale au 1/10ème de son montant ;",
+        "- si la subvention se rapporte à des immobilisations amortissables, le montant de la quote-part amortie est en principe égal au montant de la dotation aux comptes d'amortissement des immobilisations acquises ou créées au moyen de la subvention.",
+        "Des dérogations à ces règles générales pourront être admises lorsqu'une telle mesure sera justifiée par des circonstances particulières, notamment par le régime juridique des entités, l'objet de leur activité, les conditions posées ou les engagements demandés par les autorités ou organismes ayant alloué ces subventions."
+      ],
+      "comptes": ["14", "799"],
+      "mots_cles": ["rapportement", "subvention", "immobilisation amortissable", "immobilisation non amortissable", "inaliénabilité", "1/10ème", "quote-part amortie"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 735,
+      "titre": "Disparition du bien subventionné",
+      "texte": [
+        "La disparition du bien doit entraîner la reprise intégrale de la subvention d'investissement.",
+        "Lorsque la convention de subvention prévoit :",
+        "- la constitution par l'entité subventionnée d'une réserve de montant déterminé eu égard à la subvention ;",
+        "- le maintien d'une telle réserve au passif du bilan pendant une période déterminée.",
+        "Un compte spécifique 1133 Réserves consécutives à l'octroi de subventions d'investissement doit être ouvert et alimenté selon la convention soit par les résultats, les réserves facultatives ou le report à nouveau."
+      ],
+      "comptes": ["14", "1133"],
+      "mots_cles": ["disparition du bien", "reprise intégrale", "subvention d'investissement", "réserve", "compte 1133", "convention de subvention"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 736,
+      "titre": "B. Subdivision du compte 14 Subventions d'investissement",
+      "texte": [
+        "Le compte 14 Subventions d'investissement est subdivisé comme suit :",
+        "141 - Subventions d'équipement : 1411 État ; 1412 Régions ; 1413 Départements ; 1414 Communes et collectivités publiques décentralisées ; 1415 Entités publiques ou mixtes ; 1416 Entités et organismes privés ; 1417 Organismes internationaux ; 1418 Autres.",
+        "148 - Autres subventions d'investissement.",
+        "Les subdivisions des comptes de subventions seront détaillées en fonction de l'origine de ces subventions."
+      ],
+      "comptes": ["14", "141", "1411", "1412", "1413", "1414", "1415", "1416", "1417", "1418", "148"],
+      "mots_cles": ["subdivision", "compte 14", "subventions d'équipement", "État", "régions", "départements", "communes", "organismes internationaux"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 737,
+      "titre": "C. Comptabilisation des subventions d'investissement",
+      "texte": [
+        "La subvention doit être rattachée à l'exercice à compter du jour de la décision de l'organisme attributaire qui rend l'octroi de la subvention certain dans son principe et son montant. Les dispositions particulières qui prévoient le remboursement de tout ou partie des sommes versées en cas de non exécution des engagements pris par le bénéficiaire ont un caractère résolutoire et non suspensif et sont sans effet sur la date de prise en compte de la subvention. Dans cette hypothèse, le non respect de l'engagement de l'entité devra donner lieu à l'enregistrement d'une provision destinée à constater le risque de reversement de la subvention.",
+        "Par contre, s'il existe des conditions suspensives avant l'obtention de la subvention, la date de prise en compte de la subvention est la date de la réalisation des conditions suspensives.",
+        "La comptabilisation des subventions doit permettre aux entités qui en bénéficient d'étaler, sur plusieurs exercices, la constatation de l'enrichissement provenant de ces subventions.",
+        "Au moment de la réception de la subvention : Débit Comptes d'actif immobilisé (transfert gratuit) (2), Comptes de tiers (4), Comptes de trésorerie (5) — Crédit Subventions d'investissement (14).",
+        "A la clôture de chaque exercice : Débit Dotations aux amortissements (68) — Crédit Amortissements (28). Et : Débit Subventions d'investissement (14) — Crédit Reprises de subventions d'investissement (799).",
+        "En cas de non respect des engagements (risque de remboursement de la subvention) : Débit Dotations aux provisions (69) — Crédit Provisions financières pour risques et charges (19)."
+      ],
+      "comptes": ["14", "2", "4", "5", "68", "28", "799", "69", "19"],
+      "mots_cles": ["comptabilisation", "subventions d'investissement", "réception", "clôture exercice", "reprises de subventions", "compte 799", "provision", "risque de remboursement", "conditions suspensives"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "737-1",
+      "titre": "Exemple — Immobilisation amortissable entièrement financée par une subvention",
+      "texte": [
+        "Exemple 1 : Une entité a bénéficié d'une subvention de FCFA 5 000 000 qui lui a été versée le 28 février N en vue de l'acquisition d'un matériel d'exploitation.",
+        "Ce matériel, acheté HT pour FCFA 5 000 000, le 1er mars N est à amortir linéairement sur 10 ans. Taux de TVA 10%."
+      ],
+      "comptes": ["14", "2", "28", "799"],
+      "mots_cles": ["exemple", "subvention", "immobilisation amortissable", "amortissement linéaire", "FCFA 5 000 000", "matériel d'exploitation", "10 ans", "TVA 10%"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "737-1-suite",
+      "titre": "Exemple 1 (suite) — Écritures comptables subvention intégrale",
+      "texte": [
+        "28/02/N — Réception de la subvention : Débit Banques (52) : 5 000 000 — Crédit Subventions d'équipement reçues (141) : 5 000 000.",
+        "01/03/N — Acquisition du matériel : Débit Matériel (24) : 5 000 000, État TVA récupérable sur immobilisations (4451) : 500 000 — Crédit Banques (52) : 5 500 000.",
+        "31/12/N — Dotation aux amortissements (10 mois) : Débit Dotations aux amortissements (68) : 416 666 — Crédit Amortissements (28) : 416 666.",
+        "31/12/N — Reprise de la subvention : Débit Subventions d'équipement (141) : 416 666 — Crédit Reprises de subventions d'investissement (799) : 416 666.",
+        "31/12/N+1 — Dotation aux amortissements (12 mois) : Débit Dotations aux amortissements (68) : 500 000 — Crédit Amortissements du matériel (284) : 500 000.",
+        "31/12/N+1 — Reprise de la subvention : Débit Subventions d'équipement (141) : 500 000 — Crédit Reprises de subventions d'investissement (799) : 500 000.",
+        "Les mêmes écritures d'amortissement de l'immobilisation et de la subvention seront passées jusqu'à la fin de N+9. Un complément relatif à la période du 1er janvier au 28 février N+10 sera passé pour solde du compte 141 à la fin dudit exercice."
+      ],
+      "comptes": ["52", "141", "24", "4451", "68", "28", "284", "799"],
+      "mots_cles": ["exemple", "écritures comptables", "subvention intégrale", "amortissement", "reprise de subvention", "matériel", "TVA récupérable"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "737-2",
+      "titre": "Immobilisation financée partiellement par une subvention",
+      "texte": [
+        "Lorsque la subvention ne finance que partiellement l'acquisition de l'immobilisation, la subvention sera rapportée aux résultats de l'entité, de manière rationnelle, sur la durée de vie du bien.",
+        "Exemple 2 : En reprenant l'exemple précédent, et en admettant que le matériel a été acquis pour FCFA 9 000 000, les écritures à passer seront les suivantes :",
+        "28/02/N — Réception de la subvention : Débit Banques (52) : 5 000 000 — Crédit Subventions d'équipement (141) : 5 000 000."
+      ],
+      "comptes": ["141", "52", "24"],
+      "mots_cles": ["subvention partielle", "financement partiel", "immobilisation", "rapportement rationnel", "durée de vie", "FCFA 9 000 000"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "737-2-suite",
+      "titre": "Exemple 2 (suite) — Écritures subvention partielle",
+      "texte": [
+        "28/02/N — Acquisition du matériel : Débit Matériel (24) : 9 000 000, État TVA récupérable sur immobilisations (4451) : 900 000 — Crédit Banques (52) : 9 900 000.",
+        "31/12/N — Dotation aux amortissements (10 mois) : Débit Dotations aux amortissements (68) : 750 000 — Crédit Amortissement du matériel (284) : 750 000. (9 000 000 x 10% x 10/12)",
+        "31/12/N — Reprise de la subvention : Débit Subventions d'équipement (141) : 416 666 — Crédit Reprises de subventions d'investissement (799) : 416 666. (750 000 x 5 000 000 / 9 000 000)",
+        "31/12/N+1 — Dotation aux amortissements (12 mois) : Débit Dotations aux amortissements (68) : 900 000 — Crédit Amortissements du matériel (284) : 900 000.",
+        "31/12/N+1 — Reprise de la subvention : Débit Subventions d'équipement (141) : 500 000 — Crédit Reprises de subventions d'investissement (799) : 500 000. (900 000 x 5 000 000 / 9 000 000)",
+        "Les mêmes écritures seront passées jusqu'à la fin de N+9. Un complément relatif à la période du 1er janvier au 28 février N+10 sera passé pour solde du compte 141 à la fin dudit exercice.",
+        "Lorsque la subvention sera complètement amortie, les comptes 141 seront soldés."
+      ],
+      "comptes": ["24", "4451", "52", "68", "284", "141", "799"],
+      "mots_cles": ["exemple", "subvention partielle", "écritures comptables", "reprise proportionnelle", "amortissement", "ratio subvention/coût"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "737-3",
+      "titre": "Acquisition d'une immobilisation non amortissable au moyen d'une subvention",
+      "texte": [
+        "Exemple 3 : Une subvention de FCFA 6 000 000 a été versée par virement bancaire pour l'acquisition d'un terrain. Le contrat ne prévoit pas de clause d'inaliénabilité. Le montant à rapporter aux résultats correspond alors au 1/10ème de la subvention.",
+        "Réception de la subvention : Débit Banques (52) : 6 000 000 — Crédit Subventions d'équipement (141) : 6 000 000.",
+        "Le montant à rapporter aux résultats est enregistré comme suit pour chacune des 10 années concernées : Débit Subventions d'équipement (141) : 600 000 — Crédit Reprises de subventions d'investissement (799) : 600 000."
+      ],
+      "comptes": ["52", "141", "799"],
+      "mots_cles": ["immobilisation non amortissable", "terrain", "subvention", "1/10ème", "inaliénabilité", "FCFA 6 000 000"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 738,
+      "titre": "5. Provisions réglementées — Plus-values de cession à réinvestir — Principe",
+      "texte": [
+        "Seules les plus-values de cession à réinvestir sont développées dans ce paragraphe.",
+        "Les amortissements dérogatoires sont étudiés au § 814 alors que la provision spéciale de réévaluation est abordée au § 208-3.",
+        "Pour les autres provisions, voir les paragraphes 868 et suivants.",
+        "Les provisions réglementées correspondent à une partie du bénéfice dont l'imposition est provisoirement différée. Elles s'assimilent plus à des réserves non libérées d'impôt qu'à des provisions. (Voir §§ 851-2 et 868 s.).",
+        "Ces provisions sont régies par les dispositions législatives propres à chaque État partie."
+      ],
+      "comptes": ["15"],
+      "mots_cles": ["provisions réglementées", "plus-values de cession", "réinvestissement", "imposition différée", "réserves non libérées d'impôt"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 739,
+      "titre": "Plus-values de cession à réinvestir — Droit sénégalais",
+      "texte": [
+        "Au Sénégal, les plus-values de cession à réinvestir correspondent à des plus-values constatées sur des éléments d'actif et pour lesquelles on prend l'engagement de les réinvestir dans un délai déterminé. Ce délai est actuellement de trois (3) ans à compter de la clôture de l'exercice au cours duquel la cession a été réalisée.",
+        "Pour pouvoir bénéficier de l'exonération, la plus-value doit provenir d'une cession réalisée en cours d'exploitation d'un bien appartenant à l'actif immobilisé.",
+        "La plus-value réinvestie est affectée à l'amortissement des nouvelles immobilisations acquises. En pratique, la plus-value est déduite du prix de revient de la nouvelle immobilisation. La nouvelle valeur ainsi obtenue sert de base d'amortissement.",
+        "Si, pour des raisons quelconques le réemploi n'a pas eu lieu dans les délais fixés, la plus-value est rapportée au bénéfice imposable de l'exercice au cours duquel expire ce délai. Aucune majoration ou pénalité n'est appliquée."
+      ],
+      "comptes": ["152"],
+      "mots_cles": ["plus-values de cession", "réinvestissement", "Sénégal", "3 ans", "exonération", "actif immobilisé", "base d'amortissement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 740,
+      "titre": "Plus-values sur cession d'éléments d'actif — Article 259-1 CGI sénégalais",
+      "texte": [
+        "Selon l'article 259-1 du Code Général des Impôts sénégalais, les plus-values provenant de la cession d'éléments d'actif immobilisé en fin d'exploitation ou en cas de cession partielle d'entreprise, les indemnités reçues en contrepartie de la cessation de l'exercice de la profession ou du transfert d'une clientèle, sont comptées dans les bénéfices imposables pour le tiers de leur montant.",
+        "Toutefois, lorsque la cession, le transfert ou la cessation intervient moins de cinq ans après la création, l'achat du fonds, de l'office ou de la clientèle, la plus-value est retenue dans les bénéfices imposables pour la moitié de son montant."
+      ],
+      "mots_cles": ["article 259-1", "CGI sénégalais", "plus-values", "cession d'actif", "bénéfices imposables", "tiers du montant", "moitié du montant", "5 ans"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 741,
+      "titre": "Définition de la cession",
+      "texte": [
+        "Par cession, il faut entendre toute sortie d'actif d'un bien immobilisé. Il peut s'agir d'une vente, d'un apport en société, d'une expropriation ou d'un sinistre. La plus-value peut donc provenir de la remise d'un prix de vente, de la rémunération reçue en actions ou parts sociales ou de l'indemnité d'expropriation ou d'assurance reçue.",
+        "Les plus-values visées sont celles réalisées en cours d'exploitation sur les éléments de l'actif immobilisé (immobilisations corporelles ou incorporelles)."
+      ],
+      "mots_cles": ["cession", "sortie d'actif", "vente", "apport en société", "expropriation", "sinistre", "plus-value", "immobilisations"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 742,
+      "titre": "Engagement de réinvestir",
+      "texte": [
+        "L'engagement de réinvestir doit résulter d'un écrit joint à la déclaration des résultats de l'exercice au cours duquel la plus-value a été réalisée.",
+        "Par cet écrit, l'entité doit s'engager à réinvestir, dans un délai de trois (3) ans à compter de la clôture de l'exercice au cours duquel la plus-value a été constatée, une somme au moins égale au total constitué par la valeur d'origine du bien cédé et la plus-value réalisée sur la cession dudit bien."
+      ],
+      "comptes": ["152"],
+      "mots_cles": ["engagement de réinvestir", "déclaration des résultats", "3 ans", "valeur d'origine", "plus-value"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 743,
+      "titre": "Imputation de la plus-value sur le prix de revient en réemploi",
+      "texte": [
+        "Lorsque les conditions de son exonération sont réunies, la plus-value exonérée est imputée sur le prix de revient du bien acquis en réemploi pour le calcul de la dotation aux amortissements fiscalement déductibles.",
+        "Si le prix du bien acquis en réemploi est inférieur ou égal à celui du bien cédé, il n'y a pas d'imputation, même partielle, de la plus-value.",
+        "Mais si le prix du bien acquis en réemploi est supérieur à celui du bien cédé, l'exonération concernera la partie réinvestie de la plus-value et sera déterminée comme suit : prix bien acquis en réemploi - prix bien cédé.",
+        "Sur le plan comptable, le bien donnera lieu à un amortissement calculé dans les conditions de droit commun. En revanche, annuellement, la différence entre l'amortissement globalement constaté sur la valeur d'entrée du bien dans le patrimoine et l'amortissement calculé sur la base de son coût de revient diminué de la plus-value, donne lieu à la reprise partielle de la plus-value à réinvestir.",
+        "En d'autres termes :",
+        "- la dotation aux amortissements doit être calculée annuellement sur le montant global investi suivant la durée probable d'utilisation ;",
+        "- la plus-value à réinvestir doit être reprise annuellement suivant le rythme de l'amortissement du bien correspondant. Au cas où le bien serait cédé avant la fin de la réintégration, la plus-value restante doit être rapportée au résultat."
+      ],
+      "comptes": ["152"],
+      "mots_cles": ["imputation", "plus-value", "prix de revient", "réemploi", "amortissement fiscal", "reprise partielle", "droit commun"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 744,
+      "titre": "B. Subdivision du compte 152 Plus-values de cession à réinvestir",
+      "texte": [
+        "Le SYSCOHADA n'a pas prévu une subdivision du compte 152 Plus-values de cession à réinvestir ; mais des sous-comptes peuvent être créés pour faciliter le suivi des plus-values à réinvestir."
+      ],
+      "comptes": ["152"],
+      "mots_cles": ["subdivision", "compte 152", "plus-values de cession à réinvestir", "sous-comptes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 745,
+      "titre": "C. Comptabilisation des plus-values de cession à réinvestir",
+      "texte": [
+        "La comptabilisation des plus-values de cession à réinvestir constate l'engagement de réemploi et le réemploi effectif. Auparavant, le montant de la plus-value est déterminé au travers des comptes 81 et 82 ou 654 et 754 s'il s'agit de cessions courantes.",
+        "Dotation complémentaire à la date de cession : Débit Dotations aux amortissements (68) — Crédit Amortissements (28).",
+        "Enregistrement de la cession : Débit Créances sur cessions d'immobilisations (485) ou Créances sur cessions courantes d'immobilisations (414) ou Banques (52) — Crédit Produits des cessions d'immobilisations (82) ou Produits des cessions courantes d'immobilisations (754).",
+        "Sortie de l'actif constatée à la valeur d'origine : Débit Valeur comptable des cessions d'immobilisations (81) ou Valeur comptable des cessions courantes d'immobilisations (654) — Crédit Comptes d'actif immobilisé (2).",
+        "Solde des amortissements cumulés : Débit Amortissements (28) — Crédit Valeur comptable des cessions d'immobilisations (81) ou Valeur comptable des cessions courantes d'immobilisations (654).",
+        "Engagement de réemploi : Débit Dotations aux provisions réglementées (851) — Crédit Plus-values de cession à réinvestir (152).",
+        "Amortissement sur la base du prix de revient comptabilisé : Débit Dotations aux amortissements (68) — Crédit Amortissements (28).",
+        "Reprise annuelle de la plus-value réinvestie (plus-value à réinvestir / durée d'utilisation) : Débit Plus-values de cession à réinvestir (152) — Crédit Reprises de provisions réglementées (861)."
+      ],
+      "comptes": ["68", "28", "485", "414", "52", "82", "754", "81", "654", "2", "851", "152", "861"],
+      "mots_cles": ["comptabilisation", "plus-values", "cession", "réemploi", "engagement", "dotation complémentaire", "sortie d'actif", "amortissements cumulés", "reprise annuelle", "compte 851", "compte 152", "compte 861"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 746,
+      "titre": "Exemple — Cas de réemploi total",
+      "texte": [
+        "Soit un matériel acquis pour FCFA 12 000 000. Amorti au 31/12/N : 9 600 000. Valeur nette comptable : 2 400 000. Revente du matériel le 01/03/N+1 : 6 000 000. Plus-value réalisée : 3 600 000.",
+        "Engagement de réinvestir avant le 31 décembre N+4 une somme au moins égale à 12 000 000 + 3 600 000 = 15 600 000.",
+        "Acquisition en réemploi, le 1er juin N+3, d'un matériel à FCFA 18 000 000 HT, payé par chèque, à amortir en 10 ans. TVA = 10%.",
+        "a) Cas de réemploi total :",
+        "Engagement de réinvestir 31/12/N+1 : Débit Dotations aux provisions réglementées (851) : 3 600 000 — Crédit Plus-values de cession à réinvestir (152) : 3 600 000.",
+        "Réemploi de la plus-value 01/06/N+3 : Débit Matériel (24) : 18 000 000, État TVA récupérable (4451) : 1 800 000 — Crédit Banques (52) : 19 800 000.",
+        "31/12/N+3 — Dotation aux amortissements : Débit (68) : 1 050 000 — Crédit (284) : 1 050 000. (18 000 000 x 10% x 7/12)",
+        "31/12/N+3 — Reprise de la provision : Débit (152) : 210 000 — Crédit (861) : 210 000. (3 600 000 x 10% x 7/12)",
+        "31/12/N+4 — Dotation annuelle : Débit (68) : 1 800 000 — Crédit (284) : 1 800 000. (18 000 000 x 10%)",
+        "31/12/N+4 — Reprise provision : Débit (152) : 360 000 — Crédit (861) : 360 000. (3 600 000 x 10%)"
+      ],
+      "comptes": ["851", "152", "24", "4451", "52", "68", "284", "861"],
+      "mots_cles": ["exemple", "réemploi total", "plus-value", "engagement de réinvestir", "matériel", "FCFA 12 000 000", "FCFA 18 000 000", "amortissement", "reprise provision"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "746-1",
+      "titre": "Exemple — Cas de réemploi partiel",
+      "texte": [
+        "Reprenons l'exemple précédent en supposant que le réinvestissement n'a porté que sur FCFA 14 000 000. Dans ce cas, la constatation de l'engagement de réinvestir ne change pas.",
+        "Réemploi de la plus-value 01/06/N+3 : Débit Matériel (24) : 14 000 000, État TVA récupérable (4451) : 1 400 000 — Crédit Banques (52) : 15 400 000.",
+        "31/12/N+3 — Dotation aux amortissements : Débit (68) : 816 667 — Crédit (284) : 816 667. (14 000 000 x 10% x 7/12)",
+        "31/12/N+3 — Reprise provision : Débit (152) : 116 667 — Crédit (861) : 116 667. (2 000 000 x 10% x 7/12). La plus-value réinvestie est de 14 000 000 - 12 000 000 = 2 000 000.",
+        "31/12/N+4 — Dotation annuelle : Débit (68) : 1 400 000 — Crédit (284) : 1 400 000.",
+        "31/12/N+4 — Reprise provision : Débit (152) : 200 000 — Crédit (861) : 200 000. (2 000 000 x 10%)",
+        "Plus-values non réinvesties au terme des 3 ans : Débit Plus-values de cession à réinvestir (152) : 1 600 000 — Crédit Reprises de provisions réglementées (861) : 1 600 000. (3 600 000 - 2 000 000)"
+      ],
+      "comptes": ["24", "4451", "52", "68", "284", "152", "861"],
+      "mots_cles": ["exemple", "réemploi partiel", "plus-value non réinvestie", "FCFA 14 000 000", "reprise intégrale", "3 ans"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 747,
+      "titre": "6. Emprunts obligataires et dettes assimilées — A. Principe",
+      "texte": [
+        "Le SYSCOHADA entend par emprunts et dettes assimilées, les ressources financières externes contractées auprès d'établissements de crédit et/ou de tiers divers, affectées de façon durable au financement des moyens d'exploitation ou de production. Cette dette doit avoir une origine supérieure à un an.",
+        "Les intérêts des emprunts et dettes dus à la fin de l'exercice sont rattachés à l'exercice par l'intermédiaire du compte 166 Intérêts courus.",
+        "Pour les emprunts assortis d'une caution, d'une garantie ou d'un gage, le montant et la portée de la sûreté doivent être indiqués dans la Note annexe 1 engagements hors bilan.",
+        "Les échéances des dettes sont suivies comme indiqué au § 704."
+      ],
+      "comptes": ["16", "166"],
+      "mots_cles": ["emprunts", "dettes assimilées", "ressources financières externes", "établissements de crédit", "financement durable", "intérêts courus", "compte 166", "Note annexe 1", "engagements hors bilan"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 748,
+      "titre": "Emprunt-obligation — Définition",
+      "texte": [
+        "L'emprunt-obligation est un emprunt à long terme, contracté par une entité et divisé en parts égales représentées par des titres (obligations) dont le remboursement est échelonné sur la durée de l'emprunt."
+      ],
+      "comptes": ["161"],
+      "mots_cles": ["emprunt-obligation", "long terme", "obligations", "titres", "remboursement échelonné"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 749,
+      "titre": "Obligations — Article 779 AUSCGIE",
+      "texte": [
+        "Selon l'article 779 de l'Acte uniforme relatif au droit des sociétés commerciales et du GIE, les obligations sont des titres négociables qui, dans une même émission, confèrent les mêmes droits de créance pour une même valeur nominale.",
+        "L'émission d'obligations n'est permise qu'aux sociétés anonymes et aux GIE constitués de sociétés anonymes ayant deux années d'existence et qui ont établi deux Bilans régulièrement approuvés par les actionnaires (art. 780 AUSCGIE)."
+      ],
+      "comptes": ["161"],
+      "mots_cles": ["obligations", "titres négociables", "article 779", "article 780", "AUSCGIE", "SA", "GIE", "deux années d'existence"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 750,
+      "titre": "Conditions d'émission des obligations",
+      "texte": [
+        "L'émission d'obligations est interdite aux sociétés dont le capital n'est pas intégralement libéré (art. 781 AUSCGIE). Est également interdite l'émission d'obligations à lots (art. 782 AUSCGIE).",
+        "L'émission d'obligations est du ressort exclusif de l'assemblée générale des actionnaires. L'assemblée générale peut déléguer au conseil d'administration ou à l'administrateur général, selon le cas, les pouvoirs nécessaires pour procéder à l'émission d'obligations en une ou plusieurs fois dans le délai de deux ans, et pour en arrêter les modalités (Article 783 AUSCGIE)."
+      ],
+      "comptes": ["161"],
+      "mots_cles": ["émission d'obligations", "capital intégralement libéré", "article 781", "article 782", "article 783", "AUSCGIE", "assemblée générale", "obligations à lots"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-2",
+      "titre": "Comptabilisation des emprunts obligataires — Émission ou ouverture souscription",
+      "texte": [
+        "Exemple : Une entité émet à FCFA 9 800, 5 000 obligations de FCFA 10 000 à 5%. Toutes les obligations sont souscrites et immédiatement libérées.",
+        "Solution : Débit Obligataires, obligations à placer (47131) : 49 000 000 — Crédit Emprunts obligataires (161) : 49 000 000. (Ouverture de la souscription : 5 000 x 9 800).",
+        "Débit Obligataires, comptes de souscription (47132) : 49 000 000 — Crédit Obligataires, obligations à placer (47131) : 49 000 000. (Souscriptions : 5 000 x 9 800).",
+        "Débit Banques (52) : 49 000 000 — Crédit Obligataires, comptes de souscription (47132) : 49 000 000. (Libération).",
+        "L'entité doit constater en comptabilité toutes les étapes, du lancement à la libération de l'emprunt obligataire suivant le schéma d'écritures :",
+        "Décision de l'assemblée générale : Débit Obligataires, obligations à placer (47131) — Crédit Emprunts obligataires (161).",
+        "Lorsque l'émission et la souscription se font simultanément, une autre solution consiste à comptabiliser sans passer par le compte 47131 : Débit Obligataires, comptes de souscription (47132) — Crédit Emprunts obligataires (161). (Prix d'émission).",
+        "a) Souscription : Débit Obligataires, comptes de souscription (47132) — Crédit Obligataires, obligations à placer (47131).",
+        "b) Libération : Débit Comptes de trésorerie (5) — Crédit Obligataires, comptes de souscription (47132).",
+        "c) Frais d'émission : Débit Frais d'émission d'emprunts (6316) — Crédit Comptes de trésorerie (5)."
+      ],
+      "comptes": ["47131", "47132", "161", "52", "5", "6316"],
+      "mots_cles": ["emprunt obligataire", "émission", "souscription", "libération", "frais d'émission", "compte 47131", "compte 47132", "compte 161", "compte 6316"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-2-exemple",
+      "titre": "Exemple — Émission d'obligations avec souscription partielle",
+      "texte": [
+        "L'assemblée générale a décidé le 1er mars d'émettre 10 000 obligations de FCFA 10 000 remboursables au prix de FCFA 10 200 à 6%.",
+        "- 20 avril, 8 000 obligations ont été souscrites ;",
+        "- 15 juin, les 8 000 obligations souscrites ont été entièrement libérées par chèque ;",
+        "- 30 juin, les frais d'émission de FCFA 15 par obligation souscrite, ont été prélevés à la banque ;",
+        "- 31 décembre, aucune nouvelle souscription n'a eu lieu.",
+        "Solution :",
+        "01/03 — Débit Obligataires, obligations à placer (47131) : 100 000 000 — Crédit Emprunts obligataires ordinaires (1611) : 100 000 000. (10 000 x 10 000).",
+        "20/04 — Débit Obligataires, comptes de souscription (47132) : 80 000 000 — Crédit Obligataires, obligations à placer (47131) : 80 000 000. (8 000 x 10 000).",
+        "15/06 — Débit Banques (52) : 80 000 000 — Crédit Obligataires, comptes de souscription (47132) : 80 000 000.",
+        "30/06 — Débit Frais d'émission des emprunts (6316) : 120 000 — Crédit Banques (52) : 120 000. (8 000 x 15).",
+        "Au bilan : Passif emprunts obligataires FCFA 100 000 000, Actif Obligataires obligations à placer : 80 000 000. Emprunts obligataires non souscrits FCFA 20 000 000.",
+        "Au 31 décembre, une écriture de FCFA 20 000 000 doit être passée pour constater l'emprunt effectif. Cette écriture sera contrepassée le 1er janvier : Débit Emprunts obligataires ordinaires (1611) : 20 000 000 — Crédit Obligataires, obligations à placer (47131) : 20 000 000."
+      ],
+      "comptes": ["47131", "47132", "1611", "52", "6316"],
+      "mots_cles": ["exemple", "émission d'obligations", "souscription partielle", "10 000 obligations", "FCFA 10 000", "frais d'émission", "emprunt effectif"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-3",
+      "titre": "Émission sur couverte — Souscription dépassant le montant de l'émission",
+      "texte": [
+        "Lorsque les souscriptions sont recueillies à plusieurs endroits, elles peuvent dépasser le nombre de titres à émettre. Pour faire face à cette éventualité, un certain nombre d'obligations est souscrit à titre irréductible, le surplus est réparti proportionnellement aux demandes à titre réductible.",
+        "Dans cette hypothèse, la libération se fait en principe par fractions : la première à la souscription, en cas de réduction des souscriptions les versements correspondants seront restitués ; la seconde, lors de la répartition des titres.",
+        "Exemple : Une entité émet le 15 janvier à FCFA 9 000, 15 000 obligations de FCFA 10 000, 5% à libérer de FCFA 2 000 par chèque à la souscription et de FCFA 7 000 par chèque à la répartition des titres. Il a été précisé que toute souscription inférieure ou égale à 50 obligations l'est à titre irréductible. L'entité a recueilli 16 000 souscriptions le 15 mai. La répartition des 15 000 titres a eu lieu le 31 mai ainsi que la restitution des fonds versés par les souscripteurs à titre réductible.",
+        "Solution :",
+        "15/01 — Débit (47131) : 135 000 000 — Crédit (1611) : 135 000 000. (15 000 x 9 000).",
+        "Débit (47132) : 135 000 000 — Crédit (47131) : 135 000 000.",
+        "15/05 — Débit Banques (52) : 32 000 000 — Crédit Obligataires, comptes de souscription (47132) : 32 000 000. (16 000 x 2 000).",
+        "31/05 — Débit Banques (52) : 105 000 000 — Crédit Obligataires, comptes de souscription (4713) : 105 000 000. Répartition des titres (15 000 x 7 000).",
+        "31/05 — Restitution des souscriptions réductibles : Débit Obligataires, comptes de souscription (4713) : 2 000 000 — Crédit Banques (52) : 2 000 000. (1 000 x 2 000)."
+      ],
+      "comptes": ["47131", "47132", "4713", "1611", "52"],
+      "mots_cles": ["émission sur couverte", "souscription irréductible", "souscription réductible", "répartition", "restitution", "15 000 obligations"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-4",
+      "titre": "e) Amortissement des obligations sur le fonds de roulement",
+      "texte": [
+        "Les obligations émises peuvent être remboursées en une seule fois lors de l'arrivée du terme. Mais en général, le remboursement se fait annuellement en même temps que l'intérêt calculé sur le capital restant dû.",
+        "Ces deux opérations : le paiement des intérêts et le remboursement d'une fraction de l'emprunt, constituent le service de l'emprunt en comptabilité.",
+        "Les intérêts se calculent sur la valeur nominale et non sur le prix d'émission ou la valeur de remboursement. Ces intérêts sont appelés coupon.",
+        "Les intérêts sont passibles d'une imposition fiscale spécifique à chaque État partie. Au Sénégal, les produits des obligations sont passibles d'une retenue à la source au titre de l'impôt sur le revenu des valeurs mobilières (IRVM), au taux de 13% non libératoire. Ce taux est ramené à 6% libératoire, si la durée de l'emprunt est supérieure à 5 ans. Pour les exemples proposés, il a été retenu un taux de 13% pour le calcul de l'IRVM à inscrire au compte 4423 Impôts et taxes recouvrables sur des obligataires."
+      ],
+      "comptes": ["161", "4423", "6711"],
+      "mots_cles": ["amortissement des obligations", "service de l'emprunt", "intérêts", "coupon", "valeur nominale", "IRVM", "13%", "6%", "compte 4423", "fonds de roulement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-5",
+      "titre": "Modalités de remboursement des emprunts obligataires",
+      "texte": [
+        "L'amortissement de l'emprunt est l'opération qui consiste à éteindre la dette en remboursant chaque année un certain nombre d'obligations. Cet amortissement est qualifié de financier par opposition à l'amortissement comptable.",
+        "Lorsqu'il s'agit d'amortissement comptable, le compte figure à l'actif tandis que lorsqu'il s'agit d'amortissement financier, le compte figure au passif du bilan. L'amortissement de l'emprunt peut s'effectuer de plusieurs façons :",
+        "- le remboursement peut se faire in fine, c'est-à-dire que toutes les obligations sont remboursées en bloc à l'expiration de la durée de l'emprunt. Les intérêts servis annuellement ainsi que le rattachement de la prime de remboursement à l'exercice s'il y a lieu sont identiques ;",
+        "- le remboursement peut se faire par amortissement constant. Dans ce cas, le nombre d'obligations à rembourser chaque année est identique. Nombre d'obligations à rembourser chaque année = N / d (N = nombre d'obligations, d = durée de l'emprunt). Le service de l'emprunt varie d'une année à l'autre ;",
+        "- le remboursement peut se faire par annuité constante, c'est-à-dire que le service de l'emprunt (intérêts + amortissement de l'emprunt) est constant. Formule : Annuité constante = NV × i / (1 - (1+i)^(-n)). (a = annuité, N = nombre d'obligations, V = valeur nominale, i = taux d'intérêt, d = durée).",
+        "NB : S'il y a une différence entre la valeur nominale et la valeur de remboursement, il faut recalculer le taux d'intérêt sur la valeur de remboursement : Taux = (Coupon x 100) / Valeur de remboursement.",
+        "Le coupon correspond au revenu minimum de l'obligation : Coupon = Valeur nominale x Taux d'intérêt nominal.",
+        "Le nombre de titres amortis au titre de la première année est déterminé : (Annuité remboursement – Coupons totaux payés) / Valeur unitaire remboursement.",
+        "Le nombre de titres amortis à partir de la 2ème année sera calculé par application de la progression géométrique au taux de 1 + intérêts éventuellement corrigés si la valeur de remboursement est différente de la valeur nominale."
+      ],
+      "comptes": ["161"],
+      "mots_cles": ["remboursement", "in fine", "amortissement constant", "annuité constante", "coupon", "prime de remboursement", "formule", "progression géométrique", "valeur nominale", "valeur de remboursement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-5-exemple",
+      "titre": "Exemple — Tableaux d'amortissement d'emprunt obligataire",
+      "texte": [
+        "Soit un emprunt de 3 000 obligations de nominal FCFA 10 000 à 9% pour 5 ans. Les obligations sont émises à FCFA 9 950 et remboursables à FCFA 10 100, les coupons sont payables le 31 décembre de chaque année.",
+        "Méthode de remboursement in fine : Les coupons vivants sont constants (2 700 000 par an = 3 000 x 10 000 x 9%). L'amortissement de 30 300 000 (3 000 x 10 100) se fait en totalité à l'échéance 5. Primes de remboursement (compte 6714) à rattacher annuellement = (3 000 x 150) / 5 = 90 000.",
+        "Méthode d'amortissement constant : Nombre de titres amortis annuellement = 3 000 / 5 = 600. Coupon unitaire = 10 000 x 9% = 900. Amortissement unitaire = 600 x 10 100 = 6 060 000. Total amortissement 30 300 000. Primes annuelles = 600 x (10 100 - 9 950) = 90 000.",
+        "Méthode d'annuité constante : Taux d'intérêt sur valeur de remboursement = (900 x 100) / 10 100 = 8,910891%. Annuité constante = 3 000 x 10 100 x 0,08910891 / (1 - 1,08910891^(-5)) = 7 771 899. Titres amortis année 1 = (7 771 899 - 2 700 000) / 10 100 = 502. Années suivantes par progression géométrique : année 2 = 547, année 3 = 596, année 4 = 649, année 5 = 706. Primes de remboursement par année : 75 300, 82 050, 89 400, 97 350, 105 900."
+      ],
+      "comptes": ["161", "6714"],
+      "mots_cles": ["exemple", "tableau d'amortissement", "in fine", "amortissement constant", "annuité constante", "3 000 obligations", "FCFA 10 000", "9%", "5 ans", "prime de remboursement", "compte 6714"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-6",
+      "titre": "Schéma des écritures de remboursement des obligations",
+      "texte": [
+        "Le remboursement des obligations est échelonné sur toute la durée de l'emprunt. L'amortissement des obligations, c'est-à-dire leur remboursement se fait soit par tirage au sort, soit par rachats en bourse. Les fonds nécessaires à l'amortissement sont prélevés soit sur le fonds de roulement, soit sur les bénéfices.",
+        "a) Rattachement des primes de remboursement et des intérêts à l'exercice si la date d'échéance du service de l'emprunt ne coïncide pas avec celle de la clôture de l'exercice : Débit Intérêts des emprunts obligataires (6711), Primes de remboursement (6714) — Crédit Intérêts courus sur emprunts obligataires (1661). NB : Cette écriture est extournée au 1er janvier.",
+        "b) Constatation des primes de remboursement et du coupon échus : Débit Intérêts des emprunts obligataires (6711), Primes de remboursement (6714) — Crédit État, impôts et taxes recouvrables sur des obligataires (4423), Emprunts obligataires ordinaires (1611).",
+        "Paiement des obligations : Débit Emprunts obligataires ordinaires (1611) — Crédit Comptes de trésorerie (5)."
+      ],
+      "comptes": ["6711", "6714", "1661", "4423", "1611", "5"],
+      "mots_cles": ["remboursement", "obligations", "tirage au sort", "rachat en bourse", "primes de remboursement", "coupons", "rattachement", "extourne", "compte 6711", "compte 6714", "compte 1661"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-7",
+      "titre": "Exemple — Rattachement des intérêts et paiement des coupons",
+      "texte": [
+        "Une entité a émis un emprunt obligation le 1er avril N. Le 31 mars N+1, l'entité met en paiement 8 000 coupons n°1 de FCFA 500 et retient la taxe sur les revenus des valeurs mobilières de 13%. 30 avril N+1, l'entité émet un chèque pour payer les coupons.",
+        "Solution :",
+        "31/12/N — Rattachement : Débit Intérêts des emprunts obligataires (6711) : 3 000 000 — Crédit Intérêts courus sur emprunts obligataires (1661) : 3 000 000. (8 000 x 500 x 9/12).",
+        "01/01/N+1 — Extourne : Débit (1661) : 3 000 000 — Crédit (6711) : 3 000 000.",
+        "31/03/N+1 — Mise à disposition des coupons : Débit Intérêts des emprunts obligataires (6711) : 4 000 000 (8 000 x 500) — Crédit État, impôts et taxes recouvrables sur des obligataires (4423) : 520 000 (8 000 x 500 x 13%), Emprunts obligataires ordinaires (1611) : 3 480 000 (8 000 x 500 x 87%).",
+        "30/04/N+1 — Paiement : Débit Emprunts obligataires ordinaires (1611) : 3 480 000 — Crédit Banques (52) : 3 480 000."
+      ],
+      "comptes": ["6711", "1661", "4423", "1611", "52"],
+      "mots_cles": ["exemple", "rattachement intérêts", "coupons", "IRVM", "13%", "extourne", "paiement", "8 000 coupons"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-8",
+      "titre": "f) Amortissement des obligations par prélèvement sur le bénéfice",
+      "texte": [
+        "L'amortissement se fait par prélèvement sur la trésorerie. On parle d'amortissement sur le fonds de roulement. Pour éviter une diminution du fonds de roulement, l'entité peut le reconstituer par une dotation à une réserve d'un montant égal à celui des obligations remboursées. Cette dotation est en principe prélevée du bénéfice. Toutefois, l'assemblée générale peut décider de la prélever sur les réserves libres ou sur le report à nouveau. On parle dans ce cas d'amortissement par prélèvement sur le bénéfice."
+      ],
+      "comptes": ["161", "11", "12"],
+      "mots_cles": ["amortissement par prélèvement", "bénéfice", "fonds de roulement", "réserve", "obligations remboursées", "assemblée générale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-8-suite",
+      "titre": "Écritures d'amortissement par prélèvement et exemple",
+      "texte": [
+        "Amortissement par prélèvement sur fonds de roulement doit être constaté lors du paiement : Débit Emprunts obligataires (161) — Crédit Comptes de trésorerie (5).",
+        "Amortissement par prélèvement sur le bénéfice : Débit Résultat en instance d'affectation (130) — Crédit Réserves pour obligations amorties (1182).",
+        "Exemple : Une entité a émis le 1er janvier N, 10 000 obligations à 5%, de nominal FCFA 10 000 au prix d'émission de FCFA 9 600 sur une durée de 10 ans. Le 31 décembre N, l'entité rembourse par chèque 463 obligations. Le 30 juin N+1, l'assemblée générale décide de répartir le bénéfice de l'exercice N s'élevant à FCFA 25 000 000 : dotation à la réserve légale 10% ; dotation à la réserve des obligations amorties pour le montant du remboursement des obligations au 31 décembre N ; le solde à titre de dividendes aux associés.",
+        "31/12/N — Remboursement : Débit Emprunts obligataires (161) : 4 630 000 — Crédit Banques (52) : 4 630 000. (463 x 10 000).",
+        "30/06/N+1 — Affectation du résultat : Débit Résultat en instance d'affectation (130) : 25 000 000 — Crédit Réserve légale (111) : 2 500 000, Réserves pour obligations amorties (1182) : 4 630 000, Associés dividendes à payer (465) : 17 870 000."
+      ],
+      "comptes": ["161", "5", "130", "1182", "52", "111", "465"],
+      "mots_cles": ["exemple", "amortissement par prélèvement", "réserve pour obligations amorties", "compte 1182", "affectation du résultat", "réserve légale", "dividendes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-9",
+      "titre": "g) Rachat par la société de ses propres obligations",
+      "texte": [
+        "Les dispositions de l'Acte uniforme relatives au droit des sociétés commerciales et du GIE permettent le rachat par la société émettrice de ses propres obligations en vue de les annuler (art. 784). Cette possibilité de rachat doit figurer dans le contrat d'emprunt par prudence.",
+        "L'entité fait jouer cette disposition lorsque les obligations sont cotées au-dessous de la valeur de remboursement. Les titres rachetés sont annulés. Si les obligations ne sont pas cotées, la société peut toujours les racheter. Dans ce cas, elle doit les conserver jusqu'à leur sortie au tirage au sort. Les obligations rachetées doivent être inscrites au compte 5031 Obligations émises par la société et rachetées par elle jusqu'à la date de l'amortissement.",
+        "Au plan fiscal, les dispositions de certains États-parties exonèrent de l'impôt sur le revenu des valeurs mobilières, les coupons attachés aux obligations rachetées par la société émettrice.",
+        "En règle générale, une plus-value n'est mise en évidence que lors de la réalisation. Pour les obligations rachetées, la réalisation de la plus-value n'apparaît qu'au moment de leur amortissement. Cette plus-value doit être inscrite au compte 841 Produits HAO constatés dans la mesure où cette opération ne se rapporte pas à l'activité normale de l'entité.",
+        "Si une perte est dégagée au moment de l'amortissement des obligations rachetées par l'entité, le compte 831 Charges HAO constatées doit être utilisé.",
+        "Le prix des obligations rachetées comprend : la valeur du capital, appelée valeur au pied du coupon ; les intérêts ou coupons courus jusqu'à la date du rachat inscrits au compte 6711 Intérêts des emprunts obligataires. En revanche à compter de la date du rachat, les coupons découlant des obligations rachetées par la société doivent être déduits des frais financiers à l'échéance."
+      ],
+      "comptes": ["5031", "841", "831", "6711"],
+      "mots_cles": ["rachat d'obligations", "article 784", "compte 5031", "annulation", "plus-value", "produits HAO", "compte 841", "charges HAO", "compte 831", "valeur au pied du coupon"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-9-exemple",
+      "titre": "Exemple — Rachat d'obligations",
+      "texte": [
+        "Une entité avait émis 75 000 obligations de nominal FCFA 10 000, à 5%, remboursables en 15 ans. Elle en a racheté le 31 mars 110 pour FCFA 1 001 000 par chèque. Lors du premier tirage, 50 obligations rachetées par l'entité figurent parmi les 526 titres amortis et payés par chèque le 30 novembre.",
+        "31/03 — Rachat : Débit Obligations émises par la société et rachetées par elle (5031) : 987 250, Intérêts des emprunts obligataires (6711) : 13 750 (110 x 10 000 x 5% x 3/12) — Crédit Banques (52) : 1 001 000.",
+        "30/11 — Amortissement : Débit Emprunts obligataires (161) : 5 260 000 (526 x 10 000) — Crédit Banques (52) : 4 760 000 (476 x 10 000), Obligations émises rachetées (5031) : 448 750 (50 x 8 975), Produits HAO constatés (841) : 51 250 (50 x (10 000 - 8 975))."
+      ],
+      "comptes": ["5031", "6711", "52", "161", "841"],
+      "mots_cles": ["exemple", "rachat", "obligations", "75 000 obligations", "tirage au sort", "plus-value HAO", "amortissement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-10",
+      "titre": "h) Conversion des obligations en d'autres obligations",
+      "texte": [
+        "Au moment de l'émission des obligations, l'entité peut prévoir une clause de conversion des obligations ou de remboursement anticipé de toutes les obligations non amorties à une date donnée.",
+        "La conversion a pour but de remplacer un emprunt dont le taux est élevé par un autre d'un taux d'intérêt plus faible. Les obligataires peuvent opter entre l'échange de leurs titres anciens contre de nouveaux et le remboursement de leurs titres.",
+        "Les primes de remboursement de l'ancien emprunt non soldé doivent être considérées comme des frais d'émission inhérent au nouvel emprunt.",
+        "Au plan fiscal, l'impôt sur le revenu des valeurs mobilières est dû sur la différence entre le prix de remboursement du nouvel emprunt et le prix d'émission de l'ancien emprunt selon les dispositions fiscales de certains États parties.",
+        "Exemple : Une entité avait émis un emprunt obligation de 5% dont la situation au 31 décembre N est : 161 Emprunts obligataires 5% FCFA 67 472 500 (émis à 9 850 remboursables à FCFA 10 000). Primes de remboursement figurant dans la Note 1 : 1 027 500. Elle décide de convertir en un emprunt de 4% par émission de 9 000 obligations de FCFA 10 000 à 9 750. 4 600 obligations sont à échanger et 2 250 à rembourser, frais d'émission prélevés par la banque FCFA 6 500 000. IRVM 13%."
+      ],
+      "comptes": ["161", "1611", "47132", "47133", "47135", "6316", "4423"],
+      "mots_cles": ["conversion d'obligations", "remplacement d'emprunt", "taux d'intérêt", "échange de titres", "remboursement anticipé", "primes de remboursement", "frais d'émission"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-11",
+      "titre": "i) Conversion des obligations en actions",
+      "texte": [
+        "Selon l'article 822 de l'AUSCGIE, les sociétés par actions peuvent émettre des valeurs mobilières donnant accès au capital.",
+        "Le contrat d'émission d'obligations peut prévoir que les obligataires pourront, à tout moment ou à une ou plusieurs dates déterminées, convertir leurs obligations en actions selon un rapport déterminé à l'avance. Les obligations émises portent alors le nom d'obligations convertibles en actions (OCA) ou d'obligations échangeables en actions.",
+        "La conversion des obligations en actions ne peut avoir lieu qu'au gré des porteurs. Les obligations dont les porteurs n'ont pas demandé la conversion sont remboursables en numéraire, comme des obligations ordinaires.",
+        "L'assemblée générale extraordinaire doit donner son autorisation préalablement à l'émission des obligations au vu des rapports du conseil d'administration et du commissaire aux comptes. Cette autorisation doit comporter, au profit des porteurs d'obligations convertibles, renonciation expresse des actionnaires à leur droit préférentiel de souscription.",
+        "A compter de l'émission des valeurs mobilières donnant accès au capital, la société ne peut : modifier sa forme et son objet (sauf autorisation article 822-7 AUSCGIE) ; modifier les règles de répartition de ses bénéfices ; amortir le capital ; créer des actions de préférences ; procéder à une augmentation de capital réservée (sauf autorisation article 822-8 AUSCGIE) ; distribuer des réserves, primes d'apports, d'émission ou de fusion, sauf virement au compte 1134 Réserves des valeurs mobilières donnant accès au capital.",
+        "La conversion ne peut jamais être imposée aux obligataires. La différence entre le prix d'émission des obligations et la valeur nominale des actions est appelée prime de conversion."
+      ],
+      "comptes": ["1612", "1013", "1054", "1134"],
+      "mots_cles": ["obligations convertibles en actions", "OCA", "article 822", "AUSCGIE", "conversion", "prime de conversion", "assemblée générale extraordinaire", "droit préférentiel", "valeurs mobilières donnant accès au capital"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-12",
+      "titre": "Comptabilisation de la conversion sans prime de remboursement",
+      "texte": [
+        "L'opération de conversion des obligations sans prime de remboursement ne présente aucune difficulté. La valeur d'émission des obligations correspond à la valeur des obligations convertibles.",
+        "Schéma des écritures :",
+        "Conversion : Débit Emprunts obligataires convertibles (1612) — Crédit Capital souscrit, appelé, versé, non amorti (1013), Primes de conversion (1054).",
+        "Remboursement des obligations non converties : Débit Emprunts obligataires convertibles (1612) — Crédit Banques (52)."
+      ],
+      "comptes": ["1612", "1013", "1054", "52"],
+      "mots_cles": ["conversion", "sans prime de remboursement", "écritures", "compte 1612", "compte 1013", "compte 1054"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-13",
+      "titre": "Comptabilisation de la conversion avec prime de remboursement",
+      "texte": [
+        "Compte tenu du fait que tous les obligataires n'accepteront pas la conversion, une provision pour risques doit être constituée annuellement pour tenir compte des remboursements éventuels. Cette provision correspond à la différence entre le prix de remboursement et le prix d'émission des obligations qui ne seraient pas converties en actions.",
+        "Lors de la conversion, la provision sans objet doit être reprise.",
+        "La différence entre le prix de remboursement et la valeur d'émission, correspondant à la prime de remboursement des obligations non converties est une charge financière à inscrire au compte 6714 Primes de remboursement des obligations.",
+        "Schéma des écritures avec prime de remboursement :",
+        "Ouverture souscription : Débit Obligataires, obligations à placer (47131) — Crédit Emprunts obligataires convertibles (1612).",
+        "Souscription : Débit Obligataires, comptes de souscription (47132) — Crédit Obligataires, obligations à placer (47131).",
+        "Libération : Débit Comptes de trésorerie (5) — Crédit Obligataires, comptes de souscription (47132).",
+        "Annuellement, provision pour remboursement : Débit Dotations aux provisions (69) — Crédit Provisions pour risques et charges (19).",
+        "Conversion des obligations en actions : Débit Emprunts obligataires convertibles (1612) (prix émission) — Crédit Capital souscrit, appelé, versé, non amorti (1013) (valeur nominale action), Primes de conversion (1054) (prix émission obligation - valeur nominale action).",
+        "Remboursement obligations non converties : Débit Emprunts obligataires convertibles (1612) (prix émission), Primes de remboursement des obligations (6714) (prix remboursement - prix émission) — Crédit Banques (52). Et : Débit Provisions pour risques et charges (19) — Crédit Reprises de provisions (79). (Provisions sans objet).",
+        "Exemple : Une société a émis 5 000 obligations convertibles de FCFA 10 200 à FCFA 10 000. Le contrat prévoit 5 obligations contre 3 actions de FCFA 10 000 de nominal. 31/12/N provision pour 500 non convertis. 31/12/N+1 provision ajustée pour 800. 30/06/N+2 conversion de 3 500 obligataires. 30/07/N+2 remboursement de 1 500 par chèque.",
+        "Solution : 01/01/N — Débit Banques (52) : 50 000 000 — Crédit Emprunts obligataires convertibles (1612) : 50 000 000. 31/12/N — Provision : Débit (69) : 100 000 — Crédit (19) : 100 000. (500 x (10 200 - 10 000)). 31/12/N+1 — Ajustement : Débit (69) : 60 000 — Crédit (19) : 60 000. 31/12/N+2 — Conversion : Débit (1612) : 35 000 000 — Crédit (1013) : 21 000 000 (3 500 x 3/5 x 10 000), (1054) : 14 000 000. 30/07/N+2 — Remboursement : Débit (1612) : 15 000 000, (6714) : 300 000 — Crédit (52) : 15 300 000. Et : Débit (19) : 160 000 — Crédit (79) : 160 000."
+      ],
+      "comptes": ["47131", "47132", "1612", "5", "69", "19", "1013", "1054", "6714", "52", "79"],
+      "mots_cles": ["conversion avec prime", "provision pour risques", "prime de remboursement", "obligations convertibles", "écritures", "exemple", "compte 6714", "reprise de provisions"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "753-14",
+      "titre": "j) Obligations à bons de souscription d'actions",
+      "texte": [
+        "Les obligations à bons de souscription d'actions sont des valeurs mobilières composées d'une obligation, accompagnée d'un ou de plusieurs bons de souscription d'actions, qui donnent le droit de souscrire à une augmentation de capital, dans des conditions, et à une ou plusieurs dates prévues à l'avance. Les bons de souscription sont, dans la plupart des cas, négociables séparément des obligations.",
+        "Lors de la souscription, l'emprunt obligataire est enregistré comme un emprunt ordinaire compte 1611.",
+        "La contrepartie des bons n'est pas constatée car, du point de vue juridique, elle ne génère pas de dettes.",
+        "Lors de l'exercice des bons, l'augmentation de capital est comptabilisée au crédit des comptes 1013 Capital souscrit, appelé, versé, non amorti et 1051 Prime d'émission. En cas de péremption des bons aucune écriture n'est passée.",
+        "Ces bons peuvent aussi être émis de manière autonome. Le produit de l'émission des bons de souscription d'actions autonome est comptabilisé au crédit du compte 1051 Prime d'émission par le débit d'un compte de trésorerie. Cette affectation est définitive, même en cas de péremption des bons."
+      ],
+      "comptes": ["1611", "1013", "1051"],
+      "mots_cles": ["obligations à bons de souscription", "OBSA", "bons de souscription d'actions", "augmentation de capital", "prime d'émission", "péremption", "compte 1611", "compte 1013", "compte 1051"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 754,
+      "titre": "k) Autres dettes — Avances reçues et comptes courants bloqués",
+      "texte": [
+        "Le compte 164 Avances reçues et comptes courants bloqués enregistre les avances faites par les associés, l'entité-mère et les entités du groupe, dès lors qu'elles ont fait l'objet d'une convention écrite de blocage."
+      ],
+      "comptes": ["164"],
+      "mots_cles": ["avances reçues", "comptes courants bloqués", "compte 164", "associés", "entité-mère", "convention de blocage"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 755,
+      "titre": "Dépôts et cautionnements reçus",
+      "texte": [
+        "Les dépôts et cautionnements reçus sont inscrits au compte 165 Dépôts et cautionnements reçus."
+      ],
+      "comptes": ["165"],
+      "mots_cles": ["dépôts", "cautionnements reçus", "compte 165"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 756,
+      "titre": "Avances assorties de conditions particulières",
+      "texte": [
+        "Le compte 167 Avances assorties de conditions particulières est destiné à enregistrer les sommes mises à la disposition des entités par les associés, les dirigeants, l'État ou d'autres organismes et soumises à des conditions particulières de remboursement ou d'incorporation au capital."
+      ],
+      "comptes": ["167"],
+      "mots_cles": ["avances", "conditions particulières", "compte 167", "incorporation au capital", "remboursement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 757,
+      "titre": "Principes d'enregistrement des emprunts et dettes",
+      "texte": [
+        "Les comptes d'emprunts et dettes assimilées sont régis pour l'essentiel par les mêmes principes d'enregistrement comptable que les prêts et créances. Leur mode d'évaluation en monnaie locale ou étrangère a été développé aux §§ 182 et suivants.",
+        "Les moins-values de change constatées en fin d'exercice sur les emprunts qui viennent à échéance au cours de l'exercice suivant doivent être enregistrées dans les livres de l'entité par le biais des comptes 697 Dotations aux provisions financières et 194 Provisions pour pertes de change."
+      ],
+      "comptes": ["16", "697", "194"],
+      "mots_cles": ["emprunts", "dettes assimilées", "évaluation", "monnaie étrangère", "moins-values de change", "provisions pour pertes de change", "compte 697", "compte 194"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 758,
+      "titre": "B. Subdivision du compte 16 Emprunts et dettes assimilées",
+      "texte": [
+        "Les comptes 16 Emprunts et dettes assimilées sont subdivisés comme suit :",
+        "161 - Emprunts obligataires : 1611 Emprunts obligataires ordinaires ; 1612 Emprunts obligataires convertibles en actions ; 1613 Emprunts obligataires remboursables en actions ; 1618 Autres emprunts obligataires.",
+        "162 - Emprunts et dettes auprès des établissements de crédit.",
+        "163 - Avances reçues de l'État.",
+        "164 - Avances reçues et comptes courants bloqués.",
+        "165 - Dépôts et cautionnements reçus : 1651 Dépôts ; 1652 Cautionnements.",
+        "166 - Intérêts courus : 1661 Sur emprunts obligataires ; 1662 Sur emprunts et dettes auprès des établissements de crédit ; 1663 Sur avances reçues de l'État ; 1664 Sur avances reçues et comptes courants bloqués ; 1665 Sur dépôts et cautionnements reçus ; 1667 Sur avances assorties de conditions particulières ; 1668 Sur autres emprunts et dettes.",
+        "167 - Avances assorties de conditions particulières : 1671 Avances bloquées pour augmentation du capital ; 1672 Avances conditionnées par l'État ; 1673 Avances conditionnées par les autres organismes africains ; 1674 Avances conditionnées par les organismes internationaux ; 1676 Droits du concédant exigibles en nature.",
+        "168 - Autres emprunts et dettes : 1681 Rentes viagères capitalisées ; 1682 Billets de fonds ; 1683 Dettes consécutives à des titres empruntés ; 1684 Emprunts participatifs ; 1685 Participation des travailleurs aux bénéfices ; 1686 Emprunts et dettes contractés auprès des autres tiers."
+      ],
+      "comptes": ["16", "161", "1611", "1612", "1613", "1618", "162", "163", "164", "165", "1651", "1652", "166", "1661", "1662", "1663", "1664", "1665", "1667", "1668", "167", "1671", "1672", "1673", "1674", "1676", "168", "1681", "1682", "1683", "1684", "1685", "1686"],
+      "mots_cles": ["subdivision", "compte 16", "emprunts obligataires", "établissements de crédit", "avances de l'État", "dépôts", "cautionnements", "intérêts courus", "rentes viagères", "emprunts participatifs"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "759-1",
+      "titre": "Dettes de location-acquisition — Renvoi",
+      "texte": [
+        "Le compte 17 Dettes de location-acquisition (crédit-bail et contrats assimilés) est étudié aux §§ 191 et suivants."
+      ],
+      "comptes": ["17"],
+      "mots_cles": ["dettes de location-acquisition", "crédit-bail", "compte 17"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "759-2",
+      "titre": "Dettes liées à des participations — Renvoi et exemple général",
+      "texte": [
+        "Le compte 18 Dettes liées à des participations et comptes de liaison des établissements et sociétés en participation est étudié aux §§ 1161 s. et 1200 s. ; le compte de liaison et succursales au § 509 et les sociétés en participation aux §§ 1161 s.",
+        "Exemple général : Le 1er janvier N un ensemble immobilier est acquis pour FCFA 28 000 000 dont FCFA 12 000 000 pour le terrain. Les autres dépenses payées par chèque sont : droits d'enregistrement (15%) FCFA 4 200 000 ; honoraires du notaire (dont TVA 78 390) 391 950 ; frais d'actes 78 000 ; commissions versées au démarcheur 1 200 000 ; frais de rénovation indispensables à la mise en service : frais architecture (dont TVA 256 230) 1 537 380, dépenses grosses réparations (dont TVA 870 000) 5 000 000 ; frais financiers rattachables 220 000. Taux d'amortissement 5%.",
+        "L'entité DIOP a financé l'ensemble par un crédit d'une banque américaine pour les 3/4 soit 42 000 dollars au cours de FCFA 500 le dollar, remboursable à 10% sur 5 ans. Le fournisseur d'immobilisations consent un crédit de FCFA 7 000 000 sans intérêt sur 3 ans. Le 1er juillet N, pour financer des achats de marchandises de FCFA 6 000 000, un crédit de 3 ans à 5% a été obtenu.",
+        "Frais accessoires à imputer : droits d'enregistrement 4 200 000, honoraires notaire HT 313 560, frais d'actes 78 000, commissions démarcheur 1 200 000. Total 5 791 560.",
+        "01/01/N — Acquisition : Débit Terrains bâtis (223) : 14 482 097, Bâtiments sur sol propre (231) : 24 940 613, État TVA récupérable (4451) : 1 204 620 — Crédit Fournisseurs d'immobilisations (4812) : 7 000 000, Emprunts et dettes auprès des Établissements de crédit (162) : 21 000 000, Banques locales (521) : 12 627 330."
+      ],
+      "comptes": ["18", "223", "231", "4451", "4812", "162", "521"],
+      "mots_cles": ["dettes liées à des participations", "compte 18", "exemple général", "ensemble immobilier", "frais accessoires", "emprunts en devises", "terrain", "bâtiment"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "759-2-suite",
+      "titre": "Exemple général (suite) — Écritures exercices N à N+2",
+      "texte": [
+        "01/07/N — Achat de marchandises : Débit Achat de marchandises hors région (6012) : 6 000 000, Intérêts sur dettes commerciales (6744) : 300 000 — Crédit Fournisseurs (4011) : 6 300 000.",
+        "31/12/N — Charges constatées d'avance (intérêts) : Débit (476) : 150 000 — Crédit (6744) : 150 000.",
+        "31/12/N — Dotation aux amortissements : Débit (6813) : 1 247 031 — Crédit Amortissement bâtiments (2831) : 1 247 031. (24 940 613 x 5%).",
+        "31/12/N — Intérêts sur emprunt bancaire : Débit Intérêts sur dettes diverses (6748) : 2 100 000 — Crédit Intérêts courus (1662) : 2 100 000. (42 000 x 500 x 10%).",
+        "30/06/N+1 — Remboursement fournisseur : Débit (4011) : 2 000 000 — Crédit Banques (521) : 2 000 000.",
+        "30/06/N+1 — Intérêts dettes commerciales : Débit (6744) : 200 000 — Crédit (4011) : 200 000. ((6 000 000 - 2 000 000) x 5%). Et paiement : Débit (4011) : 200 000 — Crédit (521) : 200 000.",
+        "31/12/N+1 — Écart de conversion-passif (dollar passe de 500 à 450) : Débit Emprunts (162) : 1 680 000 — Crédit Écart de conversion-passif (479) : 1 680 000. ((500-450) x 33 600).",
+        "31/12/N+1 — Intérêts emprunt bancaire : Débit (6748) : 1 680 000 — Crédit (1662) : 1 680 000. (33 600 x 500 x 10%).",
+        "31/12/N+2 — Cession de l'ensemble immobilier à FCFA 30 000 000 : Débit Créances sur cession (485) : 30 000 000 — Crédit Produits cessions (822) : 30 000 000. Dotation amortissement : Débit (6813) : 1 247 031 — Crédit (2831) : 1 247 031. Sortie de l'actif : Débit Valeur comptable cession (812) : 39 782 710 — Crédit Terrains bâtis (223) : 14 482 097, Bâtiments (231) : 24 940 613. Et reprise amortissements : Débit (2831) : 3 741 093 — Crédit (812) : 3 741 093."
+      ],
+      "comptes": ["6012", "6744", "4011", "476", "6813", "2831", "6748", "1662", "162", "479", "521", "485", "822", "812", "223", "231"],
+      "mots_cles": ["exemple général", "écritures comptables", "amortissement", "intérêts", "écart de conversion", "cession immobilière", "emprunt en devises", "dollar"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 763,
+      "titre": "7. Provisions pour risques et charges — A. Principe",
+      "texte": [
+        "Les risques et charges sont considérés comme des dettes à inscrire au passif circulant dans les comptes : 4991 Provisions pour risques à court terme pour les opérations relatives à l'exploitation ; 599 Risques provisionnés à caractère financier pour les opérations financières.",
+        "Le SYSCOHADA considère ces dotations comme des décaissements probables à brève échéance, moins d'un an. Elles figurent dans le Compte de résultat comme charges externes avec les comptes : 659 Charges pour provisions pour risques à court terme d'exploitation contrepartie du compte 4991 ; 679 Charges pour provisions pour risques à court terme financières en contrepartie du compte 599."
+      ],
+      "comptes": ["4991", "599", "659", "679"],
+      "mots_cles": ["provisions pour risques", "passif circulant", "court terme", "compte 4991", "compte 599", "compte 659", "compte 679"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 764,
+      "titre": "Provisions pour risques et charges à plus d'un an",
+      "texte": [
+        "Les risques et les charges comportant un élément d'incertitude quant à leur montant ou leur réalisation prévisible à plus d'un an sont à inscrire au passif du Bilan dans le compte 19 Provisions pour risques et charges par l'intermédiaire du compte 69 Dotations aux provisions."
+      ],
+      "comptes": ["19", "69"],
+      "mots_cles": ["provisions pour risques et charges", "plus d'un an", "compte 19", "compte 69", "passif du bilan", "incertitude"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 765,
+      "titre": "Provisions HAO",
+      "texte": [
+        "Si le risque ou la charge est dû à un évènement extraordinaire ou lié à la restructuration de l'entité, la provision doit être constatée dans :",
+        "- le compte 839 Charges pour provisions pour risques à court terme HAO en contrepartie du compte 4998, si la réalisation est prévisible dans un délai de moins d'un an ;",
+        "- le compte 854 Dotations aux provisions pour risques et charges HAO en contrepartie du compte 19 si la réalisation est prévisible dans un délai de plus d'un an.",
+        "Les provisions devenues sans objet sont reprises par les comptes : 759 Reprises de provisions pour risques à court terme d'exploitation ; 779 Reprises de provisions pour risques à court terme financières ; 791 Reprises de provisions et dépréciations d'exploitation ; 797 Reprises de provisions et dépréciations financières ; 849 Reprises de provisions pour risques à court terme HAO ; 864 Reprises de provisions pour risques et charges HAO."
+      ],
+      "comptes": ["839", "4998", "854", "19", "759", "779", "791", "797", "849", "864"],
+      "mots_cles": ["provisions HAO", "événement extraordinaire", "restructuration", "compte 839", "compte 854", "reprises de provisions"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 766,
+      "titre": "Comptabilisation des provisions pour risques et charges",
+      "texte": [
+        "a) Constitution ou réajustement en hausse de la provision :",
+        "Risques et charges à moins d'un an — exploitation : Débit Charges pour provisions pour risques à court terme (659) ou Charges HAO (839) — Crédit Provisions pour risques à court terme (499).",
+        "Risques et charges à moins d'un an — financier : Débit Charges pour provisions pour risques à court terme financier (679) — Crédit Provisions pour risques à c.t. à caractère financier (599).",
+        "Risques et charges à plus d'un an : Débit Dotations aux provisions (69) ou Dotations aux provisions pour risques et charges HAO (854) — Crédit Provisions pour risques et charges (19).",
+        "b) Reprise ou annulation de la provision :",
+        "Risques et charges à moins d'un an — exploitation : Débit Provisions pour risques à court terme (499) — Crédit Reprises de provisions pour risques à court terme (759) ou Reprises provisions HAO (849).",
+        "Risques et charges à moins d'un an — financier : Débit Provisions pour risques à c.t. à caractère financier (599) — Crédit Reprises de provisions pour risques à c.t. financières (779).",
+        "Risques et charges à plus d'un an : Débit Provisions pour risques et charges (19) — Crédit Reprises de provisions (79) ou Reprises provisions HAO (864)."
+      ],
+      "comptes": ["659", "839", "499", "679", "599", "69", "854", "19", "759", "849", "779", "79", "864"],
+      "mots_cles": ["comptabilisation", "provisions pour risques et charges", "constitution", "réajustement", "reprise", "annulation", "court terme", "long terme", "HAO"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "766-exemples",
+      "titre": "Exemples — Provisions pour risques et charges",
+      "texte": [
+        "Exemple 1 : A la suite d'un litige, l'entité a constitué une provision de FCFA 650 000 à la clôture de l'exercice N. En N+1, la provision est réajustée à la hausse à FCFA 800 000. En N+2, le litige est réglé, la perte réelle n'est que de FCFA 600 000.",
+        "31/12/N — Constitution : Débit Dotations aux provisions financières (697) : 650 000 — Crédit Provisions pour litiges (191) : 650 000.",
+        "31/12/N+1 — Réajustement : Débit (697) : 150 000 — Crédit (191) : 150 000. (800 000 - 650 000).",
+        "31/12/N+2 — Annulation provision sans objet : Débit Provisions pour litiges (191) : 800 000 — Crédit Reprises de provisions (79) : 800 000.",
+        "Exemple 2 : A la suite d'un litige avec un client, provision de FCFA 250 000 le 31.12.N. Le 15 mars N+1, les parties conviennent de régler le litige au prix de FCFA 130 000 payé par chèque.",
+        "31/12/N — Débit Charges pour provisions pour risques à court terme (659) : 250 000 — Crédit Provisions pour risques à court terme (499) : 250 000.",
+        "15/03/N+1 — Règlement : Débit Pertes sur créances clients (6511) : 130 000 — Crédit Banques (52) : 130 000.",
+        "31/12/N+1 — Annulation provision sans objet : Débit (499) : 250 000 — Crédit Reprises de provisions pour risques à court terme (759) : 250 000."
+      ],
+      "comptes": ["697", "191", "79", "659", "499", "6511", "52", "759"],
+      "mots_cles": ["exemples", "provision pour litiges", "réajustement", "annulation", "perte réelle", "court terme", "reprise de provision"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 770,
+      "titre": "III. Contrôle externe des ressources durables",
+      "texte": [
+        "Le contrôle externe des ressources durables portera sur la recherche de l'assurance du respect des objectifs suivants :",
+        "Exhaustivité : s'assurer que : le capital est intégralement souscrit ; les réserves résultent de l'affectation des résultats ; toutes les subventions accordées, les dettes et les emprunts ont été pris en compte ; tous les risques, charges et pertes ont fait l'objet de provisions ; les amortissements dérogatoires et autres provisions réglementées figurent dans les états financiers en vertu de dispositions légales ; les dettes de location-acquisition existent et ressortent de contrats ad hoc ; l'intégralité des opérations relatives aux ressources durables a été prise en compte.",
+        "Réalité : s'assurer notamment que : le capital résulte des souscriptions et qu'il est matérialisé par des titres (vérifier le registre des actions pour la SA et statuts SARL et autres sociétés)."
+      ],
+      "mots_cles": ["contrôle externe", "audit", "exhaustivité", "réalité", "ressources durables", "capital", "réserves", "subventions", "provisions", "dettes de location-acquisition"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
