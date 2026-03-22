@@ -4,6 +4,7 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
+import AlertesCompte from './AlertesCompte';
 
 interface RevisionAutresTiersProps {
   balanceN: BalanceLigne[];
@@ -389,6 +390,8 @@ function RevisionAutresTiers({ balanceN, exerciceAnnee, entiteId, exerciceId }: 
       <div className="revision-objectif">
         <strong>Objectif :</strong> S'assurer de la realite, de l'exhaustivite et de la correcte evaluation des charges et produits constates d'avance (476, 477), de l'apurement des comptes d'attente (471), de la justification des debiteurs et crediteurs divers (46x, 47x) et du traitement correct des ecarts de conversion (478, 479).
       </div>
+
+      <AlertesCompte lignes={balanceN} titre="Autres tiers" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

@@ -7,6 +7,7 @@ import ControleReserveLegale from './ControleReserveLegale';
 import ControleNiveauKP from './ControleNiveauKP';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
+import AlertesCompte from './AlertesCompte';
 
 interface RevisionKPProps {
   balanceN: BalanceLigne[];
@@ -546,6 +547,8 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
       <div className="revision-objectif">
         <strong>Objectif :</strong> S'assurer que les capitaux propres sont correctement constitués, que l'affectation du résultat N-1 est conforme aux décisions de l'assemblée générale, et que les obligations légales (réserve légale, niveau des KP) sont respectées.
       </div>
+
+      <AlertesCompte lignes={balanceN} titre="Capitaux propres" />
 
       {/* Travaux à effectuer */}
       <div className="revision-travaux">

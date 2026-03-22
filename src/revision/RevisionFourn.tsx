@@ -4,6 +4,7 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
+import AlertesCompte from './AlertesCompte';
 
 interface RevisionFournProps {
   balanceN: BalanceLigne[];
@@ -264,6 +265,8 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
       <div className="revision-objectif">
         <strong>Objectif :</strong> S'assurer de l'exhaustivité et de la correcte évaluation des dettes fournisseurs (401), des factures non parvenues (408), des avances versées (4091) et de la correcte conversion des dettes en devises au cours de clôture. Les fournisseurs d'immobilisations relèvent du compte 481, pas du 401.
       </div>
+
+      <AlertesCompte lignes={balanceN} titre="Fournisseurs" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

@@ -4,6 +4,7 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
+import AlertesCompte from './AlertesCompte';
 
 interface RevisionClientsProps {
   balanceN: BalanceLigne[];
@@ -350,6 +351,8 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
       <div className="revision-objectif">
         <strong>Objectif :</strong> S'assurer de l'exhaustivité, de la réalité et de la correcte évaluation des créances clients (411), du bon reclassement des créances douteuses (416), de l'adéquation des dépréciations (D 6594 / C 491) et de la correcte conversion des créances en devises.
       </div>
+
+      <AlertesCompte lignes={balanceN} titre="Clients" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>
