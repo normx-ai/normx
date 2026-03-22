@@ -90,10 +90,16 @@ function getSens(numero) {
   }
 
   // Classe 6 — Charges → Débiteur
-  if (c1 === '6') return 'debiteur';
+  if (c1 === '6') {
+    if (c2 === '60' && c3 === '603') return 'mixte'; // Variations des stocks de biens achetés
+    return 'debiteur';
+  }
 
   // Classe 7 — Produits → Créditeur
-  if (c1 === '7') return 'crediteur';
+  if (c1 === '7') {
+    if (c2 === '73') return 'mixte'; // Variations des stocks de biens produits
+    return 'crediteur';
+  }
 
   // Classe 8 — Comptes spéciaux (HAO)
   if (c1 === '8') {

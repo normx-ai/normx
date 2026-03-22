@@ -5499,25 +5499,25 @@
     "numero": "603",
     "libelle": "Variations des stocks de biens achetes",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6031",
     "libelle": "Variations des stocks de marchandises",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6032",
     "libelle": "Variations des stocks de matieres premieres et fournitures liees",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6033",
     "libelle": "Variations des stocks d'autres approvisionnements",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "604",
@@ -7425,67 +7425,67 @@
     "numero": "73",
     "libelle": "Variations des stocks de biens et de services produits",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "734",
     "libelle": "Variations des stocks de produits en cours",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "7341",
     "libelle": "Produits en cours",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "7342",
     "libelle": "Travaux en cours",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "735",
     "libelle": "Variations des services en cours",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "7351",
     "libelle": "Etudes en cours",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "7352",
     "libelle": "Prestations de services en cours",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "736",
     "libelle": "Variations des stocks de produits finis",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "737",
     "libelle": "Variations des stocks de produits intermediaires et residuels",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "7371",
     "libelle": "Produits intermediaires",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "7372",
     "libelle": "Produits residuels",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "75",

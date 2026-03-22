@@ -4371,37 +4371,37 @@
     "numero": "603",
     "libelle": "Variations des stocks de biens achetes et recus en dons en nature a distribuer",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6031",
     "libelle": "Variations des stocks de biens et services lies a l'activite",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6032",
     "libelle": "Variations des stocks de marchandises",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6033",
     "libelle": "Variations des stocks de matieres premieres et fournitures liees",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6034",
     "libelle": "Variations des stocks d'autres approvisionnements",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "6035",
     "libelle": "Variations de stocks de dons en nature a distribuer",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "604",
@@ -6057,19 +6057,19 @@
     "numero": "73",
     "libelle": "Variations des stocks de biens produits",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "735",
     "libelle": "Variations des stocks de produits finis et services en cours",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "736",
     "libelle": "Variations des stocks de produits finis, produits intermediaires et residuels",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "75",
