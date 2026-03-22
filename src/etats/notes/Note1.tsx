@@ -125,26 +125,41 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     return Math.round(val).toLocaleString('fr-FR');
   };
 
-  // Calculer les dettes financières depuis la balance
-  let totalMontant = 0;
-  const emprunts = lignesBalance.filter(l => {
+  // Calculer les dettes financières depuis la balance — détail par sous-compte
+  const emprunts16 = lignesBalance.filter(l => {
     const num = (l.numero_compte || '').trim();
-    return num.startsWith('16') || num.startsWith('17');
+    return num.startsWith('16') && !num.startsWith('166'); // Emprunts hors intérêts courus
   });
-  let empruntsMontant = 0;
-  emprunts.forEach(l => {
-    const sc = parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0;
-    const sd = parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0;
-    empruntsMontant += sc - sd;
+  const interetsCourus = lignesBalance.filter(l => {
+    const num = (l.numero_compte || '').trim();
+    return num.startsWith('166'); // Intérêts courus sur emprunts
   });
-  totalMontant = empruntsMontant;
+  const emprunts17 = lignesBalance.filter(l => {
+    const num = (l.numero_compte || '').trim();
+    return num.startsWith('17'); // Dettes crédit-bail
+  });
+
+  const calcMontant = (lignes: BalanceLigne[]): number => {
+    let total = 0;
+    lignes.forEach(l => {
+      const sc = parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0;
+      const sd = parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0;
+      total += sc - sd;
+    });
+    return total;
+  };
+
+  const montant16 = calcMontant(emprunts16);
+  const montantIC = calcMontant(interetsCourus);
+  const montant17 = calcMontant(emprunts17);
+  const totalMontant = montant16 + montantIC + montant17;
 
   const generatePDF = async (): Promise<jsPDF> => {
     const wasEditing = editing;
     if (wasEditing) setEditing(false);
     // Wait for re-render
     await new Promise(r => setTimeout(r, 100));
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdf = new jsPDF('landscape', 'mm', 'a4');
     if (!pageRef.current) return pdf;
     const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
     const imgData = canvas.toDataURL('image/png');
@@ -266,10 +281,10 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
         </div>
       )}
 
-      {/* Page A4 */}
-      <div className="a4-page fi-page" ref={pageRef}>
+      {/* Page A4 paysage */}
+      <div className="a4-page fi-page" ref={pageRef} style={{ width: 1100, minHeight: 700, padding: '30px 40px' }}>
         {/* En-tête */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
           <div>
             <div style={{ fontSize: 12 }}><strong>Désignation entité :</strong> {entiteName}</div>
             <div style={{ fontSize: 12 }}><strong>Numéro d'identification :</strong> {entiteNif}</div>
@@ -279,6 +294,14 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
             <div style={{ fontSize: 12 }}><strong>Durée (en mois)</strong> {duree}</div>
           </div>
         </div>
+
+        {/* Titre */}
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '20px 0 6px', textDecoration: 'underline' }}>
+          NOTE 1 — DETTES GARANTIES PAR DES SURETES REELLES DONNEES PAR L'ENTITE
+        </h3>
+        <p style={{ textAlign: 'center', fontSize: 11, color: '#666', marginBottom: 20 }}>
+          (montants en FCFA)
+        </p>
 
         {/* Tableau */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 20 }}>
@@ -301,10 +324,11 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
                 Dettes financières et ressources assimilées :
               </td>
             </tr>
+            {/* Emprunts 16x (hors intérêts courus) */}
             <tr>
-              <td style={tdStyle}>Emprunts et dettes des établissements de crédit</td>
-              <td style={{ ...tdStyle, textAlign: 'center' }}></td>
-              <td style={{ ...tdStyle, textAlign: 'right' }}>{fmtMontant(empruntsMontant)}</td>
+              <td style={tdStyle}>Emprunts et dettes des établissements de crédit (16x hors 166)</td>
+              <td style={{ ...tdStyle, textAlign: 'center' }}>16A</td>
+              <td style={{ ...tdStyle, textAlign: 'right' }}>{fmtMontant(montant16)}</td>
               <td style={{ ...tdStyle, textAlign: 'center' }}>
                 {editing ? <input style={inputStyle} value={hypotheques} onChange={e => setHypotheques(e.target.value)} /> : hypotheques}
               </td>
@@ -315,20 +339,40 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
                 {editing ? <input style={inputStyle} value={gages} onChange={e => setGages(e.target.value)} /> : gages}
               </td>
             </tr>
-            {empruntsMontant === 0 && (
+            {/* Intérêts courus 166x */}
+            {montantIC !== 0 && (
               <tr>
-                <td style={tdStyle}>&nbsp;</td>
-                <td style={tdStyle}></td>
-                <td style={tdStyle}></td>
+                <td style={{ ...tdStyle, paddingLeft: 20, fontStyle: 'italic', color: '#666' }}>Intérêts courus sur emprunts (166)</td>
+                <td style={{ ...tdStyle, textAlign: 'center', color: '#666' }}></td>
+                <td style={{ ...tdStyle, textAlign: 'right', color: '#666' }}>{fmtMontant(montantIC)}</td>
                 <td style={tdStyle}></td>
                 <td style={tdStyle}></td>
                 <td style={tdStyle}></td>
               </tr>
             )}
+            {/* Dettes crédit-bail 17x */}
+            {montant17 !== 0 && (
+              <tr>
+                <td style={tdStyle}>Dettes de location-acquisition / crédit-bail (17x)</td>
+                <td style={{ ...tdStyle, textAlign: 'center' }}></td>
+                <td style={{ ...tdStyle, textAlign: 'right' }}>{fmtMontant(montant17)}</td>
+                <td style={tdStyle}></td>
+                <td style={tdStyle}></td>
+                <td style={tdStyle}></td>
+              </tr>
+            )}
+            {/* Détail par sous-compte si écart possible */}
+            {emprunts16.length > 0 && (
+              <tr>
+                <td colSpan={6} style={{ ...tdStyle, fontSize: 10, color: '#888', fontStyle: 'italic', paddingLeft: 20, background: '#fafafa' }}>
+                  Détail 16x : {emprunts16.map(l => (l.numero_compte || '') + ' = ' + fmtMontant((parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0))).join(' | ')}
+                </td>
+              </tr>
+            )}
             <tr>
               <td style={{ ...tdStyle, fontWeight: 700, textAlign: 'center' }}>TOTAL</td>
               <td style={tdStyle}></td>
-              <td style={{ ...tdStyle, textAlign: 'right', fontWeight: 600 }}>{fmtMontant(totalMontant)}</td>
+              <td style={{ ...tdStyle, textAlign: 'right', fontWeight: 700 }}>{fmtMontant(totalMontant)}</td>
               <td style={tdStyle}></td>
               <td style={tdStyle}></td>
               <td style={tdStyle}></td>
