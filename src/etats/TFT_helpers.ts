@@ -300,9 +300,14 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   data.FD = -FD_raw;
 
   // FE — Variation du passif circulant (guide t4)
-  // Poste DP excl: 404, 481, 482, 467, 4752, 472
-  // + ecarts conversion dettes: 4793 (diminution), 4783 (augmentation)
-  const feExcl = ['404', '481', '482', '467', '4752', '472'];
+  // Exclusions FE : comptes non exploitation dans DP
+  // 404 = fournisseurs immobilisations (investissement)
+  // 465 = dividendes a payer (financement, capte par FN via MvtD)
+  // 467 = apporteurs restant du (financement)
+  // 472 = versements titres non liberes (financement)
+  // 481, 482 = fournisseurs investissements (investissement)
+  // 4752 = compte transitoire SYSCOHADA (non-cash, symetrique du 4751 dans FD)
+  const feExcl = ['404', '465', '467', '472', '481', '482', '4752'];
   data.FE = (bilanDP(lN) - bilanDP(lN1))
     - rawSC(lN, feExcl) + rawSC(lN1, feExcl)
     + rawSC(lN, ['4793']) - rawSC(lN1, ['4793'])
