@@ -652,7 +652,68 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     }
   }
 
-  // ===== 5. RESUME =====
+  // ===== 5. ANOMALIES DE SENS (impact TFT) =====
+  // Detecter les comptes dont le solde est inverse par rapport au sens normal SYSCOHADA
+  // et qui peuvent fausser les postes du TFT
+  const sensRules: { prefix: string; sens: 'debiteur' | 'crediteur'; poste: string; impact: string }[] = [
+    // Classe 1 — Ressources durables (crediteur)
+    { prefix: '101', sens: 'crediteur', poste: 'FK', impact: 'Un capital debiteur fausse le poste FK (augmentation de capital) du TFT.' },
+    { prefix: '11', sens: 'crediteur', poste: 'FK', impact: 'Des reserves debitrices faussent le poste FK et peuvent indiquer une absorption de pertes non comptabilisee.' },
+    { prefix: '14', sens: 'crediteur', poste: 'FL', impact: 'Une subvention d\'investissement debitrice fausse le poste FL (subventions recues).' },
+    { prefix: '15', sens: 'crediteur', poste: 'FA', impact: 'Une provision reglementee debitrice fausse la CAFG (poste FA) car les dotations/reprises HAO sont neutralisees.' },
+    { prefix: '16', sens: 'crediteur', poste: 'FO', impact: 'Un emprunt debiteur fausse le poste FO/FP (emprunts) : la variation sera interpretee comme un remboursement au lieu d\'un tirage.' },
+    { prefix: '19', sens: 'crediteur', poste: 'FA', impact: 'Une provision pour risques debitrice fausse la CAFG car les dotations aux provisions sont neutralisees dans FA.' },
+    // Classe 2 — Actif immobilise (debiteur, sauf 28/29)
+    { prefix: '28', sens: 'crediteur', poste: 'FA', impact: 'Un amortissement debiteur fausse la CAFG car les dotations aux amortissements sont neutralisees dans FA.' },
+    { prefix: '29', sens: 'crediteur', poste: 'FA', impact: 'Une provision pour depreciation debitrice fausse la CAFG (neutralisation des dotations/reprises).' },
+    // Classe 3 — Stocks (debiteur, sauf 39)
+    { prefix: '39', sens: 'crediteur', poste: 'FC', impact: 'Une depreciation de stocks debitrice fausse le poste FC (variation des stocks).' },
+    // Classe 4 — Tiers
+    { prefix: '40', sens: 'crediteur', poste: 'FE', impact: 'Un fournisseur debiteur fausse le poste FE (passif circulant) : la variation sera inversee.' },
+    { prefix: '41', sens: 'debiteur', poste: 'FD', impact: 'Un client crediteur fausse le poste FD (creances) : la variation sera inversee.' },
+    { prefix: '42', sens: 'crediteur', poste: 'FE', impact: 'Un compte personnel debiteur (sauf 421) fausse le poste FE (passif circulant).' },
+    { prefix: '43', sens: 'crediteur', poste: 'FE', impact: 'Un organisme social debiteur fausse le poste FE (passif circulant).' },
+    { prefix: '49', sens: 'crediteur', poste: 'FD', impact: 'Une depreciation de creances debitrice fausse le poste FD (creances nettes).' },
+    // Classe 5 — Tresorerie (debiteur, sauf 56/59)
+    { prefix: '52', sens: 'debiteur', poste: 'ZI', impact: 'Un compte banque crediteur indique un decouvert. Verifier qu\'il est bien classe en tresorerie passif pour le calcul de ZI.' },
+    { prefix: '57', sens: 'debiteur', poste: 'ZI', impact: 'Un compte caisse crediteur est une anomalie grave (presomption d\'irregularite). Impact direct sur la tresorerie finale ZI.' },
+  ];
+
+  for (const l of lN) {
+    const num = (l.numero_compte || '').trim();
+    if (!num || num.length <= 2) continue;
+    const sd = getSD(l);
+    const sc = getSC(l);
+    if (sd < 0.5 && sc < 0.5) continue; // pas de solde
+
+    for (const rule of sensRules) {
+      if (!num.startsWith(rule.prefix)) continue;
+      // Exceptions connues
+      if (num.startsWith('109') || num.startsWith('129') || num.startsWith('139')) continue; // debiteur normal
+      if (num.startsWith('409')) continue; // avances fournisseurs = debiteur normal
+      if (num.startsWith('419')) continue; // avances clients = crediteur normal
+      if (num.startsWith('421')) continue; // avances personnel = debiteur normal
+      if (num.startsWith('445')) continue; // TVA recuperable = debiteur normal
+
+      const estInverse = (rule.sens === 'crediteur' && sd > 0.5 && sc < 0.5) ||
+                         (rule.sens === 'debiteur' && sc > 0.5 && sd < 0.5);
+      if (estInverse) {
+        diag.push({
+          poste: rule.poste,
+          type: 'alerte',
+          message: num + ' ' + (l.libelle_compte || '') + ' : solde '
+            + (sd > 0.5 ? 'debiteur' : 'crediteur') + ' de ' + formatMontant(Math.round(sd > 0.5 ? sd : sc))
+            + ' (sens attendu : ' + rule.sens + ').',
+          suggestion: rule.impact
+            + ' Verifier si ce solde est justifie (ex: avance, avoir, correction) ou s\'il s\'agit d\'une erreur d\'imputation.',
+          montant: Math.round(sd > 0.5 ? sd : sc)
+        });
+      }
+      break;
+    }
+  }
+
+  // ===== 6. RESUME =====
   // Renumeroter les sections
 
   const nbAlertes = diag.filter(d => d.type === 'alerte').length;
