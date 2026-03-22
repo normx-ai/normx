@@ -24,6 +24,12 @@
         {"ne_pas_enregistrer": "les cessions considérées comme courantes compte tenu de l'activité de l'entreprise", "utiliser": "654 Valeurs comptables des cessions courantes d'immobilisations"}
       ],
       "controles": ["des documents attestant la valeur de sortie de l'immobilisation", "des factures de vente", "d'un procès-verbal de destruction", "des tableaux d'amortissement"],
+      "commentaires": [
+        "Pour les biens non amortissables, la valeur comptable est la valeur d'entree, sans deduction des eventuelles provisions pour depreciation.",
+        "Pour les biens amortissables, la valeur comptable est la difference entre la valeur d'entree brute et le cumul des amortissements pratiques jusqu'a la date de cession.",
+        "Les cessions considerees comme courantes (frequentes et recurrentes) ne sont pas enregistrees ici mais aux comptes 654 (valeur comptable) et 754 (prix de cession).",
+        "Les provisions pour depreciation afferentes aux elements cedes doivent etre reprises separement (compte 29), pas au compte 81."
+      ],
       "sens": "debiteur",
       "mots_cles": ["valeurs comptables", "cessions d'immobilisations", "compte 81", "sortie d'actif", "valeur nette comptable", "amortissements cumulés"],
       "statut": "en_vigueur"
@@ -46,6 +52,13 @@
         {"ne_pas_enregistrer": "les produits des cessions courantes d'immobilisations", "utiliser": "754 Produits des cessions courantes d'immobilisations"}
       ],
       "controles": ["des factures de cession d'immobilisations", "des commissions et frais de vente"],
+      "commentaires": [
+        "Le produit net de cession est le prix resultant de l'accord entre les parties, diminue des commissions et frais de vente.",
+        "En cas d'apport, le montant a enregistrer est le montant contractuel.",
+        "L'indemnite d'assurance percue pour destruction d'un bien est assimilee au prix de cession et enregistree au credit du compte 82, meme si l'entreprise decide de ne pas reparer.",
+        "Les indemnites d'assurances non representatives de l'indemnisation du bien detruit sont enregistrees au compte 7582.",
+        "Les produits des cessions courantes d'immobilisations relevent du compte 754, pas du compte 82."
+      ],
       "sens": "crediteur",
       "mots_cles": ["produits des cessions", "immobilisations", "compte 82", "prix de cession", "indemnité d'assurance", "plus-value", "moins-value"],
       "statut": "en_vigueur"
@@ -67,6 +80,13 @@
         {"ne_pas_enregistrer": "les provisions pour risques et charges hors activités ordinaires à plus d'un an", "utiliser": "854 Dotations aux provisions pour risques et charges H.A.O."}
       ],
       "controles": ["des factures", "des évaluations", "des tableaux d'amortissements", "des calculs de plus-values"],
+      "commentaires": [
+        "Seules les charges liees a la restructuration de l'entreprise ou a des evenements extraordinaires (tempetes, tremblements de terre, vols, invasions de criquets...) sont H.A.O.",
+        "Toute autre charge est ordinaire, y compris les amendes fiscales ou penales et les charges sur exercices anterieurs liees aux activites courantes.",
+        "Lorsque la charge H.A.O., bien qu'incertaine, est envisagee a court terme, elle constitue une charge provisionnee (compte 839).",
+        "Lorsque la charge probable est envisagee a plus d'un an, elle doit faire l'objet d'une dotation aux provisions (compte 854).",
+        "La notion H.A.O. doit etre apprehendee de facon restrictive."
+      ],
       "sens": "debiteur",
       "mots_cles": ["charges HAO", "hors activités ordinaires", "compte 83", "restructuration", "événements extraordinaires", "charges constatées", "charges provisionnées HAO"],
       "statut": "en_vigueur"
@@ -89,6 +109,12 @@
         {"ne_pas_enregistrer": "les reprises de provisions H.A.O. antérieurement constituées", "utiliser": "86 Reprises H.A.O."}
       ],
       "controles": ["de l'analyse des charges immobilisées, des factures, des évaluations et des tableaux de provisions"],
+      "commentaires": [
+        "Les produits sont consideres comme H.A.O. lorsqu'ils relevent d'evenements extraordinaires, lies notamment a des phenomenes naturels ou a des modifications de structure de l'entreprise.",
+        "Comprend les subdivisions : 841 Produits H.A.O. constates, 845 Dons et liberalites obtenus, 846 Abandons de creances obtenus, 848 Transferts de charges H.A.O., 849 Reprises de charges provisionnees H.A.O.",
+        "Les reprises de provisions H.A.O. anterieurement constituees relevent du compte 86, pas du compte 84.",
+        "Le compte 848 enregistre les transferts de charges dont l'inscription a l'actif (charges immobilisees, compte 20) a ete decidee."
+      ],
       "sens": "crediteur",
       "mots_cles": ["produits HAO", "hors activités ordinaires", "compte 84", "produits constatés", "reprises de charges provisionnées HAO", "transferts de charges HAO"],
       "statut": "en_vigueur"
@@ -111,6 +137,12 @@
         {"ne_pas_enregistrer": "les charges calculées H.A.O. à court terme (moins d'un an)", "utiliser": "839 Charges provisionnées H.A.O."}
       ],
       "controles": ["de l'évaluation de la provision"],
+      "commentaires": [
+        "La notion H.A.O. doit etre apprehendee de facon restrictive : restructurations d'entreprises, catastrophes naturelles, evenements par essence non previsibles et depourvus de caractere recurrent.",
+        "Le compte 85 est aussi utilise dans les Etats-parties pour enregistrer les operations liees a l'application de dispositions fiscales (provisions reglementees, amortissements derogatoires via le compte 151).",
+        "Subdivisions : 851 Dotations aux provisions reglementees, 852 Dotations aux amortissements H.A.O., 853 Dotations aux provisions pour depreciation H.A.O., 854 Dotations aux provisions pour risques et charges H.A.O.",
+        "Les charges calculees H.A.O. a court terme (moins d'un an) relevent du compte 839, pas du compte 85."
+      ],
       "sens": "debiteur",
       "mots_cles": ["dotations HAO", "hors activités ordinaires", "compte 85", "provisions réglementées", "amortissements dérogatoires", "provisions pour dépréciation HAO", "provisions pour risques et charges HAO"],
       "statut": "en_vigueur"
@@ -135,6 +167,13 @@
         {"ne_pas_enregistrer": "les dotations aux provisions d'exploitation ou à caractère financier", "utiliser": "691/697 Dotations aux provisions"}
       ],
       "controles": ["des tableaux d'amortissements", "des décisions de subventions", "des tableaux de reprises de subvention", "des tableaux de reprises des écarts de réévaluation", "des tableaux de reprises de la plus-value de cession à réinvestir"],
+      "commentaires": [
+        "Toute provision constituee via le compte 85 doit etre reprise au cours des exercices suivants par le compte 86, lors de la survenance de la charge ou de la modification de l'appreciation du risque.",
+        "Concerne les Provisions reglementees (compte 15) et les Provisions financieres pour risques et charges (compte 19).",
+        "Le compte 865 Reprises de subventions d'investissement enregistre au credit soit un montant egal a la dotation aux amortissements des immobilisations subventionnees (affecte du coefficient Subvention/Investissement), soit une somme calculee sur la duree d'inalienabilite (ou 1/10e de la subvention a defaut).",
+        "Les reprises de charges provisionnees relevent des comptes 759, 779 ou 849, pas du 86.",
+        "Les reprises de dotations d'exploitation ou financieres relevent des comptes 691/697, pas du 86."
+      ],
       "sens": "crediteur",
       "mots_cles": ["reprises HAO", "hors activités ordinaires", "compte 86", "reprises de provisions réglementées", "reprises d'amortissements HAO", "reprises de subventions d'investissement", "compte 865"],
       "statut": "en_vigueur"
@@ -156,6 +195,12 @@
         {"ne_pas_enregistrer": "les rémunérations diverses versées au personnel (intéressement)", "utiliser": "66 Charges de personnel"}
       ],
       "controles": ["des conventions, des accords d'entreprises"],
+      "commentaires": [
+        "En raison de son assiette de calcul (basee sur le benefice), la participation n'est pas consideree comme une charge de personnel mais comme un element de repartition du resultat.",
+        "Subdivisions : 871 Participation legale aux benefices, 872 Participation contractuelle aux benefices, 878 Autres participations.",
+        "La participation du personnel au capital de l'entreprise releve du compte 10 Capital, pas du compte 87.",
+        "Les remunerations diverses versees au personnel (interessement) relevent du compte 66 Charges de personnel."
+      ],
       "sens": "debiteur",
       "mots_cles": ["participation des travailleurs", "compte 87", "bénéfices", "répartition du résultat", "fonds légal", "fonds contractuel", "compte 426"],
       "statut": "en_vigueur"
@@ -177,6 +222,13 @@
         {"ne_pas_enregistrer": "les subventions d'exploitation", "utiliser": "71 Subventions d'exploitation"}
       ],
       "controles": ["de décrets ou d'arrêtés ministériels", "de décisions de collectivités publiques accordant la subvention"],
+      "commentaires": [
+        "Il importe, avant tout enregistrement, d'analyser la subvention pour en definir la finalite : aide a l'investissement, a l'exploitation ou a l'equilibre.",
+        "Les subventions d'equilibre se distinguent des subventions d'exploitation en ce qu'elles ne sont pas directement liees a une insuffisance des prix de vente imposes.",
+        "Elles sont destinees a compenser des pertes survenues dans des circonstances exceptionnelles.",
+        "Subdivisions : 881 Etat, 884 Collectivites publiques, 886 Groupe, 888 Autres.",
+        "Ne pas confondre avec les subventions d'investissement (compte 14) ni les subventions d'exploitation (compte 71)."
+      ],
       "sens": "crediteur",
       "mots_cles": ["subventions d'équilibre", "compte 88", "État", "pertes exceptionnelles", "circonstances exceptionnelles"],
       "statut": "en_vigueur"
@@ -195,6 +247,13 @@
       },
       "exclusions": [],
       "controles": [],
+      "commentaires": [
+        "Le montant de l'impot sur le resultat doit etre calcule sur la base du resultat comptable retraite selon les regles fiscales.",
+        "Le compte 891 doit correspondre au montant total de l'impot du de l'exercice, quelles que soient les modalites de reglement.",
+        "Ce montant est eventuellement augmente des rappels d'impots (892) et diminue des degrevements et annulations sur exercices anterieurs (899).",
+        "Subdivisions : 891 Impots sur les benefices (8911 activites dans l'Etat, 8912 autres Etats de la Region, 8913 hors Region), 892 Rappels d'impots, 895 IMF (Impot Minimum Forfaitaire), 899 Degrevements et annulations.",
+        "Les impots et taxes (dont l'assiette n'est pas le resultat) relevent du compte 64, pas du compte 89."
+      ],
       "sens": "debiteur",
       "mots_cles": ["impôts sur le résultat", "compte 89", "impôt sur les bénéfices", "résultat comptable", "résultat fiscal", "IMF", "impôt minimum forfaitaire", "dégrèvements", "rappels d'impôts"],
       "statut": "en_vigueur"

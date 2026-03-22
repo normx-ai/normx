@@ -31,6 +31,13 @@
         "des contrats",
         "des relevés de titres en portefeuille"
       ],
+      "commentaires": [
+        "Les titres de placement sont des titres cessibles acquis pour en retirer un revenu direct ou une plus-value a breve echeance, aisement negociables sur un marche reglemente.",
+        "A l'entree, ils sont comptabilises au prix d'achat, hors frais d'achat (inscrits au compte 6311).",
+        "A l'inventaire, evaluation au cours en Bourse ou, pour les titres non cotes, a leur valeur probable de negociation.",
+        "En cas de cession, la difference entre prix de cession et valeur d'entree est enregistree au compte 677 (perte) ou 777 (gain).",
+        "Ne pas confondre avec les titres de participation (compte 26) ou les titres immobilises (compte 274), dont la cession n'est pas facilement realisable."
+      ],
       "sens": "debiteur",
       "mots_cles": ["titres de placement", "compte 50", "actions", "obligations", "bons", "cession", "plus-value", "moins-value", "cours en Bourse", "compte 677", "compte 777"],
       "statut": "en_vigueur"
@@ -45,6 +52,11 @@
       },
       "exclusions": [],
       "controles": [],
+      "commentaires": [
+        "Les valeurs a encaisser sont les effets, cheques et autres valeurs transmis a la banque dont l'entreprise attend l'encaissement a l'echeance.",
+        "Elles representent des valeurs en transit entre l'entreprise et la banque, pas encore creditees sur le compte bancaire.",
+        "Les sous-comptes distinguent les effets a encaisser (511), les effets a l'encaissement (512), les cheques a encaisser (513), les cheques a l'encaissement (514) et les cartes de credit a encaisser (515)."
+      ],
       "sens": "debiteur",
       "mots_cles": ["valeurs à encaisser", "compte 51", "effets", "chèques", "encaissement", "banque"],
       "statut": "en_vigueur"
@@ -66,6 +78,12 @@
         {"ne_pas_enregistrer": "les représentations locales d'institutions financières internationales ou étrangères", "utiliser": "538 Autres organismes financiers"}
       ],
       "controles": ["des relevés bancaires", "des états de rapprochement bancaire"],
+      "commentaires": [
+        "Distinguer les avoirs en monnaie legale du pays des avoirs en devises pour les banques locales.",
+        "Le solde comptable doit etre rapproche du solde du releve bancaire par un etat de rapprochement.",
+        "Les comptes bancaires a solde crediteur en fin de periode sont inscrits au passif du bilan (poste decouverts bancaires), sans compensation avec les comptes a solde debiteur.",
+        "Distinguer les banques agreees dans un Etat-partie (521) des autres banques (522)."
+      ],
       "sens": "debiteur",
       "mots_cles": ["banques", "compte 52", "opérations financières", "rapprochement bancaire", "avoirs en devises", "découverts bancaires"],
       "statut": "en_vigueur"
@@ -86,6 +104,12 @@
         {"ne_pas_enregistrer": "les mouvements de fonds relatifs aux opérations avec les banques", "utiliser": "52 Banques"}
       ],
       "controles": ["des relevés de chèques postaux", "des relevés du Trésor", "des états de rapprochement"],
+      "commentaires": [
+        "Concerne les Cheques postaux (CCP) et le Tresor dans un Etat de la Region, ainsi que les autres etablissements financiers.",
+        "Les operations enregistrees doivent correspondre aux extraits de comptes du Centre de cheques postaux.",
+        "Les comptes a solde crediteur en fin de periode sont inscrits au passif du bilan sous le poste decouverts bancaires.",
+        "Le compte 538 Autres organismes financiers enregistre les operations avec les representations locales d'institutions financieres internationales ou etrangeres."
+      ],
       "sens": "debiteur",
       "mots_cles": ["établissements financiers", "compte 53", "chèques postaux", "Trésor", "CCP"],
       "statut": "en_vigueur"
@@ -102,6 +126,11 @@
         {"ne_pas_enregistrer": "les opérations de crédits de trésorerie", "utiliser": "56 Banques, crédits de trésorerie et d'escompte"}
       ],
       "controles": ["des relevés et états de rapprochement bancaires"],
+      "commentaires": [
+        "Les instruments de tresorerie comprennent les options de taux, de change, sur actions, les instruments de marches a terme.",
+        "Incluent aussi les avoirs d'or et autres metaux precieux acquis en vue d'une cession a court terme.",
+        "Ne pas confondre avec les credits de tresorerie (compte 56) qui relevent des concours bancaires."
+      ],
       "sens": "debiteur",
       "mots_cles": ["instruments de trésorerie", "compte 54", "options", "taux", "change", "actions", "marchés à terme", "métaux précieux"],
       "statut": "en_vigueur"
@@ -126,6 +155,13 @@
         {"ne_pas_enregistrer": "les effets remis à l'encaissement à leur échéance normale", "utiliser": "51 Valeurs à encaisser"}
       ],
       "controles": ["des attestations de la banque concernant les crédits de trésorerie", "des relevés bancaires", "des bordereaux de remise des effets à l'escompte"],
+      "commentaires": [
+        "Le compte 561 enregistre les concours bancaires a court terme (deux ans au plus) pour financer les besoins generaux de tresorerie.",
+        "Le compte 565 enregistre les operations d'escompte des effets representatifs de transactions commerciales.",
+        "Les effets escomptes restent au debit du compte 415 (Clients, effets escomptes non echus) jusqu'a leur echeance.",
+        "Les prets bancaires a plus d'un an ne doivent pas etre enregistres ici mais au compte 16 Emprunts et dettes assimilees.",
+        "Les decouverts bancaires autorises (tant qu'ils n'ont qu'un caractere d'engagement) sont portes en engagements hors bilan."
+      ],
       "sens": "crediteur",
       "mots_cles": ["crédits de trésorerie", "escompte", "compte 56", "effets escomptés", "concours bancaires", "découverts", "compte 675", "compte 415"],
       "statut": "en_vigueur"
@@ -151,6 +187,12 @@
         {"ne_pas_enregistrer": "les paiements effectués par cartes de crédit", "utiliser": "515 Cartes de crédit à encaisser"}
       ],
       "controles": ["des procès verbaux de caisse", "des états de reddition de la caisse", "des bordereaux de situation journalière"],
+      "commentaires": [
+        "Le solde du compte caisse doit toujours correspondre exactement a la somme reellement disponible en especes.",
+        "Le solde ne peut etre que debiteur ou nul. Un solde crediteur constitue une presomption d'irregularite de la comptabilite.",
+        "Ne pas enregistrer en caisse : les cheques de voyage (518), les cheques de banque (513/514), les timbres fiscaux (64), les timbres postaux (616), les effets de commerce (41/51/56), les paiements par cartes de credit (515).",
+        "Prevoir un inventaire physique regulier (arrete de caisse) pour rapprocher le solde comptable de l'encaisse reelle."
+      ],
       "sens": "debiteur",
       "mots_cles": ["caisse", "compte 57", "espèces", "encaissement", "paiement", "solde débiteur", "irrégularité"],
       "statut": "en_vigueur"
@@ -173,6 +215,12 @@
         {"ne_pas_enregistrer": "les opérations internes de trésorerie, lorsque l'entreprise utilise un journal unique", "utiliser": "les autres comptes de la classe 5 concernés"}
       ],
       "controles": ["des relevés bancaires, en s'assurant que les comptes 585 et 588 relatifs aux virements internes sont soldés à la fin de l'exercice"],
+      "commentaires": [
+        "Les comptes 581 et 582 enregistrent les operations relatives aux regies d'avances (fonds geres par des regisseurs ou comptables subordonnes) et aux accreditifs (credits ouverts par un etablissement de credit).",
+        "Les comptes 585 et 588 (virements internes) sont des comptes de passage utilises dans les comptabilites a journaux auxiliaires.",
+        "Les comptes 585 et 588 doivent etre soldes a la fin de l'exercice.",
+        "Lorsque l'entreprise utilise un journal unique, les operations internes de tresorerie n'ont pas a transiter par le compte 58."
+      ],
       "sens": "debiteur",
       "mots_cles": ["régies d'avances", "accréditifs", "virements internes", "compte 58", "comptes de passage", "journaux auxiliaires"],
       "statut": "en_vigueur"
@@ -196,6 +244,13 @@
         {"ne_pas_enregistrer": "Classe 4", "utiliser": "49 Dépréciations et risques provisionnés (Tiers)"}
       ],
       "controles": ["des cours de Bourse de clôture, des évaluations de titres, des cours du change"],
+      "commentaires": [
+        "La provision doit etre constituee meme en l'absence ou en cas d'insuffisance de benefices.",
+        "Pour les titres de placement, la provision pour depreciation s'appuie sur une evaluation des cours a la cloture de l'exercice.",
+        "Les risques provisionnes a caractere financier enregistrent les pertes financieres probables a moins d'un an (ex. : provisions pour pertes de change).",
+        "Les depreciations sont constatees par le debit du compte 679 et reprises par le credit du compte 779.",
+        "Chaque classe a son propre compte de depreciation (19, 29, 39, 49, 59) : ne pas les confondre."
+      ],
       "sens": "crediteur",
       "mots_cles": ["dépréciations trésorerie", "risques provisionnés", "compte 59", "titres de placement", "pertes de change", "compte 679", "compte 779", "moins-values"],
       "statut": "en_vigueur"

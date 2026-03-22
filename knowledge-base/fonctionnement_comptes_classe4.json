@@ -29,6 +29,13 @@
         "des factures, chèques de règlement, effets"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Les dettes d'exploitation se caractérisent par le rattachement au compte 40 de toutes les opérations le concernant : effets à payer, factures à recevoir, intérêts courus, avances et acomptes, retenues de garantie.",
+        "Si un fournisseur d'exploitation a aussi des relations de fournisseur d'investissements, ces dernières doivent être imputées au compte 481.",
+        "Les fournisseurs sont classés selon : responsabilité de l'exécution, relations avec l'entreprise (groupe ou autres), nature de la dette, identité du fournisseur, nature de l'agent fournisseur, répartition géographique (État-partie, autres États de la Région, hors Région).",
+        "Aucune compensation ne peut s'effectuer entre les comptes fournisseurs à solde débiteur et ceux à solde créditeur ; les premiers figurent à l'actif, les seconds au passif.",
+        "Les sous-traitants sont des tiers auxquels l'entreprise a recours pour exécuter des travaux sur ses ordres ; si le sous-traitant travaille sur des matières fournies par l'entreprise, il est dénommé façonnier."
+      ],
       "mots_cles": ["fournisseurs", "compte 40", "dettes d'exploitation", "achats", "effets à payer", "factures à recevoir", "avances", "acomptes", "retenues de garantie", "escomptes obtenus"],
       "statut": "en_vigueur"
     },
@@ -57,6 +64,13 @@
         "des dossiers contentieux"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Les créances d'exploitation se caractérisent par le rattachement au compte 41 de toutes les opérations le concernant : effets à recevoir, factures à établir, créances sur cession d'actifs, effets escomptés non échus, créances litigieuses/douteuses, intérêts courus, avances et acomptes, retenues de garantie.",
+        "Si un tiers client a aussi d'autres relations (fournisseur, salarié), seules les opérations relatives aux ventes figurent au compte Client.",
+        "Si un client a aussi des relations d'investissements, ces opérations doivent être imputées au compte 485 Créances sur cessions d'immobilisations.",
+        "Les clients sont classés selon des critères variés : nature du client, identité, répartition géographique, relations de groupe.",
+        "Aucune compensation ne doit être établie entre les comptes clients à solde débiteur et ceux à solde créditeur."
+      ],
       "mots_cles": ["clients", "compte 41", "créances", "ventes", "factures", "avoirs", "rabais", "ristournes", "escomptes", "créances douteuses", "créances litigieuses"],
       "statut": "en_vigueur"
     },
@@ -87,6 +101,13 @@
         "des avis à tiers détenteur"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Le personnel comprend : direction et encadrement, employés, ouvriers, occasionnels, représentants salariés, associés et dirigeants exerçant des fonctions techniques, membres de la famille de l'exploitant exerçant un emploi salarié.",
+        "Les cotisations salariales sont versées aux organismes sociaux (compte 43) par le débit du compte 42.",
+        "En cas de saisie-arrêt (opposition de tiers sur salaires), la fraction saisie est versée directement par l'entreprise.",
+        "Les prêts au personnel relèvent du compte 272, pas du compte 42.",
+        "Les opérations en comptes courants d'associés/administrateurs (hors rémunération) relèvent du compte 46."
+      ],
       "mots_cles": ["personnel", "compte 42", "rémunérations", "salaires", "avances", "acomptes", "cotisations salariales", "saisie-arrêt", "charges de personnel"],
       "statut": "en_vigueur"
     },
@@ -111,6 +132,11 @@
         "des livres de paie"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Le compte 43 enregistre la part patronale (débit du compte 664 Charges sociales) et la part salariale (débit du compte 422 Rémunérations dues) des cotisations sociales.",
+        "Les opérations faites avec les organismes sociaux en tant que clients relèvent du compte 41, pas du compte 43.",
+        "Le contrôle s'effectue à partir des fiches de paie, bordereaux de déclarations sociales et livres de paie."
+      ],
       "mots_cles": ["organismes sociaux", "compte 43", "cotisations sociales", "salariales", "patronales", "sécurité sociale", "caisse de retraite"],
       "statut": "en_vigueur"
     },
@@ -139,6 +165,12 @@
         "des relevés bancaires"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Ce compte concerne les opérations avec l'État et les collectivités publiques en tant que pouvoirs publics (impôts, taxes, subventions, fonds de dotation).",
+        "Les achats et ventes de biens/services avec l'État s'inscrivent aux comptes 40 et 41, comme pour tout autre fournisseur ou client.",
+        "Les dettes du compte 442 comprennent les impôts d'État et les impôts perçus pour le compte des collectivités locales.",
+        "Les droits de douane à l'entrée faisant partie du prix d'achat sont comptabilisés dans les comptes de la classe 2 ou 6, pas au compte 44."
+      ],
       "mots_cles": ["État", "collectivités publiques", "compte 44", "impôts", "taxes", "TVA", "TVA facturée", "TVA récupérable", "droits de douane", "subventions"],
       "statut": "en_vigueur"
     },
@@ -166,6 +198,11 @@
         "des avis d'octroi de subventions"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Ce compte concerne exclusivement les dettes et créances autres que celles liées à l'activité commerciale (achats/ventes) de l'entreprise avec les organismes internationaux.",
+        "Les opérations d'achats et ventes avec les organismes internationaux relèvent des comptes 40 et 41.",
+        "Le contrôle s'effectue à partir des relevés bancaires, avis de versement et avis d'octroi de subventions."
+      ],
       "mots_cles": ["organismes internationaux", "compte 45", "dettes", "créances", "subventions", "fonds de dotation"],
       "statut": "en_vigueur"
     },
@@ -192,6 +229,13 @@
         "des décisions des Assemblées d'actionnaires"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Sont réputés associés les membres des sociétés de capitaux, de personnes, de fait et des sociétés en participation.",
+        "Les mouvements du compte 461 (opérations sur le capital) concernent tous les associés, y compris les sociétés du groupe associées.",
+        "Les créances/dettes envers les sociétés du groupe (hors compte 466) sont comptabilisées dans les comptes 40/41 (opérations commerciales) et 16, 18, 27 (opérations financières).",
+        "Les fonds mis temporairement à disposition de la société par les associés sont enregistrés au compte 462 Comptes courants.",
+        "Les dettes/créances contractées ou consenties des associés relèvent du compte 16, les emprunts/prêts du compte 27, la dette du capital souscrit non appelé du compte 109."
+      ],
       "mots_cles": ["associés", "groupe", "compte 46", "dividendes", "comptes courants", "capital social", "opérations sur le capital"],
       "statut": "en_vigueur"
     },
@@ -224,6 +268,13 @@
         "des relevés de banque"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Aucune compensation n'est admise entre dettes et créances ; les soldes créditeurs figurent au passif (Autres dettes), les débiteurs à l'actif (Autres créances).",
+        "Le compte 471 Comptes d'attente est utilisé pour les opérations non imputables de manière certaine ; il doit être soldé au plus tard à la clôture.",
+        "Lors de l'acquisition de titres non totalement libérés, les montants non appelés figurent au compte 472.",
+        "Le compte 475 Créances sur travaux non encore facturables est utilisé pour les contrats pluri-exercices (produits nets partiels).",
+        "Les comptes 478/479 Écarts de conversion Actif/Passif permettent de constater à la clôture les écarts entre créances/dettes en devises et leur évaluation en monnaie légale du pays."
+      ],
       "mots_cles": ["débiteurs", "créditeurs divers", "compte 47", "comptes d'attente", "charges constatées d'avance", "produits constatés d'avance", "écarts de conversion", "régularisation"],
       "statut": "en_vigueur"
     },
@@ -250,6 +301,11 @@
         "des ordres de mouvements en Bourse"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "La mise en évidence au bilan des créances/dettes H.A.O. via le compte 48 permet de mesurer directement le besoin ou la ressource de financement H.A.O., en parallèle avec celui de l'exploitation.",
+        "Les créances sur cessions d'immobilisations sont considérées comme H.A.O. sauf lorsqu'elles concernent l'activité normale et courante (dans ce cas : compte 414 rattaché au Client, avec le crédit du compte 754).",
+        "Les dettes et créances ayant pour origine les activités ordinaires restent aux comptes 40 et 41."
+      ],
       "mots_cles": ["créances HAO", "dettes HAO", "compte 48", "hors activités ordinaires", "cessions d'immobilisations", "fournisseurs d'investissements"],
       "statut": "en_vigueur"
     },
@@ -274,6 +330,14 @@
         "de tous documents à même de justifier les motifs qui rendent la créance douteuse ou litigieuse (courriers et autres protêts, justificatifs du caractère douteux ou litigieux de la créance)"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Les provisions pour dépréciation des comptes de tiers obéissent aux mêmes règles que celles constatées sur les stocks et les comptes de trésorerie.",
+        "La dépréciation doit être certaine quant à sa nature et le tiers doit être individualisé. L'entreprise doit pouvoir préciser la nature et l'objet des créances à déprécier et justifier les motifs rendant la créance douteuse ou litigieuse.",
+        "La provision est à constituer même en l'absence ou en cas d'insuffisance de bénéfices (principe de prudence).",
+        "Les risques à court terme provisionnés (compte 499) sont liés au mécanisme des charges provisionnées et représentent une dette probable à moins d'un an.",
+        "Les dépréciations et risques provisionnés correspondent à des charges d'exploitation ou H.A.O. selon leur nature.",
+        "Les événements générateurs de dépréciation survenus après la clôture ne sont pas pris en compte dans cet exercice."
+      ],
       "mots_cles": ["dépréciations", "risques provisionnés", "compte 49", "créances douteuses", "créances litigieuses", "provisions", "charges provisionnées", "reprises", "principe de prudence"],
       "statut": "en_vigueur"
     }

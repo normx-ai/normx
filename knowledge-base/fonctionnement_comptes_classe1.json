@@ -35,6 +35,12 @@
         "du procès-verbal de l'Assemblée des associés"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Le capital initial correspond à la valeur des apports effectués par les associés tels qu'ils figurent dans les statuts, divisé en actions ou parts d'une même valeur nominale.",
+        "Le capital peut être augmenté ou diminué par décision des organes compétents : apports/retraits, affectation de résultats, incorporation de réserves.",
+        "Pour certaines sociétés (SA, SARL), la loi fixe un montant minimum du capital social et limite la responsabilité des associés envers les créanciers sociaux.",
+        "Les versements et retraits temporaires de fonds des associés ne transitent pas par le compte 101 mais par le compte 46."
+      ],
       "mots_cles": ["capital social", "compte 101", "apports", "augmentation de capital", "réduction de capital", "associés", "actions", "parts sociales", "valeur nominale"],
       "statut": "en_vigueur"
     },
@@ -64,6 +70,11 @@
         "de pièces justificatives de virements correspondants"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Le capital par dotation concerne exclusivement les entreprises publiques et représente la contrepartie des immobilisations et fonds affectés par l'Autorité publique.",
+        "La dotation peut se réaliser par transformation de dettes de l'entreprise publique.",
+        "Ne pas confondre avec les prêts/avances remboursables (compte 163) ni les subventions d'investissement non transformées en dotation (compte 14)."
+      ],
       "mots_cles": ["capital par dotation", "compte 102", "entreprises publiques", "collectivité publique", "dotation", "fonds affectés"],
       "statut": "en_vigueur"
     },
@@ -93,6 +104,11 @@
         "des relevés de banque"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Réservé aux entreprises individuelles. Le capital initial correspond aux apports définitifs en nature ou en espèces de l'entrepreneur.",
+        "Le capital est modifié par les apports/retraits définitifs et par l'affectation des résultats.",
+        "Les apports et retraits temporaires de l'exploitant transitent par le compte 104 Compte de l'exploitant, pas par le 103."
+      ],
       "mots_cles": ["capital personnel", "compte 103", "entreprise individuelle", "exploitant", "apports définitifs"],
       "statut": "en_vigueur"
     },
@@ -119,6 +135,11 @@
         "des relevés de banque"
       ],
       "sens": "mixte",
+      "commentaires": [
+        "Le compte 104 est un démembrement du compte 103 Capital personnel, réservé aux entreprises individuelles.",
+        "Il enregistre les apports temporaires et les prélèvements de l'exploitant (biens, services, fonds) en cours d'exercice.",
+        "Il est systématiquement soldé à la clôture de l'exercice par virement au compte 103."
+      ],
       "mots_cles": ["compte de l'exploitant", "compte 104", "prélèvements", "apports temporaires", "entreprise individuelle", "soldé à la clôture"],
       "statut": "en_vigueur"
     },
@@ -147,6 +168,13 @@
         "des factures de frais ou du calcul analytique des frais d'augmentation de capital"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Quatre catégories de primes selon la nature de l'augmentation de capital : prime d'émission, prime de fusion, prime d'apport, prime de conversion.",
+        "Les primes figurent distinctement au passif du bilan dans les capitaux propres.",
+        "Elles peuvent être incorporées au capital, utilisées pour absorber des pertes, ou pour rembourser le capital.",
+        "Les frais d'augmentation de capital peuvent être imputés sur les primes par le crédit du compte 78 Transferts de charges.",
+        "Ne pas confondre avec les primes de remboursement des obligations (compte 206), primes d'assurance (625), primes de création d'emplois (7078)."
+      ],
       "mots_cles": ["primes liées aux capitaux propres", "compte 105", "prime d'émission", "prime de fusion", "prime d'apport", "prime de conversion", "augmentation de capital"],
       "statut": "en_vigueur"
     },
@@ -168,6 +196,12 @@
         "des décisions de l'Assemblée générale des actionnaires portant augmentation de capital par incorporation de tout ou partie de l'écart de réévaluation"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "L'écart de réévaluation est la différence entre les valeurs réévaluées et les valeurs nettes précédemment comptabilisées.",
+        "Il n'a pas la nature d'un résultat : il n'est pas distribuable et ne peut pas compenser les pertes de l'exercice de réévaluation.",
+        "Il peut être incorporé en tout ou partie au capital social.",
+        "Il s'inscrit distinctement au passif du bilan dans les capitaux propres."
+      ],
       "mots_cles": ["écarts de réévaluation", "compte 106", "réévaluation légale", "réévaluation libre", "augmentation de valeur", "capitaux propres", "non distribuable"],
       "statut": "en_vigueur"
     },
@@ -190,6 +224,12 @@
         "du compte 1011 Capital souscrit, non appelé, de solde opposé et de montant identique"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Ce compte figure au passif du bilan en diminution des capitaux propres (signe négatif).",
+        "Il représente la créance globale de la société sur les actionnaires pour la fraction du capital non encore appelée.",
+        "Il est crédité au fur et à mesure des appels successifs de capital, par le débit du compte 467.",
+        "Le compte 1011 Capital souscrit, non appelé, a un solde opposé et de montant identique."
+      ],
       "mots_cles": ["actionnaires", "capital souscrit non appelé", "compte 109", "créance", "libération partielle", "appel de capital"],
       "statut": "en_vigueur"
     },
@@ -219,6 +259,12 @@
         "des décisions de l'Assemblée générale des actionnaires portant répartition des résultats"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Les réserves sont des bénéfices laissés à la disposition de l'entreprise et non incorporés au capital.",
+        "La réserve légale (compte 111) est obligatoire pour les SA et SARL ; elle cesse d'être obligatoire lorsqu'elle atteint 20% du capital.",
+        "Les réserves peuvent être constituées par obligation légale, statutaire ou par décision des organes compétents.",
+        "Elles peuvent être incorporées au capital, distribuées aux associés, ou utilisées pour absorber des pertes."
+      ],
       "mots_cles": ["réserves", "compte 11", "réserve légale", "20% du capital", "bénéfices", "incorporation au capital", "distribution", "amortissement des pertes"],
       "statut": "en_vigueur"
     },
@@ -242,6 +288,12 @@
         "des décisions des assemblées sur la répartition des résultats"
       ],
       "sens": "mixte",
+      "commentaires": [
+        "Le report à nouveau est inscrit au passif du bilan sur une ligne distincte : en moins si débiteur (pertes), en plus si créditeur (bénéfices).",
+        "Il constitue un élément des capitaux propres.",
+        "Le report à nouveau créditeur peut être mis en distribution ultérieurement.",
+        "Le report à nouveau débiteur représente des pertes non encore compensées par des prélèvements sur les réserves ou le capital."
+      ],
       "mots_cles": ["report à nouveau", "compte 12", "bénéfices reportés", "pertes reportées", "affectation du résultat", "capitaux propres"],
       "statut": "en_vigueur"
     },
@@ -266,6 +318,12 @@
         "de recoupements issus des soldes des comptes de gestion"
       ],
       "sens": "mixte",
+      "commentaires": [
+        "Le résultat net est calculé soit comme différence produits-charges, soit comme variation des capitaux propres (hors apports/retraits et réévaluation).",
+        "Quel que soit son signe (bénéfice ou perte), il est inscrit au passif du bilan parmi les capitaux propres.",
+        "Dans les entreprises individuelles, le solde du compte 13 est viré au compte 103 Capital personnel.",
+        "Aucune charge ou produit ne doit transiter directement par le compte 13 sans passer au préalable par les comptes de gestion (classes 6, 7, 8)."
+      ],
       "mots_cles": ["résultat net", "compte 13", "bénéfice", "perte", "clôture de l'exercice", "affectation du résultat", "capitaux propres", "comptes de gestion"],
       "statut": "en_vigueur"
     },
@@ -292,6 +350,13 @@
         "du tableau d'amortissement des biens acquis ou créés à l'aide de la subvention pour vérification de la reprise au résultat de la subvention selon le même rythme que les amortissements"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Les subventions d'investissement figurent au passif du bilan dans les capitaux propres pour leur montant net, jusqu'à ce qu'elles aient rempli leur objet.",
+        "La reprise au résultat se fait au même rythme que l'amortissement des immobilisations acquises avec la subvention.",
+        "Pour les immobilisations non amortissables : reprise sur la durée d'inaliénabilité, ou à défaut 1/10e par an.",
+        "En cas de cession de l'actif subventionné, le solde non encore repris est rapporté intégralement au résultat.",
+        "Ne pas confondre avec les subventions d'exploitation (compte 71) ni les subventions d'équilibre (compte 88)."
+      ],
       "mots_cles": ["subventions d'investissement", "compte 14", "aides financières", "non remboursables", "immobilisations", "reprise de subvention", "quote-part", "compte 865"],
       "statut": "en_vigueur"
     },
@@ -310,6 +375,13 @@
       "exclusions": [],
       "controles": [],
       "sens": "crediteur",
+      "commentaires": [
+        "Les provisions réglementées sont de nature purement fiscale ou réglementaire, non liées aux principes comptables.",
+        "Exemples : provisions pour reconstitution de gisements, hausse des prix, fluctuation des cours, investissement.",
+        "Les fonds assimilés incluent les amortissements dérogatoires, plus-values de cession à réinvestir, provision spéciale de réévaluation.",
+        "Elles constituent des réserves non libérées d'impôt, inscrites au passif parmi les capitaux propres.",
+        "Elles sont créées/augmentées exclusivement par Dotations H.A.O. (compte 85) et réduites/annulées par Reprises H.A.O. (compte 86)."
+      ],
       "mots_cles": ["provisions réglementées", "fonds assimilés", "compte 15", "fiscal", "amortissements dérogatoires", "plus-values de cession", "dotations HAO", "reprises HAO", "capitaux propres"],
       "statut": "en_vigueur"
     },
@@ -342,6 +414,12 @@
         "des contrats d'avances-engagements de l'État et des organismes internationaux"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Les emprunts ne sont pas distingués en fonction du terme d'exigibilité dans le compte, mais les fractions exigibles à 1 an, 2 ans et plus de 2 ans sont isolées dans le tableau des créances et dettes.",
+        "Les intérêts courus à la clôture de l'exercice sont enregistrés au crédit du compte 16 par le débit du compte 671.",
+        "Le compte enregistre aussi les dépôts et cautionnements reçus.",
+        "Les emprunts obligataires à primes sont enregistrés pour la valeur totale de remboursement, la prime étant inscrite au compte 206."
+      ],
       "mots_cles": ["emprunts", "dettes assimilées", "compte 16", "emprunts obligataires", "établissements de crédit", "intérêts courus", "dépôts", "cautionnements", "primes de remboursement"],
       "statut": "en_vigueur"
     },
@@ -369,6 +447,13 @@
         "des échéanciers de remboursement"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Seuls les contrats de crédit-bail d'importance significative ou de locations renouvelables sans limitation sont visés.",
+        "La valeur d'entrée est celle figurant dans le contrat ou la somme actualisée des redevances.",
+        "La fraction des redevances correspondant au remboursement de la dette transite par le compte 623 au débit du compte 17.",
+        "Les intérêts courus de l'emprunt équivalent sont enregistrés au compte 672.",
+        "Les redevances non retraitées (contrats non significatifs) restent au compte 622 Locations et charges locatives."
+      ],
       "mots_cles": ["crédit-bail", "leasing", "compte 17", "redevances", "contrats assimilés", "valeur d'entrée", "intérêts courus", "compte 672", "compte 623"],
       "statut": "en_vigueur"
     },
@@ -401,6 +486,13 @@
         "des virements"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Les dettes liées à des participations concernent les emprunts contractés auprès d'entreprises liées ou avec lien de participation.",
+        "Les comptes de liaison (184 à 187) fonctionnent comme des comptes courants entre le siège et ses établissements/succursales.",
+        "Les comptes de liaison sont égaux et de sens contraire dans la comptabilité du siège et celle de l'établissement.",
+        "Les opérations commerciales courantes entre sociétés du groupe restent aux comptes 40 et 41, les opérations financières aux comptes 16, 18 et 27.",
+        "Les intérêts courus sur dettes liées à des participations sont inscrits au compte 183 par le débit du compte 671."
+      ],
       "mots_cles": ["dettes liées à des participations", "compte 18", "comptes de liaison", "établissements", "succursales", "sociétés en participation", "entreprises liées", "intérêts courus"],
       "statut": "en_vigueur"
     },
@@ -427,6 +519,13 @@
         "appréciation de l'échéance du risque ou de la charge"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "Les provisions du compte 19 couvrent des risques et charges probables à plus d'un an, nettement précisés quant à leur objet.",
+        "Elles sont réajustées à chaque clôture d'exercice par dotations supplémentaires ou reprises.",
+        "Les charges certaines d'un montant déterminé ne doivent pas figurer en provisions mais dans les comptes de charges par nature.",
+        "Les provisions à caractère fiscal sans risque réel sont à inscrire au compte 15 Provisions réglementées.",
+        "Les risques à moins d'un an relèvent du compte 499 Risques provisionnés."
+      ],
       "mots_cles": ["provisions financières", "risques et charges", "compte 19", "litiges", "garanties", "pertes de change", "pensions", "charges à répartir", "dotations aux provisions", "reprises de provisions", "plus d'un an"],
       "statut": "en_vigueur"
     }

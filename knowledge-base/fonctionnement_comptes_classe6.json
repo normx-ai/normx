@@ -24,6 +24,13 @@
         {"ne_pas_enregistrer": "les frais accessoires d'achats", "utiliser": "comptes de la classe 6 correspondant à leur nature"}
       ],
       "controles": ["des factures et avoirs fournisseurs", "des bons de commande", "des états d'inventaire"],
+      "commentaires": [
+        "Le montant des achats s'entend net de taxes recuperables, augmente des droits de douane (prix rendu frontiere).",
+        "Les achats sont comptabilises deduction faite des rabais et remises imputes directement sur la facture.",
+        "Les escomptes de reglement ne reduisent pas le prix d'achat mais sont portes au compte 773 Escomptes obtenus.",
+        "A la cloture, les biens recus avant reception de la facture doivent etre inscrits en achats par le credit du compte 408 Factures non parvenues.",
+        "Les frais accessoires d'achats (transport, commissions, etc.) ne sont pas enregistres au compte 60 mais dans les comptes de charges correspondant a leur nature."
+      ],
       "sens": "debiteur",
       "mots_cles": ["achats", "compte 60", "marchandises", "matières premières", "fournitures", "rabais", "remises", "ristournes", "factures non parvenues", "compte 408"],
       "statut": "en_vigueur"
@@ -48,6 +55,12 @@
         {"ne_pas_enregistrer": "les variations de stocks d'en-cours ou de produits fabriqués", "utiliser": "73 Variations des stocks de biens et de services produits"}
       ],
       "controles": ["de l'inventaire, ou du décompte physique, et de l'évaluation"],
+      "commentaires": [
+        "Le compte 603 peut etre debiteur (destockage) ou crediteur (stockage) selon le sens de la variation.",
+        "En inventaire intermittent : annulation du stock initial au debit, constatation du stock final au credit.",
+        "En inventaire permanent : les entrees en stock sont creditees, les sorties sont debitees, les ecarts d'inventaire sont ajustes.",
+        "Ne pas confondre avec le compte 73 qui enregistre les variations de stocks de biens et services produits (en-cours, produits finis)."
+      ],
       "sens": "mixte",
       "mots_cles": ["variations des stocks", "compte 603", "stocks de biens achetés", "marchandises", "matières premières", "inventaire intermittent", "inventaire permanent", "compte 6031", "compte 6032", "compte 6033"],
       "statut": "en_vigueur"
@@ -69,6 +82,11 @@
         {"ne_pas_enregistrer": "les consommations intermédiaires de biens et de services, lorsque l'entreprise effectue des transports pour son propre compte (carburants, réparations de véhicules, etc.)", "utiliser": "comptes de charges appropriés"}
       ],
       "controles": ["des factures et avoirs fournisseurs", "des documents de transport", "de l'inventaire des figurines d'affranchissement", "des bons de course"],
+      "commentaires": [
+        "Les frais de transport rattachables a une immobilisation doivent etre incorpores au cout de l'immobilisation et non passes en charges.",
+        "Les sous-comptes distinguent : transports sur achats (611), transports sur ventes (612), transports pour le compte de tiers (613), transports du personnel (614), transports de plis (616).",
+        "Les consommations intermediaires (carburants, reparations de vehicules) pour transport pour propre compte ne sont pas enregistrees ici mais dans les comptes de charges appropriees."
+      ],
       "sens": "debiteur",
       "mots_cles": ["transports", "compte 61", "port", "fret", "déplacements", "expédition", "affranchissement"],
       "statut": "en_vigueur"
@@ -88,6 +106,13 @@
       },
       "exclusions": [],
       "controles": [],
+      "commentaires": [
+        "Les deux comptes 62 et 63 fonctionnent de maniere identique ; leur separation repond a la diversite des services externes.",
+        "Compte 62 : sous-traitance generale, locations et charges locatives, entretien et reparations, primes d'assurance, etudes et recherches.",
+        "Compte 63 : publicite et relations publiques, telecommunications, frais bancaires (631), remunerations d'intermediaires et de conseils (632), redevances de credit-bail (623/633), cotisations, dons, pourboires.",
+        "Les travaux a facon et sous-traitances industrielles integres a la production ne sont pas des services consommes et sont classes avec les produits dans lesquels ils sont incorpores.",
+        "A la cloture, regulariser les charges constatees d'avance (compte 476)."
+      ],
       "sens": "debiteur",
       "mots_cles": ["services extérieurs", "compte 62", "compte 63", "sous-traitance", "locations", "crédit-bail", "entretien", "assurances", "études", "publicité", "télécommunications", "frais bancaires", "honoraires", "formation"],
       "statut": "en_vigueur"
@@ -111,6 +136,12 @@
         {"ne_pas_enregistrer": "l'impôt sur les bénéfices", "utiliser": "89 Impôts sur le résultat"}
       ],
       "controles": ["des déclarations", "des avis d'imposition", "des règlements à l'ordre du Trésor"],
+      "commentaires": [
+        "Le compte 64 enregistre tous les impots et taxes a la charge de l'entreprise, sauf ceux dont l'assiette est etablie sur les resultats (compte 89).",
+        "Les droits de douane sur acquisitions d'immobilisations sont incorpores au cout de l'immobilisation (classe 2), pas au compte 64.",
+        "Les droits de douane sur achats de biens importes sont integres au prix d'achat (prix rendu frontiere) au compte 60.",
+        "Comprend les impots fonciers, patentes, licences, taxes sur salaires, droits d'enregistrement, droits de timbre, penalites fiscales et amendes."
+      ],
       "sens": "debiteur",
       "mots_cles": ["impôts", "taxes", "compte 64", "impôts fonciers", "patentes", "licences", "taxes sur salaires", "droits d'enregistrement", "droits de timbre", "pénalités fiscales", "amendes"],
       "statut": "en_vigueur"
@@ -134,6 +165,13 @@
         {"ne_pas_enregistrer": "les charges provisionnées H.A.O.", "utiliser": "839 Charges provisionnées H.A.O."}
       ],
       "controles": ["des factures", "des notifications de cessation de paiement relevées", "des calculs de la comptabilité analytique de gestion"],
+      "commentaires": [
+        "Les charges diverses (658) incluent les jetons de presence, les amendes et penalites, les dons et liberalites.",
+        "Le compte 651 enregistre les pertes sur creances clients devenues irrecouvrables.",
+        "Le compte 654 enregistre la valeur comptable nette des immobilisations cedees dans le cadre d'operations courantes (frequentes et recurrentes).",
+        "Le compte 659 Charges provisionnees d'exploitation enregistre les dotations pour depreciation de l'actif circulant (stocks, clients) et les risques provisionnes a court terme.",
+        "Les charges H.A.O. ne doivent pas etre enregistrees ici mais au compte 831/839."
+      ],
       "sens": "debiteur",
       "mots_cles": ["autres charges", "compte 65", "pertes sur créances", "quote-part de résultat", "cessions courantes", "charges provisionnées", "compte 659", "compte 654"],
       "statut": "en_vigueur"
@@ -159,6 +197,13 @@
         {"ne_pas_enregistrer": "les indemnités versées à des tierces personnes qui ne sont pas membres de l'entreprise (honoraires)", "utiliser": "632 Rémunérations d'intermédiaires et de conseils"}
       ],
       "controles": ["des livres de paie", "des fiches de paie", "des déclarations sociales et fiscales"],
+      "commentaires": [
+        "Le compte 66 enregistre la remuneration brute (appointements, salaires, commissions, conges payes, gratifications, indemnites, avantages en nature) et les charges sociales.",
+        "La remuneration de l'exploitant individuel est egalement enregistree ici.",
+        "Le compte 667 enregistre les charges de personnel exterieur (interimaire, detache ou prete), par transfert du compte 637.",
+        "Les impots dont l'assiette repose sur la remuneration (taxes sur appointements) sont au compte 6413, pas au compte 66.",
+        "Les depenses exposees par les salaries pour le compte de l'entreprise (notes de frais) ne sont pas des charges de personnel mais des consommations intermediaires."
+      ],
       "sens": "debiteur",
       "mots_cles": ["charges de personnel", "compte 66", "salaires", "rémunérations", "cotisations sociales", "charges sociales", "personnel extérieur", "exploitant individuel", "avantages en nature"],
       "statut": "en_vigueur"
@@ -183,6 +228,13 @@
         {"ne_pas_enregistrer": "les primes de remboursement afférentes aux obligations amorties au cours de la période", "utiliser": "206 Primes de remboursement des obligations"}
       ],
       "controles": ["des relevés de banque et décomptes d'intérêt"],
+      "commentaires": [
+        "Le compte 67 enregistre les charges financieres a l'exclusion de la remuneration des capitaux propres et des services bancaires (qui vont au compte 631).",
+        "Les interets intercalaires d'emprunts dus pendant la periode de construction des immobilisations sont incorpores au cout de l'immobilisation (classe 2).",
+        "Les remboursements d'emprunts ne sont pas des charges financieres mais un remboursement de dette (compte 16).",
+        "Les primes de remboursement des obligations amorties sont portees au compte 206, pas au compte 67.",
+        "Le compte 676 enregistre les pertes de change et le 677 les pertes sur cessions de titres de placement."
+      ],
       "sens": "debiteur",
       "mots_cles": ["frais financiers", "charges assimilées", "compte 67", "intérêts des emprunts", "crédit-bail", "escomptes accordés", "pertes de change", "pertes sur titres", "charges provisionnées financières"],
       "statut": "en_vigueur"
@@ -205,6 +257,13 @@
         {"ne_pas_enregistrer": "les dotations aux amortissements H.A.O.", "utiliser": "852 Dotations aux amortissements H.A.O."}
       ],
       "controles": ["des plans et tableaux d'amortissement"],
+      "commentaires": [
+        "Le compte 68 enregistre les dotations aux amortissements dans leur conception economique et comptable, et non pas fiscale.",
+        "Les dotations aux amortissements des charges immobilisees sont imputees directement au credit des comptes concernes sans transiter par un compte Amortissements.",
+        "Lorsque les dispositions fiscales autorisent des amortissements acceleres, le complement fiscal est porte au debit du compte 85 par le credit du compte 151 Amortissements derogatoires.",
+        "Le complement d'amortissement relatif aux immobilisations cedees, mises hors service ou au rebut est enregistre ici.",
+        "Ne pas confondre avec les dotations aux provisions (compte 69) ni avec les charges provisionnees (compte 659)."
+      ],
       "sens": "debiteur",
       "mots_cles": ["dotations aux amortissements", "compte 68", "amortissement d'exploitation", "amortissement financier", "charges immobilisées", "primes de remboursement", "dépréciation économique"],
       "statut": "en_vigueur"
@@ -227,6 +286,13 @@
         {"ne_pas_enregistrer": "les charges correspondant à la dépréciation probable constatée sur les éléments de trésorerie", "utiliser": "679 Charges provisionnées financières"}
       ],
       "controles": ["de tous documents susceptibles d'éclairer le jugement sur les charges à prévoir par suite de dépréciation d'éléments d'actif ou les risques attachés à des événements ou opérations intervenus au cours de l'exercice"],
+      "commentaires": [
+        "Les provisions sont creees ou ajustees en hausse en debitant le compte 69 par le credit du compte de provision concerne (19 ou 29).",
+        "Elles sont ajustees en baisse ou annulees en debitant le compte de provision par le credit du compte 79 Reprises de provisions.",
+        "Lorsqu'un risque ou une charge provisionnee se realise, il est comptabilise dans un compte de charges (classe 6 ou 8) et la provision est reprise integralement.",
+        "Ne pas confondre avec les charges provisionnees a court terme (659 pour l'exploitation, 679 pour le financier) ni avec les dotations H.A.O. (compte 85).",
+        "Les provisions pour depreciation de l'actif circulant (stocks, clients) relevent du compte 659, pas du compte 69."
+      ],
       "sens": "debiteur",
       "mots_cles": ["dotations aux provisions", "compte 69", "provisions d'exploitation", "provisions financières", "risques et charges", "dépréciations", "reprises de provisions"],
       "statut": "en_vigueur"

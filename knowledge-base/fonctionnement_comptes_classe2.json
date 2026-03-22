@@ -31,6 +31,12 @@
         "des bons de souscription des obligations"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Les charges immobilisées constituent des actifs fictifs et sont d'abord comptabilisées en charges par nature puis transférées au compte 20 par le crédit du compte 78.",
+        "L'étalement se fait par amortissement direct sur 2 à 5 ans maximum.",
+        "Aucune distribution de bénéfice ne peut intervenir avant amortissement complet des frais d'établissement.",
+        "Ne pas confondre avec les immobilisations incorporelles (compte 21) ni les frais de transport, installation et montage à rattacher aux immobilisations concernées."
+      ],
       "mots_cles": ["charges immobilisées", "compte 20", "frais d'établissement", "charges à répartir", "primes de remboursement", "amortissement direct", "transfert de charges", "actifs fictifs"],
       "statut": "en_vigueur"
     },
@@ -64,6 +70,14 @@
         "des contrats de concession"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Seules les dépenses de R&D relatives à des projets ayant de sérieuses chances de réalisation technique et de rentabilité commerciale peuvent être immobilisées.",
+        "Le compte 212 enregistre les brevets, modèles, dessins, procédés, droits de propriété littéraire et artistique.",
+        "Le compte 213 Logiciels enregistre les logiciels acquis ou produits en interne.",
+        "Le fonds commercial (compte 215) regroupe les éléments incorporels non évalués et non comptabilisés séparément.",
+        "Le droit au bail (compte 216) correspond au montant versé au locataire précédent.",
+        "Le compte 219 enregistre les brevets, logiciels et investissements de création en cours d'élaboration par l'entreprise."
+      ],
       "mots_cles": ["immobilisations incorporelles", "compte 21", "brevets", "licences", "logiciels", "fonds commercial", "droit au bail", "marques", "recherche et développement", "production immobilisée"],
       "statut": "en_vigueur"
     },
@@ -90,6 +104,12 @@
         "des titres de propriété"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "La valeur des terrains bâtis doit toujours être distinguée de celle des bâtiments correspondants.",
+        "Les terrains de gisement sont des terrains d'extraction de matières premières.",
+        "Les travaux de mise en valeur (défrichage, drainage, irrigation, nivellement, plantations) peuvent être isolés et amortis s'ils ont été effectués par l'entreprise.",
+        "Les terrains nus ne sont en principe pas amortissables, sauf les terrains agricoles ou forestiers et les travaux de mise en valeur."
+      ],
       "mots_cles": ["terrains", "compte 22", "terrains nus", "terrains bâtis", "terrains de gisement", "mise en valeur", "amortissement des terrains"],
       "statut": "en_vigueur"
     },
@@ -113,6 +133,12 @@
       "exclusions": [],
       "controles": [],
       "sens": "debiteur",
+      "commentaires": [
+        "La valeur des terrains n'est pas comprise dans celle des bâtiments ; des évaluations distinctes sont requises.",
+        "Inclure dans la valeur des bâtiments : peinture extérieure/intérieure des constructions neuves, aménagements permanents (chauffage, climatisation, conduites d'eau, gaz, électricité), matériel installé avant occupation.",
+        "L'amortissement des bâtiments ou installations en cours ne peut commencer qu'à partir de leur mise en service effective.",
+        "Le compte 239 enregistre les travaux en cours, qui sont transférés aux comptes 231-238 une fois terminés."
+      ],
       "mots_cles": ["bâtiments", "installations techniques", "agencements", "compte 23", "constructions", "ouvrages d'infrastructure", "installations en cours", "production immobilisée"],
       "statut": "en_vigueur"
     },
@@ -143,6 +169,12 @@
         "de recoupements avec les assurances payées et les taxes sur les matériels roulants"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Le matériel comprend tous les objets et instruments utilisés pour l'extraction, la transformation et la fourniture de services constituant l'objet de la profession.",
+        "Inclut : matériel industriel/commercial, agricole, emballages récupérables identifiables, mobilier de bureau, informatique, matériel de transport, immobilisations animales et agricoles.",
+        "Les biens corporels d'une durée de vie inférieure à un an ou de très faible valeur sont à comptabiliser en charges (classe 6).",
+        "Le matériel en cours (compte 249) est transféré aux comptes définitifs une fois achevé."
+      ],
       "mots_cles": ["matériel", "compte 24", "machines", "mobilier", "outillage", "matériel de transport", "matériel informatique", "immobilisations animales", "matériel en cours"],
       "statut": "en_vigueur"
     },
@@ -169,6 +201,11 @@
         "des versements effectués"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Le solde du compte 25 représente la créance de l'entreprise sur ses fournisseurs d'immobilisations.",
+        "Le compte est soldé à la réception de la facture définitive, par le débit du compte d'immobilisation concerné.",
+        "Ne pas confondre avec les en-cours d'immobilisation (comptes de classe 2) ni les avances sur biens autres qu'immobilisations (comptes 48 ou 40)."
+      ],
       "mots_cles": ["avances", "acomptes", "immobilisations", "compte 25", "fournisseurs d'immobilisations", "commandes en cours"],
       "statut": "en_vigueur"
     },
@@ -195,6 +232,14 @@
         "des ordres d'achat et de vente en Bourse"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Sont présumés titres de participation : les titres acquis par OPA ou OPE, et ceux représentant au moins 10% du capital d'une entreprise.",
+        "Contrôle exclusif : détention directe ou indirecte supérieure à 40% des droits de vote.",
+        "Contrôle conjoint : partage du contrôle entre un nombre limité d'associés.",
+        "Influence notable : détention d'au moins 20% des droits de vote.",
+        "La valeur d'entrée est le prix d'acquisition majoré des frais accessoires d'achat.",
+        "La partie non libérée des titres est inscrite au crédit du compte 472."
+      ],
       "mots_cles": ["titres de participation", "compte 26", "contrôle exclusif", "contrôle conjoint", "influence notable", "OPA", "OPE", "10% du capital", "20% des droits de vote", "40%"],
       "statut": "en_vigueur"
     },
@@ -222,6 +267,12 @@
         "des reconnaissances de dettes de la part de tiers, virements bancaires et mouvements financiers"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Le compte 27 enregistre les titres que l'entreprise n'a ni l'intention ni la possibilité de revendre à brève échéance.",
+        "Les prêts et créances ne sont pas distingués par terme d'exigibilité, mais les fractions à 1 an au plus sont isolées dans le tableau d'échéances.",
+        "Les prêts assortis de garanties doivent être mentionnés dans l'État annexé.",
+        "Les frais accessoires d'achat de titres (impôts, courtages, commissions) sont en charges (classe 6), sauf pour les TIAP (compte 2741)."
+      ],
       "mots_cles": ["autres immobilisations financières", "compte 27", "titres immobilisés", "prêts", "dépôts", "cautionnements versés", "créances non commerciales", "TIAP"],
       "statut": "en_vigueur"
     },
@@ -247,6 +298,13 @@
         "des recoupements provenant des tableaux d'amortissement"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "L'amortissement constate l'amoindrissement certain et irréversible de la valeur des immobilisations avec le temps, l'usage ou l'évolution technique.",
+        "Le coût amortissable est la différence entre le coût d'entrée et la valeur résiduelle prévisionnelle (nulle si durée de vie = durée d'utilisation).",
+        "Les amortissements sont inscrits à l'actif en diminution de la valeur brute pour donner la valeur comptable nette.",
+        "Les amortissements doivent être pratiqués à chaque clôture, même en cas d'absence ou d'insuffisance de bénéfice.",
+        "L'amortissement des charges immobilisées (compte 20) se fait par amortissement direct (crédit du compte 20), pas via le compte 28."
+      ],
       "mots_cles": ["amortissements", "compte 28", "dépréciation irréversible", "plan d'amortissement", "durée d'utilisation", "valeur résiduelle", "dotations aux amortissements", "valeur comptable nette"],
       "statut": "en_vigueur"
     },
@@ -278,6 +336,13 @@
         "du livre d'inventaire"
       ],
       "sens": "crediteur",
+      "commentaires": [
+        "La provision pour dépréciation constate un amoindrissement probable et non irréversible de la valeur d'un élément d'actif.",
+        "Elle concerne principalement les actifs non amortissables (terrains, fonds commercial) mais peut aussi toucher les immobilisations amortissables en cas de dépréciation exceptionnelle.",
+        "Les provisions sont inscrites à l'actif en diminution de la valeur brute pour donner la valeur comptable nette.",
+        "Elles doivent être pratiquées à la clôture de l'exercice, même en l'absence de bénéfice (principe de prudence).",
+        "A la différence des provisions pour pertes et charges (passif), elles sont des corrections d'actif de sens négatif."
+      ],
       "mots_cles": ["provisions pour dépréciation", "compte 29", "moins-values", "actif non amortissable", "terrains", "fonds commercial", "dotations aux provisions", "reprises de provisions", "valeur comptable nette"],
       "statut": "en_vigueur"
     }

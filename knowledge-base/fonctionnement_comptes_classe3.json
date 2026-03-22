@@ -30,6 +30,13 @@
         "de l'inventaire extra-comptable et des factures (achats et frais)"
       ],
       "sens": "debiteur",
+      "commentaires": [
+        "Les marchandises sont des biens achetés pour être revendus en l'état, sans transformation.",
+        "Les marchandises H.A.O. ne sont distinguées que si leur montant dépasse 5% du total de l'actif circulant.",
+        "Le stock est évalué au prix d'achat majoré des frais accessoires (coût direct d'achat), sous déduction des ristournes, rabais et remises.",
+        "La valeur des sorties est déterminée soit par le coût moyen pondéré (CMP), soit par la méthode PEPS (premier entré, premier sorti).",
+        "En inventaire intermittent, seuls le stock initial et le stock final sont enregistrés ; en inventaire permanent, chaque mouvement est tracé."
+      ],
       "mots_cles": ["marchandises", "compte 31", "stocks", "inventaire permanent", "inventaire intermittent", "PEPS", "coût moyen pondéré", "CMP", "variation des stocks", "compte 6031"],
       "statut": "en_vigueur"
     },
@@ -52,6 +59,11 @@
       ],
       "controles": ["de l'inventaire extra-comptable et des factures (achats et frais)"],
       "sens": "debiteur",
+      "commentaires": [
+        "Les matières dites consommables ne font pas partie des fournitures liées et sont classées au compte 33 Autres approvisionnements.",
+        "Le fonctionnement est identique au compte 31, avec le compte 6032 comme contrepartie.",
+        "Le matériel de remplacement ou de réserve non encore en service doit être comptabilisé au compte 24 Matériel."
+      ],
       "mots_cles": ["matières premières", "fournitures liées", "compte 32", "stocks", "compte 6032", "PEPS", "CMP"],
       "statut": "en_vigueur"
     },
@@ -74,6 +86,11 @@
       ],
       "controles": ["de l'inventaire extra-comptable et des factures (achats et frais)"],
       "sens": "debiteur",
+      "commentaires": [
+        "Le compte 33 peut comprendre des pièces de rechange, du petit outillage et du matériel mobile dont la destination définitive (immobilisation ou entretien) n'est pas exactement connue.",
+        "Les matières consommables, fournitures d'atelier, d'usine, de magasin, de bureau et les emballages y sont enregistrés.",
+        "Le matériel de remplacement ou de réserve non encore en service relève du compte 24 Matériel."
+      ],
       "mots_cles": ["autres approvisionnements", "compte 33", "matières consommables", "fournitures", "emballages", "pièces de rechange", "compte 6033"],
       "statut": "en_vigueur"
     },
@@ -96,6 +113,11 @@
       ],
       "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production"],
       "sens": "debiteur",
+      "commentaires": [
+        "Les produits en cours ne sont pas inscrits à un compte de magasin.",
+        "Les travaux en cours concernent des biens d'équipement lourd, immeubles, constructions dont les délais de fabrication sont longs et dont la propriété n'est pas encore transférée à l'acheteur.",
+        "En inventaire permanent, les en-cours achevés sont transférés en produits finis ou intermédiaires au coût de production."
+      ],
       "mots_cles": ["produits en cours", "travaux en cours", "compte 34", "compte 734", "coût de production", "en-cours"],
       "statut": "en_vigueur"
     },
@@ -118,6 +140,11 @@
       ],
       "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production"],
       "sens": "debiteur",
+      "commentaires": [
+        "Les montants d'études et de prestations déjà engagées et non encore facturées (prestations de longue durée) sont enregistrés ici.",
+        "Exemples : études d'organisation, transport international, etc.",
+        "Selon l'organisation de l'entreprise, ils peuvent être suivis en inventaire permanent ou seulement constatés en inventaire intermittent."
+      ],
       "mots_cles": ["services en cours", "compte 35", "études", "prestations", "compte 735"],
       "statut": "en_vigueur"
     },
@@ -140,6 +167,11 @@
       ],
       "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production"],
       "sens": "debiteur",
+      "commentaires": [
+        "Lorsque l'entreprise vend concurremment et indistinctement des produits achetés et des produits fabriqués (semblables, ne se distinguant que par l'origine), elle peut n'ouvrir qu'un seul compte.",
+        "Dans ce cas, les sorties de stocks sont créditées par le débit du compte 6031 (marchandises) et du compte 736 (produits finis) selon un prorata déterminé sous la responsabilité de l'entreprise.",
+        "L'évaluation se fait au coût réel de production pour les corps certains, au CMP ou PEPS pour les biens interchangeables."
+      ],
       "mots_cles": ["produits finis", "compte 36", "coût de production", "compte 736", "PEPS", "CMP"],
       "statut": "en_vigueur"
     },
@@ -164,6 +196,12 @@
       ],
       "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production des produits concernés"],
       "sens": "debiteur",
+      "commentaires": [
+        "Lorsque l'entreprise utilise indistinctement un produit intermédiaire fabriqué et une matière achetée semblable, un seul compte peut être ouvert avec prorata entre les comptes 7371 et 6032.",
+        "Les produits résiduels comprennent les déchets et rebuts (résidus impropres à une utilisation normale) et les produits de récupération (matières récupérées après mise hors service d'immobilisations).",
+        "Le compte 372 Produits résiduels n'est ouvert que si les déchets et rebuts ne peuvent pas être introduits dans la nomenclature courante de l'entreprise.",
+        "Les produits issus d'immobilisations mises hors service en attente d'affectation vont au compte 38, et une fois affectés aux comptes 31, 32 ou 33."
+      ],
       "mots_cles": ["produits intermédiaires", "produits résiduels", "compte 37", "déchets", "rebuts", "récupération", "compte 7371", "compte 7372"],
       "statut": "en_vigueur"
     },
@@ -186,6 +224,13 @@
       ],
       "controles": ["de l'inventaire extra-comptable et au moyen des factures d'achat"],
       "sens": "debiteur",
+      "commentaires": [
+        "Le compte 38 est un compte de passage pour les stocks dont l'entreprise est déjà propriétaire mais qui sont en voie d'acheminement ou en dépôt/consignation chez des tiers.",
+        "Dès réception, les stocks sont ventilés dans les comptes de stocks appropriés (31, 32, 33, 36).",
+        "En inventaire intermittent, les entreprises enregistrent les stocks en cours de route dans les achats à la date de transfert de propriété et utilisent le compte 38 si ces stocks ne sont pas encore réceptionnés à la date du bilan.",
+        "En fin de période, les entreprises doivent inscrire dans l'État annexé le détail par catégorie des stocks figurant au compte 38.",
+        "Les stocks dont l'entreprise a pris possession mais dont elle attend les factures ne sont pas à inscrire ici : en cours d'exercice pas d'écriture, à la clôture utiliser les comptes de régularisation."
+      ],
       "mots_cles": ["stocks en cours de route", "consignation", "dépôt", "compte 38", "stocks non réceptionnés", "coût approché"],
       "statut": "en_vigueur"
     },
@@ -210,6 +255,14 @@
       ],
       "controles": ["de l'inventaire extra-comptable et par évaluation"],
       "sens": "crediteur",
+      "commentaires": [
+        "Les provisions pour dépréciation des stocks obéissent aux mêmes règles que celles constatées sur les autres éléments de l'actif circulant (classe 4).",
+        "La dépréciation doit être certaine quant à sa nature et l'élément d'actif en cause doit être individualisé. La provision est à constituer même si le montant est incertain.",
+        "Les éléments en stock détériorés, défraîchis, démodés doivent faire l'objet d'une provision.",
+        "Le montant est déterminé par différence entre la valeur comptable (coût d'achat ou de production, PEPS ou CMP) et la valeur actuelle au jour de l'inventaire (valeur probable de réalisation).",
+        "La provision doit être constituée même en l'absence ou en cas d'insuffisance de bénéfices, conformément au principe de prudence.",
+        "Les événements générateurs de dépréciation survenus après la clôture ne sont pas pris en compte dans l'exercice clos."
+      ],
       "mots_cles": ["dépréciations des stocks", "compte 39", "provisions", "moins-values", "stocks détériorés", "démodés", "compte 6593", "compte 7593", "principe de prudence"],
       "statut": "en_vigueur"
     }

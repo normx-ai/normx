@@ -24,6 +24,13 @@
         {"ne_pas_enregistrer": "les subventions d'exploitation compensatrices d'insuffisances de tarifs", "utiliser": "71 Subventions d'exploitation"}
       ],
       "controles": ["des factures de ventes", "des factures d'avoirs", "de la vérification des marges"],
+      "commentaires": [
+        "Le prix de vente facture s'entend net de taxes collectees, deduction faite des rabais et remises imputes directement sur la facture.",
+        "Les escomptes de reglement accordes ne reduisent pas le chiffre d'affaires mais sont comptabilises au debit du compte 673 Escomptes accordes.",
+        "Les retours sur ventes et les rabais/remises/ristournes hors factures sont enregistres au debit du compte 70.",
+        "Les sous-comptes distinguent : ventes de marchandises (701), ventes de produits finis (702), ventes de produits intermediaires (703), travaux factures (704), etudes et prestations de services (705), produits accessoires (706).",
+        "Les subventions d'exploitation compensatrices d'insuffisances de tarifs ne sont pas des ventes (compte 71)."
+      ],
       "sens": "crediteur",
       "mots_cles": ["ventes", "compte 70", "marchandises", "produits finis", "services vendus", "travaux facturés", "chiffre d'affaires", "rabais", "remises", "ristournes"],
       "statut": "en_vigueur"
@@ -45,6 +52,12 @@
         {"ne_pas_enregistrer": "les subventions accordées en vue d'acquérir, de créer, de remplacer et de mettre en état des immobilisations", "utiliser": "14 Subventions d'investissement"}
       ],
       "controles": ["des courriers d'octroi des subventions"],
+      "commentaires": [
+        "Les subventions d'exploitation sont des aides destinees a compenser l'insuffisance du prix de vente administre ou a faire face a des charges d'exploitation.",
+        "Les abandons de creances a caractere commercial consentis en faveur de l'entreprise sont assimiles a des subventions d'exploitation.",
+        "Ne pas confondre avec les fonds de dotation (compte 102 Capital par dotation) ni avec les subventions d'investissement (compte 14).",
+        "Le compte est credite des subventions acquises par le debit du compte 4495 ou 4582, puis par les comptes de tresorerie a l'encaissement."
+      ],
       "sens": "crediteur",
       "mots_cles": ["subventions d'exploitation", "compte 71", "aides financières", "État", "collectivités publiques", "insuffisance de tarifs", "abandons de créances"],
       "statut": "en_vigueur"
@@ -65,6 +78,12 @@
         {"ne_pas_enregistrer": "les frais d'établissement et les charges à répartir", "utiliser": "comptes 78 ou 848"}
       ],
       "controles": ["des immobilisations portées à l'actif", "des charges saisies par la comptabilité analytique"],
+      "commentaires": [
+        "Le cout de production doit integrer tous les intrants : cout d'acquisition des materiaux consommes, charges directes et indirectes de production.",
+        "Les frais financiers supportes sur les emprunts exclusivement affectes au financement de la fabrication sont integres au cout de production pendant la periode de fabrication.",
+        "Les frais d'etablissement et les charges a repartir ne sont pas de la production immobilisee (utiliser comptes 78 ou 848).",
+        "Le compte 72 est credite par le debit du compte d'immobilisation concerne (classe 2)."
+      ],
       "sens": "crediteur",
       "mots_cles": ["production immobilisée", "compte 72", "travaux pour soi-même", "coût de production", "immobilisations", "frais financiers rattachables"],
       "statut": "en_vigueur"
@@ -89,6 +108,13 @@
         {"ne_pas_enregistrer": "la variation de la période afférente aux stocks de marchandises, de matières, de fournitures et d'emballages commerciaux", "utiliser": "comptes 603 Variations des stocks de biens achetés"}
       ],
       "controles": ["des fiches d'inventaire", "de l'évaluation des stocks", "de la comptabilité analytique"],
+      "commentaires": [
+        "Crediteur, le solde du compte 73 represente l'augmentation globale des stocks de produits fabriques (stockage) ; debiteur, il represente la diminution (destockage).",
+        "En inventaire intermittent : annulation du stock initial au debit, constatation du stock final au credit.",
+        "En inventaire permanent : les entrees (en-cours, produits fabriques) sont creditees, les sorties sont debitees.",
+        "Les ecarts entre inventaire comptable et inventaire physique sont ajustes dans ce compte.",
+        "Ne pas confondre avec le compte 603 qui concerne les variations de stocks de biens achetes (marchandises, matieres, fournitures)."
+      ],
       "sens": "mixte",
       "mots_cles": ["variations des stocks", "compte 73", "produits en cours", "produits finis", "services en cours", "produits intermédiaires", "produits résiduels", "inventaire permanent", "inventaire intermittent"],
       "statut": "en_vigueur"
@@ -112,6 +138,13 @@
         {"ne_pas_enregistrer": "les reprises de provisions pour dépréciation d'éléments à caractère financier", "utiliser": "797 Reprises de provisions financières"}
       ],
       "controles": ["des factures", "des avis bancaires", "des correspondances échangées"],
+      "commentaires": [
+        "Produits accessoires ne provenant pas directement de l'activite productrice, commerciale ou financiere de l'entreprise, mais relevant neanmoins de ses activites ordinaires.",
+        "Le compte 754 enregistre le prix de cession des immobilisations cedees de maniere courante (frequente et recurrente) ; le compte 654 enregistre la valeur comptable nette correspondante.",
+        "Le compte 759 enregistre les reprises de charges provisionnees d'exploitation : annulations ou rajustements en baisse des depreciations de l'actif circulant (comptes 39, 49) et des risques provisionnes (499).",
+        "Les reprises de provisions pour depreciation de l'actif immobilise relevent du compte 791, pas du 759.",
+        "Les rabais/remises/ristournes hors factures accordes aux clients sont portes au debit du compte 70, pas au compte 75."
+      ],
       "sens": "crediteur",
       "mots_cles": ["autres produits", "compte 75", "quote-part de résultat", "cessions courantes", "produits divers", "reprises de charges provisionnées", "compte 759", "compte 754"],
       "statut": "en_vigueur"
@@ -133,6 +166,13 @@
         {"ne_pas_enregistrer": "les récupérations de prêts ou d'avances consenties", "utiliser": "27 Autres immobilisations financières"}
       ],
       "controles": ["de virements bancaires", "de décompte d'intérêts", "de factures avec escompte", "de bordereaux de cession de titres", "d'encaissement des coupons"],
+      "commentaires": [
+        "Les interets et dividendes recus de l'etranger doivent etre comptabilises distinctement de ceux acquis dans l'Etat.",
+        "Le compte 773 Escomptes obtenus enregistre les escomptes de reglement obtenus des fournisseurs pour paiement anticipe.",
+        "Le compte 776 enregistre les gains de change, le 777 les gains sur cessions de titres de placement.",
+        "Le compte 779 enregistre les reprises de charges provisionnees financieres (depreciations de tresorerie et risques provisionnes existant au debut de l'exercice).",
+        "Les recuperations de prets ou d'avances consenties ne sont pas des produits financiers mais un recouvrement d'immobilisation (compte 27)."
+      ],
       "sens": "crediteur",
       "mots_cles": ["revenus financiers", "produits assimilés", "compte 77", "intérêts de prêts", "revenus de participations", "escomptes obtenus", "revenus de titres", "gains de change", "gains sur cessions", "reprises de charges provisionnées financières"],
       "statut": "en_vigueur"
@@ -154,6 +194,13 @@
         {"ne_pas_enregistrer": "les transferts de charges H.A.O.", "utiliser": "848 Transferts de charges H.A.O."}
       ],
       "controles": ["du relevé des décisions de gestion des organes compétents"],
+      "commentaires": [
+        "Le transfert de charges sert a imputer des charges d'exploitation ou financieres a un compte de bilan (sauf immobilisations, pour lesquelles utiliser le compte 72).",
+        "Le transfert peut concerner les charges immobilisees, les stocks, les comptes de tiers.",
+        "Exceptionnellement, il sert a des transferts de charges a charges (ex. : avantages en nature accordes au personnel, transfères du compte 66 au compte approprie).",
+        "Les transferts de charges doivent etre mentionnes dans l'Etat annexe.",
+        "Les transferts de charges H.A.O. relevent du compte 848, pas du compte 78."
+      ],
       "sens": "crediteur",
       "mots_cles": ["transferts de charges", "compte 78", "charges immobilisées", "charges d'exploitation", "charges financières", "comptes de bilan", "avantages en nature"],
       "statut": "en_vigueur"
@@ -175,6 +222,13 @@
         {"ne_pas_enregistrer": "les reprises de charges provisionnées", "utiliser": "759 Reprises de charges provisionnées d'exploitation, 779 Reprises de charges provisionnées financières, 849 Reprises de charges provisionnées HAO"}
       ],
       "controles": ["du relevé des décisions des organes compétents"],
+      "commentaires": [
+        "Les reprises de provisions constatent soit la diminution de la provision ramenee a un montant inferieur, soit son integration dans les resultats (suite a la realisation ou l'annulation du risque/de la charge).",
+        "Le compte 791 enregistre les reprises de provisions d'exploitation, le compte 797 les reprises de provisions financieres.",
+        "Le compte 798 Reprises d'amortissements est utilise exceptionnellement en cas de revision retroactive du plan d'amortissement initial.",
+        "Les reprises H.A.O. relevent du compte 86, pas du compte 79.",
+        "Les reprises de charges provisionnees relevent des comptes 759, 779 ou 849, pas du compte 79."
+      ],
       "sens": "crediteur",
       "mots_cles": ["reprises de provisions", "compte 79", "annulation", "rajustement en baisse", "provisions financières", "provisions pour dépréciation", "reprises d'amortissements", "compte 798"],
       "statut": "en_vigueur"
