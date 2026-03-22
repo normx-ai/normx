@@ -214,7 +214,16 @@ async function main() {
     console.log(`Fonctionnement Comptes Classe 2: ${docs.length} articles`);
   }
 
-  // Source 8: Fonctionnement des comptes — Classe 4
+  // Source 8: Fonctionnement des comptes — Classe 3
+  const fonctC3KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe3.json'));
+  if (fonctC3KB) {
+    const articles = fonctC3KB.articles || fonctC3KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe3');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 3: ${docs.length} articles`);
+  }
+
+  // Source 9: Fonctionnement des comptes — Classe 4
   const fonctC4KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe4.json'));
   if (fonctC4KB) {
     const articles = fonctC4KB.articles || fonctC4KB;

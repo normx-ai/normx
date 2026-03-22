@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 3 — Classe 3 : Comptes de Stocks",
+    "pages_source": "113-115+",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "31",
+      "titre": "COMPTE 31 Marchandises",
+      "contenu": "Les marchandises sont les objets, matières et fournitures, acquis par l'entreprise et destinés à être revendus en l'état. Les marchandises hors activités ordinaires (H.A.O.) ne seront distinguées que si leur montant est supérieur à 5% du total de l'actif circulant. La comptabilisation des stocks repose sur la tenue soit d'un inventaire permanent, soit d'un inventaire intermittent. Les marchandises, matières premières, fournitures et emballages achetés sont entrés en stocks au prix d'achat majoré éventuellement des frais accessoires d'achat (coût direct d'achat), sous déduction des ristournes, rabais et remises obtenus des fournisseurs. La valeur des sorties de stocks est déterminée soit selon la technique du coût moyen pondéré (C.M.P.), soit selon la méthode du premier entré premier sorti (P.E.P.S.).",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 31 est crédité du montant du stock initial, pour solde — par le débit du compte 6031 Variations des stocks de marchandises",
+          "Inventaire permanent — Le compte 31 est crédité, à chaque sortie de stock, du coût des marchandises vendues, calculé selon la méthode P.E.P.S. ou du coût moyen pondéré (C.M.P.) — par le débit du compte 6031 Variations des stocks de marchandises",
+          "Inventaire permanent — Le compte 31 est crédité à la clôture de l'exercice, après inventaire physique, pour régularisation du stock des marchandises, des différences constatées en moins par rapport à l'inventaire permanent — par le débit du compte 6031 Variations des stocks de marchandises"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 31 est débité du montant du stock final, déterminé par inventaire extra-comptable et évalué conformément aux règles précisées dans l'évaluation des stocks (méthode P.E.P.S. ou du coût moyen pondéré) — par le crédit du compte 6031 Variations des stocks de marchandises",
+          "Inventaire permanent — Le compte 31 est débité, à chaque entrée en stock, du coût des marchandises achetées (prix d'achat et frais accessoires d'achat) — par le crédit du compte 6031 Variations des stocks de marchandises",
+          "Inventaire permanent — Le compte 31 est débité en fin d'exercice, après inventaire physique, pour régularisation du stock des marchandises, des différences constatées en plus par rapport à l'inventaire permanent — par le crédit du compte 6031 Variations des stocks de marchandises"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les achats de matières premières et fournitures non destinées à être revendues en l'état", "utiliser": "32 Matières premières et fournitures liées"}
+      ],
+      "controles": [
+        "de l'inventaire extra-comptable et des factures (achats et frais)"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["marchandises", "compte 31", "stocks", "inventaire permanent", "inventaire intermittent", "PEPS", "coût moyen pondéré", "CMP", "variation des stocks", "compte 6031"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

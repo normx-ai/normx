@@ -115,6 +115,171 @@
       "sens": "debiteur",
       "mots_cles": ["bâtiments", "installations techniques", "agencements", "compte 23", "constructions", "ouvrages d'infrastructure", "installations en cours", "production immobilisée"],
       "statut": "en_vigueur"
+    },
+    {
+      "numero": "24",
+      "titre": "COMPTE 24 Matériel",
+      "contenu": "Le matériel (machines, mobiliers) est constitué par l'ensemble des objets et instruments avec lesquels sont extraits, transformés les matières ou fournitures, et sont fournis les services qui sont l'objet même de la profession exercée. Comprend le matériel et outillage industriel et commercial, le matériel agricole, le matériel d'emballage récupérable et identifiable, le matériel et mobilier (de bureau, informatique, bureautique), le matériel de transport (automobile, ferroviaire, fluvial, naval, aérien), les immobilisations animales et agricoles, les agencements et aménagements du matériel, les autres matériels et le matériel en cours.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 24 est crédité en cas de cession, disparition, mise au rebut — par le débit du compte 284 Amortissements du matériel (à concurrence des amortissements pratiqués)",
+          "Le compte 24 est crédité — ou par le débit du compte 81 Valeurs comptables des cessions d'immobilisations (ou 654) pour le solde"
+        ],
+        "debit": [
+          "Le compte 24 est débité de la valeur d'apport, d'acquisition ou de création par l'entreprise des matériels — par le crédit du compte 10 Capital",
+          "Le compte 24 est débité — par le crédit du compte 46 Associés et Groupe",
+          "Le compte 24 est débité — ou par le crédit des comptes de tiers et des comptes de trésorerie concernés",
+          "Le compte 24 est débité — par le crédit du compte 72 Production immobilisée",
+          "Le compte 24 est débité — ou par le crédit du compte 249 Matériel en cours, lorsqu'ils ont été achevés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les biens corporels disparaissant par le premier usage ou d'une durée de vie inférieure à un an ou de très faible valeur", "utiliser": "comptes de la classe 6"}
+      ],
+      "controles": [
+        "des factures",
+        "des inventaires",
+        "des documents nécessaires à la circulation (cartes grises, livrets de bord)",
+        "de recoupements avec les assurances payées et les taxes sur les matériels roulants"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["matériel", "compte 24", "machines", "mobilier", "outillage", "matériel de transport", "matériel informatique", "immobilisations animales", "matériel en cours"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "25",
+      "titre": "COMPTE 25 Avances et acomptes versés sur immobilisations",
+      "contenu": "Sommes versées par l'entreprise à des tiers pour des commandes en cours d'immobilisations. Le solde de ce compte représente la créance de l'entreprise sur ses fournisseurs d'immobilisations. Les avances et acomptes versés sont des versements effectués au profit des fournisseurs d'immobilisations au moment des commandes ou au cours de l'exécution des contrats. Selon que ces sommes ont pour objet l'acquisition d'une immobilisation incorporelle ou corporelle, elles sont portées dans les comptes appropriés.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 25 est crédité pour solde à la réception de la facture définitive du fournisseur de l'immobilisation — par le débit du compte d'immobilisation concerné"
+        ],
+        "debit": [
+          "Le compte 25 est débité du montant des sommes versées aux fournisseurs d'immobilisations à la commande ou en cours d'exécution des contrats — par le crédit des comptes de trésorerie"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les en-cours d'immobilisation", "utiliser": "comptes appropriés de la classe 2"},
+        {"ne_pas_enregistrer": "les avances et acomptes versés sur d'autres biens que les immobilisations", "utiliser": "48 Créances et dettes H.A.O. ou 40 Fournisseurs et comptes rattachés"}
+      ],
+      "controles": [
+        "des chèques",
+        "des relevés bancaires",
+        "des factures",
+        "des versements effectués"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["avances", "acomptes", "immobilisations", "compte 25", "fournisseurs d'immobilisations", "commandes en cours"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "26",
+      "titre": "COMPTE 26 Titres de participation",
+      "contenu": "Les titres de participation sont constitués par les droits dans le capital d'autres entreprises, matérialisés ou non par des titres, afin de créer un lien durable avec celles-ci et de contribuer à l'activité et au développement de la société détentrice. Sont présumés être des titres de participation les titres acquis en tout ou partie par offre publique d'achat (O.P.A.) ou par offre publique d'échange (O.P.E.) et les titres représentant au moins 10% du capital social d'une entreprise. Une société est sous contrôle exclusif lorsqu'elle est détenue directement ou indirectement par une entreprise possédant une fraction du capital lui conférant la majorité des droits de vote (supérieure à 40%). Le contrôle conjoint est le partage du contrôle. L'influence notable correspond à la détention d'au moins 20% des droits de vote. La valeur d'entrée est le prix d'acquisition majoré des frais accessoires d'achat.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 26 est crédité en cas de cession de titres — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations"
+        ],
+        "debit": [
+          "Le compte 26 est débité de la valeur d'apport ou d'acquisition — par le crédit du compte 10 Capital",
+          "Le compte 26 est débité — ou par le crédit des comptes de tiers et des comptes de trésorerie concernés",
+          "Le compte 26 est débité — par le crédit du compte 472 Versements restant à effectuer sur titres non libérés, pour la partie non libérée des titres"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les titres de placement", "utiliser": "50 Titres de placement"},
+        {"ne_pas_enregistrer": "les titres immobilisés", "utiliser": "274 Titres immobilisés"}
+      ],
+      "controles": [
+        "des bons de souscription",
+        "des ordres d'achat et de vente en Bourse"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["titres de participation", "compte 26", "contrôle exclusif", "contrôle conjoint", "influence notable", "OPA", "OPE", "10% du capital", "20% des droits de vote", "40%"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "27",
+      "titre": "COMPTE 27 Autres immobilisations financières",
+      "contenu": "Les autres immobilisations financières comprennent : les titres autres que les titres de participation, que l'entreprise n'a ni l'intention ni la possibilité de revendre dans un bref délai (titres immobilisés) ; les prêts nés en vertu de dispositions contractuelles ; les créances non commerciales assimilées à des prêts (dépôts et cautionnements). Les prêts et créances ne sont pas distingués en fonction du terme d'exigibilité, mais les fractions exigibles à un an au plus sont isolées distinctement dans le tableau d'échéances des créances et des dettes. Les prêts assortis d'une garantie font l'objet d'une mention dans l'État annexé.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 27 est crédité lors du règlement ou en cas de cession de titres — par le débit des comptes de trésorerie ou de tiers intéressés"
+        ],
+        "debit": [
+          "Le compte 27 est débité de la valeur d'apport ou d'acquisition des titres, du montant des prêts accordés, des créances nées ou des dépôts et cautionnements versés et de la partie non libérée des titres immobilisés — par le crédit des comptes de tiers et des comptes de trésorerie concernés",
+          "Le compte 27 est débité — par le crédit du compte 472 Versements restant à effectuer sur titres non libérés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les titres de participation", "utiliser": "26 Titres de participation"},
+        {"ne_pas_enregistrer": "les titres de placement", "utiliser": "50 Titres de placement"},
+        {"ne_pas_enregistrer": "les frais accessoires d'achat de titres (impôts, courtages, commissions, honoraires), sauf pour les T.I.A.P. (compte 2741)", "utiliser": "comptes concernés de la classe 6"}
+      ],
+      "controles": [
+        "des contrats de prêts, reçus des dépôts et cautionnement",
+        "des souscriptions de titres, certificats de propriété de titres",
+        "des reconnaissances de dettes de la part de tiers, virements bancaires et mouvements financiers"
+      ],
+      "sens": "debiteur",
+      "mots_cles": ["autres immobilisations financières", "compte 27", "titres immobilisés", "prêts", "dépôts", "cautionnements versés", "créances non commerciales", "TIAP"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "28",
+      "titre": "COMPTE 28 Amortissements",
+      "contenu": "L'amortissement est la constatation comptable obligatoire de l'amoindrissement de la valeur des immobilisations qui se déprécient de façon certaine et irréversible avec le temps, l'usage ou en raison du changement de techniques, de l'évolution des marchés ou de toute autre cause. Il consiste à répartir le coût du bien sur la durée probable d'utilisation selon un plan prédéfini. Le coût du bien pour l'entreprise s'entend de la différence entre son coût d'entrée et sa valeur résiduelle prévisionnelle (cette dernière est nulle lorsque la durée probable de vie du bien coïncide avec sa durée d'utilisation). Les amortissements sont inscrits distinctement à l'actif en diminution de la valeur brute des biens correspondants pour donner leur valeur comptable nette. Les amortissements doivent être pratiqués à la clôture de chaque exercice, même en cas d'absence ou d'insuffisance de bénéfice.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 28 est crédité, en fin d'exercice de l'annuité d'amortissement ou en cas de cession de la dotation complémentaire aux amortissements — par le débit du compte 681 Dotations aux amortissements d'exploitation",
+          "Le compte 28 est crédité — ou par le débit du compte 85 Dotations H.A.O."
+        ],
+        "debit": [
+          "Le compte 28 est débité, en cas de cession d'immobilisation, de l'annulation des amortissements relatifs à l'immobilisation cédée — par le crédit du compte d'immobilisation concerné (classe 2)",
+          "Le compte 28 est débité de la reprise des amortissements — par le crédit du compte 798 Reprises d'amortissements, en cas de révision du plan d'amortissement",
+          "Le compte 28 est débité — ou par le crédit du compte 862 Reprises d'amortissements H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "l'amortissement des frais d'établissement, des charges à répartir et des primes de remboursement des obligations", "utiliser": "20 Charges immobilisées (crédité, pour amortissement direct)"}
+      ],
+      "controles": [
+        "des recoupements provenant des tableaux d'amortissement"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["amortissements", "compte 28", "dépréciation irréversible", "plan d'amortissement", "durée d'utilisation", "valeur résiduelle", "dotations aux amortissements", "valeur comptable nette"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "29",
+      "titre": "COMPTE 29 Provisions pour dépréciation",
+      "contenu": "La provision pour dépréciation des immobilisations constate l'amoindrissement probable de la valeur d'un élément d'actif résultant de causes dont les effets ne sont pas jugés irréversibles. Les provisions pour dépréciation sont inscrites distinctement à l'actif, en diminution de la valeur brute des biens correspondants pour donner leur valeur comptable nette (V.C.N.). Les provisions pour dépréciation résultent de l'évaluation comptable des moins-values constatées sur les éléments d'actif non amortissables tels que les terrains et le fonds commercial. Elles peuvent également concerner les dépréciations exceptionnelles subies par les immobilisations amortissables. A la différence des provisions pour pertes et charges, elles expriment des corrections d'actif de sens négatif. Les provisions doivent être pratiquées à la clôture de l'exercice, même en l'absence de bénéfice.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 29 est crédité de la dotation aux provisions — par le débit du compte 691 Dotations aux provisions d'exploitation",
+          "Le compte 29 est crédité — ou par le débit du compte 697 Dotations aux provisions financières",
+          "Le compte 29 est crédité — ou par le débit du compte 853 Dotations aux provisions pour dépréciation H.A.O."
+        ],
+        "debit": [
+          "Le compte 29 est débité de la reprise de provision — par le crédit du compte 791 Reprises de provisions d'exploitation",
+          "Le compte 29 est débité — par le crédit du compte 797 Reprises de provisions financières",
+          "Le compte 29 est débité — ou par le crédit du compte 863 Reprises de provisions pour dépréciation H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dépréciations des comptes de stocks", "utiliser": "39 Dépréciations des stocks"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes de tiers", "utiliser": "49 Dépréciations et risques provisionnés (Tiers)"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes de trésorerie", "utiliser": "59 Dépréciations et risques provisionnés (Trésorerie)"}
+      ],
+      "controles": [
+        "des rapprochements effectués entre la valeur d'entrée des actifs dans le patrimoine de l'entreprise et la valeur à la date de clôture de l'exercice",
+        "de factures",
+        "de l'argus",
+        "du livre d'inventaire"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["provisions pour dépréciation", "compte 29", "moins-values", "actif non amortissable", "terrains", "fonds commercial", "dotations aux provisions", "reprises de provisions", "valeur comptable nette"],
+      "statut": "en_vigueur"
     }
   ]
 }
