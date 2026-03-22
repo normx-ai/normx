@@ -32,6 +32,186 @@
       "sens": "debiteur",
       "mots_cles": ["marchandises", "compte 31", "stocks", "inventaire permanent", "inventaire intermittent", "PEPS", "coût moyen pondéré", "CMP", "variation des stocks", "compte 6031"],
       "statut": "en_vigueur"
+    },
+    {
+      "numero": "32",
+      "titre": "COMPTE 32 Matières premières et fournitures liées",
+      "contenu": "Les matières premières et fournitures liées sont les objets, matières et fournitures achetés pour être incorporés aux produits fabriqués. Les matières dites consommables ne font pas partie des fournitures liées et sont classées dans le compte 33 Autres approvisionnements. Le fonctionnement est identique au compte 31 avec le compte 6032 Variations des stocks de matières premières et fournitures liées.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 32 est crédité du montant du stock initial, pour solde — par le débit du compte 6032",
+          "Inventaire permanent — Le compte 32 est crédité à chaque sortie de stock, du coût des matières et fournitures utilisées (PEPS ou CMP) — par le débit du compte 6032"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 32 est débité du montant du stock final — par le crédit du compte 6032",
+          "Inventaire permanent — Le compte 32 est débité à chaque entrée en stock, du coût des matières et fournitures achetées — par le crédit du compte 6032"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "le matériel de remplacement ou de réserve qui n'est pas encore en service", "utiliser": "24 Matériel"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et des factures (achats et frais)"],
+      "sens": "debiteur",
+      "mots_cles": ["matières premières", "fournitures liées", "compte 32", "stocks", "compte 6032", "PEPS", "CMP"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "33",
+      "titre": "COMPTE 33 Autres approvisionnements",
+      "contenu": "Les autres approvisionnements sont des matières, des fournitures acquises par l'entreprise et qui concourent à la fabrication ou à l'exploitation, sans entrer dans la composition des produits fabriqués ou traités. Le compte 33 peut comprendre des pièces de rechange, du petit outillage et, le cas échéant, du matériel mobile, dont la destination définitive (immobilisation ou entretien) n'est pas exactement connue. Le fonctionnement est identique aux comptes 31 et 32 avec le compte 6033 Variations des stocks d'autres approvisionnements.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 33 est crédité du montant du stock initial, pour solde — par le débit du compte 6033",
+          "Inventaire permanent — Le compte 33 est crédité à chaque sortie de stock (PEPS ou CMP) — par le débit du compte 6033"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 33 est débité du montant du stock final — par le crédit du compte 6033",
+          "Inventaire permanent — Le compte 33 est débité à chaque entrée en stock — par le crédit du compte 6033"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "le matériel de remplacement ou de réserve qui n'est pas encore en service", "utiliser": "24 Matériel"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et des factures (achats et frais)"],
+      "sens": "debiteur",
+      "mots_cles": ["autres approvisionnements", "compte 33", "matières consommables", "fournitures", "emballages", "pièces de rechange", "compte 6033"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "34",
+      "titre": "COMPTE 34 Produits en cours",
+      "contenu": "Les produits en cours sont des biens et services en voie de formation ou de transformation à la clôture de l'exercice. Les produits en cours ne sont pas inscrits à un compte de magasin. Les travaux en cours concernent des biens d'équipement lourd, immeubles, constructions, dont les délais de fabrication sont relativement longs et dont la propriété n'est pas encore transférée à l'acheteur. Le fonctionnement utilise le compte 734 Variations des stocks de produits en cours.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 34 est crédité en fin d'exercice, du montant initial des en-cours, pour solde — par le débit du compte 734",
+          "Inventaire permanent — Le compte 34 est crédité à chaque sortie des en-cours achevés et transférés en produits finis ou intermédiaires au coût de production — par le débit du compte 734"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 34 est débité en fin d'exercice, du montant constaté des en-cours, déterminé en comptabilité analytique de gestion ou par voie extra-comptable — par le crédit du compte 734",
+          "Inventaire permanent — Le compte 34 est débité à chaque incorporation des frais dans les en-cours, du montant déterminé en comptabilité analytique de gestion — par le crédit du compte 734"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les services en cours", "utiliser": "35 Services en cours"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production"],
+      "sens": "debiteur",
+      "mots_cles": ["produits en cours", "travaux en cours", "compte 34", "compte 734", "coût de production", "en-cours"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "35",
+      "titre": "COMPTE 35 Services en cours",
+      "contenu": "Les services en cours sont des études et prestations en cours d'exécution, dont la remise définitive à l'acheteur ou au passeur d'ordre n'est pas encore intervenue. Le fonctionnement utilise le compte 735 Variations des en-cours de services.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 35 est crédité en fin d'exercice du montant des en-cours existant au début de l'exercice, pour solde — par le débit du compte 735",
+          "Inventaire permanent — Le compte 35 est crédité à chaque sortie en coût de production des en-cours achevés et vendus — par le débit du compte 735"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 35 est débité en fin d'exercice, du montant constaté des en-cours — par le crédit du compte 735",
+          "Inventaire permanent — Le compte 35 est débité à chaque incorporation des frais dans les en-cours — par le crédit du compte 735"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les produits en cours", "utiliser": "34 Produits en cours"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production"],
+      "sens": "debiteur",
+      "mots_cles": ["services en cours", "compte 35", "études", "prestations", "compte 735"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "36",
+      "titre": "COMPTE 36 Produits finis",
+      "contenu": "Les produits finis sont les produits fabriqués par l'entreprise qui ont atteint le stade final de production. Ils sont destinés à être vendus, loués ou fournis. Lorsque l'entreprise vend concurremment et indistinctement des produits achetés à l'extérieur ou des produits fabriqués par elle-même, évalués respectivement selon le coût d'achat et le coût de production, les sorties de stocks sont créditées par le débit du compte 6031 et du compte 736 selon un prorata. Le fonctionnement utilise le compte 736 Variations des stocks de produits finis.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 36 est crédité, à la fin de l'exercice, du montant du stock initial, pour solde — par le débit du compte 736",
+          "Inventaire permanent — Le compte 36 est crédité à chaque sortie des stocks (coût réel de production pour les corps certains ; PEPS ou CMP pour les biens interchangeables) — par le débit du compte 736"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 36 est débité, à la fin de l'exercice, du montant du stock final évalué au coût réel de production ou au CMP/PEPS — par le crédit du compte 736",
+          "Inventaire permanent — Le compte 36 est débité à chaque entrée en stock, du coût de production des produits finis — par le crédit du compte 736"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les produits intermédiaires fabriqués", "utiliser": "37 Produits intermédiaires et résiduels"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production"],
+      "sens": "debiteur",
+      "mots_cles": ["produits finis", "compte 36", "coût de production", "compte 736", "PEPS", "CMP"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "37",
+      "titre": "COMPTE 37 Produits intermédiaires et résiduels",
+      "contenu": "Les produits intermédiaires sont des produits ayant atteint un stade déterminé de fabrication et disponibles pour des fabrications ultérieures. Les produits résiduels sont constitués par les déchets et rebuts (résidus de toutes natures impropres à une utilisation ou à un écoulement normal) et les produits de la récupération (matières et matériaux récupérés à la suite de la mise hors service de certaines immobilisations). Le fonctionnement utilise les comptes 7371 Variations des stocks de produits intermédiaires et 7372 Variations des stocks de produits résiduels.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 371 est crédité du montant du stock initial, pour solde — par le débit du compte 7371",
+          "Inventaire permanent — Le compte 37 est crédité à chaque sortie des stocks (coût réel ou PEPS/CMP) — par le débit du compte 737"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 371 est débité du montant du stock final — par le crédit du compte 7371",
+          "Inventaire permanent — Le compte 37 est débité à chaque entrée en stocks, du coût de production — par le crédit du compte 737"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les produits en cours qui par définition ne peuvent être inscrits à un compte de magasin", "utiliser": "34 Produits en cours"},
+        {"ne_pas_enregistrer": "les produits issus d'immobilisations démontées ou mises hors service en attente d'affectation définitive", "utiliser": "compte 38"},
+        {"ne_pas_enregistrer": "les produits issus de la récupération affectés définitivement à d'autres stocks", "utiliser": "comptes 31, 32, 33"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et de l'évaluation des coûts de production des produits concernés"],
+      "sens": "debiteur",
+      "mots_cles": ["produits intermédiaires", "produits résiduels", "compte 37", "déchets", "rebuts", "récupération", "compte 7371", "compte 7372"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "38",
+      "titre": "COMPTE 38 Stocks en cours de route, en consignation ou en dépôt",
+      "contenu": "Ce sont des marchandises, matières, fournitures ou produits fabriqués, expédiés par le fournisseur et non encore réceptionnés par l'entreprise ou détenus chez des tiers mais dont l'entreprise est propriétaire. Le compte 38 constitue un compte de passage destiné à enregistrer les stocks dont l'entreprise est déjà propriétaire mais qui sont en voie d'acheminement et non encore réceptionnés. Il peut également être utilisé pour constater l'envoi de stocks en dépôt ou en consignation. En fin de période, les entreprises doivent inscrire dans l'État annexé, le détail par catégorie des stocks figurant au bilan dans le compte 38.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 38 est crédité à la fin de l'exercice du montant des stocks en cours de route de début d'exercice, pour solde — par le débit des sous-comptes 603 concernés",
+          "Inventaire permanent — Le compte 38 est crédité lorsque les stocks sont réceptionnés par l'entreprise, le consignataire ou le dépositaire — par le débit des comptes de stocks de la classe 3 concernés"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 38 est débité en fin d'exercice, des stocks en cours de route à cette date, pour leur coût approché ou leur coût standard — par le crédit des sous-comptes 603 concernés",
+          "Inventaire permanent — Le compte 38 est débité du montant des marchandises, matières premières et fournitures, produits fabriqués, en cours de route et non encore réceptionnés (coût approché ou coût standard) — par le crédit des sous-comptes 603 concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les stocks dont l'entreprise a pris possession et dont elle continue d'attendre les factures d'achat", "utiliser": "En cours d'exercice pas d'écriture à passer. A la clôture de l'exercice les comptes de régularisation"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et au moyen des factures d'achat"],
+      "sens": "debiteur",
+      "mots_cles": ["stocks en cours de route", "consignation", "dépôt", "compte 38", "stocks non réceptionnés", "coût approché"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "39",
+      "titre": "COMPTE 39 Dépréciations des stocks",
+      "contenu": "Ce sont des dépréciations subies par des stocks de marchandises, de matières, et autres approvisionnements résultant de causes diverses dont les effets ne sont pas jugés irréversibles. La dépréciation doit être certaine quant à sa nature et l'élément d'actif en cause doit être individualisé. La provision est à constituer même si la dépréciation est d'un montant incertain. La dépréciation traduit une baisse non définitive et non irréversible de l'évaluation des éléments d'actif par rapport à leur valeur comptable. Les éléments en stock détériorés, défraîchis, démodés doivent faire l'objet d'une provision pour dépréciation. Le montant de ces provisions est normalement déterminé par différence entre la valeur comptable et la valeur actuelle au jour de l'inventaire. Les provisions pour dépréciation sont portées à l'actif du bilan, en déduction de la valeur des postes qu'elles concernent.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 39 est crédité des dépréciations constatées sur les stocks à la fin de l'exercice — par le débit du compte 6593 Charges provisionnées d'exploitation sur stocks",
+          "Le compte 39 est crédité — ou par le débit du compte 839 Charges provisionnées H.A.O."
+        ],
+        "debit": [
+          "Le compte 39 est débité des dépréciations existant au début de l'exercice sur les stocks, pour solde — par le crédit du compte 7593 Reprises de charges provisionnées d'exploitation sur stocks",
+          "Le compte 39 est débité — ou par le crédit du compte 849 Reprises de charges provisionnées H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions pour dépréciation de l'actif immobilisé de la classe 2", "utiliser": "29 Provisions pour dépréciation"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des clients et comptes rattachés", "utiliser": "49 Dépréciations et risques provisionnés (Tiers)"},
+        {"ne_pas_enregistrer": "les provisions pour dépréciation des comptes de trésorerie", "utiliser": "59 Dépréciations et risques provisionnés (Trésorerie)"}
+      ],
+      "controles": ["de l'inventaire extra-comptable et par évaluation"],
+      "sens": "crediteur",
+      "mots_cles": ["dépréciations des stocks", "compte 39", "provisions", "moins-values", "stocks détériorés", "démodés", "compte 6593", "compte 7593", "principe de prudence"],
+      "statut": "en_vigueur"
     }
   ]
 }

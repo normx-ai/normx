@@ -8,6 +8,31 @@
   },
   "articles": [
     {
+      "numero": "40",
+      "titre": "COMPTE 40 Fournisseurs et comptes rattachés",
+      "contenu": "Les fournisseurs d'exploitation sont des tiers auxquels l'entreprise a recours pour ses achats de fournitures de toutes natures et de services. Les dettes d'exploitation se caractérisent par le rattachement à ce compte de tiers de toutes les opérations le concernant : effets à payer, factures à recevoir à la clôture de l'exercice, les intérêts courus à la clôture, les avances et acomptes versés, les retenues de garantie. Si un fournisseur d'exploitation a en outre des relations de fournisseur d'investissements, ces dernières opérations doivent être imputées au compte 481 Fournisseurs d'investissements. Aucune compensation ne saurait s'effectuer entre les comptes fournisseurs à solde débiteur et les comptes fournisseurs à solde créditeur.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 40 est crédité du montant des factures d'achats de biens ou de prestations de services des fournisseurs ou des sous-traitants — par le débit des comptes concernés de la classe 6 (montant hors taxes récupérables), ou le cas échéant de la classe 3 (inventaire permanent), par le débit du compte 4094 Fournisseurs créances pour emballages et matériels à rendre, par le débit du compte 445 État TVA récupérable"
+        ],
+        "debit": [
+          "Le compte 40 est débité des avances et acomptes versés aux fournisseurs ainsi que des règlements effectués sur factures — par le crédit des comptes de trésorerie ou d'effets à payer",
+          "Le compte 40 est débité pour le montant des factures d'avoir reçues pour retour des marchandises au fournisseur — par le crédit des comptes de la classe 6 et des autres comptes ayant joué lors de l'enregistrement initial",
+          "Le compte 40 est débité des rabais, remises et ristournes sur achats obtenus hors factures — par le crédit des comptes de la classe 6 concernés",
+          "Le compte 40 est débité des escomptes de règlement obtenus des fournisseurs — par le crédit du compte 773 Escomptes obtenus"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les fournisseurs d'immobilisations", "utiliser": "481 Fournisseurs d'investissements"}
+      ],
+      "controles": [
+        "des factures, chèques de règlement, effets"
+      ],
+      "sens": "crediteur",
+      "mots_cles": ["fournisseurs", "compte 40", "dettes d'exploitation", "achats", "effets à payer", "factures à recevoir", "avances", "acomptes", "retenues de garantie", "escomptes obtenus"],
+      "statut": "en_vigueur"
+    },
+    {
       "numero": "41",
       "titre": "COMPTE 41 Clients et comptes rattachés",
       "contenu": "Le compte 41 enregistre les créances liées à la vente de biens et services par l'entreprise. Les comptes clients sont ventilés selon : la répartition géographique (État-partie, autres États de la Région, hors Région), la nature du client (entreprise, particulier, État, institution financière), les relations (groupe, autres), l'identité du client, la nature du produit ou service vendu. Aucune compensation ne doit être établie entre les comptes clients à solde débiteur et les comptes clients à solde créditeur.",
