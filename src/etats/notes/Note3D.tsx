@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -157,26 +157,49 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
     return Math.round(val).toLocaleString('fr-FR');
   };
 
-  const sumPrefixes = (prefixes: string[], side: 'debit' | 'credit'): number => {
+  // Note 3D = saisie MANUELLE — les mouvements crédit sur les comptes immo
+  // peuvent être des cessions, annulations ou reclassements.
+  // Seul le comptable sait quels biens ont réellement été cédés.
+
+  // Indicateur depuis la balance : montant des comptes 82 (produits des cessions HAO)
+  // et 754 (cessions courantes) pour aider le comptable
+  const prixCessionBalance = (() => {
     let total = 0;
     for (const l of lignesN) {
       const num = (l.numero_compte || '').trim();
-      if (!prefixes.some(p => num.startsWith(p))) continue;
-      if (side === 'debit') {
-        total += parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0;
-      } else {
-        total += parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0;
+      if (num.startsWith('82') || num.startsWith('754')) {
+        total += parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur ?? l.credit)) || 0;
       }
     }
     return total;
+  })();
+
+  // VNC depuis la balance : comptes 81 (valeur comptable des cessions)
+  const vncCessionBalance = (() => {
+    let total = 0;
+    for (const l of lignesN) {
+      const num = (l.numero_compte || '').trim();
+      if (num.startsWith('81') || num.startsWith('654')) {
+        total += parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur ?? l.debit)) || 0;
+      }
+    }
+    return total;
+  })();
+
+  // Toutes les colonnes sont en saisie manuelle (stockées dans cessions[label_field])
+  const getVal = (label: string, field: string): number => {
+    return cessions[label + '_' + field] || 0;
+  };
+  const setVal = (label: string, field: string, value: number) => {
+    setCessions(prev => ({ ...prev, [label + '_' + field]: value }));
   };
 
   const computeRow = (r: Rubrique) => {
-    const a = sumPrefixes(r.immoPrefixes, 'debit');
-    const b = sumPrefixes(r.amortPrefixes, 'credit');
-    const c = a - b;
-    const d = cessions[r.label] || 0;
-    const e = d - c;
+    const a = getVal(r.label, 'brut');       // Valeur brute saisie
+    const b = getVal(r.label, 'amort');      // Amortissements saisis
+    const c = a - b;                          // VNC calculée
+    const d = getVal(r.label, 'prix');        // Prix de cession saisi
+    const e = d - c;                          // Plus/moins-value calculée
     return { a, b, c, d, e };
   };
 
@@ -301,6 +324,30 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
         </div>
       )}
 
+      {/* Bulle d'information */}
+      <div style={{
+        margin: '12px 20px', padding: '12px 16px',
+        background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8,
+        fontSize: 12, color: '#1e40af', lineHeight: 1.6,
+      }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 3D
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Saisie manuelle :</strong> Cette note est entièrement à renseigner manuellement. Les mouvements crédit sur les comptes d'immobilisations peuvent être des cessions, annulations ou reclassements — seul le comptable sait quels biens ont été cédés.</li>
+          <li><strong>Valeur brute :</strong> Montant d'origine du bien cédé (valeur d'entrée dans l'actif).</li>
+          <li><strong>Amortissements :</strong> Cumul des amortissements pratiqués jusqu'à la date de cession.</li>
+          <li><strong>Prix de cession :</strong> Prix de vente effectif ou indemnité d'assurance reçue.</li>
+        </ul>
+        {(prixCessionBalance > 0 || vncCessionBalance > 0) && (
+          <div style={{ marginTop: 8, padding: '6px 10px', background: '#dbeafe', borderRadius: 4, fontSize: 11 }}>
+            <strong>Indicateurs balance :</strong>
+            {vncCessionBalance > 0 && <span> Compte 81/654 (VNC cessions) = {fmtM(vncCessionBalance)}</span>}
+            {prixCessionBalance > 0 && <span> | Compte 82/754 (Prix de cession) = {fmtM(prixCessionBalance)}</span>}
+          </div>
+        )}
+      </div>
+
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',
         margin: '0 auto 20px', padding: '8mm 10mm',
@@ -379,17 +426,27 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
                 );
               }
 
-              // Ligne de détail
+              // Ligne de détail — toutes les colonnes saisies manuellement
               const vals = computeRow(r);
               return (
                 <tr key={i}>
                   <td style={tdStyle}>{r.label}</td>
-                  <td style={tdRight}>{fmtM(vals.a)}</td>
-                  <td style={tdRight}>{fmtM(vals.b)}</td>
+                  <td style={tdRight}>
+                    {editing ? (
+                      <input type="number" value={getVal(r.label, 'brut') || ''} onChange={e => setVal(r.label, 'brut', parseFloat(e.target.value) || 0)}
+                        placeholder="0" style={inputSt} />
+                    ) : fmtM(vals.a)}
+                  </td>
+                  <td style={tdRight}>
+                    {editing ? (
+                      <input type="number" value={getVal(r.label, 'amort') || ''} onChange={e => setVal(r.label, 'amort', parseFloat(e.target.value) || 0)}
+                        placeholder="0" style={inputSt} />
+                    ) : fmtM(vals.b)}
+                  </td>
                   <td style={tdRight}>{fmtM(vals.c)}</td>
                   <td style={tdRight}>
                     {editing ? (
-                      <input type="number" value={cessions[r.label] || ''} onChange={e => setCessions(prev => ({ ...prev, [r.label]: parseFloat(e.target.value) || 0 }))}
+                      <input type="number" value={getVal(r.label, 'prix') || ''} onChange={e => setVal(r.label, 'prix', parseFloat(e.target.value) || 0)}
                         placeholder="0" style={inputSt} />
                     ) : fmtM(vals.d)}
                   </td>
