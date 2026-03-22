@@ -301,8 +301,10 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 6<br />STOCKS ET EN COURS <sup>(1)</sup></div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 6 — STOCKS ET EN COURS
+        </h3>
 
         {/* Tableau stocks */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>

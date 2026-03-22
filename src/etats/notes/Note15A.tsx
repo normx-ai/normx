@@ -316,8 +316,10 @@ function Note15A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 15 A<br />TOTAL SUBVENTIONS ET PROVISIONS REGLEMENTEES</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 15A — TOTAL SUBVENTIONS ET PROVISIONS REGLEMENTEES
+        </h3>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
           <thead>

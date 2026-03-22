@@ -186,8 +186,10 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 16B<br />ENGAGEMENTS DE RETRAITE ET AVANTAGES ASSIMILES</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 16B — ENGAGEMENTS DE RETRAITE ET AVANTAGES ASSIMILES
+        </h3>
 
         {/* HYPOTHESES ACTUARIELLES */}
         <div style={{ textAlign: 'center', fontWeight: 700, fontSize: 13, margin: '10px 0 6px', border: '0.5px solid #000', padding: 6, background: '#f9f9f9' }}>HYPOTHESES ACTUARIELLES</div>

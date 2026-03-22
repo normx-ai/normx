@@ -451,8 +451,10 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 4<br />IMMOBILISATIONS FINANCIERES</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 4 — IMMOBILISATIONS FINANCIERES
+        </h3>
 
         {/* Tableau principal */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>

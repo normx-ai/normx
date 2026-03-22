@@ -206,8 +206,10 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 13<br />CAPITAL</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 13 — CAPITAL
+        </h3>
 
         {/* Valeur nominale */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>

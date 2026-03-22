@@ -322,8 +322,10 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 3C<br />IMMOBILISATIONS (AMORTISSEMENTS)</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 3C — IMMOBILISATIONS (AMORTISSEMENTS)
+        </h3>
 
         {/* Tableau */}
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 12 }}>

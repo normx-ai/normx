@@ -248,8 +248,10 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 3E<br />INFORMATIONS SUR LES REEVALUATIONS EFFECTUEES PAR L'ENTITE</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 3E — INFORMATIONS SUR LES REEVALUATIONS EFFECTUEES PAR L'ENTITE
+        </h3>
 
         {/* Nature et date des réévaluations */}
         <div style={sectionStyle}>

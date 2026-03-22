@@ -273,8 +273,10 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 8A<br />TABLEAU D'ETALEMENT DES CHARGES IMMOBILISEES ET DES PROVISIONS POUR CHARGES A REPARTIR</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 8A — TABLEAU D'ETALEMENT DES CHARGES IMMOBILISEES ET DES PROVISIONS POUR CHARGES A REPARTIR
+        </h3>
 
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>

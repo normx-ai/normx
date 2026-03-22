@@ -104,8 +104,10 @@ function Note24({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note24P
             <div className="etat-header-row"><span className="etat-header-label">Désignation entité :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span></div>
             <div className="etat-header-row"><span className="etat-header-label">Numéro d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Durée (en mois) :</span><span className="etat-header-value-right">{duree}</span></div>
           </div>
-          <div className="etat-sub-titre">NOTE 24<br />SERVICES EXTERIEURS</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 24 — SERVICES EXTERIEURS
+        </h3>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
           <thead><tr><th style={{ ...thStyle, width: '55%' }}>Libellés</th><th style={thStyle}>Année N</th><th style={thStyle}>Année N-1</th><th style={thStyle}>Variation en %</th></tr></thead>

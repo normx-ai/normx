@@ -238,8 +238,10 @@ function Note20({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note20P
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 20<br />BANQUES, CREDIT D'ESCOMPTE ET DE TRESORERIE</div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 20 — BANQUES, CREDIT D'ESCOMPTE ET DE TRESORERIE
+        </h3>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
           <thead>

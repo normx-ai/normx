@@ -254,8 +254,10 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
               <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
-          <div className="etat-sub-titre">NOTE 15 B<br />AUTRES FONDS PROPRES <sup>(1)</sup></div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
+          NOTE 15B — AUTRES FONDS PROPRES
+        </h3>
 
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
           <thead>
