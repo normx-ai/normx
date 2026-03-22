@@ -135,17 +135,10 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
   };
 
   // Calculer les dettes financières depuis la balance — détail par sous-compte
+  // 16x complet (intérêts courus 166 inclus car rattachés à l'emprunt)
   const emprunts16 = lignesBalance.filter(l => {
     const num = (l.numero_compte || '').trim();
-    return num.startsWith('16') && !num.startsWith('166'); // Emprunts hors intérêts courus
-  });
-  const interetsCourus = lignesBalance.filter(l => {
-    const num = (l.numero_compte || '').trim();
-    return num.startsWith('166'); // Intérêts courus sur emprunts
-  });
-  const emprunts17 = lignesBalance.filter(l => {
-    const num = (l.numero_compte || '').trim();
-    return num.startsWith('17'); // Dettes crédit-bail
+    return num.startsWith('16');
   });
 
   // Valeur brute = solde créditeur uniquement (pas le net SC-SD)
@@ -158,16 +151,12 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     return total;
   };
 
-  // Valeurs balance (référence)
+  // Valeur balance (référence) — uniquement 16x (emprunts propres de l'entité)
   const balRef16 = calcMontant(emprunts16);
-  const balRefIC = calcMontant(interetsCourus);
-  const balRef17 = calcMontant(emprunts17);
 
-  // Montants affichés : valeur saisie si existante, sinon balance comme référence
+  // Montant affiché : valeur saisie si existante, sinon balance comme référence
   const val16 = montantBrutEmprunts ? parseFloat(montantBrutEmprunts) || 0 : balRef16;
-  const valIC = montantBrutIC ? parseFloat(montantBrutIC) || 0 : balRefIC;
-  const val17 = montantBrutCB ? parseFloat(montantBrutCB) || 0 : balRef17;
-  const totalMontant = val16 + valIC + val17;
+  const totalMontant = val16;
 
   const generatePDF = async (): Promise<jsPDF> => {
     const wasEditing = editing;
@@ -306,9 +295,9 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
           <LuInfo size={14} /> Note d'information — Note 1
         </div>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
-          <li><strong>Montant brut :</strong> Renseigner la valeur initiale brute de chaque emprunt (montant emprunté), pas le solde restant dû de la balance. La balance est utilisée comme pré-remplissage à titre indicatif.</li>
-          <li><strong>Sûretés réelles :</strong> Indiquer les montants des hypothèques, nantissements et gages/autres garanties accordées pour chaque dette. Ces informations sont extra-comptables (contrats de prêt, actes notariés).</li>
-          <li><strong>Intérêts courus :</strong> Les intérêts courus (compte 166) sont affichés séparément car ils ne font pas partie de la dette principale.</li>
+          <li><strong>Montant brut :</strong> Renseigner la valeur initiale brute de chaque emprunt (montant emprunté à l'origine), pas le solde restant dû. La balance (comptes 16x) est utilisée comme pré-remplissage à titre indicatif.</li>
+          <li><strong>Sûretés réelles :</strong> Indiquer la référence du contrat et les montants des hypothèques, nantissements et gages/autres garanties. Ces informations sont extra-comptables (contrats de prêt, actes notariés, conventions de garantie).</li>
+          <li><strong>Crédit-bail (17x) :</strong> Les biens en crédit-bail n'appartiennent pas à l'entité et ne sont donc pas concernés par cette note.</li>
           <li>Cliquer sur <strong>Modifier</strong> pour saisir les montants, puis <strong>Sauvegarder</strong>.</li>
         </ul>
       </div>
@@ -375,44 +364,6 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
                 {editing ? <input style={inputStyle} value={gages} onChange={e => setGages(e.target.value)} /> : gages}
               </td>
             </tr>
-            {/* Intérêts courus 166x */}
-            {(balRefIC !== 0 || montantBrutIC) && (
-              <tr>
-                <td style={{ ...tdStyle, paddingLeft: 20, fontStyle: 'italic', color: '#666' }}>Intérêts courus sur emprunts</td>
-                <td style={{ ...tdStyle, textAlign: 'center', color: '#666' }}></td>
-                <td style={{ ...tdStyle, textAlign: 'right', color: '#666' }}>
-                  {editing ? (
-                    <input style={{ ...inputStyle, textAlign: 'right' }} value={montantBrutIC || String(Math.round(balRefIC))} onChange={e => setMontantBrutIC(e.target.value)} />
-                  ) : fmtMontant(valIC)}
-                </td>
-                <td style={tdStyle}></td>
-                <td style={tdStyle}></td>
-                <td style={tdStyle}></td>
-              </tr>
-            )}
-            {/* Dettes crédit-bail 17x */}
-            {(balRef17 !== 0 || montantBrutCB) && (
-              <tr>
-                <td style={tdStyle}>Dettes de location-acquisition / crédit-bail</td>
-                <td style={{ ...tdStyle, textAlign: 'center' }}></td>
-                <td style={{ ...tdStyle, textAlign: 'right' }}>
-                  {editing ? (
-                    <input style={{ ...inputStyle, textAlign: 'right' }} value={montantBrutCB || String(Math.round(balRef17))} onChange={e => setMontantBrutCB(e.target.value)} />
-                  ) : fmtMontant(val17)}
-                </td>
-                <td style={tdStyle}></td>
-                <td style={tdStyle}></td>
-                <td style={tdStyle}></td>
-              </tr>
-            )}
-            {/* Détail par sous-compte si écart possible */}
-            {emprunts16.length > 0 && (
-              <tr>
-                <td colSpan={6} style={{ ...tdStyle, fontSize: 10, color: '#888', fontStyle: 'italic', paddingLeft: 20, background: '#fafafa' }}>
-                  Détail 16x : {emprunts16.map(l => (l.numero_compte || '') + ' = ' + fmtMontant(parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0)).join(' | ')}
-                </td>
-              </tr>
-            )}
             <tr>
               <td style={{ ...tdStyle, fontWeight: 700, textAlign: 'center' }}>TOTAL</td>
               <td style={tdStyle}></td>
