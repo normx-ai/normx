@@ -167,9 +167,9 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     if (!pageRef.current) return pdf;
     const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
     const imgData = canvas.toDataURL('image/png');
-    const pdfWidth = 210;
+    const pdfWidth = 287; // A4 paysage = 297mm - marges 5mm chaque côté
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.addImage(imgData, 'PNG', 5, 5, pdfWidth, pdfHeight);
     if (wasEditing) setEditing(true);
     return pdf;
   };
@@ -303,7 +303,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
       </div>
 
       {/* Page A4 paysage */}
-      <div className="a4-page fi-page" ref={pageRef} style={{ width: 1100, minHeight: 700, padding: '30px 40px' }}>
+      <div className="a4-page fi-page" ref={pageRef} style={{ width: 1050, minHeight: 680, padding: '25px 35px' }}>
         {/* En-tête */}
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
           <div>
