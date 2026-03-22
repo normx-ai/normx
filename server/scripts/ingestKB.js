@@ -241,7 +241,16 @@ async function main() {
     console.log(`Fonctionnement Comptes Classe 5: ${docs.length} articles`);
   }
 
-  // Source 10: Ressources Durables (Chapitre 6)
+  // Source 10: Fonctionnement des comptes — Classe 6
+  const fonctC6KB = loadJSON(path.join(kbDir, 'fonctionnement_comptes_classe6.json'));
+  if (fonctC6KB) {
+    const articles = fonctC6KB.articles || fonctC6KB;
+    const docs = prepareKBArticles(articles, 'fonctionnement_classe6');
+    sources.push(...docs);
+    console.log(`Fonctionnement Comptes Classe 6: ${docs.length} articles`);
+  }
+
+  // Source 11: Ressources Durables (Chapitre 6)
   const resDurKB = loadJSON(path.join(kbDir, 'ressources_durables_chapitre_6.json'));
   if (resDurKB) {
     const articles = resDurKB.articles || resDurKB;

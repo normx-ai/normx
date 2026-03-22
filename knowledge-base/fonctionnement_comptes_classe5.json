@@ -48,6 +48,157 @@
       "sens": "debiteur",
       "mots_cles": ["valeurs à encaisser", "compte 51", "effets", "chèques", "encaissement", "banque"],
       "statut": "en_vigueur"
+    },
+    {
+      "numero": "52",
+      "titre": "COMPTE 52 Banques",
+      "contenu": "Ce compte enregistre les opérations financières effectuées entre l'entreprise, les banques agréées dans un État-partie et les autres banques. Il y a lieu de distinguer pour les banques locales, les avoirs en unité monétaire légale du pays des avoirs en devises. Le solde qui ressort des livres comptables doit être rapproché du solde du compte tenu par la banque. Les comptes bancaires dont le solde apparaît créditeur en fin de période comptable sont inscrits au passif du bilan sous le poste banques découverts, sans compensation possible avec ceux des comptes bancaires présentant un solde débiteur.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 52 est crédité des mouvements de fonds en diminution des comptes Banques — par le débit des comptes concernés"
+        ],
+        "debit": [
+          "Le compte 52 est débité des mouvements de fonds en faveur des comptes Banques — par le crédit des comptes concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les Chèques postaux et le Trésor", "utiliser": "53 Établissements financiers et assimilés"},
+        {"ne_pas_enregistrer": "les représentations locales d'institutions financières internationales ou étrangères", "utiliser": "538 Autres organismes financiers"}
+      ],
+      "controles": ["des relevés bancaires", "des états de rapprochement bancaire"],
+      "sens": "debiteur",
+      "mots_cles": ["banques", "compte 52", "opérations financières", "rapprochement bancaire", "avoirs en devises", "découverts bancaires"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "53",
+      "titre": "COMPTE 53 Établissements financiers et assimilés",
+      "contenu": "Ce compte enregistre les opérations entre l'entreprise et les Chèques postaux et le Trésor dans un État de la Région et les autres établissements financiers. Les opérations enregistrées en comptabilité doivent correspondre aux extraits de comptes envoyés par le Centre de chèques postaux. Les comptes dont le solde apparaît créditeur en fin de période comptable sont inscrits au passif du bilan sous le poste banques découverts.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 53 est crédité des mouvements de fonds diminuant les avoirs de l'entreprise dans les établissements — par le débit des comptes concernés"
+        ],
+        "debit": [
+          "Le compte 53 est débité des mouvements de fonds en faveur des établissements concernés — par le crédit des comptes concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les mouvements de fonds relatifs aux opérations avec les banques", "utiliser": "52 Banques"}
+      ],
+      "controles": ["des relevés de chèques postaux", "des relevés du Trésor", "des états de rapprochement"],
+      "sens": "debiteur",
+      "mots_cles": ["établissements financiers", "compte 53", "chèques postaux", "Trésor", "CCP"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "54",
+      "titre": "COMPTE 54 Instruments de trésorerie",
+      "contenu": "Les instruments de trésorerie appartiennent à la catégorie des instruments financiers. Ils comprennent les options de taux, les options de change, les options sur actions, les instruments de marchés à terme, les avoirs d'or et autres métaux précieux acquis en vue d'une cession à court terme.",
+      "fonctionnement": {
+        "credit": [],
+        "debit": []
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les opérations de crédits de trésorerie", "utiliser": "56 Banques, crédits de trésorerie et d'escompte"}
+      ],
+      "controles": ["des relevés et états de rapprochement bancaires"],
+      "sens": "debiteur",
+      "mots_cles": ["instruments de trésorerie", "compte 54", "options", "taux", "change", "actions", "marchés à terme", "métaux précieux"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "56",
+      "titre": "COMPTE 56 Banques, crédits de trésorerie et d'escompte",
+      "contenu": "Ce compte enregistre, d'une part, le montant des crédits de trésorerie inscrit au compte courant de l'établissement dispensateur de ces concours avec lequel l'entreprise est en relation d'affaires et, d'autre part, le montant nominal des effets escomptés. Le compte 561 Crédits de trésorerie sert à enregistrer les concours qu'accordent les établissements de crédit sur une durée de deux ans au plus, pour financer généralement des besoins généraux. Le compte 565 Escompte de crédits ordinaires sert à enregistrer les opérations d'escompte des effets représentatifs de transactions commerciales.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 56 est crédité du montant des crédits de trésorerie effectivement portés au compte — par le débit du compte 52 Banques",
+          "Le compte 56 est crédité du montant nominal des effets escomptés — par le débit du compte 52 Banques, ou par le débit du compte 675 Escompte des effets de commerce"
+        ],
+        "debit": [
+          "Le compte 56 est débité du montant des remboursements de crédits de trésorerie — par le crédit du compte 52 Banques",
+          "Le compte 56 est débité du montant nominal des effets remis à l'escompte dont l'échéance est passée et l'opération dénouée — par le crédit du compte 415 Clients, effets escomptés non échus"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les prêts bancaires à plus d'un an", "utiliser": "16 Emprunts et dettes assimilées"},
+        {"ne_pas_enregistrer": "les découverts bancaires autorisés (tant qu'ils n'ont qu'un caractère d'engagement)", "utiliser": "comptes d'engagements hors bilan"},
+        {"ne_pas_enregistrer": "les effets remis à l'encaissement à leur échéance normale", "utiliser": "51 Valeurs à encaisser"}
+      ],
+      "controles": ["des attestations de la banque concernant les crédits de trésorerie", "des relevés bancaires", "des bordereaux de remise des effets à l'escompte"],
+      "sens": "crediteur",
+      "mots_cles": ["crédits de trésorerie", "escompte", "compte 56", "effets escomptés", "concours bancaires", "découverts", "compte 675", "compte 415"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "57",
+      "titre": "COMPTE 57 Caisse",
+      "contenu": "Le compte Caisse retrace les opérations d'encaissement et de paiement effectuées en espèces pour les besoins de l'entreprise. Le solde du compte caisse doit toujours correspondre exactement à la somme disponible réellement. Le solde du compte caisse ne doit être que débiteur ou nul. Un solde créditeur du compte caisse constitue une présomption d'irrégularité de la comptabilité.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 57 est crédité des règlements effectués par la caisse — par le débit des comptes concernés"
+        ],
+        "debit": [
+          "Le compte 57 est débité des versements effectués au profit de la caisse — par le crédit des comptes concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les chèques de voyage", "utiliser": "518 Autres valeurs à l'encaissement"},
+        {"ne_pas_enregistrer": "les chèques de banque", "utiliser": "513 Chèques à encaisser ou 514 Chèques à l'encaissement"},
+        {"ne_pas_enregistrer": "les timbres fiscaux", "utiliser": "64 Impôts et taxes"},
+        {"ne_pas_enregistrer": "les timbres postaux et autres figurines d'affranchissement", "utiliser": "616 Transports de plis"},
+        {"ne_pas_enregistrer": "les effets de commerce", "utiliser": "41 Clients et comptes rattachés, 51 Valeurs à encaisser, 56 Banques crédits de trésorerie et d'escompte"},
+        {"ne_pas_enregistrer": "les paiements effectués par cartes de crédit", "utiliser": "515 Cartes de crédit à encaisser"}
+      ],
+      "controles": ["des procès verbaux de caisse", "des états de reddition de la caisse", "des bordereaux de situation journalière"],
+      "sens": "debiteur",
+      "mots_cles": ["caisse", "compte 57", "espèces", "encaissement", "paiement", "solde débiteur", "irrégularité"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "58",
+      "titre": "COMPTE 58 Régies d'avances, accréditifs et virements internes",
+      "contenu": "Ce compte enregistre le montant des avances aux régisseurs, le montant des accréditifs ainsi que la régularisation desdites avances et le règlement des accréditifs. Les comptes 581 et 582 enregistrent les opérations relatives aux régies d'avances (fonds gérés par les régisseurs ou les comptables subordonnés) et aux accréditifs (crédits ouverts par un établissement de crédit). Les comptes 585 et 588 relatifs aux virements internes sont utilisés pour des raisons techniques dans les comptabilités organisées sur la base de journaux auxiliaires, ce sont des comptes de passage.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 58 est crédité lors de la régularisation des avances et du règlement définitif des accréditifs (comptes 581 et 582) — par le débit des comptes concernés",
+          "Le compte 58 est crédité, en cours d'exercice, du montant correspondant à un crédit à porter dans un compte support d'un journal auxiliaire (comptes 585 et 588) — par le débit des comptes de trésorerie"
+        ],
+        "debit": [
+          "Le compte 58 est débité du montant des avances aux régisseurs et du montant des accréditifs (comptes 581 et 582) — par le crédit des comptes de trésorerie",
+          "Le compte 58 est débité, en cours d'exercice, du montant correspondant à un débit à porter dans un compte support d'un journal auxiliaire (comptes 585 et 588) — par le crédit des comptes de trésorerie"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les opérations internes de trésorerie, lorsque l'entreprise utilise un journal unique", "utiliser": "les autres comptes de la classe 5 concernés"}
+      ],
+      "controles": ["des relevés bancaires, en s'assurant que les comptes 585 et 588 relatifs aux virements internes sont soldés à la fin de l'exercice"],
+      "sens": "debiteur",
+      "mots_cles": ["régies d'avances", "accréditifs", "virements internes", "compte 58", "comptes de passage", "journaux auxiliaires"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "59",
+      "titre": "COMPTE 59 Dépréciations et risques provisionnés (Trésorerie)",
+      "contenu": "Ce compte enregistre l'amoindrissement de la valeur des titres et valeurs liquides, des avoirs en banque, et autres éléments financiers résultant de causes précises quant à leur nature, mais dont les effets ne sont pas jugés irréversibles ainsi que les reprises de charges provisionnées s'y rapportant. Il enregistre également les provisions de caractère financier pour risques à moins d'un an. La provision doit être constituée même en l'absence ou en cas d'insuffisance de bénéfices. Pour les titres de placement, la constitution de provisions pour dépréciation s'appuie sur une évaluation des cours à la clôture de l'exercice. Les risques provisionnés à caractère financier enregistrent les pertes financières probables à moins d'un an (provisions pour pertes de change par exemple).",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 59 est crédité des dépréciations de l'exercice constatées sur les éléments d'actif de la classe 5, ainsi que des pertes probables de nature financière à moins d'un an — par le débit du compte 679 Charges provisionnées financières"
+        ],
+        "debit": [
+          "Le compte 59 est débité des dépréciations et provisions existant à l'ouverture de l'exercice — par le crédit du compte 779 Reprises de charges provisionnées financières"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions pour dépréciations d'autres éléments du bilan : Classe 1", "utiliser": "19 Provisions financières pour risques et charges"},
+        {"ne_pas_enregistrer": "Classe 2", "utiliser": "29 Provisions pour dépréciation"},
+        {"ne_pas_enregistrer": "Classe 3", "utiliser": "39 Dépréciations des stocks"},
+        {"ne_pas_enregistrer": "Classe 4", "utiliser": "49 Dépréciations et risques provisionnés (Tiers)"}
+      ],
+      "controles": ["des cours de Bourse de clôture, des évaluations de titres, des cours du change"],
+      "sens": "crediteur",
+      "mots_cles": ["dépréciations trésorerie", "risques provisionnés", "compte 59", "titres de placement", "pertes de change", "compte 679", "compte 779", "moins-values"],
+      "statut": "en_vigueur"
     }
   ]
 }

@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA N°10 — Chapitre 2 : Contenu et Fonctionnement des Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Section 6 — Classe 6 : Comptes de Charges des Activités Ordinaires",
+    "pages_source": "167-175+",
+    "date_extraction": "2026-03-22"
+  },
+  "articles": [
+    {
+      "numero": "60",
+      "titre": "COMPTE 60 Achats (sauf 603)",
+      "contenu": "Ce compte enregistre le montant des factures d'achat et la valeur des retours de matières, fournitures et marchandises aux fournisseurs ainsi que les rabais, remises et ristournes hors factures obtenus des fournisseurs de biens. Le montant des factures d'achat à inscrire au compte 60 s'entend, le cas échéant, net de taxes récupérables, auquel s'ajoutent les droits de douane afférents aux biens acquis (prix rendu frontière). Les achats sont comptabilisés déduction faite des rabais et remises imputés directement sur le montant de la facture. Les escomptes de règlement sont portés au compte 773 Escomptes obtenus. A la clôture de l'exercice, les biens reçus par l'entreprise avant réception de la facture correspondante sont néanmoins inscrits dans les achats par le crédit d'un compte divisionnaire de fournisseurs (408 Factures non parvenues).",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 60 est crédité, en cours d'exercice, des retours de matières, fournitures et marchandises aux fournisseurs ainsi que les rabais, remises, ristournes obtenus par facture d'avoir (après première facturation) — par le débit des comptes fournisseurs ou de tiers intéressés",
+          "Le compte 60 est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"
+        ],
+        "debit": [
+          "Le compte 60 est débité du montant des factures d'achat — par le crédit du compte fournisseur ou d'un compte de trésorerie"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les frais accessoires d'achats", "utiliser": "comptes de la classe 6 correspondant à leur nature"}
+      ],
+      "controles": ["des factures et avoirs fournisseurs", "des bons de commande", "des états d'inventaire"],
+      "sens": "debiteur",
+      "mots_cles": ["achats", "compte 60", "marchandises", "matières premières", "fournitures", "rabais", "remises", "ristournes", "factures non parvenues", "compte 408"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "603",
+      "titre": "COMPTE 603 Variations des stocks de biens achetés",
+      "contenu": "Ce compte enregistre les variations de stocks de biens et de marchandises achetés en retraçant les opérations relatives aux entrées en stocks, aux sorties de stocks, et aux différences constatées entre l'inventaire comptable permanent et l'inventaire physique. Les comptes de variations de stocks peuvent être de solde débiteur ou créditeur. Les soldes des sous-comptes du compte 603 donnent la mesure des différences entre la valeur brute des stocks de biens achetés telle qu'elle est constatée à la clôture de l'exercice, et la valeur brute correspondante à l'ouverture de l'exercice.",
+      "fonctionnement": {
+        "credit": [
+          "Inventaire intermittent — Le compte 603 est crédité de la valeur du stock final, pour sa valeur d'inventaire — par le débit des comptes de stocks concernés (constatation des stocks finals)",
+          "Inventaire permanent — Le compte 603 est crédité, en cours d'exercice, des entrées en stocks — par le débit des comptes de stocks concernés",
+          "Inventaire permanent — Le compte 603 est crédité des différences en plus constatées entre l'inventaire comptable et l'inventaire physique — par le débit des comptes de stocks concernés"
+        ],
+        "debit": [
+          "Inventaire intermittent — Le compte 603 est débité de la valeur du stock initial — par le crédit des comptes de stocks concernés (pour solde des stocks initiaux)",
+          "Inventaire permanent — Le compte 603 est débité, en cours d'exercice, des sorties de stocks — par le crédit des comptes de stocks concernés",
+          "Inventaire permanent — Le compte 603 est débité des différences en moins constatées entre l'inventaire comptable et l'inventaire physique — par le crédit des comptes de stocks concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les variations de stocks d'en-cours ou de produits fabriqués", "utiliser": "73 Variations des stocks de biens et de services produits"}
+      ],
+      "controles": ["de l'inventaire, ou du décompte physique, et de l'évaluation"],
+      "sens": "mixte",
+      "mots_cles": ["variations des stocks", "compte 603", "stocks de biens achetés", "marchandises", "matières premières", "inventaire intermittent", "inventaire permanent", "compte 6031", "compte 6032", "compte 6033"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "61",
+      "titre": "COMPTE 61 Transports",
+      "contenu": "Les frais de transport comprennent le montant des charges de port ou transports engagés par l'entreprise, à l'occasion des achats, des ventes, des déplacements de son personnel ou de l'expédition de plis. Les frais de transport rattachables à une immobilisation en sont exclus et sont incorporés au coût de l'immobilisation.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 61 est crédité, en cours d'exercice, du montant des factures d'avoir représentant des réductions à caractère commercial ou des annulations de factures — par le débit des comptes fournisseurs concernés",
+          "Le compte 61 est crédité, à la clôture de l'exercice — par le débit du compte 476 Charges constatées d'avance pour régularisation ou par le débit du compte 13 Résultat net de l'exercice (pour solde)"
+        ],
+        "debit": [
+          "Le compte 61 est débité des charges de port ou transports engagées par l'entreprise — par le crédit des comptes de tiers ou de trésorerie concernés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les consommations intermédiaires de biens et de services, lorsque l'entreprise effectue des transports pour son propre compte (carburants, réparations de véhicules, etc.)", "utiliser": "comptes de charges appropriés"}
+      ],
+      "controles": ["des factures et avoirs fournisseurs", "des documents de transport", "de l'inventaire des figurines d'affranchissement", "des bons de course"],
+      "sens": "debiteur",
+      "mots_cles": ["transports", "compte 61", "port", "fret", "déplacements", "expédition", "affranchissement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "62-63",
+      "titre": "COMPTES 62 Services extérieurs A et 63 Services extérieurs B",
+      "contenu": "Ces deux comptes enregistrent le montant des factures, paiements et rémunérations versés aux prestataires extérieurs à l'entreprise et les éventuels rabais, remises et ristournes obtenus hors factures sur les services extérieurs consommés. Les services sont classés par nature. Leur importance et diversité ont nécessité deux comptes à deux chiffres (62 et 63), dont le fonctionnement est rigoureusement identique. Ne sont pas considérés comme des services consommés et sont en principe classés dans la même catégorie que les produits dans la fabrication desquels ils sont incorporés : les travaux à façon, les sous-traitances industrielles, les frais de réparation lorsqu'ils sont effectués par le fabricant du produit.",
+      "fonctionnement": {
+        "credit": [
+          "Les comptes 62 et 63 sont crédités — par le débit des comptes Fournisseurs des rabais, remises et ristournes éventuellement obtenus hors factures",
+          "Les comptes 62 et 63 sont crédités — soit par le débit du compte 476 Charges constatées d'avance (régularisation), soit par le débit du compte 13 Résultat net de l'exercice, pour solde à la clôture de l'exercice"
+        ],
+        "debit": [
+          "Les comptes 62 et 63 sont débités — par le crédit d'un compte de tiers ou de trésorerie"
+        ]
+      },
+      "exclusions": [],
+      "controles": [],
+      "sens": "debiteur",
+      "mots_cles": ["services extérieurs", "compte 62", "compte 63", "sous-traitance", "locations", "crédit-bail", "entretien", "assurances", "études", "publicité", "télécommunications", "frais bancaires", "honoraires", "formation"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
