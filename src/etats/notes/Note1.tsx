@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -26,6 +26,9 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
   const [nantissements, setNantissements] = useState('');
   const [gages, setGages] = useState('');
   const [commentaire, setCommentaire] = useState('');
+  const [montantBrutEmprunts, setMontantBrutEmprunts] = useState('');
+  const [montantBrutIC, setMontantBrutIC] = useState('');
+  const [montantBrutCB, setMontantBrutCB] = useState('');
 
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -40,6 +43,9 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
         setNantissements(data['note1_nantissements'] || '');
         setGages(data['note1_gages'] || '');
         setCommentaire(data['note1_commentaire'] || '');
+        setMontantBrutEmprunts(data['note1_montant_emprunts'] || '');
+        setMontantBrutIC(data['note1_montant_ic'] || '');
+        setMontantBrutCB(data['note1_montant_cb'] || '');
       })
       .catch(() => {});
   }, [entiteId]);
@@ -95,6 +101,9 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
         note1_nantissements: nantissements,
         note1_gages: gages,
         note1_commentaire: commentaire,
+        note1_montant_emprunts: montantBrutEmprunts,
+        note1_montant_ic: montantBrutIC,
+        note1_montant_cb: montantBrutCB,
       };
       const res = await fetch(`/api/entites/${entiteId}`, {
         method: 'PUT',
@@ -149,10 +158,16 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     return total;
   };
 
-  const montant16 = calcMontant(emprunts16);
-  const montantIC = calcMontant(interetsCourus);
-  const montant17 = calcMontant(emprunts17);
-  const totalMontant = montant16 + montantIC + montant17;
+  // Valeurs balance (référence)
+  const balRef16 = calcMontant(emprunts16);
+  const balRefIC = calcMontant(interetsCourus);
+  const balRef17 = calcMontant(emprunts17);
+
+  // Montants affichés : valeur saisie si existante, sinon balance comme référence
+  const val16 = montantBrutEmprunts ? parseFloat(montantBrutEmprunts) || 0 : balRef16;
+  const valIC = montantBrutIC ? parseFloat(montantBrutIC) || 0 : balRefIC;
+  const val17 = montantBrutCB ? parseFloat(montantBrutCB) || 0 : balRef17;
+  const totalMontant = val16 + valIC + val17;
 
   const generatePDF = async (): Promise<jsPDF> => {
     const wasEditing = editing;
@@ -281,6 +296,23 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
         </div>
       )}
 
+      {/* Bulle d'information */}
+      <div style={{
+        margin: '12px 20px', padding: '12px 16px',
+        background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8,
+        fontSize: 12, color: '#1e40af', lineHeight: 1.6,
+      }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 1
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Montant brut :</strong> Renseigner la valeur initiale brute de chaque emprunt (montant emprunté), pas le solde restant dû de la balance. La balance est utilisée comme pré-remplissage à titre indicatif.</li>
+          <li><strong>Sûretés réelles :</strong> Indiquer les montants des hypothèques, nantissements et gages/autres garanties accordées pour chaque dette. Ces informations sont extra-comptables (contrats de prêt, actes notariés).</li>
+          <li><strong>Intérêts courus :</strong> Les intérêts courus (compte 166) sont affichés séparément car ils ne font pas partie de la dette principale.</li>
+          <li>Cliquer sur <strong>Modifier</strong> pour saisir les montants, puis <strong>Sauvegarder</strong>.</li>
+        </ul>
+      </div>
+
       {/* Page A4 paysage */}
       <div className="a4-page fi-page" ref={pageRef} style={{ width: 1100, minHeight: 700, padding: '30px 40px' }}>
         {/* En-tête */}
@@ -326,9 +358,13 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
             </tr>
             {/* Emprunts 16x (hors intérêts courus) */}
             <tr>
-              <td style={tdStyle}>Emprunts et dettes des établissements de crédit (16x hors 166)</td>
+              <td style={tdStyle}>Emprunts et dettes des établissements de crédit</td>
               <td style={{ ...tdStyle, textAlign: 'center' }}>16A</td>
-              <td style={{ ...tdStyle, textAlign: 'right' }}>{fmtMontant(montant16)}</td>
+              <td style={{ ...tdStyle, textAlign: 'right' }}>
+                {editing ? (
+                  <input style={{ ...inputStyle, textAlign: 'right' }} value={montantBrutEmprunts || String(Math.round(balRef16))} onChange={e => setMontantBrutEmprunts(e.target.value)} />
+                ) : fmtMontant(val16)}
+              </td>
               <td style={{ ...tdStyle, textAlign: 'center' }}>
                 {editing ? <input style={inputStyle} value={hypotheques} onChange={e => setHypotheques(e.target.value)} /> : hypotheques}
               </td>
@@ -340,22 +376,30 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
               </td>
             </tr>
             {/* Intérêts courus 166x */}
-            {montantIC !== 0 && (
+            {(balRefIC !== 0 || montantBrutIC) && (
               <tr>
-                <td style={{ ...tdStyle, paddingLeft: 20, fontStyle: 'italic', color: '#666' }}>Intérêts courus sur emprunts (166)</td>
+                <td style={{ ...tdStyle, paddingLeft: 20, fontStyle: 'italic', color: '#666' }}>Intérêts courus sur emprunts</td>
                 <td style={{ ...tdStyle, textAlign: 'center', color: '#666' }}></td>
-                <td style={{ ...tdStyle, textAlign: 'right', color: '#666' }}>{fmtMontant(montantIC)}</td>
+                <td style={{ ...tdStyle, textAlign: 'right', color: '#666' }}>
+                  {editing ? (
+                    <input style={{ ...inputStyle, textAlign: 'right' }} value={montantBrutIC || String(Math.round(balRefIC))} onChange={e => setMontantBrutIC(e.target.value)} />
+                  ) : fmtMontant(valIC)}
+                </td>
                 <td style={tdStyle}></td>
                 <td style={tdStyle}></td>
                 <td style={tdStyle}></td>
               </tr>
             )}
             {/* Dettes crédit-bail 17x */}
-            {montant17 !== 0 && (
+            {(balRef17 !== 0 || montantBrutCB) && (
               <tr>
-                <td style={tdStyle}>Dettes de location-acquisition / crédit-bail (17x)</td>
+                <td style={tdStyle}>Dettes de location-acquisition / crédit-bail</td>
                 <td style={{ ...tdStyle, textAlign: 'center' }}></td>
-                <td style={{ ...tdStyle, textAlign: 'right' }}>{fmtMontant(montant17)}</td>
+                <td style={{ ...tdStyle, textAlign: 'right' }}>
+                  {editing ? (
+                    <input style={{ ...inputStyle, textAlign: 'right' }} value={montantBrutCB || String(Math.round(balRef17))} onChange={e => setMontantBrutCB(e.target.value)} />
+                  ) : fmtMontant(val17)}
+                </td>
                 <td style={tdStyle}></td>
                 <td style={tdStyle}></td>
                 <td style={tdStyle}></td>
