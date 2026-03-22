@@ -529,8 +529,11 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     }
   }
 
-  // ===== 3. COMPTES BILAN NON CAPTES =====
-  // Comptes captes explicitement par les formules ou implicitement
+  // ===== 3. COMPTES BILAN NON CAPTES (uniquement si ecart TFT) =====
+  // Cette analyse ne se fait que si le TFT n'est pas equilibre,
+  // pour identifier les comptes qui ont des soldes avec variation
+  // mais qui ne sont pas repris dans les formules du TFT.
+  if (Math.abs(ecart) >= 1) {
   const captedPrefixes = [
     // CR -> FA (CAFG)
     '60','61','62','63','64','65','66','67','68','69',
@@ -632,6 +635,25 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
       montant: Math.round(c.variation)
     });
   }
+
+  // Resume de l'impact des comptes non captes
+  if (nonCaptes.length > 0) {
+    const totalNonCapte = nonCaptes.reduce((s, c) => s + c.variation, 0);
+    const explique = Math.abs(Math.round(totalNonCapte) - ecart) < 2;
+    diag.push({
+      poste: 'BG',
+      type: explique ? 'alerte' : 'info',
+      message: nonCaptes.length + ' compte(s) non capte(s) pour une variation totale de ' + formatMontant(Math.round(totalNonCapte))
+        + (explique
+          ? '. Cette somme explique l\'ecart de bouclage de ' + formatMontant(ecart) + '.'
+          : '. Ecart TFT = ' + formatMontant(ecart) + ', la difference (' + formatMontant(Math.round(ecart - totalNonCapte)) + ') provient d\'autres sources.'),
+      suggestion: explique
+        ? 'Corriger les numeros de ces comptes pour qu\'ils soient reconnus par les formules du TFT, ou ajouter les prefixes manquants dans les formules.'
+        : 'Ces comptes n\'expliquent pas tout l\'ecart. Verifier aussi les anomalies de sens et les comptes de tresorerie (classes 5).',
+    });
+  }
+
+  } // fin du if (ecart >= 1)
 
   // ===== 4. COHERENCE DES SOUS-TOTAUX =====
   const checks: [string, number, string, number][] = [
