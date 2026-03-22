@@ -6,8 +6,8 @@ import type { BalanceLigne, TFTRow } from '../types';
 
 export const PRODUITS_PREFIXES: string[] = ['70', '71', '72', '73', '75', '77', '78', '79', '82', '84', '86', '88'];
 export const CHARGES_PREFIXES: string[] = ['60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '81', '83', '85', '87', '89'];
-export const DOTATIONS_PREFIXES: string[] = ['681', '691', '697'];
-export const REPRISES_PREFIXES_TFT: string[] = ['791', '797', '798', '799'];
+export const DOTATIONS_PREFIXES: string[] = ['68', '69'];
+export const REPRISES_PREFIXES_TFT: string[] = ['79'];
 
 // ===================== TFT ROWS =====================
 export const TFT_ROWS: TFTRow[] = [
