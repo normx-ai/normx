@@ -50,13 +50,31 @@ interface AssistantChatProps {
   typeActivite: TypeActivite;
 }
 
-const SUGGESTIONS_DEFAULT: string[] = [
+const SUGGESTIONS_SYSCOHADA: string[] = [
+  "Comment fonctionne le compte 101 Capital social ?",
+  "Quand debiter et crediter le compte 40 Fournisseurs ?",
+  "Comment calculer la CAFG pour le TFT ?",
+  "Le tableau des flux de tresorerie SYSCOHADA",
+  "Les notes annexes obligatoires SYSCOHADA",
+  "Comment comptabiliser une subvention d'investissement ?",
+];
+
+const SUGGESTIONS_SYCEBNL: string[] = [
   "Qu'est-ce que le SYCEBNL ?",
   "Comment presenter le bilan d'une association ?",
-  "Quels sont les etats financiers d'un projet ?",
+  "Quels sont les etats financiers SYCEBNL ?",
   "Le tableau des flux de tresorerie",
   "Les notes annexes obligatoires",
   "Difference SYSCOHADA et SYCEBNL",
+];
+
+const SUGGESTIONS_SMT: string[] = [
+  "Qu'est-ce que le Systeme Minimal de Tresorerie ?",
+  "Quels sont les seuils du SMT (negoce, artisanal, services) ?",
+  "Comment tenir le journal unique de tresorerie ?",
+  "Le bilan et le compte de resultat SMT",
+  "L'inventaire extra-comptable de fin d'exercice",
+  "Comment passer du SMT au systeme normal ?",
 ];
 
 const SUGGESTIONS_PROJET: string[] = [
@@ -70,7 +88,10 @@ const SUGGESTIONS_PROJET: string[] = [
 
 function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): React.ReactElement {
   const userInitial: string = userName ? userName.charAt(0).toUpperCase() : 'U';
-  const SUGGESTIONS: string[] = typeActivite === 'projet_developpement' ? SUGGESTIONS_PROJET : SUGGESTIONS_DEFAULT;
+  const SUGGESTIONS: string[] = typeActivite === 'entreprise' ? SUGGESTIONS_SYSCOHADA
+    : typeActivite === 'smt' ? SUGGESTIONS_SMT
+    : typeActivite === 'projet_developpement' ? SUGGESTIONS_PROJET
+    : SUGGESTIONS_SYCEBNL;
 
   const [conversations, setConversations] = useState<ConversationItem[]>([]);
   const [activeConvId, setActiveConvId] = useState<number | null>(null);
