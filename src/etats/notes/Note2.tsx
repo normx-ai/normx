@@ -233,18 +233,18 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
 
         {/* Sections */}
         {SECTIONS.map(s => (
-          <div key={s.key} style={{ marginBottom: 30 }}>
+          <div key={s.key} style={{ marginBottom: 20, border: '1px solid #000' }}>
             <div style={{
               textAlign: 'center',
               fontWeight: 700,
               fontSize: 12,
               padding: '8px 10px',
-              borderTop: '1px solid #000',
               borderBottom: '1px solid #000',
+              background: '#f5f5f5',
             }}>
               {s.title}
             </div>
-            <div style={{ padding: '16px 10px', minHeight: 100 }}>
+            <div style={{ padding: '16px 14px', minHeight: 100 }}>
               {editing ? (
                 <textarea
                   value={texts[s.key] || ''}
