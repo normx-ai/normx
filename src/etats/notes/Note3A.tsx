@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -330,6 +330,20 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
           </div>
         </div>
       )}
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 3A
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Brut A :</strong> Valeur brute des immobilisations au début de l'exercice (solde initial débiteur des comptes 2x).</li>
+          <li><strong>Acquisitions :</strong> Mouvements débit de l'exercice (nouvelles acquisitions, transferts d'en-cours).</li>
+          <li><strong>Cessions / Retraits :</strong> Mouvements crédit de l'exercice (sorties d'actif, mises au rebut).</li>
+          <li><strong>Brut B :</strong> Calculé automatiquement = Brut A + Acquisitions - Cessions.</li>
+          <li>Toute variation significative doit être commentée dans la zone commentaire.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

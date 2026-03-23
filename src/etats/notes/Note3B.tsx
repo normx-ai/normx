@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -282,6 +282,19 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
           </div>
         </div>
       )}
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 3B
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Biens en crédit-bail :</strong> Biens utilisés par l'entité mais dont elle n'est pas propriétaire (comptes 17x).</li>
+          <li><strong>Redevances :</strong> Montant des loyers versés au titre du contrat de crédit-bail (compte 623).</li>
+          <li><strong>Valeur résiduelle :</strong> Prix d'achat convenu pour le transfert de propriété en fin de contrat.</li>
+          <li>Les biens en crédit-bail ne figurent pas à l'actif du bilan (sauf retraitement SYSCOHADA révisé).</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

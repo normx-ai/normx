@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -225,6 +225,19 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
           </div>
         </div>
       )}
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 3E
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Réévaluation :</strong> Concerne les entités ayant procédé à une réévaluation légale ou libre de leurs immobilisations.</li>
+          <li><strong>Écart de réévaluation :</strong> Inscrit au passif dans le compte 106 (non distribuable, incorporable au capital).</li>
+          <li><strong>Valeur réévaluée :</strong> Nouvelle valeur attribuée au bien après réévaluation.</li>
+          <li>Si aucune réévaluation n'a été effectuée, cette note peut rester vide.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -238,6 +238,19 @@ function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): 
           </div>
         </div>
       )}
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 3F
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Charges immobilisées :</strong> Frais d'établissement (compte 201) et charges à répartir (compte 202) — ce sont des actifs fictifs.</li>
+          <li><strong>Amortissement direct :</strong> Les charges immobilisées sont amorties sur 2 à 5 ans maximum par crédit direct du compte 20 (pas via le compte 28).</li>
+          <li><strong>Distribution de bénéfice :</strong> Interdite tant que les frais d'établissement ne sont pas entièrement amortis.</li>
+          <li>Les primes de remboursement des obligations (compte 206) sont également des charges immobilisées.</li>
+        </ul>
+      </div>
 
       <div className="a4-page fi-page" ref={pageRef}>
         {/* Header officiel comme Bilan/CR */}

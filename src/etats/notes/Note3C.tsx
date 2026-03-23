@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -299,6 +299,20 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
           </div>
         </div>
       )}
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 3C
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Amort. A :</strong> Cumul des amortissements au début de l'exercice (solde initial créditeur des comptes 28x).</li>
+          <li><strong>Dotations :</strong> Dotations aux amortissements de l'exercice (comptes 681x).</li>
+          <li><strong>Reprises :</strong> Amortissements repris lors des cessions ou mises au rebut.</li>
+          <li><strong>Amort. B :</strong> Calculé = Amort. A + Dotations - Reprises.</li>
+          <li>Les amortissements dérogatoires (compte 151) ne figurent pas ici mais dans la Note 15A.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',
