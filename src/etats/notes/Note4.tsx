@@ -274,13 +274,13 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
     const wasEditing = editing;
     if (wasEditing) setEditing(false);
     await new Promise(r => setTimeout(r, 100));
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdf = new jsPDF('landscape', 'mm', 'a4');
     if (!pageRef.current) return pdf;
     const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
     const imgData = canvas.toDataURL('image/png');
-    const pdfWidth = 210;
+    const pdfWidth = 287;
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
+    pdf.addImage(imgData, 'PNG', 5, 5, pdfWidth, Math.min(pdfHeight, 200));
     if (wasEditing) setEditing(true);
     return pdf;
   };
@@ -430,7 +430,7 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
       )}
 
       <div ref={pageRef} style={{
-        width: '210mm', minHeight: '297mm', background: '#fff',
+        width: '297mm', minHeight: '210mm', background: '#fff',
         margin: '0 auto 20px', padding: '8mm 10mm',
         boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
         fontFamily: "'Outfit', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',
