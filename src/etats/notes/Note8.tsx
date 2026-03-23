@@ -22,7 +22,7 @@ const RUBRIQUES_BRUT: RubriqueCreance[] = [
   { label: 'Organismes internationaux', prefixes: ['45'] },
   { label: 'Apporteurs, associés et groupe', prefixes: ['46'] },
   { label: 'Comptes d\'attente débiteurs', prefixes: ['471'] },
-  { label: 'Créditeurs divers devenus débiteurs', prefixes: ['472'] },
+  { label: 'Autres débiteurs', prefixes: ['472'] },
   { label: 'Comptes permanents non bloqués des établissements et succursales', prefixes: ['473', '474'] },
   { label: 'Compte transitoire ajustement spécial lié à la révision du SYSCOHADA', prefixes: ['4751'] },
   { label: 'Charges constatées d\'avance', prefixes: ['476'] },
