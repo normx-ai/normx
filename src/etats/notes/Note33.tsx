@@ -51,8 +51,8 @@ function Note33({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note33P
   const downloadPDF = () => { if (!pdfBlob) return; const u = URL.createObjectURL(pdfBlob); const a = document.createElement('a'); a.href = u; a.download = 'Note33_' + annee + '.pdf'; a.click(); URL.revokeObjectURL(u); };
   const printPDF = () => { if (!previewUrl) return; const w = window.open(previewUrl); if (w) { w.onload = () => w.print(); } };
 
-  const th: React.CSSProperties = { border: '0.5px solid #000', padding: '10px 14px', fontSize: 9, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5' };
-  const td: React.CSSProperties = { border: '0.5px solid #000', padding: '10px 14px', fontSize: 10, verticalAlign: 'middle' };
+  const th: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 9, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5' };
+  const td: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 10, verticalAlign: 'middle' };
   const tdR: React.CSSProperties = { ...td, textAlign: 'right', fontVariantNumeric: 'tabular-nums' };
   const tdB: React.CSSProperties = { ...td, fontWeight: 700, background: '#f0f0f0' };
   const tdBR: React.CSSProperties = { ...tdR, fontWeight: 700, background: '#f0f0f0' };

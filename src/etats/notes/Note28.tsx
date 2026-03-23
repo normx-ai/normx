@@ -108,8 +108,8 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   const downloadPDF = () => { if (!pdfBlob) return; const u = URL.createObjectURL(pdfBlob); const a = document.createElement('a'); a.href = u; a.download = 'Note28_' + annee + '.pdf'; a.click(); URL.revokeObjectURL(u); };
   const printPDF = () => { if (!previewUrl) return; const w = window.open(previewUrl); if (w) { w.onload = () => w.print(); } };
 
-  const th: React.CSSProperties = { border: '0.5px solid #000', padding: '10px 14px', fontSize: 10, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5' };
-  const td: React.CSSProperties = { border: '0.5px solid #000', padding: '10px 14px', fontSize: 10, verticalAlign: 'middle' };
+  const th: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 10, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5' };
+  const td: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 10, verticalAlign: 'middle' };
   const tdR: React.CSSProperties = { ...td, textAlign: 'right', fontVariantNumeric: 'tabular-nums' };
   const tdB: React.CSSProperties = { ...td, fontWeight: 700, background: '#f0f0f0' };
   const tdBR: React.CSSProperties = { ...tdR, fontWeight: 700, background: '#f0f0f0' };
@@ -185,7 +185,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
         </table>
 
         <div style={{ border: '0.5px solid #000', borderTop: 'none', padding: '8px 10px' }}>
-          <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, marginTop: 0 }}>Commentaire :</p>
+          <p style={{ fontSize: 11, fontWeight: 700, marginBottom: 4, marginTop: 0 }}>Commentaire :</p>
           {editing ? <textarea value={commentaire} onChange={e => setCommentaire(e.target.value)} style={textareaStyle} /> : <div style={{ fontSize: 12, lineHeight: 1.5, whiteSpace: 'pre-wrap', minHeight: 20 }}>{commentaire}</div>}
         </div>
       </div>

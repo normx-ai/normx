@@ -77,8 +77,8 @@ function Note27B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note27
   const downloadPDF = () => { if (!pdfBlob) return; const u = URL.createObjectURL(pdfBlob); const a = document.createElement('a'); a.href = u; a.download = 'Note27B_' + annee + '.pdf'; a.click(); URL.revokeObjectURL(u); };
   const printPDF = () => { if (!previewUrl) return; const w = window.open(previewUrl); if (w) { w.onload = () => w.print(); } };
 
-  const th: React.CSSProperties = { border: '0.5px solid #000', padding: '10px 14px', fontSize: 9, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5' };
-  const td: React.CSSProperties = { border: '0.5px solid #000', padding: '10px 14px', fontSize: 9, verticalAlign: 'middle', textAlign: 'center' };
+  const th: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 9, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5' };
+  const td: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 9, verticalAlign: 'middle', textAlign: 'center' };
   const tdL: React.CSSProperties = { ...td, textAlign: 'left', fontSize: 10 };
   const inp: React.CSSProperties = { width: 28, padding: '5px 8px', fontSize: 9, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0', textAlign: 'center', boxSizing: 'border-box' };
   const textareaStyle: React.CSSProperties = { width: '100%', minHeight: 30, padding: '6px 10px', fontSize: 12, lineHeight: '1.5', border: '1px solid #D4A843', borderRadius: 3, background: '#fffbf0', fontFamily: 'inherit', boxSizing: 'border-box', resize: 'vertical' };
@@ -166,7 +166,7 @@ function Note27B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note27
         <p style={{ fontSize: 9, margin: '4px 0', color: '#666' }}>M : Masculin &nbsp;&nbsp; F : Féminin</p>
 
         <div style={{ border: '0.5px solid #000', padding: '8px 10px', marginTop: 8 }}>
-          <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, marginTop: 0 }}>Commentaire :</p>
+          <p style={{ fontSize: 11, fontWeight: 700, marginBottom: 4, marginTop: 0 }}>Commentaire :</p>
           {editing ? <textarea value={commentaire} onChange={e => setCommentaire(e.target.value)} style={textareaStyle} /> : <div style={{ fontSize: 12, lineHeight: 1.5, whiteSpace: 'pre-wrap', minHeight: 20 }}>{commentaire}</div>}
         </div>
       </div>
