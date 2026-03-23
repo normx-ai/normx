@@ -138,7 +138,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
     if (!poste) return 0;
     let total = 0;
     for (const note3aLabel of poste.note3aLabels) {
-      total += note3aAdj[note3aLabel]?.reeval_adj || 0;
+      total += note3aAdj[note3aLabel]?.reeval || 0;
     }
     return total;
   };
