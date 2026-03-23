@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -81,6 +81,9 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametre
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({});
   const [noteStates, setNoteStates] = useState<Record<string, 'A' | 'NA'>>({});
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -143,17 +146,25 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametre
 
   // Save note states
   const saveStates = async () => {
+    setSaving(true);
     const data: Record<string, string> = { ...params };
     NOTES.forEach(n => {
       data['r4_' + n.id] = noteStates[n.id] || 'A';
     });
     try {
-      await fetch(`/api/entites/${entiteId}`, {
+      const res = await fetch(`/api/entites/${entiteId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data }),
       });
+      if (res.ok) {
+        setParams(data);
+        setSaved(true);
+        setEditing(false);
+        setTimeout(() => setSaved(false), 3000);
+      }
     } catch { /* */ }
+    setSaving(false);
   };
 
   const duree = selectedExercice?.duree_mois || 12;
@@ -245,6 +256,20 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametre
               <option key={ex.id} value={ex.id}>{ex.annee}</option>
             ))}
           </select>
+          {!editing ? (
+            <button className="etat-action-btn" onClick={() => setEditing(true)} style={{ background: '#D4A843', color: '#fff', border: 'none' }}>
+              <LuPenLine size={16} /> Modifier
+            </button>
+          ) : (
+            <button
+              className="etat-action-btn"
+              onClick={saveStates}
+              disabled={saving}
+              style={{ background: '#059669', color: '#fff', border: 'none' }}
+            >
+              <LuSave size={16} /> {saving ? 'Sauvegarde...' : saved ? 'Sauvegardé' : 'Sauvegarder'}
+            </button>
+          )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
         </div>
       </div>
@@ -265,6 +290,18 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametre
           </div>
         </div>
       )}
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Fiche R4
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Cliquer sur <strong>Modifier</strong> puis cliquer sur une ligne pour basculer entre <strong style={{ color: '#059669' }}>A</strong> (Applicable) et <strong style={{ color: '#dc2626' }}>N/A</strong> (Non applicable).</li>
+          <li>Les notes applicables sont celles pour lesquelles l'entité a des opérations ou des soldes dans la balance.</li>
+          <li>Cliquer sur <strong>Sauvegarder</strong> pour conserver vos choix.</li>
+        </ul>
+      </div>
 
       {/* Page A4 */}
       <div className="a4-page fi-page" ref={pageRef}>
@@ -294,11 +331,18 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametre
             {NOTES.map(note => {
               const state = noteStates[note.id] || 'A';
               return (
-                <tr key={note.id} onClick={() => toggleNote(note.id)} style={{ cursor: 'pointer' }}>
+                <tr key={note.id}
+                  onClick={() => { if (editing) toggleNote(note.id); }}
+                  style={{ cursor: editing ? 'pointer' : 'default', background: editing && state === 'NA' ? '#fef9ee' : undefined }}
+                >
                   <td style={{ ...tdStyle, fontWeight: 600, color: '#1A3A5C' }}>{NOTE_LABELS[note.id]}</td>
                   <td style={tdStyle}>{note.intitule}</td>
-                  <td style={{ ...tdStyle, textAlign: 'center', fontWeight: 600 }}>{state === 'A' ? 'X' : ''}</td>
-                  <td style={{ ...tdStyle, textAlign: 'center', fontWeight: 600 }}>{state === 'NA' ? 'X' : ''}</td>
+                  <td style={{ ...tdStyle, textAlign: 'center', fontWeight: 700, fontSize: 13, color: state === 'A' ? '#059669' : '#ccc' }}>
+                    {state === 'A' ? 'X' : editing ? '·' : ''}
+                  </td>
+                  <td style={{ ...tdStyle, textAlign: 'center', fontWeight: 700, fontSize: 13, color: state === 'NA' ? '#dc2626' : '#ccc' }}>
+                    {state === 'NA' ? 'X' : editing ? '·' : ''}
+                  </td>
                 </tr>
               );
             })}
