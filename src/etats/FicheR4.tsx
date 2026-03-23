@@ -18,7 +18,6 @@ const NOTES: { id: string; intitule: string; defaultA?: boolean; defaultNA?: boo
   { id: 'note_3c', intitule: 'IMMOBILISATIONS : AMORTISSEMENTS', defaultA: true },
   { id: 'note_3d', intitule: 'IMMOBILISATIONS : PLUS-VALUES ET MOINS VALUE DE CESSION', defaultA: true },
   { id: 'note_3e', intitule: 'INFORMATIONS SUR LES REEVALUATIONS EFFECTUEES PAR L\'ENTITE', defaultA: true },
-  { id: 'note_3f', intitule: 'TABLEAU D\'ETALEMENT DES CHARGES IMMOBILISEES', defaultNA: true },
   { id: 'note_4', intitule: 'IMMOBILISATIONS FINANCIERES', defaultA: true },
   { id: 'note_5', intitule: 'ACTIF CIRCULANT ET DETTES CIRCULANTES HAO', defaultA: true },
   { id: 'note_6', intitule: 'STOCKS ET ENCOURS', defaultA: true },
@@ -61,7 +60,7 @@ const NOTES: { id: string; intitule: string; defaultA?: boolean; defaultNA?: boo
 
 const NOTE_LABELS: Record<string, string> = {
   note_1: 'NOTE 1', note_2: 'NOTE 2', note_3a: 'NOTE 3A', note_3b: 'NOTE 3B',
-  note_3c: 'NOTE 3C', note_3d: 'NOTE 3D', note_3e: 'NOTE 3E', note_3f: 'NOTE 3F',
+  note_3c: 'NOTE 3C', note_3d: 'NOTE 3D', note_3e: 'NOTE 3E',
   note_4: 'NOTE 4', note_5: 'NOTE 5', note_6: 'NOTE 6', note_7: 'NOTE 7',
   note_8: 'NOTE 8', note_9: 'NOTE 9', note_10: 'NOTE 10', note_11: 'NOTE 11',
   note_12: 'NOTE 12', note_13: 'NOTE 13', note_14: 'NOTE 14', note_15a: 'NOTE 15A',

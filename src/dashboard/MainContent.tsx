@@ -30,7 +30,6 @@ import Note3B from '../etats/notes/Note3B';
 import Note3C from '../etats/notes/Note3C';
 import Note3D from '../etats/notes/Note3D';
 import Note3E from '../etats/notes/Note3E';
-import Note3F from '../etats/notes/Note3F';
 import Note4 from '../etats/notes/Note4';
 import Note5 from '../etats/notes/Note5';
 import Note6 from '../etats/notes/Note6';
@@ -158,7 +157,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
     'bilan_projet', 'compte_exploitation',
     'bilan_smt', 'compte_resultat_smt', 'notes_annexes_smt', 'journal_tresorerie_smt', 'journaux_smt',
     'page_garde_sys', 'fiche_identification_sys', 'fiche_r2_sys', 'fiche_r3_sys', 'fiche_r4_sys',
-    'notes_annexes_sys', 'note_1_sys', 'note_2_sys', 'note_3a_sys', 'note_3b_sys', 'note_3c_sys', 'note_3d_sys', 'note_3e_sys', 'note_3f_sys', 'note_4_sys', 'note_5_sys', 'note_6_sys', 'note_7_sys', 'note_8_sys', 'note_8a_sys', 'note_9_sys', 'note_10_sys', 'note_11_sys', 'note_12_sys', 'note_13_sys', 'note_14_sys', 'note_15a_sys', 'note_15b_sys', 'note_16a_sys', 'note_16b_sys', 'note_16c_sys', 'note_17_sys', 'note_18_sys', 'note_19_sys', 'note_20_sys', 'note_21_sys', 'note_22_sys', 'note_23_sys', 'note_24_sys', 'note_25_sys', 'note_26_sys', 'note_27a_sys', 'note_27b_sys', 'note_28_sys', 'note_29_sys', 'note_30_sys', 'note_31_sys', 'note_32_sys', 'note_33_sys', 'note_34_sys', 'note_35_sys', 'note_36_sys', 'note_37_sys',
+    'notes_annexes_sys', 'note_1_sys', 'note_2_sys', 'note_3a_sys', 'note_3b_sys', 'note_3c_sys', 'note_3d_sys', 'note_3e_sys', 'note_4_sys', 'note_5_sys', 'note_6_sys', 'note_7_sys', 'note_8_sys', 'note_8a_sys', 'note_9_sys', 'note_10_sys', 'note_11_sys', 'note_12_sys', 'note_13_sys', 'note_14_sys', 'note_15a_sys', 'note_15b_sys', 'note_16a_sys', 'note_16b_sys', 'note_16c_sys', 'note_17_sys', 'note_18_sys', 'note_19_sys', 'note_20_sys', 'note_21_sys', 'note_22_sys', 'note_23_sys', 'note_24_sys', 'note_25_sys', 'note_26_sys', 'note_27a_sys', 'note_27b_sys', 'note_28_sys', 'note_29_sys', 'note_30_sys', 'note_31_sys', 'note_32_sys', 'note_33_sys', 'note_34_sys', 'note_35_sys', 'note_36_sys', 'note_37_sys',
     'bilan_actif_sys', 'bilan_passif_sys', 'compte_resultat_sys', 'tafire', 'resultat_fiscal_sys',
   ];
 
@@ -171,7 +170,6 @@ function MainContent(props: MainContentProps): React.ReactElement {
     { id: 'note_3c_sys', titre: 'Note 3C', desc: 'Immobilisations : Amortissements' },
     { id: 'note_3d_sys', titre: 'Note 3D', desc: 'Plus-values et moins-values de cession' },
     { id: 'note_3e_sys', titre: 'Note 3E', desc: 'Réévaluations effectuées' },
-    { id: 'note_3f_sys', titre: 'Note 3F', desc: 'Charges immobilisées' },
     { id: 'note_4_sys', titre: 'Note 4', desc: 'Immobilisations financières' },
     { id: 'note_5_sys', titre: 'Note 5', desc: 'Actif circulant HAO et Dettes circulantes HAO' },
     { id: 'note_6_sys', titre: 'Note 6', desc: 'Stocks et en cours' },
@@ -516,7 +514,6 @@ function MainContent(props: MainContentProps): React.ReactElement {
       {activeTab === 'note_3c_sys' && <Note3C {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'note_3d_sys' && <Note3D {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'note_3e_sys' && <Note3E {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
-      {activeTab === 'note_3f_sys' && <Note3F {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'note_4_sys' && <Note4 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'note_5_sys' && <Note5 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'note_6_sys' && <Note6 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
