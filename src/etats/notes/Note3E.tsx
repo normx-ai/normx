@@ -353,7 +353,9 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
                   ) : l.element}
                 </td>
                 <td style={tdRight}>
-                  {fmtMontant(getMontantBalance(getPostePrefixes(l.element)))}
+                  {editing ? (
+                    <input value={l.montant || String(Math.round(getMontantBalance(getPostePrefixes(l.element))) || '')} onChange={e => updateLigne(i, 'montant', e.target.value)} style={inputSt} placeholder={String(Math.round(getMontantBalance(getPostePrefixes(l.element))))} />
+                  ) : (l.montant || fmtMontant(getMontantBalance(getPostePrefixes(l.element))))}
                 </td>
                 <td style={tdRight}>
                   {editing ? (
@@ -378,7 +380,10 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
             <tr style={{ fontWeight: 700 }}>
               <td style={{ ...tdStyle, fontWeight: 700 }}>Total des écarts de réévaluation</td>
               <td style={{ ...tdRight, fontWeight: 700 }}>
-                {fmtMontant(lignes.reduce((s, l) => s + getMontantBalance(getPostePrefixes(l.element)), 0))}
+                {fmtMontant(lignes.reduce((s, l) => {
+                  const saisi = parseFloat((l.montant || '').replace(/\s/g, '').replace(/,/g, '.')) || 0;
+                  return s + (saisi || getMontantBalance(getPostePrefixes(l.element)));
+                }, 0))}
               </td>
               <td style={{ ...tdRight, fontWeight: 700 }}>
                 {(() => {
