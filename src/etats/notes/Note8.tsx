@@ -21,11 +21,11 @@ const RUBRIQUES_BRUT: RubriqueCreance[] = [
   { label: 'Etat et Collectivités publiques', prefixes: ['44'] },
   { label: 'Organismes internationaux', prefixes: ['45'] },
   { label: 'Apporteurs, associés et groupe', prefixes: ['46'] },
-  { label: 'Compte transitoire ajustement spécial lié à la révision du SYSCOHADA', prefixes: ['478'] },
-  { label: 'Autres débiteurs divers', prefixes: ['471', '472'] },
-  { label: 'Comptes permanents non bloqués des établissements et des succursales', prefixes: ['473', '474'] },
-  { label: 'Comptes de liaison charges et produits', prefixes: ['475', '476'] },
-  { label: 'Comptes de liaison des sociétés en participation', prefixes: ['477'] },
+  { label: 'Comptes d\'attente débiteurs', prefixes: ['471'] },
+  { label: 'Créditeurs divers devenus débiteurs', prefixes: ['472'] },
+  { label: 'Comptes permanents non bloqués des établissements et succursales', prefixes: ['473', '474'] },
+  { label: 'Compte transitoire ajustement spécial lié à la révision du SYSCOHADA', prefixes: ['4751'] },
+  { label: 'Charges constatées d\'avance', prefixes: ['476'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueCreance[] = [
