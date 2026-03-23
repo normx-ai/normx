@@ -16,14 +16,19 @@ interface RubriqueCreance {
 }
 
 const RUBRIQUES_BRUT: RubriqueCreance[] = [
-  { label: 'Personnel', prefixes: ['42'] },
-  { label: 'Organismes sociaux', prefixes: ['43'] },
-  { label: 'Etat et Collectivités publiques', prefixes: ['44'] },
+  { label: 'Personnel, avances et acomptes', prefixes: ['421'] },
+  { label: 'Personnel, produits à recevoir', prefixes: ['4287'] },
+  { label: 'Organismes sociaux, produits à recevoir', prefixes: ['4387'] },
+  { label: 'État, TVA due ou crédit de TVA', prefixes: ['444'] },
+  { label: 'État, TVA récupérable', prefixes: ['445'] },
+  { label: 'État, créances et dettes diverses', prefixes: ['449'] },
   { label: 'Organismes internationaux', prefixes: ['45'] },
-  { label: 'Apporteurs, associés et groupe', prefixes: ['46'] },
-  { label: 'Autres débiteurs divers', prefixes: ['471', '472'] },
-  { label: 'Comptes permanents non bloqués des établissements et succursales', prefixes: ['473', '474'] },
-  { label: 'Compte transitoire ajustement spécial lié à la révision du SYSCOHADA', prefixes: ['4751'] },
+  { label: 'Associés, comptes courants', prefixes: ['462'] },
+  { label: 'Apporteurs, restant dû sur capital appelé', prefixes: ['467'] },
+  { label: 'Débiteurs divers', prefixes: ['4711', '4713', '4715', '4716', '4717'] },
+  { label: 'Intermédiaires, opérations pour compte de tiers', prefixes: ['473'] },
+  { label: 'Compte de répartition périodique des charges', prefixes: ['4746'] },
+  { label: 'Compte transitoire ajustement spécial (actif)', prefixes: ['4751'] },
   { label: 'Charges constatées d\'avance', prefixes: ['476'] },
 ];
 
