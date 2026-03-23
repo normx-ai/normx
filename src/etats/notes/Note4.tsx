@@ -315,11 +315,11 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
   };
 
   const thStyle: React.CSSProperties = {
-    border: '0.5px solid #000', padding: '10px 14px', fontSize: 12,
+    border: '0.5px solid #000', padding: '5px 8px', fontSize: 11,
     fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5',
   };
   const tdStyle: React.CSSProperties = {
-    border: '0.5px solid #000', padding: '10px 14px', fontSize: 12, verticalAlign: 'middle',
+    border: '0.5px solid #000', padding: '5px 8px', fontSize: 11, verticalAlign: 'middle',
   };
   const tdRight: React.CSSProperties = { ...tdStyle, textAlign: 'right', fontVariantNumeric: 'tabular-nums' };
   const tdBold: React.CSSProperties = { ...tdStyle, fontWeight: 700 };
@@ -460,16 +460,16 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
           <thead>
             <tr>
-              <th style={{ ...thStyle, width: '28%' }} rowSpan={2}>Libellés</th>
-              <th style={thStyle} rowSpan={2}>Année N</th>
-              <th style={thStyle} rowSpan={2}>Année N-1</th>
-              <th style={thStyle} rowSpan={2}>Variation en %</th>
+              <th style={{ ...thStyle, width: '22%' }} rowSpan={2}>Libellés</th>
+              <th style={{ ...thStyle, width: '12%' }} rowSpan={2}>Année N</th>
+              <th style={{ ...thStyle, width: '12%' }} rowSpan={2}>Année N-1</th>
+              <th style={{ ...thStyle, width: '8%' }} rowSpan={2}>Variation %</th>
               <th style={thStyle} colSpan={3}>Échéances des créances</th>
             </tr>
             <tr>
-              <th style={{ ...thStyle, fontSize: 10 }}>Créances à un an au plus</th>
-              <th style={{ ...thStyle, fontSize: 10 }}>Créances à plus d'un an et à deux ans au plus</th>
-              <th style={{ ...thStyle, fontSize: 10 }}>Créances à plus de deux ans</th>
+              <th style={{ ...thStyle, width: '15%', fontSize: 9 }}>À un an au plus</th>
+              <th style={{ ...thStyle, width: '15%', fontSize: 9 }}>Plus d'un an à deux ans</th>
+              <th style={{ ...thStyle, width: '16%', fontSize: 9 }}>Plus de deux ans</th>
             </tr>
           </thead>
           <tbody>
