@@ -17,12 +17,12 @@ interface LigneReeval {
   provSpeciale: string;
 }
 
-const DEFAULT_POSTES: { label: string; prefixes: string[] }[] = [
-  { label: 'Terrains', prefixes: ['22'] },
-  { label: 'Bâtiments', prefixes: ['231', '232', '233', '234'] },
-  { label: 'Agencements, aménagements, installations', prefixes: ['235', '236', '237', '238', '239'] },
-  { label: 'Matériel, mobilier, actifs biologiques', prefixes: ['241', '242', '243', '244', '246'] },
-  { label: 'Matériel de transport', prefixes: ['245'] },
+const DEFAULT_POSTES: { label: string; prefixes: string[]; note3aLabels: string[]; isEcart: boolean }[] = [
+  { label: 'Terrains', prefixes: ['22'], note3aLabels: ['Terrains hors immeuble de placement', 'Terrains - immeuble de placement'], isEcart: true },
+  { label: 'Bâtiments', prefixes: ['231', '232', '233', '234'], note3aLabels: ['Bâtiments hors immeuble de placement', 'Bâtiments - immeuble de placement'], isEcart: false },
+  { label: 'Agencements, aménagements, installations', prefixes: ['235', '236', '237', '238', '239'], note3aLabels: ['Aménagements, agencements et installations', 'Agencements, aménagements matériel et autres'], isEcart: false },
+  { label: 'Matériel, mobilier, actifs biologiques', prefixes: ['241', '242', '243', '244', '246'], note3aLabels: ['Matériel, mobilier et actifs biologiques'], isEcart: false },
+  { label: 'Matériel de transport', prefixes: ['245'], note3aLabels: ['Matériel de transport'], isEcart: false },
 ];
 
 const emptyLigne = (element = ''): LigneReeval => ({ element, montant: '', ecartReeval: '', provSpeciale: '' });
@@ -44,6 +44,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
   const [methode, setMethode] = useState('');
   const [traitementFiscal, setTraitementFiscal] = useState('');
   const [ecartIncorpore, setEcartIncorpore] = useState('');
+  const [note3aAdj, setNote3aAdj] = useState<Record<string, Record<string, number>>>({});
 
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -63,6 +64,10 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
             const parsed = JSON.parse(data['note3e_lignes']);
             if (Array.isArray(parsed) && parsed.length > 0) setLignes(parsed);
           } catch { /* */ }
+        }
+        // Charger les réévaluations saisies dans la Note 3A
+        if (data['note3a_adjustments']) {
+          try { setNote3aAdj(JSON.parse(data['note3a_adjustments'])); } catch { /* */ }
         }
       })
       .catch(() => {});
@@ -125,6 +130,23 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
   const getPostePrefixes = (label: string): string[] => {
     const poste = DEFAULT_POSTES.find(p => p.label === label);
     return poste ? poste.prefixes : [];
+  };
+
+  // Récupérer le montant réévaluation saisi dans la Note 3A pour ce poste
+  const getReevalNote3A = (label: string): number => {
+    const poste = DEFAULT_POSTES.find(p => p.label === label);
+    if (!poste) return 0;
+    let total = 0;
+    for (const note3aLabel of poste.note3aLabels) {
+      total += note3aAdj[note3aLabel]?.reeval_adj || 0;
+    }
+    return total;
+  };
+
+  // Le poste Terrains va dans Écarts de réévaluation, les autres dans Provisions spéciales
+  const isEcartReeval = (label: string): boolean => {
+    const poste = DEFAULT_POSTES.find(p => p.label === label);
+    return poste?.isEcart ?? false;
   };
 
   const fmtMontant = (val: number): string => {
@@ -358,14 +380,24 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
                   ) : (l.montant || fmtMontant(getMontantBalance(getPostePrefixes(l.element))))}
                 </td>
                 <td style={tdRight}>
-                  {editing ? (
-                    <input value={l.ecartReeval} onChange={e => updateLigne(i, 'ecartReeval', e.target.value)} style={inputSt} />
-                  ) : l.ecartReeval}
+                  {(() => {
+                    const note3aVal = isEcartReeval(l.element) ? getReevalNote3A(l.element) : 0;
+                    const display = l.ecartReeval || (note3aVal ? String(note3aVal) : '');
+                    return editing ? (
+                      <input value={display} onChange={e => updateLigne(i, 'ecartReeval', e.target.value)} style={inputSt}
+                        placeholder={note3aVal ? String(note3aVal) : ''} />
+                    ) : (display ? (parseFloat(display.replace(/\s/g, '').replace(/,/g, '.')) || 0).toLocaleString('fr-FR') : '');
+                  })()}
                 </td>
                 <td style={tdRight}>
-                  {editing ? (
-                    <input value={l.provSpeciale} onChange={e => updateLigne(i, 'provSpeciale', e.target.value)} style={inputSt} />
-                  ) : l.provSpeciale}
+                  {(() => {
+                    const note3aVal = !isEcartReeval(l.element) ? getReevalNote3A(l.element) : 0;
+                    const display = l.provSpeciale || (note3aVal ? String(note3aVal) : '');
+                    return editing ? (
+                      <input value={display} onChange={e => updateLigne(i, 'provSpeciale', e.target.value)} style={inputSt}
+                        placeholder={note3aVal ? String(note3aVal) : ''} />
+                    ) : (display ? (parseFloat(display.replace(/\s/g, '').replace(/,/g, '.')) || 0).toLocaleString('fr-FR') : '');
+                  })()}
                 </td>
               </tr>
             ))}
