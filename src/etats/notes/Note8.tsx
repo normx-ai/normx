@@ -161,22 +161,25 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
     return Math.round(val).toLocaleString('fr-FR');
   };
 
+  // Note 8 = Autres CRÉANCES : ne prendre que le solde débiteur
+  // Les soldes créditeurs de ces comptes sont des dettes (Note 17, 18, 19)
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
     for (const l of lignes) {
       const num = (l.numero_compte || '').trim();
       if (!prefixes.some(p => num.startsWith(p))) continue;
-      total += (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
+      total += parseFloat(String(l.solde_debiteur)) || 0;
     }
     return total;
   };
 
+  // Dépréciations (49x) : solde créditeur uniquement
   const computeDepForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
     for (const l of lignes) {
       const num = (l.numero_compte || '').trim();
       if (!prefixes.some(p => num.startsWith(p))) continue;
-      total += (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0);
+      total += parseFloat(String(l.solde_crediteur)) || 0;
     }
     return total;
   };
