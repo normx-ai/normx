@@ -16,20 +16,14 @@ interface RubriqueCreance {
 }
 
 const RUBRIQUES_BRUT: RubriqueCreance[] = [
-  { label: 'Personnel, avances et acomptes', prefixes: ['421'] },
-  { label: 'Personnel, produits à recevoir', prefixes: ['4287'] },
-  { label: 'Organismes sociaux, produits à recevoir', prefixes: ['4387'] },
-  { label: 'État, TVA due ou crédit de TVA', prefixes: ['444'] },
-  { label: 'État, TVA récupérable', prefixes: ['445'] },
-  { label: 'État, créances et dettes diverses', prefixes: ['449'] },
+  { label: 'Personnel', prefixes: ['421', '4287'] },
+  { label: 'Organismes sociaux', prefixes: ['4387'] },
+  { label: 'État et collectivités publiques', prefixes: ['444', '445', '449'] },
   { label: 'Organismes internationaux', prefixes: ['45'] },
-  { label: 'Associés, comptes courants', prefixes: ['462'] },
-  { label: 'Apporteurs, restant dû sur capital appelé', prefixes: ['467'] },
-  { label: 'Débiteurs divers', prefixes: ['4711', '4713', '4715', '4716', '4717'] },
-  { label: 'Intermédiaires, opérations pour compte de tiers', prefixes: ['473'] },
-  { label: 'Compte de répartition périodique des charges', prefixes: ['4746'] },
-  { label: 'Compte transitoire ajustement spécial (actif)', prefixes: ['4751'] },
+  { label: 'Associés et groupe', prefixes: ['462', '467'] },
+  { label: 'Débiteurs divers', prefixes: ['4711', '4713', '4715', '4716', '4717', '473'] },
   { label: 'Charges constatées d\'avance', prefixes: ['476'] },
+  { label: 'Compte transitoire ajustement spécial', prefixes: ['4751'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueCreance[] = [
