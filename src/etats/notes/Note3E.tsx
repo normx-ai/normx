@@ -4,7 +4,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { Exercice, EtatBaseProps } from '../../types';
+import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
 
 interface Note3EProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -17,12 +17,12 @@ interface LigneReeval {
   provSpeciale: string;
 }
 
-const DEFAULT_POSTES = [
-  'Terrains',
-  'Bâtiments',
-  'Agencements, aménagements, installations',
-  'Matériel, mobilier, actifs biologiques',
-  'Matériel de transport',
+const DEFAULT_POSTES: { label: string; prefixes: string[] }[] = [
+  { label: 'Terrains', prefixes: ['22'] },
+  { label: 'Bâtiments', prefixes: ['231', '232', '233', '234'] },
+  { label: 'Agencements, aménagements, installations', prefixes: ['235', '236', '237', '238', '239'] },
+  { label: 'Matériel, mobilier, actifs biologiques', prefixes: ['241', '242', '243', '244', '246'] },
+  { label: 'Matériel de transport', prefixes: ['245'] },
 ];
 
 const emptyLigne = (element = ''): LigneReeval => ({ element, montant: '', ecartReeval: '', provSpeciale: '' });
@@ -39,7 +39,8 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
 
   // Champs éditables
   const [natureDate, setNatureDate] = useState('');
-  const [lignes, setLignes] = useState<LigneReeval[]>(DEFAULT_POSTES.map(p => emptyLigne(p)));
+  const [lignes, setLignes] = useState<LigneReeval[]>(DEFAULT_POSTES.map(p => emptyLigne(p.label)));
+  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [methode, setMethode] = useState('');
   const [traitementFiscal, setTraitementFiscal] = useState('');
   const [ecartIncorpore, setEcartIncorpore] = useState('');
@@ -87,6 +88,49 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
       })
       .catch(() => {});
   }, [entiteId]);
+
+  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
+  useEffect(() => {
+    if (!entiteId || !selectedExercice) return;
+    const load = async () => {
+      try {
+        let bl: BalanceLigne[] = [];
+        if (balanceSource === 'ecritures') {
+          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const data = await res.json();
+          bl = data.lignes || [];
+        } else {
+          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const data = await res.json();
+          bl = data.lignes || [];
+        }
+        setLignesN(bl);
+      } catch { setLignesN([]); }
+    };
+    load();
+  }, [entiteId, selectedExercice, balanceSource]);
+
+  // Calculer le montant coûts historiques depuis la balance (solde débiteur des comptes immo)
+  const getMontantBalance = (prefixes: string[]): number => {
+    let total = 0;
+    for (const l of lignesN) {
+      const num = (l.numero_compte || '').trim();
+      if (!prefixes.some(p => num.startsWith(p))) continue;
+      total += parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0;
+    }
+    return total;
+  };
+
+  // Mapping poste label → prefixes
+  const getPostePrefixes = (label: string): string[] => {
+    const poste = DEFAULT_POSTES.find(p => p.label === label);
+    return poste ? poste.prefixes : [];
+  };
+
+  const fmtMontant = (val: number): string => {
+    if (!val) return '';
+    return Math.round(val).toLocaleString('fr-FR');
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -309,9 +353,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
                   ) : l.element}
                 </td>
                 <td style={tdRight}>
-                  {editing ? (
-                    <input value={l.montant} onChange={e => updateLigne(i, 'montant', e.target.value)} style={inputSt} />
-                  ) : l.montant}
+                  {fmtMontant(getMontantBalance(getPostePrefixes(l.element)))}
                 </td>
                 <td style={tdRight}>
                   {editing ? (
@@ -335,7 +377,9 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
             {/* Total écarts de réévaluation */}
             <tr style={{ fontWeight: 700 }}>
               <td style={{ ...tdStyle, fontWeight: 700 }}>Total des écarts de réévaluation</td>
-              <td style={tdRight}></td>
+              <td style={{ ...tdRight, fontWeight: 700 }}>
+                {fmtMontant(lignes.reduce((s, l) => s + getMontantBalance(getPostePrefixes(l.element)), 0))}
+              </td>
               <td style={{ ...tdRight, fontWeight: 700 }}>
                 {(() => {
                   const total = lignes.reduce((s, l) => s + (parseFloat(l.ecartReeval?.replace(/\s/g, '').replace(/,/g, '.')) || 0), 0);
