@@ -408,33 +408,23 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
               <td style={tdRight}></td>
               <td style={tdRight}></td>
             </tr>
-            {/* Total écarts de réévaluation */}
-            <tr style={{ fontWeight: 700 }}>
-              <td style={{ ...tdStyle, fontWeight: 700 }}>Total des écarts de réévaluation</td>
+            {/* Total colonnes 3 et 4 uniquement */}
+            <tr style={{ fontWeight: 700, borderTop: '2px solid #000' }}>
+              <td style={{ ...tdStyle, fontWeight: 700 }}>TOTAL</td>
+              <td style={tdRight}></td>
               <td style={{ ...tdRight, fontWeight: 700 }}>
                 {fmtMontant(lignes.reduce((s, l) => {
-                  const saisi = parseFloat((l.montant || '').replace(/\s/g, '').replace(/,/g, '.')) || 0;
-                  return s + (saisi || getMontantBalance(getPostePrefixes(l.element)));
+                  const saisi = parseFloat((l.ecartReeval || '').replace(/\s/g, '').replace(/,/g, '.')) || 0;
+                  const note3a = isEcartReeval(l.element) ? getReevalNote3A(l.element) : 0;
+                  return s + (saisi || note3a);
                 }, 0))}
               </td>
               <td style={{ ...tdRight, fontWeight: 700 }}>
-                {(() => {
-                  const total = lignes.reduce((s, l) => s + (parseFloat(l.ecartReeval?.replace(/\s/g, '').replace(/,/g, '.')) || 0), 0);
-                  return total ? Math.round(total).toLocaleString('fr-FR') : '';
-                })()}
-              </td>
-              <td style={tdRight}></td>
-            </tr>
-            {/* Total provisions spéciales */}
-            <tr style={{ fontWeight: 700 }}>
-              <td style={{ ...tdStyle, fontWeight: 700 }}>Total provisions spéciales de réévaluation</td>
-              <td style={tdRight}></td>
-              <td style={tdRight}></td>
-              <td style={{ ...tdRight, fontWeight: 700 }}>
-                {(() => {
-                  const total = lignes.reduce((s, l) => s + (parseFloat(l.provSpeciale?.replace(/\s/g, '').replace(/,/g, '.')) || 0), 0);
-                  return total ? Math.round(total).toLocaleString('fr-FR') : '';
-                })()}
+                {fmtMontant(lignes.reduce((s, l) => {
+                  const saisi = parseFloat((l.provSpeciale || '').replace(/\s/g, '').replace(/,/g, '.')) || 0;
+                  const note3a = !isEcartReeval(l.element) ? getReevalNote3A(l.element) : 0;
+                  return s + (saisi || note3a);
+                }, 0))}
               </td>
             </tr>
           </tbody>
