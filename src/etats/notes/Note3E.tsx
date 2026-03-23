@@ -13,10 +13,19 @@ interface Note3EProps extends EtatBaseProps {
 interface LigneReeval {
   element: string;
   montant: string;
-  amortSupp: string;
+  ecartReeval: string;
+  provSpeciale: string;
 }
 
-const emptyLigne = (): LigneReeval => ({ element: '', montant: '', amortSupp: '' });
+const DEFAULT_POSTES = [
+  'Terrains',
+  'Bâtiments',
+  'Agencements, aménagements, installations',
+  'Matériel, mobilier, actifs biologiques',
+  'Matériel de transport',
+];
+
+const emptyLigne = (element = ''): LigneReeval => ({ element, montant: '', ecartReeval: '', provSpeciale: '' });
 
 function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EProps): React.JSX.Element {
   const [exercices, setExercices] = useState<Exercice[]>([]);
@@ -30,7 +39,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
 
   // Champs éditables
   const [natureDate, setNatureDate] = useState('');
-  const [lignes, setLignes] = useState<LigneReeval[]>([emptyLigne(), emptyLigne(), emptyLigne(), emptyLigne(), emptyLigne(), emptyLigne(), emptyLigne(), emptyLigne()]);
+  const [lignes, setLignes] = useState<LigneReeval[]>(DEFAULT_POSTES.map(p => emptyLigne(p)));
   const [methode, setMethode] = useState('');
   const [traitementFiscal, setTraitementFiscal] = useState('');
   const [ecartIncorpore, setEcartIncorpore] = useState('');
@@ -280,9 +289,10 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr>
-              <th style={{ ...thStyle, width: '50%' }}>Eléments réévalués par postes du bilan</th>
-              <th style={{ ...thStyle, width: '25%' }}>Montants coûts historiques</th>
-              <th style={{ ...thStyle, width: '25%' }}>Amortissements supplémentaires</th>
+              <th style={{ ...thStyle, width: '34%' }}>Éléments réévalués par postes du bilan</th>
+              <th style={{ ...thStyle, width: '22%' }}>Montants coûts historiques</th>
+              <th style={{ ...thStyle, width: '22%' }}>Écarts de réévaluation</th>
+              <th style={{ ...thStyle, width: '22%' }}>Provisions spéciales de réévaluation</th>
             </tr>
           </thead>
           <tbody>
@@ -305,8 +315,13 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
                 </td>
                 <td style={tdRight}>
                   {editing ? (
-                    <input value={l.amortSupp} onChange={e => updateLigne(i, 'amortSupp', e.target.value)} style={inputSt} />
-                  ) : l.amortSupp}
+                    <input value={l.ecartReeval} onChange={e => updateLigne(i, 'ecartReeval', e.target.value)} style={inputSt} />
+                  ) : l.ecartReeval}
+                </td>
+                <td style={tdRight}>
+                  {editing ? (
+                    <input value={l.provSpeciale} onChange={e => updateLigne(i, 'provSpeciale', e.target.value)} style={inputSt} />
+                  ) : l.provSpeciale}
                 </td>
               </tr>
             ))}
