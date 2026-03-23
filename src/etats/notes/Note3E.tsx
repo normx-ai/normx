@@ -277,7 +277,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
 
         {/* Nature et date des réévaluations */}
         <div style={sectionStyle}>
-          <p style={{ fontSize: 12, fontWeight: 400, marginBottom: 6, marginTop: 0 }}>Nature et date des réévaluations :</p>
+          <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, marginTop: 0 }}>Nature et date des réévaluations :</p>
           {editing ? (
             <textarea value={natureDate} onChange={e => setNatureDate(e.target.value)} style={textareaStyle} />
           ) : (
@@ -325,6 +325,37 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
                 </td>
               </tr>
             ))}
+            {/* Ligne vide */}
+            <tr>
+              <td style={tdStyle}>&nbsp;</td>
+              <td style={tdRight}></td>
+              <td style={tdRight}></td>
+              <td style={tdRight}></td>
+            </tr>
+            {/* Total écarts de réévaluation */}
+            <tr style={{ fontWeight: 700 }}>
+              <td style={{ ...tdStyle, fontWeight: 700 }}>Total des écarts de réévaluation</td>
+              <td style={tdRight}></td>
+              <td style={{ ...tdRight, fontWeight: 700 }}>
+                {(() => {
+                  const total = lignes.reduce((s, l) => s + (parseFloat(l.ecartReeval?.replace(/\s/g, '').replace(/,/g, '.')) || 0), 0);
+                  return total ? Math.round(total).toLocaleString('fr-FR') : '';
+                })()}
+              </td>
+              <td style={tdRight}></td>
+            </tr>
+            {/* Total provisions spéciales */}
+            <tr style={{ fontWeight: 700 }}>
+              <td style={{ ...tdStyle, fontWeight: 700 }}>Total provisions spéciales de réévaluation</td>
+              <td style={tdRight}></td>
+              <td style={tdRight}></td>
+              <td style={{ ...tdRight, fontWeight: 700 }}>
+                {(() => {
+                  const total = lignes.reduce((s, l) => s + (parseFloat(l.provSpeciale?.replace(/\s/g, '').replace(/,/g, '.')) || 0), 0);
+                  return total ? Math.round(total).toLocaleString('fr-FR') : '';
+                })()}
+              </td>
+            </tr>
           </tbody>
         </table>
 
@@ -338,7 +369,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
 
         {/* Méthode de réévaluation utilisée */}
         <div style={sectionStyle}>
-          <p style={{ fontSize: 12, fontWeight: 400, marginBottom: 6, marginTop: 0 }}>Méthode de réévaluation utilisée :</p>
+          <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, marginTop: 0 }}>Méthode de réévaluation utilisée :</p>
           {editing ? (
             <textarea value={methode} onChange={e => setMethode(e.target.value)} style={textareaStyle} />
           ) : (
@@ -348,7 +379,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
 
         {/* Traitement fiscal */}
         <div style={sectionStyle}>
-          <p style={{ fontSize: 12, fontWeight: 400, marginBottom: 6, marginTop: 0 }}>Traitement fiscal de l'écart de réévaluation et des amortissements supplémentaires :</p>
+          <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, marginTop: 0 }}>Traitement fiscal de l'écart de réévaluation et des amortissements supplémentaires :</p>
           {editing ? (
             <textarea value={traitementFiscal} onChange={e => setTraitementFiscal(e.target.value)} style={textareaStyle} />
           ) : (
@@ -359,7 +390,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
         {/* Montant de l'écart incorporé au capital */}
         <div style={sectionStyle}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ fontSize: 12, fontWeight: 400 }}>Montant de l'écart incorporé au capital :</span>
+            <span style={{ fontSize: 12, fontWeight: 700 }}>Montant de l'écart incorporé au capital :</span>
             {editing ? (
               <input value={ecartIncorpore} onChange={e => setEcartIncorpore(e.target.value)}
                 style={{ ...inputSt, width: 200 }} />
