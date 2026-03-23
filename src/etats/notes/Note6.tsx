@@ -227,23 +227,31 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
     return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
   };
 
-  const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => (
-    <tr key={r.label}>
-      <td style={tdStyle}>{r.label}</td>
-      <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
-      <td style={tdRight}>{renderAdjInput(r.label, 'anneeN1', r.vals.anneeN1)}</td>
-      <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variation !== 0 ? r.vals.variation.toFixed(1) + ' %' : ''}</td>
-    </tr>
-  );
+  const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => {
+    const varStock = r.vals.anneeN - r.vals.anneeN1;
+    return (
+      <tr key={r.label}>
+        <td style={tdStyle}>{r.label}</td>
+        <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
+        <td style={tdRight}>{renderAdjInput(r.label, 'anneeN1', r.vals.anneeN1)}</td>
+        <td style={{ ...tdRight, color: varStock < 0 ? '#dc2626' : '#333' }}>{varStock !== 0 ? fmtM(varStock) : ''}</td>
+        <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variation !== 0 ? r.vals.variation.toFixed(1) + ' %' : ''}</td>
+      </tr>
+    );
+  };
 
-  const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number }, variation: number) => (
-    <tr>
-      <td style={tdBold}>{label}</td>
-      <td style={tdBoldRight}>{fmtM(totals.anneeN)}</td>
-      <td style={tdBoldRight}>{fmtM(totals.anneeN1)}</td>
-      <td style={{ ...tdBoldRight, background: '#fafafa' }}>{variation !== 0 ? variation.toFixed(1) + ' %' : ''}</td>
-    </tr>
-  );
+  const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number }, variation: number) => {
+    const varStock = totals.anneeN - totals.anneeN1;
+    return (
+      <tr>
+        <td style={tdBold}>{label}</td>
+        <td style={tdBoldRight}>{fmtM(totals.anneeN)}</td>
+        <td style={tdBoldRight}>{fmtM(totals.anneeN1)}</td>
+        <td style={{ ...tdBoldRight, color: varStock < 0 ? '#dc2626' : '#333' }}>{varStock !== 0 ? fmtM(varStock) : ''}</td>
+        <td style={{ ...tdBoldRight, background: '#fafafa' }}>{variation !== 0 ? variation.toFixed(1) + ' %' : ''}</td>
+      </tr>
+    );
+  };
 
   return (
     <div>
@@ -310,9 +318,10 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
           <thead>
             <tr>
-              <th style={{ ...thStyle, width: '50%' }}>Libellés</th>
+              <th style={{ ...thStyle, width: '34%' }}>Libellés</th>
               <th style={thStyle}>Année N</th>
               <th style={thStyle}>Année N-1</th>
+              <th style={thStyle}>Variation de stock</th>
               <th style={thStyle}>Variation en %</th>
             </tr>
           </thead>
