@@ -351,7 +351,7 @@ function Note7({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note7Pro
         <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
           <thead>
             <tr>
-              <th style={{ ...thStyle, width: '30%' }} rowSpan={2}>Libellés</th>
+              <th style={{ ...thStyle, width: '36%' }} rowSpan={2}>Libellés</th>
               <th style={thStyle} rowSpan={2}>Année N</th>
               <th style={thStyle} rowSpan={2}>Année N-1</th>
               <th style={thStyle} rowSpan={2}>Variation en %</th>
