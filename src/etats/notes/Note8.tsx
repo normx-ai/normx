@@ -21,9 +21,9 @@ const RUBRIQUES_BRUT: RubriqueCreance[] = [
   { label: 'État et collectivités publiques', prefixes: ['44'] },
   { label: 'Organismes internationaux', prefixes: ['45'] },
   { label: 'Associés et groupe', prefixes: ['46'] },
-  { label: 'Débiteurs divers', prefixes: ['471', '473'] },
+  { label: 'Débiteurs divers', prefixes: ['471', '472', '473', '474'] },
+  { label: 'Compte transitoire ajustement spécial', prefixes: ['475'] },
   { label: 'Charges constatées d\'avance', prefixes: ['476'] },
-  { label: 'Compte transitoire ajustement spécial', prefixes: ['4751'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueCreance[] = [
