@@ -1,0 +1,69 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  VPS_HOST: 51.83.75.203
+  VPS_USER: ubuntu
+  APP_DIR: /opt/normx
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ env.VPS_HOST }}
+          username: ${{ env.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd ${{ env.APP_DIR }}
+
+            git pull origin main
+
+            # --- Generer .env (Docker Compose) ---
+            cat > .env << 'ENVEOF'
+            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            ENVEOF
+            chmod 600 .env
+
+            # --- Generer .env.production (API) ---
+            cat > .env.production << 'ENVEOF'
+            NODE_ENV=production
+            PORT=5002
+            DATABASE_URL=postgresql://normx:${{ secrets.POSTGRES_PASSWORD }}@normx-postgres:5432/normx
+            ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
+            VOYAGE_API_KEY=${{ secrets.VOYAGE_API_KEY }}
+            QDRANT_URL=http://cgi242-qdrant:6333
+            CORS_ORIGIN=https://app.normx-ai.com,https://normx-ai.com
+            KEYCLOAK_URL=https://auth.normx-ai.com
+            KEYCLOAK_REALM=normx
+            SMTP_HOST=${{ secrets.SMTP_HOST }}
+            SMTP_PORT=465
+            SMTP_USER=${{ secrets.SMTP_USER }}
+            SMTP_PASS=${{ secrets.SMTP_PASS }}
+            SMTP_FROM=no-reply@normx-ai.com
+            ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}
+            ENVEOF
+            chmod 600 .env.production
+
+            # --- Build frontend ---
+            npm install && npm run build
+
+            # --- Rebuild et restart ---
+            docker compose build --no-cache api
+            docker compose up -d --remove-orphans
+
+            # --- Verifier ---
+            sleep 15
+            curl -sf http://localhost:5002/health || echo "WARN: Health check failed"
+
+            echo "Deploiement Normx termine avec succes"

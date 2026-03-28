@@ -1,0 +1,43 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: normx-api
+    restart: unless-stopped
+    env_file: ./.env.production
+    expose:
+      - "5002"
+    depends_on:
+      normx-postgres:
+        condition: service_healthy
+    networks:
+      - normx-net
+      - cgi242_cgi242-net
+
+  normx-postgres:
+    image: postgres:16-alpine
+    container_name: normx-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: normx
+      POSTGRES_USER: normx
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U normx"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - normx-net
+
+volumes:
+  pgdata:
+
+networks:
+  normx-net:
+    driver: bridge
+  cgi242_cgi242-net:
+    external: true
