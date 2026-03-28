@@ -12,7 +12,7 @@ function getErrorMessage(err: { message?: string } | null): string {
 // GET /api/revision/:entite_id/:exercice_id/all-od
 // IMPORTANT : cette route doit etre AVANT la route generique /:section
 router.get('/:entite_id/:exercice_id/all-od', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { exercice_id } = req.params;
   try {
     const allOd = await revisionService.getAllOd(schema, exercice_id);
@@ -25,7 +25,7 @@ router.get('/:entite_id/:exercice_id/all-od', async (req: Request, res: Response
 
 // GET /api/revision/:entite_id/:exercice_id/:section
 router.get('/:entite_id/:exercice_id/:section', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { exercice_id, section } = req.params;
   try {
     const data = await revisionService.getSection(schema, exercice_id, section);
@@ -38,7 +38,7 @@ router.get('/:entite_id/:exercice_id/:section', async (req: Request, res: Respon
 
 // PUT /api/revision/:entite_id/:exercice_id/:section
 router.put('/:entite_id/:exercice_id/:section', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { exercice_id, section } = req.params;
   const data = req.body;
   try {

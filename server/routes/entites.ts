@@ -11,7 +11,7 @@ function getErrorMessage(err: { message?: string } | null): string {
 
 // GET entite complete (avec data JSONB)
 router.get('/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const entite = await entitesService.getEntiteById(schema, req.params.id);
     if (!entite) return res.status(404).json({ error: 'Entite non trouvee.' });

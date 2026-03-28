@@ -11,7 +11,7 @@ function getErrorMessage(err: { message?: string } | null): string {
 
 // Lister les notifications d'un utilisateur
 router.get('/:userId', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await notificationsService.listNotifications(schema, req.params.userId);
     res.json(rows);
@@ -23,7 +23,7 @@ router.get('/:userId', async (req: Request, res: Response) => {
 
 // Nombre de non lues
 router.get('/:userId/unread-count', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const count = await notificationsService.getUnreadCount(schema, req.params.userId);
     res.json({ count });
@@ -35,7 +35,7 @@ router.get('/:userId/unread-count', async (req: Request, res: Response) => {
 
 // Creer une notification
 router.post('/', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { user_id, type, title, message } = req.body;
   if (!user_id || !title || !message) {
     return res.status(400).json({ error: 'user_id, title et message requis.' });
@@ -51,7 +51,7 @@ router.post('/', async (req: Request, res: Response) => {
 
 // Marquer une notification comme lue
 router.put('/:id/read', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     await notificationsService.markAsRead(schema, req.params.id);
     res.json({ message: 'Notification lue.' });
@@ -63,7 +63,7 @@ router.put('/:id/read', async (req: Request, res: Response) => {
 
 // Tout marquer comme lu
 router.put('/read-all/:userId', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     await notificationsService.markAllAsRead(schema, req.params.userId);
     res.json({ message: 'Toutes les notifications marquees comme lues.' });
@@ -75,7 +75,7 @@ router.put('/read-all/:userId', async (req: Request, res: Response) => {
 
 // Supprimer une notification
 router.delete('/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     await notificationsService.deleteNotification(schema, req.params.id);
     res.json({ message: 'Notification supprimee.' });

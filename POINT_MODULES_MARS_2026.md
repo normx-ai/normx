@@ -56,7 +56,35 @@
 | Legal | https://legal.normx-ai.com | 200 |
 | Keycloak SSO | https://auth.normx-ai.com | 302 |
 
-**Prochaine etape : deployer Normx Compta sur app.normx-ai.com, completer SYSCOHADA (~30%), backend absences, rapprochement bancaire**
+### Avancement Base SYSCOHADA RAG — 65%
+
+| Chapitre | Titre | Statut |
+|----------|-------|--------|
+| 1 | Concepts fondamentaux | Absent |
+| 2 | Actifs immobilises | Absent |
+| 3 | Actifs circulants | Absent |
+| 4 | Passifs / Tiers | Absent |
+| 5 | Tresorerie | Absent |
+| **6** | **Ressources durables** | **Fait** (93 articles) |
+| **7** | **Amortissements** | **Fait 28/03** (13 articles) |
+| **8** | **Provisions et depreciations** | **Fait 28/03** (8 articles) |
+| 9 | Cloture / operations fin d'exercice | Absent |
+| **10** | **Produits par nature** | **Fait 28/03** (7 articles) |
+| **11** | **SIG** | **Fait** (31 articles) |
+| **12** | **Operations pour compte de tiers** | **Fait 28/03** (3 articles) |
+| **13** | **Operations en participation et GIE** | **Fait 28/03** (9 articles) |
+| + | **Fonctionnement comptes classes 1-8** | **Fait** (81 articles) |
+
+### Audit plan comptable SYSCOHADA — TERMINÉ 28/03
+
+- 1 409 comptes, classes 1-9 completes
+- Bilan ACTIF/PASSIF : 95%+ couverture
+- Compte de resultat : 100% couverture
+- Sens debit/credit : 99% conforme
+- Incoherences : **0**
+- Comptes obsoletes (6811, 6872, 865, 206) : confirmes supprimes dans le SYSCOHADA revise
+
+**Prochaine etape : deployer Normx Compta sur app.normx-ai.com, completer SYSCOHADA chapitres 1-5 et 9, backend absences, rapprochement bancaire**
 
 ---
 

@@ -18,7 +18,7 @@ function getErrorMessage(err: { message?: string } | null): string {
 
 // GET /declarations/:entiteId/:exerciceId
 router.get('/declarations/:entiteId/:exerciceId', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await tvaService.getDeclarations(schema, req.params.exerciceId);
     res.json(rows);
@@ -30,7 +30,7 @@ router.get('/declarations/:entiteId/:exerciceId', async (req: Request, res: Resp
 
 // GET /declaration/:id
 router.get('/declaration/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const data = await tvaService.getDeclarationDetail(schema, req.params.id);
     if (!data) return res.status(404).json({ error: 'Declaration non trouvee.' });
@@ -43,7 +43,7 @@ router.get('/declaration/:id', async (req: Request, res: Response) => {
 
 // GET /lignes/:declarationId/:onglet
 router.get('/lignes/:declarationId/:onglet', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await tvaService.getLignesByOnglet(schema, req.params.declarationId, req.params.onglet);
     res.json(rows);
@@ -55,13 +55,13 @@ router.get('/lignes/:declarationId/:onglet', async (req: Request, res: Response)
 
 // GET /montants-comptes/:entiteId/:exerciceId
 router.get('/montants-comptes/:entiteId/:exerciceId', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { mois, comptes } = req.query;
   if (!mois || !comptes) {
     return res.status(400).json({ error: 'Parametres mois et comptes requis.' });
   }
   try {
-    const data = await tvaService.getMontantsComptes(schema, req.params.exerciceId, mois, comptes);
+    const data = await tvaService.getMontantsComptes(schema, req.params.exerciceId, mois as string, comptes as string);
     if (!data) return res.status(404).json({ error: 'Exercice non trouve.' });
     res.json(data);
   } catch (err) {
@@ -84,7 +84,7 @@ router.get('/plan-comptable-44', (_req: Request, res: Response) => {
 
 // POST /ligne
 router.post('/ligne', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { declaration_id, onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir } = req.body;
   if (!declaration_id || !onglet) {
     return res.status(400).json({ error: 'declaration_id et onglet sont requis.' });
@@ -100,7 +100,7 @@ router.post('/ligne', async (req: Request, res: Response) => {
 
 // PUT /ligne/:id
 router.put('/ligne/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir } = req.body;
   try {
     const result = await tvaService.updateLigne(schema, req.params.id, { onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir });
@@ -114,7 +114,7 @@ router.put('/ligne/:id', async (req: Request, res: Response) => {
 
 // DELETE /ligne/:id
 router.delete('/ligne/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const result = await tvaService.deleteLigne(schema, req.params.id);
     if (!result) return res.status(404).json({ error: 'Ligne non trouvee.' });
@@ -127,7 +127,7 @@ router.delete('/ligne/:id', async (req: Request, res: Response) => {
 
 // POST /importer-ecritures/:declarationId
 router.post('/importer-ecritures/:declarationId', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const result = await tvaService.importerEcritures(schema, req.params.declarationId);
     if (result.notFound) return res.status(404).json({ error: result.notFound });
@@ -145,7 +145,7 @@ router.post('/importer-ecritures/:declarationId', async (req: Request, res: Resp
 
 // PUT /declaration/:id/statut
 router.put('/declaration/:id/statut', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { statut } = req.body;
   try {
     const result = await tvaService.updateDeclarationStatut(schema, req.params.id, statut);

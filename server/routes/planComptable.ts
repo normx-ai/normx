@@ -21,7 +21,7 @@ function getPlanSyscohada(): CompteComptable[] {
       planSyscohada = [];
     }
   }
-  return planSyscohada;
+  return planSyscohada ?? [];
 }
 
 function getPlan(referentiel: string | undefined): CompteComptable[] {

@@ -47,7 +47,7 @@ const router = express.Router();
 // Creer une ecriture avec ses lignes
 router.post('/', async (req: Request, res: Response) => {
   const { exercice_id, date_ecriture, journal, numero_piece, libelle, lignes } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
 
   if (!exercice_id || !date_ecriture || !libelle || !lignes || lignes.length < 2) {
     return res.status(400).json({ error: 'Donnees incompletes. Minimum 2 lignes.' });
@@ -78,10 +78,10 @@ router.post('/', async (req: Request, res: Response) => {
 
 // Lister ecritures d'un exercice
 router.get('/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { journal, statut, date_du, date_au, search } = req.query;
   try {
-    const rows = await ecrituresService.listEcritures(schema, req.params.exercice_id, { journal, statut, date_du, date_au, search });
+    const rows = await ecrituresService.listEcritures(schema, req.params.exercice_id, { journal: journal as string, statut: statut as string, date_du: date_du as string, date_au: date_au as string, search: search as string });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -92,7 +92,7 @@ router.get('/:entite_id/:exercice_id', async (req: Request, res: Response) => {
 // Valider une ou plusieurs ecritures
 router.post('/valider', async (req: Request, res: Response) => {
   const { ids, user_id } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   if (!ids || !Array.isArray(ids) || ids.length === 0) {
     return res.status(400).json({ error: 'Aucune ecriture selectionnee.' });
   }
@@ -108,7 +108,7 @@ router.post('/valider', async (req: Request, res: Response) => {
 // Devalider une ecriture
 router.post('/devalider', async (req: Request, res: Response) => {
   const { ids } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   if (!ids || !Array.isArray(ids) || ids.length === 0) {
     return res.status(400).json({ error: 'Aucune ecriture selectionnee.' });
   }
@@ -124,7 +124,7 @@ router.post('/devalider', async (req: Request, res: Response) => {
 // Modifier une ecriture (brouillard uniquement)
 router.put('/:id', async (req: Request, res: Response) => {
   const { date_ecriture, journal, numero_piece, libelle, lignes } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
 
   if (!date_ecriture || !libelle || !lignes || lignes.length < 2) {
     return res.status(400).json({ error: 'Donnees incompletes.' });
@@ -157,7 +157,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 
 // Supprimer une ecriture (brouillard uniquement)
 router.delete('/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const result = await ecrituresService.deleteEcriture(schema, req.params.id);
     if (result.notFound) return res.status(404).json({ error: 'Ecriture non trouvee.' });
@@ -171,10 +171,10 @@ router.delete('/:id', async (req: Request, res: Response) => {
 
 // Grand livre
 router.get('/grand-livre/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { compte, journal, date_du, date_au } = req.query;
   try {
-    const rows = await ecrituresService.getGrandLivre(schema, req.params.exercice_id, { compte, journal, date_du, date_au });
+    const rows = await ecrituresService.getGrandLivre(schema, req.params.exercice_id, { compte: compte as string, journal: journal as string, date_du: date_du as string, date_au: date_au as string });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -184,7 +184,7 @@ router.get('/grand-livre/:entite_id/:exercice_id', async (req: Request, res: Res
 
 // Balance generee depuis les ecritures
 router.get('/balance/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await ecrituresService.getBalanceFromEcritures(schema, req.params.exercice_id);
     res.json(rows);
@@ -196,10 +196,10 @@ router.get('/balance/:entite_id/:exercice_id', async (req: Request, res: Respons
 
 // Grand livre tiers
 router.get('/grand-livre-tiers/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { tiers_id, type_tiers, date_du, date_au } = req.query;
   try {
-    const rows = await ecrituresService.getGrandLivreTiers(schema, req.params.exercice_id, { tiers_id, type_tiers, date_du, date_au });
+    const rows = await ecrituresService.getGrandLivreTiers(schema, req.params.exercice_id, { tiers_id: tiers_id as string, type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -209,10 +209,10 @@ router.get('/grand-livre-tiers/:entite_id/:exercice_id', async (req: Request, re
 
 // Balance tiers
 router.get('/balance-tiers/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { type_tiers, date_du, date_au } = req.query;
   try {
-    const rows = await ecrituresService.getBalanceTiers(schema, req.params.exercice_id, { type_tiers, date_du, date_au });
+    const rows = await ecrituresService.getBalanceTiers(schema, req.params.exercice_id, { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -222,7 +222,7 @@ router.get('/balance-tiers/:entite_id/:exercice_id', async (req: Request, res: R
 
 // Stats
 router.get('/stats/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const stats = await ecrituresService.getStats(schema, req.params.exercice_id);
     res.json(stats);
@@ -235,7 +235,7 @@ router.get('/stats/:entite_id/:exercice_id', async (req: Request, res: Response)
 // ============ RAPPORTS ============
 
 router.get('/rapports/journal-centralisateur/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await ecrituresService.getJournalCentralisateur(schema, req.params.exercice_id);
     res.json(rows);
@@ -243,7 +243,7 @@ router.get('/rapports/journal-centralisateur/:entite_id/:exercice_id', async (re
 });
 
 router.get('/rapports/balance-agee/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await ecrituresService.getBalanceAgee(schema, req.params.exercice_id);
     res.json(rows);
@@ -251,7 +251,7 @@ router.get('/rapports/balance-agee/:entite_id/:exercice_id', async (req: Request
 });
 
 router.get('/rapports/tresorerie/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await ecrituresService.getTresorerie(schema, req.params.exercice_id);
     res.json(rows);
@@ -259,7 +259,7 @@ router.get('/rapports/tresorerie/:entite_id/:exercice_id', async (req: Request, 
 });
 
 router.get('/rapports/repartition-charges/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await ecrituresService.getRepartitionCharges(schema, req.params.exercice_id);
     res.json(rows);
@@ -267,16 +267,16 @@ router.get('/rapports/repartition-charges/:entite_id/:exercice_id', async (req: 
 });
 
 router.get('/rapports/comparatif/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { exercice_id_n1 } = req.query;
   try {
-    const data = await ecrituresService.getComparatif(schema, req.params.exercice_id, exercice_id_n1 || null);
+    const data = await ecrituresService.getComparatif(schema, req.params.exercice_id, (exercice_id_n1 as string) || null);
     res.json(data);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
 
 router.get('/rapports/tableau-bord/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const data = await ecrituresService.getTableauBord(schema, req.params.exercice_id);
     res.json(data);
@@ -284,10 +284,10 @@ router.get('/rapports/tableau-bord/:entite_id/:exercice_id', async (req: Request
 });
 
 router.get('/rapports/echeancier/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { type_tiers, date_du, date_au, statut } = req.query;
   try {
-    const rows = await ecrituresService.getEcheancier(schema, req.params.exercice_id, { type_tiers, date_du, date_au });
+    const rows = await ecrituresService.getEcheancier(schema, req.params.exercice_id, { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
     const mapped = rows.map((r: EcheancierRow) => {
       const montant = Math.abs(parseFloat(r.debit) - parseFloat(r.credit));
       const paye = r.lettrage_code ? montant : 0;
@@ -302,10 +302,10 @@ router.get('/rapports/echeancier/:entite_id/:exercice_id', async (req: Request, 
 // ============ LETTRAGE ============
 
 router.get('/lettrage/tiers/:entite_id/:exercice_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { type_tiers } = req.query;
   try {
-    const rows = await ecrituresService.getLettreTiers(schema, req.params.exercice_id, type_tiers);
+    const rows = await ecrituresService.getLettreTiers(schema, req.params.exercice_id, type_tiers as string);
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -314,10 +314,10 @@ router.get('/lettrage/tiers/:entite_id/:exercice_id', async (req: Request, res: 
 });
 
 router.get('/lettrage/ecritures/:entite_id/:exercice_id/:tiers_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { statut, annee_de, annee_a } = req.query;
   try {
-    const rows = await ecrituresService.getLettreEcritures(schema, req.params.exercice_id, req.params.tiers_id, { statut, annee_de, annee_a });
+    const rows = await ecrituresService.getLettreEcritures(schema, req.params.exercice_id, req.params.tiers_id, { statut: statut as string, annee_de: annee_de as string, annee_a: annee_a as string });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -327,7 +327,7 @@ router.get('/lettrage/ecritures/:entite_id/:exercice_id/:tiers_id', async (req: 
 
 router.post('/lettrage/lettrer', async (req: Request, res: Response) => {
   const { ligne_ids } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   if (!ligne_ids || ligne_ids.length < 2) {
     return res.status(400).json({ error: 'Au moins 2 lignes requises.' });
   }
@@ -343,7 +343,7 @@ router.post('/lettrage/lettrer', async (req: Request, res: Response) => {
 
 router.post('/lettrage/delettrer', async (req: Request, res: Response) => {
   const { lettrage_code } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   if (!lettrage_code) {
     return res.status(400).json({ error: 'Code lettrage requis.' });
   }

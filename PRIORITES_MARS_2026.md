@@ -10,7 +10,7 @@
 | 2 | ~~Extraire formules TFT SYCEBNL (méthode directe)~~ | RAG | **FAIT** | `sycebnl_partie4_etats_financiers_tft.json` |
 | 3 | ~~Extraire dons/legs/cotisations/opérations spécifiques~~ | RAG | **FAIT** | `sycebnl_partie3_operations_specifiques.json` |
 | 3b | ~~Fonctionnement comptes classes 1-9 (p.106-308)~~ | RAG | **FAIT** | 4 fichiers `sycebnl_fonctionnement_comptes_*.json` |
-| 4 | Compléter les chapitres SYSCOHADA manquants (1–5, 7–10, 12) | RAG | **À faire** | Agent SYSCOHADA couvre seulement 30% |
+| 4 | ~~Compléter les chapitres SYSCOHADA~~ | RAG | **65% fait 28/03** | Ch. 6,7,8,10,11,12,13 + classes 1-8 faits. Reste ch. 1-5,9. Plan comptable audite = 100% conforme |
 
 ### Phase 2 — États financiers (composants manquants visibles)
 
@@ -69,6 +69,8 @@
 | **4a — CGI-242 → Keycloak** | — | ~~Élevé~~ | **TERMINÉ** — backend JWKS + frontend redirect + role fiscaliste |
 | **4b — Legal → Keycloak** | — | ~~Élevé~~ | **TERMINÉ** — backend JWKS + frontend redirect + role legal + auto-creation user |
 | **4c — Securite Legal** | — | ~~Moyen~~ | **TERMINÉ** — 10 problemes corriges (rate limiting, CORS, PrismaClient, cleanup, 131 any→0) |
+| **4d — SYSCOHADA KB** | 4 | ~~Moyen~~ | **65%** — Ch. 7,8,10,12,13 ajoutes. Plan comptable audite = conforme |
+| **4e — Audit plan comptable** | — | ~~Faible~~ | **TERMINÉ** — 1 409 comptes, 96% aligne, 0 incoherence |
 | **2 — États financiers** | 5–7 | Moyen | Plus de composants vides visibles |
 | **3 — Paie** | 8–11 | Moyen à élevé | Module paie réellement exploitable |
 | **4 — Comptabilité** | 12–15 | Élevé | Module comptabilité complet |

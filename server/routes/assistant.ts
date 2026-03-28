@@ -654,7 +654,7 @@ router.get('/qdrant/status', async (_req: Request, res: Response) => {
     let collectionInfo: QdrantCollectionInfo | null = null;
     if (health.ok) {
       try {
-        collectionInfo = await qdrantModule.qdrant.getCollection('normx_kb') as QdrantCollectionInfo;
+        collectionInfo = await qdrantModule.qdrant.getCollection('normx_kb') as unknown as QdrantCollectionInfo;
       } catch (_ignored) { /* collection may not exist */ }
     }
     res.json({

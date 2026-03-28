@@ -12,7 +12,7 @@ function getErrorMessage(err: { message?: string } | null): string {
 // Creer/obtenir exercice
 router.post('/exercice', async (req: Request, res: Response) => {
   const { annee, duree_mois, date_debut, date_fin } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   if (!annee) return res.status(400).json({ error: 'annee requis.' });
 
   const duree = parseInt(duree_mois, 10) || 12;
@@ -39,7 +39,7 @@ router.post('/exercice', async (req: Request, res: Response) => {
 
 // Lister exercices d'une entite
 router.get('/exercices/:entite_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const rows = await balanceService.listExercices(schema);
     res.json(rows);
@@ -51,7 +51,7 @@ router.get('/exercices/:entite_id', async (req: Request, res: Response) => {
 
 // Cloturer un exercice
 router.put('/exercice/:id/cloturer', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const result = await balanceService.cloturerExercice(schema, req.params.id);
     if (!result) return res.status(404).json({ error: 'Exercice non trouve ou deja cloture.' });
@@ -64,7 +64,7 @@ router.put('/exercice/:id/cloturer', async (req: Request, res: Response) => {
 
 // Rouvrir un exercice
 router.put('/exercice/:id/rouvrir', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const result = await balanceService.rouvrirExercice(schema, req.params.id);
     if (!result) return res.status(404).json({ error: 'Exercice non trouve ou deja ouvert.' });
@@ -78,7 +78,7 @@ router.put('/exercice/:id/rouvrir', async (req: Request, res: Response) => {
 // Importer balance
 router.post('/import', async (req: Request, res: Response) => {
   const { exercice_id, type_balance, nom_fichier, lignes } = req.body;
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
 
   if (!exercice_id || !type_balance || !lignes || !lignes.length) {
     return res.status(400).json({ error: 'Donnees incompletes.' });
@@ -99,7 +99,7 @@ router.post('/import', async (req: Request, res: Response) => {
 
 // Supprimer une balance importee
 router.delete('/:balance_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   try {
     const deleted = await balanceService.deleteBalance(schema, req.params.balance_id);
     if (!deleted) return res.status(404).json({ error: 'Balance introuvable.' });
@@ -112,7 +112,7 @@ router.delete('/:balance_id', async (req: Request, res: Response) => {
 
 // Modifier une ligne de balance
 router.put('/ligne/:ligne_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur } = req.body;
   try {
     const result = await balanceService.updateBalanceLigne(schema, req.params.ligne_id, { numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur });
@@ -127,7 +127,7 @@ router.put('/ligne/:ligne_id', async (req: Request, res: Response) => {
 
 // Obtenir balance avec lignes
 router.get('/:entite_id/:exercice_id/:type_balance', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { exercice_id, type_balance } = req.params;
   try {
     const data = await balanceService.getBalance(schema, exercice_id, type_balance);
@@ -140,7 +140,7 @@ router.get('/:entite_id/:exercice_id/:type_balance', async (req: Request, res: R
 
 // Revision : mettre a jour une ligne
 router.put('/revision/:ligne_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { debit_revise, credit_revise, solde_debiteur_revise, solde_crediteur_revise, note_revision } = req.body;
   try {
     const result = await balanceService.updateRevisionLigne(schema, req.params.ligne_id, {
@@ -160,7 +160,7 @@ router.put('/revision/:ligne_id', async (req: Request, res: Response) => {
 
 // Valider/changer statut balance
 router.put('/statut/:balance_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
+  const schema = req.tenantSchema as string;
   const { statut, revision_notes, user_id } = req.body;
   if (!['brut', 'revise', 'valide'].includes(statut)) {
     return res.status(400).json({ error: 'Statut invalide.' });

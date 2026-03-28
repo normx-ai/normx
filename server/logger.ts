@@ -1,10 +1,10 @@
-const { createLogger, format, transports } = require('winston');
-const path = require('path');
+import { createLogger, format, transports } from "winston";
+import path from "path";
 
 const logger = createLogger({
-  level: process.env.LOG_LEVEL || 'info',
+  level: process.env.LOG_LEVEL || "info",
   format: format.combine(
-    format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+    format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     format.errors({ stack: true }),
     format.printf(({ timestamp, level, message, stack }) => {
       return stack
@@ -24,17 +24,17 @@ const logger = createLogger({
       ),
     }),
     new transports.File({
-      filename: path.join(__dirname, 'logs', 'error.log'),
-      level: 'error',
+      filename: path.join(__dirname, "logs", "error.log"),
+      level: "error",
       maxsize: 5 * 1024 * 1024,
       maxFiles: 3,
     }),
     new transports.File({
-      filename: path.join(__dirname, 'logs', 'combined.log'),
+      filename: path.join(__dirname, "logs", "combined.log"),
       maxsize: 10 * 1024 * 1024,
       maxFiles: 5,
     }),
   ],
 });
 
-module.exports = logger;
+export default logger;
