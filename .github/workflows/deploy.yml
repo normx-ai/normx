@@ -56,11 +56,26 @@ jobs:
             chmod 600 .env.production
 
             # --- Build frontend ---
-            npm install && npm run build
+            npm install --legacy-peer-deps && npm run build
+
+            # --- Copier le build frontend ---
+            sudo rm -rf /var/www/normx-app/*
+            cp -r build/* /var/www/normx-app/
 
             # --- Rebuild et restart ---
             docker compose build --no-cache api
             docker compose up -d --remove-orphans
+
+            # --- Activer nginx app.conf si desactive ---
+            if [ -f /opt/cgi242/nginx/conf.d/app.conf.disabled ]; then
+              mv /opt/cgi242/nginx/conf.d/app.conf.disabled /opt/cgi242/nginx/conf.d/app.conf
+              cd /opt/cgi242 && docker compose build --no-cache nginx && docker compose up -d nginx
+              sleep 5
+              docker network connect normx_normx-net cgi242-nginx 2>/dev/null || true
+              docker network connect normx-legal_normx-legal-net cgi242-nginx 2>/dev/null || true
+              docker network connect keycloak_keycloak-net cgi242-nginx 2>/dev/null || true
+              cd ${{ env.APP_DIR }}
+            fi
 
             # --- Verifier ---
             sleep 15
