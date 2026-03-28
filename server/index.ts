@@ -58,10 +58,12 @@ app.get("/health", (_req: Request, res: Response) => {
   res.json({ status: "ok", service: "normx" });
 });
 
-// SPA fallback
-app.get("*", (_req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+// SPA fallback (dev uniquement — en prod nginx sert le frontend)
+if (process.env.NODE_ENV !== "production") {
+  app.get("/{*path}", (_req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+  });
+}
 
 // 404 handler
 app.use((_req: Request, res: Response) => {
