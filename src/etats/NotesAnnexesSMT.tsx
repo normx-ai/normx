@@ -61,7 +61,7 @@ function NotesAnnexesSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }
   const downloadPDF = () => { if (!pdfBlob) return; const u = URL.createObjectURL(pdfBlob); const a = document.createElement('a'); a.href = u; a.download = 'Notes_Annexes_SMT_' + annee + '.pdf'; a.click(); URL.revokeObjectURL(u); };
   const printPDF = () => { if (!previewUrl) return; const w = window.open(previewUrl); if (w) { w.onload = () => w.print(); } };
 
-  const pageStyle: React.CSSProperties = { width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Outfit', 'Segoe UI', Arial, sans-serif", fontSize: 11, color: '#1a1a1a' };
+  const pageStyle: React.CSSProperties = { width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 11, color: '#1a1a1a' };
   const th: React.CSSProperties = { border: '1px solid #000', padding: '8px 10px', fontSize: 11, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#e8e8e8' };
   const td: React.CSSProperties = { border: '1px solid #000', padding: '7px 10px', fontSize: 11, verticalAlign: 'middle' };
   const tdR: React.CSSProperties = { ...td, textAlign: 'right', fontVariantNumeric: 'tabular-nums' };

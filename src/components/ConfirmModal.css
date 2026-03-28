@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   z-index: 2000;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .confirm-modal {
@@ -71,7 +71,7 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   transition: background 0.15s;
 }
 .confirm-btn-cancel:hover {
@@ -85,7 +85,7 @@
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #fff;
   transition: opacity 0.15s;
 }

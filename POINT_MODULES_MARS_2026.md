@@ -25,9 +25,16 @@
 | DSF | **DÉJÀ FAIT** | Couverte par la liasse existante |
 | Notes 3F/3G | **À faire** | — |
 
-**Build vérifié : zero erreur TypeScript, compilation OK.**
+### Avancement Phase 3 — Paie
 
-**Prochaine étape : Notes 3F/3G, compléter SYSCOHADA (~30%), ou Phase 3 (Paie)**
+| Tâche | Statut | Détail |
+|-------|--------|--------|
+| Persistance bulletins | **FAIT 28/03** | `saveBulletin` (upsert), `getBulletin`, `genererBulletinsBatch` + routes API + contrainte UNIQUE |
+
+**Build vérifié : zero erreur TypeScript, compilation OK.**
+**Projet poussé sur GitHub : https://github.com/normx-ai/normx (28/03/2026)**
+
+**Prochaine étape : compléter SYSCOHADA (~30%), backend absences, intégration paie→compta, ou rapprochement bancaire**
 
 ---
 
@@ -51,7 +58,7 @@
 
 | Priorité | Fonctionnalité | Détail |
 |----------|---------------|--------|
-| **P1** | Persistance bulletins | Génération OK mais sauvegarde/consultation historique incomplète |
+| ~~P1~~ | ~~Persistance bulletins~~ | **FAIT 28/03** — saveBulletin, getBulletin, batch + routes POST/GET + UNIQUE |
 | **P1** | Absences | UI présente, backend non branché |
 | **P1** | Intégration comptabilité | Pas de génération auto d'OD (comptes 42x, 43x, 44x) |
 | **P2** | Import batch salariés | Pas d'import Excel/CSV d'employés |

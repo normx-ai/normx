@@ -34,7 +34,7 @@
   justify-content: center;
   padding: 0 4px;
   line-height: 1;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .notif-dropdown {
@@ -51,7 +51,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 .notif-dropdown-header {
@@ -79,7 +79,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 .notif-mark-all:hover {
   text-decoration: underline;

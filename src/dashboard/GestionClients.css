@@ -2,7 +2,7 @@
 
 .gc-container {
   padding: 0; width: 100%; flex: 1;
-  font-family: 'Outfit', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 
 /* Header */
@@ -134,7 +134,7 @@
 .gc-modal {
   background: #fff; width: 100%; max-width: 580px; max-height: 90vh;
   overflow-y: auto; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-  border-radius: 16px; font-family: 'Outfit', 'Segoe UI', Arial, sans-serif;
+  border-radius: 16px; font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
 }
 .gc-modal-header {
   display: flex; align-items: center; justify-content: space-between;

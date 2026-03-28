@@ -351,7 +351,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
         width: '297mm', minHeight: '210mm', background: '#fff',
         margin: '0 auto 20px', padding: '8mm 10mm',
         boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
-        fontFamily: "'Outfit', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',
+        fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',
       }}>
         {/* Header officiel comme Bilan/CR */}
         <div className="etat-header-officiel">

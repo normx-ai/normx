@@ -79,7 +79,7 @@
   font-size: 30px;
   font-weight: 700;
   color: #1a1a1a;
-  font-family: 'Outfit', monospace;
+  font-family: 'Inter', monospace;
   text-align: right;
   word-break: break-all;
 }
@@ -101,7 +101,7 @@
   cursor: pointer;
   font-size: 20px;
   font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Inter', sans-serif;
   transition: background 0.15s;
   background: #f0f1f3;
   color: #1a1a1a;
