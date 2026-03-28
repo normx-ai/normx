@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA - SYSCOHADA",
+    "referentiel": "SYSCOHADA",
+    "partie": "Chapitres 12 et 13 — Operations pour compte de tiers et GIE",
+    "pages_source": "811-832",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": 1150,
+      "titre": "Operations faites pour le compte de tiers — Intermediaire de commerce",
+      "texte": ["L'intermediaire de commerce est celui qui a pouvoir d'agir ou entend agir, habituellement et professionnellement pour le compte d'une autre personne, le represente, pour conclure avec un tiers un contrat de vente a caractere commercial.", "Le commissionnaire en matiere de vente ou d'achat est celui qui se charge d'operer en son propre nom pour le compte du commettant, la vente ou l'achat de marchandises moyennant une commission.", "On distingue : le commissionnaire expediteur (agent de transport) ; le commissionnaire agree en douane (transitaire) ; le commissionnaire depositaire ; le commissionnaire entrepositaire ; les cooperatives ; les gestionnaires de titres ; les administrateurs de biens et les syndics de copropriete ; debours et toutes autres operations faites pour le compte des tiers.", "La comptabilisation des operations a la commission differe selon la nature du mandat. Le commissionnaire peut agir soit en son seul nom, soit au nom d'autrui.", "Au plan fiscal, les debours sont des frais avances aupres de tiers au nom et pour le compte du client. Le remboursement de ces debours n'a pas a etre compris dans la base de calcul de la TVA facturee, a condition que le montant soit exact et atteste par des documents justificatifs."],
+      "mots_cles": ["intermediaire commerce", "commissionnaire", "commettant", "commission", "debours", "TVA", "transitaire", "depositaire"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1151,
+      "titre": "Comptabilisation du commissionnaire (agissant en son nom)",
+      "texte": ["Le SYSCOHADA appelle commissionnaire celui qui agit en son nom personnel. Il est personnellement tenu a l'egard des acheteurs ou des vendeurs des obligations resultant des contrats d'achats et de ventes qu'il conclut, meme si apparait le nom du commettant pour lequel il agit, et auquel il doit rendre compte.", "Le commissionnaire enregistre les operations simultanement dans ses propres comptes d'achats et de ventes de facon a faire apparaitre son role d'intermediaire, qui n'est ni celui de proprietaire des marchandises ni de detenteur des stocks.", "La commission n'est pas isolee dans un compte specifique. Elle est incluse dans le compte de vente du commissionnaire.", "Schema de comptabilisation chez le commissionnaire : Achat = Debit 601 Achats TTC / Credit 4 Tiers + 5 Tresorerie. Vente = Debit 4 Tiers + 5 Tresorerie / Credit 443 TVA facturee (sur commission) + 701 Ventes TTC.", "Chez le commettant : les enregistrements sont effectues des que le commettant est informe, lors de la reddition de comptes de l'intermediaire. A la vente, le commettant enregistre le montant de la vente nette de commission. La commission est enregistree au compte 6322 Commissions et courtage sur vente. Le commettant doit isoler les stocks dans le compte 387 Stocks en consignation ou en depots."],
+      "mots_cles": ["commissionnaire", "comptabilisation", "vente commission", "compte 601", "compte 701", "compte 6322", "compte 387", "reddition comptes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1153,
+      "titre": "Mandataire et mandants",
+      "texte": ["Le SYSCOHADA appelle mandataire celui qui agit au nom d'autrui. Le mandataire represente le mandant pour tous les actes accomplis avec les tiers en le rendant personnellement debiteur ou creancier envers ces tiers.", "En comptabilite, le mandataire enregistre les operations qu'elle effectue pour le compte de son mandant (achat, vente, debours) dans un compte de tiers ouvert au nom du mandant 4731 Mandants.", "Les operations d'achat sont debitees au compte 4731 par le credit du compte 4712 Crediteurs divers. Les operations de vente sont debitees par le compte 4711 Debiteurs divers par le credit du compte 4731 Mandants.", "Seule la remuneration du mandataire est inscrite dans les produits de l'exploitation aux comptes : 706 Services vendus s'il s'agit de l'activite principale ; 7072 Commissions et courtages s'il s'agit d'une activite annexe ; en contrepartie du compte 41 Client.", "Chez le mandant : les comptes de charges et de produits ont comme contrepartie les comptes de tiers ou de tresorerie. La commission est enregistree au debit du compte 6322 Commissions et courtages sur ventes par le credit du compte 40 Fournisseurs."],
+      "mots_cles": ["mandataire", "mandant", "compte 4731", "compte 4711", "compte 4712", "compte 706", "compte 7072", "compte 6322"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1160,
+      "titre": "Chapitre 13 — Operations en participation et GIE — Introduction",
+      "texte": ["La societe en participation et le Groupement d'Interet Economique (GIE) sont deux entites assez particulieres dans la mesure ou l'une est occulte donc non connue des tiers alors que l'autre est un prolongement d'activites de structures deja existantes. Ces particularites necessitent un traitement comptable special pour permettre a toutes les parties d'apprehender l'ensemble des operations dans leur comptabilite respective en tenant compte de la specificite des structures."],
+      "mots_cles": ["societe en participation", "GIE", "groupement interet economique", "comptabilite speciale"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1161,
+      "titre": "Societe en participation — Definition et aspects fiscaux",
+      "texte": ["Selon l'Acte uniforme relatif au droit des societes commerciales et du GIE (Art. 854), la societe en participation : n'est pas immatriculee au registre du commerce ; n'a pas de personnalite morale ; n'est pas soumise a publicite ; est dispensee de l'accomplissement des formalites de constitution ; peut etre prouvee par tous moyens.", "La volonte des associes peut etre materialisee dans un document tenant lieu de statuts ou peut etre enoncee verbalement. Les conditions de fonctionnement sont librement determinees entre les associes dans les statuts.", "Les tiers ne traitent pas directement avec la societe qui leur est en principe inconnue. Chaque associe contracte en son nom personnel et est seul engage a l'egard des tiers.", "Au plan fiscal, l'imposition des societes en participation pose probleme puisque ces societes n'ont pas de personnalite juridique. L'impot sur les societes est etabli au nom du gerant qui a procede aux declarations.", "Les benefices realises par les societes en participation ayant un objet industriel, commercial ou artisanal, relevent de droit de la categorie des BIC. Ces societes etant reputees fiscalement semi-transparentes, ne paient pas elles-memes l'impot ; ce sont les associes, consideres comme proprietaires immediats des benefices, qui sont soumis a l'impot sur le revenu au titre des BIC."],
+      "mots_cles": ["societe participation", "article 854", "pas de personnalite morale", "occulte", "BIC", "semi-transparente", "imposition associes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1162,
+      "titre": "Societe en participation — Methodes de comptabilisation",
+      "texte": ["La comptabilisation des operations de la societe en participation peut se faire sous plusieurs methodes : la methode du partage final (partage du benefice en fin de participation) ; la methode du partage immediat (charges et produits partages entre participants des que les operations sont enregistrees) ; la methode mixte (certaines operations en partie simple, d'autres en partie double).", "Selon le SYSCOHADA, les operations sont regroupees dans la comptabilite de l'un des coparticipants, seul responsable vis-a-vis des tiers, de la gestion des operations. Les comptes de la societe en participation peuvent etre tenus : soit dans une comptabilite autonome ; soit dans une comptabilite integree a celle du gerant."],
+      "mots_cles": ["methodes comptabilisation", "partage final", "partage immediat", "methode mixte", "comptabilite autonome", "comptabilite integree"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1163,
+      "titre": "Societe en participation — Comptabilite autonome",
+      "texte": ["Compte tenu de sa specificite de societe occulte, la societe en participation ne peut avoir ni comptes de tiers, ni comptes de tresorerie. L'autonomie de la comptabilite est limitee aux comptes de gestion et aux comptes de tiers permettant d'identifier les operations effectuees avec les associes.", "Les charges et les produits sont enregistres dans les comptes de gestion par nature (classes 6 et 7) avec comme contrepartie le compte 188 Comptes de liaison des societes en participation quel que soit le mode d'acquisition (a credit ou au comptant).", "Les comptes de tiers et de tresorerie sont transcrits dans la comptabilite de l'entite du gerant.", "Les biens mis a la disposition de la participation (indivision) ne doivent faire l'objet d'aucune comptabilisation dans les livres de celle-ci. Les amortissements sont pris en compte dans la comptabilite de la societe en participation sous forme de location facturee par l'associe proprietaire non gerant.", "Les fonds mis a la disposition de la participation par les associes sont constates par le compte 463 Associes operations faites en commun avec comme contrepartie le credit du compte 188."],
+      "mots_cles": ["comptabilite autonome", "compte 188", "comptes de liaison", "compte 463", "pas de tresorerie", "biens mis a disposition", "indivision"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1171,
+      "titre": "Societe en participation — Repartition du resultat",
+      "texte": ["La repartition du resultat presuppose que la comptabilite de la societe en participation est tenue par un gerant, seul connu des tiers. Cette methode est dite du partage final.", "Dans la comptabilite du gerant : la quote-part dans les resultats revenant aux associes est portee, en cas de benefice, au debit du compte 652 Quote-part de resultat sur operations faites en commun (transferts de benefice aux gerants). En cas de perte, elle est portee au credit du compte 752 Quote-part de resultat sur operations faites en commun (transferts de pertes aux non-gerants).", "Entites gerantes : le resultat de la participation est enregistre en produits s'il s'agit de la part de perte transferee aux coparticipants non gerants (compte 7521 Quote-part transferee de pertes). En charges s'il s'agit de la part de benefice transferee (compte 6521 Quote-part transferee de benefices).", "Entites associees non gerantes : le resultat est enregistre en charge d'exploitation s'il s'agit d'une quote-part de perte (compte 6525 Pertes imputees par transfert). En produits s'il s'agit d'une quote-part de benefice (compte 7525 Benefices attribues par transfert).", "Les deux cas precedents de charges (comptes 6525 et 6521) et de produits (comptes 7525 et 7521) devront etre distingues si l'entite est a la fois gerante et associee non gerante dans d'autres societes en participation."],
+      "mots_cles": ["repartition resultat", "partage final", "compte 652", "compte 752", "compte 6521", "compte 7521", "compte 6525", "compte 7525", "benefice", "perte"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1173,
+      "titre": "Societe en participation — Comptabilite integree",
+      "texte": ["La difference fondamentale avec la comptabilite autonome est la suppression du compte 188 Compte de liaison des societes en participation. Les operations relatives aux charges et aux produits sont inscrites dans les comptes de gestion par nature classes 6 et 7.", "Il est recommande de creer une numerotation specifique qui permet d'identifier les comptes de la societe en participation avec les autres operations du gerant. Le SYSCOHADA suggere l'utilisation des comptes : 06 Exploitation de la societe en participation pour les charges ; 07 Exploitation de la societe en participation pour les produits.", "Les comptes de charges et de produits ont comme contrepartie les comptes de tiers ou de tresorerie, selon la nature de l'operation. A l'exception du compte 188 remplace par un compte de tiers ou de tresorerie, toutes les operations sont enregistrees de la meme facon que dans une comptabilite integree dans celle du gerant."],
+      "mots_cles": ["comptabilite integree", "suppression compte 188", "comptes 06 07", "numerotation specifique", "tiers tresorerie"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1200,
+      "titre": "Groupement d'Interet Economique (GIE) — Definition",
+      "texte": ["Selon l'Acte uniforme relatif au droit des societes commerciales et du GIE, le GIE est celui qui a pour but exclusif de mettre en oeuvre pour une duree determinee, tous les moyens propres a faciliter ou a developper l'activite economique de ses membres, a ameliorer ou a accroitre les resultats de cette activite (Art. 869). Son activite doit se rattacher essentiellement a l'activite economique de ses membres et ne peut avoir qu'un caractere auxiliaire par rapport a celle-ci.", "Il en decoule que : l'etendue de l'objet du GIE est limitee ; chaque membre doit avoir une activite professionnelle ; le GIE ne doit pas permettre l'exercice direct d'une activite commerciale ; le GIE n'a pas vocation a realiser des profits mais a ameliorer le resultat de l'activite de ses membres ; le GIE n'est pas tenu d'avoir un capital.", "Au plan fiscal, le GIE n'est pas recherche en paiement de l'impot sur les resultats, sauf option pour l'impot sur les societes (irrevocable). Chaque membre est donc personnellement passible de l'impot (IRPP ou IS) pour la part des benefices correspondant a ses droits dans le groupement. Par contre, le GIE est soumis a la TVA."],
+      "mots_cles": ["GIE", "groupement interet economique", "article 869", "activite auxiliaire", "pas de capital", "membres", "transparence fiscale", "TVA"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1201,
+      "titre": "GIE — Comptabilisation des operations",
+      "texte": ["Le GIE, dote de la personnalite morale, doit tenir une comptabilite qui respecte les dispositifs de l'Acte uniforme relatif au droit comptable et a l'information financiere.", "L'objet du GIE est determinant pour choisir la comptabilite la plus adequate selon que : le GIE achete en son propre nom pour revendre a ses membres (les membres sont des clients, compte 41 Clients et 701 Ventes de marchandises) ; le GIE achete des produits de ses membres pour les revendre (les membres sont des fournisseurs, compte 40 Fournisseurs et 60 Achats) ; le GIE est un mandataire ou un commissionnaire (operations traitees comme au §1151) ; le GIE est un prestataire de services (les cotisations des membres sont enregistrees au compte 706 Services vendus par le debit du compte 41 Clients et comptes rattaches)."],
+      "mots_cles": ["GIE comptabilisation", "achat revente", "mandataire", "prestataire services", "cotisations membres", "compte 706"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 1202,
+      "titre": "GIE — Operations chez les membres",
+      "texte": ["Les membres du GIE interviennent soit sous forme de contributions financieres, soit sous forme de participation aux resultats.", "Contributions financieres : apport en capital (compte 266 Parts dans des GIE) ; avances de fonds a long terme (compte 277 Avances a des GIE) ou a court terme (compte 462 Associes compte courant). Tout apport de membres non evalue doit etre mentionne dans la Note annexe.", "Les cotisations versees par les membres relatives aux services rendus par le GIE doivent etre inscrites dans le compte 621 Sous-traitance generale par le biais du compte 40 Fournisseurs et comptes rattaches s'il s'agit d'une operation a credit.", "Affectation du resultat : la vocation du GIE n'est pas de realiser des benefices mais s'il en existe, la decision de l'assemblee generale est obligatoire. La quote-part du benefice de chaque membre doit etre inscrite dans le compte 772 Revenus de participations. En cas de deficit, l'assemblee a toujours le choix entre l'affecter en report a nouveau (compte 12) et/ou faire appel aux membres : si la perte est definitive, le versement d'un complement de cotisation peut etre decide (compte 621) ; si la perte n'est pas consideree comme definitive, des apports ou avances complementaires peuvent etre effectues."],
+      "mots_cles": ["GIE membres", "contributions financieres", "compte 266", "compte 277", "compte 462", "cotisations", "compte 621", "affectation resultat", "compte 772", "deficit"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
