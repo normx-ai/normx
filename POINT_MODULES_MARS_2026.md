@@ -84,7 +84,45 @@
 - Incoherences : **0**
 - Comptes obsoletes (6811, 6872, 865, 206) : confirmes supprimes dans le SYSCOHADA revise
 
-**Prochaine etape : deployer Normx Compta sur app.normx-ai.com, completer SYSCOHADA chapitres 1-5 et 9, backend absences, rapprochement bancaire**
+### Deploiement 28/03 — 5 sites en ligne
+
+| Site | URL | Status | CI/CD |
+|------|-----|--------|-------|
+| Landing | https://normx-ai.com | 200 | Via CGI-242 workflow |
+| Tax (CGI-242) | https://tax.normx-ai.com | 200 | GitHub Actions auto |
+| Legal | https://legal.normx-ai.com | 200 | GitHub Actions auto |
+| Compta (Normx) | https://app.normx-ai.com | 200 | GitHub Actions auto |
+| Keycloak SSO | https://auth.normx-ai.com | 302 | Docker manuel |
+
+### Realisations du 28/03
+
+| # | Realisation |
+|---|------------|
+| 1 | Base SYCEBNL 100% (7 JSON, 94 articles) |
+| 2 | TFT SYCEBNL methode directe |
+| 3 | Composant ResultatFiscal.tsx (IS/IBA CGI 2026) |
+| 4 | Persistance bulletins paie (API + DB) |
+| 5 | Landing page style Pennylane + formulaire contact + accents |
+| 6 | Police Inter harmonisee 3 projets |
+| 7 | Keycloak deploye (realm normx, 3 clients, 6 roles, brute force) |
+| 8 | CGI-242 migre vers Keycloak + role fiscaliste |
+| 9 | Legal migre vers Keycloak + role legal + auto-creation user |
+| 10 | 10 problemes securite Legal corriges + 131 any→0 |
+| 11 | Base SYSCOHADA ch. 7,8,10,12,13 (30%→65%) + audit plan comptable |
+| 12 | Rapprochement bancaire backend (PDF/CSV/Excel + matching auto) |
+| 13 | 3 repos GitHub unifies sous normx-ai + secrets + workflows CI/CD |
+| 14 | Cause racine DB Legal fixee (conflit DNS postgres) |
+| 15 | Normx deploye sur app.normx-ai.com |
+| 16 | Landing Tax refaite style Pennylane + Showcase 4 sections |
+| 17 | Dashboard Tax ameliore (actions 2x2, stats barre or/bleu, sans douanes/hydrocarbures) |
+| 18 | Registration Keycloak activee |
+
+**Prochaine session :**
+- Harmoniser style or/bleu (#D4A843/#1A3A5C) sur les 3 apps (Legal, Normx, Tax)
+- Completer SYSCOHADA chapitres 1-5 et 9
+- Backend absences
+- Screenshots pour remplacer les images Pennylane
+- Rapprochement bancaire frontend
 
 ---
 
