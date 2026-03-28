@@ -26,7 +26,11 @@
 | # | Tâche | Module | Effort | Impact |
 |---|-------|--------|--------|--------|
 | 8 | ~~Persistance des bulletins en base~~ | Paie | **FAIT 28/03** | Service saveBulletin/getBulletin/batch + routes POST/GET + contrainte UNIQUE + correction table |
-| 9 | Brancher le backend absences | Paie | Faible | UI présente, backend non connecté |
+| 9 | Brancher le backend absences | Paie | Faible | UI presente, backend non connecte |
+| — | ~~Keycloak SSO deploiement~~ | Infra | **FAIT 28/03** | auth.normx-ai.com + 3 clients + brute force |
+| — | ~~Migration auth CGI-242~~ | Tax | **FAIT 28/03** | JWT custom → Keycloak JWKS + role fiscaliste |
+| — | ~~Migration auth Legal~~ | Legal | **FAIT 28/03** | JWT custom → Keycloak JWKS + role legal |
+| — | ~~Securite Legal (10 points)~~ | Legal | **FAIT 28/03** | Rate limiting, CORS, PrismaClient, cleanup, 131 any→0 |
 | 10 | Intégration comptabilité (OD automatiques 42x, 43x, 44x) | Paie | Élevé | Pas de lien paie → écritures comptables |
 | 11 | Import batch salariés (Excel/CSV) | Paie | Moyen | Saisie manuelle uniquement |
 
@@ -61,6 +65,10 @@
 | **2c — DSF** | 6 | — | **DÉJÀ FAIT** — couverte par la liasse existante |
 | **2d — Notes 3F/3G** | 7 | — | **NON APPLICABLE** — Notes 3 complètes (3A-3E), pas de 3F/3G dans SYSCOHADA |
 | **3a — Persistance bulletins** | 8 | ~~Moyen~~ | **TERMINÉ** — saveBulletin, getBulletin, batch + routes API + UNIQUE constraint |
+| **4 — Keycloak SSO** | — | ~~Élevé~~ | **TERMINÉ** — auth.normx-ai.com deploye, 3 clients, 6 roles, brute force |
+| **4a — CGI-242 → Keycloak** | — | ~~Élevé~~ | **TERMINÉ** — backend JWKS + frontend redirect + role fiscaliste |
+| **4b — Legal → Keycloak** | — | ~~Élevé~~ | **TERMINÉ** — backend JWKS + frontend redirect + role legal + auto-creation user |
+| **4c — Securite Legal** | — | ~~Moyen~~ | **TERMINÉ** — 10 problemes corriges (rate limiting, CORS, PrismaClient, cleanup, 131 any→0) |
 | **2 — États financiers** | 5–7 | Moyen | Plus de composants vides visibles |
 | **3 — Paie** | 8–11 | Moyen à élevé | Module paie réellement exploitable |
 | **4 — Comptabilité** | 12–15 | Élevé | Module comptabilité complet |

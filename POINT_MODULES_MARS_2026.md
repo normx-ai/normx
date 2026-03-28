@@ -34,7 +34,29 @@
 **Build vérifié : zero erreur TypeScript, compilation OK.**
 **Projet poussé sur GitHub : https://github.com/normx-ai/normx (28/03/2026)**
 
-**Prochaine étape : compléter SYSCOHADA (~30%), backend absences, intégration paie→compta, ou rapprochement bancaire**
+### Avancement Infra & Securite
+
+| Tache | Statut | Detail |
+|-------|--------|--------|
+| Keycloak SSO | **FAIT 28/03** | auth.normx-ai.com, realm normx, 3 clients (tax, app, legal), 6 roles |
+| Brute force protection | **FAIT 28/03** | 5 tentatives → 15 min blocage |
+| CGI-242 → Keycloak | **FAIT 28/03** | Backend JWKS + frontend redirect + role fiscaliste |
+| Legal → Keycloak | **FAIT 28/03** | Backend JWKS + frontend redirect + role legal + auto-creation user |
+| Securite Legal (10 points) | **FAIT 28/03** | Rate limiting, CORS, PrismaClient singleton, cleanup fichiers, 131 any→0 |
+| Police Inter | **FAIT 28/03** | Harmonisee sur les 3 projets |
+| Landing normx-ai.com | **FAIT 28/03** | Style Pennylane, formulaire contact, 3 produits |
+| Repos GitHub unifies | **FAIT 28/03** | normx-ai/normx, normx-ai/tax, normx-ai/legal |
+
+### 4 sites en ligne
+
+| Site | URL | Status |
+|------|-----|--------|
+| Landing | https://normx-ai.com | 200 |
+| Tax (CGI-242) | https://tax.normx-ai.com | 200 |
+| Legal | https://legal.normx-ai.com | 200 |
+| Keycloak SSO | https://auth.normx-ai.com | 302 |
+
+**Prochaine etape : deployer Normx Compta sur app.normx-ai.com, completer SYSCOHADA (~30%), backend absences, rapprochement bancaire**
 
 ---
 
