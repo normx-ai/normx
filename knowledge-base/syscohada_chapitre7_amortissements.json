@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA - SYSCOHADA",
+    "referentiel": "SYSCOHADA",
+    "partie": "Chapitre 7 — Amortissements",
+    "pages_source": "630-650",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": 800,
+      "titre": "Definition de l'amortissement",
+      "texte": ["Selon l'article 45 de l'Acte uniforme, l'amortissement consiste pour l'entite a repartir le montant amortissable du bien sur sa duree d'utilite selon un plan predefini.", "Le montant amortissable du bien s'entend de la difference entre le cout d'entree d'un actif et sa valeur residuelle previsionnelle.", "La valeur residuelle previsionnelle d'un actif est le montant estime qu'une entite obtiendrait actuellement de la sortie de l'actif, apres deduction des couts de sortie estimes, si l'actif avait deja l'age et se trouvait deja dans l'etat prevu a la fin de sa duree d'utilite.", "La duree d'utilite est definie en fonction de l'utilite attendue de cet actif pour l'entite. Les facteurs pris en consideration : l'usage attendu (capacite ou production physique attendue), l'usure physique (cadences de production et maintenance), l'obsolescence technique ou commerciale, les limites juridiques ou similaires (expiration des contrats de location).", "Le plan d'amortissement est la traduction comptable de la repartition systematique du montant amortissable d'un actif selon le rythme de consommation des avantages economiques attendus en fonction de sa duree d'utilite.", "Toute modification significative dans l'environnement juridique, technique, economique de l'entite et dans les conditions d'utilisation du bien est susceptible d'entrainer la revision du plan d'amortissement en cours d'execution.", "Il ne faut pas confondre l'amortissement des immobilisations avec l'amortissement du capital ni avec l'amortissement d'un emprunt, lequel signifie remboursement.", "L'amortissement derogatoire ne correspond pas a une repartition sur la duree d'utilite de la valeur d'une immobilisation. Il s'agit d'une provision reglementee."],
+      "mots_cles": ["amortissement", "definition", "duree utilite", "montant amortissable", "valeur residuelle", "plan amortissement", "article 45", "AUDCIF"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 801,
+      "titre": "Regles de constitution des amortissements",
+      "texte": ["Le montant amortissable d'un bien est egal a la difference entre la valeur d'entree du bien et sa valeur residuelle probable a l'issue de la periode d'utilisation prevue. Dans la pratique, la valeur residuelle d'un bien est souvent non significative.", "La valeur d'origine (valeur d'entree) est constituee par : le prix d'achat hors taxes deductibles, augmente des frais accessoires d'achat hors taxes si la TVA est recuperable ; le cout de production, lorsque l'immobilisation a ete creee par l'entite ; la valeur actuelle, au jour du transfert, pour les biens acquis a titre gratuit ; la valeur figurant sur l'acte d'apport pour les biens recus dans le cadre d'un apport en nature.", "Dans les cas exceptionnels ou il n'est pas possible de determiner le cout d'acquisition d'un bien mis en service (faute de facture par exemple) a la cloture de l'exercice, l'evaluation s'effectue au cout d'acquisition ou au cout de production de biens equivalents constate ou estime a la date la plus proche de l'acquisition du bien.", "L'entree du patrimoine dans le bien est constatee par le biais du compte 4818 Fournisseurs d'investissements, factures non parvenues.", "Le montant amorti chaque annee est appele annuite d'amortissement. La somme des differentes annuites constitue les amortissements cumules.", "La valeur nette comptable correspond a la valeur d'origine diminuee des amortissements cumules.", "La Note annexe 3C mentionne la variation des amortissements du debut a la cloture de l'exercice."],
+      "mots_cles": ["montant amortissable", "valeur origine", "valeur entree", "annuite", "amortissements cumules", "valeur nette comptable", "Note 3C"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 803,
+      "titre": "Obligation de dotation aux amortissements",
+      "texte": ["Selon l'article 45 de l'Acte uniforme, la constatation de la dotation aux amortissements d'une immobilisation amortissable est obligatoire meme en cas d'absence ou d'insuffisance de benefice.", "L'administration fiscale dans chaque Etat partie admet dans les charges deductibles de l'entite les amortissements qui ont ete pratiques dans le respect des dispositions legales et reglementaires.", "Selon l'article 45 de l'Acte uniforme, la date de debut d'amortissement est la date a laquelle l'actif immobilise est en etat de fonctionner et au lieu d'utilisation prevu par l'entite.", "Les amortissements doivent, pour pouvoir etre valablement constitues, se rapporter a des immobilisations appartenant a l'entite ou acquises dans le cadre d'un contrat de location-acquisition et portees au Bilan de l'entite."],
+      "mots_cles": ["dotation obligatoire", "absence benefice", "date debut amortissement", "article 45", "location-acquisition"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 806,
+      "titre": "Nomenclature comptable des amortissements",
+      "texte": ["L'enregistrement des amortissements se fait par l'intermediaire des comptes suivants :", "Comptes de dotations et de reprises : 68 Dotations aux amortissements (681 exploitation : 6812 immob. incorporelles, 6813 immob. corporelles ; 852 amortissements HAO ; 798 Reprises d'amortissements ; 862 Reprises d'amortissements HAO).", "Comptes d'amortissements : 28 Amortissements (281 immob. incorporelles : 2811 frais de developpement, 2812 brevets licences, 2813 logiciels et sites, 2814 marques, 2815 fonds commercial, 2816 droit au bail, 2817 investissements creation, 2818 autres droits et valeurs incorporels ; 282 terrains : 2824 travaux mise en valeur ; 283 batiments : 2831-2838 ; 284 materiel : 2841 industriel, 2842 agricole, 2843 emballage, 2844 mobilier, 2845 transport, 2846 actifs biologiques, 2847 agencements, 2848 autres).", "La constitution de l'amortissement : debit du compte 68 ou 852 ; credit du compte 28 et de ses subdivisions.", "La reprise des amortissements en cas de revision du plan : debit du compte 28 ; credit du compte 798 ou 862."],
+      "mots_cles": ["nomenclature", "comptes 28", "comptes 68", "dotations", "reprises", "ecritures comptables", "amortissements"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 807,
+      "titre": "Methodes et taux d'amortissement",
+      "texte": ["Selon l'article 45 de l'Acte uniforme, differents modes d'amortissement peuvent etre utilises : le mode lineaire (charge constante sur la duree d'utilite) ; le mode degressif a taux decroissant (charge decroissante) ; le mode des unites de production ou unites d'oeuvre (nombre de pieces produites, heures de fonctionnement, kilometres parcourus) ; et tout autre mode mieux adapte.", "Un mode d'amortissement base sur les revenus generes par l'utilisation de l'actif est interdit pour les immobilisations corporelles.", "L'amortissement financier qui consiste a amortir une immobilisation au meme rythme que le cout de son financement n'est pas autorise.", "Le mode d'amortissement retenu est applique de maniere coherente d'une periode a l'autre, sauf en cas de changement du rythme attendu de consommation de l'actif."],
+      "mots_cles": ["methodes amortissement", "lineaire", "degressif", "unites production", "article 45", "modes interdits"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 809,
+      "titre": "Amortissement lineaire ou constant",
+      "texte": ["En principe, tous les biens amortissables peuvent faire l'objet d'un amortissement constant. Pour chaque bien, il est prevu une duree normale d'utilisation, compte tenu de l'usure et de la desuetude.", "L'annuite, qui est constante, est obtenue soit en divisant la valeur d'origine par la duree d'utilisation, soit en appliquant a cette valeur d'origine le taux d'amortissement. Le taux d'amortissement est egal au quotient suivant : 100/Duree.", "Les principaux taux generalement admis dans la pratique sont les suivants : Batiments usage commercial ou industriel 3 a 5% ; Batiments usage habitation 1 a 2% ; Materiel 10 a 15% ; Outillage 10 a 20% ; Petit materiel et outillage a main de faible valeur 100% ; Mobilier 10% ; Materiel de bureau 10 a 20% ; Agencements, amenagements, installations 5 a 10% ; Materiel de transport 25 a 33%.", "Un bien acquis en occasion ne peut avoir la meme duree de vie qu'un bien neuf. Les taux doivent etre revus a la hausse pour tenir compte de la duree de vie restant du bien.", "La premiere annuite est reduite prorata temporis, calculee en tenant compte du temps ecoule entre la date effective d'utilisation et la fin de l'exercice."],
+      "mots_cles": ["amortissement lineaire", "taux", "prorata temporis", "duree utilisation", "batiments", "materiel", "transport", "mobilier"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 812,
+      "titre": "Amortissement degressif comptable et fiscal",
+      "texte": ["A. Amortissement degressif comptable — Selon le SYSCOHADA le mode d'amortissement degressif consiste a appliquer un coefficient determine suivant une progression arithmetique de raison 1 sur le montant amortissable (valeur d'origine). Numerateur : pour la premiere annee = duree totale d'utilite N, chaque annee suivante diminue de 1. Denominateur : somme des numeros d'ordre des annees de la duree d'utilite (ex: pour 10 ans = 1+2+3+...+10 = 55). Le coefficient est determine pour une periode de 12 mois. Si le bien est acquis en cours d'exercice la regle du prorata doit etre respectee.", "B. Amortissement degressif fiscal — Regime de faveur facultatif. Le taux applicable est obtenu en multipliant le taux lineaire par un coefficient determine en fonction de la duree de vie comptable du bien. Coefficients : duree 5 ans = coefficient 2 (taux 40%) ; duree 6 ans = coefficient 2,5 (taux 41,65%) ; duree 7 ans = coefficient 2,5 (taux 35,725%) ; duree N ans = coefficient 2,5 (taux 100/N x 2,5). Lorsqu'un bien est acquis en cours d'annee, le premier amortissement est calcule prorata temporis, soit proportionnellement au nombre entier de mois a courir depuis le debut du mois d'acquisition jusqu'a la fin de l'exercice.", "A la cloture de chaque exercice, le total des amortissements degressifs pratiques depuis l'acquisition ne peut etre inferieur au montant cumule des amortissements lineaires. A defaut, l'entite perd definitivement le droit de deduire la fraction des amortissements ainsi differee."],
+      "mots_cles": ["degressif comptable", "degressif fiscal", "coefficient", "progression arithmetique", "prorata temporis", "taux degressif", "amortissement minimum"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 813,
+      "titre": "Amortissement accelere",
+      "texte": ["L'amortissement accelere est un regime de faveur fiscal. Conditions : d'etre utilises exclusivement pour les operations industrielles de fabrication, manutention, transport, peche, elevage et exploitation agricole ou remplir une fonction anti-pollution ; d'etre normalement utilisables pendant au moins cinq ans.", "Pour ces materiels et outillages, le montant de la premiere annee d'amortissement calcule d'apres leur duree d'utilisation normale pourra etre double, cette duree etant reduite d'une annee.", "Pour les biens pouvant beneficier de l'amortissement accelere, la regle du prorata temporis doit egalement s'appliquer. La premiere annuite est la somme de la premiere annuite reguliere reduite prorata temporis + une annuite complete d'amortissement."],
+      "mots_cles": ["amortissement accelere", "regime faveur", "double premiere annuite", "materiel industriel", "prorata temporis"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 814,
+      "titre": "Amortissements derogatoires",
+      "texte": ["Il s'agit d'amortissements ou de fraction d'amortissements ne correspondant pas a l'objet normal d'un amortissement et comptabilises en application de textes particuliers d'origine fiscale le plus souvent.", "Les amortissements derogatoires sont classes en provisions reglementees compte 15 et traites comme telles. Ils figurent en consequence parmi les capitaux propres et ne concourent pas a la determination de la valeur comptable nette du bien concerne.", "Le compte 151 Amortissements derogatoires est mouvemente par le debit du compte 851 Dotations aux provisions reglementees.", "A la cession ou a la mise au rebut du bien, l'amortissement derogatoire ne peut etre utilise pour la determination de la valeur comptable du bien. Il doit etre solde par le biais du compte 861 Reprises de provisions reglementees.", "L'amortissement degressif comptable est considere comme un amortissement economiquement justifie et non comme un amortissement derogatoire. Par contre, l'amortissement accelere qui consiste a doubler l'annuite de la premiere annee doit etre considere comme un amortissement derogatoire pour la partie de l'annuite qui decoule des textes fiscaux applicables."],
+      "mots_cles": ["amortissement derogatoire", "provision reglementee", "compte 15", "compte 151", "compte 851", "compte 861", "capitaux propres"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "814-1",
+      "titre": "Amortissement par unites d'oeuvre",
+      "texte": ["Il consiste a appliquer sur le montant amortissable d'origine un coefficient correspondant au nombre d'unites d'oeuvre consomme dans le courant de l'exercice par rapport au nombre total d'unites d'oeuvre a consommer sur la duree d'utilite du bien.", "Exemple : Un vehicule achete 60 000 000 FCFA, renouvele tous les 300 000 km, valeur argus 15 000 000 FCFA. Montant amortissable = 60 000 000 - 15 000 000 = 45 000 000 FCFA. Montant d'une unite d'oeuvre (km) = 45 000 000 / 300 000 = 150 F/km. Dotation N (17 000 km) = 2 550 000 ; N+1 (60 000 km) = 9 000 000 ; N+2 (25 000 km) = 3 750 000."],
+      "mots_cles": ["unites oeuvre", "kilometrage", "heures fonctionnement", "pieces produites", "valeur residuelle", "coefficient utilisation"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 815,
+      "titre": "Cas particuliers d'amortissements",
+      "texte": ["Le compte 852 Dotations aux amortissements HAO doit etre utilise si la depreciation est due a une destruction accidentelle ou a une restructuration de l'entite. Ce compte doit etre utilise pour constater la dotation des actifs immobilises ne participant pas au processus de production (exemples : terrains et batiments inutiles a l'objet economique, oeuvres d'art eventuellement).", "Amortissement des biens donnes en location : les entites qui donnent des biens en location doivent les amortir en fonction de la duree normale d'utilisation quelle que soit la duree de location.", "Amortissement des terrains d'exploitation (agricoles, forestiers, mise en valeur des terrains) : en principe, les terrains constituent des immobilisations non sujettes a depreciation. Par exception, les terrains d'exploitation sont consideres comme ayant une duree de vie limitee et peuvent alors faire l'objet d'amortissement. Les travaux d'amenagement des terrains ayant un effet permanent (irrigations, drainage, defrichement, nivellement du sol) sont consideres comme des immobilisations amortissables.", "Fonds commercial : en principe, le fonds commercial n'est pas amortissable car sa duree d'utilite est presumee non limitee. En revanche, le fonds commercial doit obligatoirement etre amorti lorsque la duree d'utilite est limitee et determinable. Dans les cas exceptionnels, lorsque la duree d'utilite ne peut etre estimee de maniere fiable, il est alors amorti sur une duree fixee a 10 ans.", "Pieces de rechange : les pieces de rechange principales et le stock de pieces de securite constituent des immobilisations corporelles si l'entite compte les utiliser sur plus d'un exercice. Pour les pieces de securite, l'amortissement doit demarrer des l'acquisition de l'immobilisation principale."],
+      "mots_cles": ["amortissements HAO", "biens en location", "terrains exploitation", "fonds commercial", "pieces de rechange", "compte 852"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "817-1",
+      "titre": "Reprises d'amortissements",
+      "texte": ["Selon l'article 45 de l'Acte uniforme, toute modification significative dans l'environnement juridique, technique, economique de l'entite et dans les conditions d'utilisation du bien est susceptible d'entrainer la revision du plan d'amortissement en cours d'execution.", "La modification est assimilee a un changement dans les estimations comptables et doit faire l'objet d'une information dans les Notes annexes.", "Selon le SYSCOHADA, dans le cas exceptionnel d'une revision retroactive du plan d'amortissement initial, la reduction du cumul des amortissements est operee par le credit du compte 798 Reprises d'amortissements, s'il s'agit d'une erreur d'appreciation sur la duree d'utilite les dotations doivent etre corrigees par le compte 12 Report a nouveau."],
+      "mots_cles": ["reprise amortissement", "revision plan", "compte 798", "compte 12", "changement estimation", "notes annexes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 819,
+      "titre": "Aspect fiscal des amortissements",
+      "texte": ["Sur le plan fiscal, la principale difficulte concernant les amortissements est relative aux amortissements differes. Chaque Etat partie dispose d'une legislation fiscale specifique.", "Les entites sont soumises a l'obligation de comptabiliser un amortissement minimum pour chaque bien amortissable. Les amortissements cumules a la fin de chaque exercice doivent etre au moins egaux aux amortissements calcules lineairement.", "En cas d'amortissement degressif ou d'amortissement accelere, si l'entite a pratique sur un bien des amortissements superieurs a ceux calcules lineairement, elle a la faculte sur le plan fiscal de ne pas deduire les amortissements normaux tant qu'elle conserve son avance sur les amortissements lineaires.", "On distingue trois types d'amortissements differes : les amortissements irregulierement differes (§820 — perte definitive du droit de deduire), les amortissements regulierement differes (§821 — conservent le droit si cumul >= lineaire), et les amortissements reputes differes en periode deficitaire (§822)."],
+      "mots_cles": ["amortissement fiscal", "amortissement minimum", "amortissements differes", "irregulierement differes", "regulierement differes", "deductibilite", "CGI"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

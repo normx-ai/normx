@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "document": "Le Praticien Comptable OHADA - SYSCOHADA",
+    "referentiel": "SYSCOHADA",
+    "partie": "Chapitre 8 — Provisions et Depreciations",
+    "pages_source": "653-672",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": 850,
+      "titre": "Definition des provisions",
+      "texte": ["Une provision est un passif externe dont l'echeance ou le montant est incertain. Un passif externe est une obligation actuelle de l'entite de transferer une ressource economique a la suite d'evenements passes.", "Selon le Systeme Comptable OHADA, le terme provision designe les provisions pour risques et charges et de facon derogatoire, les provisions reglementees. Les provisions reglementees ne repondent pas a la definition comptable d'une provision car elles ne correspondent ni a un risque, ni a une charge future. Elles sont constituees uniquement en application de dispositions fiscales.", "La depreciation de la valeur d'actif des immobilisations amortissables est consecutive a une perte de valeur voir §852-1."],
+      "mots_cles": ["provision", "definition", "passif externe", "obligation", "incertitude", "provisions reglementees"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 851,
+      "titre": "Obligation de constitution des provisions et depreciations",
+      "texte": ["La constitution d'une provision ou d'une depreciation n'est pas une simple faculte offerte aux entites. Selon l'article 49 de l'Acte uniforme, il doit etre procede, dans l'exercice, a toutes depreciations et provisions necessaires pour couvrir les pertes de valeurs, les risques et les charges probables, meme en cas d'absence ou d'insuffisance de benefice."],
+      "mots_cles": ["obligation", "article 49", "absence benefice", "provision obligatoire"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "852-1",
+      "titre": "Depreciations d'actif",
+      "texte": ["Selon l'article 46 de l'Acte uniforme, la depreciation permet de constater la perte de valeur de l'actif.", "A la cloture de chaque exercice, une entite doit apprecier s'il existe un quelconque indice qu'un actif a subi une perte de valeur. S'il existe un tel indice, l'entite doit estimer la valeur actuelle de l'actif concerne et la comparer avec la valeur nette comptable.", "L'actif doit etre deprecie lorsque la valeur nette comptable est superieure a la valeur actuelle.", "Sources d'informations externes : durant l'exercice, la valeur de marche d'un actif a diminue de facon plus importante que le seul effet attendu du passage du temps ; d'importants changements ayant un effet negatif sur l'entite sont survenus dans l'environnement technologique, economique ou juridique ; les taux d'interet du marche ont augmente ; la valeur comptable de l'actif net de l'entite est superieure a sa capitalisation boursiere.", "Sources d'informations internes : il existe un indice d'obsolescence ou de degradation physique d'un actif ; des changements importants ayant un effet negatif sur l'entite sont survenus ou susceptibles de survenir (mise hors service, plans d'abandon ou de restructuration) ; un element probant du systeme d'information interne montre que la performance economique d'un actif est ou sera moins bonne que celle attendue."],
+      "mots_cles": ["depreciation actif", "perte de valeur", "valeur actuelle", "valeur nette comptable", "indices depreciation", "article 46", "sources externes", "sources internes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "852-2",
+      "titre": "Provisions pour risques et charges",
+      "texte": ["Une provision pour risques et charges est un passif dont l'echeance ou le montant ne sont pas fixes de facon precise. Le critere de distinction entre les dettes et les provisions porte sur la connaissance precise ou non du montant ou de l'echeance de la sortie de ressources necessaires a l'extinction de l'obligation.", "Les trois conditions cumulatives pour constater une provision : une obligation actuelle resultant d'un evenement passe (fait generateur juridique ou implicite) ; une sortie probable de ressources ; le montant peut etre estime de maniere fiable. Si ces trois conditions ne sont pas reunies, aucune provision ne doit etre comptabilisee.", "Le passif eventuel est soit une obligation potentielle dont l'existence ne sera confirmee que par des evenements futurs incertains, soit une obligation actuelle non comptabilisee car il n'est pas probable qu'une sortie de ressources soit necessaire ou le montant ne peut etre evalue avec fiabilite. Le passif eventuel ne doit pas etre comptabilise mais une information doit etre donnee dans les Notes annexes.", "Les provisions pour risques et charges concernent : la provision pour litige (risques pecuniaires lies a un proces), la provision pour garanties donnees au client (garanties contractuelles ou implicites), la provision pour pertes sur marche a achevement futur, la provision pour pertes de change, la provision pour impots, la provision pour pensions et obligations similaires (retraite, indemnites de depart), la provision pour restructuration (programme planifie par la direction), la provision pour amendes et penalites, la provision pour propre assureur, la provision pour demantelement et remise en etat, la provision pour droit a reduction ou avantage en nature, les provisions pour contrat deficitaire, la caution donnee.", "Les provisions pour risques et charges sont inscrites au passif du Bilan : dans le compte 19 si la survenance de l'evenement est estimee a plus d'un an ; dans les comptes 499 ou 599 si la charge represente une dette probable a moins d'un an."],
+      "mots_cles": ["provisions risques charges", "obligation actuelle", "fait generateur", "sortie probable", "passif eventuel", "litige", "garanties", "restructuration", "pensions", "demantelement", "compte 19", "compte 499"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "852-3",
+      "titre": "Provisions reglementees et fonds assimiles",
+      "texte": ["Ce sont des provisions a caractere purement fiscal ou reglementaire, comptabilisees non pas en application de principes comptables, mais suivant des dispositions legales ou reglementaires propres a chaque Etat partie de l'OHADA.", "Peuvent etre classees dans la categorie des provisions reglementees : la provision speciale de reevaluation (voir §2083), la plus-value de cession a reinvestir (voir §738), la provision pour la reconstitution des gisements de substances minerales (voir §869), la provision constituee par les entites de navigation maritime agreees (voir §870), les amortissements derogatoires (voir §814).", "Du fait de leur caractere de reserves non liberees d'impots sur lesquelles pese une charge latente ou differee d'impots qui n'est pas comptabilisee, les provisions reglementees sont inscrites au passif du Bilan parmi les capitaux propres compte 15.", "Par dispositions legislatives ou reglementaires, les pouvoirs publics soumettent les entites a une obligation de prelevement sur leurs benefices pour doter un fonds de reserve appele fonds reglemente."],
+      "mots_cles": ["provisions reglementees", "fonds assimiles", "provision reevaluation", "plus-value cession", "gisements minerales", "navigation maritime", "amortissements derogatoires", "compte 15", "capitaux propres"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 853,
+      "titre": "Depreciations — Definition et regles de constitution",
+      "texte": ["A la cloture de l'exercice, il est procede a un inventaire de l'ensemble des biens de l'entite. L'evaluation qui en resulte conduit quelquefois a constater une perte de valeur de certains elements de l'actif. La depreciation peut concerner des biens physiques (immobilisations et stocks) et des valeurs (creances, titres, etc.).", "La depreciation des immobilisations concerne des immobilisations non amortissables tels que les terrains et les fonds de commerce. Elle peut egalement constater des pertes de valeur subies exceptionnellement par des immobilisations amortissables selon l'article 46 de l'Acte uniforme. Apres la comptabilisation d'une perte de valeur, l'amortissement de l'actif doit etre calcule sur la base de la valeur comptable brute diminuee de la valeur residuelle previsionnelle, des amortissements cumules et de la depreciation.", "Les titres de participation sont estimes a la cloture de l'exercice au cours moyen du dernier mois pour les titres cotes, a leur valeur probable de negociation pour les titres non cotes. Alors que les plus-values ne sont pas enregistrees en comptabilite, les moins-values sont constatees sous forme de depreciations.", "La depreciation des stocks constate la moins-value resultant de l'inventaire. Pour les marchandises : valeur probable de realisation ; pour les matieres et fournitures : prix d'achat majore des frais accessoires d'achat au cours du jour de l'inventaire.", "La depreciation des creances constate les moins-values justifiees par la survenance de certains evenements permettant de douter de la solvabilite des debiteurs. La depreciation doit etre individualisee et constituee par creancier. Elle est calculee sur le montant hors taxes.", "La depreciation des comptes de tresorerie concerne pour l'essentiel les titres de placement."],
+      "mots_cles": ["depreciations", "perte de valeur", "immobilisations", "terrains", "fonds commercial", "titres participation", "stocks", "creances", "tresorerie", "inventaire"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 859,
+      "titre": "Subdivision des comptes de depreciations",
+      "texte": ["Le SYSCOHADA donne la subdivision ci-apres des differents comptes de depreciations :", "29 Depreciations des immobilisations : 291 immob. incorporelles (2911-2919), 292 terrains (2921-2929), 293 batiments (2931-2939), 294 materiel, mobilier et actif biologique (2941-2949), 295 avances et acomptes verses sur immob. (2951-2952), 296 titres de participation (2961-2968), 297 autres immob. financieres (2971-2978).", "39 Depreciations des stocks : 391 marchandises, 392 matieres premieres et fournitures liees, 393 autres approvisionnements, 394 productions en cours, 395 services en cours, 396 produits finis, 397 produits intermediaires et residuels, 398 stocks en cours de route.", "49 Depreciations et provisions pour risques a court terme (tiers) : 490 fournisseurs, 491 clients (4911 creances litigieuses, 4912 creances douteuses), 492 personnel, 493 organismes sociaux, 494 Etats et collectivites publiques, 495 organismes internationaux, 496 associes et groupe (4962/4963/4966), 497 debiteurs divers, 498 creances HAO (4985/4986/4988), 499 provisions pour risques a court terme (4991 exploitation, 4998 HAO).", "59 Depreciations et provisions pour risques a court terme (tresorerie) : 590 titres de placement, 591 valeurs a encaisser, 592 banques, 593 etablissements financiers, 594 instruments de tresorerie, 599 provisions pour risque a court terme a caractere financier."],
+      "mots_cles": ["comptes depreciations", "29", "39", "49", "59", "nomenclature", "subdivision comptes"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": 860,
+      "titre": "Comptabilisation des depreciations",
+      "texte": ["L'enregistrement en comptabilite de la depreciation dans les comptes de charges est different selon la nature de l'actif concerne.", "Les depreciations relatives a l'actif circulant (stocks et tiers) et a la tresorerie sont considerees par le SYSCOHADA comme une charge decaissable a court terme et ne sont donc pas incluses dans les dotations. Le concept de dotation courte qui n'entre pas dans la capacite d'autofinancement est employe. Comptes utilises : 659 Charges pour depreciations d'exploitation (contrepartie comptes 39 et 49) ; 679 Charges pour depreciations financieres (contrepartie compte 59).", "Les depreciations des comptes de l'actif immobilise (29) sont considerees comme une dotation de nature classique qui entre dans la capacite d'autofinancement. Le compte de charge cree a cet effet est le compte 69 Dotations aux depreciations.", "S'il s'agit d'une depreciation due a un evenement extraordinaire ou a la restructuration de l'entite : 839 Charges pour depreciations et provisions pour risques a court terme HAO (pour stocks, tiers et tresorerie) ; 853 Dotations aux depreciations HAO (pour actif immobilise).", "Le reajustement et l'annulation de la depreciation se fait a travers les comptes : 759 Reprises (actif circulant exploitation), 779 Reprises (tresorerie financiere), 79 Reprises de depreciations (actif immobilise), 849 Reprises HAO (actif circulant et tresorerie), 863 Reprises de depreciations HAO (actif immobilise)."],
+      "mots_cles": ["comptabilisation depreciations", "charges pour depreciations", "dotations", "reprises", "actif circulant", "actif immobilise", "HAO", "capacite autofinancement", "comptes 659", "comptes 679", "comptes 69", "comptes 759", "comptes 779"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
