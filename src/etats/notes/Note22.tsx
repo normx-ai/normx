@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -17,26 +17,15 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Achats dans la Région', prefixes: ['6011'], group: 'marchandises' },
-  { label: 'Achats hors Région', prefixes: ['6012'], group: 'marchandises' },
-  { label: 'Achats groupe', prefixes: ['6013'], group: 'marchandises' },
-  { label: 'Achats dans la Région', prefixes: ['6021'], group: 'matieres' },
-  { label: 'Achats hors Région', prefixes: ['6022'], group: 'matieres' },
-  { label: 'Achats groupe', prefixes: ['6023'], group: 'matieres' },
-  { label: 'Matières consommables', prefixes: ['6041'], group: 'autres' },
-  { label: 'Matières combustibles', prefixes: ['6042'], group: 'autres' },
-  { label: 'Produits d\'entretien', prefixes: ['6043'], group: 'autres' },
-  { label: 'Fournitures d\'atelier, d\'usine et de magasin', prefixes: ['6044'], group: 'autres' },
-  { label: 'Eau', prefixes: ['6051'], group: 'autres' },
-  { label: 'Electricité', prefixes: ['6052'], group: 'autres' },
-  { label: 'Autres énergies', prefixes: ['6053', '6058'], group: 'autres' },
-  { label: 'Fourniture d\'entretien', prefixes: ['6061'], group: 'autres' },
-  { label: 'Fourniture de bureau', prefixes: ['6064'], group: 'autres' },
-  { label: 'Petit matériel et outillages', prefixes: ['6063'], group: 'autres' },
-  { label: 'Achats études, prestations de services, de travaux matériels et équipements', prefixes: ['608'], group: 'autres' },
-  { label: 'Achats d\'emballages', prefixes: ['609'], group: 'autres' },
-  { label: 'Frais sur achats', prefixes: ['6015', '6025'], group: 'autres' },
-  { label: 'Remises rabais, remises et ristournes', prefixes: ['6019', '6029'], group: 'autres' },
+  { label: 'Achats de marchandises', prefixes: ['601'], group: 'marchandises' },
+  { label: 'Achats de matières premières et fournitures liées', prefixes: ['602'], group: 'matieres' },
+  { label: 'Variations de stocks', prefixes: ['603'], group: 'autres' },
+  { label: 'Achats stockés de matières et fournitures consommables', prefixes: ['604'], group: 'autres' },
+  { label: 'Achats d\'eau, électricité et autres énergies', prefixes: ['605'], group: 'autres' },
+  { label: 'Achats de petit matériel et fournitures', prefixes: ['606'], group: 'autres' },
+  { label: 'Achats de marchandises et matières en cours de route', prefixes: ['607'], group: 'autres' },
+  { label: 'Achats d\'études et prestations de services', prefixes: ['608'], group: 'autres' },
+  { label: 'Rabais, remises et ristournes obtenus', prefixes: ['609'], group: 'autres' },
 ];
 
 function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22Props): React.JSX.Element {
@@ -48,6 +37,7 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
@@ -125,7 +115,7 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const fmtDateShort = (d: Date | null): string => { if (!d) return ''; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
-  const fmtM = (val: number): string => { if (val === 0) return ''; return Math.round(val).toLocaleString('fr-FR'); };
+  const fmtM = (val: number): string => { if (val === 0) return '0'; return Math.round(val).toLocaleString('fr-FR'); };
 
   // Charges = solde débiteur
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
@@ -188,6 +178,7 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
     const idx = RUBRIQUES.indexOf(r);
     const vals = computeRow(r, idx);
     const key = rowKey(r, idx);
+    if (hideEmpty && vals.anneeN === 0 && vals.anneeN1 === 0) return null;
     return (
       <tr key={key}>
         <td style={tdStyle}>{r.label}</td>
@@ -222,6 +213,7 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
             <button className="etat-action-btn" onClick={handleSave} disabled={saving} style={{ background: '#059669', color: '#fff', border: 'none' }}><LuSave size={16} /> {saving ? 'Sauvegarde...' : 'Sauvegarder'}</button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 

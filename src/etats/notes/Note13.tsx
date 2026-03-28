@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2  } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -104,11 +104,12 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
   const fmtDateShort = (d: Date | null): string => { if (!d) return ''; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
 
   const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');
+  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   // Totaux
-  const totalNombre = lignes.reduce((s, l) => s + parseN(l.nombre), 0) + parseN(capitalNonAppeleNombre);
-  const totalMontant = lignes.reduce((s, l) => s + parseN(l.montantTotal), 0) + parseN(capitalNonAppeleMontant);
+  const vn = parseN(valeurNominale);
+  const totalNombre = lignes.reduce((s, l) => s + parseN(l.nombre), 0);
+  const totalMontant = totalNombre * vn - parseN(capitalNonAppeleMontant);
   const totalCessions = lignes.reduce((s, l) => s + parseN(l.cessions), 0);
 
   const updateLigne = (idx: number, field: keyof LigneActionnaire, value: string) => {
@@ -138,7 +139,7 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
 
   // Styles
   const thStyle: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 11, fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5' };
-  const tdStyle: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 11, verticalAlign: 'middle' };
+  const tdStyle: React.CSSProperties = { border: '0.5px solid #000', padding: '8px 10px', fontSize: 11, verticalAlign: 'middle' };
   const tdRight: React.CSSProperties = { ...tdStyle, textAlign: 'right', fontVariantNumeric: 'tabular-nums' };
   const tdBold: React.CSSProperties = { ...tdStyle, fontWeight: 700 };
   const tdBoldRight: React.CSSProperties = { ...tdRight, fontWeight: 700 };
@@ -212,7 +213,7 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
         </h3>
 
         {/* Valeur nominale */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 12, marginBottom: 8 }}>
           <span style={{ fontSize: 12, fontWeight: 700 }}>Valeur nominale des actions ou des parts :</span>
           {renderInput(valeurNominale, setValeurNominale, { ...inputSt, width: 150 })}
         </div>
@@ -225,8 +226,8 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
               <th style={thStyle}>Nationalité</th>
               <th style={thStyle}>Nature des actions ou parts (Ordinaires ou préférences)</th>
               <th style={thStyle}>Nombre</th>
-              <th style={thStyle}>Montant total</th>
-              <th style={thStyle}>Cessions enregistrements au cours d'exercice</th>
+              <th style={{ ...thStyle, width: '16%' }}>Montant total</th>
+              <th style={{ ...thStyle, width: '11%' }}>Cessions enregistrements au cours d'exercice</th>
             </tr>
           </thead>
           <tbody>
@@ -241,9 +242,9 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
                   ) : l.nom}
                 </td>
                 <td style={tdStyle}>{renderInput(l.nationalite, v => updateLigne(i, 'nationalite', v), inputLeft)}</td>
-                <td style={tdStyle}>{renderInput(l.nature, v => updateLigne(i, 'nature', v), inputLeft)}</td>
+                <td style={{ ...tdStyle, textAlign: 'center' }}>{renderInput(l.nature, v => updateLigne(i, 'nature', v), { ...inputLeft, textAlign: 'center' })}</td>
                 <td style={tdRight}>{renderInput(l.nombre, v => updateLigne(i, 'nombre', v))}</td>
-                <td style={tdRight}>{renderInput(l.montantTotal, v => updateLigne(i, 'montantTotal', v))}</td>
+                <td style={{ ...tdRight, background: '#fafafa' }}>{(() => { const mt = parseN(l.nombre) * parseN(valeurNominale); return mt !== 0 ? fmtM(mt) : ''; })()}</td>
                 <td style={tdRight}>{renderInput(l.cessions, v => updateLigne(i, 'cessions', v))}</td>
               </tr>
             ))}
@@ -261,7 +262,7 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
             {/* Capital non appelé */}
             <tr>
               <td style={tdBold} colSpan={3}>Apporteurs, capital non appelé</td>
-              <td style={tdRight}>{renderInput(capitalNonAppeleNombre, setCapitalNonAppeleNombre)}</td>
+              <td style={tdRight}></td>
               <td style={tdRight}>{renderInput(capitalNonAppeleMontant, setCapitalNonAppeleMontant)}</td>
               <td style={tdRight}></td>
             </tr>

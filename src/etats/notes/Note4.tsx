@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -53,6 +53,7 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   // Balance N et N-1
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
@@ -210,7 +211,7 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
   };
 
   const fmtM = (val: number): string => {
-    if (val === 0) return '';
+    if (val === 0) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 
@@ -274,13 +275,13 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
     const wasEditing = editing;
     if (wasEditing) setEditing(false);
     await new Promise(r => setTimeout(r, 100));
-    const pdf = new jsPDF('landscape', 'mm', 'a4');
+    const pdf = new jsPDF('p', 'mm', 'a4');
     if (!pageRef.current) return pdf;
     const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
     const imgData = canvas.toDataURL('image/png');
-    const pdfWidth = 287;
+    const pdfWidth = 210;
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 5, 5, pdfWidth, Math.min(pdfHeight, 200));
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
     if (wasEditing) setEditing(true);
     return pdf;
   };
@@ -366,7 +367,9 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
     );
   };
 
-  const renderImmoRow = (r: { label: string; vals: ReturnType<typeof computeRow> }) => (
+  const renderImmoRow = (r: { label: string; vals: ReturnType<typeof computeRow> }) => {
+    if (hideEmpty && r.vals.anneeN === 0 && r.vals.anneeN1 === 0) return null;
+    return (
     <tr key={r.label}>
       <td style={tdStyle}>{r.label}</td>
       <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
@@ -376,7 +379,8 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
       <td style={tdRight}>{renderCreanceInput(r.label, 'creances1a2ans')}</td>
       <td style={tdRight}>{renderCreanceInput(r.label, 'creancesPlus2ans')}</td>
     </tr>
-  );
+    );
+  };
 
   const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number; creances1an: number; creances1a2ans: number; creancesPlus2ans: number }, variation: number) => (
     <tr>
@@ -410,6 +414,7 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
             </button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 
@@ -430,7 +435,7 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
       )}
 
       <div ref={pageRef} style={{
-        width: '297mm', minHeight: '210mm', background: '#fff',
+        width: '210mm', minHeight: '297mm', background: '#fff',
         margin: '0 auto 20px', padding: '8mm 10mm',
         boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
         fontFamily: "'Outfit', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',

@@ -4,7 +4,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import './FicheIdentification.css';
-import type { Exercice, EtatBaseProps } from '../types';
+import type { Exercice, EtatBaseProps, BalanceLigne } from '../types';
 
 interface FicheR4Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -73,7 +73,7 @@ const NOTE_LABELS: Record<string, string> = {
   note_35: 'NOTE 35', note_36: 'NOTE 36',
 };
 
-function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametres }: FicheR4Props): React.JSX.Element {
+function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToParametres }: FicheR4Props): React.JSX.Element {
   const [exercices, setExercices] = useState<Exercice[]>([]);
   const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -84,7 +84,60 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametre
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
+  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
+
   const pageRef = useRef<HTMLDivElement>(null);
+
+  // Mapping note → préfixes de comptes pour détection auto
+  const NOTE_PREFIXES: Record<string, string[]> = {
+    note_3a: ['21', '22', '23', '24', '25'],
+    note_3b: ['22'],
+    note_3c: ['28'],
+    note_4: ['26', '27'],
+    note_5: ['48', '481', '482', '483', '484', '485'],
+    note_6: ['31', '32', '33', '34', '35', '36', '37', '38', '39'],
+    note_7: ['41'],
+    note_8: ['42', '43', '44', '45', '46', '471', '472', '473', '474', '476'],
+    note_9: ['50'],
+    note_10: ['51'],
+    note_11: ['52', '53', '54', '55', '56', '57', '58'],
+    note_12: ['478', '479'],
+    note_13: ['10'],
+    note_14: ['11'],
+    note_15a: ['14', '15'],
+    note_15b: ['12', '13'],
+    note_16a: ['16', '17'],
+    note_16b: ['19'],
+    note_16c: ['19'],
+    note_17: ['40'],
+    note_18: ['42', '43', '44'],
+    note_19: ['47', '48', '49'],
+    note_20: ['52', '56'],
+    note_21: ['70', '71', '72', '73', '74', '75', '76', '77', '78'],
+    note_22: ['60'],
+    note_23: ['61'],
+    note_24: ['62', '63'],
+    note_25: ['64'],
+    note_26: ['65', '66', '67', '68'],
+    note_27a: ['66'],
+    note_27b: ['66'],
+    note_28: ['29', '39', '49', '59'],
+    note_29: ['77', '67'],
+    note_30: ['82', '83', '84', '85', '86'],
+    note_31: ['12', '13'],
+    note_32: ['70', '71', '72', '73'],
+    note_33: ['60'],
+  };
+
+  const hasDataForNote = (noteId: string): boolean => {
+    const prefixes = NOTE_PREFIXES[noteId];
+    if (!prefixes) return false;
+    return lignesN.some(l => {
+      const num = (l.numero_compte || '').trim();
+      return prefixes.some(p => num.startsWith(p)) &&
+        ((parseFloat(String(l.solde_debiteur)) || 0) !== 0 || (parseFloat(String(l.solde_crediteur)) || 0) !== 0);
+    });
+  };
 
   // Init default states
   useEffect(() => {
@@ -135,6 +188,39 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametre
       })
       .catch(() => {});
   }, [entiteId]);
+
+  // Charger la balance pour détection auto A/NA
+  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
+  useEffect(() => {
+    if (!entiteId || !selectedExercice) return;
+    const load = async () => {
+      try {
+        if (balanceSource === 'ecritures') {
+          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          setLignesN((await res.json()).lignes || []);
+        } else {
+          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          setLignesN((await res.json()).lignes || []);
+        }
+      } catch { setLignesN([]); }
+    };
+    load();
+  }, [entiteId, selectedExercice, balanceSource]);
+
+  // Mise à jour auto des notes A/NA en fonction de la balance
+  useEffect(() => {
+    if (lignesN.length === 0) return;
+    setNoteStates(prev => {
+      const updated = { ...prev };
+      NOTES.forEach(n => {
+        // Notes sans mapping comptes : garder l'état actuel
+        if (!NOTE_PREFIXES[n.id]) return;
+        const has = hasDataForNote(n.id);
+        updated[n.id] = has ? 'A' : 'NA';
+      });
+      return updated;
+    });
+  }, [lignesN]);
 
   const toggleNote = (id: string) => {
     setNoteStates(prev => ({

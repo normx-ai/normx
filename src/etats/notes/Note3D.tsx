@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -58,6 +58,7 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
   const [commentaire, setCommentaire] = useState(DEFAULT_COMMENTAIRE);
   const [cessions, setCessions] = useState<Record<string, number>>({});
 
@@ -153,7 +154,7 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
   };
 
   const fmtM = (val: number): string => {
-    if (val === 0) return '';
+    if (val === 0) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 
@@ -305,6 +306,7 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
             </button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 
@@ -428,6 +430,7 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
 
               // Ligne de détail — toutes les colonnes saisies manuellement
               const vals = computeRow(r);
+              if (hideEmpty && vals.a === 0 && vals.b === 0 && vals.c === 0 && vals.d === 0 && vals.e === 0) return null;
               return (
                 <tr key={i}>
                   <td style={tdStyle}>{r.label}</td>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -30,6 +30,7 @@ function Note30({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note30P
   const [exercices, setExercices] = useState<Exercice[]>([]); const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({}); const [editing, setEditing] = useState(false); const [saving, setSaving] = useState(false); const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]); const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
   const [adjustments, setAdjustments] = useState<Record<string, Record<string, number>>>({});
   const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;
@@ -71,9 +72,11 @@ function Note30({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note30P
   const inputSt: React.CSSProperties = { width: '100%', padding: '5px 8px', fontSize: 12, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0', textAlign: 'right', boxSizing: 'border-box' };
   const textareaStyle: React.CSSProperties = { width: '100%', minHeight: 30, padding: '8px 10px', fontSize: 12, lineHeight: '1.6', border: '1px solid #D4A843', borderRadius: 3, background: '#fffbf0', fontFamily: 'inherit', boxSizing: 'border-box', resize: 'vertical' };
 
-  const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => (
+  const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => {
+    if (hideEmpty && r.vals.anneeN === 0 && r.vals.anneeN1 === 0) return null;
+    return (
     <tr key={r.label}><td style={tdStyle}>{r.label}</td><td style={tdRight}>{renderAdj(r.label, 'anneeN', r.vals.anneeN)}</td><td style={tdRight}>{renderAdj(r.label, 'anneeN1', r.vals.anneeN1)}</td><td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variation !== 0 ? r.vals.variation.toFixed(1) + ' %' : ''}</td></tr>
-  );
+  ); };
   const renderTotalRow = (label: string, t: { anneeN: number; anneeN1: number }) => (
     <tr key={label}><td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN)}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN1)}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{calcVar(t) !== 0 ? calcVar(t).toFixed(1) + ' %' : ''}</td></tr>
   );
@@ -87,6 +90,7 @@ function Note30({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note30P
           <select className="etat-exercice-select" value={selectedExercice?.id || ''} onChange={e => { const ex = exercices.find(x => x.id === Number(e.target.value)); if (ex) setSelectedExercice(ex); }}>{exercices.map(ex => (<option key={ex.id} value={ex.id}>{ex.annee}</option>))}</select>
           {!editing ? (<button className="etat-action-btn" onClick={() => setEditing(true)} style={{ background: '#D4A843', color: '#fff', border: 'none' }}><LuPenLine size={16} /> Modifier</button>) : (<button className="etat-action-btn" onClick={handleSave} disabled={saving} style={{ background: '#059669', color: '#fff', border: 'none' }}><LuSave size={16} /> {saving ? 'Sauvegarde...' : 'Sauvegarder'}</button>)}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
       {previewUrl && (<div className="etat-preview-overlay" onClick={closePreview}><div className="etat-preview-modal" onClick={e => e.stopPropagation()}><div className="etat-preview-header"><span>Aperçu — Note 30</span><div className="etat-preview-actions"><button onClick={printPDF} title="Imprimer"><LuPrinter size={18} /></button><button onClick={downloadPDF} title="Télécharger"><LuDownload size={18} /></button><button onClick={closePreview}><LuX size={18} /></button></div></div><iframe src={previewUrl} className="etat-preview-iframe" title="Aperçu Note 30" /></div></div>)}

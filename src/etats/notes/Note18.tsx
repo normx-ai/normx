@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -39,6 +39,7 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
@@ -116,7 +117,7 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const fmtDateShort = (d: Date | null): string => { if (!d) return ''; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
-  const fmtM = (val: number): string => { if (val === 0) return ''; return Math.round(val).toLocaleString('fr-FR'); };
+  const fmtM = (val: number): string => { if (val === 0) return '0'; return Math.round(val).toLocaleString('fr-FR'); };
 
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
@@ -173,7 +174,9 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
   const inputSt: React.CSSProperties = { width: '100%', padding: '5px 8px', fontSize: 12, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0', textAlign: 'right', boxSizing: 'border-box' };
   const textareaStyle: React.CSSProperties = { width: '100%', minHeight: 40, padding: '8px 10px', fontSize: 12, lineHeight: '1.6', border: '1px solid #D4A843', borderRadius: 3, background: '#fffbf0', fontFamily: 'inherit', boxSizing: 'border-box', resize: 'vertical' };
 
-  const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variationAbs: number; variationPct: number } }) => (
+  const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variationAbs: number; variationPct: number } }) => {
+    if (hideEmpty && r.vals.anneeN === 0 && r.vals.anneeN1 === 0) return null;
+    return (
     <tr key={r.label}>
       <td style={tdStyle}>{r.label}</td>
       <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
@@ -184,7 +187,7 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
       <td style={tdRight}>{renderCreanceInput(r.label, 'dettes1a2ans')}</td>
       <td style={tdRight}>{renderCreanceInput(r.label, 'dettesPlus2ans')}</td>
     </tr>
-  );
+  ); };
 
   const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number }) => {
     const variationAbs = totals.anneeN - totals.anneeN1;
@@ -218,6 +221,7 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
             <button className="etat-action-btn" onClick={handleSave} disabled={saving} style={{ background: '#059669', color: '#fff', border: 'none' }}><LuSave size={16} /> {saving ? 'Sauvegarde...' : 'Sauvegarder'}</button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 

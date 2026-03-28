@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo, LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -57,6 +57,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
   const DEFAULT_COMMENTAIRE = `• Toute variation significative doit être commentée.
 • Détailler les éléments constitutifs du fonds commercial et indiquer la date d'acquisition.
 • Pour l'immobilisation incorporelle relative à la concession faire un descriptif de l'accord.
@@ -172,7 +173,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
   };
 
   const fmtM = (val: number): string => {
-    if (val === 0) return '';
+    if (val === 0) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 
@@ -312,6 +313,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
             </button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 
@@ -401,6 +403,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
             {rows.map((r, i) => {
               const isBold = r.bold || r.isTotal;
               const isDetail = !r.bold && !r.isTotal;
+              if (hideEmpty && isDetail && r.vals.a === 0 && r.vals.acq === 0 && r.vals.cess === 0 && r.vals.d === 0) return null;
               const bgStyle = isBold ? { background: '#f0f0f0' } : {};
               const fw = isBold ? 700 : 400;
               const inputSt: React.CSSProperties = { width: '100%', padding: '1px 3px', fontSize: 12, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0', textAlign: 'right', boxSizing: 'border-box' };

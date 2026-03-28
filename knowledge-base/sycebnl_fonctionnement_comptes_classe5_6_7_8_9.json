@@ -1,0 +1,361 @@
+{
+  "meta": {
+    "document": "SYCEBNL-2022",
+    "referentiel": "SYCEBNL",
+    "partie": "Partie 2, Chapitre 3, Sections 5-9 — Classes 5 à 9",
+    "pages_source": "218-308",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": "50",
+      "titre": "COMPTE 50 : Titres de placement",
+      "contenu": "Les titres de placement sont des titres acquis en vue de réaliser un gain à brève échéance. Ils sont immédiatement négociables et l'entité n'envisage pas de les conserver durablement. Le compte 50 enregistre la valeur d'acquisition des titres de placement.",
+      "subdivisions": ["501 Titres du Trésor et bons de caisse à court terme", "502 Actions (5021 cotées, 5022 non cotées)", "503 Obligations (5031 cotées, 5032 non cotées)", "504 Bons de souscription", "505 Titres négociables, hors actions, obligations", "506 Intérêts courus (5061-5068)", "508 Autres valeurs assimilées"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "51",
+      "titre": "COMPTE 51 : Valeurs à encaisser",
+      "contenu": "Ce compte enregistre les valeurs remises à l'entité par les tiers débiteurs en règlement de leurs dettes et en attente d'encaissement. Comprend les chèques, les effets à encaisser, les effets à l'escompte et les chèques et valeurs à l'encaissement.",
+      "subdivisions": ["511 Effets à encaisser (5111 à recevoir, 5112 à l'encaissement, 5113 impayés)", "512 Effets à l'escompte", "513 Chèques à encaisser (5131 à recevoir, 5132 à l'encaissement)", "514 Chèques impayés", "515 Cartes de crédit à encaisser", "518 Autres valeurs à l'encaissement"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "52",
+      "titre": "COMPTE 52 : Banques",
+      "contenu": "Ce compte enregistre les mouvements de fonds en banque de l'entité. Il retrace l'ensemble des opérations effectuées entre l'entité et les établissements bancaires.",
+      "subdivisions": ["521 Banques locales (5211 comptes en monnaie nationale, 5212 comptes en devises)", "522 Banques autres États de la Région", "523 Banques autres États zone monétaire", "524 Banques hors zone monétaire", "525 Établissements financiers (et assimilés) (5251 comptes courants, 5252 chèques postaux)", "526 Banques, intérêts courus", "528 Autres établissements financiers et assimilés"],
+      "sens": "debiteur ou crediteur"
+    },
+    {
+      "numero": "53",
+      "titre": "COMPTE 53 : Établissements financiers et assimilés",
+      "contenu": "Ce compte enregistre les opérations bancaires effectuées avec les établissements financiers et les comptes spéciaux.",
+      "subdivisions": ["531 Chèques postaux", "532 Trésor"],
+      "sens": "debiteur ou crediteur"
+    },
+    {
+      "numero": "56",
+      "titre": "COMPTE 56 : Banques, crédits de trésorerie et d'escompte",
+      "contenu": "Ce compte enregistre les concours bancaires courants et les crédits de trésorerie à court terme. Il traduit la position emprunteuse de l'entité vis-à-vis de sa banque pour les opérations de financement à court terme.",
+      "subdivisions": ["561 Crédits de trésorerie", "564 Escompte de crédits de campagne", "565 Escompte de crédits ordinaires", "566 Banques, crédits de trésorerie, intérêts courus"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "57",
+      "titre": "COMPTE 57 : Caisse",
+      "contenu": "Ce compte enregistre les entrées et sorties de numéraire détenu par l'entité.",
+      "subdivisions": ["571 Caisse siège social", "572 Caisse succursale A", "573 Caisse succursale B"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "58",
+      "titre": "COMPTE 58 : Régies d'avances, accréditifs et virements internes",
+      "contenu": "Ce compte enregistre les opérations relatives aux régies d'avances, accréditifs et virements de fonds internes entre les différentes caisses et banques de l'entité. Ce sont des comptes de passage utilisés pour les transferts de fonds d'un compte à un autre et qui doivent être soldés.",
+      "subdivisions": ["581 Régies d'avances", "582 Accréditifs", "585 Virements de fonds"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "59",
+      "titre": "COMPTE 59 : Dépréciations et provisions pour risques à court terme (Trésorerie)",
+      "contenu": "Ce compte enregistre les dépréciations des titres de placement et des valeurs à encaisser ainsi que les provisions pour risques à court terme ayant un caractère financier.",
+      "fonctionnement": {
+        "credit": ["Est crédité de la dotation pour dépréciation — par le débit du compte 6795 ou 679"],
+        "debit": ["Est débité de la reprise — par le crédit du compte 7795 ou 779"]
+      },
+      "subdivisions": ["590 Dépréciations des titres de placement (5901-5908)", "591 Dépréciations des valeurs à l'encaissement", "599 Provisions pour risques à court terme"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "60",
+      "titre": "COMPTE 60 : Achats et variations de stocks",
+      "contenu": "Les achats concernent les biens et services acquis dans le cadre de l'activité de l'entité. Le compte 60 enregistre les achats de biens liés à l'activité, de marchandises, de matières premières et fournitures liées et d'autres approvisionnements, ainsi que les variations de stocks y afférentes. Le compte 601 Achats de biens liés à l'activité est spécifique aux EBNL — il enregistre les achats de biens destinés à être mis à la disposition des bénéficiaires sans contrepartie.",
+      "subdivisions": ["601 Achats de biens liés à l'activité (6011 dans l'État partie, 6012 dans la Région, 6019 hors Région)", "602 Achats de marchandises et de matières premières", "6031 Variations des stocks de biens liés à l'activité", "6032 Variations des stocks de marchandises", "6033 Variations des stocks de matières premières et fournitures liées", "6034 Variations des stocks d'autres approvisionnements", "6035 Variations des stocks de dons en nature", "604 Achats stockés de matières et fournitures consommables (6041-6048)", "605 Autres achats (6051 Fournitures non stockables — Eau, 6052 Électricité, 6053 Autres énergies, 6054 Fournitures d'entretien non stockables, 6058 Achats de petit matériel et outillage)", "608 Achats d'emballages (6081 emballages perdus, 6082 emballages récupérables non identifiables, 6083 emballages à usage mixte)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "61-62",
+      "titre": "COMPTES 61/62 : Transports et Services extérieurs",
+      "contenu": "Le compte 61 enregistre les charges de transport de l'entité ventilées selon la nature du transport et l'objet transporté : transports sur achats, transports sur ventes, transports pour le compte de tiers, transports du personnel, transports de plis. Le compte 62 enregistre les charges de services extérieurs : sous-traitance générale, locations et charges locatives, redevances de crédit-bail et contrats assimilés, entretien et réparations et maintenance, primes d'assurances, études et recherches, documentation, rémunérations d'intermédiaires et honoraires, publicité et relations publiques, frais de colloques et séminaires, transports et déplacements, missions et réceptions.",
+      "subdivisions": ["611 Transports sur achats", "612 Transports sur ventes", "613 Transports pour le compte de tiers", "614 Transports du personnel", "618 Autres frais de transport", "621 Sous-traitance générale", "622 Locations et charges locatives", "623 Redevances de crédit-bail et contrats assimilés", "624 Entretien réparations et maintenance", "625 Primes d'assurances", "626 Études, recherches et documentation", "627 Publicité, publications, relations publiques", "628 Frais de colloques, séminaires, conférences, congrès", "631 Frais bancaires", "632 Rémunérations d'intermédiaires et honoraires", "633 Frais de formation du personnel", "634 Redevances pour brevets licences logiciels et droits similaires", "635 Cotisations", "637 Rémunérations de personnel extérieur à l'entité", "638 Autres charges externes"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "64",
+      "titre": "COMPTE 64 : Impôts et taxes",
+      "contenu": "Ce compte enregistre les charges d'impôts, taxes et versements assimilés supportés par l'entité. Sont exclues les charges correspondant à l'impôt sur les bénéfices ou à la TVA déductible.",
+      "subdivisions": ["641 Impôts et taxes directs", "646 Droits d'enregistrement", "647 Pénalités et amendes fiscales", "648 Autres impôts et taxes"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "65",
+      "titre": "COMPTE 65 : Autres charges",
+      "contenu": "Ce sont toutes les charges qui ne proviennent pas directement de l'activité de l'entité, ni de son activité financière, mais qui relèvent néanmoins de ses activités ordinaires. Comprennent les pertes sur créances adhérents, clients-usagers et autres débiteurs, les subventions versées par l'entité, les dons en nature courants distribués, les charges diverses.",
+      "subdivisions": ["651 Pertes sur créances adhérents, clients-usagers et autres débiteurs", "654 Dons en nature courants reçus à distribuer (6541 non affectés, 6542 affectés)", "655 Subventions accordées à des organismes extérieurs (6551 Dons en numéraire, 6558 Autres subventions)", "658 Charges diverses (6581 Jetons de présence, indemnités et allocations forfaitaires, 6582 Dons, libéralités et lots accordés, 6583 Malis sur emballages, 6588 Autres charges diverses)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "66",
+      "titre": "COMPTE 66 : Charges de personnel",
+      "contenu": "Ce sont l'ensemble des rémunérations du personnel de l'entité et les charges sociales et fiscales liées à ces rémunérations. Les rémunérations du personnel sont comptabilisées en charges de l'exercice au cours duquel le travail a été effectué.",
+      "subdivisions": ["661 Rémunérations directes versées au personnel national", "662 Rémunérations directes versées au personnel non national", "663 Indemnités forfaitaires versées au personnel", "664 Charges sociales (6641 part patronale sécurité sociale, 6642 part patronale caisses retraite, 6643 part patronale mutuelle/assurance, 6645 part patronale organismes sociaux de l'entité)", "666 Rémunérations et charges sociales de l'exploitant individuel", "667 Rémunérations transférées de personnel extérieur", "668 Autres charges sociales (6681 Versements aux syndicats et comités, 6682 Médecine du travail, 6683 Apostolat et assimilés, 6684 Œuvres sociales, 6685 Assurances retraite et fonds de pension, 6688 Autres)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "67",
+      "titre": "COMPTE 67 : Frais financiers et charges assimilées",
+      "contenu": "Ce sont les charges liées aux moyens de financement de l'entité : intérêts des emprunts et dettes, intérêts bancaires, escomptes accordés aux adhérents et clients, pertes de change.",
+      "subdivisions": ["671 Intérêts des emprunts", "672 Intérêts dans loyers de crédit-bail et contrats assimilés", "673 Escomptes accordés", "674 Autres intérêts", "675 Escomptes des effets de commerce", "676 Pertes de change financières", "677 Pertes sur cessions de titres de placement", "678 Pertes sur risques financiers (6781 rentes viagères, 6782 opérations financières)", "679 Charges pour dépréciations et provisions pour risques à court terme financières (6791 risques financiers, 6795 titres de placement, 6798 Autres)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "68",
+      "titre": "COMPTE 68 : Dotations aux amortissements",
+      "contenu": "Ce compte enregistre les charges calculées résultant des amortissements pratiqués sur les immobilisations de l'entité. Les dotations aux amortissements doivent être pratiquées à la clôture de chaque exercice, même en cas d'absence ou d'insuffisance d'excédent.",
+      "fonctionnement": {
+        "debit": ["Est débité du montant de l'annuité d'amortissement de l'exercice — par le crédit du compte 28 Amortissements"],
+        "credit": ["Est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"]
+      },
+      "subdivisions": ["680 Dotations aux amortissements d'usufruit temporaire", "681 Dotations aux amortissements des immobilisations incorporelles et corporelles (6812 incorporelles, 6813 corporelles)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "69",
+      "titre": "COMPTE 69 : Dotations aux provisions, aux dépréciations et autres",
+      "contenu": "Ce compte enregistre les dotations aux provisions pour risques et charges et les dotations aux dépréciations d'exploitation. Les dotations aux provisions sont constituées même en l'absence d'excédent.",
+      "fonctionnement": {
+        "debit": ["Est débité du montant des provisions et dépréciations constituées — par le crédit des comptes 19, 29, 39, 49 ou 59 selon le cas"],
+        "credit": ["Est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"]
+      },
+      "subdivisions": ["691 Dotations aux provisions et aux dépréciations d'exploitation (6911 pour risques et charges, 6913 des immobilisations incorporelles, 6914 des immobilisations corporelles)", "6593 Charges pour dépréciations et provisions pour risques à court terme d'exploitation sur stocks", "6594 Charges pour dépréciations et provisions pour risques à court terme d'exploitation sur créances", "697 Dotations aux provisions et aux dépréciations financières (6971 pour risques et charges, 6972 des immobilisations financières)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "70",
+      "titre": "COMPTE 70 : Ventes",
+      "contenu": "Le compte 70 enregistre les revenus des ventes de marchandises, de produits fabriqués, de prestations de services et de produits accessoires. Pour les EBNL, les cotisations des adhérents ne sont pas des ventes et sont enregistrées au compte 701.",
+      "subdivisions": ["701 Cotisations des adhérents (7011 Cotisations statutaires, 7012 Appels supplémentaires)", "702 Quote-part de fonds d'administration et de dotation consomptible transférés (7021 Quote-part de fonds d'administration transférés, 7022 Quote-part de dotation consomptible transférée au compte de résultat)", "703 Revenus liés à la générosité (7031 Dons manuels en numéraire, 7032 Quêtes, offrandes et denier du culte, 7033 Dîmes et zakat, 7034 Legs en numéraire, 7035 Mécénat, parrainage, 7036 Appels à la générosité publique, 7038 Autres)", "704 Ventes de marchandises (7041 produits A, 7042 produits B)", "705 Ventes de produits fabriqués et services (7051-7058)", "706 Produits des manifestations de collecte de fonds", "707 Produits accessoires (7071 locations, 7072 commissions, 7073 courtages, 7074 mise à disposition de personnel, 7075 ports, emballages perdus, 7076 services exploités dans l'intérêt du personnel, 7077 brevets, licences, logiciels, 7078 ventes de dons en nature)", "708 Revenus d'usufruit (7081 Revenus d'usufruit immobilier, 7082 Revenus d'usufruit mobilier)"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "71",
+      "titre": "COMPTE 71 : Subventions d'exploitation",
+      "contenu": "Le compte 71 enregistre les subventions d'exploitation reçues pour compenser l'insuffisance de revenus de l'entité face à certaines charges. Les subventions d'exploitation ne sont ni des dotations ni des fonds affectés. Le fait générateur est la notification de l'acte d'attribution de la subvention par le tiers financeur.",
+      "subdivisions": ["711 Subventions de l'État", "712 Subventions des collectivités territoriales", "713 Subventions d'organismes internationaux", "714 Subventions des entreprises et organismes privés", "718 Autres subventions d'exploitation"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "72",
+      "titre": "COMPTE 72 : Production immobilisée",
+      "contenu": "Ce compte enregistre le coût de production des travaux effectués par l'entité pour elle-même, au coût de production déterminé par la comptabilité analytique de gestion ou à défaut par des calculs extra comptables. Les frais financiers supportés sur les emprunts exclusivement affectés au financement de la fabrication des biens concernant la période de fabrication sont capitalisés dans le coût de l'actif éligible via le compte 787 Transfert de charges financières.",
+      "fonctionnement": {
+        "credit": ["Est crédité du montant des travaux effectués par l'entité pour elle-même — par le débit du compte 21 Immobilisations incorporelles, ou 23 Bâtiments, ou 24 Matériel et mobilier"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "subdivisions": ["721 Immobilisations incorporelles", "722 Immobilisations corporelles", "724 Production auto-consommée", "726 Immobilisations financières"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "73",
+      "titre": "COMPTE 73 : Variations des stocks de biens produits",
+      "contenu": "Ce compte enregistre les variations de stocks de biens produits en retraçant les opérations relatives aux entrées en stocks, aux sorties de stocks et aux différences constatées à la clôture de l'exercice entre l'inventaire comptable permanent et l'inventaire physique, et, dans le cas de l'inventaire intermittent, le stock initial et le stock final, ou leur différence. Créditeur, il représente l'augmentation globale de ces stocks du début à la fin de l'exercice ; débiteur, il représente la diminution de ces stocks.",
+      "fonctionnement": {
+        "credit": ["Inventaire permanent : Est crédité des entrées en stocks (en-cours, produits fabriqués) — par le débit des comptes de stocks concernés", "Inventaire intermittent : Est crédité pour la constatation du stock final à la clôture — par le débit des comptes de stocks concernés"],
+        "debit": ["Inventaire permanent : Est débité des sorties de stocks (virements d'en-cours en produits fabriqués ou du fait de ventes) — par le crédit des comptes de stocks concernés", "Inventaire intermittent : Est débité pour l'annulation du stock initial à la clôture — par le crédit des comptes de stocks concernés"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "la variation de la période afférente aux stocks de marchandises, de matières, de fournitures et d'emballages commerciaux", "utiliser": "comptes 603 Variations des stocks de biens achetés"}],
+      "controles": ["fiches d'inventaire", "évaluation des stocks", "comptabilité analytique"],
+      "subdivisions": ["735 Variations des en-cours de produits finis et services", "736 Variations des stocks de produits finis, produits intermédiaires et résiduels"],
+      "sens": "crediteur ou debiteur"
+    },
+    {
+      "numero": "75",
+      "titre": "COMPTE 75 : Autres produits (sauf compte 759)",
+      "contenu": "Ce sont tous les produits divers qui ne proviennent pas directement de l'activité de l'entité, ni de son activité financière ou de ses relations avec l'État (subventions) mais qui relèvent néanmoins de ses activités ordinaires. Comprennent les profits sur créances adhérents, clients-usagers et autres débiteurs, la contribution du fondateur, les dons en nature courants reçus à distribuer, les produits divers (indemnités d'assurances reçues, abandons de frais par les bénévoles, etc.).",
+      "fonctionnement": {
+        "credit": ["Est crédité des produits divers à l'exception des revenus dons en nature courants reçus à distribuer — par le débit des comptes de tiers concernés ou des comptes de trésorerie", "Est crédité le compte 7542 Revenus dons en nature courants reçus à distribuer (montant de la valeur actuelle des dons en nature reçus) — par le débit du compte 654 Dons en nature courants reçus"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les rabais, remises et ristournes accordés hors factures aux clients", "utiliser": "compte 70 Ventes"}, {"ne_pas_enregistrer": "les dons en nature destinés à la vente non encore réalisée", "utiliser": "suivi extra comptable"}, {"ne_pas_enregistrer": "les profits de change sur opérations ayant un caractère financier", "utiliser": "776 Gains de change financiers"}],
+      "controles": ["factures", "avis bancaires", "correspondances échangées"],
+      "subdivisions": ["751 Profits sur créances adhérents, clients-usagers et autres débiteurs", "752 Contribution du fondateur", "754 Dons en nature courants (7541 non affectés, 7542 reçus à distribuer)", "758 Produits divers (7582 Indemnités d'assurances reçues, 7583 Abandons de frais par les bénévoles, 7588 Autres produits divers)"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "759",
+      "titre": "COMPTE 759 : Reprises de charges pour dépréciations et provisions pour risques à court terme d'exploitation",
+      "contenu": "Ce compte enregistre les annulations ou les régularisations en baisse des provisions à court terme sur éléments de l'actif circulant et des risques à court terme d'exploitation. Le compte 759 reprend en fin d'exercice tout ou partie des dépréciations et provisions à court terme devenues sans objet ou pour toute autre cause justifiant la régularisation en baisse. Symétriquement aux charges correspondant à des décaissements probables à brève échéance, les reprises doivent être traitées comme des encaissements probables.",
+      "fonctionnement": {
+        "credit": ["Est crédité pour les reprises de charges pour dépréciations et provisions pour risques à court terme d'exploitation (montant des dépréciations d'actif circulant et des provisions pour risques à court terme d'exploitation existant au début de l'exercice) — par le débit du compte 39 Dépréciations des stocks et en cours ou par le débit du compte 49 Dépréciations et provisions pour risques à court terme (Tiers)"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les reprises de dépréciations d'éléments de l'actif immobilisé", "utiliser": "791 Reprises de charges pour dépréciations et provisions pour risques à court terme d'exploitation"}, {"ne_pas_enregistrer": "les reprises de dépréciations d'éléments à caractère financier", "utiliser": "797 Reprises de charges pour dépréciations et provisions pour risques à court terme financières"}],
+      "controles": ["relevé des décisions de gestion des organes compétents"],
+      "subdivisions": ["7591 sur risques à court terme", "7593 sur stocks", "7594 sur créances", "7598 sur autres charges pour dépréciations et provisions pour risques à court terme d'exploitation"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "77",
+      "titre": "COMPTE 77 : Revenus financiers et produits assimilés",
+      "contenu": "Ce sont les ressources que tire l'entité de ses activités financières. Comprennent les intérêts de prêts et créances diverses, les revenus de participations et autres titres immobilisés, les escomptes obtenus, les revenus de placement, les gains de change financiers, les gains sur cessions de titres de placement, les gains sur risques financiers, et les reprises de charges pour dépréciations et provisions pour risques à court terme financières. Les intérêts et dividendes reçus de l'étranger sont comptabilisés distinctement de ceux acquis dans l'État. Les profits de change sur opérations ayant un caractère financier (emprunt bancaire en devise, liquidités en devises etc.) sont enregistrés en résultat financier au crédit du compte 776 Gains de change financiers.",
+      "fonctionnement": {
+        "credit": ["Est crédité (sauf 779) des produits financiers acquis — par le débit des comptes de tiers concernés ou des comptes de trésorerie", "Est crédité le compte 779 Reprises de charges pour dépréciations et provisions pour risques à court terme financières (reprise des dépréciations des comptes de trésorerie et des provisions pour risques à court terme à caractère financier sans objet, existant au début de l'exercice) — par le débit du compte 59"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les récupérations de prêts ou d'avances consenties", "utiliser": "27 Autres immobilisations financières"}],
+      "controles": ["virements bancaires", "décompte d'intérêts", "factures avec escompte", "bordereaux de cession de titres", "encaissement des coupons"],
+      "subdivisions": ["771 Intérêts de prêts et créances diverses (7712 Intérêts de prêts, 7713 Intérêts sur créances diverses)", "772 Revenus de participations et autres titres immobilisés (7721 des titres de participation, 7722 des autres titres immobilisés)", "773 Escomptes obtenus", "774 Revenus de placement (7745 des obligations, 7746 des titres de placement, 7747 des dépôts à terme et opérations assimilées, 7748 Autres)", "776 Gains de change financiers", "777 Gains sur cessions de titres de placement", "778 Gains sur risques financiers (7781 sur rentes viagères, 7782 sur opérations financières)", "779 Reprises de charges pour dépréciations et provisions pour risques à court terme financières (7791-7798)"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "78",
+      "titre": "COMPTE 78 : Transferts de charges",
+      "contenu": "Ce compte sert à l'imputation de charges d'exploitation ou financières qui doivent être, en raison de leur nature, affectées à un autre compte que leur compte de charges initial. Le transfert peut concerner les stocks, les comptes de tiers. Il sert aussi, exceptionnellement, à des transferts de charges à charges (exemple : avantages en nature accordés au personnel). Les transferts de charges sont à mentionner dans les Notes annexes.",
+      "fonctionnement": {
+        "credit": ["Est crédité des montants des charges d'exploitation ou financières à transférer — par le débit des comptes de bilan concernés (autre que les comptes d'immobilisation), ou des comptes de charges concernés (en cas de transfert de charges à charges)"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les transferts de charges en actif immobilisé", "utiliser": "72 Production immobilisée"}, {"ne_pas_enregistrer": "les transferts de charges HAO", "utiliser": "848 Transferts de charges HAO"}],
+      "controles": ["relevé des décisions de gestion des organes compétents"],
+      "subdivisions": ["781 Transferts de charges d'exploitation", "787 Transferts de charges financières"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "79",
+      "titre": "COMPTE 79 : Reprises de provisions, de dépréciations et autres",
+      "contenu": "Le compte 79 enregistre les annulations et les réajustements en baisse des provisions, des dépréciations des éléments de l'actif immobilisé et les reprises de subventions d'investissement. Les reprises de provisions et de dépréciations constatent soit la diminution de la provision ou de la dépréciation ramenée à un montant inférieur, soit l'intégration dans les résultats de l'entité de la provision ou de la dépréciation existante par suite de la réalisation ou de l'annulation de la charge ou de la disparition du risque. Les fonds relatifs aux immobilisations provenant de dons et legs d'immobilisations conservées par l'entité (compte 167) et la donation temporaire d'usufruit (compte 171) sont repris suivant le même rythme des amortissements des biens concernés par le crédit des comptes 7923 et 7961. Le compte 799 Reprises de subventions d'investissement enregistre à son crédit un montant égal à celui de la dotation de l'exercice aux comptes d'amortissements des immobilisations amortissables acquises ou créées au moyen de ladite subvention.",
+      "fonctionnement": {
+        "credit": ["Est crédité (sauf 792, 796 et 799) pour les diminutions des provisions, par suite d'annulation ou de réduction — par le débit des comptes 19 et 29", "Est crédité le compte 792 Reprises de fonds affectés et provenant des dons et legs d'immobilisations (au fur et à mesure des consommations ou suivant le même rythme d'amortissement des biens concernés) — par le débit du compte 16 Fonds affectés et provenant des dons ou legs d'immobilisations (sauf compte 165). NB : le compte 165 est repris au fur et à mesure de l'engagement des charges du projet spécifique", "Est crédité le compte 7962 Reprises des fonds reportés lors de la cession des immobilisations reçues destinées à la vente provenant de dons et de legs — par le débit du compte 172", "Est crédité le compte 799 Reprises de subventions d'investissement — par le débit du compte 14 Subventions d'investissement"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les reprises HAO", "utiliser": "86 Reprises HAO"}, {"ne_pas_enregistrer": "les reprises de charges pour provisions à court terme", "utiliser": "759 ou 779 selon le cas"}, {"ne_pas_enregistrer": "les reprises de dépréciations d'exploitation à court terme", "utiliser": "759"}, {"ne_pas_enregistrer": "les reprises de dépréciations financières à court terme", "utiliser": "779"}],
+      "controles": ["relevé des décisions des organes compétents"],
+      "subdivisions": ["791 Reprises de provisions et de dépréciations d'exploitation (7911 pour risques et charges, 7913 des immobilisations incorporelles, 7914 des immobilisations corporelles)", "792 Reprises de fonds affectés et provenant des dons et legs d'immobilisations (7923, 7925, 7928)", "795 Reprises des dépréciations d'immobilisations reçues provenant des dons et legs et d'usufruit temporaire (7951, 7952)", "796 Reprises de fonds reportés (7961 provenant de la donation temporaire d'usufruit, 7962 provenant des dons et legs non encore reçus d'immobilisations destinées à la vente, 7968 Autres)", "797 Reprises de provisions et dépréciations financières (7971 pour risques et charges, 7972 des immobilisations financières)", "798 Reprises d'amortissements (cas de révision de plan d'amortissement)", "799 Reprises de subventions d'investissement"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "81",
+      "titre": "COMPTE 81 : Valeurs comptables des cessions d'immobilisations",
+      "contenu": "Ce compte sert à déterminer la valeur comptable nette des éléments de l'actif immobilisé cédés. Pour les biens non amortissables, cette valeur est la valeur d'entrée, sans déduction des éventuelles dépréciations. Pour les biens amortissables, elle est la différence entre la valeur d'entrée brute des immobilisations cédées et le cumul des amortissements pratiqués depuis l'entrée du bien dans le patrimoine de l'entité jusqu'à la date de sa cession. Par cession, il faut entendre : vente, échange, mise au rebut ou destruction. Le compte 818 Immobilisations reçues en dons et legs destinées à la vente est spécifique au SYCEBNL.",
+      "fonctionnement": {
+        "debit": ["Est débité de la valeur d'entrée des éléments sortis sous déduction des amortissements pratiqués — par le crédit du compte d'immobilisation concerné (classe 2)"],
+        "credit": ["Est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les dépréciations afférentes aux éléments d'actif immobilisé cédés", "utiliser": "29 Dépréciations"}],
+      "controles": ["documents attestant de la valeur de sortie de l'immobilisation : procès-verbal de mise au rebut", "factures de vente", "procès-verbal de destruction", "tableaux d'amortissement"],
+      "subdivisions": ["811 Immobilisations incorporelles", "812 Immobilisations corporelles", "816 Immobilisations financières", "818 Immobilisations reçues en dons et legs destinées à la vente"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "82",
+      "titre": "COMPTE 82 : Produits des cessions d'immobilisations",
+      "contenu": "Ce compte enregistre le produit net de la cession : dans le cas d'une vente, prix figurant sur l'acte de vente diminué des commissions et des frais de vente ; dans le cas d'apport, montant contractuel. Le compte 828 Produits des cessions d'immobilisations reçues en dons et legs destinées à la vente est spécifique au SYCEBNL.",
+      "fonctionnement": {
+        "credit": ["Est crédité pour les produits de cession d'actif — par le débit du compte de tiers 485 Créances sur cessions d'immobilisations ou d'un compte de trésorerie", "Est crédité pour une indemnité d'assurance perçue suite à la destruction totale d'une immobilisation — par le débit du compte de tiers 485 ou d'un compte de trésorerie"],
+        "debit": ["Est débité pour le montant des commissions et frais de vente — par le crédit d'un compte de tiers ou de trésorerie", "Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les indemnités d'assurances autres que celles représentatives de l'indemnisation du bien détruit", "utiliser": "7582 Produits divers, indemnités d'assurances reçues"}],
+      "controles": ["factures de cession d'immobilisations", "commissions et frais de vente"],
+      "subdivisions": ["821 Immobilisations incorporelles", "822 Immobilisations corporelles", "826 Immobilisations financières", "828 Immobilisations reçues en dons et legs destinées à la vente"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "83",
+      "titre": "COMPTE 83 : Charges hors activités ordinaires",
+      "contenu": "Ce sont les charges qui ne sont pas liées à l'activité ordinaire de l'entité et qui n'ont généralement pas de caractère récurrent. Elles comprennent des charges constatées et des charges pour dépréciations et provisions pour risques à court terme H.A.O. Seules les charges liées à la restructuration de l'entité ou à des événements extraordinaires (phénomènes naturels : sécheresse, inondations, tempêtes, raz-de-marée, tremblements de terre, vols, pandémies etc.) doivent être considérées comme relevant des activités autres que les activités dites ordinaires. Les dons en nature destinés à être distribués en l'état aux nécessiteux sont enregistrés à leur valeur actuelle dans le courant de l'exercice au fur et à mesure de leur réception. Les dons en nature non récurrents reçus sont inscrits au débit du compte 832 par le crédit du compte 8415 Dons en nature HAO à distribuer.",
+      "fonctionnement": {
+        "debit": ["Est débité des charges constatées ne concernant pas l'activité ordinaire de l'entité — par le crédit d'un compte de tiers ou de trésorerie", "Est débité des charges hors activités ordinaires non encore engagées, mais dont la survenance à moins d'un an est probable et mesurable — par le crédit du compte 48 Créances et dettes HAO", "Est débité pour les dons en nature HAO à distribuer (compte 832) de la valeur actuelle des dons en nature reçus — par le crédit du compte 8415 Dons en nature HAO à distribuer"],
+        "credit": ["Est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les provisions pour risques et charges hors activités ordinaires à plus d'un an", "utiliser": "854 Dotations aux provisions pour risques et charges H.A.O."}],
+      "controles": ["factures", "évaluations", "tableaux d'amortissements", "calculs de plus-values notamment"],
+      "subdivisions": ["831 Charges H.A.O. constatées (8311 non affectées, 8315 affectées)", "832 Dons en nature HAO à distribuer", "834 Pertes sur créances HAO", "836 Abandons de créances consentis", "838 Transferts de charges HAO", "839 Charges pour dépréciations et provisions pour risques à court terme HAO"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "84",
+      "titre": "COMPTE 84 : Revenus hors activités ordinaires",
+      "contenu": "Ce sont des produits qui ne sont pas liés à l'activité ordinaire de l'entité et sont donc dépourvus de caractère récurrent. Ils comprennent des produits constatés, des reprises de charges pour provisions et des transferts de charges. Le compte 8411 Dons en nature HAO vendus enregistre les dons en nature non récurrents reçus destinés à la vente pour se procurer de la trésorerie. Le compte 8415 Dons en nature HAO à distribuer est destiné à la comptabilisation des dons en nature non récurrents destinés à la distribution en l'état. Les contributions de dons en nature non récurrents en stock en fin de période doivent faire l'objet d'une régularisation en créditant le compte 488 par le débit du compte 8415.",
+      "fonctionnement": {
+        "credit": ["Est crédité (sauf 8415) le compte 84 Revenus hors activités ordinaires du montant des produits constatés — par le débit d'un compte de tiers ou de trésorerie", "Est crédité le compte 8415 Dons en nature HAO à distribuer de la valeur actuelle des dons en nature reçus — par le débit du compte 832 Dons en nature HAO à distribuer", "Est crédité pour les reprises de charges pour provisions (compte 849) — par le débit du compte 4998 Provisions pour risques sur opérations H.A.O."],
+        "debit": ["Est débité pour la constatation du stock de dons en nature de fin d'exercice (compte 8415) — par le crédit du compte 488 Créditeurs dons en nature HAO non consommés", "Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les reprises de provisions H.A.O. antérieurement constituées", "utiliser": "86 Reprises H.A.O."}],
+      "controles": ["analyse", "factures", "évaluations", "tableaux de provisions"],
+      "subdivisions": ["841 Produits H.A.O. constatés (8411 Dons en nature HAO vendus, 8412 Prestations de services en nature HAO, 8415 Dons en nature HAO à distribuer)", "842 Contributions volontaires en nature", "843 Contributions volontaires en numéraire", "846 Abandons de créances obtenus", "848 Transferts de produits H.A.O.", "849 Reprises de charges pour dépréciations et provisions pour risques à court terme H.A.O."],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "85",
+      "titre": "COMPTE 85 : Dotations hors activités ordinaires",
+      "contenu": "Ce compte enregistre les dotations aux amortissements et aux provisions qui ne concernent pas l'activité ordinaire de l'entité. La notion hors activités ordinaires doit être appréhendée de façon restrictive : restructurations d'entités, autres événements (telles les catastrophes naturelles) par essence non prévisibles, et dépourvus de caractère récurrent. Le compte 85 est aussi utilisé dans les États parties pour enregistrer les opérations liées à l'application de dispositions fiscales (provisions réglementées).",
+      "fonctionnement": {
+        "debit": ["Est débité du montant de la provision pour risques ou charges H.A.O. ou de l'amortissement à la clôture de l'exercice — par le crédit du compte 15 Provisions réglementées et Fonds assimilés, du compte 19 Provisions pour risques et charges, ou du compte 28 Amortissements, ou du compte 29 Dépréciations"],
+        "credit": ["Est crédité pour solde à la clôture de l'exercice — par le débit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les charges calculées H.A.O. à court terme (moins d'un an)", "utiliser": "839 Charges pour dépréciations et provisions pour risques à court terme H.A.O."}],
+      "controles": ["évaluation de la provision"],
+      "subdivisions": ["851 Dotations aux provisions réglementées", "852 Dotations aux amortissements H.A.O.", "853 Dotations aux dépréciations H.A.O.", "854 Dotations aux provisions pour risques et charges H.A.O.", "858 Autres dotations H.A.O."],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "86",
+      "titre": "COMPTE 86 : Reprises d'amortissements, provisions et dépréciations HAO",
+      "contenu": "Ce compte enregistre les annulations et rajustements en baisse des provisions, amortissements qui ne sont pas liés à l'activité ordinaire de l'entité. Toute provision constituée par l'intermédiaire du compte 85 Dotations hors activités ordinaires doit être reprise au cours de l'un des exercices suivants par le compte 86 Reprises de dotations H.A.O. ; cette reprise se produisant l'année de survenance de la charge, ou l'année où l'appréciation en est modifiée. Tel est le cas des Provisions réglementées (compte 15) comme des Provisions financières pour risques et charges (compte 19).",
+      "fonctionnement": {
+        "credit": ["Est crédité pour l'annulation ou la réduction d'une provision — par le débit du compte 15 Provisions réglementées et Fonds assimilés, du compte 19 Provisions pour risques et charges, ou du compte 29 Dépréciations"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les reprises de dépréciations et provisions pour risques à court terme", "utiliser": "759, 779, ou 849 selon le cas"}, {"ne_pas_enregistrer": "les reprises de dépréciations d'éléments de l'actif immobilisé", "utiliser": "791 ou 797"}, {"ne_pas_enregistrer": "les dotations aux provisions et aux dépréciations d'exploitation ou à caractère financier", "utiliser": "691 ou 697"}],
+      "controles": ["tableaux d'amortissements", "tableaux de reprises des écarts de réévaluation", "tableaux de reprises de la plus-value de cession à réinvestir"],
+      "subdivisions": ["861 Reprises de provisions réglementées", "862 Reprises d'amortissements H.A.O.", "863 Reprises de dépréciations H.A.O.", "864 Reprises de provisions pour risques et charges H.A.O.", "868 Autres reprises H.A.O."],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "87",
+      "titre": "COMPTE 87 : Variations de stocks de dons en nature HAO",
+      "contenu": "Ce compte enregistre les montants des stocks de fin d'exercice de dons en nature non récurrents à distribuer. En fin d'exercice, un inventaire des dons à distribuer non récurrents doit être réalisé et constaté par le débit du compte 38 Stock de dons en nature HAO en contrepartie du compte 87 Variations de stocks de dons en nature HAO. Les revenus de dons non utilisés, compte 8415, sont débités par le crédit du compte 488 Créditeurs, dons en nature HAO non consommés. Les écritures de fin d'exercice doivent être extournées au début de l'exercice suivant.",
+      "fonctionnement": {
+        "credit": ["Est crédité pour la constatation du stock final de dons en nature HAO à la clôture de l'exercice — par le débit du compte 38 Stock de dons en nature HAO"],
+        "debit": ["Est débité (solde de ce compte à la clôture de l'exercice) — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "le stock de dons en nature courant à distribuer", "utiliser": "6035 Variations de stocks de dons en nature"}, {"ne_pas_enregistrer": "le stock de dons en nature non récurrents destinés à la vente pour se procurer de la trésorerie", "utiliser": "Suivi extra comptable"}],
+      "controles": ["prise d'inventaire", "nature des dons"],
+      "sens": "crediteur ou debiteur"
+    },
+    {
+      "numero": "88",
+      "titre": "COMPTE 88 : Subventions d'équilibre",
+      "contenu": "Ce compte enregistre le montant des subventions allouées par l'État, les collectivités publiques et les bailleurs de fonds à l'entité pour compenser, en totalité ou partiellement, des pertes survenues dans des circonstances exceptionnelles. Les subventions d'équilibre se distinguent des subventions d'exploitation en ce qu'elles servent à combler le déficit de l'entité. Il importe, avant tout enregistrement, d'analyser la subvention pour en définir la finalité : aide à l'investissement, à l'exploitation ou à l'équilibre.",
+      "fonctionnement": {
+        "credit": ["Est crédité du montant des subventions d'équilibre allouées à l'entité — par le débit d'un compte de tiers ou de trésorerie"],
+        "debit": ["Est débité pour solde à la clôture de l'exercice — par le crédit du compte 13 Résultat net de l'exercice"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les subventions d'investissement", "utiliser": "14 Subventions d'investissement"}, {"ne_pas_enregistrer": "les subventions d'exploitation", "utiliser": "71 Subventions d'exploitation"}],
+      "controles": ["décrets ou arrêtés ministériels", "décisions de collectivités publiques accordant la subvention"],
+      "subdivisions": ["881 État", "884 Collectivités publiques", "888 Autres"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "90-91",
+      "titre": "COMPTES 90-91 : Contributions volontaires en nature (Classe 9, Sous-section 1)",
+      "contenu": "Les contributions volontaires en nature sont comptabilisées dans les comptes de la classe 9 à l'exception des dons en nature à distribuer et des dons et legs d'immobilisations (voir Partie 3 : Opérations et problèmes spécifiques aux EBNL, chapitre 4 et 6). Les contributions volontaires en nature sont valorisées et comptabilisées si leur poids dans l'activité de l'entité est significatif et celle-ci est en mesure de les recenser et de les valoriser de façon pertinente. À chaque contribution volontaire doit correspondre une pièce comptable indiquant la date, la nature de l'opération, le nom de la personne ou de l'organisme concerné et le mode d'évaluation de l'apport.",
+      "fonctionnement": {
+        "debit": ["Sont débités les comptes 900 à 904 : 900 Secours en nature (alimentaires, vestimentaires...), 901 Mise à disposition gratuite de biens (locaux, matériels...), 902 Prestations en nature, 904 Personnel bénévole"],
+        "credit": ["Par le crédit des comptes 910 à 914 : 910 Dons en nature à vendre, 911 Prestations en nature, 914 Bénévolat"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les produits de la vente des dons en nature reçus", "utiliser": "7081 Ventes de dons en nature"}, {"ne_pas_enregistrer": "les dons en nature courants à distribuer", "utiliser": "654 et 7542 Dons en nature courants à distribuer"}, {"ne_pas_enregistrer": "les dons en nature non récurrents à distribuer", "utiliser": "832 et 842 Contributions volontaires en nature"}, {"ne_pas_enregistrer": "les dons et legs d'immobilisations", "utiliser": "167 Fonds provenant de dons et legs d'immobilisations ou 172 Legs et donations non encore reçus d'immobilisations destinées à la vente"}],
+      "controles": ["conventions de mises à disposition du personnel ou des locaux", "barème d'estimation des heures de bénévolat", "copies des reçus-dons"],
+      "subdivisions": ["900 Secours en nature (alimentaires, vestimentaires...)", "901 Mise à disposition gratuite de biens (locaux, matériels...)", "902 Prestations en nature", "904 Personnel bénévole", "910 Dons en nature à vendre", "911 Prestations en nature", "914 Bénévolat"],
+      "sens": "debiteur (90x) / crediteur (91x)"
+    },
+    {
+      "numero": "92-99",
+      "titre": "COMPTES 92-99 : Comptabilité analytique de gestion (Classe 9, Sous-section 2)",
+      "contenu": "L'usage des comptes 92 à 99 est laissé à l'initiative des entités qui utilisent les découpages convenant le mieux à leur structure, à leur politique des coûts, à leur organisation.",
+      "subdivisions": ["92 Comptes réfléchis", "93 Comptes de reclassements", "94 Comptes de coûts", "95 Comptes de stocks", "96 Comptes d'écarts sur coûts préétablis", "97 Comptes de différences de traitement comptable", "98 Comptes de résultats", "99 Comptes de liaisons internes"],
+      "sens": "variable"
+    }
+  ]
+}

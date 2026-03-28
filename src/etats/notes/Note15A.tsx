@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -52,6 +52,7 @@ function Note15A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
@@ -154,7 +155,7 @@ function Note15A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const fmtDateShort = (d: Date | null): string => { if (!d) return ''; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
-  const fmtM = (val: number): string => { if (val === 0) return ''; return Math.round(val).toLocaleString('fr-FR'); };
+  const fmtM = (val: number): string => { if (val === 0) return '0'; return Math.round(val).toLocaleString('fr-FR'); };
 
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
@@ -230,6 +231,7 @@ function Note15A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
 
   const renderDataRow = (r: Rubrique) => {
     const vals = computeRow(r);
+    if (hideEmpty && vals.anneeN === 0 && vals.anneeN1 === 0) return null;
     return (
       <tr key={r.label}>
         <td style={tdStyle}>{r.label}</td>
@@ -276,6 +278,7 @@ function Note15A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
             <button className="etat-action-btn" onClick={handleSave} disabled={saving} style={{ background: '#059669', color: '#fff', border: 'none' }}><LuSave size={16} /> {saving ? 'Sauvegarde...' : 'Sauvegarder'}</button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 

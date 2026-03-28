@@ -11,8 +11,10 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "html2canvas": "^1.4.1",
+    "jsonwebtoken": "^9.0.3",
     "jspdf": "^4.2.0",
     "jspdf-autotable": "^5.0.7",
+    "jwks-rsa": "^4.0.1",
     "nodemailer": "^8.0.1",
     "pg": "^8.18.0",
     "react": "^19.2.4",
@@ -27,7 +29,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "server": "node server/index.js"
+    "server": "tsx server/index.js"
   },
   "proxy": "http://localhost:5002",
   "browserslist": {
@@ -43,9 +45,13 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "ts-jest": "^29.4.6",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }

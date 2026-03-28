@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2  } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { Exercice, EtatBaseProps } from '../../types';
+import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
 
 interface Note8AProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -48,6 +48,8 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
 
   const [montantGlobalFrais, setMontantGlobalFrais] = useState('');
   const [montantGlobalCharges, setMontantGlobalCharges] = useState('');
@@ -112,6 +114,42 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
       })
       .catch(() => {});
   }, [entiteId]);
+
+  // Chargement balance N pour soldes 475
+  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
+  useEffect(() => {
+    if (!entiteId || !selectedExercice) return;
+    const load = async () => {
+      try {
+        if (balanceSource === 'ecritures') {
+          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          setLignesN((await res.json()).lignes || []);
+        } else {
+          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          setLignesN((await res.json()).lignes || []);
+        }
+      } catch { setLignesN([]); }
+    };
+    load();
+  }, [entiteId, selectedExercice, balanceSource]);
+
+  // Soldes 4751 (débiteur) et 4752 (créditeur) depuis la balance
+  const solde4751 = lignesN.reduce((total, l) => {
+    const num = (l.numero_compte || '').trim();
+    if (!num.startsWith('4751')) return total;
+    return total + (parseFloat(String(l.solde_debiteur)) || 0);
+  }, 0);
+
+  const solde4752 = lignesN.reduce((total, l) => {
+    const num = (l.numero_compte || '').trim();
+    if (!num.startsWith('4752')) return total;
+    return total + (parseFloat(String(l.solde_crediteur)) || 0);
+  }, 0);
+
+  // Montant global affiché = valeur manuelle si saisie, sinon solde balance 475
+  const montantFraisDisplay = montantGlobalFrais || (solde4751 ? String(Math.round(solde4751)) : '');
+  const montantChargesDisplay = montantGlobalCharges || (solde4752 ? String(Math.round(solde4752)) : '');
+  const montantPrimesDisplay = montantGlobalPrimes;
 
   const handleSave = async () => {
     setSaving(true);
@@ -180,7 +218,7 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
   const totalGeneralFrais = totalExercices.reduce((s, t) => s + parseN(t.frais), 0);
   const totalGeneralCharges = totalExercices.reduce((s, t) => s + parseN(t.charges), 0);
   const totalGeneralPrimes = totalExercices.reduce((s, t) => s + parseN(t.primes), 0);
-  const fmtM = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');
+  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   // PDF
   const generatePDF = async (): Promise<jsPDF> => {
@@ -291,8 +329,8 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
             {/* Montant global */}
             <tr>
               <td style={tdBold}>Montant global à étaler au 1<sup>er</sup> janvier {annee}</td>
-              <td style={tdRight} colSpan={2}>{renderInput(montantGlobalFrais, setMontantGlobalFrais)}</td>
-              <td style={tdRight} colSpan={2}>{renderInput(montantGlobalCharges, setMontantGlobalCharges)}</td>
+              <td style={tdRight} colSpan={2}>{editing ? <input value={montantGlobalFrais} onChange={e => setMontantGlobalFrais(e.target.value)} style={inputSt} placeholder={solde4751 ? String(Math.round(solde4751)) : ''} /> : montantFraisDisplay}</td>
+              <td style={tdRight} colSpan={2}>{editing ? <input value={montantGlobalCharges} onChange={e => setMontantGlobalCharges(e.target.value)} style={inputSt} placeholder={solde4752 ? String(Math.round(solde4752)) : ''} /> : montantChargesDisplay}</td>
               <td style={tdRight} colSpan={2}>{renderInput(montantGlobalPrimes, setMontantGlobalPrimes)}</td>
             </tr>
             {/* Durée */}

@@ -11,7 +11,7 @@ import {
   LuFileCheck, LuBriefcase, LuCoins, LuCircleHelp, LuListOrdered,
   LuLayoutDashboard, LuChartPie
 } from 'react-icons/lu';
-// @ts-expect-error -- Paie module is JS, will be migrated to TS later
+// @ts-ignore
 import Paie from '../paie/Paie';
 import GestionClients from './GestionClients';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';

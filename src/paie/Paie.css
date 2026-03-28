@@ -245,3 +245,164 @@
 .step-periode-selects { display: flex; gap: 16px; }
 .step-periode-selects .wizard-form-group { max-width: 200px; }
 .step-periode-selects select { padding: 8px 10px; border: 1px solid #d1d5db; font-size: 13px; }
+
+/* ========================================
+   AVANTAGES EN NATURE - Art. 39 CGI
+   ======================================== */
+
+/* Modal */
+.avantages-modal {
+  background: #fff; width: 95vw; max-width: 720px; max-height: 85vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.avantages-modal-body { flex: 1; overflow-y: auto; padding: 20px 24px; }
+
+/* Info bar */
+.avantages-info-bar {
+  display: flex; gap: 24px; padding: 12px 16px; margin-bottom: 16px;
+  background: #f9fafb; border: 1px solid #e2e5ea;
+}
+.avantages-info-item { display: flex; flex-direction: column; gap: 2px; }
+.avantages-info-label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.3px; }
+.avantages-info-value { font-size: 14px; font-weight: 700; color: #1a2b3c; }
+
+/* Type row */
+.avantages-type-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border: 1px solid #e2e5ea; margin-bottom: 6px;
+  background: #fff; transition: background 0.15s, border-color 0.15s;
+}
+.avantages-type-row:hover { background: #f9fafb; }
+.avantages-type-row.active { background: #fef9ee; border-color: #D4A843; }
+
+.avantages-type-left { display: flex; flex-direction: column; gap: 2px; min-width: 200px; }
+.avantages-type-right { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+/* Checkbox */
+.avantages-checkbox-label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.avantages-checkbox {
+  width: 16px; height: 16px; accent-color: #D4A843; cursor: pointer; flex-shrink: 0;
+}
+.avantages-type-name { font-size: 13px; font-weight: 600; color: #374151; }
+.avantages-type-desc { font-size: 11px; color: #9ca3af; padding-left: 24px; }
+
+/* Colonnes montants */
+.avantages-forfait-col, .avantages-reel-col, .avantages-effectif-col {
+  display: flex; flex-direction: column; gap: 2px; min-width: 100px;
+}
+.avantages-col-label { font-size: 10px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.3px; }
+.avantages-col-value { font-size: 13px; font-weight: 500; color: #374151; }
+.avantages-effectif-value { font-weight: 700; color: #D4A843; }
+
+/* Toggle reel */
+.avantages-reel-toggle { margin-bottom: 4px; }
+.avantages-reel-input {
+  padding: 6px 8px; border: 1px solid #d1d5db; font-size: 12px; width: 110px; color: #1a2b3c;
+}
+.avantages-reel-input:focus { outline: none; border-color: #D4A843; box-shadow: 0 0 0 2px rgba(200, 160, 60, 0.15); }
+
+/* Total bar */
+.avantages-total-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; background: #1A3A5C; margin-top: 12px;
+}
+.avantages-total-label { font-size: 13px; font-weight: 600; color: #fff; }
+.avantages-total-value { font-size: 16px; font-weight: 700; color: #D4A843; }
+
+/* Recap bar (liste) */
+.avantages-recap-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; margin-top: 0;
+  background: #fff; border: 1px solid #e2e5ea; border-top: none;
+}
+.avantages-recap-label { font-size: 13px; font-weight: 600; color: #374151; }
+.avantages-recap-montant { font-size: 15px; font-weight: 700; color: #D4A843; }
+
+/* ========================================
+   DECLARATIONS SOCIALES ET FISCALES
+   ======================================== */
+
+/* Page */
+.declarations-page { display: flex; flex-direction: column; height: 100%; }
+
+/* Header */
+.declarations-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #e2e5ea; background: #fff; }
+.declarations-header h2 { font-size: 16px; font-weight: 700; color: #1A3A5C; margin: 0 0 4px; }
+.declarations-header p { font-size: 13px; color: #6b7280; margin: 0; }
+
+/* Period selector */
+.declarations-period-selector { display: flex; gap: 12px; align-items: flex-end; }
+.declarations-period-selector .wizard-form-group { min-width: 120px; }
+.declarations-period-selector select { padding: 8px 10px; border: 1px solid #d1d5db; font-size: 13px; }
+
+/* Tabs */
+.declarations-tabs { display: flex; gap: 0; border-bottom: 1px solid #e2e5ea; padding: 0 24px; background: #fff; }
+.declarations-tab { padding: 12px 20px; font-size: 13px; font-weight: 500; color: #6b7280; border: none; background: transparent; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
+.declarations-tab:hover { color: #374151; }
+.declarations-tab.active { color: #D4A843; font-weight: 600; border-bottom-color: #D4A843; }
+
+/* Content */
+.declarations-content { padding: 20px 24px; flex: 1; overflow-y: auto; }
+
+/* Section header */
+.declarations-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.declarations-section-header h4 { font-size: 14px; font-weight: 700; color: #1A3A5C; margin: 0; }
+
+/* Info bar */
+.declarations-info-bar { display: flex; gap: 24px; padding: 12px 16px; margin-bottom: 16px; background: #f9fafb; border: 1px solid #e2e5ea; }
+.declarations-info-item { display: flex; flex-direction: column; gap: 2px; }
+.declarations-info-label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.3px; }
+.declarations-info-value { font-size: 14px; font-weight: 700; color: #1A3A5C; }
+
+/* Totaux row */
+.declarations-totaux td { font-weight: 700; background: #fef9ee; }
+
+/* Footer total */
+.declarations-footer-total { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; margin-top: 12px; background: #1A3A5C; }
+.declarations-footer-total span { font-size: 14px; font-weight: 600; color: #fff; }
+.declarations-footer-amount { font-size: 16px; font-weight: 700; color: #D4A843; }
+
+/* Status badges */
+.declarations-status-ok { display: inline-block; padding: 4px 12px; font-size: 11px; font-weight: 600; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+.declarations-status-err { display: inline-block; padding: 4px 12px; font-size: 11px; font-weight: 600; background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+/* Salarie selector (nominative) */
+.declarations-salarie-selector { margin-bottom: 16px; max-width: 320px; }
+.declarations-salarie-selector select { width: 100%; padding: 8px 10px; border: 1px solid #d1d5db; font-size: 13px; }
+
+/* Card (nominative detail) */
+.declarations-card { background: #fff; border: 1px solid #e2e5ea; padding: 20px; margin-top: 16px; }
+.declarations-card h4 { font-size: 13px; font-weight: 700; color: #1A3A5C; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid #e2e5ea; }
+.declarations-card-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; }
+.declarations-card-label { color: #6b7280; }
+.declarations-card-value { font-weight: 600; color: #374151; }
+
+/* ========================================
+   LIVRE DE PAIE
+   ======================================== */
+
+.livre-paie-page { display: flex; flex-direction: column; height: 100%; }
+.livre-paie-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid #e2e5ea; background: #fff; }
+.livre-paie-header h3 { font-size: 16px; font-weight: 700; color: #1A3A5C; margin: 0 0 4px; }
+.livre-paie-header p { font-size: 13px; color: #6b7280; margin: 0; }
+.livre-paie-tabs { display: flex; gap: 0; border-bottom: 1px solid #e2e5ea; padding: 0 24px; background: #fff; }
+.livre-paie-tab { padding: 12px 16px; font-size: 12px; font-weight: 500; color: #6b7280; border: none; background: transparent; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; }
+.livre-paie-tab:hover { color: #374151; }
+.livre-paie-tab.active { color: #D4A843; font-weight: 600; border-bottom-color: #D4A843; }
+.livre-paie-content { padding: 20px 24px; overflow-y: auto; flex: 1; }
+.livre-paie-totaux td { font-weight: 700; background: #fef9ee; }
+.livre-paie-selector { margin-bottom: 16px; }
+.livre-paie-selector select { padding: 8px 12px; border: 1px solid #d1d5db; font-size: 13px; color: #1a2b3c; min-width: 280px; }
+.livre-paie-selector select:focus { outline: none; border-color: #D4A843; box-shadow: 0 0 0 2px rgba(200, 160, 60, 0.15); }
+
+/* ========================================
+   RUBRIQUES DE PAIE
+   ======================================== */
+
+.rubriques-filter-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.rubriques-filter-tab { padding: 6px 14px; font-size: 12px; font-weight: 500; color: #6b7280; border: 1px solid #d1d5db; background: #fff; cursor: pointer; transition: all 0.15s; }
+.rubriques-filter-tab:hover { border-color: #D4A843; color: #D4A843; }
+.rubriques-filter-tab.active { background: #D4A843; color: #1A3A5C; border-color: #D4A843; font-weight: 600; }
+.rubriques-badge-actif { display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 600; background: #dcfce7; color: #166534; }
+.rubriques-badge-inactif { display: inline-block; padding: 2px 8px; font-size: 11px; font-weight: 600; background: #fee2e2; color: #991b1b; }

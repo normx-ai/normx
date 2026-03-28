@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -22,7 +22,6 @@ const RUBRIQUES_BRUT: RubriqueCreance[] = [
   { label: 'Organismes internationaux', prefixes: ['45'] },
   { label: 'Associés et groupe', prefixes: ['46'] },
   { label: 'Débiteurs divers', prefixes: ['471', '472', '473', '474'] },
-  { label: 'Compte transitoire ajustement spécial', prefixes: ['475'] },
   { label: 'Charges constatées d\'avance', prefixes: ['476'] },
 ];
 
@@ -39,6 +38,7 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
@@ -155,7 +155,7 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
   };
 
   const fmtM = (val: number): string => {
-    if (val === 0) return '';
+    if (val === 0) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 
@@ -257,7 +257,9 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
     return <input value={getAdj(label, field) || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} />;
   };
 
-  const renderRow = (r: { label: string; vals: ReturnType<typeof computeRow> }) => (
+  const renderRow = (r: { label: string; vals: ReturnType<typeof computeRow> }) => {
+    if (hideEmpty && r.vals.anneeN === 0 && r.vals.anneeN1 === 0) return null;
+    return (
     <tr key={r.label}>
       <td style={tdStyle}>{r.label}</td>
       <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
@@ -267,7 +269,7 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
       <td style={tdRight}>{renderCreanceInput(r.label, 'creances1a2ans')}</td>
       <td style={tdRight}>{renderCreanceInput(r.label, 'creancesPlus2ans')}</td>
     </tr>
-  );
+  ); };
 
   const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number; creances1an: number; creances1a2ans: number; creancesPlus2ans: number }, variation: number) => (
     <tr>
@@ -296,6 +298,7 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
             <button className="etat-action-btn" onClick={handleSave} disabled={saving} style={{ background: '#059669', color: '#fff', border: 'none' }}><LuSave size={16} /> {saving ? 'Sauvegarde...' : 'Sauvegarder'}</button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 
@@ -353,9 +356,9 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
               <th style={thStyle} colSpan={3}>Échéances des créances</th>
             </tr>
             <tr>
-              <th style={{ ...thStyle, fontSize: 10 }}>Créances à un an au plus</th>
-              <th style={{ ...thStyle, fontSize: 10 }}>Créances à plus d'un an et à deux ans au plus</th>
-              <th style={{ ...thStyle, fontSize: 10 }}>Créances à plus de deux ans</th>
+              <th style={{ ...thStyle, fontSize: 10, width: '11%' }}>Créances à un an au plus</th>
+              <th style={{ ...thStyle, fontSize: 10, width: '9%' }}>Créances à plus d'un an et à deux ans au plus</th>
+              <th style={{ ...thStyle, fontSize: 10, width: '10%' }}>Créances à plus de deux ans</th>
             </tr>
           </thead>
           <tbody>

@@ -1,0 +1,181 @@
+{
+  "meta": {
+    "document": "Acte uniforme relatif au Système Comptable des Entités à But Non Lucratif (SYCEBNL-2022)",
+    "referentiel": "SYCEBNL",
+    "partie": "Partie 1 — Définitions et cadre conceptuel",
+    "titre": "Définitions des termes et cadre conceptuel du SYCEBNL",
+    "pages_source": "33-67",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": "P1-DEF-01",
+      "titre": "Définitions des termes SYCEBNL — Liste complète",
+      "texte": [
+        "Le SYCEBNL définit 44 termes spécifiques aux entités à but non lucratif.",
+        "Adhérents : les membres des associations sont adhérents des entités.",
+        "Association : convention par laquelle plusieurs personnes physiques ou morales mettent en commun leurs connaissances ou leurs activités dans un but autre que de partager des bénéfices. L'Acte uniforme entend par association : association, fondation, fonds de dotation, organisation religieuse et toute autre entité de droit ou de fait.",
+        "Bailleur de fonds : personne physique ou morale qui affecte des biens ou des ressources à la réalisation d'un projet d'intérêt communautaire ou général sur une durée bien déterminée.",
+        "Bénévole : personne qui s'engage librement pour mener une action non rémunérée au profit et selon l'objet et les règles de l'entité.",
+        "Commodat : prêt à usage — contrat par lequel l'une des parties livre une chose à l'autre pour s'en servir, à la charge par le preneur de la rendre. Considéré comme une contribution volontaire en nature.",
+        "Consomptible : bien qui se détruit par l'usage qu'on en fait.",
+        "Contribution : participation de toute nature à la réalisation d'une œuvre commune.",
+        "Contribution volontaire en nature : acte par lequel une personne physique ou morale apporte à une entité un travail, des biens ou des services à titre gratuit (travail/bénévolat, biens/dons et legs en nature, services/mise à disposition de locaux ou matériel).",
+        "Cotisations : fonds versés périodiquement par les membres conformément aux dispositions statutaires pour assurer le fonctionnement de l'association et de l'ordre professionnel.",
+        "Déficit : produits inférieurs aux charges de l'entité à but non lucratif. Dans le cas contraire, il s'agit d'un excédent.",
+        "Denier du culte : participation économique des laïcs en faveur de leur paroisse.",
+        "Dîme : don obligatoire fait au Temple pour l'entretien des prêtres et des lévites.",
+        "Donation : contrat par lequel une personne (le donateur) transfère la propriété d'un bien à une autre (le donataire) qui l'accepte sans contrepartie et avec intention libérale.",
+        "Donation temporaire d'usufruit : opération de démembrement de propriété. Le donateur donne le droit d'user et de percevoir les revenus de ses biens à un bénéficiaire pendant une durée déterminée.",
+        "Don manuel : donation de la main à la main ayant pour objet un bien meuble corporel, en numéraire ou en nature.",
+        "Dotation consomptible : ressource de financement durable reprise au compte résultat pour couvrir des charges de l'exercice.",
+        "Dotation non consomptible : ressource de financement mise à la disposition de l'entité de façon durable et permanente. Sans reprise si la mise à disposition est définitive, avec reprise si l'apport doit être repris.",
+        "Droit d'entrée : fonds versé une seule fois lors de l'adhésion de tout nouveau membre en sus de la cotisation périodique (fonds propres de l'entité).",
+        "EBNL : Entité à But Non Lucratif.",
+        "Excédent : revenus supérieurs aux dépenses ou charges de l'entité à but non lucratif.",
+        "Exercice : coïncide avec l'année civile (1er janvier au 31 décembre). Sa durée peut être exceptionnellement inférieure ou supérieure à 12 mois.",
+        "Fondateurs : les membres qui ont constitué l'association.",
+        "Fondation : acte par lequel une ou plusieurs personnes physiques ou morales décident l'affectation irrévocable de biens, droits ou ressources à la réalisation d'une œuvre d'intérêt général et à but non lucratif.",
+        "Fonds affectés : ressources reçues par les EBNL affectées à un projet précis, dont on ne saurait se détourner de l'intention du donateur ou du bailleur. Comprennent aussi les fonds destinés à l'acquisition d'immobilisations.",
+        "Fonds d'administration : fonds ou biens consommables que le bailleur du projet de développement a mis à disposition pour couvrir les charges de fonctionnement du projet.",
+        "Fonds de dotation : entité qui reçoit et gère, en les capitalisant, des biens et droits apportés à titre gratuit et irrévocable.",
+        "Fonds dédiés : ressources reçues par les EBNL affectées à un projet précis, dont on ne saurait se détourner de l'intention du donateur.",
+        "Fonds propres provenant de legs et de dons d'immobilisations : legs et dons d'immobilisations destinés à être conservés par l'entité.",
+        "Fonds reportés : donations ou legs d'immobilisations non encore reçus destinés à la vente ou donations temporaires d'usufruit.",
+        "Générosité : expression d'un acte d'altruisme, d'une libéralité, d'un geste de don envers une EBNL.",
+        "Legs : transmission testamentaire du patrimoine d'une personne réalisée à son décès. Peut être universel, à titre universel, ou particulier.",
+        "Mécénat : soutien financier ou matériel apporté par une entité ou un particulier à une action ou activité d'intérêt général.",
+        "Mutuelle : entité ayant la capacité civile, dont la création est soumise à déclaration, poursuivant un but non lucratif dans l'intérêt de ses membres.",
+        "Ordre professionnel : organisme corporatif institué par une loi regroupant obligatoirement les membres de certaines professions libérales (avocats, médecins, experts-comptables, etc.).",
+        "Parrainage : soutien matériel apporté par une personne à une manifestation en vue d'en retirer un bénéfice direct.",
+        "Potentiel de service : capacité de produire des biens et services contribuant aux objectifs des EBNL, sans nécessairement générer un bénéfice économique.",
+        "Projet de développement : entité financée par les bailleurs ayant pour but l'amélioration du niveau économique d'un pays et des conditions de vie des populations.",
+        "Subventions d'équilibre : libéralité pour compenser tout ou partie du déficit global de l'entité.",
+        "Subventions d'exploitation : aide pour compenser l'insuffisance de revenus face à certaines charges d'exploitation. Ne sont ni des dotations ni des fonds affectés.",
+        "Subventions d'investissement : aide financière pour acquérir ou créer des valeurs immobilisées.",
+        "Subventions versées : dons en numéraire octroyés par l'entité à but non lucratif.",
+        "Tiers financeurs : donateurs, bailleurs de fonds, mécènes, testateurs, autorités publiques, personnes morales de droit privé.",
+        "Testateur : auteur d'un testament.",
+        "Usager : bénéficiaire des services de l'entité à but non lucratif (libellé du compte 411).",
+        "Waqf : donation caritative inaliénable en vertu de la loi islamique. Il s'agit d'une fondation.",
+        "Zakat : forme de dons d'aumônes traitée dans l'Islam comme une obligation religieuse (habituellement 2,5% de l'épargne et de la richesse totale)."
+      ],
+      "mots_cles": ["définitions", "terminologie", "SYCEBNL", "EBNL", "association", "fondation", "fonds", "dotation", "legs", "dons", "cotisations"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-01",
+      "titre": "Cadre conceptuel — Définition et objectifs",
+      "texte": [
+        "Le cadre conceptuel du Système comptable des entités à but non lucratif est un système cohérent de principes fondamentaux liés entre eux qui a pour objet de donner une représentation utile de ces entités pour les différents utilisateurs.",
+        "Il constitue la structure de référence théorique qui sert de support et de guide à l'élaboration des normes comptables dédiées aux entités à but non lucratif.",
+        "Le cadre conceptuel a pour objectifs d'aider : à élaborer des normes cohérentes pouvant faciliter la production de données et d'états financiers ; à faciliter l'interprétation des normes comptables et l'appréhension d'opérations non explicitement prévus par la réglementation comptable ; les auditeurs à se faire une opinion sur la conformité des états financiers."
+      ],
+      "mots_cles": ["cadre conceptuel", "définition", "objectifs", "normes comptables", "SYCEBNL"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-02",
+      "titre": "Principaux utilisateurs de l'information financière",
+      "texte": [
+        "L'information financière de l'entité à but non lucratif est destinée aux utilisateurs internes et externes suivants : les membres ; les bailleurs de fonds et autres contributeurs volontaires ; les usagers, bénéficiaires de services ; l'État partie ; les partenaires sociaux ; les organes publics de contrôle ; les citoyens et leurs représentants.",
+        "Les utilisateurs ont besoin d'informations utiles sur le patrimoine (bilan), la performance (compte de résultat), un Tableau des Flux de Trésorerie (spécifique aux associations et ordres professionnels), et d'un état des emplois-ressources spécifiques aux projets de développement."
+      ],
+      "mots_cles": ["utilisateurs", "information financière", "membres", "bailleurs", "État", "bilan", "TFT"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-03",
+      "titre": "Objectif des états financiers et hypothèse de continuité",
+      "texte": [
+        "L'objectif des états financiers est de fournir des informations utiles sur le patrimoine, la situation financière, la performance, l'utilisation des ressources et les variations de la situation de trésorerie des entités à but non lucratif.",
+        "Les états financiers sont établis sur une base de continuité d'exploitation, présumant que l'entité poursuivra ses activités dans un avenir prévisible.",
+        "Lorsque les états financiers ne sont pas établis sur cette base (liquidation par exemple), les incertitudes sont indiquées et justifiées."
+      ],
+      "mots_cles": ["objectif", "états financiers", "continuité", "exploitation", "patrimoine"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-04",
+      "titre": "Postulats comptables du SYCEBNL",
+      "texte": [
+        "Les 5 postulats comptables du SYCEBNL :",
+        "1. Postulat de l'entité : l'entité est considérée comme une personne morale autonome et distincte de ses propriétaires. La comptabilité est fondée sur la séparation entre le patrimoine de l'entité et celui de ses membres.",
+        "2. Postulat de la comptabilité d'engagement : les effets des transactions sont pris en compte dès que ces transactions se produisent et non au moment des encaissements ou paiements. Exception pour le SMT.",
+        "3. Postulat de la spécialisation des exercices : rattacher à chaque exercice tous les produits et les charges qui le concernent, et ceux-là seulement.",
+        "4. Postulat de la permanence des méthodes : les mêmes méthodes de prise en compte, de mesure et de présentation doivent être utilisées d'une période à l'autre.",
+        "5. Postulat de la prééminence de la réalité économique sur l'apparence juridique : 4 applications retenues — biens avec réserve de propriété, location-acquisition, effets à l'escompte, personnel intérimaire."
+      ],
+      "mots_cles": ["postulats", "entité", "engagement", "spécialisation", "permanence", "prééminence", "réalité économique"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-05",
+      "titre": "Conventions comptables du SYCEBNL",
+      "texte": [
+        "Les 5 conventions comptables du SYCEBNL :",
+        "1. Convention du coût historique : opérations comptabilisées sur la base de la valeur nominale de la monnaie. Dérogation possible via la réévaluation (immobilisations corporelles et financières uniquement).",
+        "2. Convention de prudence : les actifs et produits ne doivent pas être surévalués, les passifs et charges ne doivent pas être sous-évalués. Pas de création de réserves occultes.",
+        "3. Convention de régularité et sincérité : comptes établis par référence aux principes et règles comptables définis par les textes. Inclut la conformité aux règles du SYCEBNL, la présentation claire et loyale, le respect de la règle de non-compensation.",
+        "4. Convention de la correspondance bilan de clôture – bilan d'ouverture : le bilan d'ouverture doit correspondre au bilan de clôture du précédent exercice. Deux exceptions d'imputation directe sur capitaux propres : changement de méthode significatif et correction d'erreur significative.",
+        "5. Convention de l'importance significative : éléments susceptibles d'influencer le jugement des destinataires. Critères quantitatifs : 5-10% du total du bilan, 10-20% de la variation du poste, 10% du bénéfice net."
+      ],
+      "mots_cles": ["conventions", "coût historique", "prudence", "régularité", "sincérité", "correspondance", "importance significative"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-06",
+      "titre": "Caractéristiques qualitatives de l'information financière",
+      "texte": [
+        "Caractéristiques essentielles : Pertinence (l'information permet d'influencer les prises de décision, valeur de prédiction et de validation) et Fidélité (traduction fidèle des opérations, représentation complète, absence d'erreur significative).",
+        "Caractéristiques auxiliaires : Comparabilité (relever similitudes et différences) ; Vérifiabilité (assurance que l'information reflète l'image fidèle) ; Rapidité (accessible avant de perdre sa capacité d'influence) ; Compréhensibilité (classée, définie et présentée de façon claire).",
+        "Contrainte : équilibre avantages-coûts. Les informations doivent procurer un intérêt supérieur au coût de leur production."
+      ],
+      "mots_cles": ["caractéristiques qualitatives", "pertinence", "fidélité", "comparabilité", "vérifiabilité", "rapidité", "compréhensibilité"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-07",
+      "titre": "Définitions des éléments des états financiers",
+      "texte": [
+        "Actif : élément identifiable du patrimoine représentant une ressource économique actuelle contrôlée par l'entité du fait d'événements passés. Ressource économique = élément ayant la capacité de fournir un potentiel de service ou un avantage économique. Contrôle = capacité de disposer de son potentiel de service.",
+        "Passif externe : obligation actuelle de l'entité résultant d'un événement passé, qu'elle ne peut régler que par une sortie de ressources économiques.",
+        "Fonds propres : différence entre les actifs et les passifs externes. Comprennent apports, écarts de réévaluation, réserves, reports à nouveau, excédents/déficits, dotation consomptible, fonds provenant des dons et legs, fonds affectés aux investissements, provisions réglementées, subventions d'équipement.",
+        "Charges : diminution d'avantages économiques résultant d'une diminution d'actif ou augmentation de passif.",
+        "Produits : accroissement d'avantages économiques résultant d'une augmentation d'actif ou diminution de passif.",
+        "Structure des états financiers pour associations/ordres professionnels : Bilan, Compte de résultat, Tableau des flux de trésorerie, Notes annexes. Pour projets de développement : Tableau emplois-ressources, Tableau de suivi budgétaire, Tableau de réconciliation de trésorerie, Bilan, Compte d'exploitation, Notes annexes."
+      ],
+      "mots_cles": ["actif", "passif", "fonds propres", "charges", "produits", "bilan", "potentiel de service"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-08",
+      "titre": "Règles d'évaluation des actifs et passifs",
+      "texte": [
+        "Règles régies par les articles 35 à 65 de l'AUDCIF. Méthode fondée sur les conventions du coût historique, de prudence et de continuité d'exploitation.",
+        "Trois formes de valeur : valeur d'entrée dans le patrimoine ; valeur actuelle à la clôture ; valeur nette au bilan à l'arrêté des comptes.",
+        "Valeur d'entrée : constituée par le coût d'achat (biens achetés), le coût de production (biens produits), la valeur actuelle (biens acquis à titre gratuit). En cas d'acquisition financée par subvention, celle-ci reste sans influence sur la valeur d'entrée (art. 36 AUDCIF).",
+        "Valeur actuelle : valeur d'estimation en fonction du marché et de l'utilité du bien. Équivaut à la valeur d'inventaire.",
+        "Valeur nette au bilan : la plus faible entre la valeur actuelle et la valeur d'entrée (convention de prudence, art. 3 et 6 AUDCIF).",
+        "Créances-dettes en monnaies étrangères : conversions au cours de change de la date de la transaction. Règles des art. 51 à 58 de l'AUDCIF."
+      ],
+      "mots_cles": ["évaluation", "valeur d'entrée", "valeur actuelle", "valeur nette", "coût historique", "AUDCIF"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P1-CC-09",
+      "titre": "Règles de comptabilisation et décomptabilisation",
+      "texte": [
+        "Un élément est comptabilisé dès que deux critères cumulatifs sont réunis : son fait générateur est intervenu et l'élément a un coût évalué de façon fiable.",
+        "Règles spécifiques SYCEBNL :",
+        "Cotisations et droit d'entrée : fait générateur = appel de cotisation. Si l'entité ne peut justifier d'un droit en recouvrement, comptabilisation à l'encaissement effectif.",
+        "Subventions d'exploitation : fait générateur = notification de l'acte d'attribution par le tiers financeur. La quote-part d'une subvention pluriannuelle rattachée à des exercices futurs est inscrite en Reprises de subventions.",
+        "Ressources renforçant les fonds propres : comptabilisées en fonds propres avec ou sans droit de reprise. La quote-part non utilisée pour un projet est comptabilisée au passif comme Fonds non utilisés en fin d'exercice destinés à un projet spécifique.",
+        "Promesses de financement : comptabilisées en créances si engagement ferme et inconditionnel. Sinon, mention dans les Notes annexes uniquement.",
+        "Décomptabilisation : actif décomptabilisé en cas de mise au rebut, cession, destruction, vol, expiration des droits. Passif décomptabilisé lorsque l'obligation est éteinte, exécutée, annulée ou expire."
+      ],
+      "mots_cles": ["comptabilisation", "décomptabilisation", "fait générateur", "cotisations", "subventions", "fonds propres"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

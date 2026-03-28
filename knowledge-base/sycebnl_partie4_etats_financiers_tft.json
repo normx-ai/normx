@@ -1,0 +1,212 @@
+{
+  "meta": {
+    "document": "Acte uniforme relatif au Système Comptable des Entités à But Non Lucratif (SYCEBNL-2022)",
+    "referentiel": "SYCEBNL",
+    "partie": "Partie 4 — Présentation des états financiers",
+    "titre": "États financiers SYCEBNL : Bilan, Compte de résultat, TFT, Notes annexes",
+    "pages_source": "339-435",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": "P4-PRIN-01",
+      "titre": "Principes généraux des états financiers SYCEBNL",
+      "texte": [
+        "L'objectif des états financiers est de fournir des informations utiles sur le patrimoine, la situation financière, la performance et les variations de la situation de trésorerie des entités à but non lucratif.",
+        "Un jeu complet d'états financiers comprend : pour les associations et ordres professionnels : le Bilan, le Compte de résultat, le Tableau des flux de trésorerie, les Notes annexes ; pour les projets de développement : le Bilan, le Compte de résultat, l'État des dépenses et des ressources, les Notes annexes.",
+        "Les petites entités à but non lucratif qui remplissent les critères de l'article 6 de l'Acte uniforme peuvent être autorisées à ne tenir qu'une comptabilité simplifiée de trésorerie dénommée Système minimal de trésorerie. Dans ce cadre, le fait générateur est l'encaissement (recette) ou le décaissement (dépense).",
+        "Règles générales de présentation : les états financiers sont établis conformément aux modèles du Système comptable. Pour chaque poste, les chiffres correspondants de l'exercice précédent doivent être mentionnés. Chaque rubrique est identifiée par un code alphabétique (AA, AB, AG...). La compensation entre postes d'actif et de passif ou entre postes de charges et de produits n'est pas admise."
+      ],
+      "mots_cles": ["principes généraux", "états financiers", "SYCEBNL", "bilan", "compte de résultat", "TFT", "notes annexes", "SMT"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-BILAN-01",
+      "titre": "Bilan SYCEBNL — Structure des associations et ordres professionnels",
+      "texte": [
+        "Le Bilan fait apparaître de façon distincte : à l'actif : l'actif immobilisé, l'actif circulant, la trésorerie-actif et l'écart de conversion-actif ; au passif : les ressources stables, le passif circulant, la trésorerie-passif et l'écart de conversion-passif.",
+        "Logique de présentation : Ressources propres = Actif - passif externe.",
+        "ACTIF — Références et postes :",
+        "AA : Immobilisations destinées à la vente provenant de dons et legs non encore reçues et usufruit temporaire (Note 5)",
+        "AB-AG : Immobilisations incorporelles (brevets, licences, logiciels, autres, avances et acomptes)",
+        "AH-AN : Immobilisations corporelles (terrains, bâtiments, agencements, matériel mobilier, matériel transport, avances et acomptes)",
+        "AO-AY : Immobilisations financières (titres de participation, autres)",
+        "AZ : TOTAL ACTIF IMMOBILISÉ",
+        "BA-BE : Actif circulant (actif circulant HAO, stocks et encours, fournisseurs débiteurs, adhérents/clients-usagers, autres créances)",
+        "BF : TOTAL ACTIF CIRCULANT",
+        "BU-BW : Trésorerie-actif (titres de placement, valeurs à encaisser, banques/établissements financiers/caisses)",
+        "BX : TOTAL TRÉSORERIE ACTIF",
+        "BY : Écart de conversion-Actif (Note 14)",
+        "BZ : TOTAL GÉNÉRAL ACTIF",
+        "PASSIF — Références et postes :",
+        "CA : Dotation non consomptible sans droit reprise (Note 15)",
+        "CB : Dotation non consomptible avec droit reprise (Note 15)",
+        "CU : Droit d'entrée (Note 15)",
+        "CD : Dotation consomptible (Note 15)",
+        "CE : Écarts de réévaluation (Note 5F)",
+        "CF : Réserves (Note 16)",
+        "CG : Report à nouveau (+ou-) (Note 16)",
+        "CH : Résultat net de l'exercice (excédent + ou déficit -)",
+        "CI : Subventions d'investissement (Note 17A)",
+        "CJ : Provisions réglementées (Note 17A)",
+        "CK : TOTAL FONDS PROPRES ET ASSIMILÉS",
+        "CW : Fonds affectés et provenant de dons et legs d'immobilisations (Note 17B)",
+        "CX : Fonds reportés (Note 17B)",
+        "CY : TOTAL FONDS AFFECTÉS ET REPORTÉS",
+        "CZ : TOTAL RESSOURCES PROPRES ET ASSIMILÉES",
+        "DA-DC : Dettes financières (emprunts, dettes location-acquisition, provisions pour risques et charges) (Note 18A)",
+        "DD : TOTAL DETTES FINANCIÈRES ET RESSOURCES ASSIMILÉES",
+        "DE : TOTAL RESSOURCES STABLES",
+        "DF-DI : Passif circulant (dettes circulantes HAO, adhérents/clients-usagers créditeurs, fournisseurs, autres dettes)",
+        "DV : TOTAL PASSIF CIRCULANT",
+        "DW : Trésorerie-passif (banques, établissements financiers et crédits de trésorerie) (Note 22)",
+        "DX : TOTAL TRÉSORERIE PASSIF",
+        "DY : Écart de conversion-Passif (Note 14)",
+        "DZ : TOTAL GÉNÉRAL PASSIF"
+      ],
+      "mots_cles": ["bilan", "SYCEBNL", "actif", "passif", "immobilisations", "fonds propres", "dotation", "trésorerie", "ressources stables"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-CR-01",
+      "titre": "Compte de résultat SYCEBNL — Structure associations et ordres professionnels",
+      "texte": [
+        "Le Compte de résultat récapitule en liste les produits et les charges qui font apparaître l'excédent ou le déficit de l'exercice. Les produits et charges sont classés selon leur nature.",
+        "REVENUS DES ACTIVITÉS ORDINAIRES (Somme RA à RG) = XA :",
+        "RA : Cotisations (Note 23)",
+        "RB : Dotations consomptibles transférées au compte de résultat (Note 23)",
+        "RC : Revenus liés à la générosité (Note 23)",
+        "RD : Ventes de marchandises (Note 23)",
+        "RE : Ventes de services et produits finis (Note 23)",
+        "RF : Subventions d'exploitation (Note 23)",
+        "RG : Autres produits et transferts de charges (Note 23)",
+        "RH : Reprises de provisions, dépréciations, subventions et autres reprises (Note 5D&30)",
+        "CHARGES DES ACTIVITÉS ORDINAIRES (Somme TA à TL) = XB :",
+        "TA : Achats de biens et services liés à l'activité (Note 24)",
+        "TB : Variation de stocks des achats de biens et services liés à l'activité (Note 8)",
+        "TC : Achats de marchandises et matières premières (Note 24)",
+        "TD : Autres achats (Note 24)",
+        "TE : Variation de stocks de marchandises, de matières premières et autres (Note 8)",
+        "TF : Transports (Note 25)",
+        "TG : Services extérieurs (Note 26)",
+        "TH : Impôts et taxes (Note 27)",
+        "TI : Autres charges (Note 28)",
+        "TJ : Charges de personnel (Note 29)",
+        "TK : Frais financiers et charges assimilées (Note 31)",
+        "TL : Dotations aux amortissements, aux provisions, aux dépréciations et autres (Note 5D&30)",
+        "XC : RÉSULTAT DES ACTIVITÉS ORDINAIRES (XA - XB)",
+        "TM : Produits H.A.O. (Note 32)",
+        "TN : Charges H.A.O. (Note 32)",
+        "XD : RÉSULTAT H.A.O. (TM - TN)",
+        "XE : RÉSULTAT NET DE L'EXERCICE (+excédent, -déficit) (XC + XD)"
+      ],
+      "mots_cles": ["compte de résultat", "SYCEBNL", "revenus", "charges", "cotisations", "excédent", "déficit", "HAO", "activités ordinaires"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-TFT-01",
+      "titre": "Tableau des flux de trésorerie SYCEBNL — Méthode directe",
+      "texte": [
+        "Le tableau des flux de trésorerie est un état financier spécifique aux associations et ordres professionnels. Il met en évidence les entrées et les sorties de trésorerie qui sont classées en trois catégories : les flux liés aux activités opérationnelles, les flux liés aux opérations d'investissement, les flux liés aux opérations de financement.",
+        "IMPORTANT : Le SYCEBNL opte pour la méthode DIRECTE de détermination des flux de trésorerie liés aux activités opérationnelles (contrairement au SYSCOHADA qui utilise la méthode indirecte).",
+        "Pour obtenir les encaissements et les décaissements liés aux produits encaissables et charges décaissables de l'exercice, il faut utiliser les relations suivantes :",
+        "Encaissements au cours de l'exercice N = Revenus (N) + Créances (N-1) - Créances (N) = Revenus (N) - Variation des créances",
+        "Décaissements au cours de l'exercice N = Achats (N) + Dettes (N-1) - Dettes (N) = Achats (N) - Variation des dettes",
+        "Exemple : Cotisations des adhérents encaissées en N = Cotisations de l'exercice N + Créances adhérents de N-1 - Créances adhérents de N"
+      ],
+      "mots_cles": ["TFT", "tableau des flux de trésorerie", "SYCEBNL", "méthode directe", "encaissements", "décaissements", "trésorerie", "flux opérationnels"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-TFT-02",
+      "titre": "TFT SYCEBNL — Structure complète et codes de référence",
+      "texte": [
+        "TABLEAU DE FLUX DE TRÉSORERIE SYCEBNL (méthode directe) :",
+        "ZA : Trésorerie nette au 1er janvier (Trésorerie actif N-1 - Trésorerie passif N-1) — Colonne A",
+        "--- FLUX DE TRÉSORERIE PROVENANT DES ACTIVITÉS OPÉRATIONNELLES ---",
+        "FA : + Encaissement des cotisations",
+        "FB : + Encaissement des subventions d'exploitation et d'équilibre",
+        "FC : + Encaissement des revenus liés à la générosité",
+        "FD : + Encaissement des revenus des manifestations",
+        "FE : + Encaissement des autres revenus",
+        "FF : - Décaissement des sommes versées aux fournisseurs (1) — (1) à l'exclusion des fournisseurs d'investissements",
+        "FG : - Décaissement des sommes versées au personnel",
+        "FH : - Autres décaissements",
+        "ZB : Flux de trésorerie provenant des activités opérationnelles (somme FA à FH) — Colonne B",
+        "--- FLUX DE TRÉSORERIE PROVENANT DES ACTIVITÉS D'INVESTISSEMENT ---",
+        "FI : - Décaissements liés aux acquisitions d'immobilisations incorporelles et corporelles",
+        "FJ : - Décaissements liés aux acquisitions d'immobilisations financières",
+        "FK : + Encaissements liés aux cessions d'immobilisations incorporelles et corporelles",
+        "FL : + Encaissements liés aux cessions d'immobilisations financières",
+        "ZC : Flux de trésorerie provenant des activités d'investissement (somme FI à FL) — Colonne C",
+        "--- FLUX DE TRÉSORERIE PROVENANT DU FINANCEMENT PAR LES FONDS PROPRES ---",
+        "FM : + Encaissement des dotations et autres fonds propres",
+        "FN : + Subventions d'investissement reçues",
+        "FO : - Décaissement des dotations et autres fonds propres",
+        "ZD : Flux de trésorerie provenant des fonds propres (somme FM à FO) — Colonne D",
+        "--- TRÉSORERIE PROVENANT DU FINANCEMENT PAR LES FONDS ÉTRANGERS ---",
+        "FP : + Encaissement provenant des emprunts et des autres dettes financières",
+        "FQ : - Remboursements des emprunts et autres dettes financières",
+        "ZE : Trésorerie provenant des fonds étrangers (somme FP à FQ) — Colonne E",
+        "--- FLUX DE TRÉSORERIE PROVENANT DES ACTIVITÉS DE FINANCEMENT (D+E) ---",
+        "ZF : VARIATION DE LA TRÉSORERIE NETTE DE LA PÉRIODE (B+C+D+E) — Colonne G",
+        "ZG : Trésorerie nette au 31 Décembre (G+A) — Colonne H",
+        "Contrôle : Trésorerie actif N - Trésorerie passif N = ZG"
+      ],
+      "mots_cles": ["TFT", "SYCEBNL", "formules", "codes", "ZA", "ZB", "ZC", "ZD", "ZE", "ZF", "ZG", "FA", "FB", "FC", "FD", "FE", "FF", "FG", "FH", "FI", "FJ", "FK", "FL", "FM", "FN", "FO", "FP", "FQ", "méthode directe", "flux opérationnels", "flux investissement", "flux financement"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-TFT-03",
+      "titre": "TFT SYCEBNL — Différences avec le TFT SYSCOHADA",
+      "texte": [
+        "Le TFT SYCEBNL utilise la MÉTHODE DIRECTE alors que le TFT SYSCOHADA utilise la méthode indirecte.",
+        "Méthode directe (SYCEBNL) : les flux opérationnels sont calculés à partir des encaissements et décaissements réels (cotisations encaissées, fournisseurs payés, personnel payé). Les flux sont directement observés dans la trésorerie.",
+        "Méthode indirecte (SYSCOHADA) : les flux opérationnels partent du résultat net et éliminent les éléments non-trésorerie (amortissements, provisions, plus/moins-values) puis ajustent les variations du besoin en fonds de roulement.",
+        "Différences de structure des codes :",
+        "SYCEBNL : ZA (trésorerie ouverture), FA-FH (opérationnel), FI-FL (investissement), FM-FO (fonds propres), FP-FQ (fonds étrangers), ZB-ZG (totaux). 5 niveaux de flux dont financement scindé en fonds propres et fonds étrangers.",
+        "SYSCOHADA : ZA (capacité autofinancement), FA-FD (exploitation), FE-FG (investissement), FH-FJ (financement), ZB-ZI (totaux). 3 niveaux de flux classiques.",
+        "Le TFT SYCEBNL distingue le financement par fonds propres (dotations, subventions d'investissement) du financement par fonds étrangers (emprunts), ce qui est spécifique au contexte des entités à but non lucratif.",
+        "Les flux opérationnels SYCEBNL font apparaître distinctement les cotisations, la générosité, les subventions d'exploitation et les manifestations — des sources de revenus typiques des associations."
+      ],
+      "mots_cles": ["TFT", "SYCEBNL", "SYSCOHADA", "méthode directe", "méthode indirecte", "différences", "fonds propres", "fonds étrangers"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-NOTES-01",
+      "titre": "Notes annexes SYCEBNL — Fiche récapitulative",
+      "texte": [
+        "Les Notes annexes contiennent des informations complémentaires au Bilan, Compte de résultat et TFT. Elles fournissent des descriptions narratives ou des décompositions d'éléments.",
+        "Les Notes annexes doivent comporter obligatoirement une déclaration explicite de conformité à l'Acte Uniforme relatif au droit comptable et à l'information financière et au Système comptable des entités à but non lucratif.",
+        "Partie 1 : Informations générales — Note 1 : Dettes garanties par des suretés réelles, engagements financiers et contributions volontaires en nature ; Note 2 : Informations obligatoires (identité, organisation, déclaration de conformité, règles et méthodes comptables, informations complémentaires) ; Note 3 : Événements postérieurs à la clôture de l'exercice ; Note 4 : Changements de méthodes comptables, d'estimations et corrections d'erreurs.",
+        "Partie 2 : Notes sur le bilan — Note 5A : Dons et legs d'immobilisations non reçus ; Note 5B : Immobilisations brutes ; Note 5C : Biens pris en location-acquisition ; Note 5D : Dons et legs d'immobilisations (amortissements et dépréciations) ; Note 5E : Immobilisations — Amortissements ; Note 5F : Immobilisations — Dépréciations ; Note 5G : Immobilisations — Plus-values et moins-values de cession ; Note 5H : Informations sur les réévaluations effectuées par l'entité ; Note 6 : Immobilisations financières ; Note 7 : Actif circulant et dettes circulantes HAO ; Note 8 : Stocks et encours ; Note 9 : Adhérents, clients-usagers ; Note 10 : Autres créances ; Note 11 : Titres de placement ; Note 12 : Valeurs à encaisser ; Note 13 : Disponibilités ; Note 14 : Écarts de conversion ; Note 15 : Dotation ; Note 16 : Réserves ; Note 17A : Subventions et provisions réglementées ; Note 17B : Fonds affectés et reportés ; Note 18A : Dettes financières et ressources assimilées ; Note 18B : Actifs et passifs éventuels ; Note 19 : Fournisseurs d'exploitation ; Note 20 : Dettes fiscales et sociales ; Note 21 : Autres dettes et provisions pour risques et charges à court terme ; Note 22 : Banques, crédit d'escompte et de trésorerie.",
+        "Partie 3 : Notes sur le compte de résultat — Note 23 : Revenus et autres produits ; Note 24 : Achats ; Note 25 : Transports ; Note 26 : Services extérieurs ; Note 27 : Impôts et taxes ; Note 28 : Autres charges ; Note 29A : Charges de personnel ; Note 29B : Effectifs, masse salariale et personnel extérieur ; Note 30 : Dotations et charges pour provisions et dépréciations ; Note 31 : Charges et revenus financiers ; Note 32 : Autres charges et produits HAO.",
+        "Partie 4 : Autres informations — Note 33 : Fiche de synthèse des principaux indicateurs financiers ; Note 34 : Liste des informations sociales, environnementales et sociétales ; Note 35 : Tableau d'exécution budgétaire.",
+        "Les Notes non documentées ne doivent pas être jointes aux états financiers. Les lignes non chiffrées dans une note doivent être supprimées."
+      ],
+      "mots_cles": ["notes annexes", "SYCEBNL", "informations obligatoires", "bilan", "compte de résultat", "notes 1 à 35", "dettes", "immobilisations", "fonds affectés"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-PROJ-01",
+      "titre": "États financiers des projets de développement et assimilés",
+      "texte": [
+        "Les états financiers des projets de développement et entités assimilées comprennent : le Tableau emplois-ressources (Section 1, p.398) ; le Tableau d'exécution budgétaire (Section 2, p.399) ; le Tableau de réconciliation de trésorerie (Section 3, p.400) ; le Bilan (Section 4, p.401) ; le Compte d'exploitation (Section 5, p.402) ; les Notes annexes (Section 6, p.403).",
+        "Ces états sont présentés aux pages 397 à 432 du SYCEBNL-2022."
+      ],
+      "mots_cles": ["projets de développement", "états financiers", "tableau emplois-ressources", "exécution budgétaire", "réconciliation trésorerie"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P4-SMT-01",
+      "titre": "États financiers du Système Minimal de Trésorerie (SMT)",
+      "texte": [
+        "Les états financiers du Système Minimal de Trésorerie des entités à but non lucratif comprennent : le Bilan (Section 1, p.434) ; le Compte de résultat (Section 2, p.435) ; les Notes annexes (Section 3, p.435).",
+        "Le SMT est réservé aux petites entités à but non lucratif qui remplissent les critères définis à l'article 6 de l'Acte uniforme.",
+        "Ces états sont présentés aux pages 433 à 435 du SYCEBNL-2022."
+      ],
+      "mots_cles": ["SMT", "système minimal de trésorerie", "petites entités", "bilan simplifié", "compte de résultat simplifié"],
+      "statut": "en_vigueur"
+    }
+  ]
+}

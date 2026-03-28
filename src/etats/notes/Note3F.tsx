@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2, LuInfo  } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -123,7 +123,7 @@ function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): 
 
   const parseNum = (s: string): number => parseFloat(s.replace(/\s/g, '').replace(',', '.')) || 0;
   const fmtM = (val: number): string => {
-    if (val === 0) return '';
+    if (val === 0) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 

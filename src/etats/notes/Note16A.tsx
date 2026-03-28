@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -15,6 +15,7 @@ interface Rubrique {
   prefixes: string[];
   bold?: boolean;
   isTotal?: boolean;
+  excludes?: string[];
   group?: 'emprunts' | 'location' | 'provisions';
 }
 
@@ -29,29 +30,25 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Avances assorties de conditions particulières', prefixes: ['167'], group: 'emprunts' },
   { label: 'Autres emprunts et dettes', prefixes: ['168'], group: 'emprunts' },
   { label: 'Dettes liées à des participations', prefixes: ['171'], group: 'emprunts' },
-  { label: 'Comptes permanents bloqués des établissements et succursales', prefixes: ['172', '173', '174'], group: 'emprunts' },
+  { label: 'Comptes permanents bloqués des établissements et succursales', prefixes: ['172'], group: 'emprunts' },
+  { label: 'Intérêts courus sur emprunts et dettes', prefixes: ['173'], group: 'emprunts' },
+  { label: 'Dettes rattachées à des participations', prefixes: ['174'], group: 'emprunts' },
   { label: 'TOTAL EMPRUNTS ET DETTES FINANCIERES', prefixes: [], bold: true, isTotal: true, group: 'emprunts' },
   // Location-acquisition
-  { label: 'Crédit bail immobilier', prefixes: ['1811'], group: 'location' },
-  { label: 'Crédit bail mobilier', prefixes: ['1812'], group: 'location' },
+  { label: 'Crédit bail', prefixes: ['181'], group: 'location' },
   { label: 'Location-vente', prefixes: ['182'], group: 'location' },
   { label: 'Intérêts courus', prefixes: ['183'], group: 'location' },
   { label: 'Autres location-acquisition', prefixes: ['184', '185', '186'], group: 'location' },
   { label: 'TOTAL DETTES DE LOCATION-ACQUISITION', prefixes: [], bold: true, isTotal: true, group: 'location' },
-  // Provisions financières
+  // Provisions financières pour risques et charges
   { label: 'Provisions pour litiges', prefixes: ['191'], group: 'provisions' },
   { label: 'Provisions pour garantie données aux clients', prefixes: ['192'], group: 'provisions' },
   { label: 'Provisions pour pertes sur marchés à achèvement futur', prefixes: ['193'], group: 'provisions' },
   { label: 'Provisions pour pertes de change', prefixes: ['194'], group: 'provisions' },
   { label: 'Provisions pour impôts', prefixes: ['195'], group: 'provisions' },
   { label: 'Provisions pour pensions et obligations assimilées', prefixes: ['196'], group: 'provisions' },
-  { label: 'Actif du régime de retraite', prefixes: ['1961'], group: 'provisions' },
   { label: 'Provisions pour restructuration', prefixes: ['197'], group: 'provisions' },
-  { label: 'Provisions pour amendes et pénalités', prefixes: ['1981'], group: 'provisions' },
-  { label: 'Provisions de propre assureur', prefixes: ['1982'], group: 'provisions' },
-  { label: 'Provisions pour démantèlement et remise en état', prefixes: ['1983'], group: 'provisions' },
-  { label: 'Provisions de droits à déduction', prefixes: ['1984'], group: 'provisions' },
-  { label: 'Autres provisions', prefixes: ['1988'], group: 'provisions' },
+  { label: 'Autres provisions', prefixes: ['198'], group: 'provisions' },
   { label: 'TOTAL PROVISIONS FINANCIERES POUR RISQUES ET CHARGES', prefixes: [], bold: true, isTotal: true, group: 'provisions' },
 ];
 
@@ -64,6 +61,7 @@ function Note16A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
@@ -141,17 +139,22 @@ function Note16A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const fmtDateShort = (d: Date | null): string => { if (!d) return ''; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
-  const fmtM = (val: number): string => { if (val === 0) return ''; return Math.round(val).toLocaleString('fr-FR'); };
+  const fmtM = (val: number): string => { if (val === 0) return '0'; return Math.round(val).toLocaleString('fr-FR'); };
 
-  const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
+  const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[], excludes?: string[]) => {
     let total = 0;
-    for (const l of lignes) { const num = (l.numero_compte || '').trim(); if (!prefixes.some(p => num.startsWith(p))) continue; total += (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0); }
+    for (const l of lignes) {
+      const num = (l.numero_compte || '').trim();
+      if (!prefixes.some(p => num.startsWith(p))) continue;
+      if (excludes && excludes.some(e => num.startsWith(e))) continue;
+      total += (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0);
+    }
     return total;
   };
 
   const computeRow = (r: Rubrique) => {
-    const n = computeForPrefixes(lignesN, r.prefixes) + getAdj(r.label, 'anneeN');
-    const n1 = computeForPrefixes(lignesN1, r.prefixes) + getAdj(r.label, 'anneeN1');
+    const n = computeForPrefixes(lignesN, r.prefixes, r.excludes) + getAdj(r.label, 'anneeN');
+    const n1 = computeForPrefixes(lignesN1, r.prefixes, r.excludes) + getAdj(r.label, 'anneeN1');
     const variationAbs = n - n1;
     const variationPct = n1 !== 0 ? ((n - n1) / Math.abs(n1) * 100) : 0;
     return { anneeN: n, anneeN1: n1, variationAbs, variationPct };
@@ -198,6 +201,7 @@ function Note16A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
 
   const renderDataRow = (r: Rubrique) => {
     const vals = computeRow(r);
+    if (hideEmpty && vals.anneeN === 0 && vals.anneeN1 === 0) return null;
     return (
       <tr key={r.label}>
         <td style={tdStyle}>{r.label}</td>
@@ -244,6 +248,13 @@ function Note16A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
             <button className="etat-action-btn" onClick={handleSave} disabled={saving} style={{ background: '#059669', color: '#fff', border: 'none' }}><LuSave size={16} /> {saving ? 'Sauvegarde...' : 'Sauvegarder'}</button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button
+            className="etat-action-btn"
+            onClick={() => setHideEmpty(!hideEmpty)}
+            style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}
+          >
+            <LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}
+          </button>
         </div>
       </div>
 

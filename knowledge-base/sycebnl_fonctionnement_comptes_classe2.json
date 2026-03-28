@@ -1,0 +1,208 @@
+{
+  "meta": {
+    "document": "Acte uniforme relatif au Système Comptable des Entités à But Non Lucratif (SYCEBNL-2022)",
+    "referentiel": "SYCEBNL",
+    "partie": "Partie 2, Chapitre 3, Section 2 — Classe 2 : Comptes d'Actif Immobilisé",
+    "pages_source": "133-164",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": "20",
+      "titre": "COMPTE 20 : Immobilisations destinées à la vente provenant de dons et legs non encore reçus et usufruit temporaire",
+      "contenu": "Les immobilisations destinées à la vente provenant des dons et legs non encore reçus ainsi que la donation temporaire d'usufruit sont des actifs contrôlés par l'entité qui a le pouvoir d'obtenir des avantages économiques futurs. Un actif est identifiable s'il est séparable ou résulte de droits contractuels ou d'autres droits légaux. Les immobilisations destinées à la vente provenant de dons et legs non encore reçues sont enregistrées à la date de signature de l'acte notarié en cas d'étalement du transfert, à la date de chaque transfert de propriété. Les dons et legs temporaires d'usufruit sont enregistrés à la date d'acceptation ou d'entrée en jouissance. Les dons temporaires d'usufruit sont amortis sur la durée de la donation. NB: Les dépréciations des immobilisations reçues en dons destinées à la vente devenues sans objet doivent être reprises.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 20 est débité de la valeur actuelle des immobilisations destinées à la vente provenant de dons et legs non encore reçues ainsi que les dons temporaires d'usufruit — par le crédit du compte 17 Fonds reportés"
+        ],
+        "credit": [
+          "Le compte 20 est crédité en cas de cession des dons et legs d'immobilisations — par le débit du compte 818 Valeur comptable des cessions d'immobilisations reçues en dons destinées à la vente",
+          "Le compte 20 est crédité de l'amortissement d'usufruit temporaire : le compte 280 AMORTISSEMENT D'USUFRUIT TEMPORAIRE — par le débit du compte 680 Dotations aux amortissements. NB : Au terme de la donation le compte 2011 est soldé par le compte 280"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "Les dons et legs d'immobilisations destinés à être conservés", "utiliser": "Comptes 21 à 26"}
+      ],
+      "controles": ["des actes notariés", "des contrats de jouissance", "des actes de cession", "des relevés bancaires"],
+      "subdivisions": ["201 Immobilisations incorporelles (2011 Usufruit, 2012 Brevets licences concessions et droits similaires, 2013 Logiciels et sites informatiques, 2014 Marques, 2017 Autres)", "202 Terrains", "203 Bâtiments", "204 Matériels", "205 Titres de participations"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "21",
+      "titre": "COMPTE 21 : Immobilisations incorporelles",
+      "contenu": "Les immobilisations incorporelles sont des actifs non monétaires identifiables sans substance physique, contrôlés par l'entité qui a le pouvoir d'obtenir des avantages économiques futurs et peut restreindre l'accès des tiers à ces avantages. Elles ont la nature de biens acquis ou créés par l'entité, non pour être vendus, mais pour être utilisés de manière durable. Le compte 212 Brevets, licences, concessions et droits assimilés enregistre les dépenses engagées pour acquérir le droit d'exploitation des brevets, modèles, dessins, procédés, propriétés littéraire et artistique sous forme directe ou sous forme de licences ou de concessions. Les éléments du compte 212 sont amortissables sur leur durée de vie économique au maximum égale à la durée de la protection juridique. Le Logiciel est un ensemble de programmes, procédés, et règles assortis ou non de documentation, acquis ou créés par l'entité. Le compte 2181 Indemnités de transfert aux joueurs est une somme d'argent qu'une entité débourse pour acquérir un joueur, amortie sur la durée du contrat du joueur au sein de l'entité.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 21 est débité de la valeur d'apport, d'acquisition ou de création par l'entité des immobilisations incorporelles — par le crédit du compte 10 Dotation pour les associations fondations et assimilées, ou du compte 16 Fonds affectés aux investissements du projet de développement et assimilés, ou du compte 45 Fondateur, ou des comptes de tiers, ou des comptes de trésorerie"
+        ],
+        "credit": [
+          "Le compte 21 est crédité en cas de cession, disparition, destruction ou mise au rebut — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations, et/ou du compte 281 Amortissements des immobilisations incorporelles (pour solde de ce compte)"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dons d'immobilisations reçus destinés à la vente et la donation temporaire d'usufruit", "utiliser": "20 Immobilisations destinées à la vente provenant de dons et legs et usufruit temporaire"}
+      ],
+      "controles": ["des factures", "des promesses d'apport", "des actes d'acquisition", "des récépissés de dépôt de brevets, de marques"],
+      "subdivisions": ["212 Brevets, licences, concessions et droits similaires (2121 Brevets, 2122 Licences, 2123 Concessions de service public, 2128 Autres)", "213 Logiciels et sites internet (2131 Logiciels, 2132 Sites internet)", "214 Marques", "218 Autres droits et valeurs incorporels (2181 Indemnités de transfert aux joueurs)", "219 Immobilisations incorporelles en cours (2193 Logiciels et sites internet, 2198 Autres droits et valeurs incorporels)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "22",
+      "titre": "COMPTE 22 : Terrains",
+      "contenu": "Ce compte enregistre la valeur des terrains dont l'entité est propriétaire et de ceux qui sont mis à sa disposition par des tiers. Les terrains nus sont des terrains pouvant constituer le sol de bâtiments ou d'ouvrages. Les terrains bâtis sont ceux sur lesquels des constructions sont édifiées ; la valeur d'entrée de ces terrains doit toujours être distinguée de celle du bâtiment correspondant. Les travaux de mise en valeur des terrains sont enregistrés au compte 224 (voir SYSCOHADA, titre VIII, chapitre 37). Le compte 2288 Divers terrains correspond aux terrains non évoqués dans les rubriques précédentes, tels les sous-sols et les sur-sols au cas où l'entité ne serait pas propriétaire des trois éléments rattachés à une même parcelle de terrain.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 22 est débité de la valeur d'apport ou d'acquisition des terrains — par le crédit du compte 10 Dotation pour les associations fondations et assimilées, ou du compte 16 Fonds affectés, ou du compte 45 Fondateurs, ou des comptes de tiers, ou des comptes de trésorerie concernés"
+        ],
+        "credit": [
+          "Le compte 22 est crédité en cas de cession de terrains — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations, et du compte 282 Amortissements des terrains, pour le montant des amortissements pratiqués sur les terrains agricoles ou forestiers et sur les travaux de mise en valeur des terrains"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dépenses de construction qui constituent des composantes du coût des bâtiments", "utiliser": "23 Bâtiments, installations techniques et agencements"},
+        {"ne_pas_enregistrer": "les dons de terrains reçus destinés à la vente", "utiliser": "20 Immobilisations non recues destinées à la vente provenant de dons et legs et usufruit temporaire"}
+      ],
+      "controles": ["des actes d'acquisition", "des titres de propriété"],
+      "subdivisions": ["221 Terrains agricoles et forestiers (2211 exploitation agricole, 2212 exploitation forestière, 2218 Autres terrains)", "222 Terrains nus (2221 à bâtir, 2228 Autres)", "223 Terrains bâtis (2231 pour bâtiments industriels et agricoles, 2232 pour bâtiment administratifs et commerciaux, 2234 pour bâtiments affectés aux autres opérations, 2235 pour bâtiments affectés aux autres opérations non professionnelles, 2238 Autres)", "224 Travaux de mise en valeur des terrains (2241 Plantations d'arbres, 2245 Améliorations du fonds, 2248 Autres)", "226 Terrains aménagés (2261 Parkings)", "228 Autres terrains (2281 Terrains immeubles de placement, 2285 Terrains des logements affectés au personnel, 2286 Terrain location-acquisition, 2288 Divers terrains)", "229 Aménagements de terrains en cours"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "23",
+      "titre": "COMPTE 23 : Bâtiments, installations techniques et agencements",
+      "contenu": "Ce compte enregistre le montant des opérations ayant trait aux apports effectués par les fondateurs, les membres ou à l'acquisition et à la création par l'entité de bâtiments, installations et agencements, de même que leur cession, disparition et mise au rebut. La valeur des terrains n'est pas comprise dans celle des bâtiments. Il faut inclure dans la valeur des bâtiments les composants : peinture extérieure et intérieure des constructions neuves, coût de tous les aménagements permanents, coût du matériel normalement installé avant que le bâtiment soit occupé. Les agencements et installations permanents effectués par le locataire ayant une durée d'utilité supérieure à un an sont immobilisés dans le compte 235 Aménagements de bureaux et assimilés. Les bâtiments et installations en cours sont portés des comptes 231 à 238 par le crédit du compte 239.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 23 est débité de la valeur d'apport, d'acquisition ou de création par l'entité des bâtiments, installations et agencements — par le crédit du compte 10 Dotation, ou du compte 16 Fonds affectés, ou du compte 45 Fondateurs, ou des comptes de tiers, des comptes de trésorerie concernés, du compte 239 lorsque les éléments des comptes 231 à 238 ayant trait à des travaux en cours sont terminés"
+        ],
+        "credit": [
+          "Le compte 23 est crédité en cas de cession, disparition, mise au rebut — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations, du compte 283 Amortissements des bâtiments, installations techniques et agencements, à concurrence du montant des amortissements pratiqués sur les éléments cédés ou disparus"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les biens corporels disparaissant par le premier usage ou dont la durée d'utilisation est inférieure à un an (petit outillage)", "utiliser": "compte approprié de la classe 6"},
+        {"ne_pas_enregistrer": "les bâtiments reçus en dons destinés à la vente", "utiliser": "20 Immobilisations non recues destinées à la vente provenant de dons et legs et usufruit temporaire"}
+      ],
+      "controles": ["actes d'acquisition", "titres de propriété (titres fonciers)", "factures"],
+      "subdivisions": ["231 Bâtiments industriels, agricoles, administratifs, commerciaux, religieux et autres sur sol propre", "232 Bâtiments sur sol d'autrui", "233 Ouvrages d'infrastructure", "234 Installations techniques", "235 Aménagements de bureaux et assimilés", "238 Autres installations et agencements", "239 Bâtiments, aménagement, agencements et installations en cours"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "24",
+      "titre": "COMPTE 24 : Matériel, Mobilier et Actifs biologiques",
+      "contenu": "Le matériel est constitué par l'ensemble des objets et instruments avec (et/ou par) lesquels sont extraites, transformées ou façonnées les matières ou fournitures, ou sont fournis les services l'objet même de la profession exercée. Le mobilier est constitué de meubles et objets utilisés sur une période supérieure à un an dans l'entité. L'actif biologique est constitué d'animaux vivants, de plantes vivantes et secondairement des améliorations foncières, de l'autoconsommation prélevée, de certains contrats ou partenariats spécifiques. Le matériel bureautique est constitué notamment par tout le matériel de substitution au support papier (ardoises électroniques, écrans et progiciels), utilisé pour rationaliser le support vocal (téléconférences, messagerie vocale, reconnaissance de la parole), servant à regrouper des informations (chronos, échéanciers, dossiers électroniques), de télétransmission (modems de communication).",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 24 est débité de la valeur d'apport, d'acquisition ou de création par l'entité des matériels — par le crédit du compte 10 Dotation, ou du compte 16 Fonds affectés, ou du compte 45 Fondateurs, ou des comptes de tiers, des comptes de trésorerie concernés, du compte 249 Matériel en cours lorsqu'ils ont été achevés"
+        ],
+        "credit": [
+          "Le compte 24 est crédité en cas de cession, disparition, mise au rebut — par le débit du compte 284 Amortissements du matériel, à concurrence du montant des amortissements pratiqués jusqu'à la date de cession, de disparition, de mise au rebut, et du compte 81 Valeurs comptables des cessions d'immobilisations, pour le solde"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les biens corporels disparaissant par le premier usage ou d'une durée de vie inférieure à un an ou de très faible valeur", "utiliser": "comptes de la classe 6"}
+      ],
+      "controles": ["des factures", "des inventaires", "des documents nécessaires à la circulation (cartes grises, livrets de bord...)", "de recoupements avec les assurances payées et les taxes sur les matériels roulants"],
+      "subdivisions": ["241 Matériel et outillage industriel et commercial", "242 Matériel et outillage agricole", "243 Matériel d'emballage récupérable et identifiable", "244 Matériel et mobilier (2441 de bureau, 2442 informatique et bureautique, 2443 religieux, 2444 sportifs, 2445 immeubles de placement, 2446 location-acquisition, 2447 logements affectés au personnel)", "245 Matériel de transport (2451 automobile, 2452 ferroviaire, 2453 fluvial/lagunaire, 2454 naval, 2455 aérien, 2456 location-acquisition, 2457 hippomobile, 2458 Autres)", "246 Actifs biologiques (2461 cheptel animaux de trait, 2462 reproducteurs, 2463 animaux de garde, 2465 plantations agricoles, 2468 Autres)", "247 Agencements et aménagements du matériel et des actifs biologiques", "248 Autres matériels et mobiliers (2481 Collections et œuvres d'art, 2488 Divers)", "249 Matériels et actifs biologiques en cours"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "25",
+      "titre": "COMPTE 25 : Avances et acomptes versés sur immobilisations",
+      "contenu": "Sommes versées par l'entité à des tiers pour des commandes en cours d'immobilisations. Le solde de ce compte représente la créance de l'entité sur ses fournisseurs d'immobilisations. Les avances et acomptes versés par l'entité à des tiers pour les opérations en cours sont des versements effectués au profit des fournisseurs d'immobilisations au moment des commandes ou au cours de l'exécution des contrats.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 25 est débité du montant des sommes versées aux fournisseurs d'immobilisations à la commande ou en cours d'exécution des contrats — par le crédit des comptes de trésorerie"
+        ],
+        "credit": [
+          "Le compte 25 est crédité pour solde à la réception de la facture définitive du fournisseur de l'immobilisation — par le débit du compte d'immobilisation concerné"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les en-cours d'immobilisation", "utiliser": "comptes appropriés de la classe 2"},
+        {"ne_pas_enregistrer": "les avances et acomptes versés sur d'autres biens que les immobilisations", "utiliser": "48 Créances et dettes H.A.O. ou 40 Fournisseurs et comptes rattachés"}
+      ],
+      "controles": ["des chèques", "des relevés bancaires", "des factures", "des versements effectués"],
+      "subdivisions": ["251 Avances et acomptes versés sur immobilisations incorporelles", "252 Avances et acomptes versés sur immobilisations corporelles"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "26",
+      "titre": "COMPTE 26 : Titres de participation",
+      "contenu": "Les titres de participation sont constitués par les droits dans le capital d'autres entités, matérialisés ou non par des titres, afin de créer un lien durable avec celles-ci et de contribuer à l'activité et au développement de la société détentrice. Sont présumés être des titres de participation les titres acquis en tout ou partie par offre publique d'achat (O.P.A.) ou par offre publique d'échange (O.P.E.) et les titres représentant au moins 10 % du capital social d'une entité. En cas de libération partielle, la part non libérée des titres de participation constitue une dette inscrite au compte 4813 Versements restant à effectuer sur titres de participation et titres immobilisés non libérés. La valeur d'entrée est le prix d'acquisition majoré des frais accessoires d'achat (impôts, courtages, commissions, frais d'actes).",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 26 est débité de la valeur d'apport ou d'acquisition des titres — par le crédit du compte 10 Dotation, ou du compte 16 Fonds affectés, ou des comptes de tiers, des comptes de trésorerie concernés, ou du compte 4813 Versements restant à effectuer sur titres de participation et titres immobilisés non libérés (pour la partie non libérée des titres)"
+        ],
+        "credit": [
+          "Le compte 26 est crédité en cas de cession de titres — par le débit du compte 81 Valeurs comptables des cessions d'immobilisations"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les titres de placement", "utiliser": "50 Titres de placement"},
+        {"ne_pas_enregistrer": "les titres immobilisés", "utiliser": "274 Titres immobilisés"}
+      ],
+      "controles": ["des bons de souscription", "des ordres d'achat et de vente en Bourse"],
+      "subdivisions": ["261 Titres de participation", "265 Participations dans des organismes professionnels", "266 Parts dans des Groupements d'Intérêt Économique (G.I.E.)", "268 Autres titres de participation"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "27",
+      "titre": "COMPTE 27 : Autres immobilisations financières",
+      "contenu": "Les autres immobilisations financières comprennent : les titres autres que les titres de participation, que l'entité n'a ni l'intention de conserver durablement, ni la possibilité de revendre dans un bref délai (placements à long terme) ; les prêts nés en vertu de dispositions contractuelles ; les créances non commerciales assimilées à des prêts (dépôts et cautionnements). Les dépôts sont des sommes versées à certains fournisseurs ou prestataires de services pour leur garantir le paiement des redevances ou des loyers. Les cautionnements sont les sommes déposées en vue de garantir la bonne fin de l'exécution d'un marché ou d'une opération. Les prêts et créances ne sont pas distingués en fonction du terme d'exigibilité de leur remboursement. Toutefois, lorsque le délai d'exigibilité est inférieur ou égal à un an, à la clôture de l'exercice la partie devenue exigible est isolée distinctement dans le tableau d'échéances des créances et des dettes.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 27 est débité de la valeur d'apport ou d'acquisition des titres immobilisés, du montant des prêts accordés, des créances financières nées ou des dépôts et cautionnements versés et de la partie non libérée des titres immobilisés — par le crédit des comptes de tiers et des comptes de trésorerie concernés, ou du compte 4813 Versements restant à effectuer sur titres de participation et titres immobilisés non libérés"
+        ],
+        "credit": [
+          "Le compte 27 est crédité lors du règlement ou en cas de cession de titres — par le débit des comptes de trésorerie ou de tiers intéressés"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les titres de participation", "utiliser": "26 Titres de participation"},
+        {"ne_pas_enregistrer": "les titres de placement", "utiliser": "50 Titres de placement"}
+      ],
+      "controles": ["contrats de prêts, reçus des dépôts et cautionnement", "souscriptions de titres, certificats de propriété de titres", "reconnaissances de dettes de la part de tiers, virements bancaires et mouvements financiers"],
+      "subdivisions": ["271 Prêts et créances (2711 Prêts participatifs, 2713 Billets de fonds, 2715 Titres prêtés, 2718 Autres)", "272 Prêts au personnel (2721 Prêts immobiliers, 2722 Prêts mobiliers et d'installation, 2728 Autres)", "273 Créances sur l'État (2731 Retenues de garantie, 2733 Fonds réglementé, 2738 Autres)", "274 Titres immobilisés (2741 TIAP, 2742 Titres participatifs, 2743 Certificats d'investissement, 2744 Parts de fonds commun de placement, 2745 Obligations, 2748 Autres)", "275 Dépôts et cautionnements versés (2751 loyers d'avance, 2752 électricité, 2753 eau, 2754 gaz, 2755 téléphone/télécopie, 2758 Autres)", "276 Intérêts courus (2761-2768 par type)", "278 Immobilisations financières diverses (2781 Créances diverses groupe, 2784 Banques dépôt à terme, 2785 Or et métaux précieux, 2788 Autres)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "28",
+      "titre": "COMPTE 28 : Amortissements",
+      "contenu": "L'amortissement consiste pour l'entité à répartir le montant amortissable du bien sur sa durée d'utilité selon un plan prédéfini. Le montant du bien amortissable représente la différence entre le coût d'entrée d'un actif et sa valeur résiduelle prévisionnelle. La valeur résiduelle d'un actif est le montant estimé qu'une entité obtiendrait actuellement de la sortie de l'actif, après déduction des coûts de sortie estimés. Modes d'amortissement : le mode linéaire (charge constante sur la durée d'utilité), le mode dégressif à taux décroissant (charge décroissante), le mode des unités de production (heures de fonctionnement, nombre de kilomètres, nombre d'heures de travail, etc.). Un mode d'amortissement basé sur les revenus générés par l'utilisation de l'actif est interdit pour les immobilisations corporelles. La date de début d'amortissement est la date à laquelle l'actif immobilisé est en état de fonctionner et au lieu d'utilisation prévue par l'entité. Les dotations aux amortissements doivent être pratiquées à la clôture de chaque exercice, même en cas d'absence ou d'insuffisance de bénéfice.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 28 est débité en cas de cession d'immobilisation et d'annulation des amortissements — par le crédit du compte d'immobilisation concerné (classe 2)",
+          "Le compte 28 est débité lors des reprises d'amortissements, en cas de révision du plan d'amortissement — par le crédit du compte 798 Reprises d'amortissements, ou du compte 862 Reprises d'amortissements H.A.O."
+        ],
+        "credit": [
+          "Le compte 28 est crédité pour l'annuité d'amortissement de l'exercice ou la dotation complémentaire en cas de cession — par le débit du compte 681 Dotations aux amortissements d'exploitation, ou du compte 85 Dotations H.A.O."
+        ]
+      },
+      "exclusions": [],
+      "controles": ["des recoupements provenant des tableaux d'amortissement"],
+      "subdivisions": ["280 Amortissements d'usufruit temporaire", "281 Amortissements des immobilisations incorporelles (2812-2818)", "282 Amortissements des terrains (2824 travaux de mise en valeur)", "283 Amortissements des bâtiments, installations techniques et agencements (2831-2838)", "284 Amortissements du matériel (2841-2848)", "285 Amortissements des immobilisations HAO"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "29",
+      "titre": "COMPTE 29 : Dépréciations des immobilisations",
+      "contenu": "À la clôture de chaque exercice, une entité doit apprécier s'il existe un quelconque indice qu'un actif a subi une perte de valeur. L'actif doit être déprécié lorsque la valeur nette comptable est supérieure à la valeur actuelle. Sources externes d'indice : diminution de la valeur de marché plus importante que celle attendue, changements importants dans l'environnement technologique, économique ou juridique, augmentation des taux d'intérêt de marché. Sources internes : indice d'obsolescence ou de dégradation physique, changements importants dans le mode d'utilisation de l'actif, plans d'abandon ou de restructuration, réestimation de la durée d'utilité. Les dépréciations sont inscrites distinctement à l'actif en diminution de la valeur brute des biens correspondants. Même en cas d'absence ou d'insuffisance d'excédent, il doit être procédé aux dotations nécessaires pour couvrir les dépréciations.",
+      "fonctionnement": {
+        "debit": [
+          "Le compte 29 est débité pour la reprise de la dépréciation à la clôture de l'exercice — par le crédit du compte 79 Reprises de provisions, de dépréciations et autres, ou par le crédit du compte 863 Reprises de dépréciations H.A.O."
+        ],
+        "credit": [
+          "Le compte 29 est crédité de la dotation de la dépréciation à la clôture de l'exercice — par le débit du compte 69 Dotations aux dépréciations, ou du compte 853 Dotations aux dépréciations H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les dépréciations des comptes de stocks", "utiliser": "39 Dépréciations des stocks"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes de tiers", "utiliser": "49 Dépréciations et provisions pour risques à court terme (Tiers)"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes de trésorerie", "utiliser": "59 Dépréciations et provisions pour risques à court terme (Trésorerie)"}
+      ],
+      "controles": ["des rapprochements effectués entre la valeur d'entrée des actifs dans le patrimoine de l'entité et la valeur à la date de clôture de l'exercice", "de factures", "de l'argus", "du livre d'inventaire"],
+      "subdivisions": ["290 Dépréciations des immobilisations destinées à la vente (2901 d'usufruit temporaire, 2902 d'immobilisations destinées à la vente provenant de dons et legs non encore reçus)", "291 Dépréciations des immobilisations incorporelles (2912-2919)", "292 Dépréciations des terrains (2921-2929)", "293 Dépréciations des bâtiments, installations techniques et agencements (2931-2939)", "294 Dépréciations du matériel, mobilier et de l'actif biologique (2941-2949)", "295 Dépréciations des avances et acomptes versés sur immobilisations (2951-2952)", "296 Dépréciations des titres de participation (2961-2968)", "297 Dépréciations des autres immobilisations financières (2971-2978)"],
+      "sens": "crediteur"
+    }
+  ]
+}

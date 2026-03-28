@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { LuUpload, LuFileSpreadsheet, LuTrash2, LuTriangleAlert, LuChevronDown, LuChevronRight, LuCheck } from 'react-icons/lu';
+import { LuUpload, LuFileSpreadsheet, LuTrash2, LuTriangleAlert, LuChevronDown, LuChevronRight, LuCheck, LuPenLine, LuSave } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
 import ConfirmModal from '../components/ConfirmModal';
 import { parseCSV, parseExcel, formatMontant, PlanCompte, CompteAnomalie, isCompteInEtats, findSuggestionByNumero, findSimilarByLibelle } from './ImportBalance.parsers';
@@ -42,6 +42,9 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const [editingBalance, setEditingBalance] = useState(false);
+  const [savingBalance, setSavingBalance] = useState(false);
+  const [editedLignes, setEditedLignes] = useState<Record<number, Partial<BalanceLigneWithMeta>>>({});
 
   // Sync annee si le parent change d'exercice
   useEffect(() => {
@@ -259,6 +262,38 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
     }
   };
 
+  const updateEditedLigne = (ligneId: number, field: string, value: string) => {
+    setEditedLignes(prev => ({ ...prev, [ligneId]: { ...(prev[ligneId] || {}), [field]: value } }));
+  };
+
+  const getEditedValue = (ligne: BalanceLigneWithMeta, field: string): string => {
+    const edited = editedLignes[ligne.id];
+    if (edited && field in edited) return String((edited as Record<string, unknown>)[field]);
+    return String((ligne as unknown as Record<string, unknown>)[field] ?? '');
+  };
+
+  const handleSaveBalance = async () => {
+    setSavingBalance(true);
+    try {
+      const entries = Object.entries(editedLignes);
+      for (const [ligneId, fields] of entries) {
+        await fetch(`/api/balance/ligne/${ligneId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(fields),
+        });
+      }
+      if (exercice) loadBalances(exercice.id);
+      setEditedLignes({});
+      setEditingBalance(false);
+      setMessage(`${entries.length} ligne(s) modifiée(s)`);
+      setTimeout(() => setMessage(''), 3000);
+    } catch {
+      setError('Erreur lors de la sauvegarde.');
+    }
+    setSavingBalance(false);
+  };
+
   const displayedLignes = currentLignes;
 
   return (
@@ -307,6 +342,24 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
               <LuTrash2 size={14} />
             </button>
           </span>
+        )}
+        {currentLignes.length > 0 && (
+          !editingBalance ? (
+            <button
+              onClick={() => setEditingBalance(true)}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#D4A843', color: '#fff', border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
+            >
+              <LuPenLine size={15} /> Modifier
+            </button>
+          ) : (
+            <button
+              onClick={handleSaveBalance}
+              disabled={savingBalance || Object.keys(editedLignes).length === 0}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#059669', color: '#fff', border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer', opacity: Object.keys(editedLignes).length === 0 ? 0.5 : 1 }}
+            >
+              <LuSave size={15} /> {savingBalance ? 'Sauvegarde...' : `Sauvegarder (${Object.keys(editedLignes).length})`}
+            </button>
+          )
         )}
       </div>}
 
@@ -652,8 +705,16 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
                       <span style={{ color: '#f59e0b', fontSize: 14, fontWeight: 700, cursor: 'help' }}>&#9888;</span>
                     )}
                   </td>
-                  <td className="compte">{l.numero_compte}</td>
-                  <td>{l.libelle_compte}</td>
+                  <td className="compte">
+                    {editingBalance ? (
+                      <input value={getEditedValue(l, 'numero_compte')} onChange={e => updateEditedLigne(l.id, 'numero_compte', e.target.value)} style={{ width: 70, padding: '2px 4px', fontSize: 12, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0' }} />
+                    ) : l.numero_compte}
+                  </td>
+                  <td>
+                    {editingBalance ? (
+                      <input value={getEditedValue(l, 'libelle_compte')} onChange={e => updateEditedLigne(l.id, 'libelle_compte', e.target.value)} style={{ width: '100%', padding: '2px 4px', fontSize: 12, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0' }} />
+                    ) : l.libelle_compte}
+                  </td>
                   <td className="num">{formatMontant(parseFloat(String(l.si_debit)))}</td>
                   <td className="num">{formatMontant(parseFloat(String(l.si_credit)))}</td>
                   <td className="num">{formatMontant(parseFloat(String(l.debit)))}</td>

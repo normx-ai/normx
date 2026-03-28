@@ -1,0 +1,260 @@
+{
+  "meta": {
+    "document": "Acte uniforme relatif au Système Comptable des Entités à But Non Lucratif (SYCEBNL-2022)",
+    "referentiel": "SYCEBNL",
+    "partie": "Partie 2, Chapitre 3, Section 1 — Classe 1 : Comptes de Ressources Durables",
+    "pages_source": "106-132",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": "10",
+      "titre": "COMPTE 10 : Dotation",
+      "contenu": "La dotation traduit le montant des valeurs apportées par les membres que l'ENBL est tenue de maintenir en permanence dans les ressources attribuées. La dotation initiale correspond à la valeur des apports (nature ou espèces) effectués par les membres à la création de l'entité tels qu'ils figurent dans les statuts. Au cours de la vie sociale, la dotation peut, sur décision des membres, être augmentée ou diminuée pour diverses raisons : apports et/ou reprise, affectation de résultats et incorporation de réserves.",
+      "fonctionnement": {
+        "credit": [
+          "Les comptes 101, 102 et 104 sont crédités du montant des apports initiaux — par le débit du compte 45 Fondateurs, pour les apports en espèces ou en nature",
+          "Crédités des augmentations de dotation en espèces ou en nature, en réserves — par le débit du compte 45 Fondateurs, ou du compte 11 Réserves, ou du compte 12 Report à nouveau, ou du compte 131 Excédent",
+          "Le compte 104 Dotation consomptible est crédité des ressources durables apportées par les fondateurs pour couvrir des charges de fonctionnement. Le compte 1049 est débité de la quote-part de la dotation affectée aux charges de fonctionnement — par le crédit du compte 703 Quote-part de dotation consomptible transférée"
+        ],
+        "debit": [
+          "Les comptes 101 et 102 sont débités des réductions d'apport décidées par les assemblées générales des membres ou la reprise des apports conformément aux dispositions contractuelles — par le crédit du compte 12 Report à nouveau ou 139 Déficit, pour l'absorption des déficits antérieurs, ou du compte 45 Fondateurs dans le cas du remboursement d'une partie des apports"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les mises à dispositions de fonds durables effectués par les Fondateurs ou membres destinés à couvrir des charges", "utiliser": "104 Dotation consomptible"},
+        {"ne_pas_enregistrer": "les apports effectués par les bailleurs de fonds du projet de développement et assimilés affectés aux immobilisations", "utiliser": "16 Fonds affectés"},
+        {"ne_pas_enregistrer": "les apports effectués par les bailleurs de fonds du projet de développement et assimilés affectés à l'administration", "utiliser": "46 Bailleurs, fonds d'administration"}
+      ],
+      "controles": [
+        "des statuts de l'entité",
+        "des virements bancaires et relevés de banque",
+        "du procès-verbal de l'assemblée des membres"
+      ],
+      "subdivisions": ["101 Dotation non consomptible sans droit de reprise (1011 en numéraire, 1015 en nature)", "102 Dotation non consomptible avec droit de reprise (1021 en numéraire, 1025 en nature)", "103 Droit d'entrée", "104 Dotation consomptible (1041 Dotation consomptible, 1049 Dotation consomptible inscrite au compte de résultat)", "106 Écarts de réévaluation (1061 sur biens sans droit de reprise, 1062 sur biens avec droit de reprise)"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "11",
+      "titre": "COMPTE 11 : Réserves",
+      "contenu": "Les réserves correspondent à des excédents laissés à la disposition de l'entité et non incorporés à la dotation. L'obligation de constituer des réserves résulte des dispositions statutaires, réglementaires et des décisions des organes compétents. Les réserves accroissent les fonds propres ou comblent les déficits.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 11 est crédité lors de l'affectation de l'excédent aux réserves — par le débit du compte 131 Résultat net de l'exercice : Excédent"
+        ],
+        "debit": [
+          "Le compte 11 est débité des incorporations directes à la dotation — par le crédit du compte 101 ou 102 Dotation non consomptible",
+          "Le compte 11 est débité des prélèvements pour l'amortissement des déficits — par le crédit du compte 139 Résultat net de l'exercice : Déficit"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions pour pertes et charges", "utiliser": "19 Provisions pour risques et charges"},
+        {"ne_pas_enregistrer": "les dépréciations des immobilisations", "utiliser": "29 Dépréciations"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes de stocks", "utiliser": "39 Dépréciations des stocks"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes clients", "utiliser": "49 Dépréciations et provisions pour risques à court terme (Tiers)"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes de trésorerie", "utiliser": "59 Dépréciations et provisions pour risques à court terme (Trésorerie)"}
+      ],
+      "controles": [
+        "de dispositions législatives, statutaires ou contractuelles obligatoires concernant la répartition des résultats",
+        "des décisions de l'assemblée générale des membres portant affectation des résultats"
+      ],
+      "subdivisions": ["112 Réserves statutaires ou contractuelles", "118 Autres réserves"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "12",
+      "titre": "COMPTE 12 : Report à nouveau",
+      "contenu": "Le report à nouveau correspond au montant soit des excédents d'exercices antérieurs dont l'affectation a été reportée sur les exercices ultérieurs, soit des déficits constatés à la clôture d'exercices antérieurs qui n'ont pas été compensés par des prélèvements opérés sur les excédents, les réserves ou la dotation. Le report à nouveau est inscrit au passif du bilan où il doit figurer sur une ligne distincte : en moins si son solde est débiteur, et en plus si son solde est créditeur. Il constitue un élément des fonds propres.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 12 est crédité du montant non affecté à un compte de réserves — par le débit du compte 131 Résultat net de l'exercice : Excédent"
+        ],
+        "debit": [
+          "Le compte 12 est débité du montant des déficits non compensés — par le crédit du compte 139 Résultat net de l'exercice : Déficit, pour le montant des prélèvements opérés sur des réserves ou sur la dotation"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les sommes à porter en réserves par disposition statutaire ou décision des organes compétents", "utiliser": "11 Réserves"}
+      ],
+      "controles": ["des statuts ou des décisions des organes compétents"],
+      "subdivisions": ["121 Report à nouveau des excédents", "128 Résultat net en instance d'affectation", "129 Report à nouveau des déficits"],
+      "sens": "crediteur ou debiteur"
+    },
+    {
+      "numero": "13",
+      "titre": "COMPTE 13 : Résultat net de l'exercice — Solde des opérations de l'exercice",
+      "contenu": "Le résultat net de l'exercice peut être défini de deux façons : différence entre les revenus (reçus ou à recevoir) et les charges (payées ou à payer) de la période ; variation des fonds propres entre le début et la clôture de l'exercice, hors nouveaux apports et retraits d'apports et hors réévaluation. Quel que soit son signe, le résultat net de l'exercice est inscrit au passif du bilan sur la ligne correspondante, parmi les fonds propres. Le solde des opérations de l'exercice du projet de développement, différence entre les produits et charges, est toujours nul.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 13 est crédité à la clôture de l'exercice du montant des charges de l'exercice — par le débit des comptes de la classe 6 et des comptes débiteurs de la classe 8 pour solde",
+          "Le compte 13 est crédité du résultat net déficitaire après la clôture de l'exercice suivant les dispositions statutaires — par le débit des comptes 12 Report à nouveau, ou 11 Réserves"
+        ],
+        "debit": [
+          "Le compte 13 est débité à la clôture de l'exercice du montant des produits — par le crédit des comptes de la classe 7 et des comptes créditeurs de la classe 8 pour solde",
+          "Le compte 13 est débité du résultat net excédentaire après la clôture de l'exercice suivant les dispositions statutaires — par le crédit des comptes 12 Report à nouveau, 11 Réserves, 10 Dotation"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les charges ou produits qui n'auraient pas au préalable transité par les comptes de gestion", "utiliser": "classes 6, 7 et 8"}
+      ],
+      "controles": ["des soldes des comptes de gestion"],
+      "subdivisions": ["131 Résultat net de l'exercice : Excédent", "139 Résultat net de l'exercice : Déficit"],
+      "sens": "crediteur (excédent) ou debiteur (déficit)"
+    },
+    {
+      "numero": "14",
+      "titre": "COMPTE 14 : Subventions d'investissement",
+      "contenu": "Les subventions d'investissement sont des aides financières non remboursables accordées aux entités, pour différentes raisons : acquisition, création de valeurs immobilisées (subventions d'équipement) ou financement d'activités à long terme. Elles peuvent également consister en l'octroi de biens et services. Les subventions d'investissement figurent pour leur montant net au passif du bilan, parmi les fonds propres, jusqu'à ce qu'elles aient rempli leur objet. La quote-part de subvention reprise dans le résultat de l'exercice est égale : soit au montant de la dotation aux comptes d'amortissements des immobilisations amortissables acquises ou créées au moyen de la subvention ; soit à un montant déterminé en fonction du nombre d'années pendant lesquelles les immobilisations non amortissables acquises ou créées au moyen de la subvention sont inaliénables.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 14 est crédité lors de l'octroi de la subvention du montant de l'aide obtenue — par le débit du compte approprié de la classe 2, sur la base de l'évaluation des immobilisations transférées gratuitement à l'entité, ou du compte 4731 Subventions d'équipement à recevoir"
+        ],
+        "debit": [
+          "Le compte 14 est débité à la clôture de l'exercice pour la partie de la subvention rapportée au résultat de la période — par le crédit du compte 799 Reprises de subventions d'investissement",
+          "Le compte 14 est débité à la date de cession de l'actif acquis à l'aide de la subvention — par le crédit du compte 799 Reprises de subventions d'investissement, pour la partie de la subvention non encore rapportée au résultat"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les subventions d'exploitation reçues", "utiliser": "71 Subventions d'exploitation"},
+        {"ne_pas_enregistrer": "les subventions d'équilibre reçues", "utiliser": "88 Subventions d'équilibre"}
+      ],
+      "controles": [
+        "des décisions d'octroi de la subvention ou d'affectation à l'entité d'un bien de façon définitive et à titre gratuit",
+        "du tableau d'amortissement des biens acquis ou créés à l'aide de la subvention pour vérification de la reprise au résultat selon le même rythme que les amortissements"
+      ],
+      "subdivisions": ["141 Subventions d'équipement (1411 État, 1412 Régions, 1413 Départements, 1414 Communes et collectivités publiques décentralisées, 1415 Entités publiques ou mixtes, 1416 Entreprises et organismes privés, 1417 Organismes internationaux, 1418 Autres)", "148 Autres subventions d'investissement"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "15",
+      "titre": "COMPTE 15 : Provisions réglementées et fonds assimilés",
+      "contenu": "Les provisions réglementées sont des provisions à caractère purement réglementaire, comptabilisées non pas en application de principes comptables, mais suivant des dispositions légales et réglementaires (lois de finances, par exemple). Il est rare de rencontrer les fonds réglementés dans les ENBL mais il est prudent de maintenir ce compte dans le plan comptable. La provision spéciale de réévaluation est comptabilisée lorsque la législation fiscale n'autorisant pas la déductibilité du supplément d'amortissement (concept dit de « neutralité fiscale ») impose la comptabilisation sous cette forme.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 15 est crédité lors de la création ou en cas de variation en augmentation des provisions réglementées — par le débit du compte 85 Dotations H.A.O."
+        ],
+        "debit": [
+          "Le compte 15 est débité lors de l'annulation ou en cas de variation en diminution des provisions réglementées — par le crédit du compte 86 Reprises H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les provisions destinées à couvrir des risques et des charges futurs (à plus d'un an)", "utiliser": "19 Provisions pour risques et charges"},
+        {"ne_pas_enregistrer": "les dépréciations de l'actif immobilisé", "utiliser": "29 Dépréciations"},
+        {"ne_pas_enregistrer": "les dépréciations de l'actif circulant", "utiliser": "39 Dépréciations des stocks"},
+        {"ne_pas_enregistrer": "les dépréciations des comptes de trésorerie", "utiliser": "59 Dépréciations et provisions pour risques à court terme (Trésorerie)"}
+      ],
+      "controles": ["des lois et règlements qui ont été à l'origine de cette provision"],
+      "subdivisions": ["154 Provisions spéciales de réévaluation", "158 Autres provisions réglementées et fonds assimilés"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "16",
+      "titre": "COMPTE 16 : Fonds affectés",
+      "contenu": "Les comptes 162 à 164 enregistrent les fonds affectés aux immobilisations mises à la disposition du projet par le bailleur de fonds. La comptabilisation des avances à justifier (compte 161) et des fonds à recevoir (compte 169) du projet de développement est présentée au compte 46. Le compte 165 Fonds affectés à un projet spécifique est destiné aux associations et entités assimilées pour les fonds affectés à une activité bien déterminée. Il enregistre aussi des fonds que les tiers financeurs ont affecté à un but ou objet bien déterminé qui ne sont pas entièrement consommés en fin d'exercice conformément aux directives du tiers financeur. Les Fonds provenant de dons et de legs d'immobilisations que l'entité décide de conserver sont enregistrés dans le compte 167. La volonté du donateur sera traduite à travers les comptes 1671 Fonds affectés et 1672 Fonds non affectés (sans manifestation de volonté).",
+      "fonctionnement": {
+        "credit": [
+          "Les comptes 162 à 164 sont crédités lors de la mise à disposition des fonds spécifiques aux immobilisations par les bailleurs de fonds — par le débit du compte de trésorerie ou d'un compte d'actif immobilisé s'il s'agit de mise à disposition de biens",
+          "Le compte 167 est crédité du montant des dons et legs lors de l'acceptation de l'acte de donation ou de l'exécution du testament — par le débit des comptes de la classe 2 d'actif immobilisé concernés et éventuellement du compte 4865 Créances reçues sur dons et legs d'immobilisations",
+          "Le compte 167 est crédité du compte 192 Provisions pour charges sur legs et donation, des obligations à supporter par l'entité dont l'échéance et le montant sont incertains"
+        ],
+        "debit": [
+          "Le compte 167 est débité net des engagements auprès du donateur, à la clôture de l'exercice, suivant le même taux d'amortissement de l'immobilisation — par le crédit du compte 7923 Reprises fonds provenant des dons et legs d'immobilisations",
+          "Le compte 1679 Engagements auprès donateur est débité en cas de révélation tardive après la clôture de l'exercice des obligations à supporter par l'entité — par le crédit du compte 192 Provisions pour charges sur legs et donation"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les Fonds de dotation", "utiliser": "10 Fonds de dotation"},
+        {"ne_pas_enregistrer": "les Fonds d'administration des projets", "utiliser": "46 Bailleurs, fonds d'administration"}
+      ],
+      "controles": [
+        "des documents de projet et le budget des bailleurs de fonds",
+        "des documents de financement des autres tiers financeurs"
+      ],
+      "subdivisions": ["161 Fonds de développement — Avances de fonds à justifier", "162 Fonds affectés aux investissements du projet de développement — Bailleurs de fonds", "163 Fonds affectés aux investissements du projet de développement — État", "164 Fonds affectés aux investissements des autres organismes de financement assimilés", "165 Fonds affectés un projet spécifique", "167 Fonds provenant de dons ou legs d'immobilisations (1671 affectés, 1672 non affectés, 1679 Engagements auprès donateur)", "168 Autres fonds affectés", "169 Fonds affectés à recevoir"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "17",
+      "titre": "COMPTE 17 : Fonds reportés",
+      "contenu": "Les fonds reportés sont des donations et des legs non encore reçus d'immobilisations destinées à la vente et la donation temporaire d'usufruit. Les donations d'immobilisations destinées à la vente provenant de dons et legs non encore reçues et la donation temporaire d'usufruit doivent être enregistrées dès acceptation de la libéralité à leur valeur actuelle en contrepartie d'un compte d'immobilisations spécifique identifié comme destiné à la vente. Les dons non encore reçus d'immobilisations destinés à la vente peuvent faire l'objet d'une dépréciation en cas de perte de valeur. Les produits de la cession des immobilisations sont inscrits en produits d'activité ordinaire dans les comptes 828 Produits des cessions d'immobilisations reçues en dons et legs destinées à la vente et 7082 Revenus d'usufruit. Lors de la cession de l'immobilisation, les comptes d'immobilisations concernés sont soldés par le compte 818 Valeur comptable des cessions d'immobilisations reçues en dons destinées à la vente. La donation temporaire de l'usufruit (compte 171) est reprise suivant le même rythme d'amortissement de l'immobilisation concernée sur la durée de la donation par le crédit du compte 7961 Reprises de fonds reportés provenant de la donation d'usufruit temporaire.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 17 est crédité lors de l'acceptation de la libéralité — par le débit du compte d'immobilisations concerné",
+          "Les comptes de la classe 2 spécifiques aux dons reçus destinés à la vente sont crédités lors de la cession — par le débit du compte 818 Valeur comptable des cessions"
+        ],
+        "debit": [
+          "Le compte 171 est débité lors de la perception des revenus de l'usufruit — par le crédit du compte de trésorerie et par le crédit du compte 7082 Revenus d'usufruit",
+          "Le compte 171 est débité de la reprise de l'usufruit sur la durée de la donation en fin d'exercice — par le crédit du compte 7961 Reprises de fonds reportés provenant de la donation d'usufruit temporaire",
+          "Le compte 17 est débité lors du solde des fonds reportés lors de la cession des immobilisations reçues en dons destinées à la vente — par le crédit du compte 7962 Reprises de fonds reportés provenant de dons et legs d'immobilisations reçues destinées à la vente",
+          "Le compte 17 est débité lors de la réalisation de la vente des immobilisations — par le crédit du compte 485 ou un compte de trésorerie de la classe 5 et du compte 828 Produits des cessions"
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les fonds affectés", "utiliser": "16 Fonds affectés"},
+        {"ne_pas_enregistrer": "les fonds de dotation", "utiliser": "10 Fonds de dotation"},
+        {"ne_pas_enregistrer": "les assurances vie au profit de l'entité", "utiliser": "Engagements reçus"}
+      ],
+      "controles": [
+        "de l'acte de donation",
+        "de l'acte de vente des biens",
+        "du compte bancaire"
+      ],
+      "subdivisions": ["171 Donation temporaire d'usufruit", "172 Legs et donations non encore reçus d'immobilisations destinées à la vente", "178 Autres fonds reportés"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "18",
+      "titre": "COMPTE 18 : Emprunts et dettes assimilées",
+      "contenu": "Les emprunts et les dettes assimilées sont des ressources financières externes, contractées auprès d'établissements de crédit et/ou de tiers divers, affectées de façon durable au financement des moyens d'exploitation ou de production. Remboursables à terme, ils participent concurremment avec les fonds propres à la couverture des besoins durables de l'entité. La location-acquisition enregistre le montant correspondant à la valeur d'entrée du bien acquis par contrats de location acquisition (crédit-bail, location-vente). Les emprunts et dettes assimilées ne sont pas distingués en fonction du terme d'exigibilité. Toutefois, à la clôture de l'exercice, les fractions devenues exigibles à un an au plus, à deux ans au plus, et à plus de deux ans, sont isolées distinctement dans le tableau des créances et des dettes.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 18 est crédité du montant net des emprunts et avances diverses accordés — par le débit des comptes de trésorerie concernés",
+          "Le compte 18 est crédité des intérêts courus à la clôture de l'exercice, des intérêts courus jusqu'au jour de la clôture — par le débit du compte 671 Intérêts des emprunts",
+          "Le compte 18 est crédité des dépôts et cautionnements reçus — par le débit des comptes de trésorerie intéressés"
+        ],
+        "debit": [
+          "Le compte 18 est débité à la date d'échéance de remboursement, du montant du principal remboursé — par le crédit d'un compte de tiers ou de trésorerie",
+          "Le compte 18 est débité à l'ouverture de l'exercice, du montant des intérêts courus pris en compte à la clôture de l'exercice précédent — par le crédit du compte 671 Intérêts des emprunts",
+          "Le compte 18 est débité des dépôts et cautionnements restitués — par le crédit des comptes de trésorerie concernés"
+        ]
+      },
+      "exclusions": [],
+      "controles": [
+        "des contrats de prêts signés par l'entité",
+        "des virements (réception et remboursements)",
+        "du tableau d'amortissement des emprunts",
+        "du calcul des intérêts courus",
+        "des contrats de dépôts et cautionnements",
+        "des contrats d'avances-engagements de l'Etat et des organismes internationaux",
+        "Le compte 187 Dettes de location-acquisition peut être contrôlé à partir des factures de redevances, des contrats de crédit-bail et assimilés, des contrats de location-vente et assimilés, des échéanciers de remboursement"
+      ],
+      "subdivisions": ["181 Emprunts obligataires", "182 Emprunts et dettes auprès des établissements de crédit", "183 Avances reçues de l'État", "184 Avances reçues et comptes courants bloqués", "185 Dépôts et cautionnements reçus (1851 Dépôts, 1852 Cautionnements, 1863 sur avances reçues de l'État, 1865 sur dépôts et cautionnements reçus, 1868 sur autres emprunts et dettes)", "186 Intérêts courus (1861 sur emprunts obligataires, 1862 sur emprunts et dettes auprès des établissements de crédit)", "187 Dettes de location-acquisition (1871 crédit-bail immobilier, 1872 crédit-bail mobilier, 1873 location-acquisition/location-vente, 1876 Intérêts courus)", "188 Autres emprunts et dettes"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "19",
+      "titre": "COMPTE 19 : Provisions pour risques et charges",
+      "contenu": "Une provision est un passif externe (dette) dont l'échéance ou le montant est incertain. Les provisions pour risques et charges sont des provisions destinées à couvrir des charges et des risques nettement précisés quant à leur objet, que des événements survenus ou en cours rendent probables, mais comportant un élément d'incertitude quant à leur montant ou leur réalisation prévisible à plus d'un an. Les provisions pour risques et charges sont inscrites au passif du bilan. En application du principe de prudence, même en cas d'absence ou d'insuffisance d'excédent, il doit être procédé obligatoirement à la dotation aux provisions. Le compte 19 est réajusté à la clôture de chaque exercice soit par dotations supplémentaires, soit par reprises des provisions antérieures. La prime d'assurance maladie et assimilée due à la compagnie d'assurance est enregistrée au débit du compte 6685 Assurances retraite et fonds de pension et au crédit du compte 4332 Assurance retraite.",
+      "fonctionnement": {
+        "credit": [
+          "Le compte 19 est crédité de la dotation de la provision à la clôture de l'exercice des charges prévisibles — par le débit du compte 69 (691 Dotations aux provisions et aux dépréciations d'exploitation, ou 697 Dotations aux provisions et aux dépréciations financières) ou du compte 85 Dotations H.A.O."
+        ],
+        "debit": [
+          "Le compte 19 est débité de la reprise de la provision à la clôture de l'exercice, de la reprise des provisions pour charges constatées à la clôture d'un exercice antérieur dont les raisons qui les ont motivées ont cessé d'exister — par le crédit du compte 79 Reprises de provisions, de dépréciations et autres ou du compte 86 Reprises H.A.O."
+        ]
+      },
+      "exclusions": [
+        {"ne_pas_enregistrer": "les charges certaines d'un montant déterminé, qui sont à comptabiliser dans les comptes de charges par nature avec contrepartie dans les comptes de tiers ou de trésorerie concernés", "utiliser": "Classes 6 et 8 de Charges"},
+        {"ne_pas_enregistrer": "les provisions qui ont pour origine une réglementation particulière, souvent d'ordre fiscal, sans charges réellement prévisibles", "utiliser": "15 Provisions réglementées et fonds assimilés"},
+        {"ne_pas_enregistrer": "les provisions correspondant à des risques à moins d'un an", "utiliser": "499 Provisions pour risques à court terme"}
+      ],
+      "controles": [
+        "vérification du calcul des provisions",
+        "recherche de la réalité du risque ou de l'éventualité de la charge",
+        "appréciation de l'échéance du risque ou de la charge"
+      ],
+      "subdivisions": ["191 Provisions pour litiges", "192 Provisions pour charges sur donations et legs", "194 Provisions pour pertes de change", "196 Provisions pour pensions et obligations similaires", "198 Autres provisions pour risques et charges (1981 Provisions pour amendes et pénalités, 1984 Provisions pour démantèlement et remise en état, 1988 Provisions pour divers risques et charges)"],
+      "sens": "crediteur"
+    }
+  ]
+}

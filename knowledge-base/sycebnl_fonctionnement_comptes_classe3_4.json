@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "document": "SYCEBNL-2022",
+    "referentiel": "SYCEBNL",
+    "partie": "Partie 2, Chapitre 3, Sections 3-4 — Classes 3 et 4",
+    "pages_source": "165-217",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": "31",
+      "titre": "COMPTE 31 : Biens liés à l'activité",
+      "contenu": "Les biens liés à l'activité sont les fournitures de toute nature de biens destinés à être mis à la disposition de bénéficiaires sans contrepartie pour la réalisation de l'objet social de l'entité à but non lucratif. Le compte 31 et ses subdivisions permettent à l'entité de classer les fournitures selon la nomenclature des biens et services en usage dans chacun des États parties. Les biens liés à l'activité hors activités ordinaires (H.A.O.) ne seront distinguées que si leur montant est supérieur à 5% du total de l'actif circulant.",
+      "fonctionnement": {
+        "debit": ["Inventaire intermittent : Est débité du montant du stock final à la clôture — par le crédit du compte 6031 Variations des stocks de biens liés à l'activité", "Inventaire permanent : Est débité à chaque entrée en stock du coût (prix d'achat et frais accessoires) — par le crédit du compte 6031"],
+        "credit": ["Inventaire intermittent : Est crédité du montant du stock initial pour solde — par le débit du compte 6031", "Inventaire permanent : Est crédité à chaque sortie de stock au coût d'entrée (biens identifiés) ou suivant la méthode PEPS ou du coût moyen pondéré (biens interchangeables) — par le débit du compte 6031"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les achats de marchandises, matières premières et fournitures liées destinées à être revendues ou incorporées aux produits fabriqués", "utiliser": "32 Marchandises, matières premières et fournitures liées"}],
+      "controles": ["inventaire extra comptable", "factures (achats et frais)"],
+      "subdivisions": ["311 Biens liés à l'activité A", "312 Biens liés à l'activité B"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "32",
+      "titre": "COMPTE 32 : Marchandises, matières premières et fournitures liées",
+      "contenu": "Les marchandises sont les objets, matières et fournitures, acquis par l'entité et destinés à être revendus en l'état. Les matières premières et fournitures liées sont les objets, matières et fournitures achetés pour être incorporés aux produits fabriqués. Les matières dites consommables ne font pas partie des fournitures liées et sont classées dans le compte 33 Autres approvisionnements.",
+      "fonctionnement": {
+        "debit": ["Inventaire intermittent : Est débité du montant du stock final — par le crédit des comptes 6032 et 6033", "Inventaire permanent : Est débité à chaque entrée en stock du coût d'achat — par le crédit des comptes 6032 et 6033"],
+        "credit": ["Inventaire intermittent : Est crédité du montant du stock initial pour solde — par le débit des comptes 6032 et 6033", "Inventaire permanent : Est crédité à chaque sortie de stock — par le débit des comptes 6032 et 6033"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "le matériel de remplacement ou de réserve qui n'est pas encore en service", "utiliser": "24 Matériel, mobilier et actifs biologiques"}],
+      "controles": ["inventaire extra comptable", "factures (achats et frais)"],
+      "subdivisions": ["321 Marchandises A", "322 Marchandises B", "323 Matières A", "324 Matières B", "325 Fournitures liées (A, B)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "33",
+      "titre": "COMPTE 33 : Autres approvisionnements",
+      "contenu": "Les autres approvisionnements sont des matières, des fournitures acquises par l'entité et qui concourent à la fabrication ou à l'exploitation, sans entrer dans la composition des produits fabriqués ou traités. Le compte 33 peut comprendre des pièces de rechange, du petit outillage et, le cas échéant, du matériel mobile, dont la destination définitive (immobilisation ou entretien) n'est pas exactement connue.",
+      "fonctionnement": {
+        "debit": ["Inventaire intermittent : Est débité du montant du stock final — par le crédit du compte 6034", "Inventaire permanent : Est débité à chaque entrée en stock du coût d'achat — par le crédit du compte 6034"],
+        "credit": ["Inventaire intermittent : Est crédité du montant du stock initial pour solde — par le débit du compte 6034", "Inventaire permanent : Est crédité à chaque sortie de stock — par le débit du compte 6034"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "le matériel de remplacement ou de réserve qui n'est pas encore en service", "utiliser": "24 Matériel, Mobilier et actifs biologiques"}],
+      "controles": ["inventaire extra comptable", "factures (achats et frais)"],
+      "subdivisions": ["331 Matières consommables", "333 Fournitures de magasin", "334 Fournitures de bureau", "335 Emballages (3351 perdus, 3352 récupérables non identifiables, 3353 à usage mixte, 3358 Autres)", "338 Autres matières"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "34",
+      "titre": "COMPTE 34 : Dons en nature",
+      "contenu": "Les dons manuels en nature constituent une donation de la main à la main portant sur un bien meuble corporel. Les dons en nature récurrents sont des actifs détenus pour être distribués en l'état dans le cadre d'œuvres de bienfaisance. Ils peuvent être affectés ou non à un but ou un objet bien déterminé. Les dons en nature sont évalués à la valeur actuelle et suivis comptablement pour une meilleure traçabilité. Les dons en nature, autres que les immobilisations, destinées à la vente pour se procurer de la trésorerie sont suivis en extra comptables (voir Partie 3 : Opérations et problèmes spécifiques aux EBNL, chapitre 4 : Dons).",
+      "fonctionnement": {
+        "debit": ["Est débité du montant du stock final de dons en nature, déterminé par inventaire extra comptable — par le crédit du compte 6035 Variations de stocks de dons en nature"],
+        "credit": ["Est crédité du compte 4713 Créditeurs dons en nature courants non consommés en fin d'exercice, du montant du stock de fin d'exercice — par le débit du compte 754 Dons en nature courants. Ces écritures sont extournées au début de l'exercice suivant"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les dons en nature exceptionnels non récurrents", "utiliser": "38 Dons en nature HAO"}, {"ne_pas_enregistrer": "les dons en nature d'immobilisations", "utiliser": "comptes de la classe 2"}, {"ne_pas_enregistrer": "les dons en nature d'immobilisations destinés à la vente", "utiliser": "20 Immobilisations destinées à la vente provenant de dons et legs"}, {"ne_pas_enregistrer": "les dons temporaires d'usufruit", "utiliser": "2011 Usufruit temporaire"}],
+      "controles": ["inventaire extra comptable"],
+      "subdivisions": ["341 Dons en nature non affectés", "345 Dons en nature affectés"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "35",
+      "titre": "COMPTE 35 : Produits finis et services en cours",
+      "contenu": "Les produits en cours sont des biens et services en voie de formation ou de transformation à la clôture de l'exercice. Les services en cours sont des études et prestations en cours d'exécution, dont la commande ou l'ordre n'est pas encore intervenue.",
+      "fonctionnement": {
+        "debit": ["Est débité du montant du stock final d'en-cours déterminé en comptabilité analytique de gestion ou par voie extra-comptable — par le crédit du compte 735 variations des en-cours de produits finis et services"],
+        "credit": ["Est crédité du montant du stock initial d'en-cours achevés et vendus pour solde — par le débit du compte 735"]
+      },
+      "subdivisions": [],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "36",
+      "titre": "COMPTE 36 : Produits finis, produits intermédiaires et résiduels",
+      "contenu": "Les produits finis sont les produits fabriqués par l'entité qui ont atteint le stade final de production. Ils sont destinés à être vendus, loués ou fournis.",
+      "fonctionnement": {
+        "debit": ["Inventaire intermittent : Est débité du montant du stock final — par le crédit du compte 736", "Inventaire permanent : Est débité à chaque entrée en stocks du coût réel de production (pour les corps certains) ou du coût de production PEPS/CMP (biens interchangeables) — par le crédit du compte 736"],
+        "credit": ["Inventaire intermittent : Est crédité du montant du stock initial pour solde — par le débit du compte 736", "Inventaire permanent : Est crédité à chaque sortie de stocks — par le débit du compte 736"]
+      },
+      "controles": ["inventaire extra comptable", "évaluation des coûts de production"],
+      "subdivisions": ["361 Produits finis A", "362 Produits finis B", "363 Stocks d'actifs biologiques (3631 Animaux, 3632 Végétaux, 3638 Autres stocks)", "367 Produits intermédiaires et résiduels"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "37",
+      "titre": "COMPTE 37 : Stocks en cours de route, en consignation ou en dépôt",
+      "contenu": "Ce sont des marchandises, matières, fournitures ou produits fabriqués, expédiés par le fournisseur et non encore réceptionnés par l'entité ou détenus chez des tiers mais dont l'entité est propriétaire. Dans le cadre du système d'inventaire permanent, le compte 37 constitue un compte de passage destiné à enregistrer les stocks dont l'entité est déjà propriétaire, mais qui sont en voie d'acheminement et non encore réceptionnés. Les stocks provenant d'immobilisation mises hors service comprennent les éléments récupérés ou démontés d'immobilisations corporelles. Ce compte est débité par le crédit du compte d'immobilisation concerné.",
+      "fonctionnement": {
+        "debit": ["Inventaire intermittent : Est débité du montant des stocks en cours de route à cette date pour leur coût approché ou coût standard — par le crédit des sous-comptes 603 concernés", "Inventaire permanent : Est débité du montant des biens liés à l'activité, marchandises, matières premières et fournitures, produits finis en cours de route non encore réceptionnés (coût approché ou coût standard) — par le crédit des sous-comptes 603 concernés"],
+        "credit": ["Inventaire intermittent : Est crédité du montant des stocks en cours de route du début d'exercice, pour solde — par le débit des sous-comptes 603 concernés", "Inventaire permanent : Est crédité lorsque les stocks sont réceptionnés par l'entité, le consignataire ou le dépositaire — par le débit des comptes de stocks de classe 3 concernés"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les stocks dont l'entité a pris possession et qu'elle continue d'attendre les factures d'achat", "utiliser": "En cours d'exercice : pas d'écriture à passer. À la clôture : les comptes de régularisation"}],
+      "controles": ["inventaire extra comptable", "factures d'achat"],
+      "subdivisions": ["371 Biens liés à l'activité en cours de route", "372 Marchandises matières premières et fournitures liées en cours de route", "373 Autres approvisionnements en cours de route", "376 Produits finis en cours de route", "377 Stock en consignation ou en dépôt (3871 en consignation, 3872 en dépôt)", "378 Stock provenant d'immobilisations mises hors service ou au rebut"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "38",
+      "titre": "COMPTE 38 : Dons en nature HAO",
+      "contenu": "Les dons manuels en nature constituent une donation de la main à la main portant sur un bien meuble corporel. Les dons en nature non récurrents sont des actifs détenus pour être distribués en l'état dans le cadre d'œuvres de bienfaisance. Ils peuvent être affectés ou non à un but ou un objet bien déterminé. Les dons en nature, autres que les immobilisations, destinées à la vente pour se procurer de la trésorerie en extra comptables sont suivis en extra comptables (voir Partie 3 : Opérations et problèmes spécifiques aux EBNL, chapitre 4 : Dons). Les dons en nature sont enregistrés à la valeur actuelle dans le courant de l'exercice au fur et à mesure de leur réception. Les dons en nature non récurrents reçus sont inscrits au débit du compte 832 par le crédit du compte 8415. Les dons en nature non récurrents reçus destinés à la vente sont suivis en extra comptable.",
+      "fonctionnement": {
+        "debit": ["Est débité du montant du stock final de dons en nature HAO, déterminé par inventaire extra comptable et évalué conformément aux règles dans l'évaluation des stocks — par le crédit du compte 87 Variations de stocks de dons en nature HAO"],
+        "credit": ["Est crédité du compte 488 Créditeurs dons en nature HAO non consommés en fin d'exercice, du montant du stock de fin d'exercice — par le débit du compte 841 Produits HAO constatés. Ces écritures sont extournées au début de la période suivante"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les dons en nature récurrents", "utiliser": "34 Dons en nature"}, {"ne_pas_enregistrer": "les dons en nature d'immobilisations", "utiliser": "Comptes de la classe 2"}, {"ne_pas_enregistrer": "les dons en nature d'immobilisations destinés à la vente", "utiliser": "20"}, {"ne_pas_enregistrer": "les dons en nature consommables destinés à la vente", "utiliser": "Suivi extra comptable"}, {"ne_pas_enregistrer": "les dons temporaires d'usufruit", "utiliser": "2011 Usufruit temporaire"}],
+      "controles": ["inventaire extra comptable"],
+      "subdivisions": ["381 Dons en nature HAO non affectés", "385 Dons en nature HAO affectés"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "39",
+      "titre": "COMPTE 39 : Dépréciations des stocks et en cours de production",
+      "contenu": "Ce sont des dépréciations subies par des causes diverses dont les effets ne sont pas jugés irréversibles sur les stocks de marchandises, de matières, et autres approvisionnements. Les dépréciations des stocks obéissent aux mêmes règles de comptabilisation que les dépréciations constatées sur les autres éléments de l'actif circulant. La dépréciation est constituée même si le montant est incertain. Le montant des dépréciations est déterminé par différence entre la valeur nette comptable et la valeur nette de réalisation au jour de l'inventaire.",
+      "fonctionnement": {
+        "debit": ["Est débité pour la reprise de la dépréciation au début de l'exercice, des dépréciations existant au début de l'exercice, pour solde — par le crédit du compte 7593 ou du compte 849"],
+        "credit": ["Est crédité de la dotation de la dépréciation à la fin de l'exercice — par le débit du compte 6593 ou du compte 839"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les dépréciations de l'actif immobilisé", "utiliser": "29 Dépréciations"}, {"ne_pas_enregistrer": "les dépréciations des clients et comptes rattachés", "utiliser": "49 Dépréciations et provisions pour risques à court terme (Tiers)"}, {"ne_pas_enregistrer": "les dépréciations des comptes de trésorerie", "utiliser": "59 Dépréciations et provisions pour risques à court terme (Trésorerie)"}],
+      "controles": ["inventaire extra comptable", "évaluation"],
+      "subdivisions": ["391 Dépréciations des stocks de biens liés à l'activité", "392 Dépréciations des stocks de marchandises, matières premières et fournitures liées", "393 Dépréciations des stocks d'autres approvisionnements", "396 Dépréciations des stocks de produits finis, produits intermédiaires et résiduels", "397 Dépréciations des stocks en cours de route, en consignation ou en dépôt"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "40",
+      "titre": "COMPTE 40 : Fournisseurs et comptes rattachés",
+      "contenu": "Les fournisseurs d'exploitation sont des tiers auxquels l'entité a recours pour ses achats de fournitures de toutes natures et de services. Figurent à ce compte les dettes et avances liées à l'acquisition de biens ou de services. Les dettes d'exploitation se caractérisent par le rattachement à ce compte de tiers de toutes les opérations le concernant : effets à payer, factures à recevoir à la clôture de l'exercice, intérêts courus à la clôture de l'exercice, avances et acomptes versés, retenues de garantie. Si un fournisseur d'exploitation a d'autres relations avec l'entité (client-usager par exemple), seules les opérations relatives aux achats doivent figurer dans le compte Fournisseurs.",
+      "fonctionnement": {
+        "credit": ["Est crédité du montant des factures d'achats de biens ou de prestations de services des fournisseurs ou des sous-traitants — par le débit des comptes de la classe 6 (montant hors taxes récupérables), de la classe 3 (inventaire permanent), du compte 4094, du compte 445 TVA récupérable"],
+        "debit": ["Est débité des avances et acomptes versés aux fournisseurs ainsi que des règlements effectués sur factures — par le crédit des comptes de trésorerie", "Est débité pour le retour des marchandises au fournisseur (factures d'avoir) — par le crédit des comptes de la classe 6 et des autres comptes ayant joué lors de l'enregistrement initial", "Est débité des rabais, remises et ristournes sur achats obtenus hors factures — par le crédit des comptes de la classe 6 concernés", "Est débité des escomptes de règlement obtenus des fournisseurs — par le crédit du compte 773 Escomptes obtenus"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les fournisseurs d'immobilisations", "utiliser": "481 Fournisseurs d'investissements"}, {"ne_pas_enregistrer": "les avances et acomptes versés sur commande d'immobilisations", "utiliser": "25 Avances et acomptes versés sur immobilisations"}],
+      "controles": ["factures", "chèques de règlement", "effets"],
+      "subdivisions": ["401 Fournisseurs, dettes en compte (4011 Fournisseurs, 4013 Fournisseurs sous-traitants, 4016 Fournisseurs réserve de propriété, 4017 Fournisseurs retenues de garantie)", "402 Fournisseurs, effets à payer (4021, 4023)", "408 Fournisseurs, factures non parvenues (4081, 4083, 4086 intérêts courus)", "409 Fournisseurs débiteurs (4091 avances et acomptes versés, 4093 sous-traitants avances, 4094 créances pour emballages et matériels à rendre, 4098 Fournisseurs rabais remises ristournes et autres avoirs à obtenir)"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "41",
+      "titre": "COMPTE 41 : Adhérents, clients-usagers et comptes rattachés",
+      "contenu": "Les cotisations des adhérents contribuent au bon fonctionnement de l'EBNL. Les clients d'exploitation sont des tiers auxquels l'entité vend les biens ou services, objet de son activité. Les adhérents sont les membres qui doivent payer leurs cotisations conformément aux statuts ou aux délibérations des organes compétents. Les tiers auxquels l'entité vend les biens ou services sont les clients-usagers. Les créances d'exploitation se caractérisent par le rattachement à ce compte de tiers de toutes les opérations le concernant : créances à venir se rapportant à l'exploitation de l'exercice (factures non encore établies), les créances litigieuses ou douteuses, les intérêts courus à la clôture de l'exercice, les avances et acomptes obtenus.",
+      "fonctionnement": {
+        "debit": ["Est débité du montant des appels de cotisations et des factures de ventes de biens ou de prestations de services — par le crédit des comptes de la classe 7 (montant hors taxes récupérables), du compte 4194 dettes pour emballages et matériels consignés, du compte 443 État TVA facturée"],
+        "credit": ["Est crédité des avances et acomptes reçus des adhérents et clients, des règlements reçus sur factures — par le débit des comptes de trésorerie", "Est crédité pour le retour des marchandises du client (factures d'avoir) — par le débit des comptes de la classe 7 et des autres comptes ayant joué lors de l'enregistrement initial", "Est crédité des rabais, ristournes et remises accordées sur ventes hors factures — par le débit des comptes 70 Ventes", "Est crédité pour les créances litigieuses ou douteuses — par le débit du compte 416 créances adhérents clients-usagers litigieuses ou douteuses", "Est crédité des escomptes de règlement accordés aux clients — par le débit du compte 673 Escomptes accordés"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les créances sur des tiers nées des opérations autres que les cotisations des membres, les revenus des dons en nature et d'usufruit, la vente de marchandises, des produits intermédiaires, des produits finis ou services", "utiliser": "485 Créances sur cessions d'immobilisations"}],
+      "controles": ["appels de cotisations", "factures", "chèques de règlement", "relances adhérents clients", "dossiers contentieux"],
+      "subdivisions": ["411 Adhérents", "412 Clients-usagers", "413 Adhérents clients-usagers chèques effets et autres valeurs impayés (4131-4138)", "416 Créances adhérents clients-usagers litigieuses ou douteuses (4161 Adhérents cotisations litigieuses ou douteuses, 4162 Créances litigieuses ou douteuses)", "418 Adhérents clients produits à recevoir (4181 Adhérents appels de fonds à établir, 4182 Clients-usagers factures à établir, 4186 Intérêts courus)", "419 Adhérents clients-usagers créditeurs (4191 Adhérents avances reçues, 4192 Clients-usagers avances et acomptes reçus, 4194 Clients-usagers dettes pour emballages et matériels consignés, 4198 Clients-usagers rabais remises ristournes et autres avoirs à accorder)"],
+      "sens": "debiteur"
+    },
+    {
+      "numero": "42",
+      "titre": "COMPTE 42 : Personnel",
+      "contenu": "Le compte Personnel enregistre l'ensemble des opérations qui interviennent entre l'entité et les personnes qui lui sont liées par un contrat de travail. Par extension, les opérations qui concernent les représentants du personnel ou les organismes similaires lui sont rattachées. Le personnel de l'entité comprend : le personnel de direction et d'encadrement, les employés, les ouvriers et les occasionnels indépendamment de leur situation ou de leurs fonctions ; les représentants salariés. À la clôture de l'exercice, il ne doit pas être effectué de compensation entre les sommes dues au personnel et les montants qui seraient éventuellement dus par le personnel et qui n'auraient pas été retenus sur la dernière paie de l'exercice.",
+      "fonctionnement": {
+        "credit": ["Est crédité des rémunérations brutes à payer au personnel — par le débit des comptes de charges intéressés 66 Charges de personnel"],
+        "debit": ["Est débité du montant des avances et acomptes faits au personnel ainsi que des rémunérations versées au personnel — par le crédit des comptes de trésorerie", "Est débité des versements effectués aux organismes sociaux pour le compte du personnel (cotisations salariales) — par le crédit du compte 43 Organismes sociaux", "Est débité en cas d'opposition de tiers sur salaires, du versement de la fraction de salaire soumise à saisie — par le crédit des comptes de trésorerie"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les prêts consentis au personnel", "utiliser": "272 Prêts au personnel"}],
+      "controles": ["fiches de paie", "déclarations sociales", "contrats de prêts", "procès-verbaux de saisie-arrêt", "avis à tiers détenteur"],
+      "subdivisions": ["421 Personnel avances et acomptes (4211 Avances, 4212 Acomptes, 4213 Frais avancés et fournitures au personnel)", "422 Personnel rémunérations dues", "423 Personnel oppositions saisies-arrêts (4231 oppositions, 4232 saisies-arrêts, 4233 avis à tiers détenteur)", "424 Personnel œuvres sociales internes (4241 Assistance médicale, 4242 Allocations familiales, 4245 Organismes sociaux rattachés à l'entité, 4248 Autres)", "425 Représentants du personnel (4251 Délégués, 4252 Syndicats et assimilés, 4258 Autres)", "427 Personnel dépôts", "428 Personnel charges à payer et produits à recevoir (4281 congés à payer, 4286 Autres charges à payer, 4287 Produits à recevoir)"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "43",
+      "titre": "COMPTE 43 : Organismes sociaux",
+      "contenu": "Ce compte enregistre d'une part le montant des cotisations sociales salariales et patronales dues aux organismes sociaux et, d'autre part, les règlements de cotisations effectués à leur profit. Les obligations de l'entité vis-à-vis des organismes sociaux sont remplies conformément aux dispositions juridiques en matière de droit social de chaque État partie.",
+      "fonctionnement": {
+        "credit": ["Est crédité du montant des cotisations sociales salariales et patronales dues aux organismes sociaux — par le débit du compte 664 Charges sociales (part patronale) et du compte 422 Personnel rémunérations dues (part salariale)"],
+        "debit": ["Est débité des règlements de cotisations effectués aux organismes sociaux — par le crédit des comptes de trésorerie concernés"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les opérations faites avec les organismes sociaux en tant que clients", "utiliser": "41 Clients et comptes rattachés"}],
+      "controles": ["fiches de paie", "bordereaux de déclarations sociales", "livres de paie"],
+      "subdivisions": ["431 Sécurité sociale (4311 Prestations familiales, 4312 Accidents de travail, 4318 Autres)", "432 Caisses de retraite (4321 Caisse de retraite obligatoire, 4322 Caisse de retraite complémentaire, 4328 Autres)", "433 Autres organismes sociaux (4331 Mutuelle de santé, 4332 Assurances retraite, 4333 Assurances et organismes de santé)", "438 Organismes sociaux charges à payer et produits à recevoir (4381 Charges sociales sur gratifications à payer, 4382 Charges sociales sur congés à payer, 4386 Autres charges à payer, 4387 Produits à recevoir)"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "44",
+      "titre": "COMPTE 44 : État et Collectivités publiques",
+      "contenu": "Les opérations à inscrire à ce compte concernent d'une manière générale les opérations qui sont faites avec l'État et avec les diverses collectivités publiques en tant que pouvoirs publics. Les opérations d'achats et de ventes de biens ou de services avec l'État et les collectivités publiques s'inscrivent aux comptes 40 Fournisseurs et 412 Clients-usagers. Les dettes du compte 442 État, autres impôts et taxes comprennent non seulement les impôts et taxes d'État proprement dits tels que droits de douane à l'exportation, mais aussi les impôts et taxes perçus pour le compte des collectivités locales.",
+      "fonctionnement": {
+        "credit": ["Est crédité lors de la constatation par l'entité des dettes d'impôts dont elle est redevable envers l'État — par le débit des comptes de charges intéressés", "Est crédité lors du règlement par l'État des sommes dues à l'entité (TVA récupérable, subventions) — par le débit des comptes de trésorerie"],
+        "debit": ["Est débité des sommes versées lors du règlement par l'entité à l'État — par le crédit des comptes de trésorerie concernés"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les opérations faites avec l'État en tant que fournisseur", "utiliser": "40 Fournisseurs et comptes rattachés"}, {"ne_pas_enregistrer": "les opérations faites avec l'État en tant que client", "utiliser": "412 Clients-usagers et comptes rattachés"}, {"ne_pas_enregistrer": "les droits de douane acquittés à l'entrée des biens sur le territoire national faisant partie du prix d'achat du bien", "utiliser": "comptes de la classe 2 ou 6 concernés"}],
+      "controles": ["avis d'imposition", "déclarations fiscales", "relevés bancaires"],
+      "subdivisions": ["442 État, autres impôts et taxes (4421 État, 4422 Collectivités publiques, 4423 recouvrable sur des obligataires, 4424 recouvrable sur des adhérents et autres, 4426 Droits de douane, 4428 Autres)", "443 État TVA facturée", "444 État TVA due ou crédit de TVA", "445 État TVA récupérable", "446 État autres taxes sur le chiffre d'affaires", "447 État impôts retenus à la source (4471 Impôt général sur le revenu, 4472 Impôts sur salaires, 4473 Contribution nationale, 4474 Contribution nationale de solidarité, 4478 Autres)", "448 État charges à payer et produits à recevoir (4486 Charges à payer, 4487 Produits à recevoir)", "449 État créances et dettes diverses (4491 État subventions à recevoir)"],
+      "sens": "crediteur ou debiteur"
+    },
+    {
+      "numero": "45",
+      "titre": "COMPTE 45 : Fondateurs, apporteurs et comptes courants",
+      "contenu": "Le compte 45 enregistre d'une part les créances/dettes envers les apporteurs résultant des divers mouvements de dotation ; d'autre part les créances/dettes temporaires en comptes courants des adhérents et dirigeants. Sont réputés fondateurs les membres qui ont créé les entités à but non lucratif et apporté éventuellement la dotation indispensable au démarrage des activités.",
+      "fonctionnement": {
+        "debit": ["Est débité lors de la constitution ou de l'augmentation de la dotation, lors de l'appel de fonds — par le crédit du compte 10 Dotation", "Est débité pour le remboursement des fonds laissés temporairement au profit de l'entité — par le crédit des comptes de trésorerie (ou des comptes de charges)"],
+        "credit": ["Est crédité lors du règlement ou de la réalisation de l'apport en nature — par le débit des comptes de trésorerie et/ou d'immobilisations", "Est crédité des fonds mis ou laissés temporairement à la disposition de l'entité — par le débit des comptes de trésorerie (ou d'immobilisations ou de charges, s'il s'agit de frais réglés pour le compte de l'entité)"]
+      },
+      "exclusions": [{"ne_pas_enregistrer": "les appels de cotisations des membres", "utiliser": "411 Adhérents"}],
+      "controles": ["décisions des organes compétents ou des statuts"],
+      "subdivisions": ["451 Associations et assimilés (4511 Apporteurs en nature, 4512 Apporteurs en numéraire, 4515 Adhérents dirigeants comptes courants)", "452 Fondations (4521, 4522, 4525)", "453 Ordres professionnels (4531, 4532, 4535)", "454 Organisations politiques (4541, 4542)", "455 Organisations syndicales (4551, 4552, 4555)", "456 Organisations religieuses apporteurs (4561 Congrégations religieuses et assimilées, 4562 Waqf et assimilés)", "457 Mécènes bénévoles et assimilés (4571 Mécènes et assimilés, 4572 Bénévoles et assimilés)", "458 Autres fondateurs"],
+      "sens": "debiteur ou crediteur"
+    },
+    {
+      "numero": "46",
+      "titre": "COMPTE 46 : Bailleurs, fonds d'administration",
+      "contenu": "Le compte 46 enregistre les fonds que les bailleurs de fonds du projet de développement et assimilés affectent aux charges de fonctionnement. Les comptes 462 à 464 sont crédités des fonds relatifs aux frais de fonctionnement du projet lors de leur mise à disposition par le bailleur ou des charges payées directement par le bailleur. Au fur et à mesure de l'engagement des charges, ces comptes sont débités par le crédit du compte 702 Quote-part de fonds d'administration transférés. Le bailleur de fonds peut être amené à faire une avance initiale qui doit être justifiée par le projet aux fins de remboursement pour reconstitution de ladite avance. En fin d'exercice, les charges relatives aux fonds non remboursés par le bailleur doivent être neutralisées par le débit du compte 469 et le crédit du compte 702.",
+      "fonctionnement": {
+        "credit": ["Les comptes 462 à 464 sont crédités des fonds relatifs aux frais de fonctionnement du projet lors de leur mise à disposition par le bailleur — par le débit du compte 5 trésorerie"],
+        "debit": ["Les comptes 462 à 464 sont débités au fur et à mesure de l'engagement des charges — par le crédit du compte 702 Quote-part de fonds d'administration transférés"]
+      },
+      "subdivisions": ["462 Bailleurs - Projet de développement fonds d'administration reçus", "463 État - Projet de développement fonds d'administration reçus", "464 Autres organismes de financement assimilés - Projet de développement fonds d'administration reçus", "469 Fonds d'administration à recevoir"],
+      "sens": "crediteur"
+    },
+    {
+      "numero": "47",
+      "titre": "COMPTE 47 : Débiteurs et créditeurs divers",
+      "contenu": "Ce compte enregistre les opérations avec les tiers qui ne sont pas des fournisseurs, des adhérents, des clients, du personnel, des organismes sociaux, de l'État ou des fondateurs. Comprend les créances et dettes liées à l'acquisition ou la cession de titres de placement et de valeurs mobilières, les sommes en attente d'imputation, les charges et produits constatés d'avance, et les opérations relatives aux dons et legs (créditeurs dons en nature, subventions à recevoir).",
+      "subdivisions": ["471 Comptes d'attente débiteurs", "472 Comptes d'attente créditeurs", "4713 Créditeurs dons en nature courants non consommés", "4731 Subventions d'équipement à recevoir", "476 Charges constatées d'avance", "477 Produits constatés d'avance", "478 Écarts de conversion actif", "479 Écarts de conversion passif"],
+      "sens": "debiteur ou crediteur"
+    },
+    {
+      "numero": "48",
+      "titre": "COMPTE 48 : Créances et dettes HAO",
+      "contenu": "Ce compte enregistre les créances et dettes provenant d'opérations hors activités ordinaires. Comprend les fournisseurs d'investissements, les créances sur cessions d'immobilisations, les versements restant à effectuer sur titres non libérés, les créances reçues sur dons et legs d'immobilisations, les dépôts et cautionnements reçus sur dons en nature HAO non consommés.",
+      "subdivisions": ["481 Fournisseurs d'investissements (4811-4818)", "4813 Versements restant à effectuer sur titres de participation et titres immobilisés non libérés", "4817 Fournisseurs d'investissements retenues de garantie", "485 Créances sur cessions d'immobilisations", "4865 Créances reçues sur dons et legs d'immobilisations", "488 Créditeurs dons en nature HAO non consommés"],
+      "sens": "debiteur ou crediteur"
+    },
+    {
+      "numero": "49",
+      "titre": "COMPTE 49 : Dépréciations et provisions pour risques à court terme (Tiers)",
+      "contenu": "Ce compte enregistre les dépréciations des comptes de tiers (créances douteuses sur adhérents, clients-usagers) et les provisions pour risques à court terme liées aux opérations avec les tiers. Les dépréciations de créances ne sont constatées que si la perte de valeur est dûment justifiée par des événements précis (contentieux, faillite, défaut de paiement prolongé, etc.).",
+      "fonctionnement": {
+        "credit": ["Est crédité de la dotation pour dépréciation — par le débit du compte 6594 ou 659"],
+        "debit": ["Est débité de la reprise — par le crédit du compte 7594 ou 759"]
+      },
+      "subdivisions": ["491 Dépréciations des comptes adhérents", "492 Dépréciations des comptes clients-usagers", "494 Dépréciations des comptes fondateurs apporteurs", "496 Dépréciations des comptes débiteurs divers", "498 Dépréciations des comptes de créances HAO", "4991 Provisions pour risques sur opérations d'exploitation", "4998 Provisions pour risques sur opérations HAO"],
+      "sens": "crediteur"
+    }
+  ]
+}

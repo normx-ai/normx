@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2, LuInfo  } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -150,7 +150,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
   };
 
   const fmtMontant = (val: number): string => {
-    if (!val) return '';
+    if (!val) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 
@@ -200,13 +200,13 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
     const wasEditing = editing;
     if (wasEditing) setEditing(false);
     await new Promise(r => setTimeout(r, 100));
-    const pdf = new jsPDF('l', 'mm', 'a4');
+    const pdf = new jsPDF('p', 'mm', 'a4');
     if (!pageRef.current) return pdf;
     const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
     const imgData = canvas.toDataURL('image/png');
-    const pdfWidth = 297;
+    const pdfWidth = 210;
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 210));
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
     if (wasEditing) setEditing(true);
     return pdf;
   };
@@ -315,7 +315,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
       </div>
 
       <div ref={pageRef} style={{
-        width: '297mm', minHeight: '210mm', background: '#fff',
+        width: '210mm', minHeight: '297mm', background: '#fff',
         margin: '0 auto 20px', padding: '8mm 10mm',
         boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
         fontFamily: "'Outfit', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',

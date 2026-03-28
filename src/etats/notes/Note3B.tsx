@@ -131,7 +131,7 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
   };
 
   const fmtM = (val: number): string => {
-    if (val === 0) return '';
+    if (val === 0) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 
@@ -224,7 +224,7 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
     }
     return (
       <td style={tdRight}>
-        {editing ? <input style={inputStyle} value={getVal(label, col)} onChange={e => setVal(label, col, e.target.value)} /> : getVal(label, col)}
+        {editing ? <input style={inputStyle} value={getVal(label, col)} onChange={e => setVal(label, col, e.target.value)} /> : (getVal(label, col) || '0')}
       </td>
     );
   };

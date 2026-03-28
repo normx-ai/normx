@@ -5,53 +5,82 @@ import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import type { BalanceLigne, Exercice, EtatBaseProps, TFTRow } from '../types';
 
-// ===================== S2231 TABLEAU DES FLUX DE TRESORERIE -- SYCEBNL (methode indirecte) =====================
+// ===================== TABLEAU DES FLUX DE TRESORERIE -- SYCEBNL (methode DIRECTE, conforme SYCEBNL-2022 p.348) =====================
 
-// Prefixes de comptes pour le calcul
-const PRODUITS_PREFIXES: string[] = ['70', '71', '72', '73', '75', '77', '78', '79', '82', '84', '86', '88'];
-const CHARGES_PREFIXES: string[] = ['60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '81', '83', '85', '87'];
-const DOTATIONS_PREFIXES: string[] = ['68', '69'];
-const REPRISES_PREFIXES: string[] = ['78', '79'];
-const STOCKS_PREFIXES: string[] = ['31', '32', '33', '34', '36', '37', '38'];
-const CREANCES_PREFIXES: string[] = ['41', '42', '43', '44', '45', '47', '409', '485', '4865'];
-const DETTES_CIRC_PREFIXES: string[] = ['40', '481', '484', '488', '419'];
-const IMMOB_BRUT_PREFIXES: string[] = ['20', '21', '22', '23', '24', '25'];
+// Prefixes de comptes pour le calcul -- methode directe
+// Revenus par nature (pour calculer les encaissements)
+const COTISATIONS_PREFIXES: string[] = ['701'];
+const SUBVENTIONS_EXPL_PREFIXES: string[] = ['71', '88'];
+const GENEROSITE_PREFIXES: string[] = ['703'];
+const MANIFESTATIONS_PREFIXES: string[] = ['706'];
+const AUTRES_REVENUS_PREFIXES: string[] = ['702', '704', '705', '707', '708', '72', '73', '75', '77', '78', '79'];
+// Charges par nature (pour calculer les decaissements)
+const FOURNISSEURS_CHARGES_PREFIXES: string[] = ['60', '61', '62', '63', '64', '65'];
+const PERSONNEL_CHARGES_PREFIXES: string[] = ['66'];
+const AUTRES_CHARGES_PREFIXES: string[] = ['67', '68', '69'];
+// Creances par nature (pour ajuster revenus -> encaissements)
+const CREANCES_ADHERENTS_PREFIXES: string[] = ['411', '416', '418'];
+const CREANCES_SUBVENTIONS_PREFIXES: string[] = ['4491', '4731', '475'];
+const CREANCES_GENEROSITE_PREFIXES: string[] = ['4181'];
+const CREANCES_CLIENTS_PREFIXES: string[] = ['412', '413', '419'];
+const CREANCES_AUTRES_PREFIXES: string[] = ['42', '43', '44', '45', '47', '409', '485', '4865'];
+// Dettes par nature (pour ajuster charges -> decaissements)
+const DETTES_FOURNISSEURS_PREFIXES: string[] = ['40', '481'];
+const DETTES_PERSONNEL_PREFIXES: string[] = ['42', '43'];
+const DETTES_AUTRES_PREFIXES: string[] = ['44', '46', '47', '488'];
+// Immobilisations
+const IMMOB_CORP_INCORP_PREFIXES: string[] = ['20', '21', '22', '23', '24', '25'];
 const IMMOB_FIN_PREFIXES: string[] = ['26', '27'];
-const FONDS_PROPRES_PREFIXES: string[] = ['10', '11', '12', '14', '15'];
-const DETTES_FIN_PREFIXES: string[] = ['16', '17', '18', '19'];
+// Financement
+const DOTATION_FP_PREFIXES: string[] = ['10', '11', '12', '14', '15'];
+const SUBV_INVEST_PREFIXES: string[] = ['14'];
+const EMPRUNTS_PREFIXES: string[] = ['18'];
+// Tresorerie
 const TRESORERIE_ACTIF_PREFIXES: string[] = ['50', '51', '52', '53', '55', '57'];
 const TRESORERIE_PASSIF_PREFIXES: string[] = ['56'];
+// Pour resultat net (controle)
+const PRODUITS_PREFIXES: string[] = ['70', '71', '72', '73', '75', '77', '78', '79', '82', '84', '86', '88'];
+const CHARGES_PREFIXES: string[] = ['60', '61', '62', '63', '64', '65', '66', '67', '68', '69', '81', '83', '85', '87'];
 
-// ===================== TFT ROWS =====================
+// ===================== TFT ROWS -- Structure officielle SYCEBNL-2022 (methode directe) =====================
 const TFT_ROWS: TFTRow[] = [
-  { type: 'section', libelle: 'ACTIVITES OPERATIONNELLES' },
-  { ref: 'ZA', type: 'indent', note: '', libelle: 'Resultat net de l\'exercice (excedent + ou deficit -)' },
-  { type: 'label', libelle: 'Ajustements pour :' },
-  { ref: 'FA', type: 'indent', note: '5D', libelle: 'Dotations nettes aux amortissements, provisions et depreciations' },
-  { ref: 'FB', type: 'indent', note: '8', libelle: 'Variation des stocks' },
-  { ref: 'FC', type: 'indent', note: '9&10', libelle: 'Variation des creances' },
-  { ref: 'FD', type: 'indent', note: '19&20', libelle: 'Variation des dettes circulantes' },
-  { ref: 'ZB', type: 'subtotal', libelle: 'FLUX NET DE TRESORERIE DES ACTIVITES OPERATIONNELLES (A)' },
+  { ref: 'ZA', type: 'indent', note: '', libelle: 'Tresorerie nette au 1er janvier (A)' },
 
-  { type: 'section', libelle: 'ACTIVITES D\'INVESTISSEMENT' },
-  { ref: 'FE', type: 'indent', note: '5', libelle: 'Decaissements lies aux acquisitions d\'immobilisations corporelles et incorporelles' },
-  { ref: 'FF', type: 'indent', note: '6', libelle: 'Decaissements lies aux acquisitions d\'immobilisations financieres' },
-  { ref: 'FG', type: 'indent', note: '', libelle: 'Encaissements lies aux cessions d\'immobilisations' },
-  { ref: 'ZC', type: 'subtotal', libelle: 'FLUX NET DE TRESORERIE DES ACTIVITES D\'INVESTISSEMENT (B)' },
+  { type: 'section', libelle: 'FLUX DE TRESORERIE PROVENANT DES ACTIVITES OPERATIONNELLES' },
+  { ref: 'FA', type: 'indent', note: '23', libelle: '(+) Encaissement des cotisations' },
+  { ref: 'FB', type: 'indent', note: '', libelle: '(+) Encaissement des subventions d\'exploitation et d\'equilibre' },
+  { ref: 'FC', type: 'indent', note: '23', libelle: '(+) Encaissement des revenus lies a la generosite' },
+  { ref: 'FD', type: 'indent', note: '23', libelle: '(+) Encaissement des revenus des manifestations' },
+  { ref: 'FE', type: 'indent', note: '23', libelle: '(+) Encaissement des autres revenus' },
+  { ref: 'FF', type: 'indent', note: '', libelle: '(-) Decaissement des sommes versees aux fournisseurs (1)' },
+  { ref: 'FG', type: 'indent', note: '29', libelle: '(-) Decaissement des sommes versees au personnel' },
+  { ref: 'FH', type: 'indent', note: '', libelle: '(-) Autres decaissements' },
+  { ref: 'ZB', type: 'subtotal', libelle: 'FLUX DE TRESORERIE DES ACTIVITES OPERATIONNELLES (B)' },
 
-  { type: 'section', libelle: 'ACTIVITES DE FINANCEMENT' },
-  { ref: 'FH', type: 'indent', note: '15', libelle: 'Augmentation de dotation et fonds propres' },
-  { ref: 'FI', type: 'indent', note: '17B', libelle: 'Variation des fonds affectes et reportes' },
-  { ref: 'FJ', type: 'indent', note: '18A', libelle: 'Nouveaux emprunts' },
-  { ref: 'FK', type: 'indent', note: '18A', libelle: 'Remboursement des emprunts' },
-  { ref: 'ZD', type: 'subtotal', libelle: 'FLUX NET DE TRESORERIE DES ACTIVITES DE FINANCEMENT (C)' },
+  { type: 'section', libelle: 'FLUX DE TRESORERIE PROVENANT DES ACTIVITES D\'INVESTISSEMENT' },
+  { ref: 'FI', type: 'indent', note: '5', libelle: '(-) Decaissements acquisitions d\'immobilisations incorporelles et corporelles' },
+  { ref: 'FJ', type: 'indent', note: '6', libelle: '(-) Decaissements acquisitions d\'immobilisations financieres' },
+  { ref: 'FK', type: 'indent', note: '', libelle: '(+) Encaissements cessions d\'immobilisations incorporelles et corporelles' },
+  { ref: 'FL', type: 'indent', note: '', libelle: '(+) Encaissements cessions d\'immobilisations financieres' },
+  { ref: 'ZC', type: 'subtotal', libelle: 'FLUX DE TRESORERIE DES ACTIVITES D\'INVESTISSEMENT (C)' },
+
+  { type: 'section', libelle: 'FLUX DE TRESORERIE PROVENANT DU FINANCEMENT PAR LES FONDS PROPRES' },
+  { ref: 'FM', type: 'indent', note: '15', libelle: '(+) Encaissement des dotations et autres fonds propres' },
+  { ref: 'FN', type: 'indent', note: '17A', libelle: '(+) Subventions d\'investissement recues' },
+  { ref: 'FO', type: 'indent', note: '', libelle: '(-) Decaissement des dotations et autres fonds propres' },
+  { ref: 'ZD', type: 'subtotal', libelle: 'FLUX DE TRESORERIE DES FONDS PROPRES (D)' },
+
+  { type: 'section', libelle: 'TRESORERIE PROVENANT DU FINANCEMENT PAR LES FONDS ETRANGERS' },
+  { ref: 'FP', type: 'indent', note: '18A', libelle: '(+) Encaissement provenant des emprunts et autres dettes financieres' },
+  { ref: 'FQ', type: 'indent', note: '18A', libelle: '(-) Remboursements des emprunts et autres dettes financieres' },
+  { ref: 'ZE', type: 'subtotal', libelle: 'TRESORERIE DES FONDS ETRANGERS (E)' },
 
   { type: 'section', libelle: 'SYNTHESE' },
-  { ref: 'ZE', type: 'result', libelle: 'VARIATION DE TRESORERIE DE LA PERIODE (A + B + C)' },
-  { ref: 'ZF', type: 'indent', note: '', libelle: 'Tresorerie nette a l\'ouverture de l\'exercice' },
-  { ref: 'ZG', type: 'total', libelle: 'TRESORERIE NETTE A LA CLOTURE DE L\'EXERCICE (ZE + ZF)' },
-  { ref: 'ZH', type: 'indent', note: '', libelle: 'Controle : tresorerie nette calculee depuis le bilan' },
+  { ref: 'ZF', type: 'result', libelle: 'VARIATION DE LA TRESORERIE NETTE DE LA PERIODE (B+C+D+E) = (G)' },
+  { ref: 'ZG', type: 'total', libelle: 'TRESORERIE NETTE AU 31 DECEMBRE (G+A) = (H)' },
+  { ref: 'ZH', type: 'indent', note: '', libelle: 'Controle : Tresorerie actif N - Tresorerie passif N' },
 ];
+// (1) A l'exclusion des fournisseurs d'investissements
 
 interface BalanceApiRow {
   numero_compte: string;
@@ -108,25 +137,27 @@ function sumSoldeCrediteur(lignes: BalanceLigne[], prefixes: string[], excludes:
   return total;
 }
 
-// Resultat net = produits - charges
-function computeResultatNet(lignes: BalanceLigne[]): number {
-  let produits = 0;
-  let charges = 0;
-  for (const l of lignes) {
-    const num = (l.numero_compte || '').trim();
-    const sd = parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0;
-    const sc = parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0;
-    if (PRODUITS_PREFIXES.some(p => num.startsWith(p))) produits += sc - sd;
-    if (CHARGES_PREFIXES.some(p => num.startsWith(p))) charges += sd - sc;
-  }
-  return produits - charges;
-}
-
 // Tresorerie nette = tresorerie actif - tresorerie passif
 function computeTresorerieNette(lignes: BalanceLigne[]): number {
   const actif = sumSoldeDebiteur(lignes, TRESORERIE_ACTIF_PREFIXES);
   const passif = sumSoldeCrediteur(lignes, TRESORERIE_PASSIF_PREFIXES);
   return actif - passif;
+}
+
+// Methode directe : Encaissements = Revenus N + Creances N-1 - Creances N = Revenus N - variation creances
+// Decaissements = Charges N + Dettes N-1 - Dettes N = Charges N - variation dettes (positif = decaissement)
+function computeEncaissement(lN: BalanceLigne[], lN1: BalanceLigne[], revenusPrefixes: string[], creancesPrefixes: string[]): number {
+  const revenus = sumSoldeCrediteur(lN, revenusPrefixes);
+  const creancesN = sumSoldeDebiteur(lN, creancesPrefixes);
+  const creancesN1 = sumSoldeDebiteur(lN1, creancesPrefixes);
+  return revenus - (creancesN - creancesN1);
+}
+
+function computeDecaissement(lN: BalanceLigne[], lN1: BalanceLigne[], chargesPrefixes: string[], dettesPrefixes: string[]): number {
+  const charges = sumSoldeDebiteur(lN, chargesPrefixes);
+  const dettesN = sumSoldeCrediteur(lN, dettesPrefixes);
+  const dettesN1 = sumSoldeCrediteur(lN1, dettesPrefixes);
+  return charges - (dettesN - dettesN1);
 }
 
 function TFT_SYCEBNL({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
@@ -236,83 +267,107 @@ function TFT_SYCEBNL({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
   const computeAllFlux = (lN: BalanceLigne[], lN1: BalanceLigne[]): Record<string, number> => {
     const data: Record<string, number> = {};
 
-    // ZA -- Resultat net
-    data.ZA = computeResultatNet(lN);
+    // ===================== METHODE DIRECTE SYCEBNL-2022 (p.348) =====================
 
-    // FA -- Dotations nettes (dotations - reprises) = charges non decaissees
-    const dotations = sumSoldeDebiteur(lN, DOTATIONS_PREFIXES);
-    const reprises = sumSoldeCrediteur(lN, REPRISES_PREFIXES);
-    data.FA = dotations - reprises;
+    // ZA -- Tresorerie nette au 1er janvier (Tresorerie actif N-1 - Tresorerie passif N-1)
+    data.ZA = computeTresorerieNette(lN1);
 
-    // FB -- Variation des stocks : -(Stocks N - Stocks N-1)
-    // Augmentation des stocks = utilisation de tresorerie (negatif)
-    const stocksN = sumSoldeDebiteur(lN, STOCKS_PREFIXES);
-    const stocksN1 = sumSoldeDebiteur(lN1, STOCKS_PREFIXES);
-    data.FB = -(stocksN - stocksN1);
+    // --- FLUX OPERATIONNELS (methode directe : encaissements - decaissements) ---
 
-    // FC -- Variation des creances : -(Creances N - Creances N-1)
-    // Augmentation des creances = utilisation de tresorerie (negatif)
-    const creancesN = sumSoldeDebiteur(lN, CREANCES_PREFIXES);
-    const creancesN1 = sumSoldeDebiteur(lN1, CREANCES_PREFIXES);
-    data.FC = -(creancesN - creancesN1);
+    // FA -- Encaissement des cotisations = Cotisations (701) - variation creances adherents (411)
+    data.FA = computeEncaissement(lN, lN1, COTISATIONS_PREFIXES, CREANCES_ADHERENTS_PREFIXES);
 
-    // FD -- Variation des dettes circulantes : Dettes N - Dettes N-1
-    // Augmentation des dettes = source de tresorerie (positif)
-    const dettesCircN = sumSoldeCrediteur(lN, DETTES_CIRC_PREFIXES);
-    const dettesCircN1 = sumSoldeCrediteur(lN1, DETTES_CIRC_PREFIXES);
-    data.FD = dettesCircN - dettesCircN1;
+    // FB -- Encaissement des subventions d'exploitation et d'equilibre = (71+88) - variation creances subventions
+    data.FB = computeEncaissement(lN, lN1, SUBVENTIONS_EXPL_PREFIXES, CREANCES_SUBVENTIONS_PREFIXES);
 
-    // ZB -- Flux operationnels
-    data.ZB = data.ZA + data.FA + data.FB + data.FC + data.FD;
+    // FC -- Encaissement des revenus lies a la generosite = (703) - variation creances generosite
+    data.FC = computeEncaissement(lN, lN1, GENEROSITE_PREFIXES, CREANCES_GENEROSITE_PREFIXES);
 
-    // FE -- Acquisitions d'immobilisations corp. et incorp. : -(Immob brut N - Immob brut N-1)
-    const immobN = sumSoldeDebiteur(lN, IMMOB_BRUT_PREFIXES);
-    const immobN1 = sumSoldeDebiteur(lN1, IMMOB_BRUT_PREFIXES);
-    data.FE = -(immobN - immobN1);
+    // FD -- Encaissement des revenus des manifestations = (706) - variation creances clients
+    data.FD = computeEncaissement(lN, lN1, MANIFESTATIONS_PREFIXES, CREANCES_CLIENTS_PREFIXES);
 
-    // FF -- Acquisitions d'immobilisations financieres : -(Immob fin N - Immob fin N-1)
+    // FE -- Encaissement des autres revenus = (702,704,705,707,708,72,73,75,77,78,79) - variation autres creances
+    data.FE = computeEncaissement(lN, lN1, AUTRES_REVENUS_PREFIXES, CREANCES_AUTRES_PREFIXES);
+
+    // FF -- Decaissement fournisseurs (negatif) = -(Charges fournisseurs - variation dettes fournisseurs)
+    // Exclut les fournisseurs d'investissements (481)
+    data.FF = -computeDecaissement(lN, lN1, FOURNISSEURS_CHARGES_PREFIXES, DETTES_FOURNISSEURS_PREFIXES);
+
+    // FG -- Decaissement personnel (negatif) = -(Charges personnel - variation dettes personnel)
+    data.FG = -computeDecaissement(lN, lN1, PERSONNEL_CHARGES_PREFIXES, DETTES_PERSONNEL_PREFIXES);
+
+    // FH -- Autres decaissements (negatif) = -(Autres charges - variation autres dettes)
+    data.FH = -computeDecaissement(lN, lN1, AUTRES_CHARGES_PREFIXES, DETTES_AUTRES_PREFIXES);
+
+    // ZB -- Flux de tresorerie des activites operationnelles (FA a FH)
+    data.ZB = data.FA + data.FB + data.FC + data.FD + data.FE + data.FF + data.FG + data.FH;
+
+    // --- FLUX D'INVESTISSEMENT ---
+
+    // FI -- Decaissements acquisitions immob corp. et incorp. (negatif)
+    const immobCorpN = sumSoldeDebiteur(lN, IMMOB_CORP_INCORP_PREFIXES);
+    const immobCorpN1 = sumSoldeDebiteur(lN1, IMMOB_CORP_INCORP_PREFIXES);
+    data.FI = -(immobCorpN - immobCorpN1);
+    if (data.FI > 0) data.FI = 0; // Seules les acquisitions (augmentation)
+
+    // FJ -- Decaissements acquisitions immob financieres (negatif)
     const immobFinN = sumSoldeDebiteur(lN, IMMOB_FIN_PREFIXES);
     const immobFinN1 = sumSoldeDebiteur(lN1, IMMOB_FIN_PREFIXES);
-    data.FF = -(immobFinN - immobFinN1);
+    data.FJ = -(immobFinN - immobFinN1);
+    if (data.FJ > 0) data.FJ = 0;
 
-    // FG -- Encaissements cessions : produits HAO cessions (comptes 82, 84)
-    const cessions = sumSoldeCrediteur(lN, ['82', '84']);
-    data.FG = cessions;
+    // FK -- Encaissements cessions immob corp. et incorp.
+    data.FK = sumSoldeCrediteur(lN, ['82']);
 
-    // ZC -- Flux investissement
-    data.ZC = data.FE + data.FF + data.FG;
+    // FL -- Encaissements cessions immob financieres
+    data.FL = sumSoldeCrediteur(lN, ['826']);
 
-    // FH -- Augmentation fonds propres (hors resultat) : (Fonds propres N - Resultat N) - Fonds propres N-1
-    const fpN = sumSoldeCrediteur(lN, FONDS_PROPRES_PREFIXES);
-    const fpN1 = sumSoldeCrediteur(lN1, FONDS_PROPRES_PREFIXES);
-    data.FH = (fpN - data.ZA) - fpN1;
+    // ZC -- Flux de tresorerie des activites d'investissement (FI a FL)
+    data.ZC = data.FI + data.FJ + data.FK + data.FL;
 
-    // FI -- Variation fonds affectes et reportes (16, 17)
-    const fondsAffN = sumSoldeCrediteur(lN, ['16', '17']);
-    const fondsAffN1 = sumSoldeCrediteur(lN1, ['16', '17']);
-    data.FI = fondsAffN - fondsAffN1;
+    // --- FINANCEMENT PAR FONDS PROPRES ---
 
-    // FJ -- Nouveaux emprunts (augmentation dettes financieres)
-    // FK -- Remboursement (diminution dettes financieres)
-    const dettesFinN = sumSoldeCrediteur(lN, DETTES_FIN_PREFIXES, ['16', '17']);
-    const dettesFinN1 = sumSoldeCrediteur(lN1, DETTES_FIN_PREFIXES, ['16', '17']);
-    const varDettes = dettesFinN - dettesFinN1;
-    data.FJ = varDettes > 0 ? varDettes : 0;
-    data.FK = varDettes < 0 ? varDettes : 0;
+    // FM -- Encaissement des dotations et autres fonds propres
+    const fpN = sumSoldeCrediteur(lN, DOTATION_FP_PREFIXES, SUBV_INVEST_PREFIXES);
+    const fpN1 = sumSoldeCrediteur(lN1, DOTATION_FP_PREFIXES, SUBV_INVEST_PREFIXES);
+    const varFP = fpN - fpN1;
+    data.FM = varFP > 0 ? varFP : 0;
 
-    // ZD -- Flux financement
-    data.ZD = data.FH + data.FI + data.FJ + data.FK;
+    // FN -- Subventions d'investissement recues
+    const subvInvN = sumSoldeCrediteur(lN, SUBV_INVEST_PREFIXES);
+    const subvInvN1 = sumSoldeCrediteur(lN1, SUBV_INVEST_PREFIXES);
+    const varSubvInv = subvInvN - subvInvN1;
+    data.FN = varSubvInv > 0 ? varSubvInv : 0;
 
-    // ZE -- Variation de tresorerie
-    data.ZE = data.ZB + data.ZC + data.ZD;
+    // FO -- Decaissement des dotations et autres fonds propres (negatif)
+    data.FO = varFP < 0 ? varFP : 0;
 
-    // ZF -- Tresorerie ouverture
-    data.ZF = computeTresorerieNette(lN1);
+    // ZD -- Flux de tresorerie des fonds propres (FM a FO)
+    data.ZD = data.FM + data.FN + data.FO;
 
-    // ZG -- Tresorerie cloture
-    data.ZG = data.ZE + data.ZF;
+    // --- FINANCEMENT PAR FONDS ETRANGERS ---
 
-    // ZH -- Controle : tresorerie depuis le bilan N
+    // FP -- Encaissement provenant des emprunts
+    const empruntsN = sumSoldeCrediteur(lN, EMPRUNTS_PREFIXES);
+    const empruntsN1 = sumSoldeCrediteur(lN1, EMPRUNTS_PREFIXES);
+    const varEmprunts = empruntsN - empruntsN1;
+    data.FP = varEmprunts > 0 ? varEmprunts : 0;
+
+    // FQ -- Remboursements des emprunts (negatif)
+    data.FQ = varEmprunts < 0 ? varEmprunts : 0;
+
+    // ZE -- Tresorerie des fonds etrangers (FP a FQ)
+    data.ZE = data.FP + data.FQ;
+
+    // --- SYNTHESE ---
+
+    // ZF -- Variation de tresorerie nette de la periode (B+C+D+E)
+    data.ZF = data.ZB + data.ZC + data.ZD + data.ZE;
+
+    // ZG -- Tresorerie nette au 31 decembre (G+A) = ZF + ZA
+    data.ZG = data.ZF + data.ZA;
+
+    // ZH -- Controle : Tresorerie actif N - Tresorerie passif N
     data.ZH = computeTresorerieNette(lN);
 
     return data;
@@ -414,7 +469,7 @@ function TFT_SYCEBNL({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
       <div className="bilan-toolbar">
         <div className="bilan-toolbar-left">
           <button className="bilan-back-btn" onClick={onBack}><LuArrowLeft /> Retour</button>
-          <h2>Tableau des Flux de Tresorerie SYCEBNL</h2>
+          <h2>Tableau des Flux de Tresorerie SYCEBNL (methode directe)</h2>
         </div>
         <div className="bilan-toolbar-right">
           <button className="bilan-export-btn secondary" onClick={openPreview}>
@@ -536,7 +591,7 @@ function TFT_SYCEBNL({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
         <div className="pdf-preview-overlay" onClick={closePreview}>
           <div className="pdf-preview-modal" onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
             <div className="pdf-preview-header">
-              <h3>Apercu — Tableau des Flux de Tresorerie SYCEBNL {annee}</h3>
+              <h3>Apercu — TFT SYCEBNL (methode directe) {annee}</h3>
               <div className="pdf-preview-actions">
                 <button className="pdf-action-btn" onClick={printPDF}>
                   <LuPrinter /> Imprimer

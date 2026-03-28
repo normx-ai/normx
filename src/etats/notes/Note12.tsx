@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2  } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -38,13 +38,16 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  const [ecartsActif, setEcartsActif] = useState<LigneEcart[]>([emptyEcart(), emptyEcart(), emptyEcart()]);
-  const [ecartsPassif, setEcartsPassif] = useState<LigneEcart[]>([emptyEcart(), emptyEcart(), emptyEcart()]);
+  const [ecartsActif, setEcartsActif] = useState<LigneEcart[]>([emptyEcart(), emptyEcart(), emptyEcart(), emptyEcart(), emptyEcart(), emptyEcart()]);
+  const [ecartsPassif, setEcartsPassif] = useState<LigneEcart[]>([emptyEcart(), emptyEcart(), emptyEcart(), emptyEcart(), emptyEcart(), emptyEcart()]);
   const [commentaireEcarts, setCommentaireEcarts] = useState('• Faire un commentaire');
 
-  const [transfertsExploitation, setTransfertsExploitation] = useState<LigneTransfert[]>([emptyTransfert(), emptyTransfert()]);
-  const [transfertsFinancieres, setTransfertsFinancieres] = useState<LigneTransfert[]>([emptyTransfert(), emptyTransfert()]);
+  const [transfertsExploitation, setTransfertsExploitation] = useState<LigneTransfert[]>([emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert()]);
+  const [transfertsFinancieres, setTransfertsFinancieres] = useState<LigneTransfert[]>([emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert()]);
   const [commentaireTransferts, setCommentaireTransferts] = useState('• Faire un commentaire');
+
+  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
+  const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
 
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -83,6 +86,65 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
       .catch(() => {});
   }, [entiteId]);
 
+  // Chargement balance N et N-1
+  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
+  useEffect(() => {
+    if (!entiteId || !selectedExercice) return;
+    const load = async () => {
+      try {
+        if (balanceSource === 'ecritures') {
+          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          setLignesN((await res.json()).lignes || []);
+        } else {
+          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          setLignesN((await res.json()).lignes || []);
+        }
+      } catch { setLignesN([]); }
+      try {
+        const exN1 = exercices.find(e => e.annee === selectedExercice.annee - 1);
+        if (exN1) {
+          if (balanceSource === 'ecritures') {
+            const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + exN1.id);
+            setLignesN1((await res.json()).lignes || []);
+          } else {
+            const res = await fetch('/api/balance/' + entiteId + '/' + exN1.id + '/N');
+            setLignesN1((await res.json()).lignes || []);
+          }
+        } else {
+          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
+          setLignesN1((await res.json()).lignes || []);
+        }
+      } catch { setLignesN1([]); }
+    };
+    load();
+  }, [entiteId, selectedExercice, balanceSource, exercices]);
+
+  // Soldes depuis la balance
+  const computeSolde = (lignes: BalanceLigne[], prefix: string, type: 'debiteur' | 'crediteur') => {
+    let total = 0;
+    for (const l of lignes) {
+      const num = (l.numero_compte || '').trim();
+      if (!num.startsWith(prefix)) continue;
+      total += parseFloat(String(type === 'debiteur' ? l.solde_debiteur : l.solde_crediteur)) || 0;
+    }
+    return total;
+  };
+
+  // 478 = Écarts de conversion actif (solde débiteur)
+  const solde478N = computeSolde(lignesN, '478', 'debiteur');
+  const solde478N1 = computeSolde(lignesN1, '478', 'debiteur');
+  // 479 = Écarts de conversion passif (solde créditeur)
+  const solde479N = computeSolde(lignesN, '479', 'crediteur');
+  const solde479N1 = computeSolde(lignesN1, '479', 'crediteur');
+  // 781 = Transferts de charges d'exploitation
+  const solde781N = computeSolde(lignesN, '781', 'crediteur');
+  const solde781N1 = computeSolde(lignesN1, '781', 'crediteur');
+  // 791 = Transferts de charges financières
+  const solde791N = computeSolde(lignesN, '791', 'crediteur');
+  const solde791N1 = computeSolde(lignesN1, '791', 'crediteur');
+
+  const fmtSolde = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');
+
   const handleSave = async () => {
     setSaving(true);
     try {
@@ -111,7 +173,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
   const fmtDateShort = (d: Date | null): string => { if (!d) return ''; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
 
   const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');
+  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   const updateEcart = (setter: React.Dispatch<React.SetStateAction<LigneEcart[]>>, idx: number, field: keyof LigneEcart, value: string) => {
     setter(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
@@ -125,13 +187,13 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
     const wasEditing = editing;
     if (wasEditing) setEditing(false);
     await new Promise(r => setTimeout(r, 100));
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdf = new jsPDF('l', 'mm', 'a4');
     if (!pageRef.current) return pdf;
     const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
     const imgData = canvas.toDataURL('image/png');
-    const pdfWidth = 210;
+    const pdfWidth = 297;
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 210));
     if (wasEditing) setEditing(true);
     return pdf;
   };
@@ -159,23 +221,29 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
       <tr>
         <td style={{ ...tdStyle, fontWeight: 600, fontStyle: 'italic' }} colSpan={6}>{sectionLabel}</td>
       </tr>
-      {lignes.map((l, i) => (
-        <tr key={i}>
-          <td style={tdStyle}>
-            {editing ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <input value={l.libelle} onChange={e => updateEcart(setter, i, 'libelle', e.target.value)} style={inputLeft} />
-                <button onClick={() => setter(prev => prev.filter((_, j) => j !== i))} style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer', padding: 2, flexShrink: 0 }}><LuTrash2 size={12} /></button>
-              </div>
-            ) : l.libelle}
-          </td>
-          <td style={tdStyle}>{renderInput(l.devises, v => updateEcart(setter, i, 'devises', v), inputLeft)}</td>
-          <td style={tdRight}>{renderInput(l.montantDevises, v => updateEcart(setter, i, 'montantDevises', v))}</td>
-          <td style={tdRight}>{renderInput(l.coursAcquisition, v => updateEcart(setter, i, 'coursAcquisition', v))}</td>
-          <td style={tdRight}>{renderInput(l.cours3112, v => updateEcart(setter, i, 'cours3112', v))}</td>
-          <td style={tdRight}>{renderInput(l.variationAbsolue, v => updateEcart(setter, i, 'variationAbsolue', v))}</td>
-        </tr>
-      ))}
+      {lignes.map((l, i) => {
+        const montant = parseN(l.montantDevises);
+        const coursAcq = parseN(l.coursAcquisition);
+        const cours31 = parseN(l.cours3112);
+        const variationCalc = montant !== 0 && coursAcq !== 0 && cours31 !== 0 ? montant * (cours31 - coursAcq) : 0;
+        return (
+          <tr key={i}>
+            <td style={tdStyle}>
+              {editing ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <input value={l.libelle} onChange={e => updateEcart(setter, i, 'libelle', e.target.value)} style={inputLeft} />
+                  <button onClick={() => setter(prev => prev.filter((_, j) => j !== i))} style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer', padding: 2, flexShrink: 0 }}><LuTrash2 size={12} /></button>
+                </div>
+              ) : l.libelle}
+            </td>
+            <td style={tdStyle}>{renderInput(l.devises, v => updateEcart(setter, i, 'devises', v), inputLeft)}</td>
+            <td style={tdRight}>{renderInput(l.montantDevises, v => updateEcart(setter, i, 'montantDevises', v))}</td>
+            <td style={tdRight}>{renderInput(l.coursAcquisition, v => updateEcart(setter, i, 'coursAcquisition', v))}</td>
+            <td style={tdRight}>{renderInput(l.cours3112, v => updateEcart(setter, i, 'cours3112', v))}</td>
+            <td style={{ ...tdRight, background: '#fafafa' }}>{variationCalc !== 0 ? fmtM(Math.abs(variationCalc)) : ''}</td>
+          </tr>
+        );
+      })}
       {editing && (
         <tr className="no-print">
           <td colSpan={6} style={{ border: 'none', padding: '2px 0' }}>
@@ -253,7 +321,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
       )}
 
       <div ref={pageRef} style={{
-        width: '210mm', minHeight: '297mm', background: '#fff',
+        width: '297mm', minHeight: '210mm', background: '#fff',
         margin: '0 auto 20px', padding: '8mm 10mm',
         boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
         fontFamily: "'Outfit', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',

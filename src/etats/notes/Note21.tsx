@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -20,22 +20,13 @@ interface Rubrique {
 
 const RUBRIQUES: Rubrique[] = [
   // Ventes marchandises
-  { label: 'Ventes dans la Région', prefixes: ['7011'], group: 'marchandises' },
-  { label: 'Ventes hors Région', prefixes: ['7012'], group: 'marchandises' },
-  { label: 'Ventes groupe', prefixes: ['7013'], group: 'marchandises' },
-  { label: 'Ventes sur internet', prefixes: ['7014'], group: 'marchandises' },
+  { label: 'Ventes de marchandises', prefixes: ['701'], group: 'marchandises' },
   { label: 'TOTAL : VENTES MARCHANDISES', prefixes: [], bold: true, isTotal: true, group: 'marchandises' },
   // Produits fabriqués
-  { label: 'Ventes dans la Région', prefixes: ['7021'], group: 'produits_fabriques' },
-  { label: 'Ventes hors Région', prefixes: ['7022'], group: 'produits_fabriques' },
-  { label: 'Ventes groupe', prefixes: ['7023'], group: 'produits_fabriques' },
-  { label: 'Ventes sur internet', prefixes: ['7024'], group: 'produits_fabriques' },
+  { label: 'Ventes de produits fabriqués', prefixes: ['702'], group: 'produits_fabriques' },
   { label: 'TOTAL : VENTES DE PRODUITS FABRIQUES', prefixes: [], bold: true, isTotal: true, group: 'produits_fabriques' },
   // Travaux et services
-  { label: 'Ventes dans la Région', prefixes: ['7051'], group: 'travaux_services' },
-  { label: 'Ventes hors Région', prefixes: ['7052'], group: 'travaux_services' },
-  { label: 'Ventes groupe', prefixes: ['7053'], group: 'travaux_services' },
-  { label: 'Ventes sur internet', prefixes: ['7054'], group: 'travaux_services' },
+  { label: 'Travaux, services et produits annexes vendus', prefixes: ['705'], group: 'travaux_services' },
   { label: 'TOTAL : VENTES DE TRAVAUX ET SERVICES VENDUS', prefixes: [], bold: true, isTotal: true, group: 'travaux_services' },
   // Produits accessoires + Total CA
   { label: 'Produits accessoires', prefixes: ['706', '707'] },
@@ -56,6 +47,7 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
@@ -133,7 +125,7 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const fmtDateShort = (d: Date | null): string => { if (!d) return ''; return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }); };
-  const fmtM = (val: number): string => { if (val === 0) return ''; return Math.round(val).toLocaleString('fr-FR'); };
+  const fmtM = (val: number): string => { if (val === 0) return '0'; return Math.round(val).toLocaleString('fr-FR'); };
 
   // Produits = solde créditeur
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
@@ -195,6 +187,7 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
 
   const renderDetailRow = (r: Rubrique) => {
     const vals = computeRow(r);
+    if (hideEmpty && vals.anneeN === 0 && vals.anneeN1 === 0) return null;
     return (
       <tr key={r.label + '_' + (r.group || '')}>
         <td style={tdStyle}>{r.label}</td>
@@ -232,6 +225,7 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
             <button className="etat-action-btn" onClick={handleSave} disabled={saving} style={{ background: '#059669', color: '#fff', border: 'none' }}><LuSave size={16} /> {saving ? 'Sauvegarde...' : 'Sauvegarder'}</button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
+          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 

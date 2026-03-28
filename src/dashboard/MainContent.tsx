@@ -23,6 +23,7 @@ import PageDeGarde from '../etats/PageDeGarde';
 import FicheIdentification from '../etats/FicheIdentification';
 import FicheR3 from '../etats/FicheR3';
 import FicheR4 from '../etats/FicheR4';
+import ResultatFiscal from '../etats/ResultatFiscal';
 import Note1 from '../etats/notes/Note1';
 import Note2 from '../etats/notes/Note2';
 import Note3A from '../etats/notes/Note3A';
@@ -145,6 +146,81 @@ function MainContent(props: MainContentProps): React.ReactElement {
 
   const currentExAnnee: number = exercices.find(e => e.id === exerciceId)?.annee ?? new Date().getFullYear();
 
+  // Charger la balance pour détecter les notes avec/sans données
+  const [balanceLignes, setBalanceLignes] = useState<{ numero_compte: string; solde_debiteur: number; solde_crediteur: number }[]>([]);
+  useEffect(() => {
+    if (!entiteId || !exerciceId) return;
+    const balSrc = offre === 'comptabilite' ? 'ecritures' : 'import';
+    const url = balSrc === 'ecritures'
+      ? '/api/ecritures/balance/' + entiteId + '/' + exerciceId
+      : '/api/balance/' + entiteId + '/' + exerciceId + '/N';
+    fetch(url)
+      .then(r => r.json())
+      .then(data => setBalanceLignes(data.lignes || []))
+      .catch(() => setBalanceLignes([]));
+  }, [entiteId, exerciceId, offre]);
+
+  // Mapping note_id_sys → préfixes de comptes
+  const NOTE_ACCOUNT_MAP: Record<string, string[]> = {
+    note_1_sys: ['16', '17'],
+    note_2_sys: [], // toujours applicable (informations obligatoires)
+    note_3a_sys: ['21', '22', '23', '24', '25'],
+    note_3b_sys: ['22'],
+    note_3c_sys: ['28'],
+    note_3d_sys: ['21', '22', '23', '24', '25'],
+    note_3e_sys: ['21', '22', '23', '24', '25'],
+    note_4_sys: ['26', '27'],
+    note_5_sys: ['48', '481', '482', '483', '484', '485'],
+    note_6_sys: ['31', '32', '33', '34', '35', '36', '37', '38', '39'],
+    note_7_sys: ['41'],
+    note_8_sys: ['42', '43', '44', '45', '46', '471', '472', '473', '474', '476'],
+    note_8a_sys: ['4751', '4752'],
+    note_9_sys: ['50'],
+    note_10_sys: ['51'],
+    note_11_sys: ['52', '53', '54', '55', '56', '57', '58'],
+    note_12_sys: ['478', '479'],
+    note_13_sys: ['10'],
+    note_14_sys: ['11'],
+    note_15a_sys: ['14', '15'],
+    note_15b_sys: ['12', '13'],
+    note_16a_sys: ['16', '17'],
+    note_16b_sys: ['19'],
+    note_16c_sys: [],  // manuel
+    note_17_sys: ['40'],
+    note_18_sys: ['42', '43', '44'],
+    note_19_sys: ['47', '48', '49'],
+    note_20_sys: ['52', '56'],
+    note_21_sys: ['70', '71', '72', '73', '74', '75', '76', '77', '78'],
+    note_22_sys: ['60'],
+    note_23_sys: ['61'],
+    note_24_sys: ['62', '63'],
+    note_25_sys: ['64'],
+    note_26_sys: ['65', '66', '67', '68'],
+    note_27a_sys: ['66'],
+    note_27b_sys: ['66'],
+    note_28_sys: ['29', '39', '49', '59'],
+    note_29_sys: ['77', '67'],
+    note_30_sys: ['82', '83', '84', '85', '86'],
+    note_31_sys: ['12', '13'],
+    note_32_sys: ['70', '71', '72', '73'],
+    note_33_sys: ['60'],
+    note_34_sys: [], // toujours applicable (synthèse)
+    note_35_sys: [], // manuel
+    note_36_sys: [], // toujours applicable (table des codes)
+    note_37_sys: ['89'],
+  };
+
+  const noteHasData = (noteId: string): boolean => {
+    const prefixes = NOTE_ACCOUNT_MAP[noteId];
+    // Pas de mapping = toujours afficher
+    if (!prefixes || prefixes.length === 0) return true;
+    return balanceLignes.some(l => {
+      const num = (l.numero_compte || '').trim();
+      return prefixes.some(p => num.startsWith(p)) &&
+        ((parseFloat(String(l.solde_debiteur)) || 0) !== 0 || (parseFloat(String(l.solde_crediteur)) || 0) !== 0);
+    });
+  };
+
   const etatBaseProps = {
     entiteName, entiteSigle, entiteAdresse, entiteNif,
     typeActivite, entiteId, offre,
@@ -210,6 +286,9 @@ function MainContent(props: MainContentProps): React.ReactElement {
     { id: 'note_36_sys', titre: 'Note 36', desc: 'Table des codes' },
     { id: 'note_37_sys', titre: 'Note 37', desc: 'Détermination impôts sur le résultat' },
   ];
+
+  // Filtrer les notes : masquer celles sans données dans la balance
+  const filteredNotes = NOTES_ANNEXES.filter(n => noteHasData(n.id));
 
   // ===================== Alerte bascule SMT → SYSCOHADA =====================
   const [smtAlert, setSmtAlert] = useState<{ show: boolean; ca: number; seuil: number } | null>(null);
@@ -482,11 +561,11 @@ function MainContent(props: MainContentProps): React.ReactElement {
       {activeTab === 'fiche_r3_sys' && <FicheR3 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {activeTab === 'fiche_r4_sys' && <FicheR4 {...etatBaseProps} onGoToParametres={() => openTab('parametres')} />}
       {/* Navigation entre notes */}
-      {NOTES_ANNEXES.some(n => n.id === activeTab) && (() => {
-        const idx = NOTES_ANNEXES.findIndex(n => n.id === activeTab);
-        const prev = idx > 0 ? NOTES_ANNEXES[idx - 1] : null;
-        const next = idx < NOTES_ANNEXES.length - 1 ? NOTES_ANNEXES[idx + 1] : null;
-        const current = NOTES_ANNEXES[idx];
+      {filteredNotes.some(n => n.id === activeTab) && (() => {
+        const idx = filteredNotes.findIndex(n => n.id === activeTab);
+        const prev = idx > 0 ? filteredNotes[idx - 1] : null;
+        const next = idx < filteredNotes.length - 1 ? filteredNotes[idx + 1] : null;
+        const current = filteredNotes[idx];
         return (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 20px', background: '#f8f9fb', borderBottom: '1px solid #e5e7eb' }}>
             <button
@@ -561,7 +640,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
             display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
             gap: 14,
           }}>
-            {NOTES_ANNEXES.map(note => (
+            {filteredNotes.map(note => (
               <div key={note.id} onClick={() => openTab(note.id)} style={{
                 background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8,
                 padding: '16px 20px', cursor: 'pointer', transition: 'box-shadow 0.15s, border-color 0.15s',
@@ -591,6 +670,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
       {activeTab === 'bilan_passif_sys' && <BilanSYSCOHADA page="passif" {...etatBaseProps} />}
       {activeTab === 'compte_resultat_sys' && <CompteResultatSYSCOHADA {...etatBaseProps} />}
       {activeTab === 'tafire' && <TFT_SYSCOHADA {...etatBaseProps} />}
+      {activeTab === 'resultat_fiscal_sys' && <ResultatFiscal {...etatBaseProps} />}
       {etats.some(e => e.id === activeTab) && !IMPLEMENTED_ETATS.includes(activeTab) && (
         <div className="placeholder-content">
           <h2>{etats.find(e => e.id === activeTab)?.titre}</h2>

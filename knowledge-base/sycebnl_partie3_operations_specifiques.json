@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "document": "Acte uniforme relatif au Système Comptable des Entités à But Non Lucratif (SYCEBNL-2022)",
+    "referentiel": "SYCEBNL",
+    "partie": "Partie 3 — Opérations et problèmes spécifiques aux EBNL",
+    "pages_source": "309-338",
+    "date_extraction": "2026-03-28"
+  },
+  "articles": [
+    {
+      "numero": "P3-CH1",
+      "titre": "Chapitre 1 : Fonds propres des associations et ordres professionnels",
+      "texte": [
+        "Les fonds propres correspondent aux ressources formées des apports, des écarts de réévaluation, des réserves, des excédents, des déficits. Sont incluses dans les fonds propres les ressources stables dont la consommation est répartie sur une longue période : la dotation consomptible, les fonds provenant des dons et legs d'immobilisations, les subventions d'équipement et les provisions réglementées.",
+        "Les fonds propres sont regroupés dans les comptes de ressources durables de la classe 1 : 10 Dotation, 11 Réserves, 12 Report à nouveau, 13 Résultat net de l'exercice, 14 Subventions d'investissement, 15 Provisions réglementées, 17 Fonds affectés et provenant des dons et legs d'immobilisations.",
+        "DOTATION — Définition : la dotation est un apport des membres, des fondateurs, grevé d'une affectation externe en vertu de laquelle l'entité est tenue de maintenir en permanence les ressources stables. Il s'agit d'une dotation non consomptible.",
+        "Principes : La dotation peut être sans droit de reprise (compte 101, définitive) ou avec droit de reprise (compte 102, provisoire). La dotation peut être consomptible (compte 104) si elle est destinée à faire face à des charges d'exploitation sur une longue période. Le droit d'entrée (compte 103) est un droit d'adhésion des membres si les statuts le prévoient.",
+        "Écritures de souscription des apports : Débit 45 Fondateurs / Crédit 101, 102, 1041 selon le type de dotation.",
+        "Libération des apports : Débit 2 Immobilisations + Débit 5 Trésorerie / Crédit 45 Fondateurs.",
+        "Couverture des charges par dotation consomptible : Débit 1049 Dotation consomptible inscrite au CR / Crédit 703 Quote-part de dotation consomptible transférée.",
+        "Droit d'entrée du nouveau membre : Débit 411 Adhérents / Crédit 103 Droit d'entrée. Si le droit d'entrée a pour objectif de financer l'entité, il est assimilable à un dépôt restituable (compte 1851 Dépôts reçus) ou s'il représente un produit, il est inscrit au crédit du compte 701 Cotisations des adhérents.",
+        "Réévaluation : doit porter sur les immobilisations corporelles et financières. La réévaluation partielle est interdite. Écriture : Débit 2... Immobilisations / Crédit 106 Écart de réévaluation.",
+        "Réserves : constituées par les excédents des exercices antérieurs affectés en tant que tels par les statuts, l'assemblée générale ou tout autre organe habilité.",
+        "Report à nouveau : inscrit au passif du bilan, en moins si débiteur, en plus si créditeur.",
+        "Résultat net de l'exercice : excédent (compte 131) si les produits sont supérieurs aux charges, déficit (compte 139) dans le cas contraire. Pour le projet de développement, le solde des opérations est toujours nul.",
+        "Écritures de constatation de l'excédent : Débit 7,8 pair Produits / Crédit 6,8 impair Charges / Crédit 131 Excédent.",
+        "Écritures de constatation du déficit : Débit 7,8 pair Produits / Débit 139 Déficit / Crédit 6,8 impair Charges.",
+        "Subventions d'investissement : au bilan, font partie des fonds propres. Reprises au résultat au rythme des amortissements des immobilisations acquises (compte 799). Écritures : notification → Débit 4731 / Crédit 14 ; réception → Débit 521 / Crédit 4731 ; acquisition → Débit 2 / Crédit 481 ; clôture → Débit 68,69 / Crédit 28,29 puis Débit 14 / Crédit 799.",
+        "Provisions réglementées : ne correspondent pas à l'objet normal d'une provision, comptabilisées en application de dispositions légales ou réglementaires. Regroupées au passif du bilan avec les subventions d'investissement. Dotation : Débit 851 / Crédit 15 ; Reprise : Débit 15 / Crédit 861."
+      ],
+      "mots_cles": ["fonds propres", "dotation", "réserves", "report à nouveau", "résultat", "subventions d'investissement", "provisions réglementées", "droit d'entrée", "réévaluation", "associations", "ordres professionnels"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P3-CH2",
+      "titre": "Chapitre 2 : Fonds affectés et reportés des associations et ordres professionnels",
+      "texte": [
+        "SECTION 1 — FONDS AFFECTÉS :",
+        "Les Fonds affectés sont constitués par des apports que l'EBNL a l'obligation d'utiliser d'une façon prescrite à un projet ou des biens spécifiques. Les affectations sont imposées par l'apporteur des ressources. Il peut s'agir : des fonds affectés aux exercices futurs par des tiers financeurs pour un projet bien défini non consommés en fin d'exercice (compte 165) ; des fonds provenant des dons et des legs d'immobilisations que l'entité est tenue de conserver en l'état (compte 167).",
+        "Fonds destinés à un projet spécifique — Réception : Débit 5 Trésorerie / Crédit 165 Fonds affectés à un projet spécifique. Consommation en cours d'exercice : Débit 165 / Crédit 7925 Reprises de fonds affectés à un projet spécifique.",
+        "Dons et legs d'immobilisations à conserver — Réception : Débit 2 Immobilisations / Débit 4861 Dettes des dons et legs / Crédit 167 Fonds provenant des dons et legs d'immobilisations. Obligations incertaines : Débit 1679 Engagement auprès donateur / Crédit 192 Provisions pour charges sur legs et donation. Clôture : Débit 68 + 69 / Crédit 28 + 29 ; puis reprises : Débit 167 / Crédit 7923. Paiement dettes donateur : Débit 4861 / Crédit 5 Trésorerie.",
+        "SECTION 2 — FONDS REPORTÉS :",
+        "Les Fonds reportés sont constitués principalement par : une donation temporaire d'usufruit (compte 171), une donation et un legs non encore reçus d'immobilisations destinées à la vente (compte 172).",
+        "Donations et legs non encore reçus d'immobilisations destinées à la vente — Comptabilisation initiale : Débit 20 (sauf 2011) / Crédit 172. Perte de valeur : Débit 6952 / Crédit 2902. Cession : Débit 818 / Crédit 20 (sortie) ; Débit 485 + 5 / Crédit 828 (produit cession) ; Débit 172 / Crédit 7962 (reprise fonds). Reprise dépréciation : Débit 2902 / Crédit 7952.",
+        "Donation temporaire d'usufruit — Réception : Débit 2011 Usufruit temporaire / Crédit 171. Encaissement revenus : Débit 5 / Crédit 7082 Revenus d'usufruit. Clôture : Amortissement Débit 680 / Crédit 280 ; simultanément reprise Débit 171 / Crédit 7961. Perte de valeur : Débit 6951 / Crédit 2901. Rétrocession au terme : Débit 280 / Crédit 2011 (décomptabilisation). Reprise dépréciation : Débit 2901 / Crédit 7951.",
+        "L'entité doit donner dans les Notes annexes une information sur la nature et les montants perçus dans le cadre des donations temporaires d'usufruit."
+      ],
+      "mots_cles": ["fonds affectés", "fonds reportés", "projet spécifique", "dons et legs d'immobilisations", "usufruit temporaire", "donations", "compte 165", "compte 167", "compte 171", "compte 172"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P3-CH3",
+      "titre": "Chapitre 3 : Fonds propres, projets de développement et assimilés",
+      "texte": [
+        "Définition : Un projet de développement est une entité financée en général par les bailleurs bilatéraux, multilatéraux, privés et/ou par l'État partie et qui a pour but l'amélioration du niveau économique d'un pays et des conditions de vie des populations.",
+        "Principes : Le bailleur de fonds élabore un document de projet avec un budget de financement distinguant : des fonds d'investissement pour l'acquisition de biens durables (comptes 162 à 164 Fonds affectés aux investissements) ; des fonds d'administration pour les frais généraux et charges de fonctionnement (comptes 462 à 464 Fonds d'administration).",
+        "Décaissement des bailleurs : Débit 5 Trésorerie / Crédit 162,163,164 Fonds affectés aux investissements + Crédit 462,463,464 Fonds d'administration. Si le bailleur décaisse une somme globale sans distinction, il faut se référer au budget d'exécution de la période pour les affecter.",
+        "Engagement des dépenses de charges : Débit 6 ou 8 Charges par nature / Crédit 4 Comptes de tiers (sauf 481). Corrélativement : Débit 462,463,464 / Crédit 702 Quote-part de fonds administration transférés. Ce compte de produit organise la neutralité de l'opération sur le résultat du projet.",
+        "Engagement des dépenses d'immobilisations : Débit 2 Immobilisations / Crédit 481 Fournisseurs d'investissements. Avances versées aux fournisseurs : Débit 25 / Crédit 5 Trésorerie.",
+        "Paiement des dépenses : Débit 4 Comptes de tiers / Crédit 5 Trésorerie.",
+        "Décomptabilisation ou reprise des immobilisations à la fin du projet :",
+        "Cession d'immobilisation : Débit 162,163,164 / Crédit 2 (sortie) ; Débit 485/5 / Crédit 82 (produit cession).",
+        "Remise gratuite des immobilisations à l'entité à la fin du projet : Débit 162,163,164 / Crédit 2 Immobilisations.",
+        "Restitution des immobilisations au bailleur ou en cas de vol, destruction, mise au rebut : Débit 162,163,164 / Crédit 2 Immobilisations.",
+        "En fin d'exercice, les charges relatives aux fonds non remboursés par le bailleur doivent être neutralisées : Débit 469 Fonds d'administration à recevoir / Crédit 702."
+      ],
+      "mots_cles": ["projets de développement", "bailleurs de fonds", "fonds d'investissement", "fonds d'administration", "compte 162", "compte 462", "compte 702", "neutralité résultat", "cession immobilisation fin projet"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P3-CH4",
+      "titre": "Chapitre 4 : Dons",
+      "texte": [
+        "La donation est un contrat par lequel une personne (le donateur) transfère la propriété d'un bien à une autre (le donataire) qui l'accepte sans contrepartie et avec intention libérale. Les dons d'immobilisations sont traités au chapitre 2 section 2. La donation peut être : en nature destinée à être distribuée en l'état ; en nature destinée à la vente ; en numéraire.",
+        "SECTION 1 — DONS EN NATURE À DISTRIBUER :",
+        "En cours d'exercice : les dons en nature destinés à être distribués en l'état sont enregistrés à leur valeur actuelle au fur et à mesure de leur réception. Récurrents : Débit 654 / Crédit 7542. Non récurrents : Débit 832 / Crédit 8415.",
+        "À la clôture de l'exercice — inventaire des dons : Récurrents non consommés : Débit 34 Stock de dons en nature / Crédit 6035 Variations. Non récurrents non consommés : Débit 38 Stock dons nature HAO / Crédit 87 Variations stocks dons nature HAO.",
+        "Revenus de dons non utilisés : Récurrents : Débit 7542 / Crédit 4713 Créditeurs dons en nature courants non consommés. Non récurrents : Débit 8415 / Crédit 488 Créditeurs dons en nature HAO non consommés. Ces écritures de fin d'exercice doivent être extournées au début de l'exercice suivant.",
+        "SECTION 2 — DONS EN NATURE À VENDRE :",
+        "Les dons en nature reçus destinés à la vente sont suivis en extra comptable jusqu'à la date de cession. En fin d'exercice les dons non vendus doivent être mentionnés dans une Note annexe. Produits de la vente : compte 7081 Ventes de dons en nature (récurrent) ou compte 8411 Dons en nature vendus (non récurrent).",
+        "SECTION 3 — DONS EN NUMÉRAIRE :",
+        "Les revenus liés à la générosité en numéraire sont : les dons (remise de fonds sans contrepartie avec intention libérale) ; les legs (mise à disposition de fonds contenue dans un testament) ; le denier du culte ; la zakat ; la dîme ; les célébrations dans les organisations religieuses (revenus perçus lors des baptêmes, mariages etc.) ; le mécénat ; le parrainage.",
+        "Ces revenus sont enregistrés dans le compte 704 Revenus liés à la générosité. Pour le mécénat et le parrainage, même traitement que les sections 1 et 2.",
+        "Les revenus de générosité promis non encore reçus en fin d'exercice dont l'entité a la certitude de les encaisser doivent faire l'objet d'un rattachement à l'exercice par le biais du compte 475 Générosités financières à recevoir.",
+        "SECTION 4 — FRAIS DE RECHERCHE DE FONDS :",
+        "Une association est souvent amenée à engager des dépenses pour rechercher des dons notamment par voie de courrier, de publicité dans les revues, de calendrier, de bloc-notes, de stylos etc. Ces charges doivent être enregistrées dans un compte spécifique : 636 Frais de recherche de fonds."
+      ],
+      "mots_cles": ["dons", "dons en nature", "distribution", "vente", "numéraire", "générosité", "legs", "denier du culte", "zakat", "dîme", "mécénat", "parrainage", "frais de recherche de fonds", "compte 654", "compte 7542", "compte 832", "compte 8415"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P3-CH5",
+      "titre": "Chapitre 5 : Cotisations des membres et versement des fondateurs",
+      "texte": [
+        "SECTION 1 — COTISATIONS DES MEMBRES :",
+        "Les cotisations sont des fonds versés périodiquement par les membres conformément aux dispositions statutaires pour assurer le fonctionnement de l'association et assimilées.",
+        "Le fait générateur de la comptabilisation des cotisations est l'appel de cotisations. Toutefois, si l'entité ne peut justifier d'un droit d'agir en recouvrement, les cotisations sont comptabilisées lors de leur encaissement effectif.",
+        "Écritures : Appel de cotisation : Débit 411 Adhérents / Crédit 701 Cotisations des adhérents. L'entité doit préciser dans les notes annexes la méthode retenue pour la comptabilisation des cotisations.",
+        "Recouvrement : Débit 5 Trésorerie / Crédit 411 Adhérents.",
+        "Non-recouvrement — Transfert en créance douteuse : Débit 4161 Adhérents cotisations douteuses / Crédit 411 Adhérents. Dépréciation : Débit 6594 Charges pour dépréciations sur créances / Crédit 4912 Dépréciations des créances douteuses.",
+        "SECTION 2 — CONTRIBUTION FONDATEUR POUR COUVERTURE FRAIS DE FONCTIONNEMENT D'UNE FONDATION :",
+        "Le fondateur peut être amené à contribuer ponctuellement ou périodiquement au frais de fonctionnement de l'entité par des versements de fonds. Dans ce cas le compte 752 Contribution du fondateur sera utilisé lors de la réception des fonds.",
+        "SECTION 3 — SUBVENTIONS ET AIDES FINANCIÈRES VERSÉES PAR LES EBNL :",
+        "Les aides financières versées par les EBNL au profit des tiers ainsi que les contributions financières des partis politiques et assimilés à leur candidat et/ou la prise en charge directe des dépenses électorales sont considérées comme une subvention à comptabiliser au débit du compte 652 Subventions versées par l'entité."
+      ],
+      "mots_cles": ["cotisations", "membres", "adhérents", "fondateur", "contribution", "appel de cotisation", "créance douteuse", "dépréciation", "subventions versées", "compte 701", "compte 411", "compte 752", "compte 652"],
+      "statut": "en_vigueur"
+    },
+    {
+      "numero": "P3-CH6",
+      "titre": "Chapitre 6 : Autres opérations spécifiques",
+      "texte": [
+        "SECTION 1 — SUBVENTIONS D'EXPLOITATION SE RÉPARTISSANT SUR PLUSIEURS EXERCICES :",
+        "Lorsqu'une convention stipule que la subvention est accordée pour toute la durée du projet qui s'étalera sur plusieurs exercices, à la clôture du premier exercice, il convient d'extourner la part de subvention se rapportant aux exercices ultérieurs au crédit d'un compte 477 Produits constatés d'avance par le débit du compte 71 Subventions d'exploitation.",
+        "À la fin de chaque exercice ultérieur concerné, la quote-part de subvention y afférente est reprise au débit du compte 477 Produits constatés d'avance par le crédit du compte 71 Subventions d'exploitation.",
+        "SECTION 2 — ABANDONS DE FRAIS ENGAGÉS PAR LES BÉNÉVOLES :",
+        "Les frais engagés par les bénévoles dans le cadre d'une activité de l'entité (billets d'avions, frais de courses, notes de frais etc.) qui donnent droit à un remboursement sont enregistrés au débit des comptes de charges par nature par le crédit du compte 4572 Bénévoles.",
+        "Lors du remboursement des frais engagés par les bénévoles, le compte 4572 est débité pour solde par le crédit du compte de trésorerie.",
+        "Lorsque les bénévoles renoncent au remboursement des frais engagés, le compte 4572 Bénévoles est débité pour solde par le crédit du compte 7583 Abandons de frais par les bénévoles ou d'une subdivision du compte 846 Abandons de créances obtenus lorsque l'abandon a un caractère non récurrent.",
+        "SECTION 3 — CONVENTION DE MÉCÉNAT :",
+        "Lors de la signature d'une convention de mécénat concernant le versement de fonds, l'entité peut constater une créance sur le mécène au débit du compte 4751 Mécènes par le crédit du compte 7046 Mécénats. Le compte 4751 Mécène est soldé au crédit par le débit du compte de trésorerie lors du règlement des fonds par le mécène.",
+        "SECTION 4 — RESTITUTION DE SUBVENTION NON UTILISÉE CONFORMÉMENT À L'OBJET PRÉVU DANS LA CONVENTION :",
+        "Une subvention non utilisée peut faire l'objet d'une restitution de la part du bénéficiaire au tiers financeur. Lors de la naissance de l'événement déterminant l'obligation de restitution, il convient : de débiter pour solde le compte 71 Subvention d'exploitation ou le compte 14 Subvention d'investissement selon le cas ; par le crédit du compte 4739 État, collectivités et autres organismes assimilés, subvention à reverser.",
+        "Lors du règlement des fonds au tiers financeur, les comptes 4739 sont soldés au débit par le crédit du compte de trésorerie.",
+        "SECTION 5 — CONTRIBUTIONS VOLONTAIRES EN NATURE :",
+        "Une contribution volontaire en nature est l'acte par lequel une personne physique ou morale apporte à une entité un travail, des biens ou des services à titre gratuit. Ceci correspond à : une contribution en travail (bénévolat, mise à disposition de personnes) ; une contribution en biens (dons et legs en nature à vendre) ; une contribution en services (mise à disposition de locaux ou de matériel, prêt à usage, fourniture gratuite de services).",
+        "Les contributions volontaires en nature sont valorisées et comptabilisées si leur poids dans l'activité de l'entité est significatif et si celle-ci est en mesure de les recenser et de les valoriser de façon pertinente.",
+        "Comptabilisation : On enregistre un débit (entrée de charges) des comptes de la classe 9 : 900 Secours en nature, 901 Mise à disposition gratuite de biens, 902 Prestations en nature, 904 Personnel bénévole. En contrepartie, on enregistre un crédit (sortie de produits) : 910 Dons en nature à vendre, 911 Prestations en nature, 914 Bénévolat.",
+        "Les contributions volontaires en nature étant gratuites, elles n'entraînent pas de flux financiers à ce titre, ne sont donc pas inscrites au compte de résultat mais doivent faire l'objet d'informations dans la Note annexe 1 : Dettes garanties par des suretés réelles, engagements financiers et contributions volontaires en nature.",
+        "SECTION 6 — PREMIÈRE ANNÉE D'APPLICATION DU SYCEBNL :",
+        "Toute entité visée par les présentes dispositions doit préparer et de présenter son bilan d'ouverture au premier jour de l'entrée en vigueur du Système comptable des entités à but non lucratif. C'est le point de départ de sa comptabilité. Elle doit faire l'inventaire et comptabiliser tous les actifs et passifs suivant le plan des comptes du SYCEBNL. En revanche, elle ne doit pas comptabiliser des éléments en tant qu'actifs ou passifs si le SYCEBNL n'autorise pas une telle comptabilisation.",
+        "Sont considérés comme premiers états financiers ceux qui sont confirmés par une déclaration explicite et sans réserve de conformité au Système comptable des entités à but non lucratif."
+      ],
+      "mots_cles": ["subventions pluriannuelles", "abandons frais bénévoles", "convention mécénat", "restitution subvention", "contributions volontaires en nature", "bénévolat", "classe 9", "première application SYCEBNL", "compte 477", "compte 4572", "compte 7583", "compte 4751", "compte 4739"],
+      "statut": "en_vigueur"
+    }
+  ]
+}
