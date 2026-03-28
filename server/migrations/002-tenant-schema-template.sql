@@ -242,6 +242,28 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".notifications (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- ========== RAPPROCHEMENT BANCAIRE ==========
+
+CREATE TABLE IF NOT EXISTS "${schema_name}".rapprochements_bancaires (
+  id SERIAL PRIMARY KEY,
+  entite_id INTEGER NOT NULL,
+  exercice_id INTEGER NOT NULL,
+  banque VARCHAR(100),
+  compte_bancaire VARCHAR(20) DEFAULT '521',
+  mois INTEGER,
+  annee INTEGER,
+  solde_debut DECIMAL(15,2) DEFAULT 0,
+  solde_fin DECIMAL(15,2) DEFAULT 0,
+  nb_lignes INTEGER DEFAULT 0,
+  nb_rapprochees INTEGER DEFAULT 0,
+  ecart DECIMAL(15,2) DEFAULT 0,
+  data JSONB DEFAULT '{}',
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_rapprochements_entite ON "${schema_name}".rapprochements_bancaires(entite_id);
+CREATE INDEX IF NOT EXISTS idx_rapprochements_exercice ON "${schema_name}".rapprochements_bancaires(exercice_id);
+
 -- ========== INDEX ==========
 
 CREATE INDEX IF NOT EXISTS idx_ecritures_entite ON "${schema_name}".ecritures(entite_id);
