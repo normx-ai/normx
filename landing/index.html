@@ -78,7 +78,7 @@
     }
 
     /* ══ HERO — style Pennylane ══ */
-    .hero { padding: 120px 24px 60px; background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg) 100%); overflow: hidden; }
+    .hero { padding: 100px 24px 32px; background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg) 100%); overflow: hidden; }
     .hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
     .hero-text h1 { font-size: clamp(32px, 4.5vw, 52px); font-weight: 700; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.5px; }
     .hero-text h1 .highlight { color: var(--primary); position: relative; }
@@ -94,7 +94,7 @@
     .hero-social-item .stars { color: var(--primary); font-size: 14px; }
     .hero-visual { position: relative; }
     /* ══ MACBOOK FRAME ══ */
-    .macbook { max-width: 580px; margin: 0 auto; }
+    .macbook { max-width: 480px; margin: 0 auto; }
     .macbook-screen { background: #1a1a1a; border-radius: 12px 12px 0 0; padding: 8px 8px 0; border: 2px solid #2a2a2a; border-bottom: none; }
     .macbook-camera { width: 6px; height: 6px; border-radius: 50%; background: #3a3a3a; margin: 0 auto 6px; }
     .macbook-screen .mockup { border-radius: 0; border: none; box-shadow: none; }
@@ -335,7 +335,7 @@
 </nav>
 
 <!-- ══════ HERO ══════ -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-inner">
     <div class="hero-text">
       <h1>L'outil qui réunit votre <span class="highlight">comptabilité</span>, votre <span class="highlight">fiscalité</span> et votre <span class="highlight">droit</span></h1>
@@ -425,6 +425,7 @@
 
 <!-- ══════ FEATURE TABS ══════ -->
 <div class="feature-tabs">
+  <a href="#hero" class="feature-tab"><i class="bi bi-house"></i> Accueil</a>
   <a href="#comptabilité" class="feature-tab active"><i class="bi bi-calculator"></i> Comptabilité</a>
   <a href="#fiscalité" class="feature-tab"><i class="bi bi-bank"></i> Fiscalité</a>
   <a href="#paie" class="feature-tab"><i class="bi bi-people"></i> Paie</a>
