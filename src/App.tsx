@@ -8,25 +8,45 @@ import type { Entite } from './types';
 import './App.css';
 
 function AppContent(): React.JSX.Element {
-  const { user, isAuthenticated, isLoading, login, logout } = useKeycloak();
+  const { user, accessToken, isAuthenticated, isLoading, login, logout } = useKeycloak();
   const [entites, setEntites] = React.useState<Entite[]>([]);
   const [currentEntite, setCurrentEntite] = React.useState<Entite | null>(null);
   const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
-  const [onboardingDone, setOnboardingDone] = React.useState<boolean>(
-    () => localStorage.getItem('normx_onboarding_done') === 'true'
-  );
+  const [onboardingDone, setOnboardingDone] = React.useState<boolean | null>(null);
+  const [tenantLoading, setTenantLoading] = React.useState(true);
 
-  // Charger les entites au login (si onboarding déjà fait)
+  // Charger le tenant depuis l'API au login
   React.useEffect(() => {
-    if (isAuthenticated && user && onboardingDone && entites.length === 0) {
-      const saved = localStorage.getItem('normx_entite');
-      if (saved) {
-        const entite = JSON.parse(saved) as Entite;
-        setEntites([entite]);
-        setCurrentEntite(entite);
-      }
+    if (!isAuthenticated || !accessToken) {
+      setTenantLoading(false);
+      return;
     }
-  }, [isAuthenticated, user, onboardingDone]);
+
+    fetch('/api/tenant/me', {
+      headers: { 'Authorization': `Bearer ${accessToken}` },
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.onboardingRequired || !data.tenant) {
+          setOnboardingDone(false);
+        } else {
+          const t = data.tenant;
+          const modules = (t.settings?.modules as string[]) || ['compta', 'etats', 'paie'];
+          const entite: Entite = {
+            id: t.id,
+            nom: t.nom,
+            type_activite: t.type === 'cabinet' ? 'entreprise' : 'entreprise',
+            offre: modules.includes('compta') ? 'comptabilite' : 'etats',
+            modules: modules as ('compta' | 'etats' | 'paie')[],
+          };
+          setEntites([entite]);
+          setCurrentEntite(entite);
+          setOnboardingDone(true);
+        }
+      })
+      .catch(() => setOnboardingDone(false))
+      .finally(() => setTenantLoading(false));
+  }, [isAuthenticated, accessToken]);
 
   const handleLogout = (): void => {
     setEntites([]);
@@ -48,7 +68,7 @@ function AppContent(): React.JSX.Element {
     if (currentEntite?.id === id) setCurrentEntite(entites.find(e => e.id !== id) || null);
   };
 
-  if (isLoading) {
+  if (isLoading || tenantLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
@@ -64,7 +84,7 @@ function AppContent(): React.JSX.Element {
   }
 
   // Onboarding pour les nouveaux utilisateurs
-  if (!onboardingDone) {
+  if (onboardingDone === false) {
     const moduleParam = new URLSearchParams(window.location.search).get('module')
       || sessionStorage.getItem('normx_redirect_module');
     return (
@@ -72,7 +92,6 @@ function AppContent(): React.JSX.Element {
         userName={user?.name || ''}
         defaultModule={moduleParam}
         onComplete={(entite) => {
-          localStorage.setItem('normx_entite', JSON.stringify(entite));
           setEntites([entite]);
           setCurrentEntite(entite);
           setOnboardingDone(true);

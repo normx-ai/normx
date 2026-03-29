@@ -103,8 +103,6 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
         offre: selectedModules.includes('compta') ? 'comptabilite' : 'etats',
         modules: selectedModules,
       };
-      localStorage.setItem('normx_onboarding_done', 'true');
-      localStorage.setItem('normx_entite', JSON.stringify(entite));
       onComplete(entite);
     } catch {
       setSaving(false);
