@@ -56,6 +56,9 @@ jobs:
             chmod 600 .env.production
 
             # --- Build frontend ---
+            export REACT_APP_KEYCLOAK_URL=https://auth.normx-ai.com
+            export REACT_APP_KEYCLOAK_REALM=normx
+            export REACT_APP_KEYCLOAK_CLIENT_ID=normx-app
             npm install --legacy-peer-deps && npm run build
 
             # --- Copier le build frontend ---
