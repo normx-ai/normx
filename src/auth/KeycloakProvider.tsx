@@ -141,8 +141,7 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
     }
 
     setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [scheduleRefresh]);
 
   // Cleanup timer on unmount
   useEffect(() => {
