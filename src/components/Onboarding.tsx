@@ -116,11 +116,11 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
 
   return (
     <div style={{ minHeight: '100vh', background: BG, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-      <div style={{ background: '#fff', borderRadius: 16, border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.06)', maxWidth: 720, width: '100%', padding: 48 }}>
+      <div style={{ background: '#fff', borderRadius: 0, border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 8px 32px rgba(0,0,0,0.06)', maxWidth: 720, width: '100%', padding: 48 }}>
 
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ width: 48, height: 48, borderRadius: 12, background: PRIMARY, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 900, color: DARK, marginBottom: 12 }}>N</div>
+          <div style={{ width: 48, height: 48, borderRadius: 0, background: PRIMARY, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 900, color: DARK, marginBottom: 12 }}>N</div>
           <h1 style={{ fontSize: 28, fontWeight: 900, color: DARK, margin: '0 0 8px' }}>
             Bienvenue{userName ? `, ${userName.split(' ')[0]}` : ''} !
           </h1>
@@ -146,7 +146,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                 padding: '12px 16px',
                 marginBottom: 16,
                 border: `2px solid ${allSelected ? PRIMARY : 'rgba(0,0,0,0.08)'}`,
-                borderRadius: 10,
+                borderRadius: 0,
                 cursor: 'pointer',
                 background: allSelected ? 'rgba(212,168,67,0.06)' : '#fff',
               }}
@@ -175,7 +175,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                     onClick={() => toggleModule(m.id)}
                     style={{
                       border: `2px solid ${selected ? m.color : 'rgba(0,0,0,0.08)'}`,
-                      borderRadius: 12,
+                      borderRadius: 0,
                       padding: 20,
                       cursor: 'pointer',
                       background: selected ? `${m.color}08` : '#fff',
@@ -216,7 +216,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                 background: selectedModules.length > 0 ? PRIMARY : '#e5e7eb',
                 color: selectedModules.length > 0 ? DARK : '#9ca3af',
                 border: 'none',
-                borderRadius: 10,
+                borderRadius: 0,
                 fontSize: 16,
                 fontWeight: 700,
                 cursor: selectedModules.length > 0 ? 'pointer' : 'default',
@@ -243,7 +243,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                   width: '100%',
                   padding: '12px 14px',
                   border: '1.5px solid rgba(0,0,0,0.12)',
-                  borderRadius: 10,
+                  borderRadius: 0,
                   fontSize: 15,
                   outline: 'none',
                 }}
@@ -261,7 +261,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                   width: '100%',
                   padding: '12px 14px',
                   border: '1.5px solid rgba(0,0,0,0.12)',
-                  borderRadius: 10,
+                  borderRadius: 0,
                   fontSize: 15,
                   outline: 'none',
                   background: '#fff',
@@ -277,7 +277,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
             <div style={{
               background: 'rgba(212,168,67,0.06)',
               border: '1px solid rgba(212,168,67,0.2)',
-              borderRadius: 10,
+              borderRadius: 0,
               padding: 16,
               marginBottom: 24,
             }}>
@@ -291,7 +291,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                   return (
                     <span key={id} style={{
                       padding: '4px 12px',
-                      borderRadius: 20,
+                      borderRadius: 0,
                       fontSize: 13,
                       fontWeight: 600,
                       background: `${m.color}15`,
@@ -313,7 +313,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                   background: '#fff',
                   color: DARK,
                   border: '1.5px solid rgba(0,0,0,0.12)',
-                  borderRadius: 10,
+                  borderRadius: 0,
                   fontSize: 15,
                   fontWeight: 600,
                   cursor: 'pointer',
@@ -330,7 +330,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                   background: entiteNom.trim() ? PRIMARY : '#e5e7eb',
                   color: entiteNom.trim() ? DARK : '#9ca3af',
                   border: 'none',
-                  borderRadius: 10,
+                  borderRadius: 0,
                   fontSize: 16,
                   fontWeight: 700,
                   cursor: entiteNom.trim() ? 'pointer' : 'default',
