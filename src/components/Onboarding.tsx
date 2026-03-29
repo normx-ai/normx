@@ -73,17 +73,43 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     }
   };
 
-  const handleFinish = (): void => {
-    if (selectedModules.length === 0 || !entiteNom.trim()) return;
-    const entite: Entite = {
-      id: 1,
-      nom: entiteNom.trim(),
-      type_activite: typeActivite,
-      offre: selectedModules.includes('compta') ? 'comptabilite' : 'etats',
-      modules: selectedModules,
-    };
-    localStorage.setItem('normx_onboarding_done', 'true');
-    onComplete(entite);
+  const [saving, setSaving] = useState(false);
+
+  const handleFinish = async (): Promise<void> => {
+    if (selectedModules.length === 0 || !entiteNom.trim() || saving) return;
+    setSaving(true);
+
+    try {
+      // Appeler l'API pour créer/configurer le tenant
+      const token = localStorage.getItem('normx_kc_access_token');
+      const resp = await fetch('/api/tenant/setup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          nom: entiteNom.trim(),
+          type: typeActivite === 'smt' ? 'enterprise' : 'enterprise',
+          modules: selectedModules,
+        }),
+      });
+
+      if (!resp.ok) throw new Error('Erreur serveur');
+
+      const entite: Entite = {
+        id: 1,
+        nom: entiteNom.trim(),
+        type_activite: typeActivite,
+        offre: selectedModules.includes('compta') ? 'comptabilite' : 'etats',
+        modules: selectedModules,
+      };
+      localStorage.setItem('normx_onboarding_done', 'true');
+      localStorage.setItem('normx_entite', JSON.stringify(entite));
+      onComplete(entite);
+    } catch {
+      setSaving(false);
+    }
   };
 
   const allSelected = selectedModules.length === MODULES.length;
