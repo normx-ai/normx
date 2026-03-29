@@ -13,11 +13,17 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
+  const getHeaders = (): Record<string, string> => {
+    const token = localStorage.getItem('normx_kc_access_token');
+    return token ? { 'Authorization': `Bearer ${token}` } : {};
+  };
+
   const fetchNotifications = async (): Promise<void> => {
     try {
+      const headers = getHeaders();
       const [notifRes, countRes] = await Promise.all([
-        fetch(`/api/notifications/${userId}`),
-        fetch(`/api/notifications/${userId}/unread-count`),
+        fetch(`/api/notifications/${userId}`, { headers }),
+        fetch(`/api/notifications/${userId}/unread-count`, { headers }),
       ]);
       if (notifRes.ok) {
         const data: Notification[] = await notifRes.json();
@@ -49,7 +55,7 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
 
   const markAsRead = async (id: number): Promise<void> => {
     try {
-      await fetch(`/api/notifications/${id}/read`, { method: 'PUT' });
+      await fetch(`/api/notifications/${id}/read`, { method: 'PUT', headers: getHeaders() });
       setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch { /* silently */ }
@@ -57,7 +63,7 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
 
   const markAllAsRead = async (): Promise<void> => {
     try {
-      await fetch(`/api/notifications/read-all/${userId}`, { method: 'PUT' });
+      await fetch(`/api/notifications/read-all/${userId}`, { method: 'PUT', headers: getHeaders() });
       setNotifications(prev => prev.map(n => ({ ...n, read: true })));
       setUnreadCount(0);
     } catch { /* silently */ }
@@ -65,7 +71,7 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
 
   const deleteNotification = async (id: number): Promise<void> => {
     try {
-      await fetch(`/api/notifications/${id}`, { method: 'DELETE' });
+      await fetch(`/api/notifications/${id}`, { method: 'DELETE', headers: getHeaders() });
       const removed = notifications.find(n => n.id === id);
       setNotifications(prev => prev.filter(n => n.id !== id));
       if (removed && !removed.read) setUnreadCount(prev => Math.max(0, prev - 1));
