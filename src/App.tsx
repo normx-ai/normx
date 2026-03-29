@@ -2,6 +2,7 @@ import React from 'react';
 import { KeycloakProvider, useKeycloak } from './auth/KeycloakProvider';
 import LandingPage from './landing/LandingPage';
 import Dashboard from './dashboard/Dashboard';
+import Onboarding from './components/Onboarding';
 import Toast from './components/Toast';
 import type { Entite } from './types';
 import './App.css';
@@ -11,22 +12,21 @@ function AppContent(): React.JSX.Element {
   const [entites, setEntites] = React.useState<Entite[]>([]);
   const [currentEntite, setCurrentEntite] = React.useState<Entite | null>(null);
   const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
+  const [onboardingDone, setOnboardingDone] = React.useState<boolean>(
+    () => localStorage.getItem('normx_onboarding_done') === 'true'
+  );
 
-  // Charger les entites au login
+  // Charger les entites au login (si onboarding déjà fait)
   React.useEffect(() => {
-    if (isAuthenticated && user && entites.length === 0) {
-      // Creer une entite par defaut depuis le profil Keycloak
-      const defaultEntite: Entite = {
-        id: 1,
-        nom: user.name || 'Mon Entité',
-        type_activite: 'entreprise',
-        offre: 'comptabilite',
-        modules: ['compta', 'etats', 'paie'],
-      };
-      setEntites([defaultEntite]);
-      setCurrentEntite(defaultEntite);
+    if (isAuthenticated && user && onboardingDone && entites.length === 0) {
+      const saved = localStorage.getItem('normx_entite');
+      if (saved) {
+        const entite = JSON.parse(saved) as Entite;
+        setEntites([entite]);
+        setCurrentEntite(entite);
+      }
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, onboardingDone]);
 
   const handleLogout = (): void => {
     setEntites([]);
@@ -61,6 +61,24 @@ function AppContent(): React.JSX.Element {
 
   if (!isAuthenticated) {
     return <LandingPage onLogin={login} />;
+  }
+
+  // Onboarding pour les nouveaux utilisateurs
+  if (!onboardingDone) {
+    const moduleParam = new URLSearchParams(window.location.search).get('module')
+      || sessionStorage.getItem('normx_redirect_module');
+    return (
+      <Onboarding
+        userName={user?.name || ''}
+        defaultModule={moduleParam}
+        onComplete={(entite) => {
+          localStorage.setItem('normx_entite', JSON.stringify(entite));
+          setEntites([entite]);
+          setCurrentEntite(entite);
+          setOnboardingDone(true);
+        }}
+      />
+    );
   }
 
   const ent = currentEntite;
