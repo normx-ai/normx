@@ -74,7 +74,9 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
     if (parts.length !== 3) return;
 
     interface ExpPayload { exp?: number }
-    const payload = JSON.parse(atob(parts[1])) as ExpPayload;
+    const binary = atob(parts[1].replace(/-/g, '+').replace(/_/g, '/'));
+    const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+    const payload = JSON.parse(new TextDecoder('utf-8').decode(bytes)) as ExpPayload;
     if (!payload.exp) return;
 
     const msUntilExpiry = payload.exp * 1000 - Date.now();

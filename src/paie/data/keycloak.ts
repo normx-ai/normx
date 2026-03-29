@@ -106,12 +106,18 @@ export async function refreshAccessToken(
   return response.json() as Promise<TokenResponse>;
 }
 
+function decodeBase64Utf8(base64: string): string {
+  const binary = atob(base64.replace(/-/g, '+').replace(/_/g, '/'));
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  return new TextDecoder('utf-8').decode(bytes);
+}
+
 export function parseToken(accessToken: string): KeycloakUser {
   const parts = accessToken.split('.');
   if (parts.length !== 3) {
     throw new Error('Format JWT invalide.');
   }
-  const payload = JSON.parse(atob(parts[1])) as JwtPayload;
+  const payload = JSON.parse(decodeBase64Utf8(parts[1])) as JwtPayload;
   return {
     sub: payload.sub,
     email: payload.email || '',
@@ -124,7 +130,7 @@ export function parseToken(accessToken: string): KeycloakUser {
 export function isTokenExpired(accessToken: string): boolean {
   const parts = accessToken.split('.');
   if (parts.length !== 3) return true;
-  const payload = JSON.parse(atob(parts[1])) as JwtPayload;
+  const payload = JSON.parse(decodeBase64Utf8(parts[1])) as JwtPayload;
   if (!payload.exp) return true;
   // Consider expired 30 seconds before actual expiry
   return Date.now() >= (payload.exp - 30) * 1000;
