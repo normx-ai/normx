@@ -68,7 +68,7 @@ router.post('/setup', async (req: Request, res: Response) => {
     res.json({ tenant, onboardingRequired: false });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    logger.error('Erreur setup tenant: %s', message);
+    logger.error(`Erreur setup tenant: ${message}`);
     res.status(500).json({ error: 'Erreur lors de la configuration.' });
   }
 });
@@ -97,7 +97,7 @@ router.post('/client', async (req: Request, res: Response) => {
     res.status(201).json({ client });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    logger.error('Erreur création client: %s', message);
+    logger.error(`Erreur création client: ${message}`);
     res.status(500).json({ error: 'Erreur lors de la création du dossier client.' });
   }
 });
