@@ -5,6 +5,7 @@ import {
   LuExternalLink, LuX, LuArchive
 } from 'react-icons/lu';
 import { Entite, TypeActivite, Offre, NormxModule } from '../types';
+import { apiPost, apiPut, apiDelete } from '../api';
 import ConfirmModal from '../components/ConfirmModal';
 import './GestionClients.css';
 
@@ -118,27 +119,15 @@ function GestionClients({ entites, cabinetId, currentEntiteId, onSelectEntite, o
 
     try {
       if (editingId) {
-        const res = await fetch(`/api/entites/${editingId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...formData, modules }),
-        });
-        if (!res.ok) { const d = await res.json(); setError(d.error || 'Erreur.'); return; }
-        const updated: Entite = await res.json();
+        const updated = await apiPut<Entite>(`/api/entites/${editingId}`, { ...formData, modules });
         onEntiteUpdated(updated);
       } else {
-        const res = await fetch('/api/entites', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ cabinet_id: cabinetId, ...formData, modules }),
-        });
-        if (!res.ok) { const d = await res.json(); setError(d.error || 'Erreur.'); return; }
-        const created: Entite = await res.json();
+        const created = await apiPost<Entite>('/api/entites', { ...formData, modules });
         onEntiteCreated(created);
       }
       setShowForm(false);
-    } catch {
-      setError('Impossible de contacter le serveur.');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Impossible de contacter le serveur.');
     } finally {
       setLoading(false);
     }
@@ -157,7 +146,10 @@ function GestionClients({ entites, cabinetId, currentEntiteId, onSelectEntite, o
     // Vérifier si l'entité a des données (exercices)
     let hasData = false;
     try {
-      const res = await fetch(`/api/balance/exercices/${id}`);
+      const token = localStorage.getItem('normx_kc_access_token');
+      const res = await fetch(`/api/balance/exercices/${id}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+      });
       if (res.ok) {
         const exercices = await res.json();
         hasData = exercices.length > 0;
@@ -174,7 +166,7 @@ function GestionClients({ entites, cabinetId, currentEntiteId, onSelectEntite, o
         onConfirm: async () => {
           setConfirmState(prev => ({ ...prev, open: false }));
           try {
-            await fetch(`/api/entites/${id}`, { method: 'DELETE' });
+            await apiDelete(`/api/entites/${id}`);
             onEntiteDeleted(id);
           } catch { /* silently fail */ }
         },
@@ -189,7 +181,7 @@ function GestionClients({ entites, cabinetId, currentEntiteId, onSelectEntite, o
         onConfirm: async () => {
           setConfirmState(prev => ({ ...prev, open: false }));
           try {
-            await fetch(`/api/entites/${id}`, { method: 'DELETE' });
+            await apiDelete(`/api/entites/${id}`);
             onEntiteDeleted(id);
           } catch { /* silently fail */ }
         },

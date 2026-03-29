@@ -22,30 +22,52 @@ function AppContent(): React.JSX.Element {
       return;
     }
 
-    fetch('/api/tenant/me', {
-      headers: { 'Authorization': `Bearer ${accessToken}` },
-    })
+    const headers = { 'Authorization': `Bearer ${accessToken}` };
+
+    fetch('/api/tenant/me', { headers })
       .then(r => r.json())
-      .then(data => {
+      .then(async (data) => {
         if (data.onboardingRequired || !data.tenant) {
           setOnboardingDone(false);
-        } else {
+          setTenantLoading(false);
+          return;
+        }
+
+        // Charger les entités depuis l'API
+        try {
+          const entitesRes = await fetch('/api/entites', { headers });
+          if (entitesRes.ok) {
+            const entitesList: Entite[] = await entitesRes.json();
+            setEntites(entitesList);
+            if (entitesList.length > 0) setCurrentEntite(entitesList[0]);
+          } else {
+            // Fallback : utiliser le tenant comme entité
+            const t = data.tenant;
+            const modules = (t.settings?.modules as string[]) || ['compta', 'etats', 'paie'];
+            const entite: Entite = {
+              id: t.id,
+              nom: t.nom,
+              type_activite: 'entreprise',
+              offre: modules.includes('compta') ? 'comptabilite' : 'etats',
+              modules: modules as ('compta' | 'etats' | 'paie')[],
+            };
+            setEntites([entite]);
+            setCurrentEntite(entite);
+          }
+        } catch {
+          // Fallback
           const t = data.tenant;
           const modules = (t.settings?.modules as string[]) || ['compta', 'etats', 'paie'];
-          const entite: Entite = {
-            id: t.id,
-            nom: t.nom,
-            type_activite: t.type === 'cabinet' ? 'entreprise' : 'entreprise',
-            offre: modules.includes('compta') ? 'comptabilite' : 'etats',
-            modules: modules as ('compta' | 'etats' | 'paie')[],
-          };
-          setEntites([entite]);
-          setCurrentEntite(entite);
-          setOnboardingDone(true);
+          setEntites([{ id: t.id, nom: t.nom, type_activite: 'entreprise', offre: modules.includes('compta') ? 'comptabilite' : 'etats', modules: modules as ('compta' | 'etats' | 'paie')[] }]);
         }
+
+        setOnboardingDone(true);
+        setTenantLoading(false);
       })
-      .catch(() => setOnboardingDone(false))
-      .finally(() => setTenantLoading(false));
+      .catch(() => {
+        setOnboardingDone(false);
+        setTenantLoading(false);
+      });
   }, [isAuthenticated, accessToken]);
 
   const handleLogout = (): void => {
