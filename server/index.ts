@@ -21,6 +21,7 @@ import notificationsRoutes from "./routes/notifications";
 import permissionsRoutes from "./routes/permissions";
 import revisionRoutes from "./routes/revision";
 
+import tenantRoutes from "./routes/tenant";
 import { authenticateToken } from "./middleware/auth";
 import { tenantMiddleware } from "./middleware/tenant.middleware";
 import { switchClientMiddleware } from "./middleware/tenant.guards";
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routes publiques (pas de tenant)
 app.use("/api", authRoutes);
+app.use("/api/tenant", authenticateToken, tenantRoutes);
 
 // Middleware chaine : auth → tenant → switch client
 const tenantChain = [authenticateToken, tenantMiddleware, switchClientMiddleware];

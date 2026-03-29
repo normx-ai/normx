@@ -1,6 +1,7 @@
 /**
  * Middleware Tenant - NormX
- * Resout le tenant depuis la requete et configure le search_path PostgreSQL.
+ * Auto-cree ou resout le tenant depuis le Keycloak sub.
+ * Compatible entreprise et cabinet.
  */
 
 import { Request, Response, NextFunction } from 'express';
@@ -13,19 +14,31 @@ export async function tenantMiddleware(
   next: NextFunction
 ): Promise<void> {
   try {
-    // Resolution du slug tenant (ordre de priorite) :
-    // 1. Header X-Tenant-ID
-    // 2. req.user?.tenantSlug (depuis le JWT, pose par auth middleware — futur)
-    const tenantSlug = req.headers['x-tenant-id'] as string | undefined;
-
-    if (!tenantSlug) {
-      res.status(400).json({ error: 'Tenant non specifie.' });
+    if (!req.user || !req.user.sub) {
+      res.status(401).json({ error: 'Utilisateur non authentifié.' });
       return;
     }
 
-    const tenant = await tenantService.getTenantBySlug(tenantSlug);
-    if (!tenant || !tenant.actif) {
-      res.status(404).json({ error: 'Tenant introuvable.' });
+    // Slug tenant = Keycloak sub (UUID sans tirets)
+    const keycloakSub = req.user.sub;
+    const tenantSlug = keycloakSub.replace(/-/g, '_');
+
+    // Chercher le tenant existant
+    let tenant = await tenantService.getTenantBySlug(tenantSlug);
+
+    // Auto-créer si premier accès
+    if (!tenant) {
+      logger.info('Premier accès — création tenant pour %s (%s)', req.user.email, tenantSlug);
+      tenant = await tenantService.createTenant({
+        slug: tenantSlug,
+        nom: req.user.name || req.user.email || 'Mon Entité',
+        type: 'enterprise',
+        plan: 'trial',
+      });
+    }
+
+    if (!tenant.actif) {
+      res.status(403).json({ error: 'Compte désactivé.' });
       return;
     }
 
@@ -36,7 +49,7 @@ export async function tenantMiddleware(
     // Configurer le search_path pour cette connexion
     await tenantService.setTenantContext(tenant.schema_name);
 
-    // Si l'utilisateur appartient a un cabinet, charger ses clients accessibles
+    // Si l'utilisateur appartient à un cabinet, charger ses clients accessibles
     if (tenant.type === 'cabinet') {
       req.isCabinetUser = true;
       const clients = await tenantService.getCabinetClients(tenant.id);
@@ -47,6 +60,6 @@ export async function tenantMiddleware(
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     logger.error('Erreur tenant middleware: %s', message);
-    res.status(500).json({ error: 'Erreur de resolution du tenant.' });
+    res.status(500).json({ error: 'Erreur de résolution du tenant.' });
   }
 }

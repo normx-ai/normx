@@ -94,6 +94,40 @@ export async function createTenant(input: CreateTenantInput): Promise<Tenant> {
   return tenant;
 }
 
+// ============ MISE A JOUR ============
+
+export async function updateTenant(
+  id: number,
+  data: { nom?: string; type?: string; settings?: Record<string, unknown> }
+): Promise<void> {
+  const updates: string[] = [];
+  const values: unknown[] = [];
+  let idx = 1;
+
+  if (data.nom) {
+    updates.push(`nom = $${idx++}`);
+    values.push(data.nom);
+  }
+  if (data.type) {
+    updates.push(`type = $${idx++}`);
+    values.push(data.type);
+  }
+  if (data.settings) {
+    updates.push(`settings = settings || $${idx++}::jsonb`);
+    values.push(JSON.stringify(data.settings));
+  }
+
+  if (updates.length === 0) return;
+
+  updates.push(`updated_at = NOW()`);
+  values.push(id);
+
+  await pool.query(
+    `UPDATE public.tenants SET ${updates.join(', ')} WHERE id = $${idx}`,
+    values
+  );
+}
+
 // ============ CONTEXTE ============
 
 export async function setTenantContext(schemaName: string): Promise<void> {
