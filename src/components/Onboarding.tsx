@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { TypeActivite, Offre, NormxModule, Entite } from '../types';
+import type { TypeActivite, NormxModule, Entite } from '../types';
 
 interface OnboardingProps {
   userName: string;
@@ -11,52 +11,35 @@ const PRIMARY = '#D4A843';
 const DARK = '#1A3A5C';
 const BG = '#faf8f5';
 
-interface OffreOption {
-  id: string;
+interface ModuleOption {
+  id: NormxModule;
   label: string;
   desc: string;
-  modules: NormxModule[];
-  offre: Offre;
   color: string;
   features: string[];
 }
 
-const OFFRES: OffreOption[] = [
+const MODULES: ModuleOption[] = [
   {
     id: 'compta',
     label: 'Compta',
     desc: 'Comptabilité SYSCOHADA / SYCEBNL',
-    modules: ['compta'],
-    offre: 'comptabilite',
     color: '#2563eb',
-    features: ['Saisie comptable', 'GL, BG', 'Déclarations TVA', 'Plan comptable OHADA'],
+    features: ['Saisie comptable', 'GL, BG', 'Déclarations', 'Plan comptable OHADA'],
   },
   {
     id: 'etats',
     label: 'États',
     desc: 'États financiers et résultat fiscal',
-    modules: ['etats'],
-    offre: 'etats',
     color: '#059669',
-    features: ['Bilan', 'Compte de résultat', 'TFT & Notes', 'Résultat fiscal IS/IBA'],
+    features: ['Bilan', 'Compte de résultat', 'TFT & Notes', 'Résultat fiscal'],
   },
   {
     id: 'paie',
     label: 'Paie',
     desc: 'Gestion de la paie Congo',
-    modules: ['paie'],
-    offre: 'comptabilite',
     color: '#d97706',
     features: ['Bulletins de paie', 'DAS I, II, III', 'États sociaux', 'État fiscal'],
-  },
-  {
-    id: 'complet',
-    label: 'Complet',
-    desc: 'Tous les modules inclus',
-    modules: ['compta', 'etats', 'paie'],
-    offre: 'comptabilite',
-    color: PRIMARY,
-    features: ['Comptabilité', 'États financiers', 'Paie', 'Tous les modules'],
   },
 ];
 
@@ -70,26 +53,40 @@ const TYPES_ACTIVITE: { id: TypeActivite; label: string }[] = [
 
 export default function Onboarding({ userName, onComplete, defaultModule }: OnboardingProps): React.JSX.Element {
   const [step, setStep] = useState<1 | 2>(1);
-  const [selectedOffre, setSelectedOffre] = useState<string>(
-    defaultModule && OFFRES.some(o => o.id === defaultModule) ? defaultModule : ''
+  const [selectedModules, setSelectedModules] = useState<NormxModule[]>(
+    defaultModule && MODULES.some(m => m.id === defaultModule) ? [defaultModule as NormxModule] : []
   );
   const [entiteNom, setEntiteNom] = useState('');
   const [typeActivite, setTypeActivite] = useState<TypeActivite>('entreprise');
 
-  const offre = OFFRES.find(o => o.id === selectedOffre);
+  const toggleModule = (id: NormxModule): void => {
+    setSelectedModules(prev =>
+      prev.includes(id) ? prev.filter(m => m !== id) : [...prev, id]
+    );
+  };
+
+  const selectAll = (): void => {
+    if (selectedModules.length === MODULES.length) {
+      setSelectedModules([]);
+    } else {
+      setSelectedModules(MODULES.map(m => m.id));
+    }
+  };
 
   const handleFinish = (): void => {
-    if (!offre || !entiteNom.trim()) return;
+    if (selectedModules.length === 0 || !entiteNom.trim()) return;
     const entite: Entite = {
       id: 1,
       nom: entiteNom.trim(),
       type_activite: typeActivite,
-      offre: offre.offre,
-      modules: offre.modules,
+      offre: selectedModules.includes('compta') ? 'comptabilite' : 'etats',
+      modules: selectedModules,
     };
     localStorage.setItem('normx_onboarding_done', 'true');
     onComplete(entite);
   };
+
+  const allSelected = selectedModules.length === MODULES.length;
 
   return (
     <div style={{ minHeight: '100vh', background: BG, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
@@ -102,57 +99,101 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
             Bienvenue{userName ? `, ${userName.split(' ')[0]}` : ''} !
           </h1>
           <p style={{ color: '#6b7280', fontSize: 15 }}>
-            {step === 1 ? 'Choisissez votre offre pour commencer' : 'Configurez votre entité'}
+            {step === 1 ? 'Sélectionnez vos modules' : 'Configurez votre entité'}
           </p>
-          {/* Steps */}
           <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
             <div style={{ width: 32, height: 4, borderRadius: 2, background: PRIMARY }} />
             <div style={{ width: 32, height: 4, borderRadius: 2, background: step >= 2 ? PRIMARY : '#e5e7eb' }} />
           </div>
         </div>
 
-        {/* Step 1 — Choix de l'offre */}
+        {/* Step 1 — Sélection des modules */}
         {step === 1 && (
           <>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 12, marginBottom: 32 }}>
-              {OFFRES.map(o => (
-                <div
-                  key={o.id}
-                  onClick={() => setSelectedOffre(o.id)}
-                  style={{
-                    border: `2px solid ${selectedOffre === o.id ? o.color : 'rgba(0,0,0,0.08)'}`,
-                    borderRadius: 12,
-                    padding: 20,
-                    cursor: 'pointer',
-                    background: selectedOffre === o.id ? `${o.color}08` : '#fff',
-                    transition: 'all 0.2s',
-                  }}
-                >
-                  <div style={{ fontSize: 18, fontWeight: 800, color: o.color, marginBottom: 4 }}>{o.label}</div>
-                  <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 12 }}>{o.desc}</div>
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                    {o.features.map((f, i) => (
-                      <li key={i} style={{ fontSize: 12, color: '#374151', padding: '2px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{ color: o.color, fontSize: 14 }}>&#10003;</span> {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            {/* Tout sélectionner */}
+            <div
+              onClick={selectAll}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                padding: '12px 16px',
+                marginBottom: 16,
+                border: `2px solid ${allSelected ? PRIMARY : 'rgba(0,0,0,0.08)'}`,
+                borderRadius: 10,
+                cursor: 'pointer',
+                background: allSelected ? 'rgba(212,168,67,0.06)' : '#fff',
+              }}
+            >
+              <div style={{
+                width: 22, height: 22, borderRadius: 6,
+                border: `2px solid ${allSelected ? PRIMARY : '#d1d5db'}`,
+                background: allSelected ? PRIMARY : '#fff',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 14, color: '#fff', fontWeight: 700, flexShrink: 0,
+              }}>
+                {allSelected && '✓'}
+              </div>
+              <div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: DARK }}>Tous les modules</div>
+                <div style={{ fontSize: 12, color: '#6b7280' }}>Compta + États + Paie</div>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 32 }}>
+              {MODULES.map(m => {
+                const selected = selectedModules.includes(m.id);
+                return (
+                  <div
+                    key={m.id}
+                    onClick={() => toggleModule(m.id)}
+                    style={{
+                      border: `2px solid ${selected ? m.color : 'rgba(0,0,0,0.08)'}`,
+                      borderRadius: 12,
+                      padding: 20,
+                      cursor: 'pointer',
+                      background: selected ? `${m.color}08` : '#fff',
+                      transition: 'all 0.2s',
+                      position: 'relative',
+                    }}
+                  >
+                    {/* Checkbox */}
+                    <div style={{
+                      position: 'absolute', top: 12, right: 12,
+                      width: 22, height: 22, borderRadius: 6,
+                      border: `2px solid ${selected ? m.color : '#d1d5db'}`,
+                      background: selected ? m.color : '#fff',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 14, color: '#fff', fontWeight: 700,
+                    }}>
+                      {selected && '✓'}
+                    </div>
+                    <div style={{ fontSize: 20, fontWeight: 800, color: m.color, marginBottom: 4 }}>{m.label}</div>
+                    <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 12 }}>{m.desc}</div>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                      {m.features.map((f, i) => (
+                        <li key={i} style={{ fontSize: 12, color: '#374151', padding: '2px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <span style={{ color: m.color, fontSize: 14 }}>&#10003;</span> {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
             <button
-              onClick={() => selectedOffre && setStep(2)}
-              disabled={!selectedOffre}
+              onClick={() => selectedModules.length > 0 && setStep(2)}
+              disabled={selectedModules.length === 0}
               style={{
                 width: '100%',
                 padding: '14px 28px',
-                background: selectedOffre ? PRIMARY : '#e5e7eb',
-                color: selectedOffre ? DARK : '#9ca3af',
+                background: selectedModules.length > 0 ? PRIMARY : '#e5e7eb',
+                color: selectedModules.length > 0 ? DARK : '#9ca3af',
                 border: 'none',
                 borderRadius: 10,
                 fontSize: 16,
                 fontWeight: 700,
-                cursor: selectedOffre ? 'pointer' : 'default',
+                cursor: selectedModules.length > 0 ? 'pointer' : 'default',
               }}
             >
               Continuer
@@ -206,21 +247,36 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
               </select>
             </div>
 
-            {/* Résumé offre */}
-            {offre && (
-              <div style={{
-                background: `${offre.color}08`,
-                border: `1px solid ${offre.color}30`,
-                borderRadius: 10,
-                padding: 16,
-                marginBottom: 24,
-              }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: offre.color, marginBottom: 4 }}>
-                  Offre sélectionnée : NORMX {offre.label}
-                </div>
-                <div style={{ fontSize: 13, color: '#6b7280' }}>{offre.desc}</div>
+            {/* Résumé modules */}
+            <div style={{
+              background: 'rgba(212,168,67,0.06)',
+              border: '1px solid rgba(212,168,67,0.2)',
+              borderRadius: 10,
+              padding: 16,
+              marginBottom: 24,
+            }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: DARK, marginBottom: 8 }}>
+                Modules sélectionnés
               </div>
-            )}
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {selectedModules.map(id => {
+                  const m = MODULES.find(mod => mod.id === id);
+                  if (!m) return null;
+                  return (
+                    <span key={id} style={{
+                      padding: '4px 12px',
+                      borderRadius: 20,
+                      fontSize: 13,
+                      fontWeight: 600,
+                      background: `${m.color}15`,
+                      color: m.color,
+                    }}>
+                      {m.label}
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
 
             <div style={{ display: 'flex', gap: 12 }}>
               <button
