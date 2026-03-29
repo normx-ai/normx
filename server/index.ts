@@ -74,7 +74,7 @@ app.use((_req: Request, res: Response) => {
 
 // Error handler
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-  logger.error("Erreur serveur : %s", err.message);
+  logger.error(`Erreur serveur : ${err.message}\n${err.stack}`);
   res.status(500).json({ error: "Erreur interne du serveur" });
 });
 

@@ -59,7 +59,8 @@ export async function tenantMiddleware(
     next();
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    logger.error(`Erreur tenant middleware: ${message}`);
+    const stack = err instanceof Error ? err.stack : '';
+    logger.error(`Erreur tenant middleware: ${message}\n${stack}`);
     res.status(500).json({ error: 'Erreur de résolution du tenant.' });
   }
 }
