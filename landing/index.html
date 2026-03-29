@@ -136,7 +136,7 @@
     @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; text-align: center; } .hero-text p { margin-left: auto; margin-right: auto; } .hero-btns { justify-content: center; } .hero-social { justify-content: center; } .hero-visual { display: none; } }
 
     /* ══ FEATURE TABS — barre horizontale style Pennylane ══ */
-    .feature-tabs { display: flex; justify-content: center; gap: 0; background: var(--bg-warm); padding: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow-x: auto; }
+    .feature-tabs { display: flex; justify-content: center; gap: 0; background: rgba(250,248,245,0.95); backdrop-filter: blur(12px); padding: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow-x: auto; position: sticky; top: 64px; z-index: 90; }
     .feature-tab { padding: 16px 28px; font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
     .feature-tab:hover { color: var(--text); background: rgba(0,0,0,0.02); }
     .feature-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
