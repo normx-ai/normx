@@ -82,7 +82,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
       {/* Hero */}
       <div style={{ textAlign: 'center', padding: '100px 24px 60px', background: BG_WARM }}>
         <div style={{ display: 'inline-block', background: 'rgba(212,168,67,0.1)', borderRadius: 100, padding: '8px 20px', marginBottom: 32 }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: PRIMARY, letterSpacing: 0.5 }}>Comptabilité, Paie & États financiers</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: PRIMARY, letterSpacing: 0.5 }}>La comptabilité OHADA augmentée par l'IA</span>
         </div>
         <h1 style={{ fontSize: 52, fontWeight: 900, color: DARK, lineHeight: 1.15, marginBottom: 20, letterSpacing: -0.5 }}>
           Votre comptabilité<br /><span style={{ color: PRIMARY }}>OHADA conforme</span> en un clic
