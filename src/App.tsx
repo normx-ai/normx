@@ -1,174 +1,103 @@
-import React, { useState, useCallback } from 'react';
-import LoginEmail from './auth/LoginEmail';
-import LoginPassword from './auth/LoginPassword';
-import Register from './auth/Register';
-import VerifyOtp from './auth/VerifyOtp';
+import React from 'react';
+import { KeycloakProvider, useKeycloak } from './auth/KeycloakProvider';
 import LandingPage from './landing/LandingPage';
 import Dashboard from './dashboard/Dashboard';
 import Toast from './components/Toast';
-import type { User, Entite, ToastData, ToastType } from './types';
+import type { Entite } from './types';
 import './App.css';
 
-type Step = 'landing' | 'email' | 'password' | 'register' | 'verify-otp' | 'dashboard';
-type OtpSource = 'login' | 'register' | '';
+function AppContent(): React.JSX.Element {
+  const { user, isAuthenticated, isLoading, login, logout } = useKeycloak();
+  const [entites, setEntites] = React.useState<Entite[]>([]);
+  const [currentEntite, setCurrentEntite] = React.useState<Entite | null>(null);
+  const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
 
-function App(): React.JSX.Element {
-  const [step, setStep] = useState<Step>('landing');
-  const [email, setEmail] = useState<string>('');
-  const [otpCode, setOtpCode] = useState<string>('');
-  const [user, setUser] = useState<User | null>(null);
-  const [entites, setEntites] = useState<Entite[]>([]);
-  const [currentEntite, setCurrentEntite] = useState<Entite | null>(null);
-  const [otpSource, setOtpSource] = useState<OtpSource>('');
-  const [toast, setToast] = useState<ToastData | null>(null);
-
-  const showToast = useCallback((message: string, type: ToastType = 'success'): void => {
-    setToast({ message, type });
-  }, []);
-
-  const closeToast = useCallback((): void => {
-    setToast(null);
-  }, []);
-
-  const handleEmailNext = (emailValue: string): void => {
-    setEmail(emailValue);
-    setStep('password');
-  };
-
-  const isDev: boolean = process.env.NODE_ENV === 'development';
-
-  const handleLoginOtp = (userData: User, otp: string, entitesList?: Entite[]): void => {
-    setUser(userData);
-    if (entitesList && entitesList.length > 0) {
-      setEntites(entitesList);
-      setCurrentEntite(entitesList[0]);
+  // Charger les entites au login
+  React.useEffect(() => {
+    if (isAuthenticated && user && entites.length === 0) {
+      // Creer une entite par defaut depuis le profil Keycloak
+      const defaultEntite: Entite = {
+        id: 1,
+        nom: user.name || 'Mon Entité',
+        type_activite: 'entreprise',
+        offre: 'comptabilite',
+        modules: ['compta', 'etats', 'paie'],
+      };
+      setEntites([defaultEntite]);
+      setCurrentEntite(defaultEntite);
     }
-    if (isDev) {
-      showToast('Connexion réussie.');
-      setStep('dashboard');
-    } else {
-      setOtpCode(otp);
-      setOtpSource('login');
-      setStep('verify-otp');
-    }
-  };
-
-  const handleRegistered = (registeredEmail: string, otp: string, userData: User | null): void => {
-    setEmail(registeredEmail);
-    if (isDev) {
-      if (userData) {
-        setUser(userData);
-        const ent: Entite = {
-          id: userData.entite_id,
-          nom: userData.entite,
-          type_activite: userData.type_activite,
-          offre: userData.offre,
-          modules: userData.modules || ['compta', 'etats', 'paie'],
-        };
-        setEntites([ent]);
-        setCurrentEntite(ent);
-      }
-      showToast('Entité et compte créés avec succès.');
-      setStep('dashboard');
-    } else {
-      setOtpCode(otp);
-      setOtpSource('register');
-      setStep('verify-otp');
-      showToast('Entité et compte administrateur créés avec succès.');
-    }
-  };
-
-  const handleOtpVerified = (): void => {
-    if (otpSource === 'login') {
-      showToast('Connexion réussie.');
-      setStep('dashboard');
-    } else {
-      showToast('Identité vérifiée avec succès.');
-      setStep('password');
-    }
-  };
+  }, [isAuthenticated, user]);
 
   const handleLogout = (): void => {
-    setStep('email');
-    setEmail('');
-    setUser(null);
     setEntites([]);
     setCurrentEntite(null);
-    setOtpCode('');
-    setOtpSource('');
-    showToast('Déconnexion réussie.', 'info');
+    logout();
   };
 
-  const handleSwitchEntite = (entite: Entite): void => {
-    setCurrentEntite(entite);
-  };
-
+  const handleSwitchEntite = (entite: Entite): void => setCurrentEntite(entite);
   const handleEntiteCreated = (entite: Entite): void => {
     setEntites(prev => [...prev, entite]);
+    if (!currentEntite) setCurrentEntite(entite);
   };
-
   const handleEntiteUpdated = (entite: Entite): void => {
     setEntites(prev => prev.map(e => e.id === entite.id ? entite : e));
-    if (currentEntite && currentEntite.id === entite.id) {
-      setCurrentEntite(entite);
-    }
+    if (currentEntite?.id === entite.id) setCurrentEntite(entite);
   };
-
   const handleEntiteDeleted = (id: number): void => {
     setEntites(prev => prev.filter(e => e.id !== id));
-    if (currentEntite && currentEntite.id === id) {
-      setCurrentEntite(entites.find(e => e.id !== id) || null);
-    }
+    if (currentEntite?.id === id) setCurrentEntite(entites.find(e => e.id !== id) || null);
   };
 
-  const isCabinet: boolean = user ? (user.cabinet_nom || '') !== (currentEntite?.nom || '') || entites.length > 1 : false;
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#D4A843', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24, fontWeight: 900, color: '#1A3A5C' }}>N</div>
+          <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const ent: Entite | null = currentEntite;
+  if (!isAuthenticated) {
+    return <LandingPage onLogin={login} />;
+  }
+
+  const ent = currentEntite;
 
   return (
     <>
-      {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
-      {(() => {
-        switch (step) {
-          case 'landing':
-            return <LandingPage onLogin={() => setStep('email')} />;
-          case 'email':
-            return <LoginEmail onNext={handleEmailNext} onRegister={() => setStep('register')} />;
-          case 'password':
-            return <LoginPassword email={email} onNext={handleLoginOtp} onBack={() => setStep('email')} />;
-          case 'register':
-            return <Register onBack={() => setStep('email')} onRegistered={handleRegistered} />;
-          case 'verify-otp':
-            return <VerifyOtp email={email} otpCode={otpCode} onVerified={handleOtpVerified} />;
-          case 'dashboard':
-            return (
-              <Dashboard
-                userName={user ? `${user.prenom} ${user.nom}` : 'Utilisateur'}
-                cabinetName={user ? user.cabinet_nom || '' : ''}
-                cabinetId={user ? user.cabinet_id || 0 : 0}
-                isCabinet={isCabinet}
-                entiteName={ent ? ent.nom : 'Mon Entité'}
-                entiteId={ent ? ent.id : 0}
-                userId={user ? user.id : 0}
-                typeActivite={ent ? ent.type_activite : 'association'}
-                offre={ent ? ent.offre || 'comptabilite' : 'comptabilite'}
-                modules={ent ? ent.modules || [] : []}
-                entiteSigle={ent ? ent.sigle || '' : ''}
-                entiteAdresse={ent ? ent.adresse || '' : ''}
-                entiteNif={ent ? ent.nif || '' : ''}
-                entites={entites}
-                onSwitchEntite={handleSwitchEntite}
-                onEntiteCreated={handleEntiteCreated}
-                onEntiteUpdated={handleEntiteUpdated}
-                onEntiteDeleted={handleEntiteDeleted}
-                onLogout={handleLogout}
-              />
-            );
-          default:
-            return <LoginEmail onNext={handleEmailNext} onRegister={() => setStep('register')} />;
-        }
-      })()}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      <Dashboard
+        userName={user ? user.name : 'Utilisateur'}
+        cabinetName=''
+        cabinetId={0}
+        isCabinet={entites.length > 1}
+        entiteName={ent ? ent.nom : 'Mon Entité'}
+        entiteId={ent ? ent.id : 0}
+        userId={user ? parseInt(user.sub.replace(/-/g, '').substring(0, 8), 16) : 0}
+        typeActivite={ent ? ent.type_activite : 'entreprise'}
+        offre={ent ? ent.offre || 'comptabilite' : 'comptabilite'}
+        modules={ent ? ent.modules || ['compta', 'etats', 'paie'] : ['compta', 'etats', 'paie']}
+        entiteSigle={ent ? ent.sigle || '' : ''}
+        entiteAdresse={ent ? ent.adresse || '' : ''}
+        entiteNif={ent ? ent.nif || '' : ''}
+        entites={entites}
+        onSwitchEntite={handleSwitchEntite}
+        onEntiteCreated={handleEntiteCreated}
+        onEntiteUpdated={handleEntiteUpdated}
+        onEntiteDeleted={handleEntiteDeleted}
+        onLogout={handleLogout}
+      />
     </>
+  );
+}
+
+function App(): React.JSX.Element {
+  return (
+    <KeycloakProvider>
+      <AppContent />
+    </KeycloakProvider>
   );
 }
 
