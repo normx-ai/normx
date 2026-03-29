@@ -119,7 +119,16 @@ function getTypeLabel(typeActivite: TypeActivite): string {
 }
 
 function Dashboard({ userName, cabinetName = '', cabinetId = 0, isCabinet = false, entiteName, entiteId, userId, typeActivite, offre = 'comptabilite', modules = [], entiteSigle = '', entiteAdresse = '', entiteNif = '', entites = [], onSwitchEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onLogout }: DashboardProps): React.ReactElement {
-  const [activeModule, setActiveModule] = useState<NormxModule | null>(null);
+  const [activeModule, setActiveModule] = useState<NormxModule | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const mod = params.get('module') || sessionStorage.getItem('normx_redirect_module');
+    sessionStorage.removeItem('normx_redirect_module');
+    if (mod === 'compta' || mod === 'etats' || mod === 'paie') {
+      window.history.replaceState({}, '', window.location.pathname);
+      return mod;
+    }
+    return null;
+  });
   const [moduleSwitcherOpen, setModuleSwitcherOpen] = useState<boolean>(false);
   const [dossierSwitcherOpen, setDossierSwitcherOpen] = useState<boolean>(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);

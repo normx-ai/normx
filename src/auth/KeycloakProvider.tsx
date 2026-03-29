@@ -153,6 +153,11 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
   }, []);
 
   const login = useCallback(() => {
+    // Sauvegarder le paramètre module pour le restaurer après Keycloak
+    const moduleParam = new URLSearchParams(window.location.search).get('module');
+    if (moduleParam) {
+      sessionStorage.setItem('normx_redirect_module', moduleParam);
+    }
     const redirectUri = `${window.location.origin}${window.location.pathname}`;
     window.location.href = getLoginUrl(redirectUri);
   }, []);
