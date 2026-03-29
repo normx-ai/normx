@@ -43,12 +43,11 @@ const MODULES: ModuleOption[] = [
   },
 ];
 
-const TYPES_ACTIVITE: { id: TypeActivite; label: string }[] = [
-  { id: 'entreprise', label: 'Entreprise' },
-  { id: 'association', label: 'Association / ONG' },
-  { id: 'ordre_professionnel', label: 'Ordre professionnel' },
-  { id: 'projet_developpement', label: 'Projet de développement' },
-  { id: 'smt', label: 'SMT (Système Minimal de Trésorerie)' },
+type TenantType = 'enterprise' | 'cabinet';
+
+const TENANT_TYPES: { id: TenantType; label: string; desc: string; icon: string }[] = [
+  { id: 'enterprise', label: 'Entreprise', desc: 'Je gère ma propre comptabilité', icon: '🏢' },
+  { id: 'cabinet', label: 'Cabinet comptable', desc: 'Je gère la comptabilité de mes clients', icon: '📊' },
 ];
 
 export default function Onboarding({ userName, onComplete, defaultModule }: OnboardingProps): React.JSX.Element {
@@ -57,7 +56,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     defaultModule && MODULES.some(m => m.id === defaultModule) ? [defaultModule as NormxModule] : []
   );
   const [entiteNom, setEntiteNom] = useState('');
-  const [typeActivite, setTypeActivite] = useState<TypeActivite>('entreprise');
+  const [tenantType, setTenantType] = useState<TenantType>('enterprise');
 
   const toggleModule = (id: NormxModule): void => {
     setSelectedModules(prev =>
@@ -90,7 +89,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
         },
         body: JSON.stringify({
           nom: entiteNom.trim(),
-          type: typeActivite === 'smt' ? 'enterprise' : 'enterprise',
+          type: tenantType,
           modules: selectedModules,
         }),
       });
@@ -100,7 +99,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
       const entite: Entite = {
         id: 1,
         nom: entiteNom.trim(),
-        type_activite: typeActivite,
+        type_activite: tenantType === 'cabinet' ? 'entreprise' : 'entreprise',
         offre: selectedModules.includes('compta') ? 'comptabilite' : 'etats',
         modules: selectedModules,
       };
@@ -251,26 +250,33 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
             </div>
 
             <div style={{ marginBottom: 28 }}>
-              <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: DARK, marginBottom: 6 }}>
-                Type d'activité
+              <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: DARK, marginBottom: 10 }}>
+                Je suis
               </label>
-              <select
-                value={typeActivite}
-                onChange={e => setTypeActivite(e.target.value as TypeActivite)}
-                style={{
-                  width: '100%',
-                  padding: '12px 14px',
-                  border: '1.5px solid rgba(0,0,0,0.12)',
-                  borderRadius: 0,
-                  fontSize: 15,
-                  outline: 'none',
-                  background: '#fff',
-                }}
-              >
-                {TYPES_ACTIVITE.map(t => (
-                  <option key={t.id} value={t.id}>{t.label}</option>
-                ))}
-              </select>
+              <div style={{ display: 'flex', gap: 12 }}>
+                {TENANT_TYPES.map(t => {
+                  const selected = tenantType === t.id;
+                  return (
+                    <div
+                      key={t.id}
+                      onClick={() => setTenantType(t.id)}
+                      style={{
+                        flex: 1,
+                        border: `2px solid ${selected ? PRIMARY : 'rgba(0,0,0,0.08)'}`,
+                        padding: 20,
+                        cursor: 'pointer',
+                        background: selected ? 'rgba(212,168,67,0.06)' : '#fff',
+                        transition: 'all 0.2s',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <div style={{ fontSize: 28, marginBottom: 8 }}>{t.icon}</div>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: DARK, marginBottom: 4 }}>{t.label}</div>
+                      <div style={{ fontSize: 12, color: '#6b7280' }}>{t.desc}</div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Résumé modules */}
