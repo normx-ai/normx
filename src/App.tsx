@@ -3,16 +3,17 @@ import LoginEmail from './auth/LoginEmail';
 import LoginPassword from './auth/LoginPassword';
 import Register from './auth/Register';
 import VerifyOtp from './auth/VerifyOtp';
+import LandingPage from './landing/LandingPage';
 import Dashboard from './dashboard/Dashboard';
 import Toast from './components/Toast';
 import type { User, Entite, ToastData, ToastType } from './types';
 import './App.css';
 
-type Step = 'email' | 'password' | 'register' | 'verify-otp' | 'dashboard';
+type Step = 'landing' | 'email' | 'password' | 'register' | 'verify-otp' | 'dashboard';
 type OtpSource = 'login' | 'register' | '';
 
 function App(): React.JSX.Element {
-  const [step, setStep] = useState<Step>('email');
+  const [step, setStep] = useState<Step>('landing');
   const [email, setEmail] = useState<string>('');
   const [otpCode, setOtpCode] = useState<string>('');
   const [user, setUser] = useState<User | null>(null);
@@ -129,6 +130,8 @@ function App(): React.JSX.Element {
       {toast && <Toast message={toast.message} type={toast.type} onClose={closeToast} />}
       {(() => {
         switch (step) {
+          case 'landing':
+            return <LandingPage onLogin={() => setStep('email')} />;
           case 'email':
             return <LoginEmail onNext={handleEmailNext} onRegister={() => setStep('register')} />;
           case 'password':
