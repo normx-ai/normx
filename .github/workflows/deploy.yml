@@ -17,6 +17,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build frontend
+        env:
+          REACT_APP_KEYCLOAK_URL: https://auth.normx-ai.com
+          REACT_APP_KEYCLOAK_REALM: normx
+          REACT_APP_KEYCLOAK_CLIENT_ID: normx-app
+          CI: false
+        run: npm run build
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ env.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload frontend build
+        run: |
+          rsync -az --delete build/ ${{ env.VPS_USER }}@${{ env.VPS_HOST }}:/var/www/normx-app/
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
         with:
@@ -55,33 +83,12 @@ jobs:
             ENVEOF
             chmod 600 .env.production
 
-            # --- Build frontend ---
-            export REACT_APP_KEYCLOAK_URL=https://auth.normx-ai.com
-            export REACT_APP_KEYCLOAK_REALM=normx
-            export REACT_APP_KEYCLOAK_CLIENT_ID=normx-app
-            npm install --legacy-peer-deps && npm run build
-
-            # --- Copier le build frontend ---
-            sudo rm -rf /var/www/normx-app/*
-            cp -r build/* /var/www/normx-app/
-
-            # --- Rebuild et restart ---
+            # --- Rebuild et restart API ---
             docker compose build --no-cache api
             docker compose up -d --remove-orphans
 
             # --- Connecter nginx au reseau normx ---
             docker network connect normx_normx-net cgi242-nginx 2>/dev/null || true
-
-            # --- Activer nginx app.conf si desactive ---
-            if [ -f /opt/cgi242/nginx/conf.d/app.conf.disabled ]; then
-              mv /opt/cgi242/nginx/conf.d/app.conf.disabled /opt/cgi242/nginx/conf.d/app.conf
-              cd /opt/cgi242 && docker compose build --no-cache nginx && docker compose up -d nginx
-              sleep 5
-              docker network connect normx_normx-net cgi242-nginx 2>/dev/null || true
-              docker network connect normx-legal_normx-legal-net cgi242-nginx 2>/dev/null || true
-              docker network connect keycloak_keycloak-net cgi242-nginx 2>/dev/null || true
-              cd ${{ env.APP_DIR }}
-            fi
 
             # --- Verifier ---
             sleep 15
