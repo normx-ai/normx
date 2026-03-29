@@ -51,10 +51,30 @@
     .nav-cta:hover { background: var(--dark2); transform: translateY(-1px); }
     .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
     .nav-burger span { display: block; width: 20px; height: 2px; background: var(--text-secondary); margin: 4px 0; border-radius: 2px; }
+    /* ══ MEGA MENU ══ */
+    .nav-products { position: relative; }
+    .nav-products > .nav-link { cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .nav-products > .nav-link::after { content: ''; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; transition: transform 0.2s; }
+    .nav-products:hover > .nav-link::after { transform: rotate(180deg); }
+    .mega-menu { display: none; position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); padding: 28px; width: 640px; z-index: 200; }
+    .nav-products:hover .mega-menu { display: block; animation: fadeSlideUp 0.2s ease-out; }
+    .mega-menu::before { content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 8px solid #fff; }
+    .mega-menu-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .mega-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .mega-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: 10px; transition: background 0.15s; }
+    .mega-item:hover { background: var(--bg-warm); }
+    .mega-item-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .mega-item-text h5 { font-size: 14px; font-weight: 700; color: var(--dark); margin: 0 0 2px; }
+    .mega-item-text p { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.4; }
+    .mega-bottom { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .mega-bottom span { font-size: 12px; color: var(--text-secondary); }
+    .mega-bottom a { font-size: 13px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 4px; }
+    .mega-bottom a:hover { gap: 8px; }
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-burger { display: block; }
       .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--bg); padding: 16px; gap: 4px; border-bottom: 1px solid var(--border); }
+      .mega-menu { display: none !important; }
     }
 
     /* ══ HERO — style Pennylane ══ */
@@ -243,7 +263,60 @@
       NORMX <span style="color:var(--primary)">AI</span>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="#products" class="nav-link">Produits</a>
+      <div class="nav-products">
+        <span class="nav-link">Produits</span>
+        <div class="mega-menu">
+          <div class="mega-menu-title">Un logiciel complet et puissant</div>
+          <div class="mega-menu-grid">
+            <a href="https://tax.normx-ai.com" class="mega-item">
+              <div class="mega-item-icon" style="background:rgba(212,168,67,0.1)"><i class="bi bi-bank" style="color:#D4A843"></i></div>
+              <div class="mega-item-text">
+                <h5>NORMX <span style="color:#D4A843">Tax</span></h5>
+                <p>Simulateurs fiscaux, codes CGI et social, assistant IA fiscal</p>
+              </div>
+            </a>
+            <a href="https://app.normx-ai.com?module=compta" class="mega-item">
+              <div class="mega-item-icon" style="background:rgba(37,99,235,0.08)"><i class="bi bi-calculator" style="color:#2563eb"></i></div>
+              <div class="mega-item-text">
+                <h5>NORMX <span style="color:#2563eb">Compta</span></h5>
+                <p>Saisie comptable, grand livre, balance, déclarations</p>
+              </div>
+            </a>
+            <a href="https://app.normx-ai.com?module=etats" class="mega-item">
+              <div class="mega-item-icon" style="background:rgba(5,150,105,0.08)"><i class="bi bi-file-earmark-bar-graph" style="color:#059669"></i></div>
+              <div class="mega-item-text">
+                <h5>NORMX <span style="color:#059669">États</span></h5>
+                <p>Bilan, compte de résultat, TFT, notes annexes, résultat fiscal</p>
+              </div>
+            </a>
+            <a href="https://app.normx-ai.com?module=paie" class="mega-item">
+              <div class="mega-item-icon" style="background:rgba(217,119,6,0.08)"><i class="bi bi-people" style="color:#d97706"></i></div>
+              <div class="mega-item-text">
+                <h5>NORMX <span style="color:#d97706">Paie</span></h5>
+                <p>Bulletins de paie, DAS I/II/III, états sociaux et fiscal</p>
+              </div>
+            </a>
+            <a href="https://legal.normx-ai.com" class="mega-item">
+              <div class="mega-item-icon" style="background:rgba(124,58,237,0.08)"><i class="bi bi-file-earmark-text" style="color:#7c3aed"></i></div>
+              <div class="mega-item-text">
+                <h5>NORMX <span style="color:#7c3aed">Legal</span></h5>
+                <p>Statuts, procès-verbaux, actes de cession, droit OHADA</p>
+              </div>
+            </a>
+            <a href="#features" class="mega-item">
+              <div class="mega-item-icon" style="background:rgba(26,58,92,0.08)"><i class="bi bi-robot" style="color:var(--dark)"></i></div>
+              <div class="mega-item-text">
+                <h5>Assistant <span style="color:var(--primary)">IA</span></h5>
+                <p>IA fiscal, juridique et comptable intégrée à chaque module</p>
+              </div>
+            </a>
+          </div>
+          <div class="mega-bottom">
+            <span>5 produits · 1 plateforme</span>
+            <a href="#products">Voir tous les produits <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
       <a href="#features" class="nav-link">Fonctionnalités</a>
       <a href="#contact" class="nav-cta">Contact</a>
     </div>
