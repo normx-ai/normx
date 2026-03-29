@@ -7,6 +7,23 @@ import Toast from './components/Toast';
 import type { Entite } from './types';
 import './App.css';
 
+// Intercepteur global : injecter le token Keycloak sur toutes les requêtes /api
+const originalFetch = window.fetch;
+window.fetch = function (input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
+  if (url.startsWith('/api')) {
+    const token = localStorage.getItem('normx_kc_access_token');
+    if (token) {
+      const headers = new Headers(init?.headers);
+      if (!headers.has('Authorization')) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      init = { ...init, headers };
+    }
+  }
+  return originalFetch.call(window, input, init);
+};
+
 function AppContent(): React.JSX.Element {
   const { user, accessToken, isAuthenticated, isLoading, login, logout } = useKeycloak();
   const [entites, setEntites] = React.useState<Entite[]>([]);
