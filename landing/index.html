@@ -93,6 +93,14 @@
     .hero-social-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
     .hero-social-item .stars { color: var(--primary); font-size: 14px; }
     .hero-visual { position: relative; }
+    /* ══ MACBOOK FRAME ══ */
+    .macbook { max-width: 580px; margin: 0 auto; }
+    .macbook-screen { background: #1a1a1a; border-radius: 12px 12px 0 0; padding: 8px 8px 0; border: 2px solid #2a2a2a; border-bottom: none; }
+    .macbook-camera { width: 6px; height: 6px; border-radius: 50%; background: #3a3a3a; margin: 0 auto 6px; }
+    .macbook-screen .mockup { border-radius: 0; border: none; box-shadow: none; }
+    .macbook-base { height: 14px; background: linear-gradient(180deg, #c8c8c8 0%, #a8a8a8 40%, #b8b8b8 100%); border-radius: 0 0 4px 4px; position: relative; }
+    .macbook-base::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: #9a9a9a; border-radius: 0 0 4px 4px; }
+    .macbook-shadow { height: 6px; background: radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, transparent 70%); margin: 0 20px; }
     /* ══ MOCKUP ANIMATIONS ══ */
     @keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
     @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
@@ -348,7 +356,10 @@
       </div>
     </div>
     <div class="hero-visual">
-      <div class="mockup" style="max-width:560px;">
+      <div class="macbook">
+      <div class="macbook-screen">
+      <div class="macbook-camera"></div>
+      <div class="mockup" style="max-width:none;">
         <div class="mockup-bar">
           <div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div>
           <span style="flex:1;text-align:center;font-size:11px;font-weight:600;color:var(--text-secondary);">NORMX AI — Tableau de bord</span>
@@ -404,6 +415,10 @@
           </div>
         </div>
       </div>
+      </div><!-- /macbook-screen -->
+      <div class="macbook-base"></div>
+      <div class="macbook-shadow"></div>
+      </div><!-- /macbook -->
     </div>
   </div>
 </section>
