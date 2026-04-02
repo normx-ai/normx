@@ -73,13 +73,16 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
   };
 
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  const canFinish = selectedModules.length > 0 && entiteNom.trim() && !saving;
 
   const handleFinish = async (): Promise<void> => {
-    if (selectedModules.length === 0 || !entiteNom.trim() || saving) return;
+    if (!canFinish) return;
     setSaving(true);
+    setError('');
 
     try {
-      // Appeler l'API pour créer/configurer le tenant
       const token = localStorage.getItem('normx_kc_access_token');
       const resp = await fetch('/api/tenant/setup', {
         method: 'POST',
@@ -94,17 +97,23 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
         }),
       });
 
-      if (!resp.ok) throw new Error('Erreur serveur');
+      if (!resp.ok) {
+        const data = await resp.json().catch(() => ({}));
+        throw new Error(data.error || 'Erreur serveur (' + resp.status + ')');
+      }
+
+      const data = await resp.json();
 
       const entite: Entite = {
-        id: 1,
+        id: data.tenant?.id || 1,
         nom: entiteNom.trim(),
         type_activite: tenantType === 'cabinet' ? 'entreprise' : 'entreprise',
         offre: selectedModules.includes('compta') ? 'comptabilite' : 'etats',
         modules: selectedModules,
       };
       onComplete(entite);
-    } catch {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors de la configuration');
       setSaving(false);
     }
   };
@@ -289,6 +298,12 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
               </div>
             </div>
 
+            {error && (
+              <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '10px 14px', marginBottom: 16, fontSize: 14, color: '#dc2626' }}>
+                {error}
+              </div>
+            )}
+
             <div style={{ display: 'flex', gap: 12 }}>
               <button
                 onClick={() => setStep(1)}
@@ -308,12 +323,12 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
               </button>
               <button
                 onClick={handleFinish}
-                disabled={!entiteNom.trim()}
+                disabled={!canFinish}
                 style={{
                   flex: 2,
                   padding: '14px 28px',
-                  background: entiteNom.trim() ? PRIMARY : '#e5e7eb',
-                  color: entiteNom.trim() ? DARK : '#9ca3af',
+                  background: canFinish ? PRIMARY : '#e5e7eb',
+                  color: canFinish ? DARK : '#9ca3af',
                   border: 'none',
                   borderRadius: 0,
                   fontSize: 16,
