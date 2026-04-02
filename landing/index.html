@@ -3,774 +3,353 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NORMX AI — La plateforme complète pour les États membres OHADA</title>
-  <meta name="description" content="NORMX AI — La plateforme complète pour les États membres OHADA : comptabilité, fiscalité, paie et droit des affaires propulsés par l'intelligence artificielle." />
+  <title>NORMX Compta — Comptabilite SYSCOHADA & SYCEBNL propulsee par l'IA</title>
+  <meta name="description" content="Logiciel comptable conforme SYSCOHADA et SYCEBNL pour l'Afrique. Saisie d'ecritures, grand livre, balance, etats financiers, assistant IA." />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #D4A843;
-      --primary-light: #e8c96a;
-      --primary-bg: rgba(212,168,67,0.08);
-      --dark: #1A3A5C;
-      --dark2: #0d2b45;
-      --text: #1f2937;
-      --text-secondary: #6b7280;
-      --bg: #ffffff;
-      --bg-warm: #faf8f5;
-      --bg-card: #f9fafb;
-      --border: rgba(0,0,0,0.08);
-      --green: #059669;
-      --green-bg: rgba(5,150,105,0.1);
-      --blue: #2563eb;
-      --blue-bg: rgba(37,99,235,0.08);
-      --purple: #7c3aed;
-      --purple-bg: rgba(124,58,237,0.08);
-      --orange: #d97706;
-      --radius: 16px;
-      --radius-sm: 10px;
-      --shadow: 0 1px 3px rgba(0,0,0,0.06);
-      --shadow-lg: 0 20px 60px rgba(0,0,0,0.08);
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary:#2563eb;--primary-light:#60a5fa;--primary-bg:rgba(37,99,235,.06);--gold:#D4A843;--dark:#0F2A42;--text:#1f2937;--text2:#6b7280;--text3:#9ca3af;--bg:#fff;--bg2:#faf8f5;--bg3:#f9fafb;--border:rgba(0,0,0,.08);--green:#059669;--red:#ef4444;--orange:#d97706;--purple:#7c3aed;--r:16px;--shadow:0 1px 3px rgba(0,0,0,.06);--shadow-lg:0 20px 60px rgba(0,0,0,.08)}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:var(--dark)}
+    .nav-icon{width:34px;height:34px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+    .nav-links{display:flex;align-items:center;gap:6px}
+    .nav-link{padding:8px 14px;font-size:14px;font-weight:600;color:var(--text2);border-radius:8px;transition:all .2s}
+    .nav-link:hover{color:var(--text);background:rgba(0,0,0,.04)}
+    .nav-cta{padding:9px 22px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;border-radius:8px}
+
+    /* HERO */
+    .hero{padding:120px 24px 60px;background:var(--bg2)}
+    .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary-bg);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--primary);margin-bottom:20px}
+    .hero h1{font-size:clamp(30px,4vw,48px);font-weight:900;color:var(--dark);line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
+    .hero h1 span{color:var(--primary)}
+    .hero p{font-size:17px;color:var(--text2);max-width:480px;line-height:1.7;margin-bottom:28px}
+    .hero-btns{display:flex;gap:12px;margin-bottom:20px}
+    .btn-primary{padding:14px 28px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;border-radius:10px}
+    .btn-outline{padding:14px 28px;border:1.5px solid var(--border);background:#fff;color:var(--dark);font-size:15px;font-weight:600;border-radius:10px}
+
+    /* STATS */
+    .stats{background:var(--dark);border-radius:16px;padding:24px 48px;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;max-width:800px;margin:48px auto 0}
+    .stat{text-align:center}
+    .stat .n{font-size:32px;font-weight:900;color:var(--gold)}
+    .stat .l{font-size:11px;color:rgba(255,255,255,.7);margin-top:4px}
+
+    /* SECTIONS */
+    .section{padding:80px 24px}
+    .section.alt{background:var(--bg2)}
+    .section-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .section-inner.reverse{direction:rtl}
+    .section-inner.reverse>*{direction:ltr}
+    .section-label{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+    .section h2{font-size:clamp(24px,3vw,36px);font-weight:900;line-height:1.2;margin-bottom:16px;color:var(--dark)}
+    .section p{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:24px}
+    .checks{list-style:none;margin-bottom:24px}
+    .checks li{display:flex;align-items:start;gap:10px;padding:6px 0;font-size:15px}
+    .checks li i{color:var(--green);font-size:18px;margin-top:2px;flex-shrink:0}
+
+    /* PRICING */
+    .pricing{padding:60px 24px;text-align:center}
+    .pricing h2{font-size:clamp(26px,3vw,40px);font-weight:900;color:var(--dark);margin-bottom:8px}
+    .pricing .sub{font-size:17px;color:var(--text2);margin-bottom:40px}
+    .plans{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;max-width:700px;margin:0 auto}
+    .plan{flex:1;min-width:260px;max-width:320px;border-radius:16px;padding:28px;text-align:left}
+    .plan.free{background:var(--bg3);border:1px solid var(--border)}
+    .plan.pro{background:var(--primary-bg);border:2px solid var(--primary);position:relative}
+    .plan .tag{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px}
+    .plan .price{font-size:38px;font-weight:900;color:var(--dark)}
+    .plan .period{font-size:15px;color:var(--text2);margin-bottom:20px}
+    .plan .feat{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:15px;color:var(--text2)}
+    .plan .feat i{font-size:16px}
+    .plan .cta{display:block;margin-top:16px;padding:12px;border-radius:10px;text-align:center;font-size:16px;font-weight:700}
+
+    /* CTA */
+    .cta-section{padding:60px 24px;background:var(--bg2)}
+    .cta-box{max-width:700px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center}
+    .cta-box h2{font-size:28px;font-weight:900;color:var(--dark);margin-bottom:12px}
+    .cta-box p{color:var(--text2);font-size:16px;margin-bottom:28px}
+
+    /* FOOTER */
+    footer{padding:40px 24px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--text2)}
+    footer a{color:var(--primary);font-weight:600}
+
+    /* TABLE */
+    .mt{width:100%;border-collapse:collapse;font-size:11px}
+    .mt th{text-align:left;padding:6px 8px;background:#f9fafb;color:var(--text2);font-weight:700;border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+    .mt td{padding:8px;border-bottom:1px solid #f3f4f6}
+    .mt .num{text-align:right;font-family:'Inter',monospace;font-weight:600}
+
+    @media(max-width:900px){
+      .hero-inner,.section-inner{grid-template-columns:1fr;text-align:center}
+      .hero p{margin:0 auto 28px}
+      .hero-btns{justify-content:center}
+      .hero-visual{display:none}
+      .section-inner.reverse{direction:ltr}
+      .stats{gap:20px;padding:24px 16px}
+      .stat .n{font-size:24px}
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', -apple-system, sans-serif; font-weight: 400; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    a { text-decoration: none; color: inherit; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-
-    /* ══ NAV ══ */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; color: var(--dark); }
-    .nav-logo-icon { width: 34px; height: 34px; border-radius: 10px; background: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: var(--dark); }
-    .nav-links { display: flex; align-items: center; gap: 6px; }
-    .nav-link { padding: 8px 14px; font-size: 14px; font-weight: 600; color: var(--text-secondary); border-radius: 8px; transition: all 0.2s; }
-    .nav-link:hover { color: var(--text); background: rgba(0,0,0,0.04); }
-    .nav-cta { padding: 9px 22px; background: var(--dark); color: #fff; font-size: 14px; font-weight: 700; border-radius: 8px; transition: all 0.2s; }
-    .nav-cta:hover { background: var(--dark2); transform: translateY(-1px); }
-    .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-    .nav-burger span { display: block; width: 20px; height: 2px; background: var(--text-secondary); margin: 4px 0; border-radius: 2px; }
-    /* ══ MEGA MENU ══ */
-    .nav-products { position: relative; }
-    .nav-products > .nav-link { cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    .nav-products > .nav-link::after { content: ''; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; transition: transform 0.2s; }
-    .nav-products:hover > .nav-link::after { transform: rotate(180deg); }
-    .mega-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); padding: 28px; width: 640px; z-index: 200; margin-top: 0; }
-    .mega-menu::after { content: ''; position: absolute; top: -20px; left: 0; right: 0; height: 20px; }
-    .nav-products:hover .mega-menu { display: block; animation: fadeSlideUp 0.2s ease-out; }
-    .mega-menu::before { content: ''; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 8px solid #fff; }
-    .mega-menu-title { font-size: 11px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-    .mega-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
-    .mega-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: 10px; transition: background 0.15s; }
-    .mega-item:hover { background: var(--bg-warm); }
-    .mega-item-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-    .mega-item-text h5 { font-size: 14px; font-weight: 700; color: var(--dark); margin: 0 0 2px; }
-    .mega-item-text p { font-size: 12px; color: var(--text-secondary); margin: 0; line-height: 1.4; }
-    .mega-bottom { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .mega-bottom span { font-size: 12px; color: var(--text-secondary); }
-    .mega-bottom a { font-size: 13px; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 4px; }
-    .mega-bottom a:hover { gap: 8px; }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .nav-burger { display: block; }
-      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--bg); padding: 16px; gap: 4px; border-bottom: 1px solid var(--border); }
-      .mega-menu { display: none !important; }
-    }
-
-    /* ══ HERO — style Pennylane ══ */
-    .hero { padding: 100px 24px 32px; background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg) 100%); overflow: hidden; }
-    .hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .hero-text h1 { font-size: clamp(32px, 4.5vw, 52px); font-weight: 700; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.5px; }
-    .hero-text h1 .highlight { color: var(--primary); position: relative; }
-    .hero-text h1 .highlight::after { content: ''; position: absolute; bottom: 2px; left: 0; right: 0; height: 6px; background: rgba(212,168,67,0.25); border-radius: 3px; }
-    .hero-text p { font-size: 18px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 32px; max-width: 480px; }
-    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
-    .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--primary); color: var(--dark); font-size: 15px; font-weight: 700; border-radius: var(--radius-sm); transition: all 0.2s; }
-    .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,168,67,0.3); }
-    .btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--bg); color: var(--text); font-size: 15px; font-weight: 600; border-radius: var(--radius-sm); border: 1.5px solid var(--border); transition: all 0.2s; }
-    .btn-outline:hover { border-color: var(--primary); background: var(--primary-bg); }
-    .hero-social { display: flex; align-items: center; gap: 24px; }
-    .hero-social-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
-    .hero-social-item .stars { color: var(--primary); font-size: 14px; }
-    .hero-visual { position: relative; }
-    /* ══ MACBOOK FRAME ══ */
-    .macbook { max-width: 480px; margin: 0 auto; }
-    .macbook-screen { background: #1a1a1a; border-radius: 12px 12px 0 0; padding: 8px 8px 0; border: 2px solid #2a2a2a; border-bottom: none; }
-    .macbook-camera { width: 6px; height: 6px; border-radius: 50%; background: #3a3a3a; margin: 0 auto 6px; }
-    .macbook-screen .mockup { border-radius: 0; border: none; box-shadow: none; }
-    .macbook-base { height: 14px; background: linear-gradient(180deg, #c8c8c8 0%, #a8a8a8 40%, #b8b8b8 100%); border-radius: 0 0 4px 4px; position: relative; }
-    .macbook-base::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: #9a9a9a; border-radius: 0 0 4px 4px; }
-    .macbook-shadow { height: 6px; background: radial-gradient(ellipse at center, rgba(0,0,0,0.15) 0%, transparent 70%); margin: 0 20px; }
-    /* ══ MOCKUP ANIMATIONS ══ */
-    @keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,67,0); } 50% { box-shadow: 0 0 12px 2px rgba(212,168,67,0.15); } }
-    @keyframes sidebarSlide { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-    .hero-visual .mockup { animation: fadeIn 0.6s ease-out; }
-    .hero-visual .mockup-stat { animation: fadeSlideUp 0.5s ease-out both; }
-    .hero-visual .mockup-stat:nth-child(1) { animation-delay: 0.3s; }
-    .hero-visual .mockup-stat:nth-child(2) { animation-delay: 0.5s; }
-    .hero-visual .mockup-stat:nth-child(3) { animation-delay: 0.7s; }
-    .hero-visual .mockup-bar-chart { transform-origin: bottom; animation: barGrow 0.8s ease-out both; }
-    .hero-visual .mockup-bar-chart:nth-child(1) { animation-delay: 0.6s; }
-    .hero-visual .mockup-bar-chart:nth-child(2) { animation-delay: 0.7s; }
-    .hero-visual .mockup-bar-chart:nth-child(3) { animation-delay: 0.8s; }
-    .hero-visual .mockup-bar-chart:nth-child(4) { animation-delay: 0.9s; }
-    .hero-visual .mockup-bar-chart:nth-child(5) { animation-delay: 1.0s; }
-    .hero-visual .mockup-bar-chart:nth-child(6) { animation-delay: 1.1s; }
-    .hero-visual .mockup-bar-chart:nth-child(7) { animation-delay: 1.2s; }
-    .hero-visual .mockup-bar-chart:nth-child(8) { animation-delay: 1.3s; }
-    .hero-visual .mockup-bar-chart:nth-child(9) { animation-delay: 1.4s; }
-    .hero-visual .mockup-bar-chart:nth-child(10) { animation-delay: 1.5s; }
-    .hero-visual .mockup-bar-chart:nth-child(11) { animation-delay: 1.6s; }
-    .hero-visual .mockup-bar-chart:nth-child(12) { animation-delay: 1.7s; }
-    .hero-visual .mockup-table tr { animation: fadeSlideUp 0.4s ease-out both; }
-    .hero-visual .mockup-table tr:nth-child(1) { animation-delay: 1.2s; }
-    .hero-visual .mockup-table tr:nth-child(2) { animation-delay: 1.4s; }
-    .hero-visual .mockup-table tr:nth-child(3) { animation-delay: 1.6s; }
-    .hero-visual .mockup-table tr:nth-child(4) { animation-delay: 1.8s; }
-    .hero-visual .mockup-table tr:nth-child(5) { animation-delay: 2.0s; }
-    .hero-visual .mockup-sidebar-item { animation: sidebarSlide 0.4s ease-out both; }
-    .hero-visual .mockup-sidebar-item:nth-child(1) { animation-delay: 0.2s; }
-    .hero-visual .mockup-sidebar-item:nth-child(2) { animation-delay: 0.3s; }
-    .hero-visual .mockup-sidebar-item:nth-child(3) { animation-delay: 0.4s; }
-    .hero-visual .mockup-sidebar-item:nth-child(4) { animation-delay: 0.5s; }
-    .hero-visual .mockup-sidebar-item:nth-child(5) { animation-delay: 0.6s; }
-    .hero-visual .mockup-sidebar-item:nth-child(6) { animation-delay: 0.7s; }
-    .hero-visual .mockup-sidebar-item:nth-child(7) { animation-delay: 0.8s; }
-    .hero-visual .mockup { animation: pulseGlow 3s ease-in-out 2.5s infinite; }
-    .hero-mockup { width: 100%; max-width: 560px; border-radius: 16px; box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
-    @media (max-width: 900px) { .hero-inner { grid-template-columns: 1fr; text-align: center; } .hero-text p { margin-left: auto; margin-right: auto; } .hero-btns { justify-content: center; } .hero-social { justify-content: center; } .hero-visual { display: none; } }
-
-    /* ══ FEATURE TABS — barre horizontale style Pennylane ══ */
-    .feature-tabs { display: flex; justify-content: center; gap: 0; background: rgba(250,248,245,0.95); backdrop-filter: blur(12px); padding: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow-x: auto; position: sticky; top: 64px; z-index: 90; }
-    .feature-tab { padding: 16px 28px; font-size: 14px; font-weight: 600; color: var(--text-secondary); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
-    .feature-tab:hover { color: var(--text); background: rgba(0,0,0,0.02); }
-    .feature-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; }
-    .feature-tab i { font-size: 16px; }
-
-    /* ══ SOCIAL PROOF ══ */
-    .social-proof { padding: 48px 24px; text-align: center; background: var(--bg); }
-    .social-proof p { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; }
-    .logos-row { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; opacity: 0.5; }
-    .logos-row span { font-size: 18px; font-weight: 800; color: var(--text-secondary); letter-spacing: 1px; }
-
-    /* ══ SECTION FEATURE — alternating left/right ══ */
-    .section-feature { padding: 80px 24px; scroll-margin-top: 120px; }
-    .section-feature:nth-child(even) { background: var(--bg-warm); }
-    .feature-row { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .feature-row.reverse { direction: rtl; }
-    .feature-row.reverse > * { direction: ltr; }
-    .feature-label { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
-    .feature-content h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 700; line-height: 1.2; margin-bottom: 16px; }
-    .feature-content p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px; }
-    .feature-checks { list-style: none; margin-bottom: 28px; }
-    .feature-checks li { display: flex; align-items: start; gap: 10px; padding: 6px 0; font-size: 15px; color: var(--text); }
-    .feature-checks li i { color: var(--green); font-size: 18px; margin-top: 2px; flex-shrink: 0; }
-    .feature-img { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
-
-    /* ══ MOCKUP UI CARDS ══ */
-    .mockup { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; }
-    .mockup-bar { height: 36px; background: #f3f4f6; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 14px; gap: 6px; }
-    .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .mockup-dot.r { background: #ef4444; } .mockup-dot.y { background: #f59e0b; } .mockup-dot.g { background: #22c55e; }
-    .mockup-body { padding: 20px; }
-    .mockup-row { display: flex; gap: 12px; margin-bottom: 12px; }
-    .mockup-sidebar { width: 140px; flex-shrink: 0; }
-    .mockup-sidebar-item { padding: 8px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-    .mockup-sidebar-item.active { background: var(--primary-bg); color: var(--primary); }
-    .mockup-sidebar-item i { font-size: 14px; }
-    .mockup-main { flex: 1; }
-    .mockup-title { font-size: 14px; font-weight: 800; margin-bottom: 12px; color: var(--text); }
-    .mockup-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-    .mockup-table th { text-align: left; padding: 6px 8px; background: #f9fafb; color: var(--text-secondary); font-weight: 700; border-bottom: 1px solid var(--border); font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .mockup-table td { padding: 8px; border-bottom: 1px solid #f3f4f6; color: var(--text); }
-    .mockup-table .num { text-align: right; font-family: 'Inter', monospace; font-weight: 600; }
-    .mockup-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 10px; font-weight: 700; }
-    .mockup-badge.ok { background: var(--green-bg); color: var(--green); }
-    .mockup-badge.warn { background: rgba(245,158,11,0.12); color: var(--orange); }
-    .mockup-stat-row { display: flex; gap: 12px; margin-bottom: 16px; }
-    .mockup-stat { flex: 1; background: #f9fafb; border-radius: 10px; padding: 14px; border: 1px solid #f3f4f6; }
-    .mockup-stat .val { font-size: 20px; font-weight: 900; color: var(--dark); }
-    .mockup-stat .lbl { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
-    .mockup-chart { height: 80px; background: linear-gradient(180deg, rgba(212,168,67,0.08) 0%, transparent 100%); border-radius: 8px; display: flex; align-items: flex-end; gap: 6px; padding: 8px; }
-    .mockup-bar-chart { flex: 1; border-radius: 4px 4px 0 0; }
-    @media (max-width: 600px) { .mockup-sidebar { display: none; } }
-    .feature-link { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: var(--primary); transition: gap 0.2s; }
-    .feature-link:hover { gap: 12px; }
-    @media (max-width: 800px) { .feature-row, .feature-row.reverse { grid-template-columns: 1fr; direction: ltr; } }
-
-    /* ══ PRODUCTS GRID ══ */
-    .section-products { padding: 80px 24px; background: var(--bg-warm); scroll-margin-top: 120px; }
-    .section-header { text-align: center; margin-bottom: 48px; }
-    .section-header .label { font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
-    .section-header h2 { font-size: clamp(26px, 3.5vw, 40px); font-weight: 700; margin-bottom: 12px; }
-    .section-header p { font-size: 16px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; }
-    .products-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .product-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; transition: all 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; min-height: 320px; }
-    .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: rgba(212,168,67,0.3); }
-    .product-card.live { border-color: var(--primary); }
-    .product-card.live::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--primary); }
-    .product-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 18px; }
-    .product-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 10px; text-align: center; }
-    .product-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; min-height: 66px; }
-    .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
-    .tag-live { background: var(--green-bg); color: var(--green); }
-    .tag-soon { background: rgba(156,163,175,0.15); color: var(--text-secondary); }
-    .product-link { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--primary); margin-top: 10px; transition: gap 0.2s; width: 100%; text-align: center; }
-    .product-link:hover { gap: 10px; }
-    @media (max-width: 800px) { .products-grid { grid-template-columns: 1fr; } }
-
-    /* ══ FEATURES GRID — style Pennylane img 5 ══ */
-    .section-grid { padding: 80px 24px; }
-    .grid-features { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .grid-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; transition: all 0.25s; }
-    .grid-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-    .grid-card .icon { font-size: 28px; margin-bottom: 14px; }
-    .grid-card h4 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
-    .grid-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
-    @media (max-width: 800px) { .grid-features { grid-template-columns: 1fr; } }
-
-    /* ══ STATS ══ */
-    .stats-bar { padding: 48px 24px; background: var(--dark); }
-    .stats-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 32px; }
-    .stat { text-align: center; }
-    .stat .number { font-size: 40px; font-weight: 900; color: var(--primary); }
-    .stat .label { font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px; }
-
-    /* ══ CTA ══ */
-    .cta { padding: 80px 24px; }
-    .cta-box { max-width: 800px; margin: 0 auto; background: var(--bg-warm); border: 1px solid var(--border); border-radius: 20px; padding: 60px 40px; text-align: center; }
-    .cta-box h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
-    .cta-box p { font-size: 16px; color: var(--text-secondary); margin-bottom: 28px; }
-    .cta-box .contact { margin-top: 20px; font-size: 14px; color: var(--text-secondary); }
-    .cta-box .contact a { color: var(--primary); font-weight: 600; }
-
-    /* ══ FOOTER ══ */
-    footer { background: var(--dark); padding: 48px 24px; color: #fff; }
-    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; }
-    .footer-brand h3 { font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 8px; }
-    .footer-brand h3 span { color: var(--primary); }
-    .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
-    .footer-col h4 { font-size: 12px; font-weight: 800; color: rgba(255,255,255,0.9); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1px; }
-    .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.6); padding: 3px 0; transition: color 0.2s; }
-    .footer-col a:hover { color: var(--primary); }
-    .footer-bottom { text-align: center; padding-top: 32px; margin-top: 32px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: rgba(255,255,255,0.5); max-width: 1100px; margin-left: auto; margin-right: auto; }
-    @media (max-width: 800px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 500px) { .footer-inner { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- ══════ NAV ══════ -->
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="/" class="nav-logo">
-      <span class="nav-logo-icon">N</span>
-      NORMX <span style="color:var(--primary)">AI</span>
-    </a>
-    <div class="nav-links" id="navLinks">
-      <div class="nav-products">
-        <span class="nav-link">Produits</span>
-        <div class="mega-menu">
-          <div class="mega-menu-title">Un logiciel complet et puissant</div>
-          <div class="mega-menu-grid">
-            <a href="https://tax.normx-ai.com" class="mega-item">
-              <div class="mega-item-icon" style="background:rgba(212,168,67,0.1)"><i class="bi bi-bank" style="color:#D4A843"></i></div>
-              <div class="mega-item-text">
-                <h5>NORMX <span style="color:#D4A843">Tax</span></h5>
-                <p>Simulateurs fiscaux, codes CGI et social, assistant IA fiscal</p>
-              </div>
-            </a>
-            <a href="https://app.normx-ai.com?module=compta" class="mega-item">
-              <div class="mega-item-icon" style="background:rgba(37,99,235,0.08)"><i class="bi bi-calculator" style="color:#2563eb"></i></div>
-              <div class="mega-item-text">
-                <h5>NORMX <span style="color:#2563eb">Compta</span></h5>
-                <p>Saisie comptable, grand livre, balance, déclarations</p>
-              </div>
-            </a>
-            <a href="https://app.normx-ai.com?module=etats" class="mega-item">
-              <div class="mega-item-icon" style="background:rgba(5,150,105,0.08)"><i class="bi bi-file-earmark-bar-graph" style="color:#059669"></i></div>
-              <div class="mega-item-text">
-                <h5>NORMX <span style="color:#059669">États</span></h5>
-                <p>Bilan, compte de résultat, TFT, notes annexes, résultat fiscal</p>
-              </div>
-            </a>
-            <a href="https://app.normx-ai.com?module=paie" class="mega-item">
-              <div class="mega-item-icon" style="background:rgba(217,119,6,0.08)"><i class="bi bi-people" style="color:#d97706"></i></div>
-              <div class="mega-item-text">
-                <h5>NORMX <span style="color:#d97706">Paie</span></h5>
-                <p>Bulletins de paie, DAS I/II/III, états sociaux et fiscal</p>
-              </div>
-            </a>
-            <a href="https://legal.normx-ai.com" class="mega-item">
-              <div class="mega-item-icon" style="background:rgba(124,58,237,0.08)"><i class="bi bi-file-earmark-text" style="color:#7c3aed"></i></div>
-              <div class="mega-item-text">
-                <h5>NORMX <span style="color:#7c3aed">Legal</span></h5>
-                <p>Statuts, procès-verbaux, actes de cession, droit OHADA</p>
-              </div>
-            </a>
-            <a href="#features" class="mega-item">
-              <div class="mega-item-icon" style="background:rgba(26,58,92,0.08)"><i class="bi bi-robot" style="color:var(--dark)"></i></div>
-              <div class="mega-item-text">
-                <h5>Assistant <span style="color:var(--primary)">IA</span></h5>
-                <p>IA fiscal, juridique et comptable intégrée à chaque module</p>
-              </div>
-            </a>
-          </div>
-          <div class="mega-bottom">
-            <span>5 produits · 1 plateforme</span>
-            <a href="#products">Voir tous les produits <i class="bi bi-arrow-right"></i></a>
-          </div>
-        </div>
-      </div>
-      <a href="#features" class="nav-link">Fonctionnalités</a>
-      <a href="#contact" class="nav-cta">Contact</a>
+    <a href="/" class="nav-logo"><div class="nav-icon">N</div> NORMX Compta</a>
+    <div class="nav-links">
+      <a href="#fonctionnalites" class="nav-link">Fonctionnalites</a>
+      <a href="#tarifs" class="nav-link">Tarifs</a>
+      <a href="https://tax.normx-ai.com" class="nav-link">NORMX Tax</a>
+      <a href="https://app.normx-ai.com" class="nav-cta">Se connecter</a>
     </div>
-    <button class="nav-burger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 
-<!-- ══════ HERO ══════ -->
-<section class="hero" id="hero">
+<!-- HERO -->
+<section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <h1>L'outil qui réunit votre <span class="highlight">comptabilité</span>, votre <span class="highlight">fiscalité</span> et votre <span class="highlight">droit</span></h1>
-      <p>NORMX AI centralise la comptabilité OHADA, la fiscalité CGI, la paie et le droit des affaires dans une plateforme unique propulsée par l'IA — conçue pour l'Afrique.</p>
+      <div class="hero-badge"><i class="bi bi-stars"></i> Comptabilite augmentee par l'IA</div>
+      <h1>Gardez le controle de votre <span>comptabilite OHADA</span></h1>
+      <p>Saisie d'ecritures, grand livre, balance, etats financiers et assistant IA — conforme SYSCOHADA et SYCEBNL pour l'espace OHADA.</p>
       <div class="hero-btns">
-        <a href="#products" class="btn-primary">Découvrir nos produits <i class="bi bi-arrow-right"></i></a>
-        <a href="#contact" class="btn-outline">Nous contacter</a>
+        <a href="https://app.normx-ai.com" class="btn-primary">Commencer gratuitement →</a>
+        <a href="#fonctionnalites" class="btn-outline">Decouvrir</a>
       </div>
-      <div class="hero-social">
-        <div class="hero-social-item">
-          <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></span>
-          <span>4.7/5</span>
-        </div>
-        <div class="hero-social-item">
-          <i class="bi bi-google-play" style="font-size:16px;"></i>
-          <span>Disponible sur Google Play</span>
-        </div>
-      </div>
+      <div style="font-size:13px;color:var(--text2)">Disponible sur Web • Conforme SYSCOHADA & SYCEBNL</div>
     </div>
     <div class="hero-visual">
-      <div class="macbook">
-      <div class="macbook-screen">
-      <div class="macbook-camera"></div>
-      <div class="mockup" style="max-width:none;">
-        <div class="mockup-bar">
-          <div class="mockup-dot r"></div><div class="mockup-dot y"></div><div class="mockup-dot g"></div>
-          <span style="flex:1;text-align:center;font-size:11px;font-weight:600;color:var(--text-secondary);">NORMX AI — Tableau de bord</span>
-        </div>
-        <div class="mockup-body">
-          <div class="mockup-row">
-            <div class="mockup-sidebar">
-              <div class="mockup-sidebar-item active"><i class="bi bi-grid"></i> Dashboard</div>
-              <div class="mockup-sidebar-item"><i class="bi bi-calculator"></i> Compta</div>
-              <div class="mockup-sidebar-item"><i class="bi bi-bank"></i> Fiscalité</div>
-              <div class="mockup-sidebar-item"><i class="bi bi-people"></i> Paie</div>
-              <div class="mockup-sidebar-item"><i class="bi bi-bar-chart"></i> États</div>
-              <div class="mockup-sidebar-item"><i class="bi bi-file-text"></i> Juridique</div>
-              <div class="mockup-sidebar-item"><i class="bi bi-chat-dots"></i> Assistant IA</div>
+      <!-- MacBook Pro — Grand Livre -->
+      <div style="max-width:540px;width:100%">
+        <div style="background:#e2e2e2;border-radius:14px;padding:6px 6px 0;border:1px solid #d4d4d4">
+          <div style="width:8px;height:8px;border-radius:4px;background:#1a1a1a;margin:0 auto 4px;border:1px solid #333"></div>
+          <div style="background:#fff;border-radius:2px;overflow:hidden">
+            <div style="background:var(--dark);height:30px;display:flex;align-items:center;padding:0 10px;gap:6px">
+              <span style="width:7px;height:7px;border-radius:4px;background:#ef4444"></span><span style="width:7px;height:7px;border-radius:4px;background:#f59e0b"></span><span style="width:7px;height:7px;border-radius:4px;background:#22c55e"></span>
+              <span style="flex:1;text-align:center;font-size:9px;font-weight:600;color:rgba(255,255,255,.6)">NORMX Compta — Grand Livre</span>
             </div>
-            <div class="mockup-main">
-              <div class="mockup-stat-row">
-                <div class="mockup-stat">
-                  <div class="val" style="color:var(--green);">12,4 M</div>
-                  <div class="lbl">Chiffre d'affaires</div>
+            <div style="display:flex">
+              <div style="width:110px;background:var(--dark);padding:10px 8px;min-height:260px">
+                <div style="padding:6px 8px;border-radius:5px;font-size:8px;color:rgba(255,255,255,.5);margin-bottom:2px">Dashboard</div>
+                <div style="padding:6px 8px;border-radius:5px;font-size:8px;color:rgba(255,255,255,.5);margin-bottom:2px">Ecritures</div>
+                <div style="padding:6px 8px;border-radius:5px;background:rgba(37,99,235,.25);font-size:8px;color:#60a5fa;font-weight:700;margin-bottom:2px">Grand Livre</div>
+                <div style="padding:6px 8px;border-radius:5px;font-size:8px;color:rgba(255,255,255,.5);margin-bottom:2px">Balance</div>
+                <div style="padding:6px 8px;border-radius:5px;font-size:8px;color:rgba(255,255,255,.5);margin-bottom:2px">Etats financiers</div>
+                <div style="padding:6px 8px;border-radius:5px;font-size:8px;color:rgba(255,255,255,.5);margin-bottom:2px">Plan comptable</div>
+                <div style="padding:6px 8px;border-radius:5px;font-size:8px;color:rgba(255,255,255,.5)">Assistant IA</div>
+              </div>
+              <div style="flex:1;padding:10px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                  <span style="font-size:11px;font-weight:800;color:var(--text)">601000 — Achats marchandises</span>
+                  <span style="font-size:8px;padding:2px 8px;background:var(--primary-bg);color:var(--primary);border-radius:4px;font-weight:700">Classe 6</span>
                 </div>
-                <div class="mockup-stat">
-                  <div class="val">3,2 M</div>
-                  <div class="lbl">Charges</div>
-                </div>
-                <div class="mockup-stat">
-                  <div class="val" style="color:var(--primary);">9,2 M</div>
-                  <div class="lbl">Résultat net</div>
+                <table class="mt"><tr><th>Date</th><th>Piece</th><th>Libelle</th><th class="num">Debit</th><th class="num">Credit</th></tr>
+                <tr><td>02/01</td><td>ACH-001</td><td>Fournisseur ALPHA</td><td class="num" style="color:var(--orange)">1 250 000</td><td class="num">—</td></tr>
+                <tr><td>15/01</td><td>ACH-012</td><td>Matiere premiere</td><td class="num" style="color:var(--orange)">3 800 000</td><td class="num">—</td></tr>
+                <tr><td>28/01</td><td>ACH-018</td><td>Fournisseur BETA</td><td class="num" style="color:var(--orange)">950 000</td><td class="num">—</td></tr>
+                <tr><td>05/02</td><td>OD-003</td><td>Avoir fournisseur</td><td class="num">—</td><td class="num" style="color:var(--green)">200 000</td></tr>
+                <tr><td>12/02</td><td>ACH-025</td><td>Fournitures bureau</td><td class="num" style="color:var(--orange)">480 000</td><td class="num">—</td></tr></table>
+                <div style="display:flex;justify-content:space-between;margin-top:8px;padding:6px;background:#f9fafb;border-radius:4px">
+                  <span style="font-size:9px;color:var(--text2)">Solde debiteur</span>
+                  <span style="font-size:10px;font-weight:800;color:var(--primary)">6 280 000 FCFA</span>
                 </div>
               </div>
-              <div class="mockup-chart">
-                <div class="mockup-bar-chart" style="height:30%;background:rgba(212,168,67,0.3);"></div>
-                <div class="mockup-bar-chart" style="height:50%;background:rgba(212,168,67,0.4);"></div>
-                <div class="mockup-bar-chart" style="height:35%;background:rgba(212,168,67,0.3);"></div>
-                <div class="mockup-bar-chart" style="height:70%;background:rgba(212,168,67,0.5);"></div>
-                <div class="mockup-bar-chart" style="height:60%;background:rgba(212,168,67,0.45);"></div>
-                <div class="mockup-bar-chart" style="height:85%;background:var(--primary);"></div>
-                <div class="mockup-bar-chart" style="height:75%;background:rgba(212,168,67,0.5);"></div>
-                <div class="mockup-bar-chart" style="height:90%;background:var(--primary);"></div>
-                <div class="mockup-bar-chart" style="height:65%;background:rgba(212,168,67,0.45);"></div>
-                <div class="mockup-bar-chart" style="height:80%;background:rgba(212,168,67,0.5);"></div>
-                <div class="mockup-bar-chart" style="height:95%;background:var(--primary);"></div>
-                <div class="mockup-bar-chart" style="height:70%;background:rgba(212,168,67,0.45);"></div>
-              </div>
-              <table class="mockup-table" style="margin-top:12px;">
-                <tr><th>Date</th><th>Libellé</th><th>Compte</th><th class="num">Montant</th></tr>
-                <tr><td>28/03</td><td>Vente marchandises</td><td>701</td><td class="num" style="color:var(--green);">+2 450 000</td></tr>
-                <tr><td>27/03</td><td>Loyer bureau</td><td>613</td><td class="num" style="color:#ef4444;">-850 000</td></tr>
-                <tr><td>26/03</td><td>Salaires mars</td><td>641</td><td class="num" style="color:#ef4444;">-1 200 000</td></tr>
-                <tr><td>25/03</td><td>Prestation conseil</td><td>706</td><td class="num" style="color:var(--green);">+1 800 000</td></tr>
-              </table>
             </div>
           </div>
         </div>
+        <div style="height:8px;background:#d1d1d1;border-bottom-left-radius:2px;border-bottom-right-radius:2px;margin:0 20px"><div style="width:60px;height:3px;background:#b0b0b0;border-bottom-left-radius:2px;border-bottom-right-radius:2px;margin:0 auto"></div></div>
       </div>
-      </div><!-- /macbook-screen -->
-      <div class="macbook-base"></div>
-      <div class="macbook-shadow"></div>
-      </div><!-- /macbook -->
     </div>
+  </div>
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat"><div class="n">1 409</div><div class="l">Comptes SYSCOHADA</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">Journaux comptables</div></div>
+    <div class="stat"><div class="n">37</div><div class="l">Notes annexes</div></div>
+    <div class="stat"><div class="n">IA</div><div class="l">Assistant intelligent</div></div>
   </div>
 </section>
 
-<!-- ══════ FEATURE TABS ══════ -->
-<div class="feature-tabs">
-  <a href="#hero" class="feature-tab"><i class="bi bi-house"></i> Accueil</a>
-  <a href="#comptabilité" class="feature-tab active"><i class="bi bi-calculator"></i> Comptabilité</a>
-  <a href="#fiscalité" class="feature-tab"><i class="bi bi-bank"></i> Fiscalité</a>
-  <a href="#paie" class="feature-tab"><i class="bi bi-people"></i> Paie</a>
-  <a href="#etats" class="feature-tab"><i class="bi bi-file-earmark-bar-graph"></i> États financiers</a>
-  <a href="#legal" class="feature-tab"><i class="bi bi-file-earmark-text"></i> Juridique</a>
-</div>
-
-<!-- ══════ SOCIAL PROOF ══════ -->
-<div class="social-proof">
-  <p>Conçu pour les professionnels et entreprises de l'espace OHADA</p>
-  <div class="logos-row">
-    <span>SYSCOHADA</span>
-    <span>SYCEBNL</span>
-    <span>CGI 2026</span>
-    <span>OHADA</span>
-    <span>CEMAC</span>
-    <span>CODE SOCIAL</span>
-  </div>
-</div>
-
-<!-- ══════ FEATURE 1 — Comptabilité ══════ -->
-<section class="section-feature" id="comptabilité">
-  <div class="feature-row">
-    <div class="feature-content">
-      <div class="feature-label" style="color:var(--blue)">SOLUTION TOUT-EN-UN</div>
-      <h2>Gardez le controle de votre comptabilité</h2>
-      <p>NORMX est le logiciel comptable conforme SYSCOHADA et SYCEBNL qui réunit toutes vos données financieres au meme endroit.</p>
-      <ul class="feature-checks">
-        <li><i class="bi bi-check-circle-fill"></i> Saisie d'écritures multi-journaux (OD, ACH, VTE, BQ, CAI)</li>
-        <li><i class="bi bi-check-circle-fill"></i> Grand livre, balance générale, balance des tiers</li>
-        <li><i class="bi bi-check-circle-fill"></i> Lettrage automatique des comptes</li>
-        <li><i class="bi bi-check-circle-fill"></i> Plan comptable SYSCOHADA (1 409 comptes) et SYCEBNL</li>
-        <li><i class="bi bi-check-circle-fill"></i> Déclaration TVA mensuelle</li>
+<!-- FEATURE 1 — Ecritures -->
+<section class="section" id="fonctionnalites">
+  <div class="section-inner">
+    <div>
+      <div class="section-label" style="color:var(--primary)">SAISIE D'ECRITURES</div>
+      <h2>Saisissez vos ecritures en toute simplicite</h2>
+      <p>Multi-journaux (OD, ACH, VTE, BQ, CAI), plan comptable SYSCOHADA avec 1 409 comptes, lettrage automatique.</p>
+      <ul class="checks">
+        <li><i class="bi bi-check-circle-fill"></i> Saisie rapide avec autocompletion des comptes</li>
+        <li><i class="bi bi-check-circle-fill"></i> 5 journaux : OD, Achats, Ventes, Banque, Caisse</li>
+        <li><i class="bi bi-check-circle-fill"></i> Lettrage automatique des tiers</li>
+        <li><i class="bi bi-check-circle-fill"></i> Import d'ecritures depuis Excel</li>
       </ul>
-      <a href="https://app.normx-ai.com?module=compta" class="feature-link">Accéder à NORMX Compta <i class="bi bi-arrow-right"></i></a>
     </div>
     <div>
-      <img src="/img/3.png" alt="Comptabilité NORMX" class="feature-img" onerror="this.parentElement.style.display='none'" />
-    </div>
-  </div>
-</section>
-
-<!-- ══════ FEATURE 2 — Fiscalité ══════ -->
-<section class="section-feature" id="fiscalité">
-  <div class="feature-row reverse">
-    <div class="feature-content">
-      <div class="feature-label" style="color:var(--primary)">FISCALITE INTELLIGENTE</div>
-      <h2>Simulez vos impôts, accédez au CGI Congo 2026</h2>
-      <p>16 simulateurs fiscaux et un assistant IA qui repond a vos questions avec les articles de loi sources.</p>
-      <ul class="feature-checks">
-        <li><i class="bi bi-check-circle-fill"></i> IS (28%), IBA (30%), ITS, TVA, Patente, TUS</li>
-        <li><i class="bi bi-check-circle-fill"></i> Résultat fiscal avec réintégrations et déductions</li>
-        <li><i class="bi bi-check-circle-fill"></i> Calendrier fiscal avec alertes échéances</li>
-        <li><i class="bi bi-check-circle-fill"></i> +2 200 articles de loi indexes</li>
-        <li><i class="bi bi-check-circle-fill"></i> IA fiscale conversationnelle</li>
-      </ul>
-      <a href="https://tax.normx-ai.com" class="feature-link">Accéder a NORMX Tax <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div style="display:flex; align-items:stretch; min-height:400px;">
-      <img src="/img/princ_tax.png" alt="Fiscalité NORMX Tax" class="feature-img" style="width:100%; height:100%; object-fit:cover; object-position:top left;" />
-    </div>
-  </div>
-</section>
-
-<!-- ══════ FEATURE 3 — Paie ══════ -->
-<section class="section-feature" id="paie">
-  <div class="feature-row">
-    <div class="feature-content">
-      <div class="feature-label" style="color:var(--orange)">PAIE CONFORME CGI 2026</div>
-      <h2>Gérez vos bulletins de paie en toute conformité</h2>
-      <p>Moteur de calcul complet ITS, CNSS, CAMU, TUS, TOL avec 6+ conventions collectives du Congo.</p>
-      <ul class="feature-checks">
-        <li><i class="bi bi-check-circle-fill"></i> Bulletins de paie conformes CGI 2026</li>
-        <li><i class="bi bi-check-circle-fill"></i> 6 conventions collectives (Générale, Petrole, BTP, Commerce, BAM, Hôtellerie)</li>
-        <li><i class="bi bi-check-circle-fill"></i> Déclarations CNSS, DAS, Nominative</li>
-        <li><i class="bi bi-check-circle-fill"></i> Livre de paie et etats de controle</li>
-        <li><i class="bi bi-check-circle-fill"></i> Gestion des salaries et etablissements</li>
-      </ul>
-      <a href="https://app.normx-ai.com?module=paie" class="feature-link">Accéder à NORMX Paie <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div>
-      <img src="/img/1.png" alt="Paie NORMX" class="feature-img" onerror="this.parentElement.style.display='none'" />
-    </div>
-  </div>
-</section>
-
-<!-- ══════ FEATURE 4 — États financiers ══════ -->
-<section class="section-feature" id="etats">
-  <div class="feature-row reverse">
-    <div class="feature-content">
-      <div class="feature-label" style="color:var(--green)">ETATS FINANCIERS COMPLETS</div>
-      <h2>Générez vos états financiers OHADA en un clic</h2>
-      <p>Bilan, compte de résultat, TFT, liasse fiscale complete avec 37 notes annexes — SYSCOHADA et SYCEBNL.</p>
-      <ul class="feature-checks">
-        <li><i class="bi bi-check-circle-fill"></i> Bilan actif/passif avec correspondances automatiques</li>
-        <li><i class="bi bi-check-circle-fill"></i> Compte de résultat conforme</li>
-        <li><i class="bi bi-check-circle-fill"></i> TFT méthode directe (SYCEBNL) et indirecte (SYSCOHADA)</li>
-        <li><i class="bi bi-check-circle-fill"></i> Résultat fiscal IS/IBA avec CGI 2026</li>
-        <li><i class="bi bi-check-circle-fill"></i> Export PDF professionnel</li>
-      </ul>
-      <a href="https://app.normx-ai.com?module=etats" class="feature-link">Accéder aux États financiers <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div>
-      <img src="/img/2.png" alt="États financiers NORMX" class="feature-img" onerror="this.parentElement.style.display='none'" />
-    </div>
-  </div>
-</section>
-
-<!-- ══════ FEATURE 5 — Juridique ══════ -->
-<section class="section-feature" id="legal">
-  <div class="feature-row">
-    <div class="feature-content">
-      <div class="feature-label" style="color:var(--purple)">DOCUMENTS JURIDIQUES OHADA</div>
-      <h2>Générez vos actes juridiques en quelques clics</h2>
-      <p>59 modèles de documents conformes au droit OHADA — statuts, PV, cessions, convocations, rapports.</p>
-      <ul class="feature-checks">
-        <li><i class="bi bi-check-circle-fill"></i> Statuts SARL, SAS, SA, SNC, SCS, GIE</li>
-        <li><i class="bi bi-check-circle-fill"></i> PV d'assemblées générales ordinaires et extraordinaires</li>
-        <li><i class="bi bi-check-circle-fill"></i> Actes de cession de parts et d'actions</li>
-        <li><i class="bi bi-check-circle-fill"></i> Export Word et PDF instantané</li>
-      </ul>
-      <a href="https://legal.normx-ai.com" class="feature-link">Accéder à NORMX Legal <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div>
-      <img src="/img/princ_legal.png" alt="NORMX Legal" class="feature-img" style="width:100%; height:100%; object-fit:cover; object-position:top left;" />
-    </div>
-  </div>
-</section>
-
-<!-- ══════ STATS ══════ -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat"><div class="number">+2 200</div><div class="label">Articles de loi indexes</div></div>
-    <div class="stat"><div class="number">16</div><div class="label">Simulateurs fiscaux</div></div>
-    <div class="stat"><div class="number">6+</div><div class="label">Conventions collectives</div></div>
-    <div class="stat"><div class="number">37</div><div class="label">Notes annexes</div></div>
-    <div class="stat"><div class="number">IA</div><div class="label">Assistants spécialisés</div></div>
-  </div>
-</div>
-
-<!-- ══════ PRODUITS ══════ -->
-<section class="section-products" id="products">
-  <div class="section-header">
-    <div class="label">Nos produits</div>
-    <h2>Une suite complete pour les professionnels</h2>
-    <p>Chaque module est conçu pour les besoins spécifiques des entreprises, cabinets et administrations en Afrique.</p>
-  </div>
-  <div class="products-grid" style="grid-template-columns: repeat(5, 1fr);">
-    <div class="product-card live" style="border-top: 3px solid #D4A843;">
-      <h3>NORMX<br><span style="color:#D4A843;">Tax</span></h3>
-      <ul style="list-style:none; padding:0; margin:0 0 12px; font-size:13px; color:#6b7280;">
-        <li><i class="bi bi-check-circle-fill" style="color:#D4A843; margin-right:6px;"></i>Simulateurs</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#D4A843; margin-right:6px;"></i>Codes</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#D4A843; margin-right:6px;"></i>Assistant IA</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#D4A843; margin-right:6px;"></i>Calendrier fiscal</li>
-      </ul>
-      <span class="tag" style="background:rgba(212,168,67,0.12); color:#D4A843;">Disponible</span>
-      <a href="https://tax.normx-ai.com" class="product-link" style="color:#D4A843; margin-top:auto;">Accéder <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div class="product-card live" style="border-top: 3px solid #2563eb;">
-      <h3>NORMX<br><span style="color:#2563eb;">Compta</span></h3>
-      <ul style="list-style:none; padding:0; margin:0 0 12px; font-size:13px; color:#6b7280;">
-        <li><i class="bi bi-check-circle-fill" style="color:#2563eb; margin-right:6px;"></i>Saisie comptable</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#2563eb; margin-right:6px;"></i>GL, BG</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#2563eb; margin-right:6px;"></i>États financiers</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#2563eb; margin-right:6px;"></i>Déclarations</li>
-      </ul>
-      <span class="tag" style="background:rgba(37,99,235,0.1); color:#2563eb;">Disponible</span>
-      <a href="https://app.normx-ai.com?module=compta" class="product-link" style="color:#2563eb; margin-top:auto;">Accéder <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div class="product-card live" style="border-top: 3px solid #059669;">
-      <h3>NORMX<br><span style="color:#059669;">États</span></h3>
-      <ul style="list-style:none; padding:0; margin:0 0 12px; font-size:13px; color:#6b7280;">
-        <li><i class="bi bi-check-circle-fill" style="color:#059669; margin-right:6px;"></i>Bilan</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#059669; margin-right:6px;"></i>Compte de résultat</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#059669; margin-right:6px;"></i>TFT & Notes</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#059669; margin-right:6px;"></i>Résultat fiscal</li>
-      </ul>
-      <span class="tag" style="background:rgba(5,150,105,0.1); color:#059669;">Disponible</span>
-      <a href="https://app.normx-ai.com?module=etats" class="product-link" style="color:#059669; margin-top:auto;">Accéder <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div class="product-card live" style="border-top: 3px solid #d97706;">
-      <h3>NORMX<br><span style="color:#d97706;">Paie</span></h3>
-      <ul style="list-style:none; padding:0; margin:0 0 12px; font-size:13px; color:#6b7280;">
-        <li><i class="bi bi-check-circle-fill" style="color:#d97706; margin-right:6px;"></i>Bulletins de paie</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#d97706; margin-right:6px;"></i>DAS I, II, III</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#d97706; margin-right:6px;"></i>États sociaux</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#d97706; margin-right:6px;"></i>État fiscal</li>
-      </ul>
-      <span class="tag" style="background:rgba(217,119,6,0.1); color:#d97706;">Disponible</span>
-      <a href="https://app.normx-ai.com?module=paie" class="product-link" style="color:#d97706; margin-top:auto;">Accéder <i class="bi bi-arrow-right"></i></a>
-    </div>
-    <div class="product-card live" style="border-top: 3px solid #7c3aed;">
-      <h3>NORMX<br><span style="color:#7c3aed;">Legal</span></h3>
-      <ul style="list-style:none; padding:0; margin:0 0 12px; font-size:13px; color:#6b7280;">
-        <li><i class="bi bi-check-circle-fill" style="color:#7c3aed; margin-right:6px;"></i>Statuts</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#7c3aed; margin-right:6px;"></i>Procès-verbal</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#7c3aed; margin-right:6px;"></i>Acte de cessions</li>
-        <li><i class="bi bi-check-circle-fill" style="color:#7c3aed; margin-right:6px;"></i>Assistant IA</li>
-      </ul>
-      <span class="tag" style="background:rgba(124,58,237,0.1); color:#7c3aed;">Disponible</span>
-      <a href="https://legal.normx-ai.com" class="product-link" style="color:#7c3aed; margin-top:auto;">Accéder <i class="bi bi-arrow-right"></i></a>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ GRID FONCTIONNALITES ══════ -->
-<section class="section-grid" id="features">
-  <div class="section-header">
-    <div class="label">Fonctionnalités</div>
-    <h2>Découvrez toutes nos fonctionnalités</h2>
-    <p>Tout ce dont vous avez besoin pour gerer votre entreprise en toute conformité.</p>
-  </div>
-  <div class="grid-features">
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-robot" style="color:var(--primary)"></i></div>
-      <h4>IA conversationnelle</h4>
-      <p>Posez vos questions en langage naturel et obtenez des réponses sourcées avec les articles de loi.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-phone" style="color:var(--blue)"></i></div>
-      <h4>Mobile & Web</h4>
-      <p>Accessible sur smartphone Android/iOS et navigateur web, partout et a tout moment.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-sliders2" style="color:var(--purple)"></i></div>
-      <h4>16 simulateurs</h4>
-      <p>Calculez vos impots, taxes et cotisations en temps reel avec les taux CGI 2026.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-calendar-check" style="color:var(--green)"></i></div>
-      <h4>Calendrier fiscal</h4>
-      <p>Ne manquez plus aucune echeance grace aux alertes et rappels automatiques.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-building" style="color:var(--orange)"></i></div>
-      <h4>Multi-entités</h4>
-      <p>Gérez plusieurs entreprises ou clients depuis un seul compte avec roles et permissions.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-globe-americas" style="color:#06b6d4"></i></div>
-      <h4>Multi-pays OHADA</h4>
-      <p>Conçu pour couvrir les 17 pays de l'espace OHADA progressivement.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-file-earmark-pdf" style="color:#dc2626"></i></div>
-      <h4>Export PDF</h4>
-      <p>Générez vos états financiers, bulletins de paie et déclarations en PDF professionnel.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-shield-check" style="color:var(--green)"></i></div>
-      <h4>Conformite OHADA</h4>
-      <p>SYSCOHADA revise, SYCEBNL 2022, plan comptable, normes et référentiels a jour.</p>
-    </div>
-    <div class="grid-card">
-      <div class="icon"><i class="bi bi-lock" style="color:var(--dark)"></i></div>
-      <h4>Sécurité</h4>
-      <p>Données chiffrées, authentification Keycloak, isolation multi-tenant par schema PostgreSQL.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ CTA ══════ -->
-<section class="cta" id="contact">
-  <div class="cta-box">
-    <h2>Prêt a simplifier votre gestion ?</h2>
-    <p>Commencez maintenant avec NORMX Tax ou contactez-nous pour en savoir plus.</p>
-    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom:32px;">
-      <a href="https://tax.normx-ai.com" class="btn-primary">Essayer NORMX Tax <i class="bi bi-arrow-right"></i></a>
-    </div>
-
-    <div style="max-width:480px; margin:0 auto; text-align:left;">
-      <h3 style="font-size:18px; font-weight:800; margin-bottom:16px; text-align:center;">Nous contacter</h3>
-      <form action="https://formsubmit.co/info-contact@normx-ai.com" method="POST" style="display:flex; flex-direction:column; gap:12px;">
-        <input type="hidden" name="_subject" value="Contact depuis normx-ai.com" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_next" value="https://normx-ai.com/#contact" />
-        <div style="display:flex; gap:12px;">
-          <input type="text" name="nom" placeholder="Nom" required style="flex:1; padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-size:14px; font-family:inherit; outline:none; transition:border 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
-          <input type="text" name="prenom" placeholder="Prenom" required style="flex:1; padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-size:14px; font-family:inherit; outline:none; transition:border 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
+      <!-- MacBook — Journal -->
+      <div style="max-width:460px">
+        <div style="background:#e2e2e2;border-radius:14px;padding:6px 6px 0;border:1px solid #d4d4d4">
+          <div style="width:8px;height:8px;border-radius:4px;background:#1a1a1a;margin:0 auto 4px;border:1px solid #333"></div>
+          <div style="background:#fff;border-radius:2px;overflow:hidden">
+            <div style="background:var(--dark);height:28px;display:flex;align-items:center;padding:0 10px;gap:6px">
+              <span style="width:7px;height:7px;border-radius:4px;background:#ef4444"></span><span style="width:7px;height:7px;border-radius:4px;background:#f59e0b"></span><span style="width:7px;height:7px;border-radius:4px;background:#22c55e"></span>
+              <span style="flex:1;text-align:center;font-size:9px;font-weight:600;color:rgba(255,255,255,.6)">Journal des Achats — Mars 2026</span>
+            </div>
+            <div style="padding:12px">
+              <table class="mt"><tr><th>Date</th><th>Compte</th><th>Libelle</th><th class="num">Debit</th><th class="num">Credit</th></tr>
+              <tr><td>01/03</td><td>601000</td><td>Achats marchandises</td><td class="num" style="color:var(--orange)">2 500 000</td><td class="num">—</td></tr>
+              <tr><td>01/03</td><td>445100</td><td>TVA deductible 18%</td><td class="num" style="color:var(--orange)">450 000</td><td class="num">—</td></tr>
+              <tr><td>01/03</td><td>401000</td><td>Fournisseur ALPHA</td><td class="num">—</td><td class="num" style="color:var(--green)">2 950 000</td></tr>
+              <tr><td>05/03</td><td>605000</td><td>Fournitures bureau</td><td class="num" style="color:var(--orange)">180 000</td><td class="num">—</td></tr>
+              <tr><td>05/03</td><td>445100</td><td>TVA deductible 18%</td><td class="num" style="color:var(--orange)">32 400</td><td class="num">—</td></tr>
+              <tr><td>05/03</td><td>401200</td><td>Fournisseur GAMMA</td><td class="num">—</td><td class="num" style="color:var(--green)">212 400</td></tr></table>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;padding:6px;background:#f9fafb;border-radius:4px"><span style="font-size:9px;color:var(--text2)">6 ecritures</span><span style="font-size:9px;font-weight:700;color:var(--green)">Equilibre ✓</span></div>
+            </div>
+          </div>
         </div>
-        <input type="email" name="email" placeholder="Adresse email" required style="padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-size:14px; font-family:inherit; outline:none; transition:border 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
-        <input type="text" name="entreprise" placeholder="Entreprise / Cabinet (optionnel)" style="padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-size:14px; font-family:inherit; outline:none; transition:border 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'" />
-        <select name="sujet" required style="padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-size:14px; font-family:inherit; outline:none; background:var(--bg); color:var(--text); transition:border 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
-          <option value="" disabled selected>Sujet de votre demande</option>
-          <option value="demo">Demande de demonstration</option>
-          <option value="tarifs">Question sur les tarifs</option>
-          <option value="partenariat">Partenariat / Revendeur</option>
-          <option value="support">Support technique</option>
-          <option value="autre">Autre</option>
-        </select>
-        <textarea name="message" placeholder="Votre message..." rows="4" required style="padding:12px 14px; border:1.5px solid var(--border); border-radius:var(--radius-sm); font-size:14px; font-family:inherit; outline:none; resize:vertical; transition:border 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-        <button type="submit" class="btn-primary" style="border:none; cursor:pointer; justify-content:center;">Envoyer <i class="bi bi-send"></i></button>
-      </form>
-      <p style="text-align:center; margin-top:12px; font-size:13px; color:var(--text-secondary);">
-        Ou directement : <a href="mailto:info-contact@normx-ai.com" style="color:var(--primary); font-weight:600;">info-contact@normx-ai.com</a>
-      </p>
+        <div style="height:8px;background:#d1d1d1;border-bottom-left-radius:2px;border-bottom-right-radius:2px;margin:0 20px"><div style="width:60px;height:3px;background:#b0b0b0;margin:0 auto"></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════ FOOTER ══════ -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <h3>NORMX <span>AI</span></h3>
-      <p>Plateforme d'intelligence comptable, fiscale, sociale et juridique pour les professionnels africains.</p>
+<!-- FEATURE 2 — Balance & Grand Livre -->
+<section class="section alt">
+  <div class="section-inner reverse">
+    <div>
+      <div class="section-label" style="color:var(--green)">ETATS COMPTABLES</div>
+      <h2>Balance, grand livre et etats de synthese en un clic</h2>
+      <p>Generez instantanement vos etats comptables conformes SYSCOHADA et SYCEBNL avec correspondances automatiques.</p>
+      <ul class="checks">
+        <li><i class="bi bi-check-circle-fill"></i> Balance generale et balance des tiers</li>
+        <li><i class="bi bi-check-circle-fill"></i> Grand livre par compte et par periode</li>
+        <li><i class="bi bi-check-circle-fill"></i> Bilan actif/passif avec notes annexes</li>
+        <li><i class="bi bi-check-circle-fill"></i> Compte de resultat conforme</li>
+        <li><i class="bi bi-check-circle-fill"></i> TFT methode directe et indirecte</li>
+      </ul>
     </div>
-    <div class="footer-col">
-      <h4>Produits</h4>
-      <a href="https://tax.normx-ai.com">NORMX Tax</a>
-      <a href="https://app.normx-ai.com">NORMX Compta</a>
-      <a href="https://app.normx-ai.com">NORMX Paie</a>
-      <a href="https://app.normx-ai.com">NORMX États</a>
-      <a href="https://legal.normx-ai.com">NORMX Legal</a>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <a href="mailto:info-contact@normx-ai.com">info-contact@normx-ai.com</a>
-      <a href="mailto:support@normx-ai.com">support@normx-ai.com</a>
-      <a href="mailto:facturation@normx-ai.com">facturation@normx-ai.com</a>
-    </div>
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="/cgu.html">Conditions générales</a>
-      <a href="/confidentialite.html">Politique de confidentialité</a>
-      <a href="/mentions.html">Mentions légales</a>
+    <div>
+      <!-- iPad — Balance -->
+      <div style="max-width:400px">
+        <div style="background:#1a1a1e;border-radius:24px;padding:10px">
+          <div style="width:8px;height:8px;border-radius:4px;background:#333;margin:0 auto 6px"></div>
+          <div style="background:#fff;border-radius:14px;overflow:hidden">
+            <div style="background:var(--dark);padding:10px 14px;display:flex;align-items:center;gap:8px"><i class="bi bi-bar-chart-line" style="color:var(--gold);font-size:14px"></i><span style="font-size:13px;font-weight:700;color:#fff">Balance Generale — Mars 2026</span></div>
+            <div style="padding:14px">
+              <table class="mt"><tr><th>Compte</th><th>Libelle</th><th class="num">Debit</th><th class="num">Credit</th><th class="num">Solde</th></tr>
+              <tr><td>101000</td><td>Capital social</td><td class="num">—</td><td class="num" style="color:var(--green)">10 000 000</td><td class="num" style="font-weight:700;color:var(--green)">-10 000 000</td></tr>
+              <tr><td>411000</td><td>Clients</td><td class="num" style="color:var(--orange)">8 500 000</td><td class="num" style="color:var(--green)">3 200 000</td><td class="num" style="font-weight:700;color:var(--orange)">5 300 000</td></tr>
+              <tr><td>521000</td><td>Banque</td><td class="num" style="color:var(--orange)">15 600 000</td><td class="num" style="color:var(--green)">12 400 000</td><td class="num" style="font-weight:700;color:var(--orange)">3 200 000</td></tr>
+              <tr><td>601000</td><td>Achats march.</td><td class="num" style="color:var(--orange)">6 280 000</td><td class="num">—</td><td class="num" style="font-weight:700;color:var(--orange)">6 280 000</td></tr>
+              <tr><td>701000</td><td>Ventes march.</td><td class="num">—</td><td class="num" style="color:var(--green)">12 500 000</td><td class="num" style="font-weight:700;color:var(--green)">-12 500 000</td></tr></table>
+              <div style="text-align:center;margin-top:8px"><span style="font-size:9px;padding:3px 10px;background:rgba(5,150,105,.1);color:var(--green);border-radius:10px;font-weight:700">Total equilibre ✓</span></div>
+            </div>
+          </div>
+          <div style="width:80px;height:4px;border-radius:2px;background:#555;margin:8px auto 0"></div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="footer-bottom">
-    &copy; 2026 NORMX AI SAS — 5/7 rue Benjamin Raspail, 60100 Creil, France
+</section>
+
+<!-- FEATURE 3 — Assistant IA -->
+<section class="section">
+  <div class="section-inner">
+    <div>
+      <div class="section-label" style="color:var(--purple)">ASSISTANT IA</div>
+      <h2>Un expert comptable IA a vos cotes</h2>
+      <p>Posez vos questions comptables, l'IA repond avec les references du plan SYSCOHADA et les normes OHADA.</p>
+      <ul class="checks">
+        <li><i class="bi bi-check-circle-fill"></i> Recherche de comptes par mot-cle</li>
+        <li><i class="bi bi-check-circle-fill"></i> Explication des normes OHADA</li>
+        <li><i class="bi bi-check-circle-fill"></i> Aide a la saisie et au lettrage</li>
+        <li><i class="bi bi-check-circle-fill"></i> Generation des notes annexes</li>
+      </ul>
+    </div>
+    <div>
+      <!-- iPhone — Chat IA -->
+      <div style="max-width:280px;margin:0 auto">
+        <div style="background:#1a1a1e;border-radius:36px;padding:10px">
+          <div style="width:80px;height:20px;border-radius:12px;background:#1a1a1e;margin:0 auto -10px;position:relative;z-index:1"><div style="width:8px;height:8px;border-radius:4px;background:#333;margin:6px auto 0"></div></div>
+          <div style="background:#faf8f5;border-radius:26px;overflow:hidden">
+            <div style="height:20px;background:var(--dark);display:flex;align-items:center;justify-content:space-between;padding:0 20px"><span style="font-size:8px;font-weight:600;color:rgba(255,255,255,.7)">9:41</span><span style="font-size:8px;color:rgba(255,255,255,.5)">● ● ●</span></div>
+            <div style="background:var(--dark);padding:10px 14px;display:flex;align-items:center;gap:8px"><i class="bi bi-chat-dots" style="color:var(--gold);font-size:14px"></i><span style="font-size:13px;font-weight:700;color:#fff">Assistant Comptable</span></div>
+            <div style="padding:12px;min-height:260px">
+              <div style="margin-bottom:10px;text-align:right"><div style="display:inline-block;background:var(--dark);color:#fff;padding:8px 12px;border-radius:14px 14px 4px 14px;font-size:11px;max-width:80%">Quel compte pour les frais de mission ?</div></div>
+              <div style="margin-bottom:10px"><div style="display:inline-block;background:#fff;border:1px solid var(--border);padding:10px 12px;border-radius:14px 14px 14px 4px;font-size:11px;max-width:85%;color:var(--text)">Les frais de mission se comptabilisent au compte <b style="color:var(--primary)">625800</b> — Deplacements, missions et receptions. C'est un compte de charge de la classe 6 du plan SYSCOHADA.</div></div>
+              <div style="margin-bottom:10px;text-align:right"><div style="display:inline-block;background:var(--dark);color:#fff;padding:8px 12px;border-radius:14px 14px 4px 14px;font-size:11px;max-width:80%">Et la TVA ?</div></div>
+              <div><div style="display:inline-block;background:#fff;border:1px solid var(--border);padding:4px 12px;border-radius:14px;font-size:11px"><span style="display:inline-block;width:5px;height:5px;border-radius:3px;background:var(--primary);margin-right:4px;opacity:.5"></span><span style="display:inline-block;width:5px;height:5px;border-radius:3px;background:var(--primary);margin-right:4px;opacity:.7"></span><span style="display:inline-block;width:5px;height:5px;border-radius:3px;background:var(--primary);opacity:.9"></span></div></div>
+            </div>
+            <div style="border-top:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;gap:8px;background:#fff"><div style="flex:1;background:#f3f4f6;border-radius:20px;padding:7px 12px;font-size:11px;color:var(--text3)">Posez votre question...</div><div style="width:28px;height:28px;border-radius:14px;background:var(--primary);display:flex;align-items:center;justify-content:center"><i class="bi bi-send" style="font-size:12px;color:#fff"></i></div></div>
+          </div>
+          <div style="width:60px;height:4px;border-radius:2px;background:#555;margin:6px auto 0"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="tarifs">
+  <h2>Tarif simple, acces complet</h2>
+  <div class="sub">Offre beta — testez l'integralite de la plateforme</div>
+  <div class="plans">
+    <div class="plan free">
+      <div class="tag" style="color:var(--text2)">Decouverte</div>
+      <div class="price">0</div>
+      <div class="period">7 jours d'essai</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--green)"></i> Saisie d'ecritures</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--green)"></i> Grand livre et balance</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--green)"></i> Plan comptable SYSCOHADA</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--green)"></i> 5 questions IA</div>
+      <a href="https://app.normx-ai.com" class="cta" style="background:rgba(0,0,0,.06);border:1px solid var(--border);color:var(--dark)">Essayer gratuitement</a>
+    </div>
+    <div class="plan pro">
+      <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;font-size:9px;font-weight:800;padding:3px 12px;border-radius:10px;letter-spacing:1px">BETA</div>
+      <div class="tag" style="color:var(--primary)">Pro</div>
+      <div class="price">1€</div>
+      <div class="period">offre beta — acces complet</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--primary)"></i> Tout le plan Decouverte</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--primary)"></i> Etats financiers complets</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--primary)"></i> 37 notes annexes OHADA</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--primary)"></i> Export PDF professionnel</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--primary)"></i> Assistant IA illimite</div>
+      <div class="feat"><i class="bi bi-check-circle-fill" style="color:var(--primary)"></i> Multi-exercices</div>
+      <a href="https://app.normx-ai.com" class="cta" style="background:var(--primary);color:#fff">Commencer a 1 EUR</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Pret a simplifier votre comptabilite ?</h2>
+    <p>Accedez a la comptabilite SYSCOHADA propulsee par l'IA. Conforme, rapide, fiable.</p>
+    <a href="https://app.normx-ai.com" class="btn-primary">Commencer gratuitement →</a>
+    <div style="margin-top:16px;font-size:13px;color:var(--text3)">Connexion securisee via NORMX AI</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+    <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:16px">
+      <a href="https://normx-ai.com">NORMX AI</a>
+      <a href="https://tax.normx-ai.com">NORMX Tax</a>
+      <a href="https://legal.normx-ai.com">NORMX Legal</a>
+      <a href="/cgu.html">CGU</a>
+      <a href="/confidentialite.html">Confidentialite</a>
+      <a href="/mentions.html">Mentions legales</a>
+    </div>
+    <p>© 2026 NORMX AI SAS — 5 rue Benjamin Raspail, 60100 Creil — info-contact@normx-ai.com</p>
   </div>
 </footer>
-
-<script>
-  // Active tab on scroll
-  const tabs = document.querySelectorAll('.feature-tab');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-    });
-  });
-</script>
 
 </body>
 </html>
