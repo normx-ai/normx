@@ -17,7 +17,7 @@ export async function listNotifications(schema: string, userId: string) {
   const s = getValidatedSchemaName(schema);
   const result = await pool.query(
     `SELECT id, utilisateur_id AS "userId", titre AS title, message, type, lu AS read, created_at AS "createdAt"
-     FROM "${s}".notifications WHERE utilisateur_id = $1 ORDER BY created_at DESC LIMIT 50`,
+     FROM "${s}".notifications WHERE utilisateur_id::text = $1 ORDER BY created_at DESC LIMIT 50`,
     [userId],
   );
   return result.rows;
@@ -26,7 +26,7 @@ export async function listNotifications(schema: string, userId: string) {
 export async function getUnreadCount(schema: string, userId: string) {
   const s = getValidatedSchemaName(schema);
   const result = await pool.query(
-    `SELECT COUNT(*) FROM "${s}".notifications WHERE utilisateur_id = $1 AND lu = false`,
+    `SELECT COUNT(*) FROM "${s}".notifications WHERE utilisateur_id::text = $1 AND lu = false`,
     [userId],
   );
   return parseInt(result.rows[0].count, 10);
@@ -49,7 +49,7 @@ export async function markAsRead(schema: string, id: number) {
 export async function markAllAsRead(schema: string, userId: string) {
   const s = getValidatedSchemaName(schema);
   await pool.query(
-    `UPDATE "${s}".notifications SET lu = true WHERE utilisateur_id = $1 AND lu = false`,
+    `UPDATE "${s}".notifications SET lu = true WHERE utilisateur_id::text = $1 AND lu = false`,
     [userId],
   );
 }
