@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".permissions_modules (
 -- Audit log
 CREATE TABLE IF NOT EXISTS "${schema_name}".audit_log (
   id SERIAL PRIMARY KEY,
-  utilisateur_id UUID,
+  utilisateur_id TEXT,
   action VARCHAR(50) NOT NULL,
   module VARCHAR(50),
   entite VARCHAR(100),
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".periodes_cloture (
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".notifications (
   id SERIAL PRIMARY KEY,
-  utilisateur_id UUID,
+  utilisateur_id TEXT,
   titre VARCHAR(200),
   message TEXT,
   type VARCHAR(50) DEFAULT 'info',
