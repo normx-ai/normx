@@ -6,7 +6,6 @@ import logger from "./logger";
 
 dotenv.config({ path: path.join(__dirname, ".env") });
 
-import authRoutes from "./routes/auth";
 import balanceRoutes from "./routes/balance";
 import assistantRoutes from "./routes/assistant";
 import planComptableRoutes from "./routes/planComptable";
@@ -33,8 +32,7 @@ app.use(express.json({ limit: "10mb" }));
 // Servir le frontend React build
 app.use(express.static(path.join(__dirname, "public")));
 
-// Routes publiques (pas de tenant)
-app.use("/api", authRoutes);
+// Routes publiques
 app.use("/api/tenant", authenticateToken, tenantRoutes);
 
 // Middleware chaine : auth → tenant → switch client

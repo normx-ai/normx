@@ -146,8 +146,6 @@ function AppContent(): React.JSX.Element {
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <Dashboard
         userName={user ? user.name : 'Utilisateur'}
-        cabinetName=''
-        cabinetId={0}
         isCabinet={entites.length > 1}
         entiteName={ent ? ent.nom : 'Mon Entité'}
         entiteId={ent ? ent.id : 0}

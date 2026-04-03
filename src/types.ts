@@ -44,21 +44,11 @@ export interface Entite {
 }
 
 export interface User {
-  id: number;
+  id: string;
   nom: string;
   prenom: string;
   email: string;
   role: string;
-  cabinet_id: number;
-  cabinet_nom: string;
-  entite: string;
-  entite_id: number;
-  type_activite: TypeActivite;
-  offre: Offre;
-  modules: NormxModule[];
-  sigle?: string;
-  adresse?: string;
-  nif?: string;
 }
 
 export interface ToastData {

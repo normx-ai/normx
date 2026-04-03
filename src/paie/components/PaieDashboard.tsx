@@ -18,10 +18,9 @@ interface EtablissementFormData {
 interface PaieDashboardProps {
   etablissements: Etablissement[];
   onAddEtablissement: (data: EtablissementFormData) => void;
-  cabinetId: string | number;
 }
 
-function PaieDashboard({ etablissements, onAddEtablissement, cabinetId }: PaieDashboardProps) {
+function PaieDashboard({ etablissements, onAddEtablissement }: PaieDashboardProps) {
   const [showWizard, setShowWizard] = useState<boolean>(false);
   const [searchRS, setSearchRS] = useState<string>('');
   const [searchNUI, setSearchNUI] = useState<string>('');

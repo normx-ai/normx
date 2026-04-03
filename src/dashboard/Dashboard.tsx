@@ -27,8 +27,6 @@ import './Dashboard.css';
 
 interface DashboardProps {
   userName: string;
-  cabinetName: string;
-  cabinetId: number;
   isCabinet: boolean;
   entiteName: string;
   entiteId: number;
@@ -118,7 +116,7 @@ function getTypeLabel(typeActivite: TypeActivite): string {
   }
 }
 
-function Dashboard({ userName, cabinetName = '', cabinetId = 0, isCabinet = false, entiteName, entiteId, userId, typeActivite, offre = 'comptabilite', modules = [], entiteSigle = '', entiteAdresse = '', entiteNif = '', entites = [], onSwitchEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onLogout }: DashboardProps): React.ReactElement {
+function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, typeActivite, offre = 'comptabilite', modules = [], entiteSigle = '', entiteAdresse = '', entiteNif = '', entites = [], onSwitchEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onLogout }: DashboardProps): React.ReactElement {
   const [activeModule, setActiveModule] = useState<NormxModule | null>(() => {
     const params = new URLSearchParams(window.location.search);
     const mod = params.get('module') || sessionStorage.getItem('normx_redirect_module');
@@ -487,7 +485,7 @@ function Dashboard({ userName, cabinetName = '', cabinetId = 0, isCabinet = fals
       </button>
       {dossierSwitcherOpen && entites.length > 1 && (
         <div className="dossier-switcher-dropdown">
-          <div className="module-switcher-header">{cabinetName ? cabinetName.toUpperCase() : 'DOSSIERS'}</div>
+          <div className="module-switcher-header">{'DOSSIERS'}</div>
           {entites.map((ent: Entite) => (
             <button
               key={ent.id}
@@ -555,7 +553,6 @@ function Dashboard({ userName, cabinetName = '', cabinetId = 0, isCabinet = fals
         <div className="portail-body portail-body-full">
           <GestionClients
             entites={entites}
-            cabinetId={cabinetId}
             currentEntiteId={entiteId}
             onSelectEntite={(ent: Entite) => { onSwitchEntite(ent); }}
             onEntiteCreated={onEntiteCreated}
@@ -587,7 +584,7 @@ function Dashboard({ userName, cabinetName = '', cabinetId = 0, isCabinet = fals
       <div className="dashboard">
         <Topbar {...topbarProps} moduleLabel="Paie" dossierSelector={renderDossierSelector()} />
         <div style={{ flex: 1, overflow: 'auto' }}>
-          <Paie cabinetId={entiteId} />
+          <Paie entiteId={entiteId} />
         </div>
         {confirmModalElement}
       </div>

@@ -69,10 +69,10 @@ interface PaieConfig {
 }
 
 interface PaieProps {
-  cabinetId: string | number | null;
+  entiteId: string | number | null;
 }
 
-function Paie({ cabinetId }: PaieProps): React.ReactElement {
+function Paie({ entiteId }: PaieProps): React.ReactElement {
   const now = new Date();
   const [mois, setMois] = useState<number>(0);
   const [annee, setAnnee] = useState<number>(now.getFullYear());
@@ -90,12 +90,12 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
 
   // Chargement donnees API
   const loadData = useCallback(async () => {
-    if (!cabinetId) return;
+    if (!entiteId) return;
     try {
       const [configRes, etabRes, salRes] = await Promise.all([
-        fetch(`${API_BASE}/api/paie/config?cabinet_id=${cabinetId}`),
-        fetch(`${API_BASE}/api/paie/etablissements?cabinet_id=${cabinetId}`),
-        fetch(`${API_BASE}/api/paie/salaries?cabinet_id=${cabinetId}`),
+        fetch(`${API_BASE}/api/paie/config`),
+        fetch(`${API_BASE}/api/paie/etablissements`),
+        fetch(`${API_BASE}/api/paie/salaries`),
       ]);
       const configData = await configRes.json();
       const etabData = await etabRes.json();
@@ -134,26 +134,26 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
     } catch {
       setConfigLoaded(true);
     }
-  }, [cabinetId]);
+  }, [entiteId]);
 
   useEffect(() => { loadData(); }, [loadData]);
 
   // Sauvegarde config auto
   const saveConfig = useCallback(async () => {
-    if (!cabinetId || !configLoaded) return;
+    if (!entiteId || !configLoaded) return;
     try {
       await fetch(`${API_BASE}/api/paie/config`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          cabinet_id: cabinetId, devise: 'XAF', mois, annee,
+          devise: 'XAF', mois, annee,
           step: currentStep, mode: paieMode,
         }),
       });
     } catch {
       // Silently handle config save errors
     }
-  }, [cabinetId, configLoaded, mois, annee, currentStep, paieMode]);
+  }, [entiteId, configLoaded, mois, annee, currentStep, paieMode]);
 
   useEffect(() => { saveConfig(); }, [saveConfig]);
 
@@ -170,7 +170,7 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
   };
 
   const handleAddEtablissement = async (etab: Etablissement): Promise<void> => {
-    if (!cabinetId) {
+    if (!entiteId) {
       setEtablissements(prev => [...prev, { ...etab, id: Date.now() }]);
       return;
     }
@@ -179,8 +179,7 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          cabinet_id: cabinetId,
-          raison_sociale: etab.raison_sociale || etab.raisonSociale || '',
+                    raison_sociale: etab.raison_sociale || etab.raisonSociale || '',
           nui: etab.nui || null,
           data: etab,
         }),
@@ -201,7 +200,7 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
   const handleAddSalarie = async (data: Record<string, Record<string, string | number | boolean | null | undefined>>): Promise<void> => {
     const etabId = (data.emploi as Record<string, string | number | boolean | null | undefined> | undefined)?.etablissement || null;
 
-    if (!cabinetId) {
+    if (!entiteId) {
       const newSalarie = { ...data, id: Date.now() } as Salarie;
       setSalaries(prev => [...prev, newSalarie]);
       setShowSalarieWizard(false);
@@ -219,8 +218,7 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          cabinet_id: cabinetId,
-          etablissement_id: etabId ? Number(etabId) : null,
+                    etablissement_id: etabId ? Number(etabId) : null,
           data: data,
         }),
       });
@@ -266,7 +264,7 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
           salaries={salaries}
           etablissements={etablissements}
           periodeLabel={periodeLabel}
-          entiteId={cabinetId}
+          entiteId={entiteId}
           onSalarieAdded={handleAddSalarie}
         />
       </div>
@@ -326,7 +324,7 @@ function Paie({ cabinetId }: PaieProps): React.ReactElement {
             <PaieDashboard
               etablissements={etablissements}
               onAddEtablissement={handleAddEtablissement}
-              cabinetId={cabinetId}
+              entiteId={entiteId}
             />
           )}
           {currentStep === 4 && (

@@ -11,7 +11,6 @@ import './GestionClients.css';
 
 interface GestionClientsProps {
   entites: Entite[];
-  cabinetId: number;
   currentEntiteId: number;
   onSelectEntite: (entite: Entite) => void;
   onEntiteCreated: (entite: Entite) => void;
@@ -49,7 +48,7 @@ function getTypeLabel(t: TypeActivite): string {
   }
 }
 
-function GestionClients({ entites, cabinetId, currentEntiteId, onSelectEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onOpenModule }: GestionClientsProps): React.ReactElement {
+function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onOpenModule }: GestionClientsProps): React.ReactElement {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState<'nom' | 'type' | 'date'>('nom');
   const [showForm, setShowForm] = useState(false);
