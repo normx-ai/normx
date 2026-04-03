@@ -447,7 +447,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
               <a href="https://tax.normx-ai.com">NORMX Tax</a>
               <a href="https://legal.normx-ai.com">NORMX Legal</a>
             </div>
-            <p>&copy; 2026 NORMX AI SAS — 5 rue Benjamin Raspail, 60100 Creil — info-contact@normx-ai.com</p>
+            <p>&copy; 2026 NORMX AI SAS — 71 rue Daire, 80000 Amiens — info-contact@normx-ai.com</p>
           </div>
         </footer>
       </div>
