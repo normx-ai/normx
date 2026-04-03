@@ -38,8 +38,13 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .nav-dropdown-footer a{font-size:13px;font-weight:500;color:var(--primary)}
         @media(max-width:900px){.lp .nav-dropdown-menu{width:90vw;left:auto;right:-60px;transform:translateY(-4px)}.lp .nav-dropdown:hover .nav-dropdown-menu{transform:translateY(0)}.lp .nav-dropdown-grid{grid-template-columns:1fr}}
 
+        /* TORN PAPER DIVIDER */
+        .lp .torn-wrap{position:relative;z-index:1}
+        .lp .torn-bottom::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 Q30,8 60,18 T120,14 T180,22 T240,12 T300,20 T360,10 T420,18 T480,14 T540,22 T600,10 T660,20 T720,12 T780,18 T840,22 T900,10 T960,20 T1020,14 T1080,22 T1140,12 T1200,18 T1260,14 T1320,22 T1380,10 T1440,18 L1440,40 L0,40 Z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat bottom;background-size:100% 40px;z-index:2}
+        .lp .torn-bottom-warm::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 40' preserveAspectRatio='none'%3E%3Cpath d='M0,20 Q30,8 60,18 T120,14 T180,22 T240,12 T300,20 T360,10 T420,18 T480,14 T540,22 T600,10 T660,20 T720,12 T780,18 T840,22 T900,10 T960,20 T1020,14 T1080,22 T1140,12 T1200,18 T1260,14 T1320,22 T1380,10 T1440,18 L1440,40 L0,40 Z' fill='%23faf8f5'/%3E%3C/svg%3E") no-repeat bottom;background-size:100% 40px;z-index:2}
+
         /* HERO */
-        .lp .hero{padding:120px 24px 60px;background:var(--bg2)}
+        .lp .hero{padding:120px 24px 80px;background:var(--bg2);position:relative}
         .lp .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
         .lp .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary-bg);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--primary);margin-bottom:20px}
         .lp .hero h1{font-size:clamp(30px,4vw,48px);font-weight:900;color:var(--dark);line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
@@ -56,7 +61,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .stat .l{font-size:11px;color:rgba(255,255,255,.7);margin-top:4px}
 
         /* SECTIONS */
-        .lp .section{padding:80px 24px}
+        .lp .section{padding:80px 24px;position:relative}
         .lp .section.alt{background:var(--bg2)}
         .lp .section-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
         .lp .section-inner.reverse{direction:rtl}
@@ -156,7 +161,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         </nav>
 
         {/* HERO */}
-        <section className="hero">
+        <section className="hero torn-wrap torn-bottom">
           <div className="hero-inner">
             <div className="hero-text">
               <div className="hero-badge">&#10024; Comptabilite augmentee par l'IA</div>
@@ -229,7 +234,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         </section>
 
         {/* FEATURE 1 — Ecritures */}
-        <section className="section" id="fonctionnalites">
+        <section className="section torn-wrap torn-bottom-warm" id="fonctionnalites">
           <div className="section-inner">
             <div>
               <div className="section-label" style={{ color: 'var(--primary)' }}>SAISIE D'ECRITURES</div>
@@ -282,7 +287,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         </section>
 
         {/* FEATURE 2 — Balance & Grand Livre */}
-        <section className="section alt">
+        <section className="section alt torn-wrap torn-bottom">
           <div className="section-inner reverse">
             <div>
               <div className="section-label" style={{ color: 'var(--green)' }}>ETATS COMPTABLES</div>
@@ -330,7 +335,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         </section>
 
         {/* FEATURE 3 — Assistant IA */}
-        <section className="section">
+        <section className="section torn-wrap torn-bottom-warm">
           <div className="section-inner">
             <div>
               <div className="section-label" style={{ color: 'var(--purple)' }}>ASSISTANT IA</div>
