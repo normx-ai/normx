@@ -95,15 +95,16 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .cta-box p{color:var(--text2);font-size:16px;margin-bottom:28px}
 
         /* FOOTER */
-        .lp footer{border-top:1px solid var(--border);padding:48px 24px}
+        .lp footer{background:#0F2A42;border-top:1px solid rgba(255,255,255,0.08);padding:48px 24px 0}
         .lp .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px}
-        .lp .footer-brand h3{font-size:20px;font-weight:700;color:var(--dark);margin-bottom:8px}
+        .lp .footer-brand h3{font-size:19px;font-weight:700;color:#e8e6e1;margin-bottom:8px}
         .lp .footer-brand h3 span{color:var(--primary)}
-        .lp .footer-brand p{font-size:13px;color:var(--text2);line-height:1.6}
-        .lp .footer-col h4{font-size:12px;font-weight:600;color:var(--text);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
-        .lp .footer-col a{display:block;font-size:14px;color:var(--text2);padding:3px 0}
+        .lp .footer-brand p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
+        .lp .footer-col h4{font-size:12px;font-weight:600;color:#e8e6e1;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+        .lp .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.6);padding:3px 0}
         .lp .footer-col a:hover{color:var(--primary)}
-        .lp .footer-bottom{margin-top:32px;padding-top:24px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--text3)}
+        .lp .footer-col .footer-email{color:var(--primary)}
+        .lp .footer-bottom{margin-top:40px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.06);text-align:center;font-size:13px;color:rgba(255,255,255,0.4)}
         @media(max-width:900px){.lp .footer-inner{grid-template-columns:1fr 1fr;gap:24px}}
 
         /* TABLE */
@@ -452,15 +453,15 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
             </div>
             <div className="footer-col">
               <h4>Produits</h4>
-              <a href="https://app.normx-ai.com">NORMX Compta &amp; Paie</a>
+              <a href="https://app.normx-ai.com">NORMX</a>
               <a href="https://tax.normx-ai.com">NORMX Tax</a>
               <a href="https://legal.normx-ai.com">NORMX Legal</a>
             </div>
             <div className="footer-col">
               <h4>Contact</h4>
-              <a href="mailto:info-contact@normx-ai.com">info-contact@normx-ai.com</a>
+              <a href="mailto:info-contact@normx-ai.com" className="footer-email">info-contact@normx-ai.com</a>
               <a href="mailto:support@normx-ai.com">support@normx-ai.com</a>
-              <a href="mailto:facturation@normx-ai.com">facturation@normx-ai.com</a>
+              <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.55)', display: 'block', padding: '3px 0' }}>71 rue Daire, 80000 Amiens</span>
             </div>
             <div className="footer-col">
               <h4>Legal</h4>
