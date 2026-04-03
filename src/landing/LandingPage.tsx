@@ -119,8 +119,12 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
                     <div className="dd-icon" style={{ background: '#08080d' }}>N</div>
                     <div><div>NORMX AI</div><div className="dd-desc">Plateforme principale</div></div>
                   </a>
+                  <a href="https://app.normx-ai.com" className="nav-dropdown-item">
+                    <div className="dd-icon" style={{ background: 'var(--primary)' }}>C</div>
+                    <div><div>NORMX Compta</div><div className="dd-desc">Comptabilite OHADA + IA</div></div>
+                  </a>
                   <a href="https://tax.normx-ai.com" className="nav-dropdown-item">
-                    <div className="dd-icon" style={{ background: 'var(--primary)' }}>T</div>
+                    <div className="dd-icon" style={{ background: 'var(--gold)' }}>T</div>
                     <div><div>NORMX Tax</div><div className="dd-desc">Intelligence fiscale IA</div></div>
                   </a>
                   <a href="https://legal.normx-ai.com" className="nav-dropdown-item">
