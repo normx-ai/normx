@@ -46,18 +46,18 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         /* HERO */
         .lp .hero{padding:120px 24px 80px;background:var(--bg2);position:relative}
         .lp .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-        .lp .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary-bg);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:700;color:var(--primary);margin-bottom:20px}
-        .lp .hero h1{font-size:clamp(30px,4vw,48px);font-weight:900;color:var(--dark);line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
+        .lp .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary-bg);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:600;color:var(--primary);margin-bottom:20px}
+        .lp .hero h1{font-size:clamp(30px,4vw,48px);font-weight:700;color:var(--dark);line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
         .lp .hero h1 span{color:var(--primary)}
         .lp .hero p{font-size:17px;color:var(--text2);max-width:480px;line-height:1.7;margin-bottom:28px}
         .lp .hero-btns{display:flex;gap:12px;margin-bottom:20px}
-        .lp .btn-primary{padding:14px 28px;background:var(--primary);color:#fff;font-size:15px;font-weight:700;border-radius:10px;border:none;cursor:pointer}
+        .lp .btn-primary{padding:14px 28px;background:var(--primary);color:#fff;font-size:15px;font-weight:600;border-radius:10px;border:none;cursor:pointer}
         .lp .btn-outline{padding:14px 28px;border:1.5px solid var(--border);background:#fff;color:var(--dark);font-size:15px;font-weight:600;border-radius:10px;cursor:pointer}
 
         /* STATS */
         .lp .stats{background:var(--dark);border-radius:16px;padding:24px 48px;display:flex;justify-content:center;gap:48px;flex-wrap:wrap;max-width:800px;margin:48px auto 0}
         .lp .stat{text-align:center}
-        .lp .stat .n{font-size:32px;font-weight:900;color:var(--gold)}
+        .lp .stat .n{font-size:32px;font-weight:700;color:var(--gold)}
         .lp .stat .l{font-size:11px;color:rgba(255,255,255,.7);margin-top:4px}
 
         /* SECTIONS */
@@ -66,8 +66,8 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .section-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
         .lp .section-inner.reverse{direction:rtl}
         .lp .section-inner.reverse>*{direction:ltr}
-        .lp .section-label{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
-        .lp .section h2{font-size:clamp(24px,3vw,36px);font-weight:900;line-height:1.2;margin-bottom:16px;color:var(--dark)}
+        .lp .section-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+        .lp .section h2{font-size:clamp(24px,3vw,36px);font-weight:700;line-height:1.2;margin-bottom:16px;color:var(--dark)}
         .lp .section p{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:24px}
         .lp .checks{list-style:none;margin-bottom:24px}
         .lp .checks li{display:flex;align-items:start;gap:10px;padding:6px 0;font-size:15px}
@@ -75,23 +75,23 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
 
         /* PRICING */
         .lp .pricing{padding:60px 24px;text-align:center}
-        .lp .pricing h2{font-size:clamp(26px,3vw,40px);font-weight:900;color:var(--dark);margin-bottom:8px}
+        .lp .pricing h2{font-size:clamp(26px,3vw,40px);font-weight:700;color:var(--dark);margin-bottom:8px}
         .lp .pricing .sub{font-size:17px;color:var(--text2);margin-bottom:40px}
         .lp .plans{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;max-width:700px;margin:0 auto}
         .lp .plan{flex:1;min-width:260px;max-width:320px;border-radius:16px;padding:28px;text-align:left}
         .lp .plan.free{background:var(--bg3);border:1px solid var(--border)}
         .lp .plan.pro{background:var(--primary-bg);border:2px solid var(--primary);position:relative}
         .lp .plan .tag{font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px}
-        .lp .plan .price{font-size:38px;font-weight:900;color:var(--dark)}
+        .lp .plan .price{font-size:38px;font-weight:700;color:var(--dark)}
         .lp .plan .period{font-size:15px;color:var(--text2);margin-bottom:20px}
         .lp .plan .feat{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:15px;color:var(--text2)}
         .lp .plan .feat .ci{font-size:16px}
-        .lp .plan .cta-btn{display:block;margin-top:16px;padding:12px;border-radius:10px;text-align:center;font-size:16px;font-weight:700;border:none;cursor:pointer;width:100%}
+        .lp .plan .cta-btn{display:block;margin-top:16px;padding:12px;border-radius:10px;text-align:center;font-size:16px;font-weight:600;border:none;cursor:pointer;width:100%}
 
         /* CTA */
         .lp .cta-section{padding:60px 24px;background:var(--bg2)}
         .lp .cta-box{max-width:700px;margin:0 auto;background:#fff;border:1px solid var(--border);border-radius:20px;padding:48px;text-align:center}
-        .lp .cta-box h2{font-size:28px;font-weight:900;color:var(--dark);margin-bottom:12px}
+        .lp .cta-box h2{font-size:28px;font-weight:700;color:var(--dark);margin-bottom:12px}
         .lp .cta-box p{color:var(--text2);font-size:16px;margin-bottom:28px}
 
         /* FOOTER */
