@@ -39,52 +39,11 @@
 
   /* Table */
   --couleur-table-header: #0F2A42;
-  --couleur-table-header-border: var(--couleur-table-header-border);
+  --couleur-table-header-border: #24506F;
 
   /* Visual */
   --rayon-bordure: 6px;
   --ombre-carte: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --couleur-primaire: #D4A843;
-    --couleur-primaire-hover: #e0b84f;
-    --couleur-primaire-light: rgba(212, 168, 67, 0.08);
-
-    --couleur-sidebar: #0f0f0f;
-    --couleur-header-bg: #111111;
-
-    --couleur-texte: #e5e7eb;
-    --couleur-texte-secondaire: #a1a1aa;
-    --couleur-texte-dark: #e5e7eb;
-    --couleur-texte-slate: #d4d4d8;
-    --couleur-texte-muted: #71717a;
-    --couleur-texte-placeholder: #71717a;
-
-    --couleur-bordure: rgba(255, 255, 255, 0.08);
-    --couleur-bordure-light: rgba(255, 255, 255, 0.08);
-
-    --couleur-fond: #0a0a0a;
-    --couleur-fond-carte: #161616;
-    --couleur-fond-filter: #1a1a1a;
-    --couleur-fond-input: #1a1a1a;
-
-    --couleur-danger: #f87171;
-    --couleur-succes: #4ade80;
-    --couleur-warning: #fbbf24;
-
-    --couleur-badge-succes-bg: rgba(212, 168, 67, 0.08);
-    --couleur-badge-succes-texte: #e0b84f;
-    --couleur-selected-row: rgba(255, 255, 255, 0.06);
-    --couleur-sidebar-active: rgba(255, 255, 255, 0.06);
-
-    --couleur-table-header: #111111;
-    --couleur-table-header-border: rgba(255, 255, 255, 0.1);
-
-    --ombre-carte: 0 2px 8px rgba(0, 0, 0, 0.3);
-  }
 }
 
 * {
