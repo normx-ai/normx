@@ -1,30 +1,90 @@
 :root {
+  /* Primary Brand */
   --couleur-primaire: #D4A843;
-  --couleur-primaire-hover: #C09935;
+  --couleur-primaire-hover: #c49a38;
   --couleur-primaire-light: rgba(212, 168, 67, 0.08);
-  --couleur-sidebar: #1A3A5C;
+
+  /* Layout */
+  --couleur-sidebar: #0F2A42;
+  --couleur-header-bg: #0F2A42;
+
+  /* Text */
   --couleur-texte: #1f2937;
   --couleur-texte-secondaire: #6b7280;
-  --couleur-bordure: #e5e7eb;
-  --couleur-fond: #f3f4f6;
-  --couleur-fond-carte: #fff;
-  --couleur-danger: #ef4444;
-  --couleur-succes: #22c55e;
-  --rayon-bordure: 6px;
-  --ombre-carte: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-  --couleur-table-header: #1A3A5C;
-  --couleur-table-header-border: #24506F;
   --couleur-texte-dark: #1f2937;
   --couleur-texte-slate: #334155;
   --couleur-texte-muted: #9ca3af;
   --couleur-texte-placeholder: #9ca3af;
+
+  /* Borders */
+  --couleur-bordure: #e5e7eb;
   --couleur-bordure-light: #e5e7eb;
+
+  /* Backgrounds */
+  --couleur-fond: #f3f4f6;
+  --couleur-fond-carte: #ffffff;
   --couleur-fond-filter: #f9fafb;
+  --couleur-fond-input: #f3f4f6;
+
+  /* Status */
+  --couleur-danger: #ef4444;
+  --couleur-succes: #22c55e;
+  --couleur-warning: #f59e0b;
+
+  /* Special */
   --couleur-badge-succes-bg: #FDF8EE;
   --couleur-badge-succes-texte: #B08A2E;
-  --couleur-warning: #f59e0b;
   --couleur-selected-row: #FDF8EE;
+  --couleur-sidebar-active: #FDF8EE;
+
+  /* Table */
+  --couleur-table-header: #0F2A42;
+  --couleur-table-header-border: var(--couleur-table-header-border);
+
+  /* Visual */
+  --rayon-bordure: 6px;
+  --ombre-carte: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --couleur-primaire: #D4A843;
+    --couleur-primaire-hover: #e0b84f;
+    --couleur-primaire-light: rgba(212, 168, 67, 0.08);
+
+    --couleur-sidebar: #0f0f0f;
+    --couleur-header-bg: #111111;
+
+    --couleur-texte: #e5e7eb;
+    --couleur-texte-secondaire: #a1a1aa;
+    --couleur-texte-dark: #e5e7eb;
+    --couleur-texte-slate: #d4d4d8;
+    --couleur-texte-muted: #71717a;
+    --couleur-texte-placeholder: #71717a;
+
+    --couleur-bordure: rgba(255, 255, 255, 0.08);
+    --couleur-bordure-light: rgba(255, 255, 255, 0.08);
+
+    --couleur-fond: #0a0a0a;
+    --couleur-fond-carte: #161616;
+    --couleur-fond-filter: #1a1a1a;
+    --couleur-fond-input: #1a1a1a;
+
+    --couleur-danger: #f87171;
+    --couleur-succes: #4ade80;
+    --couleur-warning: #fbbf24;
+
+    --couleur-badge-succes-bg: rgba(212, 168, 67, 0.08);
+    --couleur-badge-succes-texte: #e0b84f;
+    --couleur-selected-row: rgba(255, 255, 255, 0.06);
+    --couleur-sidebar-active: rgba(255, 255, 255, 0.06);
+
+    --couleur-table-header: #111111;
+    --couleur-table-header-border: rgba(255, 255, 255, 0.1);
+
+    --ombre-carte: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
 }
 
 * {
@@ -39,6 +99,6 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f5f5f5;
-  color: #333;
+  background-color: var(--couleur-fond);
+  color: var(--couleur-texte);
 }

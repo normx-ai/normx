@@ -9,18 +9,18 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
     <>
       <style>{`
         .lp *,.lp *::before,.lp *::after{margin:0;padding:0;box-sizing:border-box}
-        .lp{--primary:#2563eb;--primary-light:#60a5fa;--primary-bg:rgba(37,99,235,.06);--gold:#D4A843;--dark:#0F2A42;--text:#1f2937;--text2:#6b7280;--text3:#9ca3af;--bg:#fff;--bg2:#faf8f5;--bg3:#f9fafb;--border:rgba(0,0,0,.08);--green:#059669;--red:#ef4444;--orange:#d97706;--purple:#7c3aed;--r:16px;--shadow:0 1px 3px rgba(0,0,0,.06);--shadow-lg:0 20px 60px rgba(0,0,0,.08);font-family:'Inter',-apple-system,sans-serif;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+        .lp{--primary:#D4A843;--primary-light:#e8c96a;--primary-bg:rgba(212,168,67,.08);--gold:#D4A843;--dark:#0F2A42;--text:#1f2937;--text2:#6b7280;--text3:#9ca3af;--bg:#fff;--bg2:#faf8f5;--bg3:#f9fafb;--border:rgba(0,0,0,.08);--green:#059669;--red:#ef4444;--orange:#d97706;--purple:#7c3aed;--r:16px;--shadow:0 1px 3px rgba(0,0,0,.06);--shadow-lg:0 20px 60px rgba(0,0,0,.08);font-family:'Inter',-apple-system,sans-serif;color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
         .lp a{text-decoration:none;color:inherit}
 
         /* NAV */
         .lp-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
         .lp .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
         .lp .nav-logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:var(--dark);cursor:pointer;background:none;border:none}
-        .lp .nav-icon{width:34px;height:34px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff}
+        .lp .nav-icon{width:34px;height:34px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--dark)}
         .lp .nav-links{display:flex;align-items:center;gap:6px}
         .lp .nav-link{padding:8px 14px;font-size:14px;font-weight:600;color:var(--text2);border-radius:8px;transition:all .2s;cursor:pointer}
         .lp .nav-link:hover{color:var(--text);background:rgba(0,0,0,.04)}
-        .lp .nav-cta{padding:9px 22px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;border-radius:8px;border:none;cursor:pointer}
+        .lp .nav-cta{padding:9px 22px;background:var(--dark);color:#fff;font-size:14px;font-weight:700;border-radius:8px;border:none;cursor:pointer}
         .lp .nav-dropdown{position:relative}
         .lp .nav-dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-4px);margin-top:4px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.12);width:560px;padding:24px;opacity:0;pointer-events:none;transition:all .2s ease;z-index:200}
         .lp .nav-dropdown:hover .nav-dropdown-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
@@ -51,7 +51,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .hero h1 span{color:var(--primary)}
         .lp .hero p{font-size:17px;color:var(--text2);max-width:480px;line-height:1.7;margin-bottom:28px}
         .lp .hero-btns{display:flex;gap:12px;margin-bottom:20px}
-        .lp .btn-primary{padding:14px 28px;background:var(--primary);color:#fff;font-size:15px;font-weight:600;border-radius:10px;border:none;cursor:pointer}
+        .lp .btn-primary{padding:14px 28px;background:var(--primary);color:var(--dark);font-size:15px;font-weight:600;border-radius:10px;border:none;cursor:pointer}
         .lp .btn-outline{padding:14px 28px;border:1.5px solid var(--border);background:#fff;color:var(--dark);font-size:15px;font-weight:600;border-radius:10px;cursor:pointer}
 
         /* STATS */
@@ -95,8 +95,16 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .cta-box p{color:var(--text2);font-size:16px;margin-bottom:28px}
 
         /* FOOTER */
-        .lp footer{padding:40px 24px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--text2)}
-        .lp footer a{color:var(--primary);font-weight:600}
+        .lp footer{border-top:1px solid var(--border);padding:48px 24px}
+        .lp .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px}
+        .lp .footer-brand h3{font-size:20px;font-weight:700;color:var(--dark);margin-bottom:8px}
+        .lp .footer-brand h3 span{color:var(--primary)}
+        .lp .footer-brand p{font-size:13px;color:var(--text2);line-height:1.6}
+        .lp .footer-col h4{font-size:12px;font-weight:600;color:var(--text);margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+        .lp .footer-col a{display:block;font-size:14px;color:var(--text2);padding:3px 0}
+        .lp .footer-col a:hover{color:var(--primary)}
+        .lp .footer-bottom{margin-top:32px;padding-top:24px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--text3)}
+        @media(max-width:900px){.lp .footer-inner{grid-template-columns:1fr 1fr;gap:24px}}
 
         /* TABLE */
         .lp .mt{width:100%;border-collapse:collapse;font-size:11px}
@@ -120,7 +128,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         <nav className="lp-nav">
           <div className="nav-inner">
             <button className="nav-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <div className="nav-icon">N</div> NORMX Compta
+              <div className="nav-icon">N</div> NORMX
             </button>
             <div className="nav-links">
               <a href="#fonctionnalites" className="nav-link">Fonctionnalites</a>
@@ -441,14 +449,31 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
 
         {/* FOOTER */}
         <footer>
-          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 24, flexWrap: 'wrap', marginBottom: 16 }}>
-              <a href="https://normx-ai.com">NORMX AI</a>
+          <div className="footer-inner">
+            <div className="footer-brand">
+              <h3>NORMX <span>AI</span></h3>
+              <p>Plateforme d'intelligence comptable, fiscale, sociale et juridique pour les professionnels africains.</p>
+            </div>
+            <div className="footer-col">
+              <h4>Produits</h4>
+              <a href="https://app.normx-ai.com">NORMX Compta &amp; Paie</a>
               <a href="https://tax.normx-ai.com">NORMX Tax</a>
               <a href="https://legal.normx-ai.com">NORMX Legal</a>
             </div>
-            <p>&copy; 2026 NORMX AI SAS — 71 rue Daire, 80000 Amiens — info-contact@normx-ai.com</p>
+            <div className="footer-col">
+              <h4>Contact</h4>
+              <a href="mailto:info-contact@normx-ai.com">info-contact@normx-ai.com</a>
+              <a href="mailto:support@normx-ai.com">support@normx-ai.com</a>
+              <a href="mailto:facturation@normx-ai.com">facturation@normx-ai.com</a>
+            </div>
+            <div className="footer-col">
+              <h4>Legal</h4>
+              <a href="https://tax.normx-ai.com/legal/cgu">Conditions generales</a>
+              <a href="https://tax.normx-ai.com/legal/confidentialite">Politique de confidentialite</a>
+              <a href="https://tax.normx-ai.com/legal/mentions">Mentions legales</a>
+            </div>
           </div>
+          <div className="footer-bottom">&copy; 2026 NORMX AI SAS — 71 rue Daire, 80000 Amiens, France</div>
         </footer>
       </div>
     </>

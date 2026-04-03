@@ -29,19 +29,19 @@
 }
 .btn-bulletin-print {
   background: #D4A843;
-  color: #1A3A5C;
+  color: var(--couleur-sidebar);
 }
 .btn-bulletin-print:hover { background: #C09935; }
 .btn-bulletin-back {
-  background: #fff;
+  background: var(--couleur-fond-carte);
   color: #374151;
   border: 1px solid #d1d5db;
 }
-.btn-bulletin-back:hover { background: #f3f4f6; }
+.btn-bulletin-back:hover { background: var(--couleur-fond); }
 
 /* Zone imprimable */
 .bulletin-page {
-  background: #fff;
+  background: var(--couleur-fond-carte);
   border: 1px solid #d1d5db;
   padding: 30px 36px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -56,13 +56,13 @@
 }
 .bulletin-entreprise {
   font-size: 11px;
-  color: #333;
+  color: var(--couleur-texte);
   line-height: 1.5;
 }
 .bulletin-entreprise-nom {
   font-size: 16px;
   font-weight: 700;
-  color: #1A3A5C;
+  color: var(--couleur-sidebar);
   margin-bottom: 2px;
 }
 .bulletin-titre-wrapper {
@@ -219,7 +219,7 @@
   border: 1px solid #333;
 }
 .bulletin-cumuls th {
-  background: #1A3A5C;
+  background: var(--couleur-sidebar);
   color: #fff;
   padding: 5px 8px;
   font-size: 10px;
@@ -238,7 +238,7 @@
   font-weight: 600;
 }
 .bulletin-net-a-payer {
-  background: #1A3A5C;
+  background: var(--couleur-sidebar);
   color: #fff;
   font-size: 18px;
   font-weight: 700;
@@ -251,7 +251,7 @@
   font-weight: 600;
   color: #fff;
   text-align: center;
-  background: #1A3A5C;
+  background: var(--couleur-sidebar);
   padding: 3px;
   border: 1px solid #333;
   border-bottom: none;

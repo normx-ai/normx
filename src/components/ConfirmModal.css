@@ -11,7 +11,7 @@
 }
 
 .confirm-modal {
-  background: #fff;
+  background: var(--couleur-fond-carte);
   border-radius: 16px;
   padding: 32px 28px 24px;
   max-width: 400px;
@@ -66,7 +66,7 @@
   padding: 9px 20px;
   border-radius: 8px;
   border: 1px solid #ddd;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   color: #555;
   font-size: 14px;
   font-weight: 500;
@@ -75,7 +75,7 @@
   transition: background 0.15s;
 }
 .confirm-btn-cancel:hover {
-  background: #f3f4f6;
+  background: var(--couleur-fond);
 }
 
 .confirm-btn-action {

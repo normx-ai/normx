@@ -9,7 +9,7 @@
   display: flex; align-items: center; gap: 8px;
 }
 .ib-annee { display: flex; align-items: center; gap: 8px; }
-.ib-annee label { font-size: 14px; font-weight: 600; color: #333; }
+.ib-annee label { font-size: 14px; font-weight: 600; color: var(--couleur-texte); }
 .ib-annee select {
   padding: 8px 12px; border: 1px solid #ccc; font-size: 14px;
   font-family: inherit; background: white; cursor: pointer;
@@ -36,7 +36,7 @@
 .ib-statut-badge {
   font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; text-transform: uppercase;
 }
-.ib-statut-badge.brut { background: #f3f4f6; color: #6b7280; }
+.ib-statut-badge.brut { background: var(--couleur-fond); color: var(--couleur-texte-secondaire); }
 .ib-statut-badge.revise { background: #fef3c7; color: #92400e; }
 .ib-statut-badge.valide { background: #d1fae5; color: #065f46; }
 
@@ -53,7 +53,7 @@
 
 .ib-revision-btn {
   display: flex; align-items: center; gap: 6px;
-  padding: 10px 16px; background: white; color: #333; border: 1px solid #ccc;
+  padding: 10px 16px; background: white; color: var(--couleur-texte); border: 1px solid #ccc;
   font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
 }
 .ib-revision-btn:hover { border-color: #D4A843; color: #D4A843; }
@@ -78,7 +78,7 @@
 
 /* Format info */
 .ib-format-info {
-  background: #f9fafb; border: 1px dashed #d1d5db; padding: 20px;
+  background: var(--couleur-fond-filter); border: 1px dashed #d1d5db; padding: 20px;
   margin-bottom: 16px;
 }
 .ib-format-info h4 { font-size: 13px; color: #555; margin: 0 0 8px; }
@@ -92,21 +92,21 @@
 .ib-table {
   width: 100%; border-collapse: collapse; font-size: 13px;
 }
-.ib-table thead { background: #1A3A5C; color: #e8e6e1; }
+.ib-table thead { background: var(--couleur-sidebar); color: #e8e6e1; }
 .ib-table th {
   padding: 10px 12px; text-align: left; font-weight: 600; font-size: 12px;
   text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap;
 }
 .ib-table th.num { text-align: right; }
-.ib-table td { padding: 8px 12px; border-bottom: 1px solid #e5e7eb; }
+.ib-table td { padding: 8px 12px; border: 1px solid var(--couleur-bordure); }
 .ib-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
 .ib-table td.compte { font-weight: 600; color: #D4A843; }
 
-.ib-table tr:hover { background: #f9fafb; }
+.ib-table tr:hover { background: var(--couleur-fond-filter); }
 .ib-table tr.revised { background: #fffbeb; }
 
-.ib-table tfoot td { padding: 10px 12px; background: #f3f4f6; border-top: 2px solid #1A3A5C; }
-.ib-table .equilibre-row td { background: #f9fafb; font-size: 12px; }
+.ib-table tfoot td { padding: 10px 12px; background: var(--couleur-fond); border-top: 2px solid var(--couleur-sidebar); }
+.ib-table .equilibre-row td { background: var(--couleur-fond-filter); font-size: 12px; }
 .ib-table .ok { color: #22c55e; font-weight: 700; }
 .ib-table .ko { color: #ef4444; font-weight: 700; }
 
@@ -182,7 +182,7 @@
 }
 .ib-solde-hint.debiteur { background: #FAF0D8; color: #B08A2E; }
 .ib-solde-hint.crediteur { background: #fce7f3; color: #9d174d; }
-.ib-solde-hint.les_deux { background: #f3f4f6; color: #6b7280; }
+.ib-solde-hint.les_deux { background: var(--couleur-fond); color: var(--couleur-texte-secondaire); }
 
 /* Solde anormal en rouge gras */
 .ib-table td.solde-anormal {
@@ -271,7 +271,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 11px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
 }
 .ib-suggestion {
   font-size: 11px;

@@ -14,7 +14,7 @@
   transition: background 0.15s, color 0.15s;
 }
 .notif-bell-btn:hover {
-  background: #f3f4f6;
+  background: var(--couleur-fond);
   color: #D4A843;
 }
 
@@ -44,7 +44,7 @@
   margin-top: 6px;
   width: 360px;
   max-height: 440px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.15);
   z-index: 1000;
@@ -94,7 +94,7 @@
   border-radius: 4px;
 }
 .notif-close-btn:hover {
-  color: #333;
+  color: var(--couleur-texte);
 }
 
 .notif-list {
@@ -118,7 +118,7 @@
   transition: background 0.12s;
 }
 .notif-item:hover {
-  background: #f9fafb;
+  background: var(--couleur-fond-filter);
 }
 .notif-item.unread {
   background: #fffbeb;
@@ -176,6 +176,6 @@
   transition: color 0.15s, background 0.15s;
 }
 .notif-item-actions button:hover {
-  color: #333;
+  color: var(--couleur-texte);
   background: #eee;
 }

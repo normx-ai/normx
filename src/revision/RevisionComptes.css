@@ -20,7 +20,7 @@
   border-bottom: 2px solid transparent; margin-bottom: -2px;
   white-space: nowrap; transition: all 0.15s;
 }
-.revision-tab:hover { color: #333; background: #f5f5f5; }
+.revision-tab:hover { color: var(--couleur-texte); background: var(--couleur-fond); }
 .revision-tab.active { color: #D4A843; border-bottom-color: #D4A843; font-weight: 600; }
 
 /* Content */
@@ -41,12 +41,12 @@
 
 /* Control block */
 .revision-control {
-  background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+  background: var(--couleur-fond-carte); border: 1px solid var(--couleur-bordure); border-radius: 8px;
   padding: 16px; margin-bottom: 16px;
 }
 .revision-control-title {
   display: flex; align-items: center; justify-content: space-between;
-  font-size: 13.5px; font-weight: 600; color: #333;
+  font-size: 13.5px; font-weight: 600; color: var(--couleur-texte);
   margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0;
 }
 .revision-control-footer {
@@ -138,7 +138,7 @@
 .revision-table .editable-cell input {
   width: 100%; max-width: 110px; padding: 3px 6px;
   border: 1px solid #ddd; border-radius: 4px; font-size: 11.5px;
-  text-align: right; background: #fff;
+  text-align: right; background: var(--couleur-fond-carte);
   font-variant-numeric: tabular-nums;
 }
 .revision-table .editable-cell input:focus {
@@ -182,7 +182,7 @@
   font-weight: 500; cursor: pointer; border: 1px solid;
 }
 .revision-od-add {
-  background: #fff; color: #5b21b6; border-color: #c4b5fd;
+  background: var(--couleur-fond-carte); color: #5b21b6; border-color: #c4b5fd;
 }
 .revision-od-add:hover { background: #f5f3ff; }
 /* Suggestions */

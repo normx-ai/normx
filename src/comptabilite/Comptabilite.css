@@ -32,8 +32,8 @@
 
 /* ===== BUTTONS ===== */
 .compta-action-btn {
-  background: #fff;
-  color: #333;
+  background: var(--couleur-fond-carte);
+  color: var(--couleur-texte);
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 8px 16px;
@@ -45,7 +45,7 @@
   gap: 6px;
   white-space: nowrap;
 }
-.compta-action-btn:hover { background: #f5f5f5; }
+.compta-action-btn:hover { background: var(--couleur-fond); }
 .compta-action-btn.primary { background: #D4A843; color: #fff; border-color: #D4A843; }
 .compta-action-btn.primary:hover { background: #C09935; }
 .compta-action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -103,8 +103,8 @@
 .ecritures-table-wrapper {
   flex: 1;
   overflow-y: auto;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
   border-radius: 8px;
 }
 .ecritures-main-table {
@@ -132,7 +132,7 @@
 .ecritures-main-table td {
   padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;
-  color: #333;
+  color: var(--couleur-texte);
   font-variant-numeric: tabular-nums;
 }
 .ecritures-main-table .main-line td {
@@ -146,7 +146,7 @@
   font-weight: 700;
   font-size: 11px;
   text-transform: uppercase;
-  color: #1A3A5C;
+  color: var(--couleur-sidebar);
 }
 .cell-credit { color: #666; }
 .cell-credit.indent { padding-left: 24px; }
@@ -210,7 +210,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 12px 0 0;
-  border-top: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
   margin-top: 8px;
 }
 .saisie-footer-count {
@@ -253,7 +253,7 @@
   justify-content: center;
 }
 .ecriture-overlay {
-  background: #fff;
+  background: var(--couleur-fond-carte);
   width: 90vw;
   max-width: 1000px;
   max-height: 90vh;
@@ -268,7 +268,7 @@
   align-items: flex-start;
   justify-content: space-between;
   padding: 20px 24px;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .ecriture-overlay-header h2 {
   font-size: 18px;
@@ -295,8 +295,8 @@
 
 /* Fields card */
 .ecriture-fields-card {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: var(--couleur-fond-filter);
+  border: 1px solid var(--couleur-bordure);
   border-radius: 6px;
   padding: 16px;
   margin-bottom: 16px;
@@ -343,7 +343,7 @@
   border-radius: 4px;
   font-size: 13px;
   font-weight: 600;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   cursor: pointer;
   gap: 8px;
 }
@@ -352,7 +352,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   border: 1px solid #ddd;
   border-radius: 0 0 6px 6px;
   z-index: 20;
@@ -367,7 +367,7 @@
   font-weight: 600;
   text-align: left;
   background: #f5f6f7;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
   color: #555;
 }
 .journal-dropdown td {
@@ -386,7 +386,7 @@
 
 /* Overlay table */
 .overlay-table-wrapper {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -442,7 +442,7 @@ input[type="number"] {
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   border: 1px solid #ddd;
   border-radius: 0 0 6px 6px;
   max-height: 200px;
@@ -493,8 +493,8 @@ input[type="number"] {
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  border-top: 1px solid #e5e7eb;
-  background: #f9fafb;
+  border: 1px solid var(--couleur-bordure);
+  background: var(--couleur-fond-filter);
 }
 .overlay-totaux {
   display: flex;
@@ -545,7 +545,7 @@ input[type="number"] {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   border: 1px solid #ddd;
   border-radius: 6px;
   padding: 6px 12px;
@@ -563,8 +563,8 @@ input[type="number"] {
   gap: 16px;
   flex-wrap: wrap;
   padding: 12px 16px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
   border-radius: 8px;
   margin-bottom: 20px;
 }
@@ -576,7 +576,7 @@ input[type="number"] {
 .gl-filter-group label {
   font-size: 11px;
   font-weight: 600;
-  color: #6b7280;
+  color: var(--couleur-texte-secondaire);
   text-transform: uppercase;
 }
 .gl-filter-group select,
@@ -585,7 +585,7 @@ input[type="number"] {
   border: 1px solid #d1d5db;
   border-radius: 4px;
   font-size: 13px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
 }
 .gl-filter-search {
   display: flex;
@@ -594,7 +594,7 @@ input[type="number"] {
   padding: 6px 10px;
   border: 1px solid #d1d5db;
   border-radius: 4px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
 }
 .gl-filter-search input {
   border: none;
@@ -607,7 +607,7 @@ input[type="number"] {
   flex-direction: row;
   gap: 12px;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--couleur-texte-secondaire);
   align-items: center;
 }
 
@@ -649,7 +649,7 @@ input[type="number"] {
 
 .gl-compte-block {
   margin-bottom: 24px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
@@ -663,7 +663,7 @@ input[type="number"] {
   border-bottom: 2px solid #d0d5dd;
 }
 .gl-compte-num { font-weight: 700; font-size: 14px; color: #1a56db; }
-.gl-compte-libelle { flex: 1; font-size: 13px; color: #333; font-weight: 500; }
+.gl-compte-libelle { flex: 1; font-size: 13px; color: var(--couleur-texte); font-weight: 500; }
 .gl-compte-solde { font-size: 13px; font-weight: 700; }
 .gl-compte-solde.debiteur { color: #16a34a; }
 .gl-compte-solde.crediteur { color: #dc2626; }
@@ -679,7 +679,7 @@ input[type="number"] {
   text-transform: uppercase;
   color: #666;
   text-align: left;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
   background: #fafafa;
   white-space: nowrap;
 }
@@ -704,7 +704,7 @@ input[type="number"] {
 /* ===== BALANCE GENERALE ===== */
 .balance-societe-header {
   padding: 16px 16px 12px;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .balance-societe-titre {
   text-align: center;
@@ -744,8 +744,8 @@ input[type="number"] {
 }
 
 .balance-table-wrapper {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
   border-radius: 8px;
   overflow: hidden;
 }
@@ -760,7 +760,7 @@ input[type="number"] {
   text-transform: uppercase;
   color: #fff;
   text-align: left;
-  background: #1A3A5C;
+  background: var(--couleur-sidebar);
 }
 .balance-table td {
   padding: 8px 16px;
@@ -774,7 +774,7 @@ input[type="number"] {
 }
 .compte-cell { font-weight: 600; color: #D4A843; }
 .balance-table .totals-row td {
-  background: #1A3A5C;
+  background: var(--couleur-sidebar);
   color: #fff;
   border: none;
   font-weight: 700;
@@ -783,7 +783,7 @@ input[type="number"] {
   padding: 12px 16px;
   font-size: 13px;
   text-align: center;
-  border-top: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .check-ok { color: #059669; font-weight: 600; }
 .check-ko { color: #dc2626; font-weight: 600; }
@@ -819,7 +819,7 @@ input[type="number"] {
   justify-content: center;
 }
 .pdf-preview-modal {
-  background: #fff;
+  background: var(--couleur-fond-carte);
   width: 90vw;
   height: 90vh;
   display: flex;
@@ -831,7 +831,7 @@ input[type="number"] {
   align-items: center;
   justify-content: space-between;
   padding: 12px 20px;
-  background: #1A3A5C;
+  background: var(--couleur-sidebar);
   color: #fff;
 }
 .pdf-preview-header h3 {
@@ -891,8 +891,8 @@ input[type="number"] {
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s;
@@ -942,7 +942,7 @@ input[type="number"] {
   top: 0;
   bottom: 0;
   width: 360px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   box-shadow: -4px 0 20px rgba(0,0,0,0.12);
   z-index: 50;
   display: flex;
@@ -953,7 +953,7 @@ input[type="number"] {
   align-items: center;
   justify-content: space-between;
   padding: 20px 20px 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .tiers-detail-header h3 {
   font-size: 17px;
@@ -989,7 +989,7 @@ input[type="number"] {
   gap: 8px;
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 
 /* Selecteur type dans le formulaire */
@@ -1005,7 +1005,7 @@ input[type="number"] {
   padding: 8px 14px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  background: #fff;
+  background: var(--couleur-fond-carte);
   cursor: pointer;
   font-size: 13px;
   color: #555;

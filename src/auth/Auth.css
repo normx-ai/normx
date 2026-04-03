@@ -42,7 +42,7 @@
   font-family: 'Inter', 'Georgia', serif;
   font-size: 32px;
   font-weight: bold;
-  color: #1A3A5C;
+  color: var(--couleur-sidebar);
   letter-spacing: -1px;
   margin: 0;
 }
@@ -91,8 +91,8 @@
 
 .email-display {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 14px; border: 1px solid #ccc; background-color: #fff;
-  font-size: 15px; color: #333;
+  padding: 12px 14px; border: 1px solid #ccc; background-color: var(--couleur-fond-carte);
+  font-size: 15px; color: var(--couleur-texte);
 }
 
 .link-btn { background: none; border: none; color: #D4A843; cursor: pointer; font-size: 14px; text-decoration: underline; }
@@ -139,7 +139,7 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
-  background: #f9fafb;
+  background: var(--couleur-fond-filter);
 }
 .type-card:hover { border-color: #D4A843; background: #FDF8EE; }
 .type-card.selected { border-color: #D4A843; background: #FDF8EE; }
@@ -162,7 +162,7 @@
   width: 28px; height: 28px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700;
-  border: 2px solid #ddd; color: #bbb; background: #fff;
+  border: 2px solid #ddd; color: #bbb; background: var(--couleur-fond-carte);
 }
 .register-step.active .step-number {
   border-color: #D4A843; color: #fff; background: #D4A843;
@@ -176,7 +176,7 @@
 .type-compte-row { display: flex; gap: 12px; }
 .type-compte-btn {
   flex: 1; display: flex; align-items: flex-start; gap: 10px;
-  padding: 14px; border: 2px solid #e5e7eb; background: #f9fafb;
+  padding: 14px; border: 2px solid #e5e7eb; background: var(--couleur-fond-filter);
   cursor: pointer; transition: all 0.2s; text-align: left;
 }
 .type-compte-btn:hover { border-color: #D4A843; background: #fdf8ec; }
@@ -197,7 +197,7 @@
 .offre-item {
   display: flex; align-items: center; gap: 12px;
   padding: 16px 18px; cursor: pointer;
-  border-bottom: 1px solid #eee; background: #f9fafb;
+  border-bottom: 1px solid #eee; background: var(--couleur-fond-filter);
   transition: background 0.15s;
 }
 .offre-item:last-child { border-bottom: none; }
@@ -218,7 +218,7 @@
 /* Register actions (step 2) */
 .register-actions { display: flex; gap: 12px; margin-bottom: 0; }
 .btn-secondary {
-  flex: 0 0 auto; padding: 14px 20px; background: #f0f2f5; color: #333;
+  flex: 0 0 auto; padding: 14px 20px; background: #f0f2f5; color: var(--couleur-texte);
   border: 1px solid #ccc; font-size: 15px; font-weight: 600; cursor: pointer;
   transition: background 0.2s;
 }

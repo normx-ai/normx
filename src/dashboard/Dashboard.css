@@ -3,7 +3,7 @@
 /* TOP BAR */
 .topbar {
   display: flex; align-items: center; justify-content: space-between;
-  background-color: #1A3A5C; color: #e8e6e1; padding: 0 20px;
+  background-color: var(--couleur-sidebar); color: #e8e6e1; padding: 0 20px;
   height: 54px; position: sticky; top: 0; z-index: 100;
 }
 .topbar-left { display: flex; align-items: center; gap: 20px; }
@@ -107,8 +107,8 @@
 .compta-sidebar {
   width: 220px;
   min-width: 220px;
-  background-color: #fff;
-  border-right: 1px solid #e5e7eb;
+  background-color: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -124,7 +124,7 @@
 
 .compta-sidebar-header {
   padding: 14px 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
   min-height: 20px;
 }
 .compta-sidebar-title {
@@ -184,7 +184,7 @@
   transition: background-color 0.15s;
 }
 .compta-nav-item:hover {
-  background-color: #f3f4f6;
+  background-color: var(--couleur-fond);
 }
 .compta-nav-item.active {
   background-color: #FDF8EE;
@@ -230,8 +230,8 @@
 .compta-sidebar-2 {
   width: 240px;
   min-width: 240px;
-  background-color: #f9fafb;
-  border-right: 1px solid #e5e7eb;
+  background-color: var(--couleur-fond-filter);
+  border: 1px solid var(--couleur-bordure);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -241,12 +241,12 @@
 
 .sidebar-2-header {
   padding: 14px 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .sidebar-2-title {
   font-size: 14px;
   font-weight: 700;
-  color: #6b7280;
+  color: var(--couleur-texte-secondaire);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -276,7 +276,7 @@
 }
 .sidebar-2-item:hover {
   background-color: #e5e7eb;
-  color: #1f2937;
+  color: var(--couleur-texte);
 }
 .sidebar-2-item.active {
   background-color: #FAF0D8;
@@ -298,7 +298,7 @@
   font-size: 16px;
   font-weight: bold;
   color: #ccc;
-  border-top: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .compta-sidebar-bottom .logo-n {
   font-size: 22px;
@@ -320,7 +320,7 @@
 .main-header h1 { font-size: 22px; color: #1a1a1a; font-weight: 600; margin: 0; }
 
 .welcome-banner {
-  background: linear-gradient(135deg, #24506F 0%, #D4A843 100%);
+  background: linear-gradient(135deg, var(--couleur-table-header-border) 0%, #D4A843 100%);
   padding: 30px; color: #e8e6e1; margin: 0 30px 20px;
   min-height: 100px; border-radius: 8px;
 }
@@ -333,7 +333,7 @@
   gap: 16px; padding: 0 30px 30px;
 }
 .etat-card {
-  background: white; padding: 24px; border: 1px solid #e5e7eb;
+  background: white; padding: 24px; border: 1px solid var(--couleur-bordure);
   cursor: pointer; transition: all 0.2s; border-radius: 8px;
 }
 .etat-card:hover { border-color: #D4A843; box-shadow: 0 4px 12px rgba(212, 168, 67, 0.1); }
@@ -388,7 +388,7 @@
 .accueil-no-exercice {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 60px 20px; text-align: center;
-  background: #fff; border: 2px dashed #d1d5db; border-radius: 16px;
+  background: var(--couleur-fond-carte); border: 2px dashed #d1d5db; border-radius: 16px;
   margin-top: 24px;
 }
 .accueil-no-exercice-icon { color: #d1d5db; margin-bottom: 16px; }
@@ -396,7 +396,7 @@
   font-size: 20px; font-weight: 700; color: #1a1a1a; margin: 0 0 8px;
 }
 .accueil-no-exercice p {
-  font-size: 14px; color: #6b7280; margin: 0 0 24px; max-width: 440px;
+  font-size: 14px; color: var(--couleur-texte-secondaire); margin: 0 0 24px; max-width: 440px;
 }
 .accueil-create-exercice-btn {
   padding: 12px 28px; background: #D4A843; color: #fff;
@@ -418,7 +418,7 @@
   left: 0;
   right: 0;
   height: 40px;
-  background: #24506F;
+  background: var(--couleur-table-header-border);
   display: flex;
   align-items: stretch;
   z-index: 100;

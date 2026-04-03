@@ -16,7 +16,7 @@
 
 .toast-success { background-color: #D4A843; color: #fff; }
 .toast-error { background-color: #c0392b; color: white; }
-.toast-info { background-color: #1A3A5C; color: #e8e6e1; }
+.toast-info { background-color: var(--couleur-sidebar); color: #e8e6e1; }
 
 .toast-message { font-size: 14px; flex: 1; }
 

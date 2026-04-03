@@ -6,8 +6,8 @@
 /* HISTORY PANEL */
 .chat-history-panel {
   width: 260px;
-  background: #fff;
-  border-right: 1px solid #e5e7eb;
+  background: var(--couleur-fond-carte);
+  border: 1px solid var(--couleur-bordure);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  border-bottom: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .chat-history-header h3 {
   font-size: 15px;
@@ -55,7 +55,7 @@
   text-align: left;
   cursor: pointer;
   font-size: 13px;
-  color: #333;
+  color: var(--couleur-texte);
   border-radius: 6px;
   transition: background 0.15s;
 }
@@ -91,7 +91,7 @@
 
 /* Memory section */
 .chat-memory-section {
-  border-top: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
   padding: 12px;
   max-height: 200px;
   overflow-y: auto;
@@ -189,7 +189,7 @@
   color: #fff;
 }
 .chat-avatar.bot-avatar {
-  background-color: #1A3A5C;
+  background-color: var(--couleur-sidebar);
   color: #fff;
 }
 
@@ -238,7 +238,7 @@
   display: flex;
   gap: 10px;
   padding-top: 12px;
-  border-top: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
 }
 .chat-input-area textarea {
   flex: 1;
@@ -295,12 +295,12 @@
 }
 .chat-suggestion-btn {
   background: #f0f2f5;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--couleur-bordure);
   border-radius: 20px;
   padding: 8px 16px;
   font-size: 13px;
   cursor: pointer;
-  color: #333;
+  color: var(--couleur-texte);
   transition: all 0.15s;
 }
 .chat-suggestion-btn:hover { background: #FAF0D8; border-color: #D4A843; color: #C09935; }
