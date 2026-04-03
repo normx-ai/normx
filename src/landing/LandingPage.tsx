@@ -21,6 +21,14 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .nav-link{padding:8px 14px;font-size:14px;font-weight:600;color:var(--text2);border-radius:8px;transition:all .2s;cursor:pointer}
         .lp .nav-link:hover{color:var(--text);background:rgba(0,0,0,.04)}
         .lp .nav-cta{padding:9px 22px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;border-radius:8px;border:none;cursor:pointer}
+        .lp .nav-dropdown{position:relative}
+        .lp .nav-dropdown-menu{position:absolute;top:100%;right:0;margin-top:4px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.1);min-width:220px;padding:8px;opacity:0;pointer-events:none;transform:translateY(-4px);transition:all .15s ease}
+        .lp .nav-dropdown:hover .nav-dropdown-menu{opacity:1;pointer-events:auto;transform:translateY(0)}
+        .lp .nav-dropdown-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;font-size:14px;font-weight:600;color:var(--text);transition:background .15s}
+        .lp .nav-dropdown-item:hover{background:rgba(0,0,0,.04)}
+        .lp .nav-dropdown-item .dd-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;flex-shrink:0}
+        .lp .nav-dropdown-item .dd-desc{font-size:12px;font-weight:400;color:var(--text2)}
+        .lp .badge-soon{font-size:9px;font-weight:700;background:#f3f4f6;color:var(--text3);padding:2px 8px;border-radius:10px;margin-left:auto}
 
         /* HERO */
         .lp .hero{padding:120px 24px 60px;background:var(--bg2)}
@@ -104,7 +112,24 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
             <div className="nav-links">
               <a href="#fonctionnalites" className="nav-link">Fonctionnalites</a>
               <a href="#tarifs" className="nav-link">Tarifs</a>
-              <a href="https://tax.normx-ai.com" className="nav-link">NORMX Tax</a>
+              <div className="nav-dropdown">
+                <span className="nav-link">Produits &#9662;</span>
+                <div className="nav-dropdown-menu">
+                  <a href="https://normx-ai.com" className="nav-dropdown-item">
+                    <div className="dd-icon" style={{ background: '#08080d' }}>N</div>
+                    <div><div>NORMX AI</div><div className="dd-desc">Plateforme principale</div></div>
+                  </a>
+                  <a href="https://tax.normx-ai.com" className="nav-dropdown-item">
+                    <div className="dd-icon" style={{ background: 'var(--primary)' }}>T</div>
+                    <div><div>NORMX Tax</div><div className="dd-desc">Intelligence fiscale IA</div></div>
+                  </a>
+                  <a href="https://legal.normx-ai.com" className="nav-dropdown-item">
+                    <div className="dd-icon" style={{ background: 'var(--purple)' }}>L</div>
+                    <div><div>NORMX Legal</div><div className="dd-desc">Documents juridiques OHADA</div></div>
+                    <span className="badge-soon">Bientot</span>
+                  </a>
+                </div>
+              </div>
               <button className="nav-cta" onClick={onLogin}>Se connecter</button>
             </div>
           </div>
