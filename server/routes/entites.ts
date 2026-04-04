@@ -50,7 +50,17 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/:id', async (req: Request, res: Response) => {
   const tenant = await tenantService.getTenantById(parseInt(req.params.id));
   if (!tenant) return res.status(404).json({ error: 'Entité non trouvée.' });
-  res.json(tenant);
+  const { modules, sigle, adresse, nif, telephone, email, ...data } = (tenant.settings || {}) as Record<string, unknown>;
+  res.json({
+    id: tenant.id,
+    nom: tenant.nom,
+    sigle: sigle || '',
+    adresse: adresse || '',
+    nif: nif || '',
+    telephone: telephone || '',
+    email: email || '',
+    data,
+  });
 });
 
 // POST /api/entites — Créer un dossier client (cabinet uniquement)
@@ -104,12 +114,18 @@ router.post('/', async (req: Request, res: Response) => {
 // PUT /api/entites/:id — Modifier une entité
 router.put('/:id', async (req: Request, res: Response) => {
   const id = parseInt(req.params.id);
-  const { nom, modules, sigle, adresse, nif, telephone, email } = req.body;
+  const { nom, modules, sigle, adresse, nif, telephone, email, data } = req.body;
 
   try {
+    // Merge data (parametres DSF) into settings
+    const settings: Record<string, unknown> = { modules, sigle, adresse, nif, telephone, email };
+    if (data && typeof data === 'object') {
+      Object.assign(settings, data);
+    }
+
     await tenantService.updateTenant(id, {
       nom,
-      settings: { modules, sigle, adresse, nif, telephone, email },
+      settings,
     });
 
     const updated = await tenantService.getTenantById(id);
