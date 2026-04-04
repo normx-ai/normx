@@ -65,6 +65,24 @@ router.post('/setup', async (req: Request, res: Response) => {
       tenant = await tenantService.getTenantById(tenant.id);
     }
 
+    // Cabinet : créer automatiquement un premier client (le cabinet lui-même)
+    if (type === 'cabinet' && tenant) {
+      const existingClients = await tenantService.getCabinetClients(tenant.id);
+      if (existingClients.length === 0) {
+        const clientSlug = `${slug}_client_self`;
+        const selfClient = await tenantService.createTenant({
+          slug: clientSlug,
+          nom,
+          type: 'client',
+          parent_id: tenant.id,
+          plan: tenant.plan,
+        });
+        await tenantService.updateTenant(selfClient.id, {
+          settings: { modules: modules || ['compta', 'etats', 'paie'] },
+        });
+      }
+    }
+
     res.json({ tenant, onboardingRequired: false });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
