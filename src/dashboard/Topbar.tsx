@@ -34,6 +34,7 @@ interface TopbarProps {
   onSwitchModule: (mod: NormxModule) => void;
   onGoToPortail: () => void;
   onLogout: () => void;
+  isCabinet?: boolean;
   // Dossier selector (portail + paie)
   dossierSelector?: React.ReactNode;
   // Compta/etats: entité info in topbar
@@ -48,10 +49,11 @@ function Topbar({
   userMenuOpen, setUserMenuOpen,
   moduleSwitcherRef, userMenuRef,
   moduleList, hasModule, onSwitchModule, onGoToPortail, onLogout,
+  isCabinet = false,
   dossierSelector,
   entiteName, typeActivite, showCompanyInfo,
 }: TopbarProps): React.ReactElement {
-  const showPortailLink = activeModule !== null;
+  const showPortailLink = activeModule !== null && isCabinet;
   const isComptaOrEtats = activeModule === 'compta' || activeModule === 'etats';
 
   return (

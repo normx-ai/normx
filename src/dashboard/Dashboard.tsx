@@ -521,6 +521,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     onSwitchModule: switchModule,
     onGoToPortail: () => setActiveModule(null),
     onLogout,
+    isCabinet,
   };
 
   // Shared exercice selector props
@@ -545,7 +546,14 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     />
   );
 
-  // ==================== PORTAIL (no module selected) ====================
+  // Entreprise sans module sélectionné : ouvrir le premier module automatiquement
+  React.useEffect(() => {
+    if (!activeModule && !isCabinet && modules.length > 0) {
+      setActiveModule(modules[0]);
+    }
+  }, [activeModule, isCabinet, modules]);
+
+  // ==================== PORTAIL (no module selected — cabinet only) ====================
   if (!activeModule) {
     return (
       <div className="dashboard">
