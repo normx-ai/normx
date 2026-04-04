@@ -10,6 +10,7 @@ export interface UserToken {
   roles: string[];
   tenantSlug: string;
   tenantId: string;
+  subscriptions: string[];
 }
 
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
@@ -48,6 +49,7 @@ interface KeycloakPayload {
   tenant_id?: string;
   tenantId?: string;
   role?: string;
+  subscribed_products?: string;
   iat: number;
   exp: number;
 }
@@ -98,6 +100,10 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
       });
     });
 
+    // Parse subscribed_products: "normx,tax" -> ["normx", "tax"]
+    const rawSubs = decoded.subscribed_products || '';
+    const subscriptions = rawSubs ? rawSubs.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
+
     req.user = {
       sub: decoded.sub,
       email: decoded.email || '',
@@ -106,6 +112,7 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
       roles: extractRoles(decoded),
       tenantSlug: extractTenantSlug(decoded),
       tenantId: extractTenantId(decoded),
+      subscriptions,
     };
     next();
   } catch {

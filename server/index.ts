@@ -22,6 +22,7 @@ import revisionRoutes from "./routes/revision";
 
 import tenantRoutes from "./routes/tenant";
 import { authenticateToken } from "./middleware/auth";
+import { requireSubscription } from "./middleware/subscription.middleware";
 import { tenantMiddleware } from "./middleware/tenant.middleware";
 import { switchClientMiddleware } from "./middleware/tenant.guards";
 
@@ -32,11 +33,11 @@ app.use(express.json({ limit: "10mb" }));
 // Servir le frontend React build
 app.use(express.static(path.join(__dirname, "public")));
 
-// Routes publiques
-app.use("/api/tenant", authenticateToken, tenantRoutes);
+// Routes tenant (auth + subscription, pas de tenant middleware car le tenant peut ne pas exister)
+app.use("/api/tenant", authenticateToken, requireSubscription('normx'), tenantRoutes);
 
-// Middleware chaine : auth → tenant → switch client
-const tenantChain = [authenticateToken, tenantMiddleware, switchClientMiddleware];
+// Middleware chaine : auth → subscription → tenant → switch client
+const tenantChain = [authenticateToken, requireSubscription('normx'), tenantMiddleware, switchClientMiddleware];
 
 // Routes protegees (tenant requis)
 app.use("/api/balance", ...tenantChain, balanceRoutes);

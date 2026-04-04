@@ -32,6 +32,7 @@ function AppContent(): React.JSX.Element {
   const [onboardingDone, setOnboardingDone] = React.useState<boolean | null>(null);
   const [tenantLoading, setTenantLoading] = React.useState(true);
   const [tenantName, setTenantName] = React.useState('');
+  const [subscriptionRequired, setSubscriptionRequired] = React.useState(false);
 
   // Charger le tenant depuis l'API au login
   React.useEffect(() => {
@@ -43,8 +44,19 @@ function AppContent(): React.JSX.Element {
     const headers = { 'Authorization': `Bearer ${accessToken}` };
 
     fetch('/api/tenant/me', { headers })
-      .then(r => r.json())
+      .then(async r => {
+        if (r.status === 403) {
+          const err = await r.json();
+          if (err.code === 'SUBSCRIPTION_REQUIRED') {
+            setSubscriptionRequired(true);
+            setTenantLoading(false);
+            return null;
+          }
+        }
+        return r.json();
+      })
       .then(async (data) => {
+        if (!data) return;
         if (data.onboardingRequired || !data.tenant) {
           setOnboardingDone(false);
           setTenantLoading(false);
@@ -123,6 +135,27 @@ function AppContent(): React.JSX.Element {
 
   if (!isAuthenticated) {
     return <LandingPage onLogin={login} />;
+  }
+
+  if (subscriptionRequired) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
+        <div style={{ textAlign: 'center', maxWidth: 440, padding: 32 }}>
+          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#D4A843', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24, fontWeight: 900, color: '#0F2A42' }}>N</div>
+          <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0F2A42', marginBottom: 12 }}>Abonnement requis</h2>
+          <p style={{ color: '#6b7280', fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>
+            Votre compte n'a pas acces a NORMX Compta. Contactez-nous pour activer votre abonnement.
+          </p>
+          <a href="mailto:info-contact@normx-ai.com" style={{ display: 'inline-block', padding: '12px 24px', background: '#D4A843', color: '#0F2A42', fontWeight: 700, borderRadius: 8, textDecoration: 'none', marginBottom: 12 }}>
+            Contacter NORMX AI
+          </a>
+          <br />
+          <button onClick={logout} style={{ marginTop: 8, background: 'none', border: 'none', color: '#6b7280', fontSize: 14, cursor: 'pointer' }}>
+            Se deconnecter
+          </button>
+        </div>
+      </div>
+    );
   }
 
   if (tenantLoading) {
