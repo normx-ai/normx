@@ -238,7 +238,11 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
           </thead>
           <tbody>
             {filtered.length === 0 && (
-              <tr><td colSpan={7} className="gc-empty">Aucun client trouvé.</td></tr>
+              <tr><td colSpan={7} className="gc-empty">
+                {entites.length === 0
+                  ? 'Aucun dossier client. Cliquez sur "Nouveau client" pour créer votre premier dossier.'
+                  : 'Aucun client trouvé pour cette recherche.'}
+              </td></tr>
             )}
             {filtered.map(ent => (
               <tr key={ent.id} className={ent.id === currentEntiteId ? 'gc-row-active' : ''}>
