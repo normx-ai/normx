@@ -558,6 +558,15 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     }
   }, [activeModule, isCabinet, modules]);
 
+  // Reset le module si le client change et que le module actif n'est pas disponible
+  React.useEffect(() => {
+    if (activeModule && modules.length > 0 && !modules.includes(activeModule)) {
+      // Compta inclut etats, donc si on est sur etats et que le client a compta, c'est OK
+      if (activeModule === 'etats' && modules.includes('compta')) return;
+      setActiveModule(null);
+    }
+  }, [modules, activeModule]);
+
   // ==================== PORTAIL (no module selected — cabinet only) ====================
   if (!activeModule) {
     return (
