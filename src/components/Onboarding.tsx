@@ -58,10 +58,18 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
   const [entiteNom, setEntiteNom] = useState('');
   const [tenantType, setTenantType] = useState<TenantType>('enterprise');
 
+  const comptaIncludesEtats = selectedModules.includes('compta');
+
   const toggleModule = (id: NormxModule): void => {
-    setSelectedModules(prev =>
-      prev.includes(id) ? prev.filter(m => m !== id) : [...prev, id]
-    );
+    if (id === 'etats' && comptaIncludesEtats) return; // etats grise si compta coche
+    setSelectedModules(prev => {
+      let next = prev.includes(id) ? prev.filter(m => m !== id) : [...prev, id];
+      // Si on coche compta, ajouter etats automatiquement
+      if (id === 'compta' && next.includes('compta') && !next.includes('etats')) {
+        next = [...next, 'etats'];
+      }
+      return next;
+    });
   };
 
   const selectAll = (): void => {
@@ -261,6 +269,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12, marginBottom: 32 }}>
               {MODULES.map(m => {
                 const selected = selectedModules.includes(m.id);
+                const disabled = m.id === 'etats' && comptaIncludesEtats;
                 return (
                   <div
                     key={m.id}
@@ -268,8 +277,9 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                     style={{
                       border: `2px solid ${selected ? m.color : 'rgba(0,0,0,0.08)'}`,
                       padding: 20,
-                      cursor: 'pointer',
+                      cursor: disabled ? 'default' : 'pointer',
                       background: selected ? `${m.color}08` : '#fff',
+                      opacity: disabled ? 0.5 : 1,
                       transition: 'all 0.2s',
                       position: 'relative',
                     }}
@@ -285,7 +295,8 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                       {selected && '✓'}
                     </div>
                     <div style={{ fontSize: 20, fontWeight: 800, color: m.color, marginBottom: 4 }}>{m.label}</div>
-                    <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 12 }}>{m.desc}</div>
+                    <div style={{ fontSize: 12, color: '#6b7280', marginBottom: disabled ? 4 : 12 }}>{m.desc}</div>
+                    {disabled && <div style={{ fontSize: 11, color: '#2563eb', fontWeight: 600, marginBottom: 8 }}>Inclus dans Compta</div>}
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                       {m.features.map((f, i) => (
                         <li key={i} style={{ fontSize: 12, color: '#374151', padding: '2px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
