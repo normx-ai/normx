@@ -104,9 +104,9 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
       .catch(() => {});
   };
 
-  const [saveError, setSaveError] = useState('');
+  const [saveNotif, setSaveNotif] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const handleSave = async (): Promise<void> => {
-    setSaveError('');
+    setSaveNotif(null);
     try {
       const resp = await fetch(`/api/revision/${entiteId}/${exerciceId}/kp`, {
         method: 'PUT',
@@ -115,12 +115,14 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
       });
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({}));
-        setSaveError(err.error || `Erreur ${resp.status}`);
+        setSaveNotif({ type: 'error', message: err.error || `Erreur ${resp.status}` });
         return;
       }
       setSaved(true);
+      setSaveNotif({ type: 'success', message: 'Revision sauvegardee' });
+      setTimeout(() => setSaveNotif(null), 3000);
     } catch {
-      setSaveError('Erreur reseau');
+      setSaveNotif({ type: 'error', message: 'Erreur reseau' });
     }
   };
 
@@ -544,14 +546,23 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
 
   return (
     <div className="revision-kp">
+      {saveNotif && (
+        <div style={{
+          position: 'fixed', top: 16, right: 16, zIndex: 9999,
+          padding: '12px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600,
+          background: saveNotif.type === 'success' ? '#059669' : '#ef4444',
+          color: '#fff', boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          display: 'flex', alignItems: 'center', gap: 8,
+        }}>
+          {saveNotif.message}
+          <button onClick={() => setSaveNotif(null)} style={{ background: 'none', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 16 }}>&times;</button>
+        </div>
+      )}
       <div className="revision-section-header">
         <h3>Capitaux propres</h3>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {saveError && <span style={{ color: '#ef4444', fontSize: 12 }}>{saveError}</span>}
-          <button className="revision-save-btn" onClick={handleSave}>
-            <LuSave size={14} /> {saved ? 'Sauvegardé' : 'Sauvegarder'}
-          </button>
-        </div>
+        <button className="revision-save-btn" onClick={handleSave}>
+          <LuSave size={14} /> {saved ? 'Sauvegarde' : 'Sauvegarder'}
+        </button>
       </div>
 
       {/* Objectif */}
