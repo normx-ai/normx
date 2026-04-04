@@ -162,7 +162,12 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     ? modules
     : offre === 'comptabilite' ? ['compta', 'etats'] : ['etats'];
 
-  const hasModule = (mod: NormxModule): boolean => availableModules.includes(mod);
+  const hasModule = (mod: NormxModule): boolean => {
+    if (!availableModules.includes(mod)) return false;
+    // Cacher "etats" du switcher si "compta" est actif (etats inclus dans compta)
+    if (mod === 'etats' && availableModules.includes('compta')) return false;
+    return true;
+  };
   const etats: EtatFinancier[] = getEtats(typeActivite);
 
   // Fetch exercices — reset quand on change de dossier client
