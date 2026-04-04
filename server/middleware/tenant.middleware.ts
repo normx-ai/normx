@@ -26,15 +26,10 @@ export async function tenantMiddleware(
     // Chercher le tenant existant
     let tenant = await tenantService.getTenantBySlug(tenantSlug);
 
-    // Auto-créer si premier accès
+    // Pas de tenant = onboarding pas encore fait
     if (!tenant) {
-      logger.info('Premier accès — création tenant pour %s (%s)', req.user.email, tenantSlug);
-      tenant = await tenantService.createTenant({
-        slug: tenantSlug,
-        nom: req.user.name || req.user.email || 'Mon Entité',
-        type: 'enterprise',
-        plan: 'trial',
-      });
+      res.status(403).json({ error: 'Onboarding requis.', code: 'ONBOARDING_REQUIRED' });
+      return;
     }
 
     if (!tenant.actif) {
