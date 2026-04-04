@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionProvProps {
   balanceN: BalanceLigne[];
@@ -384,7 +383,6 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
         <strong>Objectif :</strong> S'assurer de l'exhaustivité, du bien-fondé et de la correcte évaluation des provisions réglementées (amortissements dérogatoires, provisions pour investissement, hausse des prix, etc.).
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="Provisions" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

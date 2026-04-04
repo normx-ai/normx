@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionStocksProps {
   balanceN: BalanceLigne[];
@@ -267,7 +266,6 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
         <strong>Objectif :</strong> S'assurer de l'exhaustivité, de la réalité et de la correcte évaluation des stocks, ainsi que de la cohérence des variations de stocks avec le compte de résultat (603x pour biens achetés, 73x pour biens produits) et de la correcte comptabilisation des dépréciations (D 6593 / C 39x).
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="Stocks" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

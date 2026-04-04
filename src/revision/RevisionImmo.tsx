@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionImmoProps {
   balanceN: BalanceLigne[];
@@ -278,7 +277,6 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
         <strong>Objectif :</strong> S'assurer de l'exhaustivité, de la réalité et de la correcte évaluation des immobilisations inscrites au bilan, ainsi que du bon calcul des amortissements (comptes 681x) et de la correcte comptabilisation des cessions (comptes 81/82 HAO ou 654/754 AO).
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="Immobilisations" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

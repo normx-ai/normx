@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionEtatProps {
   balanceN: BalanceLigne[];
@@ -450,7 +449,6 @@ function RevisionEtat({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
         <strong>Objectif :</strong> S'assurer de la correcte détermination de l'impôt sur les sociétés (IS), de la cohérence des déclarations de TVA avec la comptabilité (TVA collectée, TVA déductible, solde de TVA) et de la justification de l'ensemble des dettes fiscales (comptes 44x) et charges d'impôts (64x, 89x).
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="État et organismes sociaux" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

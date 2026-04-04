@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionDFProps {
   balanceN: BalanceLigne[];
@@ -290,7 +289,6 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
         <strong>Objectif :</strong> S'assurer de l'exhaustivité et de la correcte évaluation des dettes financières et emprunts contractés auprès d'établissements bancaires ou financiers, ainsi que du bon calcul des charges d'intérêts et intérêts courus.
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="Dettes financières" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

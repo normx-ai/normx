@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionSubvProps {
   balanceN: BalanceLigne[];
@@ -242,7 +241,6 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
         <strong>Objectif :</strong> S'assurer que les subventions d'investissement sont correctement comptabilisées et que les reprises au résultat suivent le rythme d'amortissement des biens subventionnés (ou la durée d'inaliénabilité pour les biens non amortissables).
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="Subventions" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>

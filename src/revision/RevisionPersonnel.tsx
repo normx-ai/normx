@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { fmt, fmtInput, parseInputValue, ODEcriture, Suggestion } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionPersonnelProps {
   balanceN: BalanceLigne[];
@@ -325,7 +324,6 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
         <strong>Objectif :</strong> S'assurer de l'exhaustivit\u00e9, de la r\u00e9alit\u00e9 et de la correcte \u00e9valuation des charges de personnel, des provisions pour cong\u00e9s pay\u00e9s, des avances au personnel et des dettes sociales.
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="Personnel" />
 
       {/* Travaux \u00e0 effectuer */}
       <div className="revision-travaux">

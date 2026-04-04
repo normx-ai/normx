@@ -4,7 +4,6 @@ import { BalanceLigne } from '../types';
 import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
-import AlertesCompte from './AlertesCompte';
 
 interface RevisionTresoProps {
   balanceN: BalanceLigne[];
@@ -431,7 +430,6 @@ function RevisionTreso({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
         <strong>Objectif :</strong> S'assurer de l'exhaustivité, de la réalité et de la correcte évaluation des disponibilités (52x, 57x), des titres de placement (50x), des virements internes (58x) et des dépréciations (59x). Vérifier la concordance avec les relevés bancaires et les PV de caisse.
       </div>
 
-      <AlertesCompte lignes={balanceN} titre="Trésorerie" />
 
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>
