@@ -75,7 +75,9 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
-  const canFinish = selectedModules.length > 0 && entiteNom.trim() && !saving;
+  const isCabinet = tenantType === 'cabinet';
+  const finalModules = isCabinet ? MODULES.map(m => m.id) : selectedModules;
+  const canFinish = (isCabinet || selectedModules.length > 0) && entiteNom.trim() && !saving;
 
   const handleFinish = async (): Promise<void> => {
     if (!canFinish) return;
@@ -93,7 +95,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
         body: JSON.stringify({
           nom: entiteNom.trim(),
           type: tenantType,
-          modules: selectedModules,
+          modules: finalModules,
         }),
       });
 
@@ -133,10 +135,12 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
           <p style={{ color: '#6b7280', fontSize: 15 }}>
             {step === 1 ? 'Configurez votre entité' : 'Sélectionnez vos modules'}
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
-            <div style={{ width: 32, height: 4, borderRadius: 2, background: PRIMARY }} />
-            <div style={{ width: 32, height: 4, borderRadius: 2, background: step >= 2 ? PRIMARY : '#e5e7eb' }} />
-          </div>
+          {!(tenantType === 'cabinet' && step === 1) && (
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
+              <div style={{ width: 32, height: 4, borderRadius: 2, background: PRIMARY }} />
+              <div style={{ width: 32, height: 4, borderRadius: 2, background: step >= 2 ? PRIMARY : '#e5e7eb' }} />
+            </div>
+          )}
         </div>
 
         {/* Step 1 — Nom + Type */}
@@ -192,8 +196,15 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
             </div>
 
             <button
-              onClick={() => entiteNom.trim() && setStep(2)}
-              disabled={!entiteNom.trim()}
+              onClick={() => {
+                if (!entiteNom.trim()) return;
+                if (tenantType === 'cabinet') {
+                  handleFinish();
+                } else {
+                  setStep(2);
+                }
+              }}
+              disabled={!entiteNom.trim() || saving}
               style={{
                 width: '100%',
                 padding: '14px 28px',
@@ -205,8 +216,13 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                 cursor: entiteNom.trim() ? 'pointer' : 'default',
               }}
             >
-              Continuer
+              {tenantType === 'cabinet' ? (saving ? 'Création...' : 'Commencer') : 'Continuer'}
             </button>
+            {error && tenantType === 'cabinet' && (
+              <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '10px 14px', marginTop: 12, fontSize: 14, color: '#dc2626' }}>
+                {error}
+              </div>
+            )}
           </>
         )}
 
