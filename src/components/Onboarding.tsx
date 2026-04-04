@@ -84,7 +84,10 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
   const [error, setError] = useState('');
 
   const isCabinet = tenantType === 'cabinet';
-  const finalModules = isCabinet ? MODULES.map(m => m.id) : selectedModules;
+  // Compta inclut etats, ne pas stocker etats separement
+  const cleanModules = (mods: NormxModule[]): NormxModule[] =>
+    mods.includes('compta') ? mods.filter(m => m !== 'etats') : mods;
+  const finalModules = isCabinet ? cleanModules(MODULES.map(m => m.id)) : cleanModules(selectedModules);
   const canFinish = (isCabinet || selectedModules.length > 0) && entiteNom.trim() && !saving;
 
   const handleFinish = async (): Promise<void> => {
