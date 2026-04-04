@@ -107,11 +107,11 @@ function AppContent(): React.JSX.Element {
     if (currentEntite?.id === id) setCurrentEntite(entites.find(e => e.id !== id) || null);
   };
 
-  if (isLoading || tenantLoading) {
+  if (isLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#D4A843', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24, fontWeight: 900, color: '#1A3A5C' }}>N</div>
+          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#D4A843', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24, fontWeight: 900, color: '#0F2A42' }}>N</div>
           <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement...</p>
         </div>
       </div>
@@ -120,6 +120,17 @@ function AppContent(): React.JSX.Element {
 
   if (!isAuthenticated) {
     return <LandingPage onLogin={login} />;
+  }
+
+  if (tenantLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#D4A843', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24, fontWeight: 900, color: '#0F2A42' }}>N</div>
+          <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement...</p>
+        </div>
+      </div>
+    );
   }
 
   // Onboarding pour les nouveaux utilisateurs
