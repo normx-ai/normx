@@ -160,7 +160,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
 
   const availableModules: NormxModule[] = modules.length > 0
     ? modules
-    : offre === 'comptabilite' ? ['compta', 'etats'] : ['etats'];
+    : ['etats'];
 
   const hasModule = (mod: NormxModule): boolean => {
     if (!availableModules.includes(mod)) return false;
