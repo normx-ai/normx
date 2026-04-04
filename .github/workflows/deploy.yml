@@ -55,6 +55,7 @@ jobs:
             set -e
             cd ${{ env.APP_DIR }}
 
+            git checkout -- .
             git pull origin main
 
             # --- Generer .env (Docker Compose) ---
