@@ -104,15 +104,24 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
       .catch(() => {});
   };
 
+  const [saveError, setSaveError] = useState('');
   const handleSave = async (): Promise<void> => {
+    setSaveError('');
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/kp`, {
+      const resp = await fetch(`/api/revision/${entiteId}/${exerciceId}/kp`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lignes, odEcritures }),
       });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        setSaveError(err.error || `Erreur ${resp.status}`);
+        return;
+      }
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaveError('Erreur reseau');
+    }
   };
 
   // --- Mise à jour lignes ---
@@ -537,9 +546,12 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
     <div className="revision-kp">
       <div className="revision-section-header">
         <h3>Capitaux propres</h3>
-        <button className="revision-save-btn" onClick={handleSave}>
-          <LuSave size={14} /> {saved ? 'Sauvegardé' : 'Sauvegarder'}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {saveError && <span style={{ color: '#ef4444', fontSize: 12 }}>{saveError}</span>}
+          <button className="revision-save-btn" onClick={handleSave}>
+            <LuSave size={14} /> {saved ? 'Sauvegardé' : 'Sauvegarder'}
+          </button>
+        </div>
       </div>
 
       {/* Objectif */}
