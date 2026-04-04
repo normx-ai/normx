@@ -85,8 +85,10 @@ jobs:
             chmod 600 .env.production
 
             # --- Rebuild et restart API ---
+            # Nettoyer les containers fantomes avant rebuild
+            docker compose down --remove-orphans 2>/dev/null || true
             docker compose build --no-cache api
-            docker compose up -d --remove-orphans
+            docker compose up -d
 
             # --- Connecter nginx au reseau normx ---
             docker network connect normx_normx-net cgi242-nginx 2>/dev/null || true
