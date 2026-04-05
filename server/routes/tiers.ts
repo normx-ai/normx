@@ -24,7 +24,7 @@ router.get('/detail/:id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const tiers = await tiersService.getTiersById(schema, req.params.id);
+    const tiers = await tiersService.getTiersById(schema, parseInt(req.params.id, 10));
     if (!tiers) return res.status(404).json({ error: 'Tiers non trouve.' });
     res.json(tiers);
   } catch (err) {
@@ -57,7 +57,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   const { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data, actif } = req.body;
   if (!nom) return res.status(400).json({ error: 'Le nom est obligatoire.' });
   try {
-    const tiers = await tiersService.updateTiers(schema, req.params.id, { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data, actif });
+    const tiers = await tiersService.updateTiers(schema, parseInt(req.params.id, 10), { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data, actif });
     if (!tiers) return res.status(404).json({ error: 'Tiers non trouve.' });
     res.json(tiers);
   } catch (err) {
@@ -71,7 +71,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const deleted = await tiersService.deleteTiers(schema, req.params.id);
+    const deleted = await tiersService.deleteTiers(schema, parseInt(req.params.id, 10));
     if (!deleted) return res.status(404).json({ error: 'Tiers non trouve.' });
     res.json({ message: 'Tiers supprime.' });
   } catch (err) {

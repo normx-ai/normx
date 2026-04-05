@@ -17,7 +17,7 @@ router.get('/declarations/:entiteId/:exerciceId', async (req: Request, res: Resp
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const rows = await tvaService.getDeclarations(schema, req.params.exerciceId);
+    const rows = await tvaService.getDeclarations(schema, parseInt(req.params.exerciceId, 10));
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -30,7 +30,7 @@ router.get('/declaration/:id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const data = await tvaService.getDeclarationDetail(schema, req.params.id);
+    const data = await tvaService.getDeclarationDetail(schema, parseInt(req.params.id, 10));
     if (!data) return res.status(404).json({ error: 'Declaration non trouvee.' });
     res.json(data);
   } catch (err) {
@@ -44,7 +44,7 @@ router.get('/lignes/:declarationId/:onglet', async (req: Request, res: Response)
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const rows = await tvaService.getLignesByOnglet(schema, req.params.declarationId, req.params.onglet);
+    const rows = await tvaService.getLignesByOnglet(schema, parseInt(req.params.declarationId, 10), req.params.onglet);
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -61,7 +61,7 @@ router.get('/montants-comptes/:entiteId/:exerciceId', async (req: Request, res: 
     return res.status(400).json({ error: 'Parametres mois et comptes requis.' });
   }
   try {
-    const data = await tvaService.getMontantsComptes(schema, req.params.exerciceId, mois as string, comptes as string);
+    const data = await tvaService.getMontantsComptes(schema, parseInt(req.params.exerciceId, 10), mois as string, comptes as string);
     if (!data) return res.status(404).json({ error: 'Exercice non trouve.' });
     res.json(data);
   } catch (err) {
@@ -105,7 +105,7 @@ router.put('/ligne/:id', async (req: Request, res: Response) => {
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir } = req.body;
   try {
-    const result = await tvaService.updateLigne(schema, req.params.id, { onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir });
+    const result = await tvaService.updateLigne(schema, parseInt(req.params.id, 10), { onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir });
     if (!result) return res.status(404).json({ error: 'Ligne non trouvee.' });
     res.json(result);
   } catch (err) {
@@ -119,7 +119,7 @@ router.delete('/ligne/:id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const result = await tvaService.deleteLigne(schema, req.params.id);
+    const result = await tvaService.deleteLigne(schema, parseInt(req.params.id, 10));
     if (!result) return res.status(404).json({ error: 'Ligne non trouvee.' });
     res.json({ message: 'Ligne supprimee.', totals: result.totals });
   } catch (err) {
@@ -133,7 +133,7 @@ router.post('/importer-ecritures/:declarationId', async (req: Request, res: Resp
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const result = await tvaService.importerEcritures(schema, req.params.declarationId);
+    const result = await tvaService.importerEcritures(schema, parseInt(req.params.declarationId, 10));
     if (result.notFound) return res.status(404).json({ error: result.notFound });
     res.json({
       message: `Import termine : ${result.nb_collectee} lignes TVA collectee, ${result.nb_deductible} lignes TVA deductible.`,
@@ -153,7 +153,7 @@ router.put('/declaration/:id/statut', async (req: Request, res: Response) => {
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { statut } = req.body;
   try {
-    const result = await tvaService.updateDeclarationStatut(schema, req.params.id, statut);
+    const result = await tvaService.updateDeclarationStatut(schema, parseInt(req.params.id, 10), statut);
     if (result.notFound) return res.status(404).json({ error: 'Declaration non trouvee.' });
     if (result.forbidden) return res.status(400).json({ error: result.message });
     res.json(result.declaration);

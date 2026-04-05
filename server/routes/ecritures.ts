@@ -81,7 +81,7 @@ router.get('/:entite_id/:exercice_id', async (req: Request, res: Response) => {
   const { journal, statut, date_du, date_au, search } = req.query;
   const pagination = getPagination(req);
   try {
-    const { rows, total } = await ecrituresService.listEcritures(schema, req.params.exercice_id, { journal: journal as string, statut: statut as string, date_du: date_du as string, date_au: date_au as string, search: search as string }, { limit: pagination.limit, offset: pagination.offset });
+    const { rows, total } = await ecrituresService.listEcritures(schema, parseInt(req.params.exercice_id, 10), { journal: journal as string, statut: statut as string, date_du: date_du as string, date_au: date_au as string, search: search as string }, { limit: pagination.limit, offset: pagination.offset });
     res.json(paginatedResponse(rows, total, pagination));
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -148,7 +148,7 @@ router.put('/:id', async (req: Request, res: Response) => {
   }
 
   try {
-    const result = await ecrituresService.updateEcriture(schema, req.params.id, { date_ecriture, journal, numero_piece, libelle, lignes });
+    const result = await ecrituresService.updateEcriture(schema, parseInt(req.params.id, 10), { date_ecriture, journal, numero_piece, libelle, lignes });
     if (result.notFound) return res.status(404).json({ error: 'Ecriture non trouvee.' });
     if (result.forbidden) return res.status(403).json({ error: 'Impossible de modifier une ecriture validee. Contrepassez-la.' });
     res.json({ message: 'Ecriture modifiee.' });
@@ -163,7 +163,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const result = await ecrituresService.deleteEcriture(schema, req.params.id);
+    const result = await ecrituresService.deleteEcriture(schema, parseInt(req.params.id, 10));
     if (result.notFound) return res.status(404).json({ error: 'Ecriture non trouvee.' });
     if (result.forbidden) return res.status(403).json({ error: 'Impossible de supprimer une ecriture validee.' });
     res.json({ message: 'Ecriture supprimee.' });
@@ -180,7 +180,7 @@ router.get('/grand-livre/:entite_id/:exercice_id', async (req: Request, res: Res
   const { compte, journal, date_du, date_au } = req.query;
   const pagination = getPagination(req);
   try {
-    const { rows, total } = await ecrituresService.getGrandLivre(schema, req.params.exercice_id, { compte: compte as string, journal: journal as string, date_du: date_du as string, date_au: date_au as string }, { limit: pagination.limit, offset: pagination.offset });
+    const { rows, total } = await ecrituresService.getGrandLivre(schema, parseInt(req.params.exercice_id, 10), { compte: compte as string, journal: journal as string, date_du: date_du as string, date_au: date_au as string }, { limit: pagination.limit, offset: pagination.offset });
     res.json(paginatedResponse(rows, total, pagination));
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -193,7 +193,7 @@ router.get('/balance/:entite_id/:exercice_id', async (req: Request, res: Respons
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const rows = await ecrituresService.getBalanceFromEcritures(schema, req.params.exercice_id);
+    const rows = await ecrituresService.getBalanceFromEcritures(schema, parseInt(req.params.exercice_id, 10));
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -207,7 +207,7 @@ router.get('/grand-livre-tiers/:entite_id/:exercice_id', async (req: Request, re
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { tiers_id, type_tiers, date_du, date_au } = req.query;
   try {
-    const rows = await ecrituresService.getGrandLivreTiers(schema, req.params.exercice_id, { tiers_id: tiers_id as string, type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
+    const rows = await ecrituresService.getGrandLivreTiers(schema, parseInt(req.params.exercice_id, 10), { tiers_id: tiers_id as string, type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -222,7 +222,7 @@ router.get('/balance-tiers/:entite_id/:exercice_id', async (req: Request, res: R
   const { type_tiers, date_du, date_au } = req.query;
   const pagination = getPagination(req);
   try {
-    const { rows, total } = await ecrituresService.getBalanceTiers(schema, req.params.exercice_id, { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string }, { limit: pagination.limit, offset: pagination.offset });
+    const { rows, total } = await ecrituresService.getBalanceTiers(schema, parseInt(req.params.exercice_id, 10), { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string }, { limit: pagination.limit, offset: pagination.offset });
     res.json(paginatedResponse(rows, total, pagination));
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -235,7 +235,7 @@ router.get('/stats/:entite_id/:exercice_id', async (req: Request, res: Response)
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const stats = await ecrituresService.getStats(schema, req.params.exercice_id);
+    const stats = await ecrituresService.getStats(schema, parseInt(req.params.exercice_id, 10));
     res.json(stats);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -249,7 +249,7 @@ router.get('/rapports/journal-centralisateur/:entite_id/:exercice_id', async (re
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const rows = await ecrituresService.getJournalCentralisateur(schema, req.params.exercice_id);
+    const rows = await ecrituresService.getJournalCentralisateur(schema, parseInt(req.params.exercice_id, 10));
     res.json(rows);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
@@ -258,7 +258,7 @@ router.get('/rapports/balance-agee/:entite_id/:exercice_id', async (req: Request
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const rows = await ecrituresService.getBalanceAgee(schema, req.params.exercice_id);
+    const rows = await ecrituresService.getBalanceAgee(schema, parseInt(req.params.exercice_id, 10));
     res.json(rows);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
@@ -267,7 +267,7 @@ router.get('/rapports/tresorerie/:entite_id/:exercice_id', async (req: Request, 
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const rows = await ecrituresService.getTresorerie(schema, req.params.exercice_id);
+    const rows = await ecrituresService.getTresorerie(schema, parseInt(req.params.exercice_id, 10));
     res.json(rows);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
@@ -276,7 +276,7 @@ router.get('/rapports/repartition-charges/:entite_id/:exercice_id', async (req: 
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const rows = await ecrituresService.getRepartitionCharges(schema, req.params.exercice_id);
+    const rows = await ecrituresService.getRepartitionCharges(schema, parseInt(req.params.exercice_id, 10));
     res.json(rows);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
@@ -286,7 +286,7 @@ router.get('/rapports/comparatif/:entite_id/:exercice_id', async (req: Request, 
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { exercice_id_n1 } = req.query;
   try {
-    const data = await ecrituresService.getComparatif(schema, req.params.exercice_id, (exercice_id_n1 as string) || null);
+    const data = await ecrituresService.getComparatif(schema, parseInt(req.params.exercice_id, 10), exercice_id_n1 ? parseInt(exercice_id_n1 as string, 10) : null);
     res.json(data);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
@@ -295,7 +295,7 @@ router.get('/rapports/tableau-bord/:entite_id/:exercice_id', async (req: Request
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const data = await ecrituresService.getTableauBord(schema, req.params.exercice_id);
+    const data = await ecrituresService.getTableauBord(schema, parseInt(req.params.exercice_id, 10));
     res.json(data);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
@@ -305,7 +305,7 @@ router.get('/rapports/echeancier/:entite_id/:exercice_id', async (req: Request, 
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type_tiers, date_du, date_au, statut } = req.query;
   try {
-    const rows = await ecrituresService.getEcheancier(schema, req.params.exercice_id, { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
+    const rows = await ecrituresService.getEcheancier(schema, parseInt(req.params.exercice_id, 10), { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
     const mapped = rows.map((r: EcheancierRow) => {
       const montant = Math.abs(parseFloat(r.debit) - parseFloat(r.credit));
       const paye = r.lettrage_code ? montant : 0;
@@ -324,7 +324,7 @@ router.get('/lettrage/tiers/:entite_id/:exercice_id', async (req: Request, res: 
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type_tiers } = req.query;
   try {
-    const rows = await ecrituresService.getLettreTiers(schema, req.params.exercice_id, type_tiers as string);
+    const rows = await ecrituresService.getLettreTiers(schema, parseInt(req.params.exercice_id, 10), type_tiers as string);
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -337,7 +337,7 @@ router.get('/lettrage/ecritures/:entite_id/:exercice_id/:tiers_id', async (req: 
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { statut, annee_de, annee_a } = req.query;
   try {
-    const rows = await ecrituresService.getLettreEcritures(schema, req.params.exercice_id, req.params.tiers_id, { statut: statut as string, annee_de: annee_de as string, annee_a: annee_a as string });
+    const rows = await ecrituresService.getLettreEcritures(schema, parseInt(req.params.exercice_id, 10), parseInt(req.params.tiers_id, 10), { statut: statut as string, annee_de: annee_de as string, annee_a: annee_a as string });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));

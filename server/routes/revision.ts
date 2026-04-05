@@ -12,7 +12,7 @@ router.get('/:entite_id/:exercice_id/all-od', async (req: Request, res: Response
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { exercice_id } = req.params;
   try {
-    const allOd = await revisionService.getAllOd(schema, exercice_id);
+    const allOd = await revisionService.getAllOd(schema, parseInt(exercice_id, 10));
     res.json({ odEcritures: allOd });
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -26,7 +26,7 @@ router.get('/:entite_id/:exercice_id/:section', async (req: Request, res: Respon
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { exercice_id, section } = req.params;
   try {
-    const data = await revisionService.getSection(schema, exercice_id, section);
+    const data = await revisionService.getSection(schema, parseInt(exercice_id, 10), section);
     res.json(data);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -41,7 +41,7 @@ router.put('/:entite_id/:exercice_id/:section', async (req: Request, res: Respon
   const { exercice_id, section } = req.params;
   const data = req.body;
   try {
-    await revisionService.saveSection(schema, exercice_id, section, data);
+    await revisionService.saveSection(schema, parseInt(exercice_id, 10), section, data);
     res.json({ message: 'Sauvegarde.' });
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));

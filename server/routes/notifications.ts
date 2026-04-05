@@ -53,7 +53,7 @@ router.put('/:id/read', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    await notificationsService.markAsRead(schema, req.params.id);
+    await notificationsService.markAsRead(schema, parseInt(req.params.id, 10));
     res.json({ message: 'Notification lue.' });
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -79,7 +79,7 @@ router.delete('/:id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    await notificationsService.deleteNotification(schema, req.params.id);
+    await notificationsService.deleteNotification(schema, parseInt(req.params.id, 10));
     res.json({ message: 'Notification supprimee.' });
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));

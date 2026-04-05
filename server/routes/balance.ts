@@ -52,7 +52,7 @@ router.put('/exercice/:id/cloturer', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const result = await balanceService.cloturerExercice(schema, req.params.id);
+    const result = await balanceService.cloturerExercice(schema, parseInt(req.params.id, 10));
     if (!result) return res.status(404).json({ error: 'Exercice non trouve ou deja cloture.' });
     res.json(result);
   } catch (err) {
@@ -66,7 +66,7 @@ router.put('/exercice/:id/rouvrir', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const result = await balanceService.rouvrirExercice(schema, req.params.id);
+    const result = await balanceService.rouvrirExercice(schema, parseInt(req.params.id, 10));
     if (!result) return res.status(404).json({ error: 'Exercice non trouve ou deja ouvert.' });
     res.json(result);
   } catch (err) {
@@ -103,7 +103,7 @@ router.delete('/:balance_id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
-    const deleted = await balanceService.deleteBalance(schema, req.params.balance_id);
+    const deleted = await balanceService.deleteBalance(schema, parseInt(req.params.balance_id, 10));
     if (!deleted) return res.status(404).json({ error: 'Balance introuvable.' });
     res.json({ message: 'Balance supprimee.' });
   } catch (err) {
@@ -118,7 +118,7 @@ router.put('/ligne/:ligne_id', async (req: Request, res: Response) => {
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur } = req.body;
   try {
-    const result = await balanceService.updateBalanceLigne(schema, req.params.ligne_id, { numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur });
+    const result = await balanceService.updateBalanceLigne(schema, parseInt(req.params.ligne_id, 10), { numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur });
     if (result === null) return res.status(404).json({ error: 'Ligne introuvable.' });
     if (result.noUpdate) return res.status(400).json({ error: 'Aucun champ a modifier.' });
     res.json(result);
@@ -134,7 +134,7 @@ router.get('/:entite_id/:exercice_id/:type_balance', async (req: Request, res: R
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { exercice_id, type_balance } = req.params;
   try {
-    const data = await balanceService.getBalance(schema, exercice_id, type_balance);
+    const data = await balanceService.getBalance(schema, parseInt(exercice_id, 10), type_balance);
     res.json(data);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -148,7 +148,7 @@ router.put('/revision/:ligne_id', async (req: Request, res: Response) => {
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { debit_revise, credit_revise, solde_debiteur_revise, solde_crediteur_revise, note_revision } = req.body;
   try {
-    const result = await balanceService.updateRevisionLigne(schema, req.params.ligne_id, {
+    const result = await balanceService.updateRevisionLigne(schema, parseInt(req.params.ligne_id, 10), {
       debit_revise: debit_revise !== undefined ? debit_revise : null,
       credit_revise: credit_revise !== undefined ? credit_revise : null,
       solde_debiteur_revise: solde_debiteur_revise !== undefined ? solde_debiteur_revise : null,
@@ -172,7 +172,7 @@ router.put('/statut/:balance_id', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Statut invalide.' });
   }
   try {
-    const result = await balanceService.updateBalanceStatut(schema, req.params.balance_id, statut, user_id, revision_notes);
+    const result = await balanceService.updateBalanceStatut(schema, parseInt(req.params.balance_id, 10), statut, user_id, revision_notes);
     if (!result) return res.status(404).json({ error: 'Balance non trouvee.' });
     res.json(result);
   } catch (err) {
