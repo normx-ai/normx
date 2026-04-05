@@ -1,44 +1,34 @@
 import express, { Request, Response } from 'express';
-import logger from '../logger';
 import * as rubriquesService from '../services/rubriques.service';
+import { asyncHandler } from '../middleware/asyncHandler';
 
 const router = express.Router();
 
 // ============ LIST ALL RUBRIQUES ============
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
-  try {
-    const rubriques = await rubriquesService.getRubriques(schema);
-    res.json({ rubriques });
-  } catch (err) {
-    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const rubriques = await rubriquesService.getRubriques(schema);
+  res.json({ rubriques });
+}));
 
 // ============ LIST BY TYPE ============
 
-router.get('/type/:type', async (req: Request, res: Response) => {
+router.get('/type/:type', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
   const { type } = req.params;
 
-  try {
-    const rubriques = await rubriquesService.getRubriquesByType(schema, type);
-    res.json({ rubriques });
-  } catch (err) {
-    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const rubriques = await rubriquesService.getRubriquesByType(schema, type);
+  res.json({ rubriques });
+}));
 
 // ============ CREATE ============
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -47,64 +37,44 @@ router.post('/', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'code, libelle, type et mode requis.' });
   }
 
-  try {
-    const rubrique = await rubriquesService.createRubrique(schema, req.body);
-    res.status(201).json({ rubrique });
-  } catch (err) {
-    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const rubrique = await rubriquesService.createRubrique(schema, req.body);
+  res.status(201).json({ rubrique });
+}));
 
 // ============ UPDATE ============
 
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
   const { id } = req.params;
 
-  try {
-    const rubrique = await rubriquesService.updateRubrique(schema, Number(id), req.body);
-    if (!rubrique) return res.status(404).json({ error: 'Rubrique non trouvee.' });
-    res.json({ rubrique });
-  } catch (err) {
-    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const rubrique = await rubriquesService.updateRubrique(schema, Number(id), req.body);
+  if (!rubrique) return res.status(404).json({ error: 'Rubrique non trouvee.' });
+  res.json({ rubrique });
+}));
 
 // ============ DELETE (SOFT) ============
 
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
   const { id } = req.params;
 
-  try {
-    const deleted = await rubriquesService.deleteRubrique(schema, Number(id));
-    if (!deleted) return res.status(404).json({ error: 'Rubrique non trouvee.' });
-    res.json({ message: 'Rubrique desactivee.' });
-  } catch (err) {
-    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const deleted = await rubriquesService.deleteRubrique(schema, Number(id));
+  if (!deleted) return res.status(404).json({ error: 'Rubrique non trouvee.' });
+  res.json({ message: 'Rubrique desactivee.' });
+}));
 
 // ============ INIT DEFAULTS ============
 
-router.post('/init', async (req: Request, res: Response) => {
+router.post('/init', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
-  try {
-    const rubriques = await rubriquesService.initRubriquesDefaut(schema);
-    res.json({ rubriques });
-  } catch (err) {
-    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const rubriques = await rubriquesService.initRubriquesDefaut(schema);
+  res.json({ rubriques });
+}));
 
 export default router;

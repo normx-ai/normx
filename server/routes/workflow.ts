@@ -4,14 +4,14 @@
  */
 
 import express, { Request, Response } from 'express';
-import logger from '../logger';
 import * as workflowService from '../services/workflow.service';
+import { asyncHandler } from '../middleware/asyncHandler';
 
 const router = express.Router();
 
 // ============ SAUVEGARDER UN BULLETIN ============
 
-router.post('/bulletins', async (req: Request, res: Response) => {
+router.post('/bulletins', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -20,24 +20,19 @@ router.post('/bulletins', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'salarie_id, mois et annee requis.' });
   }
 
-  try {
-    const bulletin = await workflowService.saveBulletin(
-      schema,
-      Number(salarie_id),
-      Number(mois),
-      Number(annee),
-      data || {},
-    );
-    res.json({ bulletin });
-  } catch (err) {
-    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const bulletin = await workflowService.saveBulletin(
+    schema,
+    Number(salarie_id),
+    Number(mois),
+    Number(annee),
+    data || {},
+  );
+  res.json({ bulletin });
+}));
 
 // ============ RECUPERER UN BULLETIN ============
 
-router.get('/bulletin', async (req: Request, res: Response) => {
+router.get('/bulletin', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -46,23 +41,18 @@ router.get('/bulletin', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'salarie_id, mois et annee requis.' });
   }
 
-  try {
-    const bulletin = await workflowService.getBulletin(
-      schema,
-      Number(salarie_id),
-      Number(mois),
-      Number(annee),
-    );
-    res.json({ bulletin });
-  } catch (err) {
-    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const bulletin = await workflowService.getBulletin(
+    schema,
+    Number(salarie_id),
+    Number(mois),
+    Number(annee),
+  );
+  res.json({ bulletin });
+}));
 
 // ============ GENERER BULLETINS EN BATCH ============
 
-router.post('/bulletins/batch', async (req: Request, res: Response) => {
+router.post('/bulletins/batch', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -71,26 +61,21 @@ router.post('/bulletins/batch', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'mois, annee et bulletins[] requis.' });
   }
 
-  try {
-    const count = await workflowService.genererBulletinsBatch(
-      schema,
-      Number(mois),
-      Number(annee),
-      bulletins.map((b: { salarieId: number; data: Record<string, unknown> }) => ({
-        salarieId: b.salarieId,
-        data: b.data || {},
-      })),
-    );
-    res.json({ count, message: `${count} bulletins generes.` });
-  } catch (err) {
-    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const count = await workflowService.genererBulletinsBatch(
+    schema,
+    Number(mois),
+    Number(annee),
+    bulletins.map((b: { salarieId: number; data: Record<string, unknown> }) => ({
+      salarieId: b.salarieId,
+      data: b.data || {},
+    })),
+  );
+  res.json({ count, message: `${count} bulletins generes.` });
+}));
 
 // ============ BULLETINS PAR PERIODE ============
 
-router.get('/bulletins', async (req: Request, res: Response) => {
+router.get('/bulletins', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -99,22 +84,17 @@ router.get('/bulletins', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'mois et annee requis.' });
   }
 
-  try {
-    const bulletins = await workflowService.getBulletinsByPeriode(
-      schema,
-      Number(mois),
-      Number(annee),
-    );
-    res.json({ bulletins });
-  } catch (err) {
-    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const bulletins = await workflowService.getBulletinsByPeriode(
+    schema,
+    Number(mois),
+    Number(annee),
+  );
+  res.json({ bulletins });
+}));
 
 // ============ MISE A JOUR STATUT ============
 
-router.put('/bulletins/:id/statut', async (req: Request, res: Response) => {
+router.put('/bulletins/:id/statut', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -130,26 +110,21 @@ router.put('/bulletins/:id/statut', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Statut invalide. Valeurs acceptees : brouillon, valide, verrouille.' });
   }
 
-  try {
-    const bulletin = await workflowService.updateStatutBulletin(
-      schema,
-      id,
-      statut as workflowService.StatutBulletin,
-      valide_par || null,
-    );
-    if (!bulletin) {
-      return res.status(404).json({ error: 'Bulletin non trouve.' });
-    }
-    res.json({ bulletin });
-  } catch (err) {
-    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
+  const bulletin = await workflowService.updateStatutBulletin(
+    schema,
+    id,
+    statut as workflowService.StatutBulletin,
+    valide_par || null,
+  );
+  if (!bulletin) {
+    return res.status(404).json({ error: 'Bulletin non trouve.' });
   }
-});
+  res.json({ bulletin });
+}));
 
 // ============ CLOTURE PERIODE ============
 
-router.get('/cloture', async (req: Request, res: Response) => {
+router.get('/cloture', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -158,19 +133,15 @@ router.get('/cloture', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'mois et annee requis.' });
   }
 
-  try {
-    const periode = await workflowService.getCloturePeriode(
-      schema,
-      Number(mois),
-      Number(annee),
-    );
-    res.json({ periode });
-  } catch (err) {
-    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const periode = await workflowService.getCloturePeriode(
+    schema,
+    Number(mois),
+    Number(annee),
+  );
+  res.json({ periode });
+}));
 
+// POST /cloture — garde son propre try/catch car renvoie err.message en 400 (pas 500)
 router.post('/cloture', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
@@ -195,7 +166,7 @@ router.post('/cloture', async (req: Request, res: Response) => {
 
 // ============ CUMULS ANNUELS ============
 
-router.get('/cumuls', async (req: Request, res: Response) => {
+router.get('/cumuls', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
 
@@ -204,16 +175,11 @@ router.get('/cumuls', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'annee requis.' });
   }
 
-  try {
-    const cumuls = await workflowService.getCumulsAnnuels(
-      schema,
-      Number(annee),
-    );
-    res.json({ cumuls });
-  } catch (err) {
-    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const cumuls = await workflowService.getCumulsAnnuels(
+    schema,
+    Number(annee),
+  );
+  res.json({ cumuls });
+}));
 
 export default router;

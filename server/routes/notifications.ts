@@ -1,90 +1,59 @@
 import express, { Request, Response } from 'express';
-import logger from '../logger';
 import * as notificationsService from '../services/notifications.service';
-import { getErrorMessage } from '../utils/routeHelpers';
+import { asyncHandler } from '../middleware/asyncHandler';
 
 const router = express.Router();
 
 // Lister les notifications d'un utilisateur
-router.get('/:userId', async (req: Request, res: Response) => {
+router.get('/:userId', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  try {
-    const rows = await notificationsService.listNotifications(schema, req.params.userId);
-    res.json(rows);
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const rows = await notificationsService.listNotifications(schema, req.params.userId);
+  res.json(rows);
+}));
 
 // Nombre de non lues
-router.get('/:userId/unread-count', async (req: Request, res: Response) => {
+router.get('/:userId/unread-count', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  try {
-    const count = await notificationsService.getUnreadCount(schema, req.params.userId);
-    res.json({ count });
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const count = await notificationsService.getUnreadCount(schema, req.params.userId);
+  res.json({ count });
+}));
 
 // Creer une notification
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { user_id, type, title, message } = req.body;
   if (!user_id || !title || !message) {
     return res.status(400).json({ error: 'user_id, title et message requis.' });
   }
-  try {
-    const notification = await notificationsService.createNotification(schema, { user_id, type, title, message });
-    res.status(201).json(notification);
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const notification = await notificationsService.createNotification(schema, { user_id, type, title, message });
+  res.status(201).json(notification);
+}));
 
 // Marquer une notification comme lue
-router.put('/:id/read', async (req: Request, res: Response) => {
+router.put('/:id/read', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  try {
-    await notificationsService.markAsRead(schema, parseInt(req.params.id, 10));
-    res.json({ message: 'Notification lue.' });
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  await notificationsService.markAsRead(schema, parseInt(req.params.id, 10));
+  res.json({ message: 'Notification lue.' });
+}));
 
 // Tout marquer comme lu
-router.put('/read-all/:userId', async (req: Request, res: Response) => {
+router.put('/read-all/:userId', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  try {
-    await notificationsService.markAllAsRead(schema, req.params.userId);
-    res.json({ message: 'Toutes les notifications marquees comme lues.' });
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  await notificationsService.markAllAsRead(schema, req.params.userId);
+  res.json({ message: 'Toutes les notifications marquees comme lues.' });
+}));
 
 // Supprimer une notification
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  try {
-    await notificationsService.deleteNotification(schema, parseInt(req.params.id, 10));
-    res.json({ message: 'Notification supprimee.' });
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  await notificationsService.deleteNotification(schema, parseInt(req.params.id, 10));
+  res.json({ message: 'Notification supprimee.' });
+}));
 
 export default router;

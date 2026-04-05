@@ -4,7 +4,9 @@
  */
 
 import pool from '../db';
-import logger from '../logger';
+import { createLogger } from '../logger';
+
+const log = createLogger('tva');
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 
 // ============ INTERFACES ============

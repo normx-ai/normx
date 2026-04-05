@@ -34,7 +34,21 @@ import { switchClientMiddleware } from "./middleware/tenant.guards";
 const app = express();
 
 // Securite : headers HTTP
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({
+  contentSecurityPolicy: process.env.NODE_ENV === 'production' ? {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+      connectSrc: ["'self'", process.env.KEYCLOAK_URL || 'http://localhost:8080'],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      frameSrc: ["'none'"],
+    },
+  } : false,
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
 
 // Securite : CORS
 const allowedOrigins = process.env.ALLOWED_ORIGINS
@@ -47,8 +61,34 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-// Securite : rate limiting
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 200, standardHeaders: true, legacyHeaders: false }));
+// Rate limiting global (toutes les routes)
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 300 : 1000,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Trop de requetes, reessayez plus tard.' },
+});
+
+// Rate limiting strict pour auth/sensitive
+const sensitiveLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 heure
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Trop de tentatives, reessayez dans 1 heure.' },
+});
+
+// Rate limiting pour assistant IA (couteux)
+const chatLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 heure
+  max: process.env.NODE_ENV === 'production' ? 30 : 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Limite de requetes IA atteinte, reessayez plus tard.' },
+});
+
+app.use(globalLimiter);
 
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
@@ -57,7 +97,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes auth (pas de middleware - publiques)
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", sensitiveLimiter, authRoutes);
 
 // Routes tenant (auth + subscription, pas de tenant middleware car le tenant peut ne pas exister)
 app.use("/api/tenant", authenticateToken, requireSubscription('normx'), tenantRoutes);
@@ -67,7 +107,7 @@ const tenantChain = [authenticateToken, requireSubscription('normx'), tenantMidd
 
 // Routes protegees (tenant requis)
 app.use("/api/balance", ...tenantChain, balanceRoutes);
-app.use("/api/assistant", ...tenantChain, assistantRoutes);
+app.use("/api/assistant", ...tenantChain, chatLimiter, assistantRoutes);
 app.use("/api/plan-comptable", ...tenantChain, planComptableRoutes);
 app.use("/api/ecritures", ...tenantChain, ecrituresRoutes);
 app.use("/api/tiers", ...tenantChain, tiersRoutes);
