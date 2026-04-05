@@ -5,6 +5,7 @@
 
 import express, { Request, Response } from 'express';
 import logger from '../logger';
+import { verifyTurnstile } from '../middleware/turnstile';
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ const COOKIE_OPTIONS = {
 };
 
 // POST /api/auth/callback - Echange le code Keycloak contre des tokens (stockes en cookies)
-router.post('/callback', async (req: Request, res: Response) => {
+router.post('/callback', verifyTurnstile, async (req: Request, res: Response) => {
   const { code, redirect_uri } = req.body;
   if (!code || !redirect_uri) {
     return res.status(400).json({ error: 'code et redirect_uri requis.' });
