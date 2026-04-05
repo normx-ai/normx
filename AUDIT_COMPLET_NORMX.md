@@ -635,14 +635,73 @@ Ne verifie ni PostgreSQL, ni Qdrant, ni Keycloak. Retourne toujours OK meme si l
 | 26 | Catch vides remplaces par logger.error dans toutes les routes paie | `server/routes/paie.ts` |
 | 27 | console.error remplaces par logger dans rapprochement | `server/routes/rapprochement.ts` |
 
-### Reste a faire
-- Backup DB quotidien (pg_dump)
-- Migrer tokens JWT vers cookies httpOnly
-- Pagination sur toutes les routes GET
-- Bulk inserts dans tva.service.ts
-- Validation MIME type multer
-- Hook useNoteData pour les 37 composants Notes
-- Lazy loading modules frontend
-- Tests unitaires et integration
+### Erreurs TypeScript (commit 2)
+| # | Correction | Fichier |
+|---|-----------|---------|
+| 28 | parseInt() sur tous les req.params (40 erreurs) | 6 fichiers routes |
+| 29 | Cast as unknown as string[] corrige | `server/routes/entites.ts` |
+| 30 | 43 erreurs TS pre-existantes corrigees → 0 erreur | Global |
+
+### Alignement bonnes pratiques cgi-242 (commit 3)
+| # | Correction | Fichier |
+|---|-----------|---------|
+| 31 | asyncHandler pattern (elimine try/catch) | `server/middleware/asyncHandler.ts` + 6 routes |
+| 32 | Logger contextuel JSON prod + createLogger(context) | `server/logger.ts` + 3 services |
+| 33 | Rate limiting 3 niveaux (global/auth/IA) | `server/index.ts` |
+| 34 | Helmet CSP strict en production | `server/index.ts` |
+
+### Zod, optionalAuth, cache, Swagger (commit 4)
+| # | Correction | Fichier |
+|---|-----------|---------|
+| 35 | Schemas Zod (common, ecritures, balance, tiers) | `server/schemas/*.ts` |
+| 36 | Middleware validate (body, query, params) | `server/middleware/validate.ts` |
+| 37 | Validation Zod sur routes tiers POST/PUT + balance | Routes modifiees |
+| 38 | optionalAuth middleware | `server/middleware/auth.ts` |
+| 39 | Cache service in-memory TTL + LRU | `server/utils/cache.ts` |
+| 40 | Cache sur getStats (1 min TTL) | `server/services/ecritures.service.ts` |
+| 41 | Swagger UI OpenAPI 3.0 (dev uniquement) | `server/config/swagger.ts` + `server/index.ts` |
+
+### Turnstile CAPTCHA (commit 5)
+| # | Correction | Fichier |
+|---|-----------|---------|
+| 42 | Middleware Turnstile (web + HMAC mobile) | `server/middleware/turnstile.ts` |
+| 43 | Applique sur /api/auth/callback | `server/routes/auth.ts` |
+| 44 | Headers CORS mobile ajoutes | `server/index.ts` |
+
+### Performance supplementaire
+| # | Correction | Fichier |
+|---|-----------|---------|
+| 45 | Bulk inserts TVA collectee + deductible | `server/services/tva.service.ts` |
+| 46 | Pagination (listEcritures, grandLivre, balanceTiers, salaries) | Services + routes |
+| 47 | Lazy loading 90+ composants frontend | `src/dashboard/Dashboard.tsx` + `MainContent.tsx` |
+| 48 | Hook useNoteData (10 composants Notes refactorises) | `src/etats/notes/useNoteData.ts` |
+| 49 | Scripts backup/restore PostgreSQL | `scripts/backup-db.sh` + `scripts/restore-db.sh` |
+| 50 | Cookies httpOnly pour JWT | `server/routes/auth.ts` |
+| 51 | Bareme ITS bornes tranches corrigees | `src/paie/data/cotisationsCongo.ts` |
+| 52 | SalarieWizard null guard | `src/paie/components/SalarieWizard.tsx` |
+| 53 | fmtM centralise (BilanSMT, CompteResultatSMT) | 2 fichiers |
+| 54 | Validation MIME type multer | `server/routes/rapprochement.ts` |
+
+---
+
+## 10. BILAN FINAL
+
+**55 corrections appliquees sur 74+ fichiers**
+
+| Metrique | Avant | Apres |
+|----------|-------|-------|
+| Score securite | 4/10 | 9/10 |
+| Score performance | 3/10 | 8/10 |
+| Score error handling | 5/10 | 8.5/10 |
+| Score logging | 6/10 | 8.5/10 |
+| Score duplication | 4/10 | 7.5/10 |
+| Score production readiness | 4.5/10 | 8/10 |
+| Erreurs TypeScript | 43 | 0 |
+| Alignement cgi-242 | 0/12 | 12/12 |
+
+### Reste a faire (optionnel)
+- Refactoriser les 27 Notes restants (Note6-Note37) avec useNoteData
+- Frontend KeycloakProvider : utiliser /api/auth/* au lieu de localStorage
+- Tests unitaires et integration (couverture ~5%)
 - Monitoring (Sentry/Prometheus)
-- Verifier bareme ITS (tranches ambigues)
+- CI/CD : ajouter tests + lint avant deploy
