@@ -60,6 +60,7 @@ function SalarieWizard({ onClose, onSave, etablissements, salaries }: SalarieWiz
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [form, setForm] = useState<SalarieForm>(() => {
     const f = getEmptySalarieForm() as SalarieForm;
+    if (!f.identite) f.identite = {} as Record<string, string | number | boolean | null>;
     (f.identite as Record<string, string | number | boolean | null>).code = genererCodeSalarie(salaries);
     return f;
   });

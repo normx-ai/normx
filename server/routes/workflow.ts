@@ -4,6 +4,7 @@
  */
 
 import express, { Request, Response } from 'express';
+import logger from '../logger';
 import * as workflowService from '../services/workflow.service';
 
 const router = express.Router();
@@ -28,7 +29,8 @@ router.post('/bulletins', async (req: Request, res: Response) => {
       data || {},
     );
     res.json({ bulletin });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -52,7 +54,8 @@ router.get('/bulletin', async (req: Request, res: Response) => {
       Number(annee),
     );
     res.json({ bulletin });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -79,7 +82,8 @@ router.post('/bulletins/batch', async (req: Request, res: Response) => {
       })),
     );
     res.json({ count, message: `${count} bulletins generes.` });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -102,7 +106,8 @@ router.get('/bulletins', async (req: Request, res: Response) => {
       Number(annee),
     );
     res.json({ bulletins });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -136,7 +141,8 @@ router.put('/bulletins/:id/statut', async (req: Request, res: Response) => {
       return res.status(404).json({ error: 'Bulletin non trouve.' });
     }
     res.json({ bulletin });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -159,7 +165,8 @@ router.get('/cloture', async (req: Request, res: Response) => {
       Number(annee),
     );
     res.json({ periode });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -203,7 +210,8 @@ router.get('/cumuls', async (req: Request, res: Response) => {
       Number(annee),
     );
     res.json({ cumuls });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route workflow: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });

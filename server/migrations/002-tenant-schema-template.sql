@@ -274,3 +274,18 @@ CREATE INDEX IF NOT EXISTS idx_bulletins_salarie ON "${schema_name}".bulletins_p
 CREATE INDEX IF NOT EXISTS idx_bulletins_periode ON "${schema_name}".bulletins_paie(mois, annee);
 CREATE INDEX IF NOT EXISTS idx_audit_module ON "${schema_name}".audit_log(module);
 CREATE INDEX IF NOT EXISTS idx_audit_date ON "${schema_name}".audit_log(created_at);
+
+-- ========== INDEX SUPPLEMENTAIRES (performance) ==========
+
+CREATE INDEX IF NOT EXISTS idx_utilisateurs_keycloak ON "${schema_name}".utilisateurs(keycloak_id);
+CREATE INDEX IF NOT EXISTS idx_utilisateurs_email ON "${schema_name}".utilisateurs(email);
+CREATE INDEX IF NOT EXISTS idx_tiers_entite_type ON "${schema_name}".tiers(entite_id, type);
+CREATE INDEX IF NOT EXISTS idx_ecritures_journal ON "${schema_name}".ecritures(journal, exercice_id);
+CREATE INDEX IF NOT EXISTS idx_ecritures_date ON "${schema_name}".ecritures(date_ecriture, exercice_id);
+CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_numero_compte ON "${schema_name}".ecriture_lignes(numero_compte, ecriture_id);
+CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_tiers ON "${schema_name}".ecriture_lignes(tiers_id);
+CREATE INDEX IF NOT EXISTS idx_notifications_user_read ON "${schema_name}".notifications(utilisateur_id, lu);
+CREATE INDEX IF NOT EXISTS idx_salaries_etablissement ON "${schema_name}".salaries(etablissement_id);
+CREATE INDEX IF NOT EXISTS idx_declarations_tva_exercice ON "${schema_name}".declarations_tva(exercice_id);
+CREATE INDEX IF NOT EXISTS idx_declaration_tva_lignes_declaration ON "${schema_name}".declaration_tva_lignes(declaration_id, onglet);
+CREATE INDEX IF NOT EXISTS idx_balance_lignes_numero_compte ON "${schema_name}".balance_lignes(numero_compte);

@@ -3,6 +3,7 @@ import { LuChevronLeft, LuDownload } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { fmt, MOIS } from '../utils/formatters';
 import type { CompteComptable, JournalType } from '../types';
 import './Comptabilite.css';
 
@@ -68,7 +69,7 @@ interface ToggleProps {
   onChange: (val: boolean) => void;
 }
 
-const MOIS: string[] = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+/* MOIS importe depuis utils/formatters */
 
 const JOURNAUX_LIST: JournalType[] = [
   { code: 'OD', intitule: 'Opérations diverses' },
@@ -115,7 +116,7 @@ const tableStyle: React.CSSProperties = { width: '100%', borderCollapse: 'collap
 const thStyle: React.CSSProperties = { padding: '10px 10px', fontSize: 13, fontWeight: 600, background: '#e8edf5', color: '#333', textAlign: 'left', whiteSpace: 'nowrap' };
 const tdStyle: React.CSSProperties = { padding: '9px 10px', borderBottom: '1px solid #eee', fontSize: 14 };
 
-const fmt = (v: string | number): string => { const n = parseFloat(String(v)); if (!n) return ''; return n.toLocaleString('fr-FR'); };
+/* fmt importe depuis utils/formatters */
 
 const fmtPdf = (val: string | number): string => {
   const n = parseFloat(String(val));

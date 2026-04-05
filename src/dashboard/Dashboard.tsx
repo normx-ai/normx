@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import {
   LuHouse, LuFileSpreadsheet, LuChartBarIncreasing,
   LuSettings, LuUser, LuLock, LuLogOut,
@@ -11,8 +11,7 @@ import {
   LuFileCheck, LuBriefcase, LuCoins, LuCircleHelp, LuListOrdered,
   LuLayoutDashboard, LuChartPie
 } from 'react-icons/lu';
-// @ts-ignore
-import Paie from '../paie/Paie';
+const Paie = lazy(() => import('../paie/Paie'));
 import GestionClients from './GestionClients';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';
 import { MenuItem, MenuChild, TabItem, ModuleInfo } from './types';
@@ -606,7 +605,9 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
       <div className="dashboard">
         <Topbar {...topbarProps} moduleLabel="Paie" dossierSelector={renderDossierSelector()} />
         <div style={{ flex: 1, overflow: 'auto' }}>
-          <Paie entiteId={entiteId} />
+          <Suspense fallback={<div style={{ padding: 40, textAlign: 'center' }}>Chargement...</div>}>
+            <Paie entiteId={entiteId} />
+          </Suspense>
         </div>
         {confirmModalElement}
       </div>

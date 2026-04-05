@@ -103,66 +103,96 @@ export async function importBalance(schema: string, input: ImportBalanceInput) {
   const s = getValidatedSchemaName(schema);
   const { exercice_id, type_balance, nom_fichier, lignes } = input;
 
-  // Supprimer ancienne balance du meme type
-  const oldBalance = await pool.query(
-    `SELECT id FROM "${s}".balances WHERE exercice_id = $1 AND type_balance = $2`,
-    [exercice_id, type_balance],
-  );
-  if (oldBalance.rows.length > 0) {
-    await pool.query(`DELETE FROM "${s}".balances WHERE id = $1`, [oldBalance.rows[0].id]);
-    if (type_balance === 'N') {
-      await pool.query(
-        `DELETE FROM "${s}".revision_data WHERE exercice_id = $1`,
-        [exercice_id],
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    // Supprimer ancienne balance du meme type
+    const oldBalance = await client.query(
+      `SELECT id FROM "${s}".balances WHERE exercice_id = $1 AND type_balance = $2`,
+      [exercice_id, type_balance],
+    );
+    if (oldBalance.rows.length > 0) {
+      await client.query(`DELETE FROM "${s}".balances WHERE id = $1`, [oldBalance.rows[0].id]);
+      if (type_balance === 'N') {
+        await client.query(
+          `DELETE FROM "${s}".revision_data WHERE exercice_id = $1`,
+          [exercice_id],
+        );
+      }
+    }
+
+    // Creer la balance
+    const balResult = await client.query(
+      `INSERT INTO "${s}".balances (exercice_id, type_balance, nom_fichier) VALUES ($1, $2, $3) RETURNING *`,
+      [exercice_id, type_balance, nom_fichier || null],
+    );
+    const balanceId: number = balResult.rows[0].id;
+
+    // Bulk insert des lignes
+    if (lignes.length > 0) {
+      const values: unknown[] = [];
+      const placeholders = lignes.map((l, i) => {
+        const o = i * 9;
+        values.push(
+          balanceId,
+          l.numero_compte || '',
+          l.libelle_compte || '',
+          parseFloat(String(l.si_debit)) || 0,
+          parseFloat(String(l.si_credit)) || 0,
+          parseFloat(String(l.debit)) || 0,
+          parseFloat(String(l.credit)) || 0,
+          parseFloat(String(l.solde_debiteur)) || 0,
+          parseFloat(String(l.solde_crediteur)) || 0,
+        );
+        return `($${o+1}, $${o+2}, $${o+3}, $${o+4}, $${o+5}, $${o+6}, $${o+7}, $${o+8}, $${o+9})`;
+      });
+      await client.query(
+        `INSERT INTO "${s}".balance_lignes (balance_id, numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur)
+         VALUES ${placeholders.join(', ')}`,
+        values,
       );
     }
+
+    await client.query('COMMIT');
+    return { balance: balResult.rows[0], nb_lignes: lignes.length };
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    try { client.release(); } catch { /* ignore */ }
   }
-
-  // Creer la balance
-  const balResult = await pool.query(
-    `INSERT INTO "${s}".balances (exercice_id, type_balance, nom_fichier) VALUES ($1, $2, $3) RETURNING *`,
-    [exercice_id, type_balance, nom_fichier || null],
-  );
-  const balanceId: number = balResult.rows[0].id;
-
-  // Inserer les lignes
-  for (const l of lignes) {
-    await pool.query(
-      `INSERT INTO "${s}".balance_lignes (balance_id, numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-      [
-        balanceId,
-        l.numero_compte || '',
-        l.libelle_compte || '',
-        parseFloat(String(l.si_debit)) || 0,
-        parseFloat(String(l.si_credit)) || 0,
-        parseFloat(String(l.debit)) || 0,
-        parseFloat(String(l.credit)) || 0,
-        parseFloat(String(l.solde_debiteur)) || 0,
-        parseFloat(String(l.solde_crediteur)) || 0,
-      ],
-    );
-  }
-
-  return { balance: balResult.rows[0], nb_lignes: lignes.length };
 }
 
 export async function deleteBalance(schema: string, balanceId: number) {
   const s = getValidatedSchemaName(schema);
-  const result = await pool.query(
-    `DELETE FROM "${s}".balances WHERE id = $1 RETURNING *`,
-    [balanceId],
-  );
-  if (result.rows.length === 0) return null;
-
-  const deleted = result.rows[0];
-  if (deleted.type_balance === 'N') {
-    await pool.query(
-      `DELETE FROM "${s}".revision_data WHERE exercice_id = $1`,
-      [deleted.exercice_id],
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    const result = await client.query(
+      `DELETE FROM "${s}".balances WHERE id = $1 RETURNING *`,
+      [balanceId],
     );
+    if (result.rows.length === 0) {
+      await client.query('ROLLBACK');
+      return null;
+    }
+
+    const deleted = result.rows[0];
+    if (deleted.type_balance === 'N') {
+      await client.query(
+        `DELETE FROM "${s}".revision_data WHERE exercice_id = $1`,
+        [deleted.exercice_id],
+      );
+    }
+    await client.query('COMMIT');
+    return deleted;
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    try { client.release(); } catch { /* ignore */ }
   }
-  return deleted;
 }
 
 export async function updateBalanceLigne(

@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import logger from '../logger';
 import * as rubriquesService from '../services/rubriques.service';
 
 const router = express.Router();
@@ -12,7 +13,8 @@ router.get('/', async (req: Request, res: Response) => {
   try {
     const rubriques = await rubriquesService.getRubriques(schema);
     res.json({ rubriques });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -28,7 +30,8 @@ router.get('/type/:type', async (req: Request, res: Response) => {
   try {
     const rubriques = await rubriquesService.getRubriquesByType(schema, type);
     res.json({ rubriques });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -47,7 +50,8 @@ router.post('/', async (req: Request, res: Response) => {
   try {
     const rubrique = await rubriquesService.createRubrique(schema, req.body);
     res.status(201).json({ rubrique });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -64,7 +68,8 @@ router.put('/:id', async (req: Request, res: Response) => {
     const rubrique = await rubriquesService.updateRubrique(schema, Number(id), req.body);
     if (!rubrique) return res.status(404).json({ error: 'Rubrique non trouvee.' });
     res.json({ rubrique });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -81,7 +86,8 @@ router.delete('/:id', async (req: Request, res: Response) => {
     const deleted = await rubriquesService.deleteRubrique(schema, Number(id));
     if (!deleted) return res.status(404).json({ error: 'Rubrique non trouvee.' });
     res.json({ message: 'Rubrique desactivee.' });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
@@ -95,7 +101,8 @@ router.post('/init', async (req: Request, res: Response) => {
   try {
     const rubriques = await rubriquesService.initRubriquesDefaut(schema);
     res.json({ rubriques });
-  } catch {
+  } catch (err) {
+    logger.error('Erreur route rubriques: ' + (err instanceof Error ? err.message : String(err)));
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });

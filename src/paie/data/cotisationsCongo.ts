@@ -71,10 +71,10 @@ const COTISATIONS_CONGO: CotisationsCongoConfig = {
     fraisPro: 20,  // 20% de frais professionnels
     bareme: [
       { min: 0,         max: 615000,   taux: 0,  forfait: 1200 },  // Forfait 1 200 FCFA
-      { min: 615000,    max: 1500000,  taux: 10 },
-      { min: 1500000,   max: 3500000,  taux: 15 },
-      { min: 3500000,   max: 5000000,  taux: 20 },
-      { min: 5000000,   max: null,     taux: 30 },
+      { min: 615001,    max: 1500000,  taux: 10 },
+      { min: 1500001,   max: 3500000,  taux: 15 },
+      { min: 3500001,   max: 5000000,  taux: 20 },
+      { min: 5000001,   max: null,     taux: 30 },
     ],
     minimumAnnuel: 1200,
     forfaitaireNonResident: 20,  // 20% pour non-résidents

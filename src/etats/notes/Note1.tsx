@@ -4,22 +4,22 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps, BalanceLigne } from '../../types';
+import { useNoteData } from './useNoteData';
 
 interface Note1Props extends EtatBaseProps {
   onGoToParametres?: () => void;
 }
 
 function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Props): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
-  const [params, setParams] = useState<Record<string, string>>({});
+  const {
+    exercices, selectedExercice, setSelectedExercice,
+    params, previewUrl, setPreviewUrl,
+    pdfBlob, setPdfBlob, editing, setEditing,
+    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+  } = useNoteData({ entiteId });
+
   const [lignesBalance, setLignesBalance] = useState<BalanceLigne[]>([]);
-  const [editing, setEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
 
   // Editable fields
   const [hypotheques, setHypotheques] = useState('');
@@ -32,44 +32,16 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
 
   const pageRef = useRef<HTMLDivElement>(null);
 
+  // Initialiser les champs editables depuis les params charges
   useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
-      .then(r => r.json())
-      .then(ent => {
-        const data = ent.data || {};
-        setParams(data);
-        setHypotheques(data['note1_hypotheques'] || '');
-        setNantissements(data['note1_nantissements'] || '');
-        setGages(data['note1_gages'] || '');
-        setCommentaire(data['note1_commentaire'] || '');
-        setMontantBrutEmprunts(data['note1_montant_emprunts'] || '');
-        setMontantBrutIC(data['note1_montant_ic'] || '');
-        setMontantBrutCB(data['note1_montant_cb'] || '');
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
+    setHypotheques(params['note1_hypotheques'] || '');
+    setNantissements(params['note1_nantissements'] || '');
+    setGages(params['note1_gages'] || '');
+    setCommentaire(params['note1_commentaire'] || '');
+    setMontantBrutEmprunts(params['note1_montant_emprunts'] || '');
+    setMontantBrutIC(params['note1_montant_ic'] || '');
+    setMontantBrutCB(params['note1_montant_cb'] || '');
+  }, [params]);
 
   const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
   useEffect(() => {
@@ -93,36 +65,20 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
   }, [entiteId, selectedExercice, balanceSource]);
 
   const handleSave = async () => {
-    setSaving(true);
-    try {
-      const data: Record<string, string> = {
-        ...params,
-        note1_hypotheques: hypotheques,
-        note1_nantissements: nantissements,
-        note1_gages: gages,
-        note1_commentaire: commentaire,
-        note1_montant_emprunts: montantBrutEmprunts,
-        note1_montant_ic: montantBrutIC,
-        note1_montant_cb: montantBrutCB,
-      };
-      const res = await fetch(`/api/entites/${entiteId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data }),
-      });
-      if (res.ok) {
-        setParams(data);
-        setSaved(true);
-        setEditing(false);
-        setTimeout(() => setSaved(false), 3000);
-      }
-    } catch { /* */ }
-    setSaving(false);
+    const data: Record<string, string> = {
+      ...params,
+      note1_hypotheques: hypotheques,
+      note1_nantissements: nantissements,
+      note1_gages: gages,
+      note1_commentaire: commentaire,
+      note1_montant_emprunts: montantBrutEmprunts,
+      note1_montant_ic: montantBrutIC,
+      note1_montant_cb: montantBrutCB,
+    };
+    await saveParams(data);
   };
 
-  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
-  const duree = selectedExercice?.duree_mois || 12;
-  const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
+  const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
   const fmtDateShort = (d: Date | null): string => {
     if (!d) return '';

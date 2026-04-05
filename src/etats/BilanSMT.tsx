@@ -3,6 +3,7 @@ import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { BalanceLigne, Exercice, EtatBaseProps, ActifMapping, PassifMapping } from '../types';
+import { fmtM } from '../utils/formatters';
 import './BilanSYCEBNL.css';
 
 // ===================== BILAN SMT — Mapping comptes =====================
@@ -82,7 +83,7 @@ function computePassif(lignes: BalanceLigne[], mapping: Record<string, PassifMap
   return result;
 }
 
-const fmtM = (v: number): string => (!v || v === 0) ? '' : Math.round(v).toLocaleString('fr-FR');
+/* fmtM importe depuis utils/formatters */
 
 interface Row { ref: string; libelle: string; note?: string; bold?: boolean; }
 

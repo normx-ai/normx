@@ -3,6 +3,7 @@ import { LuDownload, LuSheet, LuFileText, LuSearch, LuEye, LuX, LuPrinter } from
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { fmt, MOIS } from '../utils/formatters';
 import './Comptabilite.css';
 
 interface GrandLivreTiersProps {
@@ -50,10 +51,7 @@ const TYPES_TIERS: TypeTiersOption[] = [
   { value: 'personnel', label: 'Personnel' },
 ];
 
-const MOIS: string[] = [
-  'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
-];
+/* MOIS importe depuis utils/formatters */
 
 function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteSigle, entiteAdresse, entiteNif, onBack }: GrandLivreTiersProps): React.JSX.Element {
   const [data, setData] = useState<GLTiersRow[]>([]);
@@ -104,11 +102,7 @@ function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, enti
     loadData();
   }, [loadData]);
 
-  const fmt = (val: string | number): string => {
-    const n = parseFloat(String(val));
-    if (!n) return '';
-    return n.toLocaleString('fr-FR');
-  };
+  /* fmt importe depuis utils/formatters */
 
   const fmtPdf = (n: number): string => {
     if (!n) return '';

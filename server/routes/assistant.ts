@@ -5,6 +5,7 @@ import path from 'path';
 import pool from '../db';
 import logger from '../logger';
 import * as qdrantModule from '../qdrant';
+import { getErrorMessage } from '../utils/routeHelpers';
 
 // ===================== TYPES =====================
 
@@ -368,11 +369,6 @@ function generateTitle(message: string): string {
   const clean = message.replace(/[?!.]/g, '').trim();
   if (clean.length <= 50) return clean;
   return clean.substring(0, 47) + '...';
-}
-
-function getErrorMessage(err: { message?: string } | null): string {
-  if (err && typeof err === 'object' && 'message' in err) return err.message || 'Erreur inconnue';
-  return String(err);
 }
 
 const COMMON_RULES =

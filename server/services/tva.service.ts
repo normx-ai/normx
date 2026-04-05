@@ -361,27 +361,27 @@ export async function importerEcritures(schema: string, declarationId: number) {
       ORDER BY e.date_ecriture, e.id
     `, [decl.exercice_id, dateDebut, dateFin]);
 
-    for (const row of collectee.rows) {
-      const montantTaxe = parseFloat(row.credit) - parseFloat(row.debit);
-      if (Math.abs(montantTaxe) < 0.01) continue;
-      const taux = row.numero_compte.startsWith('4435') ? 5 : 18;
-      const montantNet = Math.round((Math.abs(montantTaxe) / taux) * 100);
-      await client.query(
-        `INSERT INTO "${s}".declaration_tva_lignes
-         (declaration_id, onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir)
-         VALUES ($1, 'collectee', $2, $3, $4, $5, $6, $7, $8, $9)`,
-        [
-          decl.id,
-          row.numero_compte,
-          row.numero_piece || '',
-          row.libelle_ecriture || row.libelle_compte || '',
-          Math.abs(montantNet),
-          taux,
-          Math.abs(montantTaxe),
-          row.date_ecriture,
-          montantTaxe < 0,
-        ],
-      );
+    // Bulk insert TVA collectee
+    {
+      const bulkValues: unknown[] = [];
+      const bulkPlaceholders: string[] = [];
+      for (const row of collectee.rows) {
+        const montantTaxe = parseFloat(row.credit) - parseFloat(row.debit);
+        if (Math.abs(montantTaxe) < 0.01) continue;
+        const taux = row.numero_compte.startsWith('4435') ? 5 : 18;
+        const montantNet = Math.round((Math.abs(montantTaxe) / taux) * 100);
+        const o = bulkValues.length;
+        bulkValues.push(decl.id, row.numero_compte, row.numero_piece || '', row.libelle_ecriture || row.libelle_compte || '', Math.abs(montantNet), taux, Math.abs(montantTaxe), row.date_ecriture, montantTaxe < 0);
+        bulkPlaceholders.push(`($${o+1}, 'collectee', $${o+2}, $${o+3}, $${o+4}, $${o+5}, $${o+6}, $${o+7}, $${o+8}, $${o+9})`);
+      }
+      if (bulkPlaceholders.length > 0) {
+        await client.query(
+          `INSERT INTO "${s}".declaration_tva_lignes
+           (declaration_id, onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir)
+           VALUES ${bulkPlaceholders.join(', ')}`,
+          bulkValues,
+        );
+      }
     }
 
     // TVA deductible : comptes 445x
@@ -397,27 +397,27 @@ export async function importerEcritures(schema: string, declarationId: number) {
       ORDER BY e.date_ecriture, e.id
     `, [decl.exercice_id, dateDebut, dateFin]);
 
-    for (const row of deductible.rows) {
-      const montantTaxe = parseFloat(row.debit) - parseFloat(row.credit);
-      if (Math.abs(montantTaxe) < 0.01) continue;
-      const taux = row.numero_compte.startsWith('4455') ? 5 : 18;
-      const montantNet = Math.round((Math.abs(montantTaxe) / taux) * 100);
-      await client.query(
-        `INSERT INTO "${s}".declaration_tva_lignes
-         (declaration_id, onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir)
-         VALUES ($1, 'deductible', $2, $3, $4, $5, $6, $7, $8, $9)`,
-        [
-          decl.id,
-          row.numero_compte,
-          row.numero_piece || '',
-          row.libelle_ecriture || row.libelle_compte || '',
-          Math.abs(montantNet),
-          taux,
-          Math.abs(montantTaxe),
-          row.date_ecriture,
-          montantTaxe < 0,
-        ],
-      );
+    // Bulk insert TVA deductible
+    {
+      const bulkValues: unknown[] = [];
+      const bulkPlaceholders: string[] = [];
+      for (const row of deductible.rows) {
+        const montantTaxe = parseFloat(row.debit) - parseFloat(row.credit);
+        if (Math.abs(montantTaxe) < 0.01) continue;
+        const taux = row.numero_compte.startsWith('4455') ? 5 : 18;
+        const montantNet = Math.round((Math.abs(montantTaxe) / taux) * 100);
+        const o = bulkValues.length;
+        bulkValues.push(decl.id, row.numero_compte, row.numero_piece || '', row.libelle_ecriture || row.libelle_compte || '', Math.abs(montantNet), taux, Math.abs(montantTaxe), row.date_ecriture, montantTaxe < 0);
+        bulkPlaceholders.push(`($${o+1}, 'deductible', $${o+2}, $${o+3}, $${o+4}, $${o+5}, $${o+6}, $${o+7}, $${o+8}, $${o+9})`);
+      }
+      if (bulkPlaceholders.length > 0) {
+        await client.query(
+          `INSERT INTO "${s}".declaration_tva_lignes
+           (declaration_id, onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir)
+           VALUES ${bulkPlaceholders.join(', ')}`,
+          bulkValues,
+        );
+      }
     }
 
     const totals = await recalcTotals(s, decl.id, client);

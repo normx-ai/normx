@@ -1,95 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { LuHandHelping, LuLock, LuTriangleAlert, LuArrowUpRight } from 'react-icons/lu';
-import ImportBalance from '../etats/ImportBalance';
-import AssistantChat from '../assistant/AssistantChat';
-import AideVideos from '../aide/AideVideos';
-import BilanSYCEBNL from '../etats/BilanSYCEBNL';
-import CompteResultatSYCEBNL from '../etats/CompteResultatSYCEBNL';
-import TFT_SYCEBNL from '../etats/TFT_SYCEBNL';
-import TER_Projet from '../etats/TER_Projet';
-import ExecBudgetaire_Projet from '../etats/ExecBudgetaire_Projet';
-import ReconcTresorerie_Projet from '../etats/ReconcTresorerie_Projet';
-import BilanProjet from '../etats/BilanProjet';
-import CompteExploitation_Projet from '../etats/CompteExploitation_Projet';
-import BilanSMT from '../etats/BilanSMT';
-import CompteResultatSMT from '../etats/CompteResultatSMT';
-import NotesAnnexesSMT from '../etats/NotesAnnexesSMT';
-import JournauxSMT from '../etats/JournauxSMT';
-import JournalTresorerieSMT from '../etats/JournalTresorerieSMT';
-import BilanSYSCOHADA from '../etats/BilanSYSCOHADA';
-import CompteResultatSYSCOHADA from '../etats/CompteResultatSYSCOHADA';
-import TFT_SYSCOHADA from '../etats/TFT_SYSCOHADA';
-import PageDeGarde from '../etats/PageDeGarde';
-import FicheIdentification from '../etats/FicheIdentification';
-import FicheR3 from '../etats/FicheR3';
-import FicheR4 from '../etats/FicheR4';
-import ResultatFiscal from '../etats/ResultatFiscal';
-import Note1 from '../etats/notes/Note1';
-import Note2 from '../etats/notes/Note2';
-import Note3A from '../etats/notes/Note3A';
-import Note3B from '../etats/notes/Note3B';
-import Note3C from '../etats/notes/Note3C';
-import Note3D from '../etats/notes/Note3D';
-import Note3E from '../etats/notes/Note3E';
-import Note4 from '../etats/notes/Note4';
-import Note5 from '../etats/notes/Note5';
-import Note6 from '../etats/notes/Note6';
-import Note7 from '../etats/notes/Note7';
-import Note8 from '../etats/notes/Note8';
-import Note8A from '../etats/notes/Note8A';
-import Note9 from '../etats/notes/Note9';
-import Note10 from '../etats/notes/Note10';
-import Note11 from '../etats/notes/Note11';
-import Note12 from '../etats/notes/Note12';
-import Note13 from '../etats/notes/Note13';
-import Note14 from '../etats/notes/Note14';
-import Note15A from '../etats/notes/Note15A';
-import Note15B from '../etats/notes/Note15B';
-import Note16A from '../etats/notes/Note16A';
-import Note16B from '../etats/notes/Note16B';
-import Note16C from '../etats/notes/Note16C';
-import Note17 from '../etats/notes/Note17';
-import Note18 from '../etats/notes/Note18';
-import Note19 from '../etats/notes/Note19';
-import Note20 from '../etats/notes/Note20';
-import Note21 from '../etats/notes/Note21';
-import Note22 from '../etats/notes/Note22';
-import Note23 from '../etats/notes/Note23';
-import Note24 from '../etats/notes/Note24';
-import Note25 from '../etats/notes/Note25';
-import Note26 from '../etats/notes/Note26';
-import Note27A from '../etats/notes/Note27A';
-import Note27B from '../etats/notes/Note27B';
-import Note28 from '../etats/notes/Note28';
-import Note29 from '../etats/notes/Note29';
-import Note30 from '../etats/notes/Note30';
-import Note31 from '../etats/notes/Note31';
-import Note32 from '../etats/notes/Note32';
-import Note33 from '../etats/notes/Note33';
-import Note34 from '../etats/notes/Note34';
-import Note35 from '../etats/notes/Note35';
-import Note36 from '../etats/notes/Note36';
-import Note37 from '../etats/notes/Note37';
-import SaisieJournal from '../comptabilite/SaisieJournal';
-import GrandLivre from '../comptabilite/GrandLivre';
-import BalanceGenerale from '../comptabilite/BalanceGenerale';
-import TiersPage from '../comptabilite/TiersPage';
-import GrandLivreTiers from '../comptabilite/GrandLivreTiers';
-import BalanceTiers from '../comptabilite/BalanceTiers';
-import Lettrage from '../comptabilite/Lettrage';
-import { Journaux, Echeancier, BalanceAgee } from '../comptabilite/Journaux';
-import ParametresEntite from '../settings/ParametresEntite';
-import Rapports from '../rapports/Rapports';
-import SoldesIntermediaires from '../rapports/SoldesIntermediaires';
-import TableauBord from '../rapports/TableauBord';
-import RepartitionCharges from '../rapports/RepartitionCharges';
-import SuiviTresorerie from '../rapports/SuiviTresorerie';
-import ComparatifNN1 from '../rapports/ComparatifNN1';
-import DeclarationTVA from '../comptabilite/DeclarationTVA';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';
 import { ExerciceSelector } from './ExerciceManager';
-import RevisionComptes from '../revision/RevisionComptes';
-import BalanceRevisee from '../revision/BalanceRevisee';
+
+// Lazy-loaded modules — Etats financiers
+const ImportBalance = lazy(() => import('../etats/ImportBalance'));
+const BilanSYCEBNL = lazy(() => import('../etats/BilanSYCEBNL'));
+const CompteResultatSYCEBNL = lazy(() => import('../etats/CompteResultatSYCEBNL'));
+const TFT_SYCEBNL = lazy(() => import('../etats/TFT_SYCEBNL'));
+const TER_Projet = lazy(() => import('../etats/TER_Projet'));
+const ExecBudgetaire_Projet = lazy(() => import('../etats/ExecBudgetaire_Projet'));
+const ReconcTresorerie_Projet = lazy(() => import('../etats/ReconcTresorerie_Projet'));
+const BilanProjet = lazy(() => import('../etats/BilanProjet'));
+const CompteExploitation_Projet = lazy(() => import('../etats/CompteExploitation_Projet'));
+const BilanSMT = lazy(() => import('../etats/BilanSMT'));
+const CompteResultatSMT = lazy(() => import('../etats/CompteResultatSMT'));
+const NotesAnnexesSMT = lazy(() => import('../etats/NotesAnnexesSMT'));
+const JournauxSMT = lazy(() => import('../etats/JournauxSMT'));
+const JournalTresorerieSMT = lazy(() => import('../etats/JournalTresorerieSMT'));
+const BilanSYSCOHADA = lazy(() => import('../etats/BilanSYSCOHADA'));
+const CompteResultatSYSCOHADA = lazy(() => import('../etats/CompteResultatSYSCOHADA'));
+const TFT_SYSCOHADA = lazy(() => import('../etats/TFT_SYSCOHADA'));
+const PageDeGarde = lazy(() => import('../etats/PageDeGarde'));
+const FicheIdentification = lazy(() => import('../etats/FicheIdentification'));
+const FicheR3 = lazy(() => import('../etats/FicheR3'));
+const FicheR4 = lazy(() => import('../etats/FicheR4'));
+const ResultatFiscal = lazy(() => import('../etats/ResultatFiscal'));
+
+// Lazy-loaded modules — Notes annexes
+const Note1 = lazy(() => import('../etats/notes/Note1'));
+const Note2 = lazy(() => import('../etats/notes/Note2'));
+const Note3A = lazy(() => import('../etats/notes/Note3A'));
+const Note3B = lazy(() => import('../etats/notes/Note3B'));
+const Note3C = lazy(() => import('../etats/notes/Note3C'));
+const Note3D = lazy(() => import('../etats/notes/Note3D'));
+const Note3E = lazy(() => import('../etats/notes/Note3E'));
+const Note4 = lazy(() => import('../etats/notes/Note4'));
+const Note5 = lazy(() => import('../etats/notes/Note5'));
+const Note6 = lazy(() => import('../etats/notes/Note6'));
+const Note7 = lazy(() => import('../etats/notes/Note7'));
+const Note8 = lazy(() => import('../etats/notes/Note8'));
+const Note8A = lazy(() => import('../etats/notes/Note8A'));
+const Note9 = lazy(() => import('../etats/notes/Note9'));
+const Note10 = lazy(() => import('../etats/notes/Note10'));
+const Note11 = lazy(() => import('../etats/notes/Note11'));
+const Note12 = lazy(() => import('../etats/notes/Note12'));
+const Note13 = lazy(() => import('../etats/notes/Note13'));
+const Note14 = lazy(() => import('../etats/notes/Note14'));
+const Note15A = lazy(() => import('../etats/notes/Note15A'));
+const Note15B = lazy(() => import('../etats/notes/Note15B'));
+const Note16A = lazy(() => import('../etats/notes/Note16A'));
+const Note16B = lazy(() => import('../etats/notes/Note16B'));
+const Note16C = lazy(() => import('../etats/notes/Note16C'));
+const Note17 = lazy(() => import('../etats/notes/Note17'));
+const Note18 = lazy(() => import('../etats/notes/Note18'));
+const Note19 = lazy(() => import('../etats/notes/Note19'));
+const Note20 = lazy(() => import('../etats/notes/Note20'));
+const Note21 = lazy(() => import('../etats/notes/Note21'));
+const Note22 = lazy(() => import('../etats/notes/Note22'));
+const Note23 = lazy(() => import('../etats/notes/Note23'));
+const Note24 = lazy(() => import('../etats/notes/Note24'));
+const Note25 = lazy(() => import('../etats/notes/Note25'));
+const Note26 = lazy(() => import('../etats/notes/Note26'));
+const Note27A = lazy(() => import('../etats/notes/Note27A'));
+const Note27B = lazy(() => import('../etats/notes/Note27B'));
+const Note28 = lazy(() => import('../etats/notes/Note28'));
+const Note29 = lazy(() => import('../etats/notes/Note29'));
+const Note30 = lazy(() => import('../etats/notes/Note30'));
+const Note31 = lazy(() => import('../etats/notes/Note31'));
+const Note32 = lazy(() => import('../etats/notes/Note32'));
+const Note33 = lazy(() => import('../etats/notes/Note33'));
+const Note34 = lazy(() => import('../etats/notes/Note34'));
+const Note35 = lazy(() => import('../etats/notes/Note35'));
+const Note36 = lazy(() => import('../etats/notes/Note36'));
+const Note37 = lazy(() => import('../etats/notes/Note37'));
+
+// Lazy-loaded modules — Comptabilite
+const SaisieJournal = lazy(() => import('../comptabilite/SaisieJournal'));
+const GrandLivre = lazy(() => import('../comptabilite/GrandLivre'));
+const BalanceGenerale = lazy(() => import('../comptabilite/BalanceGenerale'));
+const TiersPage = lazy(() => import('../comptabilite/TiersPage'));
+const GrandLivreTiers = lazy(() => import('../comptabilite/GrandLivreTiers'));
+const BalanceTiers = lazy(() => import('../comptabilite/BalanceTiers'));
+const Lettrage = lazy(() => import('../comptabilite/Lettrage'));
+const Journaux = lazy(() => import('../comptabilite/Journaux'));
+const Echeancier = lazy(() => import('../comptabilite/Journaux').then(m => ({ default: m.Echeancier })));
+const BalanceAgee = lazy(() => import('../comptabilite/Journaux').then(m => ({ default: m.BalanceAgee })));
+const DeclarationTVA = lazy(() => import('../comptabilite/DeclarationTVA'));
+
+// Lazy-loaded modules — Revision
+const RevisionComptes = lazy(() => import('../revision/RevisionComptes'));
+const BalanceRevisee = lazy(() => import('../revision/BalanceRevisee'));
+
+// Lazy-loaded modules — Rapports
+const Rapports = lazy(() => import('../rapports/Rapports'));
+const SoldesIntermediaires = lazy(() => import('../rapports/SoldesIntermediaires'));
+const TableauBord = lazy(() => import('../rapports/TableauBord'));
+const RepartitionCharges = lazy(() => import('../rapports/RepartitionCharges'));
+const SuiviTresorerie = lazy(() => import('../rapports/SuiviTresorerie'));
+const ComparatifNN1 = lazy(() => import('../rapports/ComparatifNN1'));
+
+// Lazy-loaded modules — Outils
+const AssistantChat = lazy(() => import('../assistant/AssistantChat'));
+const AideVideos = lazy(() => import('../aide/AideVideos'));
+const ParametresEntite = lazy(() => import('../settings/ParametresEntite'));
 
 function getTypeLabel(typeActivite: TypeActivite): string {
   switch (typeActivite) {
@@ -336,6 +350,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
 
   return (
     <main className="dashboard-main">
+      <Suspense fallback={<div style={{ padding: 40, textAlign: 'center' }}>Chargement...</div>}>
       {/* ACCUEIL */}
       {activeTab === 'accueil' && (
         <div>
@@ -726,6 +741,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
           }
         }} />
       )}
+      </Suspense>
     </main>
   );
 }

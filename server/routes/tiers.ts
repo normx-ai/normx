@@ -1,17 +1,14 @@
 import express, { Request, Response } from 'express';
 import logger from '../logger';
 import * as tiersService from '../services/tiers.service';
+import { getErrorMessage } from '../utils/routeHelpers';
 
 const router = express.Router();
 
-function getErrorMessage(err: { message?: string } | null): string {
-  if (err && typeof err === 'object' && 'message' in err) return err.message || 'Erreur inconnue';
-  return String(err);
-}
-
 // Lister les tiers (avec filtres optionnels)
 router.get('/:entite_id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema as string;
+  const schema = req.tenantSchema;
+  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type, search, actif } = req.query;
   try {
     const rows = await tiersService.listTiers(schema, { type: type as string, search: search as string, actif: actif as string });
@@ -24,7 +21,8 @@ router.get('/:entite_id', async (req: Request, res: Response) => {
 
 // Obtenir un tiers par ID
 router.get('/detail/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema as string;
+  const schema = req.tenantSchema;
+  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
     const tiers = await tiersService.getTiersById(schema, req.params.id);
     if (!tiers) return res.status(404).json({ error: 'Tiers non trouve.' });
@@ -37,7 +35,8 @@ router.get('/detail/:id', async (req: Request, res: Response) => {
 
 // Creer un tiers
 router.post('/', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema as string;
+  const schema = req.tenantSchema;
+  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data } = req.body;
   if (!type || !nom) {
     return res.status(400).json({ error: 'Champs obligatoires: type, nom.' });
@@ -53,7 +52,8 @@ router.post('/', async (req: Request, res: Response) => {
 
 // Modifier un tiers
 router.put('/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema as string;
+  const schema = req.tenantSchema;
+  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data, actif } = req.body;
   if (!nom) return res.status(400).json({ error: 'Le nom est obligatoire.' });
   try {
@@ -68,7 +68,8 @@ router.put('/:id', async (req: Request, res: Response) => {
 
 // Supprimer un tiers
 router.delete('/:id', async (req: Request, res: Response) => {
-  const schema = req.tenantSchema as string;
+  const schema = req.tenantSchema;
+  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   try {
     const deleted = await tiersService.deleteTiers(schema, req.params.id);
     if (!deleted) return res.status(404).json({ error: 'Tiers non trouve.' });

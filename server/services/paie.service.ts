@@ -137,12 +137,22 @@ export async function deleteEtablissement(schema: string, id: string): Promise<b
 
 // ============ SALARIES ============
 
-export async function getSalaries(schema: string): Promise<Salarie[]> {
+export async function getSalaries(schema: string, pagination?: { limit: number; offset: number }): Promise<{ rows: Salarie[]; total: number }> {
   const s = getValidatedSchemaName(schema);
-  const result = await pool.query(
-    `SELECT * FROM "${s}".salaries ORDER BY created_at ASC`,
-  );
-  return result.rows;
+
+  const countResult = await pool.query(`SELECT COUNT(*) AS total FROM "${s}".salaries`);
+  const total = parseInt(countResult.rows[0].total, 10);
+
+  let query = `SELECT * FROM "${s}".salaries ORDER BY created_at ASC`;
+  const params: number[] = [];
+
+  if (pagination) {
+    query += ` LIMIT $1 OFFSET $2`;
+    params.push(pagination.limit, pagination.offset);
+  }
+
+  const result = await pool.query(query, params);
+  return { rows: result.rows, total };
 }
 
 export async function createSalarie(schema: string, input: CreateSalarieInput): Promise<Salarie> {

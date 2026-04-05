@@ -81,13 +81,20 @@ function extractTenantId(payload: KeycloakPayload): string {
 }
 
 export async function authenticateToken(req: Request, res: Response, next: NextFunction): Promise<void> {
+  // Accepter le token depuis le header Authorization OU le cookie httpOnly
   const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  let token: string | undefined;
+
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  } else if (req.cookies?.normx_access_token) {
+    token = req.cookies.normx_access_token;
+  }
+
+  if (!token) {
     res.status(401).json({ error: 'Token manquant.' });
     return;
   }
-
-  const token = authHeader.split(' ')[1];
 
   try {
     const decoded = await new Promise<KeycloakPayload>((resolve, reject) => {

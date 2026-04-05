@@ -4,7 +4,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { Exercice, EtatBaseProps } from '../../types';
+import type { EtatBaseProps } from '../../types';
+import { useNoteData } from './useNoteData';
 
 interface Note2Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -34,80 +35,35 @@ const SECTIONS = [
 ];
 
 function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
-  const [params, setParams] = useState<Record<string, string>>({});
-  const [editing, setEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const {
+    exercices, selectedExercice, setSelectedExercice,
+    params, previewUrl, setPreviewUrl,
+    pdfBlob, setPdfBlob, editing, setEditing,
+    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+  } = useNoteData({ entiteId });
+
   const [texts, setTexts] = useState<Record<string, string>>({});
 
   const pageRef = useRef<HTMLDivElement>(null);
 
+  // Initialiser les textes depuis les params charges
   useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
-      .then(r => r.json())
-      .then(ent => {
-        const data = ent.data || {};
-        setParams(data);
-        const t: Record<string, string> = {};
-        SECTIONS.forEach(s => {
-          t[s.key] = data['note2_' + s.key] || s.defaultText;
-        });
-        setTexts(t);
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
+    const t: Record<string, string> = {};
+    SECTIONS.forEach(s => {
+      t[s.key] = params['note2_' + s.key] || s.defaultText;
+    });
+    setTexts(t);
+  }, [params]);
 
   const handleSave = async () => {
-    setSaving(true);
-    try {
-      const data: Record<string, string> = { ...params };
-      SECTIONS.forEach(s => {
-        data['note2_' + s.key] = texts[s.key] || s.defaultText;
-      });
-      const res = await fetch(`/api/entites/${entiteId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data }),
-      });
-      if (res.ok) {
-        setParams(data);
-        setSaved(true);
-        setEditing(false);
-        setTimeout(() => setSaved(false), 3000);
-      }
-    } catch { /* */ }
-    setSaving(false);
+    const data: Record<string, string> = { ...params };
+    SECTIONS.forEach(s => {
+      data['note2_' + s.key] = texts[s.key] || s.defaultText;
+    });
+    await saveParams(data);
   };
 
-  const duree = selectedExercice?.duree_mois || 12;
-  const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
-  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
+  const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
   const fmtDateShort = (d: Date | null): string => {
     if (!d) return '';

@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { fmt, fmtDate } from '../utils/formatters';
 
 interface LettrageProps {
   entiteId: number;
@@ -185,8 +186,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     }
   };
 
-  const fmt = (v: string | number): string => { const n = parseFloat(String(v)); if (!n) return ''; return n.toLocaleString('fr-FR'); };
-  const fmtDate = (d: string): string => d ? new Date(d).toLocaleDateString('fr-FR') : '';
+  /* fmt et fmtDate importes depuis utils/formatters */
 
   return (
     <div style={{ display: 'flex', height: 'calc(100vh - 140px)', gap: 0, background: '#f5f6fa' }}>

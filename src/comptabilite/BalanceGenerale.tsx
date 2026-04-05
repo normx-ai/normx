@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx';
 import type { BalanceLigne } from '../types';
 import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from '../etats/anomaliesComptes';
 import type { AnomalieCompte } from '../etats/anomaliesComptes';
+import { fmt, MOIS } from '../utils/formatters';
 
 /* -- Shared inline components -- */
 
@@ -73,9 +74,7 @@ const tableStyle: React.CSSProperties = { width: '100%', borderCollapse: 'collap
 const thStyle: React.CSSProperties = { padding: '10px 10px', fontSize: 13, fontWeight: 600, background: '#e8edf5', color: '#333', textAlign: 'left', whiteSpace: 'nowrap' };
 const tdStyle: React.CSSProperties = { padding: '9px 10px', borderBottom: '1px solid #eee', fontSize: 14 };
 
-const MOIS: string[] = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-
-const fmt = (v: string | number): string => { const n = parseFloat(String(v)); if (!n) return ''; return n.toLocaleString('fr-FR'); };
+/* fmt et MOIS importes depuis utils/formatters */
 
 /* -- Component -- */
 

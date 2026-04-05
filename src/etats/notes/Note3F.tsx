@@ -4,7 +4,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { Exercice, EtatBaseProps } from '../../types';
+import type { EtatBaseProps } from '../../types';
+import { useNoteData } from './useNoteData';
 
 interface Note3FProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -27,79 +28,37 @@ const EMPTY_LIGNE: LigneCharge = {
 };
 
 function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
-  const [params, setParams] = useState<Record<string, string>>({});
-  const [editing, setEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const {
+    exercices, selectedExercice, setSelectedExercice,
+    params, previewUrl, setPreviewUrl,
+    pdfBlob, setPdfBlob, editing, setEditing,
+    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+  } = useNoteData({ entiteId });
+
   const [commentaire, setCommentaire] = useState('');
   const [lignes, setLignes] = useState<LigneCharge[]>([{ ...EMPTY_LIGNE }]);
 
   const pageRef = useRef<HTMLDivElement>(null);
 
+  // Initialiser les champs editables depuis les params charges
   useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
-      .then(r => r.json())
-      .then(ent => {
-        const data = ent.data || {};
-        setParams(data);
-        setCommentaire(data['note3f_commentaire'] || '');
-        if (data['note3f_lignes']) {
-          try {
-            const parsed = JSON.parse(data['note3f_lignes']);
-            if (Array.isArray(parsed) && parsed.length > 0) setLignes(parsed);
-          } catch { /* */ }
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
+    if (!params || Object.keys(params).length === 0) return;
+    setCommentaire(params['note3f_commentaire'] || '');
+    if (params['note3f_lignes']) {
+      try {
+        const parsed = JSON.parse(params['note3f_lignes']);
+        if (Array.isArray(parsed) && parsed.length > 0) setLignes(parsed);
+      } catch { /* */ }
+    }
+  }, [params]);
 
   const handleSave = async () => {
-    setSaving(true);
-    try {
-      const data: Record<string, string> = {
-        ...params,
-        note3f_commentaire: commentaire,
-        note3f_lignes: JSON.stringify(lignes),
-      };
-      const res = await fetch(`/api/entites/${entiteId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data }),
-      });
-      if (res.ok) {
-        setParams(data);
-        setSaved(true);
-        setEditing(false);
-        setTimeout(() => setSaved(false), 3000);
-      }
-    } catch { /* */ }
-    setSaving(false);
+    const data: Record<string, string> = {
+      ...params,
+      note3f_commentaire: commentaire,
+      note3f_lignes: JSON.stringify(lignes),
+    };
+    await saveParams(data);
   };
 
   const updateLigne = (idx: number, field: keyof LigneCharge, value: string) => {
@@ -112,9 +71,7 @@ function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): 
     setLignes(prev => prev.filter((_, i) => i !== idx));
   };
 
-  const duree = selectedExercice?.duree_mois || 12;
-  const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
-  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
+  const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
   const fmtDateShort = (d: Date | null): string => {
     if (!d) return '';

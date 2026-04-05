@@ -3,7 +3,7 @@ import logger from '../logger';
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
 const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || 'normx';
 const ADMIN_USER = process.env.KEYCLOAK_ADMIN_USER || 'admin';
-const ADMIN_PASSWORD = process.env.KEYCLOAK_ADMIN_PASSWORD || 'admin';
+const ADMIN_PASSWORD = process.env.KEYCLOAK_ADMIN_PASSWORD || (() => { throw new Error('KEYCLOAK_ADMIN_PASSWORD env var requise'); })();
 const CLIENT_ID = process.env.KEYCLOAK_ADMIN_CLIENT || 'admin-cli';
 
 interface KeycloakUserInput {

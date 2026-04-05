@@ -4,7 +4,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { Exercice, EtatBaseProps } from '../../types';
+import type { EtatBaseProps } from '../../types';
+import { useNoteData } from './useNoteData';
 
 interface Note3BProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -39,14 +40,13 @@ const VALUE_COLS = ['nature', 'a', 'acq', 'vir_aug', 'reeval', 'cess', 'vir_dim'
 type ColKey = typeof VALUE_COLS[number];
 
 function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
-  const [params, setParams] = useState<Record<string, string>>({});
-  const [editing, setEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const {
+    exercices, selectedExercice, setSelectedExercice,
+    params, previewUrl, setPreviewUrl,
+    pdfBlob, setPdfBlob, editing, setEditing,
+    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+  } = useNoteData({ entiteId });
+
   const [commentaire, setCommentaire] = useState('');
   // Valeurs manuelles par ligne (label) et colonne
   const [values, setValues] = useState<Record<string, Record<string, string>>>({});
@@ -62,68 +62,25 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
   };
   const numVal = (label: string, col: string): number => parseFloat(getVal(label, col).replace(/\s/g, '').replace(',', '.')) || 0;
 
+  // Initialiser les champs editables depuis les params charges
   useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
-      .then(r => r.json())
-      .then(ent => {
-        const data = ent.data || {};
-        setParams(data);
-        setCommentaire(data['note3b_commentaire'] || '');
-        if (data['note3b_values']) {
-          try { setValues(JSON.parse(data['note3b_values'])); } catch { /* */ }
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
+    if (!params || Object.keys(params).length === 0) return;
+    setCommentaire(params['note3b_commentaire'] || '');
+    if (params['note3b_values']) {
+      try { setValues(JSON.parse(params['note3b_values'])); } catch { /* */ }
+    }
+  }, [params]);
 
   const handleSave = async () => {
-    setSaving(true);
-    try {
-      const data: Record<string, string> = {
-        ...params,
-        note3b_commentaire: commentaire,
-        note3b_values: JSON.stringify(values),
-      };
-      const res = await fetch(`/api/entites/${entiteId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data }),
-      });
-      if (res.ok) {
-        setParams(data);
-        setSaved(true);
-        setEditing(false);
-        setTimeout(() => setSaved(false), 3000);
-      }
-    } catch { /* */ }
-    setSaving(false);
+    const data: Record<string, string> = {
+      ...params,
+      note3b_commentaire: commentaire,
+      note3b_values: JSON.stringify(values),
+    };
+    await saveParams(data);
   };
 
-  const duree = selectedExercice?.duree_mois || 12;
-  const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
-  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
+  const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
   const fmtDateShort = (d: Date | null): string => {
     if (!d) return '';

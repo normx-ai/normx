@@ -5,6 +5,7 @@
 
 import express, { Request, Response } from 'express';
 import multer from 'multer';
+import logger from '../logger';
 import {
   parseCSV,
   parseExcel,
@@ -15,7 +16,23 @@ import {
 import type { LigneReleve, ReleveImport } from '../services/rapprochement.service';
 
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } }); // 10 Mo max
+const ALLOWED_MIMES = [
+  'text/csv', 'text/plain',
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'application/vnd.ms-excel',
+];
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (ALLOWED_MIMES.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Type de fichier non autorise. Formats acceptes : CSV, PDF, Excel.'));
+    }
+  },
+});
 
 // ══ POST /api/rapprochement/import — Upload et parse un releve bancaire ══
 
@@ -64,7 +81,7 @@ router.post('/import', upload.single('file'), async (req: Request, res: Response
       lignes,
     });
   } catch (err) {
-    console.error('[rapprochement/import]', err);
+    logger.error('[rapprochement/import]', err);
     res.status(500).json({ error: 'Erreur lors du parsing du releve.' });
   }
 });
@@ -95,7 +112,7 @@ router.post('/auto', async (req: Request, res: Response) => {
       lignes, // retourner les lignes avec le flag rapprochee mis a jour
     });
   } catch (err) {
-    console.error('[rapprochement/auto]', err);
+    logger.error('[rapprochement/auto]', err);
     res.status(500).json({ error: 'Erreur lors du rapprochement automatique.' });
   }
 });
@@ -127,7 +144,7 @@ router.post('/save', async (req: Request, res: Response) => {
     const saved = await saveRapprochement(schema, Number(entite_id), Number(exercice_id), data, result);
     res.json({ id: saved.id, message: 'Rapprochement sauvegarde.' });
   } catch (err) {
-    console.error('[rapprochement/save]', err);
+    logger.error('[rapprochement/save]', err);
     res.status(500).json({ error: 'Erreur lors de la sauvegarde.' });
   }
 });
@@ -155,7 +172,7 @@ router.get('/list', async (req: Request, res: Response) => {
     );
     res.json({ rapprochements: result.rows });
   } catch (err) {
-    console.error('[rapprochement/list]', err);
+    logger.error('[rapprochement/list]', err);
     res.status(500).json({ error: 'Erreur serveur.' });
   }
 });

@@ -84,11 +84,17 @@ export async function createEcriture(schema: string, input: CreateEcritureInput)
     );
     const ecritureId: number = ecr.rows[0].id;
 
-    for (const l of lignes) {
+    if (lignes.length > 0) {
+      const values: unknown[] = [];
+      const placeholders = lignes.map((l, i) => {
+        const o = i * 6;
+        values.push(ecritureId, l.numero_compte, l.libelle_compte || '', parseFloat(String(l.debit)) || 0, parseFloat(String(l.credit)) || 0, l.tiers_id || null);
+        return `($${o+1}, $${o+2}, $${o+3}, $${o+4}, $${o+5}, $${o+6})`;
+      });
       await client.query(
         `INSERT INTO "${s}".ecriture_lignes (ecriture_id, numero_compte, libelle_compte, debit, credit, tiers_id)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [ecritureId, l.numero_compte, l.libelle_compte || '', parseFloat(String(l.debit)) || 0, parseFloat(String(l.credit)) || 0, l.tiers_id || null]
+         VALUES ${placeholders.join(', ')}`,
+        values,
       );
     }
 
@@ -98,13 +104,49 @@ export async function createEcriture(schema: string, input: CreateEcritureInput)
     await client.query('ROLLBACK');
     throw err;
   } finally {
-    client.release();
+    try { client.release(); } catch { /* ignore */ }
   }
 }
 
-export async function listEcritures(schema: string, exercice_id: number, filters: EcritureFilters) {
+export async function listEcritures(schema: string, exercice_id: number, filters: EcritureFilters, pagination?: { limit: number; offset: number }) {
   const s = getValidatedSchemaName(schema);
   const { journal, statut, date_du, date_au, search } = filters;
+
+  let whereClause = ` WHERE e.exercice_id = $1`;
+  const params: (string | number)[] = [exercice_id];
+  let idx = 2;
+
+  if (journal) {
+    whereClause += ` AND e.journal = $${idx}`;
+    params.push(journal);
+    idx++;
+  }
+  if (statut) {
+    whereClause += ` AND e.statut = $${idx}`;
+    params.push(statut);
+    idx++;
+  }
+  if (date_du) {
+    whereClause += ` AND e.date_ecriture >= $${idx}`;
+    params.push(date_du);
+    idx++;
+  }
+  if (date_au) {
+    whereClause += ` AND e.date_ecriture <= $${idx}`;
+    params.push(date_au);
+    idx++;
+  }
+  if (search) {
+    whereClause += ` AND (e.libelle ILIKE $${idx} OR e.numero_piece ILIKE $${idx})`;
+    params.push('%' + search + '%');
+    idx++;
+  }
+
+  // Count total
+  const countParams = [...params];
+  const countQuery = `SELECT COUNT(DISTINCT e.id) AS total FROM "${s}".ecritures e${whereClause}`;
+  const countResult = await pool.query(countQuery, countParams);
+  const total = parseInt(countResult.rows[0].total, 10);
 
   let query = `
     SELECT e.*, json_agg(
@@ -114,39 +156,16 @@ export async function listEcritures(schema: string, exercice_id: number, filters
     FROM "${s}".ecritures e
     JOIN "${s}".ecriture_lignes el ON el.ecriture_id = e.id
     LEFT JOIN "${s}".tiers t ON t.id = el.tiers_id
-    WHERE e.exercice_id = $1`;
-  const params: (string | number)[] = [exercice_id];
-  let idx = 2;
+    ${whereClause}
+     GROUP BY e.id ORDER BY e.date_ecriture, e.id`;
 
-  if (journal) {
-    query += ` AND e.journal = $${idx}`;
-    params.push(journal);
-    idx++;
-  }
-  if (statut) {
-    query += ` AND e.statut = $${idx}`;
-    params.push(statut);
-    idx++;
-  }
-  if (date_du) {
-    query += ` AND e.date_ecriture >= $${idx}`;
-    params.push(date_du);
-    idx++;
-  }
-  if (date_au) {
-    query += ` AND e.date_ecriture <= $${idx}`;
-    params.push(date_au);
-    idx++;
-  }
-  if (search) {
-    query += ` AND (e.libelle ILIKE $${idx} OR e.numero_piece ILIKE $${idx})`;
-    params.push('%' + search + '%');
-    idx++;
+  if (pagination) {
+    query += ` LIMIT $${idx} OFFSET $${idx + 1}`;
+    params.push(pagination.limit, pagination.offset);
   }
 
-  query += ` GROUP BY e.id ORDER BY e.date_ecriture, e.id`;
   const result = await pool.query(query, params);
-  return result.rows;
+  return { rows: result.rows, total };
 }
 
 export async function validerEcritures(schema: string, ids: number[], userId: number | null) {
@@ -191,11 +210,17 @@ export async function updateEcriture(schema: string, id: number, input: { date_e
 
     await client.query(`DELETE FROM "${s}".ecriture_lignes WHERE ecriture_id = $1`, [id]);
 
-    for (const l of lignes) {
+    if (lignes.length > 0) {
+      const values: unknown[] = [];
+      const placeholders = lignes.map((l, i) => {
+        const o = i * 6;
+        values.push(id, l.numero_compte, l.libelle_compte || '', parseFloat(String(l.debit)) || 0, parseFloat(String(l.credit)) || 0, l.tiers_id || null);
+        return `($${o+1}, $${o+2}, $${o+3}, $${o+4}, $${o+5}, $${o+6})`;
+      });
       await client.query(
         `INSERT INTO "${s}".ecriture_lignes (ecriture_id, numero_compte, libelle_compte, debit, credit, tiers_id)
-         VALUES ($1, $2, $3, $4, $5, $6)`,
-        [id, l.numero_compte, l.libelle_compte || '', parseFloat(String(l.debit)) || 0, parseFloat(String(l.credit)) || 0, l.tiers_id || null]
+         VALUES ${placeholders.join(', ')}`,
+        values,
       );
     }
 
@@ -205,60 +230,77 @@ export async function updateEcriture(schema: string, id: number, input: { date_e
     await client.query('ROLLBACK');
     throw err;
   } finally {
-    client.release();
+    try { client.release(); } catch { /* ignore */ }
   }
 }
 
 export async function deleteEcriture(schema: string, id: number) {
   const s = getValidatedSchemaName(schema);
-  const check = await pool.query(`SELECT statut FROM "${s}".ecritures WHERE id = $1`, [id]);
-  if (check.rows.length === 0) return { notFound: true };
-  if (check.rows[0].statut === 'validee') return { forbidden: true };
-
-  const result = await pool.query(`DELETE FROM "${s}".ecritures WHERE id = $1 RETURNING *`, [id]);
-  if (result.rows.length === 0) return { notFound: true };
+  // Atomic: DELETE seulement si non validee (evite race condition TOCTOU)
+  const result = await pool.query(
+    `DELETE FROM "${s}".ecritures WHERE id = $1 AND statut != 'validee' RETURNING *`,
+    [id]
+  );
+  if (result.rows.length === 0) {
+    // Verifier si elle existe pour distinguer notFound vs forbidden
+    const check = await pool.query(`SELECT statut FROM "${s}".ecritures WHERE id = $1`, [id]);
+    if (check.rows.length === 0) return { notFound: true };
+    return { forbidden: true };
+  }
   return { success: true };
 }
 
 // ============ GRAND LIVRE ============
 
-export async function getGrandLivre(schema: string, exercice_id: number, filters: GrandLivreFilters) {
+export async function getGrandLivre(schema: string, exercice_id: number, filters: GrandLivreFilters, pagination?: { limit: number; offset: number }) {
   const s = getValidatedSchemaName(schema);
   const { compte, journal, date_du, date_au } = filters;
+
+  let whereClause = ` WHERE e.exercice_id = $1 AND e.statut = 'validee'`;
+  const params: (string | number)[] = [exercice_id];
+  let idx = 2;
+
+  if (compte) {
+    whereClause += ` AND el.numero_compte LIKE $${idx}`;
+    params.push(compte + '%');
+    idx++;
+  }
+  if (journal) {
+    whereClause += ` AND e.journal = $${idx}`;
+    params.push(journal);
+    idx++;
+  }
+  if (date_du) {
+    whereClause += ` AND e.date_ecriture >= $${idx}`;
+    params.push(date_du);
+    idx++;
+  }
+  if (date_au) {
+    whereClause += ` AND e.date_ecriture <= $${idx}`;
+    params.push(date_au);
+    idx++;
+  }
+
+  const countParams = [...params];
+  const countQuery = `SELECT COUNT(*) AS total FROM "${s}".ecriture_lignes el JOIN "${s}".ecritures e ON e.id = el.ecriture_id${whereClause}`;
+  const countResult = await pool.query(countQuery, countParams);
+  const total = parseInt(countResult.rows[0].total, 10);
 
   let query = `
     SELECT el.numero_compte, el.libelle_compte, el.debit, el.credit,
            e.date_ecriture, e.libelle AS libelle_ecriture, e.numero_piece, e.journal
     FROM "${s}".ecriture_lignes el
     JOIN "${s}".ecritures e ON e.id = el.ecriture_id
-    WHERE e.exercice_id = $1 AND e.statut = 'validee'`;
-  const params: (string | number)[] = [exercice_id];
-  let idx = 2;
+    ${whereClause}
+     ORDER BY el.numero_compte, e.date_ecriture, e.id`;
 
-  if (compte) {
-    query += ` AND el.numero_compte LIKE $${idx}`;
-    params.push(compte + '%');
-    idx++;
-  }
-  if (journal) {
-    query += ` AND e.journal = $${idx}`;
-    params.push(journal);
-    idx++;
-  }
-  if (date_du) {
-    query += ` AND e.date_ecriture >= $${idx}`;
-    params.push(date_du);
-    idx++;
-  }
-  if (date_au) {
-    query += ` AND e.date_ecriture <= $${idx}`;
-    params.push(date_au);
-    idx++;
+  if (pagination) {
+    query += ` LIMIT $${idx} OFFSET $${idx + 1}`;
+    params.push(pagination.limit, pagination.offset);
   }
 
-  query += ` ORDER BY el.numero_compte, e.date_ecriture, e.id`;
   const result = await pool.query(query, params);
-  return result.rows;
+  return { rows: result.rows, total };
 }
 
 // ============ BALANCE GENEREE ============
@@ -327,9 +369,34 @@ export async function getGrandLivreTiers(schema: string, exercice_id: number, fi
 
 // ============ BALANCE TIERS ============
 
-export async function getBalanceTiers(schema: string, exercice_id: number, filters: BalanceTiersFilters) {
+export async function getBalanceTiers(schema: string, exercice_id: number, filters: BalanceTiersFilters, pagination?: { limit: number; offset: number }) {
   const s = getValidatedSchemaName(schema);
   const { type_tiers, date_du, date_au } = filters;
+
+  let whereClause = ` WHERE e.exercice_id = $1 AND e.statut = 'validee' AND el.tiers_id IS NOT NULL`;
+  const params: (string | number)[] = [exercice_id];
+  let idx = 2;
+
+  if (type_tiers) {
+    whereClause += ` AND t.type = $${idx}`;
+    params.push(type_tiers);
+    idx++;
+  }
+  if (date_du) {
+    whereClause += ` AND e.date_ecriture >= $${idx}`;
+    params.push(date_du);
+    idx++;
+  }
+  if (date_au) {
+    whereClause += ` AND e.date_ecriture <= $${idx}`;
+    params.push(date_au);
+    idx++;
+  }
+
+  const countParams = [...params];
+  const countQuery = `SELECT COUNT(DISTINCT el.tiers_id) AS total FROM "${s}".ecriture_lignes el JOIN "${s}".ecritures e ON e.id = el.ecriture_id JOIN "${s}".tiers t ON t.id = el.tiers_id${whereClause}`;
+  const countResult = await pool.query(countQuery, countParams);
+  const total = parseInt(countResult.rows[0].total, 10);
 
   let query = `
     SELECT el.tiers_id,
@@ -341,30 +408,17 @@ export async function getBalanceTiers(schema: string, exercice_id: number, filte
     FROM "${s}".ecriture_lignes el
     JOIN "${s}".ecritures e ON e.id = el.ecriture_id
     JOIN "${s}".tiers t ON t.id = el.tiers_id
-    WHERE e.exercice_id = $1 AND e.statut = 'validee' AND el.tiers_id IS NOT NULL`;
-  const params: (string | number)[] = [exercice_id];
-  let idx = 2;
-
-  if (type_tiers) {
-    query += ` AND t.type = $${idx}`;
-    params.push(type_tiers);
-    idx++;
-  }
-  if (date_du) {
-    query += ` AND e.date_ecriture >= $${idx}`;
-    params.push(date_du);
-    idx++;
-  }
-  if (date_au) {
-    query += ` AND e.date_ecriture <= $${idx}`;
-    params.push(date_au);
-    idx++;
-  }
-
-  query += ` GROUP BY el.tiers_id, t.nom, t.code_tiers, t.type, t.compte_comptable
+    ${whereClause}
+     GROUP BY el.tiers_id, t.nom, t.code_tiers, t.type, t.compte_comptable
              ORDER BY t.type, t.nom`;
+
+  if (pagination) {
+    query += ` LIMIT $${idx} OFFSET $${idx + 1}`;
+    params.push(pagination.limit, pagination.offset);
+  }
+
   const result = await pool.query(query, params);
-  return result.rows;
+  return { rows: result.rows, total };
 }
 
 // ============ STATS ============
@@ -372,30 +426,24 @@ export async function getBalanceTiers(schema: string, exercice_id: number, filte
 export async function getStats(schema: string, exercice_id: number) {
   const s = getValidatedSchemaName(schema);
 
-  const nbEcritures = await pool.query(
-    `SELECT COUNT(*) FROM "${s}".ecritures WHERE exercice_id = $1`,
-    [exercice_id]
-  );
-  const totaux = await pool.query(
-    `SELECT COALESCE(SUM(el.debit), 0) AS total_debit, COALESCE(SUM(el.credit), 0) AS total_credit
-     FROM "${s}".ecriture_lignes el
-     JOIN "${s}".ecritures e ON e.id = el.ecriture_id
-     WHERE e.exercice_id = $1`,
-    [exercice_id]
-  );
-  const nbComptes = await pool.query(
-    `SELECT COUNT(DISTINCT el.numero_compte) AS nb
-     FROM "${s}".ecriture_lignes el
-     JOIN "${s}".ecritures e ON e.id = el.ecriture_id
+  const result = await pool.query(
+    `SELECT
+       COUNT(DISTINCT e.id) AS nb_ecritures,
+       COALESCE(SUM(el.debit), 0) AS total_debit,
+       COALESCE(SUM(el.credit), 0) AS total_credit,
+       COUNT(DISTINCT el.numero_compte) AS nb_comptes
+     FROM "${s}".ecritures e
+     LEFT JOIN "${s}".ecriture_lignes el ON el.ecriture_id = e.id
      WHERE e.exercice_id = $1`,
     [exercice_id]
   );
 
+  const row = result.rows[0];
   return {
-    nb_ecritures: parseInt(nbEcritures.rows[0].count, 10),
-    total_debit: parseFloat(totaux.rows[0].total_debit),
-    total_credit: parseFloat(totaux.rows[0].total_credit),
-    nb_comptes: parseInt(nbComptes.rows[0].nb, 10),
+    nb_ecritures: parseInt(row.nb_ecritures, 10),
+    total_debit: parseFloat(row.total_debit),
+    total_credit: parseFloat(row.total_credit),
+    nb_comptes: parseInt(row.nb_comptes, 10),
   };
 }
 

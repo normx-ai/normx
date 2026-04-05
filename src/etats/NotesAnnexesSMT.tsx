@@ -76,7 +76,7 @@ function NotesAnnexesSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }
         <div className="etat-header-row"><span className="etat-header-label">Désignation entité :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div>
         <div className="etat-header-row"><span className="etat-header-label">Numéro d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Durée (en mois) :</span><span className="etat-header-value-right">{duree}</span></div>
       </div>
-      <div className="etat-sub-titre" dangerouslySetInnerHTML={{ __html: titre }} />
+      <div className="etat-sub-titre">{titre.split('<br/>').map((part: string, i: number) => <React.Fragment key={i}>{i > 0 && <br />}{part}</React.Fragment>)}</div>
     </div>
   );
 

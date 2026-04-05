@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { LuChevronLeft, LuDownload, LuFileText } from 'react-icons/lu';
+import { fmt } from '../utils/formatters';
 import './Comptabilite.css';
 
 interface FilterFieldProps {
@@ -166,7 +167,7 @@ function Journaux({ entiteId, exerciceId, exerciceAnnee, entiteName, onBack }: J
     setLoading(false);
   }, [entiteId, exerciceId, dateDu, dateFin, journalFilter]);
 
-  const fmt = (v: string | number): string => { const n = parseFloat(String(v)); if (!n) return ''; return n.toLocaleString('fr-FR'); };
+  /* fmt importe depuis utils/formatters */
 
   const totalDebit = data.reduce((s, l) => s + l.debit, 0);
   const totalCredit = data.reduce((s, l) => s + l.credit, 0);
@@ -294,7 +295,7 @@ function Echeancier({ entiteId, exerciceId, exerciceAnnee, onBack }: EcheancierP
     setLoading(false);
   }, [entiteId, exerciceId, dateDu, dateAu, typeTiers, statutFilter]);
 
-  const fmt = (v: string | number): string => { const n = parseFloat(String(v)); if (!n) return ''; return n.toLocaleString('fr-FR'); };
+  /* fmt importe depuis utils/formatters */
 
   return (
     <div className="compta-wrapper">
@@ -412,7 +413,7 @@ function BalanceAgee({ entiteId, exerciceId, exerciceAnnee, onBack }: BalanceAge
     setLoading(false);
   }, [entiteId, exerciceId, typeTiers]);
 
-  const fmt = (v: string | number): string => { const n = parseFloat(String(v)); if (!n) return ''; return n.toLocaleString('fr-FR'); };
+  /* fmt importe depuis utils/formatters */
 
   // Compute aging based on custom delais
   const refDate = new Date(dateSituation);

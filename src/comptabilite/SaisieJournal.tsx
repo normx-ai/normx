@@ -3,6 +3,7 @@ import { LuPlus, LuTrash2, LuSave, LuSearch, LuPenLine, LuX, LuChevronDown, LuCh
 import type { CompteComptable } from '../types';
 import type { SaisieJournalProps, EcritureRow, EcritureAPI, StatsData, TiersItem } from './SaisieJournal.types';
 import { JOURNAUX, MOIS } from './SaisieJournal.types';
+import { fmt, parseInputNumber } from '../utils/formatters';
 import './Comptabilite.css';
 
 function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJournalProps): React.JSX.Element {
@@ -29,7 +30,12 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
   const getDefaultDate = (): string => {
     const now = new Date();
     const annee = exerciceAnnee || now.getFullYear();
-    if (now.getFullYear() === annee) return now.toISOString().split('T')[0];
+    if (now.getFullYear() === annee) {
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
     return annee + '-01-01';
   };
   const [dateEcriture, setDateEcriture] = useState<string>(getDefaultDate());
@@ -206,7 +212,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     if (field === 'numero_compte') {
       const found = planComptable.find(c => c.numero === value);
       if (found) updated[idx].libelle_compte = found.libelle;
-      const oldType = getTypeTiersFromCompte(lignes[idx].numero_compte);
+      const oldType = getTypeTiersFromCompte(updated[idx].numero_compte);
       const newType = getTypeTiersFromCompte(String(value));
       if (oldType !== newType) updated[idx].tiers_id = '';
     }
@@ -251,8 +257,8 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     setLignes(lignes.filter((_, i) => i !== idx));
   };
 
-  const totalDebit = lignes.reduce((s, l) => s + (parseFloat(String(l.debit)) || 0), 0);
-  const totalCredit = lignes.reduce((s, l) => s + (parseFloat(String(l.credit)) || 0), 0);
+  const totalDebit = lignes.reduce((s, l) => s + parseInputNumber(String(l.debit)), 0);
+  const totalCredit = lignes.reduce((s, l) => s + parseInputNumber(String(l.credit)), 0);
   const solde = totalDebit - totalCredit;
 
   // Validation
@@ -266,7 +272,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     }
     return false;
   };
-  const lignesActives = lignes.filter(l => l.numero_compte && (parseFloat(String(l.debit)) || parseFloat(String(l.credit))));
+  const lignesActives = lignes.filter(l => l.numero_compte && (parseInputNumber(String(l.debit)) || parseInputNumber(String(l.credit))));
   const comptesInvalides = lignesActives.filter(l => !isCompteValide(l.numero_compte));
   const allComptesValides = comptesInvalides.length === 0 && lignesActives.length >= 2;
   const dateAnnee = dateEcriture ? parseInt(dateEcriture.split('-')[0], 10) : null;
@@ -421,11 +427,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     return ecr && ecr.statut === 'validee';
   }).length;
 
-  const fmt = (val: string | number): string => {
-    const n = parseFloat(String(val));
-    if (!n) return '';
-    return n.toLocaleString('fr-FR');
-  };
+  /* fmt importe depuis utils/formatters */
 
   const listTotalDebit = ecritures.reduce((s, e) =>
     s + e.lignes.reduce((s2, l) => s2 + (parseFloat(String(l.debit)) || 0), 0), 0);

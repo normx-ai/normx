@@ -4,7 +4,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps, BalanceLigne } from '../../types';
+import { useNoteData } from './useNoteData';
 
 interface Note3AProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -48,15 +49,14 @@ const ALL_RUBRIQUES: Rubrique[] = [
 ];
 
 function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
-  const [params, setParams] = useState<Record<string, string>>({});
+  const {
+    exercices, selectedExercice, setSelectedExercice,
+    params, previewUrl, setPreviewUrl,
+    pdfBlob, setPdfBlob, editing, setEditing,
+    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+  } = useNoteData({ entiteId });
+
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
-  const [editing, setEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
   const [hideEmpty, setHideEmpty] = useState(false);
   const DEFAULT_COMMENTAIRE = `• Toute variation significative doit être commentée.
 • Détailler les éléments constitutifs du fonds commercial et indiquer la date d'acquisition.
@@ -83,41 +83,14 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
     return adjustments[label]?.[field] || 0;
   };
 
+  // Initialiser les champs editables depuis les params charges
   useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
-      .then(r => r.json())
-      .then(ent => {
-        const data = ent.data || {};
-        setParams(data);
-        setCommentaire(data['note3a_commentaire'] || DEFAULT_COMMENTAIRE);
-        if (data['note3a_adjustments']) {
-          try { setAdjustments(JSON.parse(data['note3a_adjustments'])); } catch { /* */ }
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
+    if (!params || Object.keys(params).length === 0) return;
+    setCommentaire(params['note3a_commentaire'] || DEFAULT_COMMENTAIRE);
+    if (params['note3a_adjustments']) {
+      try { setAdjustments(JSON.parse(params['note3a_adjustments'])); } catch { /* */ }
+    }
+  }, [params]);
 
   const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
   useEffect(() => {
@@ -141,31 +114,15 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
   }, [entiteId, selectedExercice, balanceSource]);
 
   const handleSave = async () => {
-    setSaving(true);
-    try {
-      const data: Record<string, string> = {
-        ...params,
-        note3a_commentaire: commentaire,
-        note3a_adjustments: JSON.stringify(adjustments),
-      };
-      const res = await fetch(`/api/entites/${entiteId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data }),
-      });
-      if (res.ok) {
-        setParams(data);
-        setSaved(true);
-        setEditing(false);
-        setTimeout(() => setSaved(false), 3000);
-      }
-    } catch { /* */ }
-    setSaving(false);
+    const data: Record<string, string> = {
+      ...params,
+      note3a_commentaire: commentaire,
+      note3a_adjustments: JSON.stringify(adjustments),
+    };
+    await saveParams(data);
   };
 
-  const duree = selectedExercice?.duree_mois || 12;
-  const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
-  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
+  const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
   const fmtDateShort = (d: Date | null): string => {
     if (!d) return '';
