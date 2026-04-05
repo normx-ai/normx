@@ -127,6 +127,51 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
   }
 }
 
+export async function optionalAuth(req: Request, _res: Response, next: NextFunction): Promise<void> {
+  const authHeader = req.headers.authorization;
+  let token: string | undefined;
+
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.split(' ')[1];
+  } else if (req.cookies?.normx_access_token) {
+    token = req.cookies.normx_access_token;
+  }
+
+  if (!token) {
+    next();
+    return;
+  }
+
+  try {
+    const decoded = await new Promise<KeycloakPayload>((resolve, reject) => {
+      jwt.verify(token!, getSigningKey, {
+        algorithms: ['RS256'],
+        issuer: ISSUER,
+      }, (err, payload) => {
+        if (err) reject(err);
+        else resolve(payload as KeycloakPayload);
+      });
+    });
+
+    const rawSubs = decoded.subscribed_products || '';
+    const subscriptions = rawSubs ? rawSubs.split(',').map((s: string) => s.trim()).filter(Boolean) : [];
+
+    req.user = {
+      sub: decoded.sub,
+      email: decoded.email || '',
+      name: decoded.name || '',
+      preferred_username: decoded.preferred_username || '',
+      roles: extractRoles(decoded),
+      tenantSlug: extractTenantSlug(decoded),
+      tenantId: extractTenantId(decoded),
+      subscriptions,
+    };
+  } catch {
+    // Token invalide - continue sans user
+  }
+  next();
+}
+
 export function requireRole(role: string) {
   return (req: Request, res: Response, next: NextFunction): void => {
     if (!req.user || !req.user.roles.includes(role)) {

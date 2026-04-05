@@ -5,6 +5,7 @@
 
 import pool from '../db';
 import { createLogger } from '../logger';
+import cache from '../utils/cache';
 
 const log = createLogger('ecritures');
 import { getValidatedSchemaName } from '../utils/tenant.utils';
@@ -426,6 +427,10 @@ export async function getBalanceTiers(schema: string, exercice_id: number, filte
 // ============ STATS ============
 
 export async function getStats(schema: string, exercice_id: number) {
+  const cacheKey = `stats:${schema}:${exercice_id}`;
+  const cached = cache.get<{ nb_ecritures: number; total_debit: number; total_credit: number; nb_comptes: number }>(cacheKey);
+  if (cached) return cached;
+
   const s = getValidatedSchemaName(schema);
 
   const result = await pool.query(
@@ -441,12 +446,15 @@ export async function getStats(schema: string, exercice_id: number) {
   );
 
   const row = result.rows[0];
-  return {
+  const stats = {
     nb_ecritures: parseInt(row.nb_ecritures, 10),
     total_debit: parseFloat(row.total_debit),
     total_credit: parseFloat(row.total_credit),
     nb_comptes: parseInt(row.nb_comptes, 10),
   };
+
+  cache.set(cacheKey, stats, 60_000); // 1 minute TTL
+  return stats;
 }
 
 // ============ RAPPORTS ============

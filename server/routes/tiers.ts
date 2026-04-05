@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import * as tiersService from '../services/tiers.service';
 import { asyncHandler } from '../middleware/asyncHandler';
+import { validateBody } from '../middleware/validate';
+import { createTiersBody, updateTiersBody } from '../schemas/tiers.schema';
 
 const router = express.Router();
 
@@ -23,7 +25,7 @@ router.get('/detail/:id', asyncHandler(async (req: Request, res: Response) => {
 }));
 
 // Creer un tiers
-router.post('/', asyncHandler(async (req: Request, res: Response) => {
+router.post('/', validateBody(createTiersBody), asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data } = req.body;
@@ -35,7 +37,7 @@ router.post('/', asyncHandler(async (req: Request, res: Response) => {
 }));
 
 // Modifier un tiers
-router.put('/:id', asyncHandler(async (req: Request, res: Response) => {
+router.put('/:id', validateBody(updateTiersBody), asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data, actif } = req.body;

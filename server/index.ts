@@ -5,6 +5,8 @@ import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import path from "path";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger";
 import logger from "./logger";
 import pool from "./db";
 
@@ -102,6 +104,14 @@ app.use("/api/auth", sensitiveLimiter, authRoutes);
 // Routes tenant (auth + subscription, pas de tenant middleware car le tenant peut ne pas exister)
 app.use("/api/tenant", authenticateToken, requireSubscription('normx'), tenantRoutes);
 
+// Swagger UI (dev/staging uniquement)
+if (process.env.NODE_ENV !== 'production') {
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.get('/api/docs.json', (_req: Request, res: Response) => {
+    res.json(swaggerSpec);
+  });
+}
+
 // Middleware chaine : auth → subscription → tenant → switch client
 const tenantChain = [authenticateToken, requireSubscription('normx'), tenantMiddleware, switchClientMiddleware];
 
@@ -120,6 +130,18 @@ app.use("/api/notifications", ...tenantChain, notificationsRoutes);
 app.use("/api/revision", ...tenantChain, revisionRoutes);
 app.use("/api/permissions", ...tenantChain, permissionsRoutes);
 
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Health check
+ *     tags: [System]
+ *     responses:
+ *       200:
+ *         description: Service OK
+ *       503:
+ *         description: Service degrade
+ */
 // Health check (verifie DB)
 app.get("/health", async (_req: Request, res: Response) => {
   try {

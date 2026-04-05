@@ -2,11 +2,49 @@ import express, { Request, Response } from 'express';
 import logger from '../logger';
 import * as balanceService from '../services/balance.service';
 import { getErrorMessage } from '../utils/routeHelpers';
+import { validateBody } from '../middleware/validate';
+import { createExerciceBody, importBalanceBody } from '../schemas/balance.schema';
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * /balance/exercice:
+ *   post:
+ *     summary: Creer un exercice comptable
+ *     tags: [Balance]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [annee]
+ *             properties:
+ *               annee:
+ *                 type: integer
+ *                 example: 2025
+ *               duree_mois:
+ *                 type: integer
+ *                 default: 12
+ *               date_debut:
+ *                 type: string
+ *                 format: date
+ *               date_fin:
+ *                 type: string
+ *                 format: date
+ *     responses:
+ *       201:
+ *         description: Exercice cree
+ *       200:
+ *         description: Exercice existant retourne
+ *       400:
+ *         description: Erreur de validation
+ */
 // Creer/obtenir exercice
-router.post('/exercice', async (req: Request, res: Response) => {
+router.post('/exercice', validateBody(createExerciceBody), async (req: Request, res: Response) => {
   const { annee, duree_mois, date_debut, date_fin } = req.body;
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
@@ -34,6 +72,27 @@ router.post('/exercice', async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @swagger
+ * /balance/exercices/{entite_id}:
+ *   get:
+ *     summary: Lister les exercices d'une entite
+ *     tags: [Balance]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: entite_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de l'entite
+ *     responses:
+ *       200:
+ *         description: Liste des exercices
+ *       400:
+ *         description: Contexte tenant manquant
+ */
 // Lister exercices d'une entite
 router.get('/exercices/:entite_id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
@@ -75,8 +134,53 @@ router.put('/exercice/:id/rouvrir', async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * @swagger
+ * /balance/import:
+ *   post:
+ *     summary: Importer une balance comptable
+ *     tags: [Balance]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [exercice_id, type_balance, lignes]
+ *             properties:
+ *               exercice_id:
+ *                 type: integer
+ *                 example: 1
+ *               type_balance:
+ *                 type: string
+ *                 enum: [ouverture, generale, cloture]
+ *                 example: generale
+ *               nom_fichier:
+ *                 type: string
+ *                 example: balance_2025.xlsx
+ *               lignes:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     numero_compte:
+ *                       type: string
+ *                     libelle_compte:
+ *                       type: string
+ *                     debit:
+ *                       type: number
+ *                     credit:
+ *                       type: number
+ *     responses:
+ *       201:
+ *         description: Balance importee
+ *       400:
+ *         description: Donnees incompletes
+ */
 // Importer balance
-router.post('/import', async (req: Request, res: Response) => {
+router.post('/import', validateBody(importBalanceBody), async (req: Request, res: Response) => {
   const { exercice_id, type_balance, nom_fichier, lignes } = req.body;
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
