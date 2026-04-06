@@ -174,12 +174,22 @@ function MainContent(props: MainContentProps): React.ReactElement {
       .catch(() => setBalanceLignes([]));
   }, [entiteId, exerciceId, offre]);
 
+  // Charger les params d'entite (contient les saisies manuelles des notes et choix R4)
+  const [entiteParams, setEntiteParams] = useState<Record<string, string>>({});
+  useEffect(() => {
+    if (!entiteId) return;
+    fetch('/api/entites/' + entiteId)
+      .then(r => r.json())
+      .then(ent => setEntiteParams(ent.data || {}))
+      .catch(() => setEntiteParams({}));
+  }, [entiteId]);
+
   // Mapping note_id_sys → préfixes de comptes
   const NOTE_ACCOUNT_MAP: Record<string, string[]> = {
     note_1_sys: ['16', '17'],
     note_2_sys: [], // toujours applicable (informations obligatoires)
     note_3a_sys: ['21', '22', '23', '24', '25'],
-    note_3b_sys: ['22'],
+    note_3b_sys: [],  // manuelle (biens en location-acquisition)
     note_3c_sys: ['28'],
     note_3d_sys: ['21', '22', '23', '24', '25'],
     note_3e_sys: ['21', '22', '23', '24', '25'],
@@ -224,10 +234,38 @@ function MainContent(props: MainContentProps): React.ReactElement {
     note_37_sys: ['89'],
   };
 
+  // Notes toujours visibles (informations obligatoires, syntheses, etc.)
+  const ALWAYS_VISIBLE_NOTES = ['note_2_sys', 'note_34_sys', 'note_36_sys'];
+
+  // Notes manuelles : visibles si l'utilisateur a saisi des donnees
+  const MANUAL_NOTE_PARAMS: Record<string, string> = {
+    note_3b_sys: 'note3b_values',
+    note_16c_sys: 'note16c_values',
+    note_35_sys: 'note35_values',
+  };
+
   const noteHasData = (noteId: string): boolean => {
+    // Toujours afficher certaines notes obligatoires
+    if (ALWAYS_VISIBLE_NOTES.includes(noteId)) return true;
+
     const prefixes = NOTE_ACCOUNT_MAP[noteId];
-    // Pas de mapping = toujours afficher
-    if (!prefixes || prefixes.length === 0) return true;
+
+    // Notes manuelles : verifier si des donnees ont ete saisies
+    if (!prefixes || prefixes.length === 0) {
+      const paramKey = MANUAL_NOTE_PARAMS[noteId];
+      if (paramKey) {
+        const val = entiteParams[paramKey];
+        if (!val) return false;
+        try {
+          const parsed = JSON.parse(val);
+          return Object.keys(parsed).length > 0;
+        } catch { return false; }
+      }
+      // Pas de mapping et pas de param = ne pas afficher
+      return false;
+    }
+
+    // Notes avec prefixes : verifier la balance
     return balanceLignes.some(l => {
       const num = (l.numero_compte || '').trim();
       return prefixes.some(p => num.startsWith(p)) &&
