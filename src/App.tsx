@@ -66,6 +66,8 @@ function AppContent(): React.JSX.Element {
 
         // Charger les entités depuis l'API
         try {
+          // Ne PAS envoyer X-Client-Slug ici : on veut la liste complete du cabinet
+          sessionStorage.removeItem('normx_client_slug');
           const entitesRes = await fetch('/api/entites', { credentials: 'include' });
           if (entitesRes.ok) {
             const entitesList: Entite[] = await entitesRes.json();
