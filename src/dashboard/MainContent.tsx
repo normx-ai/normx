@@ -191,8 +191,8 @@ function MainContent(props: MainContentProps): React.ReactElement {
     note_3a_sys: ['21', '22', '23', '24', '25'],
     note_3b_sys: ['17'],  // biens en location-acquisition (compte 17 = dettes de location-acquisition)
     note_3c_sys: ['28'],
-    note_3d_sys: ['21', '22', '23', '24', '25'],
-    note_3e_sys: ['21', '22', '23', '24', '25'],
+    note_3d_sys: ['81', '82', '654', '754'],  // cessions : VNC (81x, 654) + produits (82x, 754)
+    note_3e_sys: ['106'],  // reevaluations : ecart de reevaluation (compte 106 = 1061 legale, 1062 libre)
     note_4_sys: ['26', '27'],
     note_5_sys: ['48', '481', '482', '483', '484', '485'],
     note_6_sys: ['31', '32', '33', '34', '35', '36', '37', '38', '39'],
