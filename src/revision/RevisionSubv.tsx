@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
+import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, soldeCreditNet, totalSoldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -153,9 +153,7 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
     const rapporteTheorique = a.subvBrute * fractionAmortie;
     const soldeTheorique = a.subvBrute - rapporteTheorique;
     const balanceLigne = comptesSubv.find(l => l.numero_compte === a.compteSubv);
-    const soldeBalance = balanceLigne
-      ? (parseFloat(String(balanceLigne.solde_crediteur)) || 0) - (parseFloat(String(balanceLigne.solde_debiteur)) || 0)
-      : 0;
+    const soldeBalance = balanceLigne ? soldeCreditNet(balanceLigne) : 0;
     const ecart = soldeBalance - soldeTheorique;
     return { ...a, fractionAmortie, rapporteTheorique, soldeTheorique, soldeBalance, ecart };
   });
@@ -166,9 +164,7 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
     const rapporteTheorique = a.subvBrute * fractionARapporter;
     const soldeTheorique = a.subvBrute - rapporteTheorique;
     const balanceLigne = comptesSubv.find(l => l.numero_compte === a.compteSubv);
-    const soldeBalance = balanceLigne
-      ? (parseFloat(String(balanceLigne.solde_crediteur)) || 0) - (parseFloat(String(balanceLigne.solde_debiteur)) || 0)
-      : 0;
+    const soldeBalance = balanceLigne ? soldeCreditNet(balanceLigne) : 0;
     const ecart = soldeBalance - soldeTheorique;
     return { ...a, fractionARapporter, rapporteTheorique, soldeTheorique, soldeBalance, ecart };
   });
@@ -225,7 +221,7 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
 
   // Rapprochement global : total soldes théoriques vs solde 14x en balance
   const totalSoldeTheorique = amortCalcs.reduce((s, c) => s + c.soldeTheorique, 0) + nonAmortCalcs.reduce((s, c) => s + c.soldeTheorique, 0);
-  const totalSolde14xBalance = comptesSubv.reduce((s, l) => s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
+  const totalSolde14xBalance = totalSoldeCreditNet(comptesSubv);
   const ecartRapprochement = totalSolde14xBalance - totalSoldeTheorique;
 
   return (
@@ -260,11 +256,11 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
       {/* Note d'information si comptes 14x présents en balance */}
       {comptesSubv.length > 0 && subvAmort.length === 0 && subvNonAmort.length === 0 && (
         <div className="revision-objectif">
-          <strong>Information :</strong> La balance contient {comptesSubv.length} compte{comptesSubv.length > 1 ? 's' : ''} de subventions d'investissement (14x) pour un solde total de <strong>{fmt(comptesSubv.reduce((s, l) => s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0))}</strong>.
+          <strong>Information :</strong> La balance contient {comptesSubv.length} compte{comptesSubv.length > 1 ? 's' : ''} de subventions d'investissement (14x) pour un solde total de <strong>{fmt(totalSoldeCreditNet(comptesSubv))}</strong>.
           <ul>
             {comptesSubv.map(l => (
               <li key={l.numero_compte}>
-                <strong>{l.numero_compte}</strong> — {l.libelle_compte} : {fmt((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0))}
+                <strong>{l.numero_compte}</strong> — {l.libelle_compte} : {fmt(soldeCreditNet(l))}
               </li>
             ))}
           </ul>
