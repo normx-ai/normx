@@ -14,8 +14,25 @@ router.get('/', async (req: Request, res: Response) => {
   }
 
   if (req.tenant.type === 'cabinet') {
+    const s = req.tenant.settings;
+    // Le cabinet lui-meme en premier (sa propre compta/paie)
+    const cabinetEntite = {
+      id: req.tenant.id,
+      nom: req.tenant.nom,
+      type_activite: 'cabinet' as const,
+      offre: s?.offre || 'comptabilite',
+      modules: s?.modules || ['compta', 'paie'],
+      sigle: s?.sigle || '',
+      adresse: s?.adresse || '',
+      nif: s?.nif || '',
+      telephone: s?.telephone || '',
+      email: s?.email || '',
+      actif: req.tenant.actif,
+      created_at: req.tenant.created_at,
+    };
+    // Puis les clients du cabinet
     const clients = await tenantService.getCabinetClients(req.tenant.id);
-    const entites = clients.map(c => ({
+    const clientEntites = clients.map(c => ({
       id: c.id,
       slug: c.slug,
       nom: c.nom,
@@ -30,7 +47,7 @@ router.get('/', async (req: Request, res: Response) => {
       actif: c.actif,
       created_at: c.created_at,
     }));
-    return res.json(entites);
+    return res.json([cabinetEntite, ...clientEntites]);
   }
 
   // Entreprise simple : retourner l'entité elle-même
