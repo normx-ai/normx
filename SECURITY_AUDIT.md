@@ -1,6 +1,7 @@
 # Audit securite multi-utilisateur — NORMX
 
 Date : 2026-04-06
+Derniere mise a jour : 2026-04-06 (5 correctifs deployes)
 
 ---
 
@@ -16,17 +17,20 @@ Date : 2026-04-06
 - Les requetes SQL sont toujours prefixees par le schema du tenant connecte
 - Le nom de schema est valide par regex avant chaque requete (protection injection SQL)
 - Requetes parametrees (pas de concatenation de valeurs utilisateur)
+- Row-Level Security (RLS) active sur toutes les tables (migration 004)
 
 ### Controle d'acces (RBAC)
 - 7 roles : admin, comptable, gestionnaire_paie, reviseur, gestionnaire, lecture_seule, employe
 - 4 actions par module : lire, creer, modifier, supprimer
 - 6 modules : compta, paie, etats, revision, assistant, admin
 - Permissions stockees par utilisateur dans le schema du tenant
+- Le role admin passe par la table permissions_modules (plus de bypass)
 
 ### Cabinet / Client
 - Un cabinet peut gerer plusieurs clients
 - Relation verifiee par `parent_id` avant tout switch de contexte
 - Un cabinet ne peut acceder qu'a ses propres clients
+- Chaque switch cabinet → client est trace dans l'audit log
 
 ### Rate limiting
 - Global : 300 requetes / 15 min (production)
@@ -35,40 +39,49 @@ Date : 2026-04-06
 
 ---
 
-## Risques identifies
+## Correctifs deployes (2026-04-06)
 
-### Critiques
+### CORRIGE — 1. Row-Level Security (RLS) PostgreSQL
+- **Fichiers** : `server/migrations/004-enable-rls.sql`, `server/services/tenant.service.ts`
+- RLS active sur toutes les tables du schema tenant (23 tables)
+- Applique automatiquement a la creation de chaque nouveau tenant
+- Defense en profondeur : meme si le code applicatif est contourne, la DB empeche l'acces cross-tenant
+- **Statut** : deploye en production
 
-#### 1. Pas de Row-Level Security (RLS) PostgreSQL
-- **Fichiers** : `server/migrations/001-create-tenants.sql`, `server/migrations/002-tenant-schema-template.sql`
-- L'isolation des donnees repose a 100% sur le code applicatif
-- Si un bug contourne la validation du schema, un tenant pourrait acceder aux donnees d'un autre
-- **Recommandation** : activer les politiques RLS comme filet de securite
+### CORRIGE — 2. Suppression du bypass admin
+- **Fichier** : `server/middleware/permissions.middleware.ts`
+- Le role admin ne contourne plus les verifications de permissions
+- L'admin passe desormais par la table `permissions_modules` (ou il a deja `allTrue` via `initDefaultPermissions`)
+- Un admin mal attribue dans Keycloak n'a plus un acces illimite sans controle
+- **Statut** : deploye en production
 
-#### 2. Le role admin bypass toutes les permissions
-- **Fichier** : `server/middleware/permissions.middleware.ts` (ligne 22)
-- Un utilisateur avec le role `admin` contourne tous les checks de permissions
-- Si le role est mal attribue dans Keycloak, acces total sans restriction
-- **Recommandation** : remplacer le bypass par des permissions granulaires
+### CORRIGE — 3. Tokens supprimes de localStorage (migration cookies httpOnly)
+- **Fichiers** : `src/auth/KeycloakProvider.tsx`, `src/api.ts`, `src/App.tsx`, `src/components/NotificationBell.tsx`, `src/components/Onboarding.tsx`, `src/dashboard/GestionClients.tsx`
+- Plus aucun token stocke dans localStorage (vulnerable XSS)
+- Tout passe par cookies httpOnly envoyes automatiquement via `credentials: 'include'`
+- Le frontend utilise `/api/auth/me` et `/api/auth/refresh` au lieu de lire localStorage
+- Les anciens tokens localStorage sont supprimes automatiquement a la migration
+- **Statut** : deploye en production
 
-#### 3. Tokens stockes dans localStorage
-- **Fichiers** : `src/auth/KeycloakProvider.tsx`, `src/api.ts`
-- Les tokens dans localStorage sont vulnerables aux attaques XSS
-- Si du JavaScript malveillant s'execute sur la page, il peut voler le token
-- **Recommandation** : migrer vers cookies httpOnly uniquement
-
-#### 4. Pas de verification croisee tenant JWT vs tenant resolu
+### CORRIGE — 4. Verification croisee tenant JWT vs tenant resolu
 - **Fichier** : `server/middleware/tenant.middleware.ts`
-- Le tenant est resolu depuis le `sub` du JWT, mais les claims `tenantSlug`/`tenantId` ne sont pas croises
-- Si les claims Keycloak sont modifies, cela pourrait causer un mismatch
-- **Recommandation** : verifier que le tenantSlug du token correspond au tenant resolu
+- Le tenantSlug et tenantId du JWT sont compares au tenant resolu depuis la DB
+- Si mismatch : acces refuse (403) + warning dans les logs serveur
+- Empeche un token trafique de pointer vers un autre tenant
+- **Statut** : deploye en production
+
+### CORRIGE — 5. Audit log sur switch cabinet → client
+- **Fichier** : `server/middleware/tenant.guards.ts`
+- Chaque switch de contexte cabinet → client est trace dans `audit_log`
+- Informations loguees : utilisateur, action, client cible, IP, timestamp
+- Permet de retracer qui a accede a quel dossier client et quand
+- **Statut** : deploye en production
+
+---
+
+## Risques restants (a planifier)
 
 ### Moyens
-
-#### 5. Pas d'audit log sur le switch cabinet → client
-- **Fichier** : `server/middleware/tenant.guards.ts`
-- Quand un cabinet switch vers un client, aucune trace n'est enregistree
-- **Recommandation** : logger chaque switch avec user, client cible, timestamp, IP
 
 #### 6. Pas de rate limiting par endpoint sur les donnees
 - **Fichier** : `server/index.ts`
@@ -85,39 +98,34 @@ Date : 2026-04-06
 - **Fichier** : `server/middleware/permissions.middleware.ts`
 - Si un tenant est desactive, les checks de permissions peuvent echouer silencieusement
 - **Recommandation** : verifier `tenant.actif === true` en amont
+- Note : le tenant middleware verifie deja `tenant.actif` (ligne 35-38), ce point est partiellement couvert
 
 ---
 
-## Matrice de risque
+## Matrice de risque (mise a jour)
 
 | Couche | Etat actuel | Risque |
 |--------|-------------|--------|
 | Authentification | Keycloak + RS256 JWT | Faible |
-| Stockage token | localStorage + httpOnly cookies | Moyen |
-| Autorisation | RBAC module/action par tenant | Moyen (bypass admin) |
-| Multi-tenancy | Schema-par-tenant PostgreSQL | Moyen (pas de RLS) |
-| Cabinet/Client | Verification parent_id | Faible |
+| Stockage token | Cookies httpOnly uniquement | Faible (corrige) |
+| Autorisation | RBAC module/action, admin via DB | Faible (corrige) |
+| Multi-tenancy | Schema-par-tenant + RLS PostgreSQL | Faible (corrige) |
+| Verification tenant | JWT croise avec DB | Faible (corrige) |
+| Cabinet/Client | Verification parent_id + audit log | Faible (corrige) |
 | Routes API | Validation schema + requetes parametrees | Faible |
-| Audit | Log automatique par tenant | Moyen (logs incomplets) |
+| Audit | Log automatique + switch client | Faible (corrige) |
 | Rate limiting | Global + auth specifique | Moyen (donnees non limitees) |
+| CSRF | SameSite=lax, pas de token | Moyen |
 
 ---
 
-## Plan d'action recommande
+## Plan d'action restant
 
-### Immediat
-1. Activer le RLS PostgreSQL comme double verrou
-2. Supprimer le bypass admin, passer en permissions granulaires
-3. Verifier le tenantSlug JWT vs tenant resolu
-4. Supprimer les tokens de localStorage, cookies httpOnly uniquement
-
-### Court terme (sprint en cours)
-5. Rate limiting par endpoint sur les routes de donnees
-6. Logger tous les switchs cabinet → client
-7. Valider tenant.actif avant les permissions
-8. Ajouter une protection CSRF
+### Court terme (prochain sprint)
+1. Rate limiting par endpoint sur les routes de donnees
+2. Ajouter une protection CSRF (token ou SameSite=Strict)
 
 ### Moyen terme
-9. Validation abonnement a la creation de tenant
-10. Piste d'audit detaillee sur les changements de permissions
-11. Binding de session (IP, user-agent) pour validation token
+3. Validation abonnement a la creation de tenant
+4. Piste d'audit detaillee sur les changements de permissions
+5. Binding de session (IP, user-agent) pour validation token
