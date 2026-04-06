@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note3AProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -303,6 +304,12 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
           <li>Toute variation significative doit être commentée dans la zone commentaire.</li>
         </ul>
       </div>
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={ALL_RUBRIQUES.filter(r => !r.bold && !r.isTotal).map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Immobilisations brutes"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

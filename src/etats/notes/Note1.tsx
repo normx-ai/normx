@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note1Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -257,6 +258,14 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
           <li>Cliquer sur <strong>Modifier</strong> pour saisir les montants, puis <strong>Sauvegarder</strong>.</li>
         </ul>
       </div>
+
+      <BalanceSourcePanel
+        lignes={lignesBalance}
+        groups={[
+          { label: 'Emprunts et dettes financieres (16x)', prefixes: ['16'] },
+        ]}
+        title="Soldes balance — Dettes garanties"
+      />
 
       {/* Page A4 paysage */}
       <div className="a4-page fi-page" ref={pageRef} style={{ width: 1050, minHeight: 680, padding: '25px 35px' }}>

@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note3EProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -269,6 +270,12 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
           <li>Si aucune réévaluation n'a été effectuée, cette note peut rester vide.</li>
         </ul>
       </div>
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={DEFAULT_POSTES.map(p => ({ label: p.label, prefixes: p.prefixes }))}
+        title="Soldes balance — Reevaluations"
+      />
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

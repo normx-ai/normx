@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note3DProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -306,6 +307,15 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
           </div>
         )}
       </div>
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={[
+          { label: 'Produits des cessions (82x, 754)', prefixes: ['82', '754'] },
+          { label: 'VNC des cessions (81x, 654)', prefixes: ['81', '654'] },
+        ]}
+        title="Soldes balance — Plus/moins-values de cession"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

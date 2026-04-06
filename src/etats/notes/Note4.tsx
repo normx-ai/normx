@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note4Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -390,6 +391,12 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={[...RUBRIQUES_BRUT, ...RUBRIQUES_DEPRECIATION].map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Immobilisations financieres"
+      />
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note5Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -256,6 +257,12 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={[...RUBRIQUES_ACTIF, ...RUBRIQUES_DEPRECIATION, ...RUBRIQUES_DETTES].map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Actif/Dettes HAO"
+      />
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

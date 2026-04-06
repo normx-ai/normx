@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note23Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -90,6 +91,12 @@ function Note23({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note23P
         </div>
       </div>
       {previewUrl && (<div className="etat-preview-overlay" onClick={closePreview}><div className="etat-preview-modal" onClick={e => e.stopPropagation()}><div className="etat-preview-header"><span>Aperçu — Note 23</span><div className="etat-preview-actions"><button onClick={printPDF} title="Imprimer"><LuPrinter size={18} /></button><button onClick={downloadPDF} title="Télécharger"><LuDownload size={18} /></button><button onClick={closePreview}><LuX size={18} /></button></div></div><iframe src={previewUrl} className="etat-preview-iframe" title="Aperçu Note 23" /></div></div>)}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={RUBRIQUES.map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Transports"
+      />
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '8mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a' }}>
         <div className="etat-header-officiel">

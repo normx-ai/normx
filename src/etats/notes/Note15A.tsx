@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note15AProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -297,6 +298,12 @@ function Note15A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={RUBRIQUES.filter(r => !r.isTotal).map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Subventions et provisions reglementees"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

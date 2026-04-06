@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note14Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -259,6 +260,12 @@ function Note14({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note14P
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={RUBRIQUES.filter(r => !r.isTotal).map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Primes et reserves"
+      />
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

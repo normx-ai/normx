@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note3CProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -272,6 +273,12 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
           <li>Les amortissements dérogatoires (compte 151) ne figurent pas ici mais dans la Note 15A.</li>
         </ul>
       </div>
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={ALL_RUBRIQUES.filter(r => !r.isSousTotal && !r.isTotal && !r.isSeparator).map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Amortissements"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

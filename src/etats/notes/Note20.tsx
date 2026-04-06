@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note20Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -220,6 +221,12 @@ function Note20({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note20P
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={RUBRIQUES.map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Banques, credits de tresorerie"
+      />
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

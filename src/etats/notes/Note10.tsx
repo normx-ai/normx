@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note10Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -284,6 +285,12 @@ function Note10({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note10P
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={[...RUBRIQUES_BRUT, ...RUBRIQUES_DEPRECIATION].map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Valeurs a encaisser"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

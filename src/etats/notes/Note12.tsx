@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note12Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -319,6 +320,17 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={[
+          { label: 'Ecarts de conversion actif (478)', prefixes: ['478'] },
+          { label: 'Ecarts de conversion passif (479)', prefixes: ['479'] },
+          { label: 'Transferts charges exploitation (781)', prefixes: ['781'] },
+          { label: 'Transferts charges financieres (791)', prefixes: ['791'] },
+        ]}
+        title="Soldes balance — Ecarts de conversion et Transferts"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note18Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -240,6 +241,12 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={RUBRIQUES.map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        title="Soldes balance — Dettes fiscales et sociales"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',

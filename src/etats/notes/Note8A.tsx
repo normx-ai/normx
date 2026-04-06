@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { Exercice, EtatBaseProps, BalanceLigne } from '../../types';
+import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note8AProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -288,6 +289,15 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
           </div>
         </div>
       )}
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={[
+          { label: 'Frais d\'etablissement (4751)', prefixes: ['4751'] },
+          { label: 'Charges a repartir (4752)', prefixes: ['4752'] },
+        ]}
+        title="Soldes balance — Charges immobilisees"
+      />
 
       <div ref={pageRef} style={{
         width: '297mm', minHeight: '210mm', background: '#fff',
