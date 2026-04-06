@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { KPLigne, ODEcriture, Suggestion } from './revisionTypes';
+import { KPLigne, ODEcriture, Suggestion, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
 import ControleAffectation from './ControleAffectation';
 import ControleReserveLegale from './ControleReserveLegale';
 import ControleNiveauKP from './ControleNiveauKP';
@@ -47,7 +47,7 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
       if (comptesVus.has(bl.numero_compte)) continue;
       comptesVus.add(bl.numero_compte);
 
-      const soldeNBal = (parseFloat(String(bl.solde_crediteur)) || 0) - (parseFloat(String(bl.solde_debiteur)) || 0);
+      const soldeNBal = soldeCreditNet(bl);
       const soldeN1 = (parseFloat(String(bl.si_credit ?? 0)) || 0) - (parseFloat(String(bl.si_debit ?? 0)) || 0);
 
       kpLignes.push({ compte: bl.numero_compte, designation: bl.libelle_compte, soldeN1, affectation: 0, dividendes: 0, variationCapital: 0, soldeNCalcule: soldeN1, soldeNBalance: soldeNBal, ecart: 0 });
@@ -191,7 +191,7 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
       const si = (parseFloat(String(l.si_credit ?? 0)) || 0) - (parseFloat(String(l.si_debit ?? 0)) || 0);
       const d = parseFloat(String(l.debit)) || 0;
       const c = parseFloat(String(l.credit)) || 0;
-      const sf = (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0);
+      const sf = soldeCreditNet(l);
 
       // Déterminer la nature du mouvement
       let nature = '';

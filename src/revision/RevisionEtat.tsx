@@ -5,6 +5,7 @@ import {
   ODEcriture, Suggestion, fmt,
   ISVerifLigne, TVACollecteeLigne, TVADeductibleLigne,
   AutresImpotsLigne, DettesFiscalesLigne, RedressementLigne,
+  getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet,
 } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
@@ -74,10 +75,8 @@ function RevisionEtat({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
       !c.startsWith('4449');
   });
 
-  const soldeCredit = (lignes: BalanceLigne[]): number =>
-    lignes.reduce((s, l) => s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
-  const soldeDebit = (lignes: BalanceLigne[]): number =>
-    lignes.reduce((s, l) => s + ((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0)), 0);
+  const soldeCredit = (lignes: BalanceLigne[]): number => totalSoldeCreditNet(lignes);
+  const soldeDebit = (lignes: BalanceLigne[]): number => totalSoldeNet(lignes);
 
   const total441Balance = soldeCredit(comptes441);
   const total891Balance = soldeDebit(comptes891);
@@ -198,11 +197,11 @@ function RevisionEtat({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
       const lignes: AutresImpotsLigne[] = [];
       let idCounter = 1;
       comptesAutres44.forEach(c => {
-        const solde = (parseFloat(String(c.solde_crediteur)) || 0) - (parseFloat(String(c.solde_debiteur)) || 0);
+        const solde = soldeCreditNet(c);
         lignes.push({ id: idCounter++, compte: c.numero_compte, designation: c.libelle_compte, balance: solde, justification: '', observation: '' });
       });
       comptes64.forEach(c => {
-        const solde = (parseFloat(String(c.solde_debiteur)) || 0) - (parseFloat(String(c.solde_crediteur)) || 0);
+        const solde = soldeNet(c);
         lignes.push({ id: idCounter++, compte: c.numero_compte, designation: c.libelle_compte, balance: solde, justification: '', observation: '' });
       });
       if (lignes.length > 0) { setAutresImpotsLignes(lignes); setNextIds(prev => ({ ...prev, autres: idCounter })); }

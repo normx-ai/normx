@@ -32,6 +32,33 @@ export interface Suggestion {
   source: string;
 }
 
+// Helpers pour utiliser les valeurs revisees avec fallback sur les originales
+import type { BalanceLigne } from '../types';
+
+export function getSD(l: BalanceLigne): number {
+  return parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur)) || 0;
+}
+
+export function getSC(l: BalanceLigne): number {
+  return parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0;
+}
+
+export function soldeNet(l: BalanceLigne): number {
+  return getSD(l) - getSC(l);
+}
+
+export function soldeCreditNet(l: BalanceLigne): number {
+  return getSC(l) - getSD(l);
+}
+
+export function totalSoldeNet(lignes: BalanceLigne[]): number {
+  return lignes.reduce((s, l) => s + soldeNet(l), 0);
+}
+
+export function totalSoldeCreditNet(lignes: BalanceLigne[]): number {
+  return lignes.reduce((s, l) => s + soldeCreditNet(l), 0);
+}
+
 export function fmt(val: number): string {
   if (Math.abs(val) < 0.5) return '';
   return val.toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });

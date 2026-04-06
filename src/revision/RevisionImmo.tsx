@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
+import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -165,12 +165,11 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
 
   // --- Contrôle 2 : Rapprochement auto depuis balance ---
   const rapprochLignes: RapprochLigne[] = comptesImmo.map(l => {
-    const solde = (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
     return {
       compte: l.numero_compte,
       designation: l.libelle_compte,
       fichierImmo: rapprochEdit[l.numero_compte] ?? 0,
-      balanceGenerale: solde,
+      balanceGenerale: soldeNet(l),
     };
   });
 
@@ -194,8 +193,7 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
   const totalBaseAmort = amortLignes.reduce((s, a) => s + a.baseAmortissable, 0);
   const totalCumulAmortCalc = amortCalcs.reduce((s, a) => s + a.cumulAmortCalc, 0);
   // Solde 28x en balance pour rapprochement
-  const totalAmort28Balance = comptesAmort.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
+  const totalAmort28Balance = totalSoldeCreditNet(comptesAmort);
   const ecartAmort = totalCumulAmortCalc - totalAmort28Balance;
 
   // --- Contrôle 4 : Calculs cessions ---
@@ -298,7 +296,7 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
         <div className="revision-objectif">
           <strong>Information :</strong> La balance contient {comptesImmo.length} compte{comptesImmo.length > 1 ? 's' : ''} d'immobilisations (21x-27x) pour une valeur brute totale de <strong>{fmt(totalBalanceImmo)}</strong>.
           {comptesAmort.length > 0 && <> Amortissements (28x) : <strong>{fmt(totalAmort28Balance)}</strong>.</>}
-          {comptesProv29.length > 0 && <> Provisions pour dépréciation (29x) : <strong>{fmt(comptesProv29.reduce((s, l) => s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0))}</strong>.</>}
+          {comptesProv29.length > 0 && <> Provisions pour dépréciation (29x) : <strong>{fmt(totalSoldeCreditNet(comptesProv29))}</strong>.</>}
           <br />Complétez les contrôles ci-dessous pour vérifier la cohérence avec le fichier des immobilisations.
         </div>
       )}

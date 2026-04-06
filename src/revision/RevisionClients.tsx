@@ -5,6 +5,7 @@ import {
   ODEcriture, Suggestion, fmt,
   RecouvLigne, CreanceDouteuseLigne, DeprecVarLigne,
   CreanceDeviseLigne, CircularClientLigne, ProdRecevoirLigne,
+  getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet,
 } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
@@ -51,10 +52,8 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
   const comptes4191 = balanceN.filter(l => l.numero_compte.startsWith('4191'));
   const comptes418 = balanceN.filter(l => l.numero_compte.startsWith('418'));
 
-  const totalClient41Balance = comptes41.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0)), 0);
-  const totalDeprec491Balance = comptes491.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
+  const totalClient41Balance = totalSoldeNet(comptes41);
+  const totalDeprec491Balance = totalSoldeCreditNet(comptes491);
 
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
@@ -102,7 +101,7 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
     if (comptes411.length === 0) return;
     let idCounter = nextIds.circ;
     const newLignes: CircularClientLigne[] = comptes411.map(l => {
-      const solde = (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
+      const solde = soldeNet(l);
       const ligne: CircularClientLigne = { id: idCounter, codeClient: l.numero_compte, nomClient: l.libelle_compte, balanceAux: solde, montantReconnu: 0, reconnaissanceSignee: 'Non', commentaire: '' };
       idCounter++;
       return ligne;
@@ -126,7 +125,7 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
   });
 
   const deprecVarLignes: DeprecVarLigne[] = comptes491.map(l => {
-    const soldeN = (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0);
+    const soldeN = soldeCreditNet(l);
     const soldeN1Auto = (parseFloat(String(l.si_credit)) || 0) - (parseFloat(String(l.si_debit)) || 0);
     const edit = deprecEdit[l.numero_compte];
     const soldeN1 = edit?.soldeN1 ?? soldeN1Auto;
@@ -157,7 +156,7 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
   const circularHasEcart = circularLignes.some(l => Math.abs(l.montantReconnu - l.balanceAux) > 0.5);
 
   const prodRecevoirLignes: ProdRecevoirLigne[] = comptes418.map(l => {
-    const soldeN = (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
+    const soldeN = soldeNet(l);
     const soldeN1 = (parseFloat(String(l.si_debit)) || 0) - (parseFloat(String(l.si_credit)) || 0);
     const edit = prodRecevoirEdit[l.numero_compte];
     return { compte: l.numero_compte, designation: l.libelle_compte, soldeN, soldeN1, commentaire: edit?.commentaire ?? '' };
@@ -248,10 +247,10 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
       {comptes41.length > 0 && recouvLignes.length === 0 && (
         <div className="revision-objectif">
           <strong>Information :</strong> La balance contient {comptes41.length} compte{comptes41.length > 1 ? 's' : ''} clients (41x) pour un solde net de <strong>{fmt(totalClient41Balance)}</strong>.
-          {comptes416.length > 0 && <> Créances douteuses (416) : <strong>{fmt(comptes416.reduce((s, l) => s + ((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0)), 0))}</strong>.</>}
+          {comptes416.length > 0 && <> Créances douteuses (416) : <strong>{fmt(totalSoldeNet(comptes416))}</strong>.</>}
           {comptes491.length > 0 && <> Dépréciations (491) : <strong>{fmt(totalDeprec491Balance)}</strong>.</>}
-          {comptes4181.length > 0 && <> Factures à établir (4181) : <strong>{fmt(comptes4181.reduce((s, l) => s + ((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0)), 0))}</strong>.</>}
-          {comptes4191.length > 0 && <> Avances reçues (4191) : <strong>{fmt(comptes4191.reduce((s, l) => s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0))}</strong>.</>}
+          {comptes4181.length > 0 && <> Factures à établir (4181) : <strong>{fmt(totalSoldeNet(comptes4181))}</strong>.</>}
+          {comptes4191.length > 0 && <> Avances reçues (4191) : <strong>{fmt(totalSoldeCreditNet(comptes4191))}</strong>.</>}
           <br />Complétez les contrôles ci-dessous.
         </div>
       )}

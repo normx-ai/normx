@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuUsers, LuChevronDown, LuChevronRight, LuSave, LuPlus, LuTrash2, LuClipboardList, LuCheck, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { fmt, fmtInput, parseInputValue, ODEcriture, Suggestion } from './revisionTypes';
+import { fmt, fmtInput, parseInputValue, ODEcriture, Suggestion, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -100,12 +100,12 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
       if (comptesVus.has(bl.numero_compte)) continue;
       comptesVus.add(bl.numero_compte);
 
-      const soldeN = (parseFloat(String(bl.solde_debiteur)) || 0) - (parseFloat(String(bl.solde_crediteur)) || 0);
+      const sN = soldeNet(bl);
       const soldeN1 = (parseFloat(String(bl.si_debit ?? 0)) || 0) - (parseFloat(String(bl.si_credit ?? 0)) || 0);
-      const variation = soldeN - soldeN1;
-      const variationPct = soldeN1 !== 0 ? (variation / Math.abs(soldeN1)) * 100 : (soldeN !== 0 ? 100 : 0);
+      const variation = sN - soldeN1;
+      const variationPct = soldeN1 !== 0 ? (variation / Math.abs(soldeN1)) * 100 : (sN !== 0 ? 100 : 0);
 
-      lignes.push({ compte: bl.numero_compte, designation: bl.libelle_compte, soldeN, soldeN1, variation, variationPct });
+      lignes.push({ compte: bl.numero_compte, designation: bl.libelle_compte, soldeN: sN, soldeN1, variation, variationPct });
     }
 
     lignes.sort((a, b) => a.compte.localeCompare(b.compte));
@@ -129,9 +129,7 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
   const totalProvisionConges = provisionConges + chargesSocialesConges + chargesFiscalesConges;
 
   // Solde 4281 en balance (charges à payer congés)
-  const solde4281 = balanceN
-    .filter(l => l.numero_compte.startsWith('4281'))
-    .reduce((s, l) => s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
+  const solde4281 = totalSoldeCreditNet(balanceN.filter(l => l.numero_compte.startsWith('4281')));
   const ecartConges = totalProvisionConges - solde4281;
 
   // --- Contrôle 3 : Avances et acomptes au personnel (421x) ---
@@ -144,11 +142,11 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
       if (comptesVus.has(bl.numero_compte)) continue;
       comptesVus.add(bl.numero_compte);
 
-      const soldeN = (parseFloat(String(bl.solde_debiteur)) || 0) - (parseFloat(String(bl.solde_crediteur)) || 0);
+      const sN = soldeNet(bl);
       const soldeN1 = (parseFloat(String(bl.si_debit ?? 0)) || 0) - (parseFloat(String(bl.si_credit ?? 0)) || 0);
 
       const edit = avancesEdit[bl.numero_compte] || { anteriorite: '', accordFormalise: 'Non', observations: '' };
-      lignes.push({ compte: bl.numero_compte, designation: bl.libelle_compte, soldeN, soldeN1, ...edit });
+      lignes.push({ compte: bl.numero_compte, designation: bl.libelle_compte, soldeN: sN, soldeN1, ...edit });
     }
 
     lignes.sort((a, b) => a.compte.localeCompare(b.compte));
@@ -168,12 +166,12 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
       if (comptesVus.has(bl.numero_compte)) continue;
       comptesVus.add(bl.numero_compte);
 
-      const soldeN = (parseFloat(String(bl.solde_crediteur)) || 0) - (parseFloat(String(bl.solde_debiteur)) || 0);
+      const sN = soldeCreditNet(bl);
       const soldeN1 = (parseFloat(String(bl.si_credit ?? 0)) || 0) - (parseFloat(String(bl.si_debit ?? 0)) || 0);
-      const variation = soldeN - soldeN1;
+      const variation = sN - soldeN1;
       const commentaire = dettesCommentaires[bl.numero_compte] || '';
 
-      lignes.push({ compte: bl.numero_compte, designation: bl.libelle_compte, soldeN, soldeN1, variation, commentaire });
+      lignes.push({ compte: bl.numero_compte, designation: bl.libelle_compte, soldeN: sN, soldeN1, variation, commentaire });
     }
 
     lignes.sort((a, b) => a.compte.localeCompare(b.compte));

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
+import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -110,12 +110,9 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
   // Comptes 481 (fournisseurs d'investissement)
   const comptes481 = balanceN.filter(l => l.numero_compte.startsWith('481'));
 
-  const totalFourn40Balance = comptes40.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
-  const totalFar408Balance = comptes408.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
-  const totalDebiteur409Balance = comptes409.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0)), 0);
+  const totalFourn40Balance = totalSoldeCreditNet(comptes40);
+  const totalFar408Balance = totalSoldeCreditNet(comptes408);
+  const totalDebiteur409Balance = totalSoldeNet(comptes409);
 
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
@@ -176,7 +173,7 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
     const newLignes: CircuFournLigne[] = [];
     comptes401.forEach(c => {
       if (!existing.has(c.numero_compte)) {
-        const solde = (parseFloat(String(c.solde_crediteur)) || 0) - (parseFloat(String(c.solde_debiteur)) || 0);
+        const solde = soldeCreditNet(c);
         newLignes.push({ id: currentId, codeFourn: c.numero_compte, nomFourn: c.libelle_compte || '', solde3112: solde, soldeReconcilie: 0, commentaire: '' });
         currentId++;
       }
@@ -287,7 +284,7 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
           <strong>Information :</strong> La balance contient {comptes40.length} compte{comptes40.length > 1 ? 's' : ''} fournisseurs (40x) pour un solde total de <strong>{fmt(totalFourn40Balance)}</strong>.
           {comptes408.length > 0 && <> Factures non parvenues (408) : <strong>{fmt(totalFar408Balance)}</strong>.</>}
           {comptes409.length > 0 && <> Fournisseurs débiteurs (409) : <strong>{fmt(totalDebiteur409Balance)}</strong>.</>}
-          {comptes481.length > 0 && <> Fournisseurs d'investissement (481) : <strong>{fmt(comptes481.reduce((s, l) => s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0))}</strong>.</>}
+          {comptes481.length > 0 && <> Fournisseurs d'investissement (481) : <strong>{fmt(totalSoldeCreditNet(comptes481))}</strong>.</>}
           <br />Complétez les contrôles ci-dessous.
         </div>
       )}

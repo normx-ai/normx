@@ -24,8 +24,11 @@ export interface BalanceLigne {
   credit: number;
   solde_debiteur: number;
   solde_crediteur: number;
+  debit_revise?: number;
+  credit_revise?: number;
   solde_debiteur_revise?: number;
   solde_crediteur_revise?: number;
+  note_revision?: string;
 }
 
 export interface Entite {

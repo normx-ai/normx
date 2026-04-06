@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
+import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -83,7 +83,7 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
       if (comptesVus.has(bl.numero_compte)) continue;
       comptesVus.add(bl.numero_compte);
 
-      const sfN = (parseFloat(String(bl.solde_crediteur)) || 0) - (parseFloat(String(bl.solde_debiteur)) || 0);
+      const sfN = soldeCreditNet(bl);
       const sfN1 = (parseFloat(String(bl.si_credit ?? 0)) || 0) - (parseFloat(String(bl.si_debit ?? 0)) || 0);
 
       provLignes.push({
@@ -109,18 +109,18 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
     const comptes6911 = balanceN.filter(l => l.numero_compte.startsWith('6911'));
     const comptes6912 = balanceN.filter(l => l.numero_compte.startsWith('6912'));
     const comptes6913 = balanceN.filter(l => l.numero_compte.startsWith('6913'));
-    const totalDotExploit = comptes6911.reduce((s, l) => s + (parseFloat(String(l.solde_debiteur)) || 0), 0);
-    const totalDotFinancier = comptes6912.reduce((s, l) => s + (parseFloat(String(l.solde_debiteur)) || 0), 0);
-    const totalDotHAO = comptes6913.reduce((s, l) => s + (parseFloat(String(l.solde_debiteur)) || 0), 0);
+    const totalDotExploit = comptes6911.reduce((s, l) => s + getSD(l), 0);
+    const totalDotFinancier = comptes6912.reduce((s, l) => s + getSD(l), 0);
+    const totalDotHAO = comptes6913.reduce((s, l) => s + getSD(l), 0);
     const totalDotRC = totalDotExploit + totalDotFinancier + totalDotHAO;
 
     // Comptes de reprise 7911/7912/7913
     const comptes7911 = balanceN.filter(l => l.numero_compte.startsWith('7911'));
     const comptes7912 = balanceN.filter(l => l.numero_compte.startsWith('7912'));
     const comptes7913 = balanceN.filter(l => l.numero_compte.startsWith('7913'));
-    const totalRepExploit = comptes7911.reduce((s, l) => s + (parseFloat(String(l.solde_crediteur)) || 0), 0);
-    const totalRepFinancier = comptes7912.reduce((s, l) => s + (parseFloat(String(l.solde_crediteur)) || 0), 0);
-    const totalRepHAO = comptes7913.reduce((s, l) => s + (parseFloat(String(l.solde_crediteur)) || 0), 0);
+    const totalRepExploit = comptes7911.reduce((s, l) => s + getSC(l), 0);
+    const totalRepFinancier = comptes7912.reduce((s, l) => s + getSC(l), 0);
+    const totalRepHAO = comptes7913.reduce((s, l) => s + getSC(l), 0);
     const totalRepRC = totalRepExploit + totalRepFinancier + totalRepHAO;
 
     // Count of 19x accounts for proportional allocation
@@ -132,7 +132,7 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
       if (comptesRC.has(bl.numero_compte)) continue;
       comptesRC.add(bl.numero_compte);
 
-      const sfN = (parseFloat(String(bl.solde_crediteur)) || 0) - (parseFloat(String(bl.solde_debiteur)) || 0);
+      const sfN = soldeCreditNet(bl);
       const sfN1 = (parseFloat(String(bl.si_credit ?? 0)) || 0) - (parseFloat(String(bl.si_debit ?? 0)) || 0);
 
       // Mouvement crédit sur le 19x = dotation, mouvement débit = reprise

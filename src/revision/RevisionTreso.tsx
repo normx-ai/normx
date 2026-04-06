@@ -5,6 +5,7 @@ import {
   ODEcriture, Suggestion, fmt,
   RapprochBancaireLigne, CaisseLigne, TitrePlacementLigne,
   VirementInterneLigne, DispoDeviseLigne, CircularisationBancaireLigne,
+  getSD, getSC, soldeNet as soldeNetHelper, soldeCreditNet as soldeCreditNetHelper,
 } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
@@ -50,10 +51,8 @@ function RevisionTreso({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
   const comptes59 = balanceN.filter(l => l.numero_compte.startsWith('59'));
   const comptes5 = balanceN.filter(l => l.numero_compte.startsWith('5'));
 
-  const soldeNet = (l: BalanceLigne): number =>
-    (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
-  const soldeCrediteur = (l: BalanceLigne): number =>
-    (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0);
+  const soldeNet = (l: BalanceLigne): number => soldeNetHelper(l);
+  const soldeCrediteur = (l: BalanceLigne): number => soldeCreditNetHelper(l);
 
   const totalBanques = comptes52.reduce((s, l) => s + soldeNet(l), 0);
   const totalCaisses = comptes57.reduce((s, l) => s + soldeNet(l), 0);

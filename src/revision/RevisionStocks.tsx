@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
+import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -101,8 +101,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
   // Comptes 73x (variations stocks produits)
   const comptes73 = balanceN.filter(l => l.numero_compte.startsWith('73'));
 
-  const totalStockBalance = comptesStock.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0)), 0);
+  const totalStockBalance = totalSoldeNet(comptesStock);
 
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
@@ -167,7 +166,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
 
   // --- Contrôle 3 : Variations bilantielles auto depuis balance ---
   const varLignes: VarLigne[] = comptesStock.map(l => {
-    const soldeN = (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
+    const soldeN = soldeNet(l);
     const soldeN1Auto = (parseFloat(String(l.si_debit ?? 0)) || 0) - (parseFloat(String(l.si_credit ?? 0)) || 0);
 
     const edit = varEdit[l.numero_compte];
@@ -195,9 +194,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
     const totalRecalcule = e.facturePrincipale + e.transport + e.douane + e.debours;
     return { ...e, totalRecalcule };
   });
-  const totalEncours38Balance = balanceN
-    .filter(l => l.numero_compte.startsWith('38'))
-    .reduce((s, l) => s + ((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0)), 0);
+  const totalEncours38Balance = totalSoldeNet(balanceN.filter(l => l.numero_compte.startsWith('38')));
   const totalEncoursRecalcule = encoursCalcs.reduce((s, e) => s + e.totalRecalcule, 0);
   const ecartEncours = totalEncoursRecalcule - totalEncours38Balance;
 
@@ -208,8 +205,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
     return { ...d, valeurStock, depreciation };
   });
   const totalDeprec = deprecCalcs.reduce((s, d) => s + d.depreciation, 0);
-  const totalDeprec39Balance = comptes39.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
+  const totalDeprec39Balance = totalSoldeCreditNet(comptes39);
   const ecartDeprec = totalDeprec - totalDeprec39Balance;
 
   // --- Journal OD ---
@@ -290,7 +286,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
           <ul>
             {comptesStock.map(l => (
               <li key={l.numero_compte}>
-                <strong>{l.numero_compte}</strong> — {l.libelle_compte} : {fmt((parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0))}
+                <strong>{l.numero_compte}</strong> — {l.libelle_compte} : {fmt(soldeNet(l))}
               </li>
             ))}
           </ul>
