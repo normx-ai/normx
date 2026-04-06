@@ -61,26 +61,30 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
     fetch(`/api/revision/${entiteId}/${exerciceId}/clients`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: any) => {
-        if (data.recouvLignes?.length > 0) { setRecouvLignes(data.recouvLignes); setNextIds(prev => ({ ...prev, recouv: Math.max(...data.recouvLignes.map((a: RecouvLigne) => a.id)) + 1 })); }
-        if (data.douteuseLignes?.length > 0) { setDouteuseLignes(data.douteuseLignes); setNextIds(prev => ({ ...prev, dout: Math.max(...data.douteuseLignes.map((a: CreanceDouteuseLigne) => a.id)) + 1 })); }
+        if (data.recouvLignes) { setRecouvLignes(data.recouvLignes); if (data.recouvLignes.length > 0) setNextIds(prev => ({ ...prev, recouv: Math.max(...data.recouvLignes.map((a: RecouvLigne) => a.id)) + 1 })); }
+        if (data.douteuseLignes) { setDouteuseLignes(data.douteuseLignes); if (data.douteuseLignes.length > 0) setNextIds(prev => ({ ...prev, dout: Math.max(...data.douteuseLignes.map((a: CreanceDouteuseLigne) => a.id)) + 1 })); }
         if (data.deprecEdit) setDeprecEdit(data.deprecEdit);
-        if (data.deviseLignes?.length > 0) { setDeviseLignes(data.deviseLignes); setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes.map((a: CreanceDeviseLigne) => a.id)) + 1 })); }
-        if (data.circularLignes?.length > 0) { setCircularLignes(data.circularLignes); setNextIds(prev => ({ ...prev, circ: Math.max(...data.circularLignes.map((a: CircularClientLigne) => a.id)) + 1 })); }
+        if (data.deviseLignes) { setDeviseLignes(data.deviseLignes); if (data.deviseLignes.length > 0) setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes.map((a: CreanceDeviseLigne) => a.id)) + 1 })); }
+        if (data.circularLignes) { setCircularLignes(data.circularLignes); if (data.circularLignes.length > 0) setNextIds(prev => ({ ...prev, circ: Math.max(...data.circularLignes.map((a: CircularClientLigne) => a.id)) + 1 })); }
         if (data.prodRecevoirEdit) setProdRecevoirEdit(data.prodRecevoirEdit);
-        if (data.odEcritures?.length > 0) { setOdEcritures(data.odEcritures); setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
+        if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});
   };
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/clients`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/clients`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recouvLignes, douteuseLignes, deprecEdit, deviseLignes, circularLignes, prodRecevoirEdit, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- CRUD ---

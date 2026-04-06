@@ -72,25 +72,29 @@ function RevisionTreso({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
     fetch(`/api/revision/${entiteId}/${exerciceId}/treso`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: any) => {
-        if (data.rapprochLignes?.length > 0) { setRapprochLignes(data.rapprochLignes); setNextIds(prev => ({ ...prev, rapp: Math.max(...data.rapprochLignes.map((a: RapprochBancaireLigne) => a.id)) + 1 })); }
-        if (data.caisseLignes?.length > 0) { setCaisseLignes(data.caisseLignes); setNextIds(prev => ({ ...prev, caisse: Math.max(...data.caisseLignes.map((a: CaisseLigne) => a.id)) + 1 })); }
-        if (data.titreLignes?.length > 0) { setTitreLignes(data.titreLignes); setNextIds(prev => ({ ...prev, titre: Math.max(...data.titreLignes.map((a: TitrePlacementLigne) => a.id)) + 1 })); }
-        if (data.deviseLignes?.length > 0) { setDeviseLignes(data.deviseLignes); setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes.map((a: DispoDeviseLigne) => a.id)) + 1 })); }
-        if (data.circularLignes?.length > 0) { setCircularLignes(data.circularLignes); setNextIds(prev => ({ ...prev, circ: Math.max(...data.circularLignes.map((a: CircularisationBancaireLigne) => a.id)) + 1 })); }
-        if (data.odEcritures?.length > 0) { setOdEcritures(data.odEcritures); setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
+        if (data.rapprochLignes) { setRapprochLignes(data.rapprochLignes); if (data.rapprochLignes.length > 0) setNextIds(prev => ({ ...prev, rapp: Math.max(...data.rapprochLignes.map((a: RapprochBancaireLigne) => a.id)) + 1 })); }
+        if (data.caisseLignes) { setCaisseLignes(data.caisseLignes); if (data.caisseLignes.length > 0) setNextIds(prev => ({ ...prev, caisse: Math.max(...data.caisseLignes.map((a: CaisseLigne) => a.id)) + 1 })); }
+        if (data.titreLignes) { setTitreLignes(data.titreLignes); if (data.titreLignes.length > 0) setNextIds(prev => ({ ...prev, titre: Math.max(...data.titreLignes.map((a: TitrePlacementLigne) => a.id)) + 1 })); }
+        if (data.deviseLignes) { setDeviseLignes(data.deviseLignes); if (data.deviseLignes.length > 0) setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes.map((a: DispoDeviseLigne) => a.id)) + 1 })); }
+        if (data.circularLignes) { setCircularLignes(data.circularLignes); if (data.circularLignes.length > 0) setNextIds(prev => ({ ...prev, circ: Math.max(...data.circularLignes.map((a: CircularisationBancaireLigne) => a.id)) + 1 })); }
+        if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});
   };
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/treso`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/treso`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rapprochLignes, caisseLignes, titreLignes, deviseLignes, circularLignes, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- CRUD Rapprochement bancaire ---

@@ -196,9 +196,9 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
         if (data.congesData) setCongesData(data.congesData);
         if (data.avancesEdit) setAvancesEdit(data.avancesEdit);
         if (data.dettesCommentaires) setDettesCommentaires(data.dettesCommentaires);
-        if (data.odEcritures?.length > 0) {
+        if (data.odEcritures) {
           setOdEcritures(data.odEcritures);
-          setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1);
+          if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1);
         }
       })
       .catch(() => {});
@@ -206,13 +206,17 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/personnel`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/personnel`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ congesData, avancesEdit, dettesCommentaires, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- Journal OD ---

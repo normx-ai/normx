@@ -181,7 +181,7 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
     fetch(`/api/revision/${entiteId}/${exerciceId}/prov`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { lignes?: ProvLigne[]; amortDerog?: AmortDerogLigne[]; provRC?: ProvRCLigne[]; odEcritures?: ODEcriture[] }) => {
-        if (data.lignes && data.lignes.length > 0) {
+        if (data.lignes) {
           const merged = defaultLignes.map(dl => {
             const s = data.lignes!.find(x => x.compte === dl.compte);
             return s ? { ...dl, dotation: s.dotation || 0, reprise: s.reprise || 0 } : dl;
@@ -189,11 +189,11 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
           recalc(merged);
           setLignes(merged);
         }
-        if (data.amortDerog && data.amortDerog.length > 0) {
+        if (data.amortDerog) {
           setAmortDerog(data.amortDerog);
-          setNextDerogId(Math.max(...data.amortDerog.map(a => a.id)) + 1);
+          if (data.amortDerog.length > 0) setNextDerogId(Math.max(...data.amortDerog.map(a => a.id)) + 1);
         }
-        if (data.provRC && data.provRC.length > 0) {
+        if (data.provRC) {
           const mergedRC = defaultRC.map(dl => {
             const s = data.provRC!.find(x => x.compte === dl.compte);
             return s ? { ...dl, dotation: s.dotation || 0, reprise: s.reprise || 0 } : dl;
@@ -201,9 +201,9 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
           recalcRC(mergedRC);
           setProvRC(mergedRC);
         }
-        if (data.odEcritures && data.odEcritures.length > 0) {
+        if (data.odEcritures) {
           setOdEcritures(data.odEcritures);
-          setNextOdId(Math.max(...data.odEcritures.map(e => e.id)) + 1);
+          if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map(e => e.id)) + 1);
         }
       })
       .catch(() => {});
@@ -211,13 +211,17 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/prov`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/prov`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lignes, amortDerog, provRC, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   const updateLigne = (idx: number, field: 'soldeN1' | 'dotation' | 'reprise', value: number): void => {

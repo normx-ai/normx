@@ -93,25 +93,25 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
     fetch(`/api/revision/${entiteId}/${exerciceId}/df`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: any) => {
-        if (data.prets?.length > 0) {
+        if (data.prets) {
           setPrets(data.prets);
-          setNextIds(prev => ({ ...prev, pret: Math.max(...data.prets.map((a: PretLigne) => a.id)) + 1 }));
+          if (data.prets.length > 0) setNextIds(prev => ({ ...prev, pret: Math.max(...data.prets.map((a: PretLigne) => a.id)) + 1 }));
         }
-        if (data.interets?.length > 0) {
+        if (data.interets) {
           setInterets(data.interets);
-          setNextIds(prev => ({ ...prev, interet: Math.max(...data.interets.map((a: InteretLigne) => a.id)) + 1 }));
+          if (data.interets.length > 0) setNextIds(prev => ({ ...prev, interet: Math.max(...data.interets.map((a: InteretLigne) => a.id)) + 1 }));
         }
-        if (data.interetsCourus?.length > 0) {
+        if (data.interetsCourus) {
           setInteretsCourus(data.interetsCourus);
-          setNextIds(prev => ({ ...prev, couru: Math.max(...data.interetsCourus.map((a: InteretCoururLigne) => a.id)) + 1 }));
+          if (data.interetsCourus.length > 0) setNextIds(prev => ({ ...prev, couru: Math.max(...data.interetsCourus.map((a: InteretCoururLigne) => a.id)) + 1 }));
         }
-        if (data.autresCharges?.length > 0) {
+        if (data.autresCharges) {
           setAutresCharges(data.autresCharges);
-          setNextIds(prev => ({ ...prev, autre: Math.max(...data.autresCharges.map((a: AutreChargeLigne) => a.id)) + 1 }));
+          if (data.autresCharges.length > 0) setNextIds(prev => ({ ...prev, autre: Math.max(...data.autresCharges.map((a: AutreChargeLigne) => a.id)) + 1 }));
         }
-        if (data.odEcritures?.length > 0) {
+        if (data.odEcritures) {
           setOdEcritures(data.odEcritures);
-          setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1);
+          if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1);
         }
       })
       .catch(() => {});
@@ -119,13 +119,17 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/df`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/df`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prets, interets, interetsCourus, autresCharges, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- Contrôle 1 : Prêts ---

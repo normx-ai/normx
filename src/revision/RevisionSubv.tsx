@@ -62,17 +62,17 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
     fetch(`/api/revision/${entiteId}/${exerciceId}/subv`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { subvAmort?: SubvAmortLigne[]; subvNonAmort?: SubvNonAmortLigne[]; odEcritures?: ODEcriture[] }) => {
-        if (data.subvAmort && data.subvAmort.length > 0) {
+        if (data.subvAmort) {
           setSubvAmort(data.subvAmort);
-          setNextAmortId(Math.max(...data.subvAmort.map(a => a.id)) + 1);
+          if (data.subvAmort.length > 0) setNextAmortId(Math.max(...data.subvAmort.map(a => a.id)) + 1);
         }
-        if (data.subvNonAmort && data.subvNonAmort.length > 0) {
+        if (data.subvNonAmort) {
           setSubvNonAmort(data.subvNonAmort);
-          setNextNonAmortId(Math.max(...data.subvNonAmort.map(a => a.id)) + 1);
+          if (data.subvNonAmort.length > 0) setNextNonAmortId(Math.max(...data.subvNonAmort.map(a => a.id)) + 1);
         }
-        if (data.odEcritures && data.odEcritures.length > 0) {
+        if (data.odEcritures) {
           setOdEcritures(data.odEcritures);
-          setNextOdId(Math.max(...data.odEcritures.map(e => e.id)) + 1);
+          if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map(e => e.id)) + 1);
         }
       })
       .catch(() => {});
@@ -80,13 +80,17 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/subv`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/subv`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subvAmort, subvNonAmort, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- Contrôle 1 : Biens amortissables ---

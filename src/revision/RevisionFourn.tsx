@@ -120,26 +120,30 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
     fetch(`/api/revision/${entiteId}/${exerciceId}/fourn`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: any) => {
-        if (data.reconLignes?.length > 0) { setReconLignes(data.reconLignes); setNextIds(prev => ({ ...prev, recon: Math.max(...data.reconLignes.map((a: ReconFournLigne) => a.id)) + 1 })); }
-        if (data.farLignes?.length > 0) { setFarLignes(data.farLignes); setNextIds(prev => ({ ...prev, far: Math.max(...data.farLignes.map((a: FarLigne) => a.id)) + 1 })); }
-        if (data.debiteurLignes?.length > 0) { setDebiteurLignes(data.debiteurLignes); setNextIds(prev => ({ ...prev, deb: Math.max(...data.debiteurLignes.map((a: FournDebiteurLigne) => a.id)) + 1 })); }
-        if (data.avanceLignes?.length > 0) { setAvanceLignes(data.avanceLignes); setNextIds(prev => ({ ...prev, av: Math.max(...data.avanceLignes.map((a: AvanceFournLigne) => a.id)) + 1 })); }
-        if (data.deviseLignes?.length > 0) { setDeviseLignes(data.deviseLignes); setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes.map((a: DetteDeviseLigne) => a.id)) + 1 })); }
-        if (data.circuLignes?.length > 0) { setCircuLignes(data.circuLignes); setNextIds(prev => ({ ...prev, circ: Math.max(...data.circuLignes.map((a: CircuFournLigne) => a.id)) + 1 })); }
-        if (data.odEcritures?.length > 0) { setOdEcritures(data.odEcritures); setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
+        if (data.reconLignes) { setReconLignes(data.reconLignes); if (data.reconLignes.length > 0) setNextIds(prev => ({ ...prev, recon: Math.max(...data.reconLignes.map((a: ReconFournLigne) => a.id)) + 1 })); }
+        if (data.farLignes) { setFarLignes(data.farLignes); if (data.farLignes.length > 0) setNextIds(prev => ({ ...prev, far: Math.max(...data.farLignes.map((a: FarLigne) => a.id)) + 1 })); }
+        if (data.debiteurLignes) { setDebiteurLignes(data.debiteurLignes); if (data.debiteurLignes.length > 0) setNextIds(prev => ({ ...prev, deb: Math.max(...data.debiteurLignes.map((a: FournDebiteurLigne) => a.id)) + 1 })); }
+        if (data.avanceLignes) { setAvanceLignes(data.avanceLignes); if (data.avanceLignes.length > 0) setNextIds(prev => ({ ...prev, av: Math.max(...data.avanceLignes.map((a: AvanceFournLigne) => a.id)) + 1 })); }
+        if (data.deviseLignes) { setDeviseLignes(data.deviseLignes); if (data.deviseLignes.length > 0) setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes.map((a: DetteDeviseLigne) => a.id)) + 1 })); }
+        if (data.circuLignes) { setCircuLignes(data.circuLignes); if (data.circuLignes.length > 0) setNextIds(prev => ({ ...prev, circ: Math.max(...data.circuLignes.map((a: CircuFournLigne) => a.id)) + 1 })); }
+        if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});
   };
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/fourn`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/fourn`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reconLignes, farLignes, debiteurLignes, avanceLignes, deviseLignes, circuLignes, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- CRUD ---

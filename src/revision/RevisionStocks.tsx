@@ -109,25 +109,29 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
     fetch(`/api/revision/${entiteId}/${exerciceId}/stocks`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: any) => {
-        if (data.invLignes?.length > 0) { setInvLignes(data.invLignes); setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes.map((a: InvStockLigne) => a.id)) + 1 })); }
-        if (data.valoLignes?.length > 0) { setValoLignes(data.valoLignes); setNextIds(prev => ({ ...prev, valo: Math.max(...data.valoLignes.map((a: ValoLigne) => a.id)) + 1 })); }
-        if (data.encoursLignes?.length > 0) { setEncoursLignes(data.encoursLignes); setNextIds(prev => ({ ...prev, enc: Math.max(...data.encoursLignes.map((a: EncoursRouteLigne) => a.id)) + 1 })); }
-        if (data.deprecLignes?.length > 0) { setDeprecLignes(data.deprecLignes); setNextIds(prev => ({ ...prev, deprec: Math.max(...data.deprecLignes.map((a: DeprecLigne) => a.id)) + 1 })); }
+        if (data.invLignes) { setInvLignes(data.invLignes); if (data.invLignes.length > 0) setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes.map((a: InvStockLigne) => a.id)) + 1 })); }
+        if (data.valoLignes) { setValoLignes(data.valoLignes); if (data.valoLignes.length > 0) setNextIds(prev => ({ ...prev, valo: Math.max(...data.valoLignes.map((a: ValoLigne) => a.id)) + 1 })); }
+        if (data.encoursLignes) { setEncoursLignes(data.encoursLignes); if (data.encoursLignes.length > 0) setNextIds(prev => ({ ...prev, enc: Math.max(...data.encoursLignes.map((a: EncoursRouteLigne) => a.id)) + 1 })); }
+        if (data.deprecLignes) { setDeprecLignes(data.deprecLignes); if (data.deprecLignes.length > 0) setNextIds(prev => ({ ...prev, deprec: Math.max(...data.deprecLignes.map((a: DeprecLigne) => a.id)) + 1 })); }
         if (data.varEdit) setVarEdit(data.varEdit);
-        if (data.odEcritures?.length > 0) { setOdEcritures(data.odEcritures); setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
+        if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});
   };
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/stocks`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/stocks`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ invLignes, valoLignes, varEdit, encoursLignes, deprecLignes, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- CRUD helpers ---

@@ -128,25 +128,29 @@ function RevisionAutresTiers({ balanceN, exerciceAnnee, entiteId, exerciceId }: 
     fetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: any) => {
-        if (data.ccaLignes?.length > 0) { setCcaLignes(data.ccaLignes); setNextIds(prev => ({ ...prev, cca: Math.max(...data.ccaLignes.map((a: CCALigne) => a.id)) + 1 })); }
-        if (data.pcaLignes?.length > 0) { setPcaLignes(data.pcaLignes); setNextIds(prev => ({ ...prev, pca: Math.max(...data.pcaLignes.map((a: PCALigne) => a.id)) + 1 })); }
-        if (data.attenteLignes?.length > 0) { setAttenteLignes(data.attenteLignes); setNextIds(prev => ({ ...prev, attente: Math.max(...data.attenteLignes.map((a: AttenteLigne) => a.id)) + 1 })); }
-        if (data.diversLignes?.length > 0) { setDiversLignes(data.diversLignes); setNextIds(prev => ({ ...prev, divers: Math.max(...data.diversLignes.map((a: DiversLigne) => a.id)) + 1 })); }
-        if (data.ecartLignes?.length > 0) { setEcartLignes(data.ecartLignes); setNextIds(prev => ({ ...prev, ecart: Math.max(...data.ecartLignes.map((a: EcartConversionLigne) => a.id)) + 1 })); }
-        if (data.odEcritures?.length > 0) { setOdEcritures(data.odEcritures); setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
+        if (data.ccaLignes) { setCcaLignes(data.ccaLignes); if (data.ccaLignes.length > 0) setNextIds(prev => ({ ...prev, cca: Math.max(...data.ccaLignes.map((a: CCALigne) => a.id)) + 1 })); }
+        if (data.pcaLignes) { setPcaLignes(data.pcaLignes); if (data.pcaLignes.length > 0) setNextIds(prev => ({ ...prev, pca: Math.max(...data.pcaLignes.map((a: PCALigne) => a.id)) + 1 })); }
+        if (data.attenteLignes) { setAttenteLignes(data.attenteLignes); if (data.attenteLignes.length > 0) setNextIds(prev => ({ ...prev, attente: Math.max(...data.attenteLignes.map((a: AttenteLigne) => a.id)) + 1 })); }
+        if (data.diversLignes) { setDiversLignes(data.diversLignes); if (data.diversLignes.length > 0) setNextIds(prev => ({ ...prev, divers: Math.max(...data.diversLignes.map((a: DiversLigne) => a.id)) + 1 })); }
+        if (data.ecartLignes) { setEcartLignes(data.ecartLignes); if (data.ecartLignes.length > 0) setNextIds(prev => ({ ...prev, ecart: Math.max(...data.ecartLignes.map((a: EcartConversionLigne) => a.id)) + 1 })); }
+        if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});
   };
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ccaLignes, pcaLignes, attenteLignes, diversLignes, ecartLignes, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- Auto-populate CCA from balance ---

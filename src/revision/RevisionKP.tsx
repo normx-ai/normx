@@ -88,7 +88,7 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
     fetch(`/api/revision/${entiteId}/${exerciceId}/kp`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { lignes: KPLigne[]; odEcritures?: ODEcriture[] }) => {
-        if (data.lignes && data.lignes.length > 0) {
+        if (data.lignes) {
           const merged = defaultLignes.map(dl => {
             const s = data.lignes.find((x: KPLigne) => x.compte === dl.compte);
             return s ? { ...dl, affectation: s.affectation || 0, dividendes: s.dividendes || 0, variationCapital: s.variationCapital || 0 } : dl;
@@ -96,9 +96,9 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
           recalc(merged);
           setLignes(merged);
         }
-        if (data.odEcritures && data.odEcritures.length > 0) {
+        if (data.odEcritures) {
           setOdEcritures(data.odEcritures);
-          setNextOdId(Math.max(...data.odEcritures.map(e => e.id)) + 1);
+          if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map(e => e.id)) + 1);
         }
       })
       .catch(() => {});

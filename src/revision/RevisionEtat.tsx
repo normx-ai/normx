@@ -96,27 +96,31 @@ function RevisionEtat({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
     fetch(`/api/revision/${entiteId}/${exerciceId}/etat`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: any) => {
-        if (data.isLignes?.length > 0) { setIsLignes(data.isLignes); setNextIds(prev => ({ ...prev, is: Math.max(...data.isLignes.map((a: ISVerifLigne) => a.id)) + 1 })); }
+        if (data.isLignes) { setIsLignes(data.isLignes); if (data.isLignes.length > 0) setNextIds(prev => ({ ...prev, is: Math.max(...data.isLignes.map((a: ISVerifLigne) => a.id)) + 1 })); }
         if (data.tauxIS !== undefined) setTauxIS(data.tauxIS);
-        if (data.tvaCollecteeLignes?.length > 0) { setTvaCollecteeLignes(data.tvaCollecteeLignes); setNextIds(prev => ({ ...prev, tvac: Math.max(...data.tvaCollecteeLignes.map((a: TVACollecteeLigne) => a.id)) + 1 })); }
-        if (data.tvaDeductibleLignes?.length > 0) { setTvaDeductibleLignes(data.tvaDeductibleLignes); setNextIds(prev => ({ ...prev, tvad: Math.max(...data.tvaDeductibleLignes.map((a: TVADeductibleLigne) => a.id)) + 1 })); }
-        if (data.autresImpotsLignes?.length > 0) { setAutresImpotsLignes(data.autresImpotsLignes); setNextIds(prev => ({ ...prev, autres: Math.max(...data.autresImpotsLignes.map((a: AutresImpotsLigne) => a.id)) + 1 })); }
-        if (data.dettesFiscalesLignes?.length > 0) { setDettesFiscalesLignes(data.dettesFiscalesLignes); setNextIds(prev => ({ ...prev, dettes: Math.max(...data.dettesFiscalesLignes.map((a: DettesFiscalesLigne) => a.id)) + 1 })); }
-        if (data.redressementLignes?.length > 0) { setRedressementLignes(data.redressementLignes); setNextIds(prev => ({ ...prev, redress: Math.max(...data.redressementLignes.map((a: RedressementLigne) => a.id)) + 1 })); }
-        if (data.odEcritures?.length > 0) { setOdEcritures(data.odEcritures); setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
+        if (data.tvaCollecteeLignes) { setTvaCollecteeLignes(data.tvaCollecteeLignes); if (data.tvaCollecteeLignes.length > 0) setNextIds(prev => ({ ...prev, tvac: Math.max(...data.tvaCollecteeLignes.map((a: TVACollecteeLigne) => a.id)) + 1 })); }
+        if (data.tvaDeductibleLignes) { setTvaDeductibleLignes(data.tvaDeductibleLignes); if (data.tvaDeductibleLignes.length > 0) setNextIds(prev => ({ ...prev, tvad: Math.max(...data.tvaDeductibleLignes.map((a: TVADeductibleLigne) => a.id)) + 1 })); }
+        if (data.autresImpotsLignes) { setAutresImpotsLignes(data.autresImpotsLignes); if (data.autresImpotsLignes.length > 0) setNextIds(prev => ({ ...prev, autres: Math.max(...data.autresImpotsLignes.map((a: AutresImpotsLigne) => a.id)) + 1 })); }
+        if (data.dettesFiscalesLignes) { setDettesFiscalesLignes(data.dettesFiscalesLignes); if (data.dettesFiscalesLignes.length > 0) setNextIds(prev => ({ ...prev, dettes: Math.max(...data.dettesFiscalesLignes.map((a: DettesFiscalesLigne) => a.id)) + 1 })); }
+        if (data.redressementLignes) { setRedressementLignes(data.redressementLignes); if (data.redressementLignes.length > 0) setNextIds(prev => ({ ...prev, redress: Math.max(...data.redressementLignes.map((a: RedressementLigne) => a.id)) + 1 })); }
+        if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});
   };
 
   const handleSave = async (): Promise<void> => {
     try {
-      await fetch(`/api/revision/${entiteId}/${exerciceId}/etat`, {
+      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/etat`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ isLignes, tauxIS, tvaCollecteeLignes, tvaDeductibleLignes, autresImpotsLignes, dettesFiscalesLignes, redressementLignes, odEcritures }),
       });
+      if (!res.ok) throw new Error('Erreur sauvegarde');
       setSaved(true);
-    } catch { /* silently */ }
+    } catch {
+      setSaved(false);
+      alert('Erreur lors de la sauvegarde. Reessayez.');
+    }
   };
 
   // --- CRUD IS ---
