@@ -42,7 +42,6 @@ const TYPES_TIERS: TypeTiersOption[] = [
   { value: 'personnel', label: 'Personnel' },
 ];
 
-/* MOIS importe depuis utils/formatters */
 
 function BalanceTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteSigle, entiteAdresse, entiteNif, onBack }: BalanceTiersProps): React.JSX.Element {
   const [data, setData] = useState<BalanceTiersRow[]>([]);
@@ -93,7 +92,6 @@ function BalanceTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteS
     loadData();
   }, [loadData]);
 
-  /* fmt importe depuis utils/formatters */
 
   const fmtPdf = (n: number): string => {
     if (!n) return '';

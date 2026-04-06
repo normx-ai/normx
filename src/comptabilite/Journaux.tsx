@@ -167,7 +167,6 @@ function Journaux({ entiteId, exerciceId, exerciceAnnee, entiteName, onBack }: J
     setLoading(false);
   }, [entiteId, exerciceId, dateDu, dateFin, journalFilter]);
 
-  /* fmt importe depuis utils/formatters */
 
   const totalDebit = data.reduce((s, l) => s + l.debit, 0);
   const totalCredit = data.reduce((s, l) => s + l.credit, 0);
@@ -295,7 +294,6 @@ function Echeancier({ entiteId, exerciceId, exerciceAnnee, onBack }: EcheancierP
     setLoading(false);
   }, [entiteId, exerciceId, dateDu, dateAu, typeTiers, statutFilter]);
 
-  /* fmt importe depuis utils/formatters */
 
   return (
     <div className="compta-wrapper">
@@ -413,7 +411,6 @@ function BalanceAgee({ entiteId, exerciceId, exerciceAnnee, onBack }: BalanceAge
     setLoading(false);
   }, [entiteId, exerciceId, typeTiers]);
 
-  /* fmt importe depuis utils/formatters */
 
   // Compute aging based on custom delais
   const refDate = new Date(dateSituation);

@@ -427,7 +427,6 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     return ecr && ecr.statut === 'validee';
   }).length;
 
-  /* fmt importe depuis utils/formatters */
 
   const listTotalDebit = ecritures.reduce((s, e) =>
     s + e.lignes.reduce((s2, l) => s2 + (parseFloat(String(l.debit)) || 0), 0), 0);

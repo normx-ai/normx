@@ -83,7 +83,6 @@ function computePassif(lignes: BalanceLigne[], mapping: Record<string, PassifMap
   return result;
 }
 
-/* fmtM importe depuis utils/formatters */
 
 interface Row { ref: string; libelle: string; note?: string; bold?: boolean; }
 

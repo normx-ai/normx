@@ -186,7 +186,6 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     }
   };
 
-  /* fmt et fmtDate importes depuis utils/formatters */
 
   return (
     <div style={{ display: 'flex', height: 'calc(100vh - 140px)', gap: 0, background: '#f5f6fa' }}>

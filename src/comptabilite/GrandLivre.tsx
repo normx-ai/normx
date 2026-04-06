@@ -69,7 +69,6 @@ interface ToggleProps {
   onChange: (val: boolean) => void;
 }
 
-/* MOIS importe depuis utils/formatters */
 
 const JOURNAUX_LIST: JournalType[] = [
   { code: 'OD', intitule: 'Opérations diverses' },
@@ -116,7 +115,6 @@ const tableStyle: React.CSSProperties = { width: '100%', borderCollapse: 'collap
 const thStyle: React.CSSProperties = { padding: '10px 10px', fontSize: 13, fontWeight: 600, background: '#e8edf5', color: '#333', textAlign: 'left', whiteSpace: 'nowrap' };
 const tdStyle: React.CSSProperties = { padding: '9px 10px', borderBottom: '1px solid #eee', fontSize: 14 };
 
-/* fmt importe depuis utils/formatters */
 
 const fmtPdf = (val: string | number): string => {
   const n = parseFloat(String(val));

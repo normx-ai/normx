@@ -75,7 +75,6 @@ function sumByPrefix(lignes: BalanceLigne[], prefixes: string[], mode: 'debit' |
   return total;
 }
 
-/* fmtM importe depuis utils/formatters */
 
 // ===================== COMPOSANT =====================
 

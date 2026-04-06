@@ -51,7 +51,6 @@ const TYPES_TIERS: TypeTiersOption[] = [
   { value: 'personnel', label: 'Personnel' },
 ];
 
-/* MOIS importe depuis utils/formatters */
 
 function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteSigle, entiteAdresse, entiteNif, onBack }: GrandLivreTiersProps): React.JSX.Element {
   const [data, setData] = useState<GLTiersRow[]>([]);
@@ -102,7 +101,6 @@ function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, enti
     loadData();
   }, [loadData]);
 
-  /* fmt importe depuis utils/formatters */
 
   const fmtPdf = (n: number): string => {
     if (!n) return '';
