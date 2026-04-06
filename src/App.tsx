@@ -75,7 +75,7 @@ function AppContent(): React.JSX.Element {
           } else {
             // Fallback : utiliser le tenant comme entité
             const t = data.tenant;
-            const modules = (t.settings?.modules as string[]) || ['compta', 'etats', 'paie'];
+            const modules = (t.settings?.modules as string[]) || [];
             const entite: Entite = {
               id: t.id,
               nom: t.nom,
@@ -198,8 +198,8 @@ function AppContent(): React.JSX.Element {
         entiteId={ent ? ent.id : 0}
         userId={user ? parseInt(user.sub.replace(/-/g, '').substring(0, 8), 16) : 0}
         typeActivite={ent ? ent.type_activite : 'entreprise'}
-        offre={ent ? ent.offre || 'comptabilite' : 'comptabilite'}
-        modules={ent ? ent.modules || ['compta', 'etats', 'paie'] : ['compta', 'etats', 'paie']}
+        offre={ent?.offre || 'etats'}
+        modules={ent ? ent.modules || [] : []}
         entiteSigle={ent ? ent.sigle || '' : ''}
         entiteAdresse={ent ? ent.adresse || '' : ''}
         entiteNif={ent ? ent.nif || '' : ''}

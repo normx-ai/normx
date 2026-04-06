@@ -46,6 +46,10 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
       window.history.replaceState({}, '', window.location.pathname);
       return mod;
     }
+    // Cabinet : rester sur le portail (null = page clients/dossiers)
+    if (isCabinet) return null;
+    // Non-cabinet : aller directement sur le premier module disponible
+    if (modules.length > 0) return modules[0];
     return null;
   });
   const [moduleSwitcherOpen, setModuleSwitcherOpen] = useState(false);
@@ -185,10 +189,10 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     />
   );
 
-  // Auto-select first module for non-cabinet
+  // Si modules changent (ex: switch client), re-selectionner le premier module pour non-cabinet
   useEffect(() => {
     if (!activeModule && !isCabinet && modules.length > 0) setActiveModule(modules[0]);
-  }, [activeModule, isCabinet, modules]);
+  }, [modules]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Reset module if not available after client switch
   useEffect(() => {
@@ -198,7 +202,19 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     }
   }, [modules, activeModule]);
 
-  // ==================== PORTAIL ====================
+  // ==================== CHARGEMENT ====================
+  if (!activeModule && !isCabinet && modules.length === 0) {
+    return (
+      <div className="dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#D4A843', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24, fontWeight: 900, color: '#0F2A42', animation: 'pulse 1.5s infinite' }}>N</div>
+          <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement des modules...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ==================== PORTAIL (Cabinet) ====================
   if (!activeModule) {
     return (
       <div className="dashboard">
