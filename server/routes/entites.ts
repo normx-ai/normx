@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express';
 import logger from '../logger';
+import pool from '../db';
+import { getValidatedSchemaName } from '../utils/tenant.utils';
 import * as tenantService from '../services/tenant.service';
 import type { TenantSettings } from '../services/tenant.service';
 
@@ -83,6 +85,18 @@ router.post('/', async (req: Request, res: Response) => {
   }
 
   try {
+    // Verifier que le cabinet a au moins un exercice
+    const cabinetSchema = getValidatedSchemaName(req.tenant.schema_name);
+    const exercicesResult = await pool.query(
+      `SELECT * FROM "${cabinetSchema}".exercices ORDER BY annee DESC`
+    );
+    if (exercicesResult.rows.length === 0) {
+      return res.status(400).json({
+        error: 'Vous devez d\'abord créer un exercice pour votre cabinet avant d\'ajouter des clients.',
+        code: 'EXERCICE_REQUIRED',
+      });
+    }
+
     const clientSlug = `${req.tenant.slug}_client_${Date.now()}`;
     const client = await tenantService.createTenant({
       slug: clientSlug,
@@ -97,9 +111,22 @@ router.post('/', async (req: Request, res: Response) => {
       settings: { modules, sigle, adresse, nif, telephone, email },
     });
 
+    // Copier les exercices du cabinet dans le schema client
+    const clientSchema = getValidatedSchemaName(client.schema_name);
+    for (const ex of exercicesResult.rows) {
+      await pool.query(
+        `INSERT INTO "${clientSchema}".exercices (annee, date_debut, date_fin, duree_mois, statut)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT DO NOTHING`,
+        [ex.annee, ex.date_debut, ex.date_fin, ex.duree_mois, ex.statut || 'ouvert']
+      );
+    }
+    logger.info('Exercices du cabinet copies vers le client "%s" (%d exercice(s))', nom, exercicesResult.rows.length);
+
     const updated = await tenantService.getTenantById(client.id);
     res.status(201).json({
       id: updated!.id,
+      slug: updated!.slug,
       nom: updated!.nom,
       type_activite: 'entreprise',
       offre: modules?.includes('compta') ? 'comptabilite' : 'etats',

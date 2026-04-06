@@ -1,5 +1,8 @@
 import express, { Request, Response } from 'express';
 import * as tenantService from '../services/tenant.service';
+import * as balanceService from '../services/balance.service';
+import pool from '../db';
+import { getValidatedSchemaName } from '../utils/tenant.utils';
 import logger from '../logger';
 
 const router = express.Router();
@@ -91,32 +94,89 @@ router.post('/setup', async (req: Request, res: Response) => {
   }
 });
 
-// POST /api/tenant/client — Cabinet : créer un dossier client
-router.post('/client', async (req: Request, res: Response) => {
-  if (!req.tenant || req.tenant.type !== 'cabinet') {
-    return res.status(403).json({ error: 'Réservé aux cabinets.' });
+
+// POST /api/tenant/exercice — Cabinet : creer un exercice au niveau cabinet
+// Cet exercice sera automatiquement copie vers les nouveaux clients
+router.post('/exercice', async (req: Request, res: Response) => {
+  if (!req.user?.sub) {
+    return res.status(401).json({ error: 'Non authentifié.' });
   }
 
-  const { nom } = req.body as { nom: string };
-  if (!nom) {
-    return res.status(400).json({ error: 'Nom du client requis.' });
+  const slug = req.user.sub.replace(/-/g, '_');
+  const tenant = await tenantService.getTenantBySlug(slug);
+  if (!tenant) {
+    return res.status(403).json({ error: 'Tenant non trouvé.' });
+  }
+
+  const { annee, duree_mois, date_debut, date_fin } = req.body as {
+    annee: number;
+    duree_mois?: number;
+    date_debut?: string;
+    date_fin?: string;
+  };
+
+  if (!annee) {
+    return res.status(400).json({ error: 'Année requise.' });
   }
 
   try {
-    const clientSlug = `${req.tenant.slug}_client_${Date.now()}`;
-    const client = await tenantService.createTenant({
-      slug: clientSlug,
-      nom,
-      type: 'client',
-      parent_id: req.tenant.id,
-      plan: req.tenant.plan,
-    });
+    const result = await balanceService.createExercice(
+      tenant.schema_name, annee, duree_mois || 12, date_debut, date_fin
+    );
 
-    res.status(201).json({ client });
+    if ('error' in result) {
+      return res.status(400).json({ error: result.error });
+    }
+    if ('existing' in result) {
+      return res.json({ exercice: result.existing, existing: true });
+    }
+
+    // Propager l'exercice vers tous les clients existants du cabinet
+    if (tenant.type === 'cabinet') {
+      const clients = await tenantService.getCabinetClients(tenant.id);
+      for (const client of clients) {
+        try {
+          const clientSchema = getValidatedSchemaName(client.schema_name);
+          await pool.query(
+            `INSERT INTO "${clientSchema}".exercices (annee, date_debut, date_fin, duree_mois, statut)
+             VALUES ($1, $2, $3, $4, 'ouvert')
+             ON CONFLICT DO NOTHING`,
+            [annee, result.created.date_debut, result.created.date_fin, result.created.duree_mois]
+          );
+        } catch (clientErr) {
+          logger.warn('Exercice non propage vers client %s: %s', client.nom, clientErr instanceof Error ? clientErr.message : String(clientErr));
+        }
+      }
+      logger.info('Exercice %d propage vers %d client(s)', annee, clients.length);
+    }
+
+    res.status(201).json({ exercice: result.created });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    logger.error(`Erreur création client: ${message}`);
-    res.status(500).json({ error: 'Erreur lors de la création du dossier client.' });
+    logger.error('Erreur création exercice cabinet: %s', message);
+    res.status(500).json({ error: 'Erreur lors de la création.' });
+  }
+});
+
+// GET /api/tenant/exercices — Lister les exercices du cabinet
+router.get('/exercices', async (req: Request, res: Response) => {
+  if (!req.user?.sub) {
+    return res.status(401).json({ error: 'Non authentifié.' });
+  }
+
+  const slug = req.user.sub.replace(/-/g, '_');
+  const tenant = await tenantService.getTenantBySlug(slug);
+  if (!tenant) {
+    return res.status(403).json({ error: 'Tenant non trouvé.' });
+  }
+
+  try {
+    const exercices = await balanceService.listExercices(tenant.schema_name);
+    res.json(exercices);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    logger.error('Erreur listing exercices cabinet: %s', message);
+    res.status(500).json({ error: 'Erreur serveur.' });
   }
 });
 

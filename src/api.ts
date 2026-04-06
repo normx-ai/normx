@@ -10,15 +10,6 @@ function authHeaders(): Record<string, string> {
   return { 'Content-Type': 'application/json' };
 }
 
-export async function apiGet<T>(url: string): Promise<T> {
-  const res = await fetch(url, { headers: authHeaders(), credentials: 'include' });
-  if (!res.ok) {
-    const data = await res.json().catch(() => ({}));
-    throw new Error(data.error || `Erreur ${res.status}`);
-  }
-  return res.json();
-}
-
 export async function apiPost<T>(url: string, body: JsonBody): Promise<T> {
   const res = await fetch(url, {
     method: 'POST',
