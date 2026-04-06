@@ -174,6 +174,42 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
     return total;
   };
 
+  // Lignes de detail
+  const detailRows = ALL_RUBRIQUES.filter(r => !r.isSousTotal && !r.isTotal && !r.isSeparator);
+  const incorpRows = detailRows.slice(0, 4);
+  const corpRows = detailRows.slice(4, 9);
+  const finRows = detailRows.slice(9);
+
+  // Distribuer le prix de cession (82x) aux lignes detail
+  // proportionnellement aux mouvements credit sur les comptes immo (2x)
+  // Car en SYSCOHADA : cession = debit 81 + credit 2x (sortie actif)
+  // et debit 485/tresorerie + credit 82 (prix cession)
+  const distribuePrix = (rows: Rubrique[], prixPrefixes: string[]): Map<string, number> => {
+    const totalPrix = balanceSum(prixPrefixes, 'credit');
+    if (totalPrix === 0) return new Map();
+
+    // Calculer le poids de chaque ligne = mouvement credit sur ses comptes 2x
+    const poids: { label: string; credit: number }[] = rows.map(r => ({
+      label: r.label,
+      credit: balanceSum(r.immoPrefixes, 'credit'),
+    }));
+    const totalCredit = poids.reduce((s, p) => s + p.credit, 0);
+    if (totalCredit === 0) return new Map();
+
+    const result = new Map<string, number>();
+    for (const p of poids) {
+      if (p.credit > 0) {
+        result.set(p.label, Math.round(totalPrix * p.credit / totalCredit));
+      }
+    }
+    return result;
+  };
+
+  // Pre-calculer la distribution du prix par groupe
+  const prixIncorp = distribuePrix(incorpRows, ['821']);
+  const prixCorp = distribuePrix(corpRows, ['822']);
+  const prixFin = distribuePrix(finRows, ['823', '824']);
+
   const computeRow = (r: Rubrique) => {
     // Valeur brute : mouvement credit des comptes immo (sortie d'actif)
     const brutBalance = balanceSum(r.immoPrefixes, 'credit');
@@ -186,20 +222,14 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
     // VNC = brut - amortissements
     const c = a - b;
 
-    // Prix de cession : pre-rempli depuis comptes 82x/754x (solde crediteur)
-    const prixBalance = balanceSum(r.prixPrefixes, 'credit');
-    const d = getVal(r.label, 'prix') || prixBalance;
+    // Prix de cession : distribue depuis 82x proportionnellement au credit des comptes 2x
+    const prixDistribue = prixIncorp.get(r.label) || prixCorp.get(r.label) || prixFin.get(r.label) || 0;
+    const d = getVal(r.label, 'prix') || prixDistribue;
 
     // Plus/moins-value = prix - VNC
     const e = d - c;
     return { a, b, c, d, e };
   };
-
-  // Lignes de détail
-  const detailRows = ALL_RUBRIQUES.filter(r => !r.isSousTotal && !r.isTotal && !r.isSeparator);
-  const incorpRows = detailRows.slice(0, 4);
-  const corpRows = detailRows.slice(4, 9);
-  const finRows = detailRows.slice(9);
 
   const sumRowVals = (rows: Rubrique[]) => {
     return rows.reduce((acc, r) => {
