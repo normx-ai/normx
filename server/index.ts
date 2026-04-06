@@ -131,7 +131,7 @@ app.use("/api/assistant", ...tenantChain, chatLimiter, assistantRoutes);
 
 // Module COMPTA
 app.use("/api/ecritures", ...tenantChain, requireModule('compta'), ecrituresRoutes);
-app.use("/api/plan-comptable", ...tenantChain, requireModule('compta'), planComptableRoutes);
+app.use("/api/plan-comptable", ...tenantChain, requireAnyModule('compta', 'etats'), planComptableRoutes);
 app.use("/api/tiers", ...tenantChain, requireModule('compta'), tiersRoutes);
 app.use("/api/tva", ...tenantChain, requireModule('compta'), tvaRoutes);
 app.use("/api/revision", ...tenantChain, requireAnyModule('compta', 'etats'), revisionRoutes);

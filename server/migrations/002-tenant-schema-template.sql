@@ -84,10 +84,11 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".ecriture_lignes (
   id SERIAL PRIMARY KEY,
   ecriture_id INTEGER REFERENCES "${schema_name}".ecritures(id) ON DELETE CASCADE,
   numero_compte VARCHAR(20) NOT NULL,
-  libelle TEXT,
+  libelle_compte TEXT,
   debit DECIMAL(15,2) DEFAULT 0,
   credit DECIMAL(15,2) DEFAULT 0,
-  tiers_id INTEGER
+  tiers_id INTEGER,
+  lettrage_code VARCHAR(10)
 );
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".balances (
