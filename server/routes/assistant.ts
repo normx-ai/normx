@@ -6,6 +6,7 @@ import pool from '../db';
 import logger from '../logger';
 import * as qdrantModule from '../qdrant';
 import { getErrorMessage } from '../utils/routeHelpers';
+import { getValidatedSchemaName } from '../utils/tenant.utils';
 
 // ===================== TYPES =====================
 
@@ -389,14 +390,10 @@ const router = express.Router();
 
 router.get('/conversations/:userId', async (req: Request, res: Response) => {
   try {
+    const s = getValidatedSchemaName(req.tenantSchema!);
     const { userId } = req.params;
-    // Securite : verifier que l'utilisateur accede a ses propres conversations
-    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
-    if (jwtUserId && userId !== jwtUserId) {
-      return res.status(403).json({ error: 'Acces interdit.' });
-    }
     const result = await pool.query(
-      'SELECT id, titre, created_at, updated_at FROM conversations WHERE user_id = $1 ORDER BY updated_at DESC',
+      `SELECT id, titre, created_at, updated_at FROM "${s}".conversations WHERE user_id = $1 ORDER BY updated_at DESC`,
       [userId]
     );
     res.json(result.rows);
@@ -407,9 +404,10 @@ router.get('/conversations/:userId', async (req: Request, res: Response) => {
 
 router.post('/conversations', async (req: Request, res: Response) => {
   try {
+    const s = getValidatedSchemaName(req.tenantSchema!);
     const { userId, titre } = req.body;
     const result = await pool.query(
-      'INSERT INTO conversations (user_id, titre) VALUES ($1, $2) RETURNING *',
+      `INSERT INTO "${s}".conversations (user_id, titre) VALUES ($1, $2) RETURNING *`,
       [userId, titre || 'Nouvelle conversation']
     );
     res.json(result.rows[0]);
@@ -420,16 +418,10 @@ router.post('/conversations', async (req: Request, res: Response) => {
 
 router.get('/conversations/:convId/messages', async (req: Request, res: Response) => {
   try {
+    const s = getValidatedSchemaName(req.tenantSchema!);
     const { convId } = req.params;
-    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
-    // Securite : verifier que la conversation appartient a l'utilisateur
-    const convCheck = await pool.query('SELECT user_id FROM conversations WHERE id = $1', [convId]);
-    if (convCheck.rows.length === 0) return res.status(404).json({ error: 'Conversation non trouvee.' });
-    if (jwtUserId && String(convCheck.rows[0].user_id) !== jwtUserId) {
-      return res.status(403).json({ error: 'Acces interdit.' });
-    }
     const result = await pool.query(
-      'SELECT id, role, content, articles_refs, created_at FROM conversation_messages WHERE conversation_id = $1 ORDER BY created_at ASC',
+      `SELECT id, role, content, articles_refs, created_at FROM "${s}".conversation_messages WHERE conversation_id = $1 ORDER BY created_at ASC`,
       [convId]
     );
     res.json(result.rows);
@@ -440,10 +432,8 @@ router.get('/conversations/:convId/messages', async (req: Request, res: Response
 
 router.delete('/conversations/:convId', async (req: Request, res: Response) => {
   try {
-    const { convId } = req.params;
-    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
-    // Securite : ne supprimer que ses propres conversations
-    await pool.query('DELETE FROM conversations WHERE id = $1 AND user_id = $2', [convId, jwtUserId]);
+    const s = getValidatedSchemaName(req.tenantSchema!);
+    await pool.query(`DELETE FROM "${s}".conversations WHERE id = $1`, [req.params.convId]);
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
@@ -459,11 +449,12 @@ router.post('/chat', async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Message requis' });
     }
 
+    const s = getValidatedSchemaName(req.tenantSchema!);
     let convId: number | null = conversationId;
 
     if (!convId && userId) {
       const convResult = await pool.query(
-        'INSERT INTO conversations (user_id, titre) VALUES ($1, $2) RETURNING id',
+        `INSERT INTO "${s}".conversations (user_id, titre) VALUES ($1, $2) RETURNING id`,
         [userId, generateTitle(message)]
       );
       convId = convResult.rows[0].id;
@@ -471,7 +462,7 @@ router.post('/chat', async (req: Request, res: Response) => {
 
     if (convId) {
       await pool.query(
-        'INSERT INTO conversation_messages (conversation_id, role, content) VALUES ($1, $2, $3)',
+        `INSERT INTO "${s}".conversation_messages (conversation_id, role, content) VALUES ($1, $2, $3)`,
         [convId, 'user', message]
       );
     }
@@ -480,7 +471,7 @@ router.post('/chat', async (req: Request, res: Response) => {
     let memoryContext = '';
     if (userId) {
       const memResult = await pool.query(
-        'SELECT cle, valeur FROM assistant_memory WHERE user_id = $1 ORDER BY updated_at DESC LIMIT 20',
+        `SELECT cle, valeur FROM "${s}".assistant_memory WHERE user_id = $1 ORDER BY updated_at DESC LIMIT 20`,
         [userId]
       );
       if (memResult.rows.length > 0) {
@@ -492,7 +483,7 @@ router.post('/chat', async (req: Request, res: Response) => {
     let dbHistory: ChatMessage[] = [];
     if (convId) {
       const histResult = await pool.query(
-        'SELECT role, content FROM conversation_messages WHERE conversation_id = $1 ORDER BY created_at ASC',
+        `SELECT role, content FROM "${s}".conversation_messages WHERE conversation_id = $1 ORDER BY created_at ASC`,
         [convId]
       );
       dbHistory = histResult.rows;
@@ -544,17 +535,17 @@ router.post('/chat', async (req: Request, res: Response) => {
       const valeur = match[2].trim();
       if (userId) {
         const existing = await pool.query(
-          'SELECT id FROM assistant_memory WHERE user_id = $1 AND cle = $2',
+          `SELECT id FROM "${s}".assistant_memory WHERE user_id = $1 AND cle = $2`,
           [userId, cle]
         );
         if (existing.rows.length > 0) {
           await pool.query(
-            'UPDATE assistant_memory SET valeur = $1, updated_at = NOW() WHERE id = $2',
+            `UPDATE "${s}".assistant_memory SET valeur = $1, updated_at = NOW() WHERE id = $2`,
             [valeur, existing.rows[0].id]
           );
         } else {
           await pool.query(
-            'INSERT INTO assistant_memory (user_id, cle, valeur) VALUES ($1, $2, $3)',
+            `INSERT INTO "${s}".assistant_memory (user_id, cle, valeur) VALUES ($1, $2, $3)`,
             [userId, cle, valeur]
           );
         }
@@ -566,11 +557,11 @@ router.post('/chat', async (req: Request, res: Response) => {
 
     if (convId) {
       await pool.query(
-        'INSERT INTO conversation_messages (conversation_id, role, content, articles_refs) VALUES ($1, $2, $3, $4)',
+        `INSERT INTO "${s}".conversation_messages (conversation_id, role, content, articles_refs) VALUES ($1, $2, $3, $4)`,
         [convId, 'assistant', assistantMessage, JSON.stringify(articlesRefs)]
       );
       await pool.query(
-        'UPDATE conversations SET updated_at = NOW() WHERE id = $1',
+        `UPDATE "${s}".conversations SET updated_at = NOW() WHERE id = $1`,
         [convId]
       );
     }
@@ -603,14 +594,10 @@ router.get('/agents', (_req: Request, res: Response) => {
 
 router.get('/memory/:userId', async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
-    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
-    if (jwtUserId && userId !== jwtUserId) {
-      return res.status(403).json({ error: 'Acces interdit.' });
-    }
+    const s = getValidatedSchemaName(req.tenantSchema!);
     const result = await pool.query(
-      'SELECT id, cle, valeur, updated_at FROM assistant_memory WHERE user_id = $1 ORDER BY updated_at DESC',
-      [userId]
+      `SELECT id, cle, valeur, updated_at FROM "${s}".assistant_memory WHERE user_id = $1 ORDER BY updated_at DESC`,
+      [req.params.userId]
     );
     res.json(result.rows);
   } catch (err) {
@@ -620,9 +607,8 @@ router.get('/memory/:userId', async (req: Request, res: Response) => {
 
 router.delete('/memory/:id', async (req: Request, res: Response) => {
   try {
-    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
-    // Securite : ne supprimer que ses propres memoires
-    await pool.query('DELETE FROM assistant_memory WHERE id = $1 AND user_id = $2', [req.params.id, jwtUserId]);
+    const s = getValidatedSchemaName(req.tenantSchema!);
+    await pool.query(`DELETE FROM "${s}".assistant_memory WHERE id = $1`, [req.params.id]);
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: getErrorMessage(err as { message?: string }) });

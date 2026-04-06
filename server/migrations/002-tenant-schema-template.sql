@@ -275,6 +275,38 @@ CREATE INDEX IF NOT EXISTS idx_bulletins_periode ON "${schema_name}".bulletins_p
 CREATE INDEX IF NOT EXISTS idx_audit_module ON "${schema_name}".audit_log(module);
 CREATE INDEX IF NOT EXISTS idx_audit_date ON "${schema_name}".audit_log(created_at);
 
+-- ========== ASSISTANT IA ==========
+
+CREATE TABLE IF NOT EXISTS "${schema_name}".conversations (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER,
+  titre VARCHAR(255) DEFAULT 'Nouvelle conversation',
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS "${schema_name}".conversation_messages (
+  id SERIAL PRIMARY KEY,
+  conversation_id INTEGER REFERENCES "${schema_name}".conversations(id) ON DELETE CASCADE,
+  role VARCHAR(20) NOT NULL DEFAULT 'user',
+  content TEXT NOT NULL,
+  articles_refs JSONB DEFAULT '[]',
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS "${schema_name}".assistant_memory (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+  cle VARCHAR(255) NOT NULL,
+  valeur TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_conversations_user ON "${schema_name}".conversations(user_id);
+CREATE INDEX IF NOT EXISTS idx_conv_messages_conv ON "${schema_name}".conversation_messages(conversation_id);
+CREATE INDEX IF NOT EXISTS idx_assistant_memory_user ON "${schema_name}".assistant_memory(user_id);
+
 -- ========== INDEX SUPPLEMENTAIRES (performance) ==========
 
 CREATE INDEX IF NOT EXISTS idx_utilisateurs_keycloak ON "${schema_name}".utilisateurs(keycloak_id);
