@@ -15,6 +15,7 @@ router.get('/', async (req: Request, res: Response) => {
     const clients = await tenantService.getCabinetClients(req.tenant.id);
     const entites = clients.map(c => ({
       id: c.id,
+      slug: c.slug,
       nom: c.nom,
       type_activite: 'entreprise' as const,
       offre: c.settings?.offre || (c.settings?.modules?.includes('compta') ? 'comptabilite' : 'etats'),

@@ -33,6 +33,7 @@ export interface BalanceLigne {
 
 export interface Entite {
   id: number;
+  slug?: string;
   nom: string;
   type_activite: TypeActivite;
   offre: Offre;

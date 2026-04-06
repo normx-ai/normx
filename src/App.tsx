@@ -7,12 +7,18 @@ import Toast from './components/Toast';
 import type { Entite } from './types';
 import './App.css';
 
-// Intercepteur global : envoyer les cookies httpOnly sur toutes les requêtes /api
+// Intercepteur global : cookies httpOnly + header X-Client-Slug pour les cabinets
 const originalFetch = window.fetch;
 window.fetch = function (input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
   if (url.startsWith('/api')) {
-    init = { ...init, credentials: 'include' };
+    const headers = new Headers(init?.headers);
+    // Injecter le slug du client selectionne (cabinet → client)
+    const clientSlug = sessionStorage.getItem('normx_client_slug');
+    if (clientSlug) {
+      headers.set('X-Client-Slug', clientSlug);
+    }
+    init = { ...init, credentials: 'include', headers };
   }
   return originalFetch.call(window, input, init);
 };
@@ -64,7 +70,12 @@ function AppContent(): React.JSX.Element {
           if (entitesRes.ok) {
             const entitesList: Entite[] = await entitesRes.json();
             setEntites(entitesList);
-            if (entitesList.length > 0) setCurrentEntite(entitesList[0]);
+            if (entitesList.length > 0) {
+              setCurrentEntite(entitesList[0]);
+              if (entitesList[0].slug) {
+                sessionStorage.setItem('normx_client_slug', entitesList[0].slug);
+              }
+            }
           } else {
             // Fallback : utiliser le tenant comme entité
             const t = data.tenant;
@@ -101,7 +112,15 @@ function AppContent(): React.JSX.Element {
     logout();
   };
 
-  const handleSwitchEntite = (entite: Entite): void => setCurrentEntite(entite);
+  const handleSwitchEntite = (entite: Entite): void => {
+    setCurrentEntite(entite);
+    // Stocker le slug du client pour le header X-Client-Slug
+    if (entite.slug) {
+      sessionStorage.setItem('normx_client_slug', entite.slug);
+    } else {
+      sessionStorage.removeItem('normx_client_slug');
+    }
+  };
   const handleEntiteCreated = (entite: Entite): void => {
     setEntites(prev => [...prev, entite]);
     if (!currentEntite) setCurrentEntite(entite);
