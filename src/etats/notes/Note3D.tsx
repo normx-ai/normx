@@ -25,31 +25,32 @@ interface Rubrique {
 }
 
 // Rubriques fideles au PDF officiel SYSCOHADA
-// VNC cessions : 811 incorporelles, 812 corporelles, 813/814 financieres (HAO) + 654 (courantes)
-// Prix cession : 821 incorporelles, 822 corporelles, 823/824 financieres (HAO) + 754 (courantes)
+// VNC cessions HAO : 811 incorporelles, 812 corporelles, 813/814 financieres
+// Prix cession HAO : 821 incorporelles, 822 corporelles, 823/824 financieres
+// Cessions courantes : 654 (VNC) / 754 (prix) — ventiles au niveau sous-total ou total
 const ALL_RUBRIQUES: Rubrique[] = [
-  // INCORPORELLES
-  { label: 'Frais de développement et de prospection', immoPrefixes: ['211'], amortPrefixes: ['2811'], vncPrefixes: ['8111'], prixPrefixes: ['8211'] },
-  { label: 'Brevets, licences, logiciels et droits similaires', immoPrefixes: ['212', '213'], amortPrefixes: ['2812', '2813'], vncPrefixes: ['8112', '8113'], prixPrefixes: ['8212', '8213'] },
-  { label: 'Fonds commercial et droit au bail', immoPrefixes: ['215', '216'], amortPrefixes: ['2815', '2816'], vncPrefixes: ['8115', '8116'], prixPrefixes: ['8215', '8216'] },
-  { label: 'Autres immobilisations incorporelles', immoPrefixes: ['214', '217', '218', '219'], amortPrefixes: ['2814', '2817', '2818', '2819'], vncPrefixes: ['8114', '8117', '8118', '8119'], prixPrefixes: ['8214', '8217', '8218', '8219'] },
-  { label: 'SOUS TOTAL : IMMOBILISATIONS INCORPORELLES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isSousTotal: true },
+  // INCORPORELLES — VNC: 811, Prix: 821
+  { label: 'Frais de développement et de prospection', immoPrefixes: ['211'], amortPrefixes: ['2811'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'Brevets, licences, logiciels et droits similaires', immoPrefixes: ['212', '213'], amortPrefixes: ['2812', '2813'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'Fonds commercial et droit au bail', immoPrefixes: ['215', '216'], amortPrefixes: ['2815', '2816'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'Autres immobilisations incorporelles', immoPrefixes: ['214', '217', '218', '219'], amortPrefixes: ['2814', '2817', '2818', '2819'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'SOUS TOTAL : IMMOBILISATIONS INCORPORELLES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: ['811'], prixPrefixes: ['821'], bold: true, isSousTotal: true },
   { label: '', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], isSeparator: true },
-  // CORPORELLES
-  { label: 'Terrains', immoPrefixes: ['22'], amortPrefixes: ['282'], vncPrefixes: ['8122'], prixPrefixes: ['8222'] },
-  { label: 'Bâtiments', immoPrefixes: ['231', '232', '233', '234'], amortPrefixes: ['2831', '2832', '2833', '2834'], vncPrefixes: ['81231', '81232', '81233', '81234'], prixPrefixes: ['82231', '82232', '82233', '82234'] },
-  { label: 'Aménagements, agencements et installations', immoPrefixes: ['235', '236', '237', '238'], amortPrefixes: ['2835', '2836', '2837', '2838'], vncPrefixes: ['81235', '81236', '81237', '81238'], prixPrefixes: ['82235', '82236', '82237', '82238'] },
-  { label: 'Matériel, mobilier et actifs biologiques', immoPrefixes: ['241', '242', '243', '244'], amortPrefixes: ['2841', '2842', '2843', '2844'], vncPrefixes: ['8124'], prixPrefixes: ['8224'] },
-  { label: 'Matériel de transport', immoPrefixes: ['245'], amortPrefixes: ['2845'], vncPrefixes: ['81245'], prixPrefixes: ['82245'] },
-  { label: 'SOUS TOTAL : IMMOBILISATIONS CORPORELLES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isSousTotal: true },
+  // CORPORELLES — VNC: 812, Prix: 822
+  { label: 'Terrains', immoPrefixes: ['22'], amortPrefixes: ['282'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'Bâtiments', immoPrefixes: ['231', '232', '233', '234'], amortPrefixes: ['2831', '2832', '2833', '2834'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'Aménagements, agencements et installations', immoPrefixes: ['235', '236', '237', '238'], amortPrefixes: ['2835', '2836', '2837', '2838'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'Matériel, mobilier et actifs biologiques', immoPrefixes: ['241', '242', '243', '244'], amortPrefixes: ['2841', '2842', '2843', '2844'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'Matériel de transport', immoPrefixes: ['245'], amortPrefixes: ['2845'], vncPrefixes: [], prixPrefixes: [] },
+  { label: 'SOUS TOTAL : IMMOBILISATIONS CORPORELLES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: ['812'], prixPrefixes: ['822'], bold: true, isSousTotal: true },
   { label: '', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], isSeparator: true },
-  // FINANCIERES
-  { label: 'Titres de participations', immoPrefixes: ['26'], amortPrefixes: [], vncPrefixes: ['813', '8126'], prixPrefixes: ['823', '8226'] },
-  { label: 'Autres immobilisations financières', immoPrefixes: ['27'], amortPrefixes: [], vncPrefixes: ['814', '8127'], prixPrefixes: ['824', '8227'] },
+  // FINANCIERES — VNC: 813/814, Prix: 823/824
+  { label: 'Titres de participations', immoPrefixes: ['26'], amortPrefixes: [], vncPrefixes: ['813'], prixPrefixes: ['823'] },
+  { label: 'Autres immobilisations financières', immoPrefixes: ['27'], amortPrefixes: [], vncPrefixes: ['814'], prixPrefixes: ['824'] },
   { label: 'SOUS TOTAL : IMMOBILISATIONS FINANCIERES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isSousTotal: true },
   { label: '', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], isSeparator: true },
-  // TOTAL
-  { label: 'TOTAL GENERAL', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isTotal: true },
+  // TOTAL — inclut aussi les cessions courantes (654/754) et le compte parent 81/82
+  { label: 'TOTAL GENERAL', immoPrefixes: [], amortPrefixes: [], vncPrefixes: ['81', '654'], prixPrefixes: ['82', '754'], bold: true, isTotal: true },
 ];
 
 const DEFAULT_COMMENTAIRE = `Mentionner la justification de la cession ainsi que la date d'acquisition et la date de sortie.`;
@@ -408,7 +409,17 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
                 const isCorp = r.label.includes('CORPORELLES') && !r.label.includes('INCORPORELLES');
                 const isFin = r.label.includes('FINANCIERES');
                 const sourceRows = isIncorp ? incorpRows : isCorp ? corpRows : isFin ? finRows : [];
-                const vals = sumRowVals(sourceRows);
+                const detailSum = sumRowVals(sourceRows);
+                // VNC et prix de cession depuis la balance (comptes 811/812/821/822)
+                const vncBal = balanceSum(r.vncPrefixes, 'debit');
+                const prixBal = balanceSum(r.prixPrefixes, 'credit');
+                const vals = {
+                  a: detailSum.a,
+                  b: detailSum.b,
+                  c: vncBal > 0 ? vncBal : detailSum.c,
+                  d: prixBal > 0 ? prixBal : detailSum.d,
+                  e: prixBal > 0 ? prixBal - (vncBal > 0 ? vncBal : detailSum.c) : detailSum.e,
+                };
                 return (
                   <tr key={i}>
                     <td style={{ ...tdStyle, fontWeight: 700 }}>{r.label}</td>
@@ -418,7 +429,17 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
               }
 
               if (r.isTotal) {
-                const vals = sumRowVals(detailRows);
+                const detailSum = sumRowVals(detailRows);
+                // Total : comptes 81/82 + cessions courantes 654/754
+                const vncBal = balanceSum(r.vncPrefixes, 'debit');
+                const prixBal = balanceSum(r.prixPrefixes, 'credit');
+                const vals = {
+                  a: detailSum.a,
+                  b: detailSum.b,
+                  c: vncBal > 0 ? vncBal : detailSum.c,
+                  d: prixBal > 0 ? prixBal : detailSum.d,
+                  e: prixBal > 0 ? prixBal - (vncBal > 0 ? vncBal : detailSum.c) : detailSum.e,
+                };
                 return (
                   <tr key={i} style={{ borderTop: '2px solid #000' }}>
                     <td style={{ ...tdStyle, fontWeight: 700 }}>{r.label}</td>
