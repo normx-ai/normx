@@ -97,12 +97,12 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     return num.startsWith('16');
   });
 
-  // Valeur brute = solde créditeur uniquement (pas le net SC-SD)
+  // Montant brut = mouvement credit (montant initial emprunte, pas le solde restant du)
   const calcMontant = (lignes: BalanceLigne[]): number => {
     let total = 0;
     lignes.forEach(l => {
-      const sc = parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur)) || 0;
-      total += sc;
+      const credit = parseFloat(String(l.credit_revise ?? l.credit)) || 0;
+      total += credit;
     });
     return total;
   };
@@ -251,7 +251,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
           <LuInfo size={14} /> Note d'information — Note 1
         </div>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
-          <li><strong>Montant brut :</strong> Renseigner la valeur initiale brute de chaque emprunt (montant emprunté à l'origine), pas le solde restant dû. La balance (comptes 16x) est utilisée comme pré-remplissage à titre indicatif.</li>
+          <li><strong>Montant brut :</strong> Correspond au montant initial emprunte (mouvement credit des comptes 16x), pas le solde restant du. Pre-rempli depuis les mouvements credit de la balance.</li>
           <li><strong>Sûretés réelles :</strong> Indiquer la référence des hypothèques, nantissements et gages accordés en garantie des emprunts (actes notariés, conventions de garantie, contrats de nantissement).</li>
           <li><strong>Crédit-bail (17x) :</strong> Les biens en crédit-bail n'appartiennent pas à l'entité et ne sont donc pas concernés par cette note.</li>
           <li>Cliquer sur <strong>Modifier</strong> pour saisir les montants, puis <strong>Sauvegarder</strong>.</li>
