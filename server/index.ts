@@ -36,6 +36,9 @@ import { requireModule, requireAnyModule } from "./middleware/moduleGuard";
 
 const app = express();
 
+// Trust proxy (Nginx reverse proxy envoie X-Forwarded-For)
+app.set('trust proxy', 1);
+
 // Securite : headers HTTP
 app.use(helmet({
   contentSecurityPolicy: process.env.NODE_ENV === 'production' ? {

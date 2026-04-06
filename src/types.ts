@@ -1,6 +1,6 @@
 // ===================== TYPES PARTAGES — NORMX =====================
 
-export type TypeActivite = 'entreprise' | 'association' | 'ordre_professionnel' | 'projet_developpement' | 'smt';
+export type TypeActivite = 'entreprise' | 'cabinet' | 'association' | 'ordre_professionnel' | 'projet_developpement' | 'smt';
 export type NormxModule = 'compta' | 'etats' | 'paie';
 export type Offre = 'comptabilite' | 'etats';
 export type ToastType = 'success' | 'error' | 'info';
