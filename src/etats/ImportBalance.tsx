@@ -108,14 +108,14 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
   const currentBalance: BalanceRecord | null = tab === 'N' ? balanceN : balanceN1;
   const currentLignes: BalanceLigneWithMeta[] = tab === 'N' ? lignesN : lignesN1;
 
-  const updateEditedLigne = (ligneId: number, field: string, value: string) => {
+  const updateEditedLigne = (ligneId: number, field: keyof BalanceLigneWithMeta, value: string) => {
     setEditedLignes(prev => ({ ...prev, [ligneId]: { ...(prev[ligneId] || {}), [field]: value } }));
   };
 
-  const getEditedValue = (ligne: BalanceLigneWithMeta, field: string): string => {
+  const getEditedValue = (ligne: BalanceLigneWithMeta, field: keyof BalanceLigneWithMeta): string => {
     const edited = editedLignes[ligne.id];
-    if (edited && field in edited) return String((edited as Record<string, unknown>)[field]);
-    return String((ligne as unknown as Record<string, unknown>)[field] ?? '');
+    if (edited && field in edited) return String(edited[field] ?? '');
+    return String(ligne[field] ?? '');
   };
 
   const handleSaveBalance = async () => {

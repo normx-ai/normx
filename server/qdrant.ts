@@ -5,13 +5,13 @@ const qdrant = new QdrantClient({
   url: process.env.QDRANT_URL || "http://localhost:6333",
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let pipeline: any = null;
+type EmbeddingPipeline = (text: string, options: { pooling: string; normalize: boolean }) => Promise<{ data: Float32Array }>;
+let pipeline: EmbeddingPipeline | null = null;
 
-async function getEmbeddingPipeline() {
+async function getEmbeddingPipeline(): Promise<EmbeddingPipeline> {
   if (pipeline) return pipeline;
   const { pipeline: createPipeline } = await import("@xenova/transformers");
-  pipeline = await createPipeline("feature-extraction", "Xenova/paraphrase-multilingual-MiniLM-L12-v2");
+  pipeline = await createPipeline("feature-extraction", "Xenova/paraphrase-multilingual-MiniLM-L12-v2") as EmbeddingPipeline;
   logger.info("Modele d'embeddings charge: paraphrase-multilingual-MiniLM-L12-v2");
   return pipeline;
 }

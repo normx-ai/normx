@@ -1,7 +1,9 @@
 export interface Etablissement {
   id: number | string;
   raison_sociale?: string;
-  [key: string]: string | number | Record<string, string | number | undefined> | undefined;
+  raisonSociale?: string;
+  nui?: string;
+  nb_salaries?: number;
 }
 
 export interface SalarieIdentite {
@@ -10,10 +12,31 @@ export interface SalarieIdentite {
   prenom?: string;
 }
 
+export interface SalarieEmploi {
+  etablissement?: string;
+  emploi?: string;
+}
+
+export interface SalarieSalaireHoraires {
+  salaire_base?: string | number;
+}
+
+export interface SalarieAvantagesNature {
+  logement?: number;
+  domesticite?: number;
+  electricite?: number;
+  voiture?: number;
+  telephone?: number;
+  nourriture?: number;
+}
+
 export interface Salarie {
   id: number | string;
+  etablissement_id?: number | string;
   identite?: SalarieIdentite;
-  [key: string]: string | number | SalarieIdentite | undefined;
+  emploi?: SalarieEmploi;
+  salaire_horaires?: SalarieSalaireHoraires;
+  avantages_nature?: SalarieAvantagesNature;
 }
 
 export interface SalarieForm {

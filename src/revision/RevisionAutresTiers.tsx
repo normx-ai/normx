@@ -127,12 +127,12 @@ function RevisionAutresTiers({ balanceN, exerciceAnnee, entiteId, exerciceId }: 
   const loadSaved = (): void => {
     fetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
-      .then((data: any) => {
-        if (data.ccaLignes) { setCcaLignes(data.ccaLignes); if (data.ccaLignes.length > 0) setNextIds(prev => ({ ...prev, cca: Math.max(...data.ccaLignes.map((a: CCALigne) => a.id)) + 1 })); }
-        if (data.pcaLignes) { setPcaLignes(data.pcaLignes); if (data.pcaLignes.length > 0) setNextIds(prev => ({ ...prev, pca: Math.max(...data.pcaLignes.map((a: PCALigne) => a.id)) + 1 })); }
-        if (data.attenteLignes) { setAttenteLignes(data.attenteLignes); if (data.attenteLignes.length > 0) setNextIds(prev => ({ ...prev, attente: Math.max(...data.attenteLignes.map((a: AttenteLigne) => a.id)) + 1 })); }
-        if (data.diversLignes) { setDiversLignes(data.diversLignes); if (data.diversLignes.length > 0) setNextIds(prev => ({ ...prev, divers: Math.max(...data.diversLignes.map((a: DiversLigne) => a.id)) + 1 })); }
-        if (data.ecartLignes) { setEcartLignes(data.ecartLignes); if (data.ecartLignes.length > 0) setNextIds(prev => ({ ...prev, ecart: Math.max(...data.ecartLignes.map((a: EcartConversionLigne) => a.id)) + 1 })); }
+      .then((data: { ccaLignes?: CCALigne[]; pcaLignes?: PCALigne[]; attenteLignes?: AttenteLigne[]; diversLignes?: DiversLigne[]; ecartLignes?: EcartConversionLigne[]; odEcritures?: ODEcriture[] }) => {
+        if (data.ccaLignes) { setCcaLignes(data.ccaLignes); if (data.ccaLignes.length > 0) setNextIds(prev => ({ ...prev, cca: Math.max(...data.ccaLignes!.map((a: CCALigne) => a.id)) + 1 })); }
+        if (data.pcaLignes) { setPcaLignes(data.pcaLignes); if (data.pcaLignes.length > 0) setNextIds(prev => ({ ...prev, pca: Math.max(...data.pcaLignes!.map((a: PCALigne) => a.id)) + 1 })); }
+        if (data.attenteLignes) { setAttenteLignes(data.attenteLignes); if (data.attenteLignes.length > 0) setNextIds(prev => ({ ...prev, attente: Math.max(...data.attenteLignes!.map((a: AttenteLigne) => a.id)) + 1 })); }
+        if (data.diversLignes) { setDiversLignes(data.diversLignes); if (data.diversLignes.length > 0) setNextIds(prev => ({ ...prev, divers: Math.max(...data.diversLignes!.map((a: DiversLigne) => a.id)) + 1 })); }
+        if (data.ecartLignes) { setEcartLignes(data.ecartLignes); if (data.ecartLignes.length > 0) setNextIds(prev => ({ ...prev, ecart: Math.max(...data.ecartLignes!.map((a: EcartConversionLigne) => a.id)) + 1 })); }
         if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});

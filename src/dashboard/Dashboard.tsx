@@ -118,9 +118,12 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   };
 
   // Menu items
-  const MENU_ITEMS: MenuItem[] = buildMenuItems({ activeModule, typeActivite, exerciceId: ex.exerciceId, etats });
+  const MENU_ITEMS: MenuItem[] = React.useMemo(
+    () => buildMenuItems({ activeModule, typeActivite, exerciceId: ex.exerciceId, etats }),
+    [activeModule, typeActivite, ex.exerciceId, etats]
+  );
 
-  const findMenuItem = (id: string): { label: string; icon: React.ComponentType<{ size?: number }> } => {
+  const findMenuItem = React.useCallback((id: string): { label: string; icon: React.ComponentType<{ size?: number }> } => {
     for (const item of MENU_ITEMS) {
       if (item.id === id) return { label: item.label, icon: item.icon };
       if (item.children) {
@@ -131,7 +134,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     const etat: EtatFinancier | undefined = etats.find((e: EtatFinancier) => e.id === id);
     if (etat) return { label: etat.titre, icon: etat.navIcon };
     return { label: id, icon: LuFileText };
-  };
+  }, [MENU_ITEMS, etats]);
 
   // Restaurer les icones des onglets apres rechargement de page
   useEffect(() => {
@@ -140,7 +143,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
       const info = findMenuItem(t.id);
       return { ...t, icon: info.icon, label: info.label };
     }));
-  }, [activeModule]); // eslint-disable-line
+  }, [activeModule, findMenuItem]);
 
   const openTab = (id: string): void => {
     setActiveTab(id);
@@ -228,7 +231,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   // Si modules changent (ex: switch client), re-selectionner le premier module pour non-cabinet
   useEffect(() => {
     if (!activeModule && !isCabinet && modules.length > 0) setActiveModule(modules[0]);
-  }, [modules]); // eslint-disable-line
+  }, [modules, activeModule, isCabinet, setActiveModule]);
 
   // Reset module if not available after client switch
   useEffect(() => {

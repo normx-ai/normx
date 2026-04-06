@@ -19,8 +19,8 @@ interface QdrantSearchResult {
 }
 
 export interface QdrantCollectionInfo {
-  points_count: number;
-  vectors_count: number;
+  points_count?: number | null;
+  indexed_vectors_count?: number | null;
   status: string;
 }
 

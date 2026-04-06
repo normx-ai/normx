@@ -92,26 +92,26 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
   const loadSaved = (): void => {
     fetch(`/api/revision/${entiteId}/${exerciceId}/df`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
-      .then((data: any) => {
+      .then((data: { prets?: PretLigne[]; interets?: InteretLigne[]; interetsCourus?: InteretCoururLigne[]; autresCharges?: AutreChargeLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.prets) {
           setPrets(data.prets);
-          if (data.prets.length > 0) setNextIds(prev => ({ ...prev, pret: Math.max(...data.prets.map((a: PretLigne) => a.id)) + 1 }));
+          if (data.prets.length > 0) setNextIds(prev => ({ ...prev, pret: Math.max(...data.prets!.map((a: PretLigne) => a.id)) + 1 }));
         }
         if (data.interets) {
           setInterets(data.interets);
-          if (data.interets.length > 0) setNextIds(prev => ({ ...prev, interet: Math.max(...data.interets.map((a: InteretLigne) => a.id)) + 1 }));
+          if (data.interets.length > 0) setNextIds(prev => ({ ...prev, interet: Math.max(...data.interets!.map((a: InteretLigne) => a.id)) + 1 }));
         }
         if (data.interetsCourus) {
           setInteretsCourus(data.interetsCourus);
-          if (data.interetsCourus.length > 0) setNextIds(prev => ({ ...prev, couru: Math.max(...data.interetsCourus.map((a: InteretCoururLigne) => a.id)) + 1 }));
+          if (data.interetsCourus.length > 0) setNextIds(prev => ({ ...prev, couru: Math.max(...data.interetsCourus!.map((a: InteretCoururLigne) => a.id)) + 1 }));
         }
         if (data.autresCharges) {
           setAutresCharges(data.autresCharges);
-          if (data.autresCharges.length > 0) setNextIds(prev => ({ ...prev, autre: Math.max(...data.autresCharges.map((a: AutreChargeLigne) => a.id)) + 1 }));
+          if (data.autresCharges.length > 0) setNextIds(prev => ({ ...prev, autre: Math.max(...data.autresCharges!.map((a: AutreChargeLigne) => a.id)) + 1 }));
         }
         if (data.odEcritures) {
           setOdEcritures(data.odEcritures);
-          if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1);
+          if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures!.map((e: ODEcriture) => e.id)) + 1);
         }
       })
       .catch(() => {});

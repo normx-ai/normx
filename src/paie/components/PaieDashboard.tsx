@@ -1,31 +1,23 @@
-// @ts-nocheck
 import React, { useState } from 'react';
-import EtablissementWizard from './EtablissementWizard';
+import EtablissementWizard, { type EtablissementFormData } from './EtablissementWizard';
+import type { Etablissement } from './wizardTypes';
 
-interface Etablissement {
-  id: string | number;
-  raison_sociale: string;
-  nui?: string;
+interface PaieDashboardEtablissement extends Etablissement {
   nb_salaries?: number;
 }
 
-interface EtablissementFormData {
-  raison_sociale: string;
-  nui?: string;
-  [key: string]: string | number | boolean | undefined;
-}
-
 interface PaieDashboardProps {
-  etablissements: Etablissement[];
+  etablissements: PaieDashboardEtablissement[];
   onAddEtablissement: (data: EtablissementFormData) => void;
+  entiteId?: string | number | null;
 }
 
-function PaieDashboard({ etablissements, onAddEtablissement }: PaieDashboardProps) {
+function PaieDashboard({ etablissements, onAddEtablissement }: PaieDashboardProps): React.ReactElement {
   const [showWizard, setShowWizard] = useState<boolean>(false);
   const [searchRS, setSearchRS] = useState<string>('');
   const [searchNUI, setSearchNUI] = useState<string>('');
 
-  const handleSaveEtablissement = (data: EtablissementFormData): void => {
+  const handleSaveEtablissement = (data: EtablissementFormData) => {
     onAddEtablissement(data);
     setShowWizard(false);
   };

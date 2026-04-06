@@ -159,7 +159,8 @@ router.get('/qdrant/status', async (_req: Request, res: Response) => {
     let collectionInfo: QdrantCollectionInfo | null = null;
     if (health.ok) {
       try {
-        collectionInfo = await qdrantModule.qdrant.getCollection('normx_kb') as unknown as QdrantCollectionInfo;
+        const info = await qdrantModule.qdrant.getCollection('normx_kb');
+        collectionInfo = { points_count: info.points_count, indexed_vectors_count: info.indexed_vectors_count, status: info.status };
       } catch (_ignored) { /* collection may not exist */ }
     }
     res.json({
@@ -168,7 +169,7 @@ router.get('/qdrant/status', async (_req: Request, res: Response) => {
       collection: collectionInfo ? {
         name: 'normx_kb',
         points_count: collectionInfo.points_count,
-        vectors_count: collectionInfo.vectors_count,
+        indexed_vectors_count: collectionInfo.indexed_vectors_count,
         status: collectionInfo.status,
       } : null,
     });

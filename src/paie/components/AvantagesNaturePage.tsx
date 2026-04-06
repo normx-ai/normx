@@ -12,7 +12,7 @@ interface SalarieIdentite {
 }
 
 interface SalarieSalaireHoraires {
-  salaire_base?: string;
+  salaire_base?: string | number;
 }
 
 interface SalarieEmploi {
@@ -30,11 +30,11 @@ interface SalarieAvantagesNature {
 
 interface Salarie {
   id: number | string;
+  etablissement_id?: number | string;
   identite?: SalarieIdentite;
   emploi?: SalarieEmploi;
   salaire_horaires?: SalarieSalaireHoraires;
   avantages_nature?: SalarieAvantagesNature;
-  [key: string]: string | number | SalarieIdentite | SalarieEmploi | SalarieSalaireHoraires | SalarieAvantagesNature | null | undefined;
 }
 
 interface AvantagesNaturePageProps {

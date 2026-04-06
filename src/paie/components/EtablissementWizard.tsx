@@ -45,7 +45,7 @@ interface EtablissementFormAdresse {
   ville: string;
 }
 
-interface EtablissementFormData {
+export interface EtablissementFormData {
   raison_sociale: string;
   nui: string;
   forme_juridique?: string;

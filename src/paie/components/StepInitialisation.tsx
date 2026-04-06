@@ -1,6 +1,11 @@
 import React from 'react';
 
-function StepInitialisation() {
+interface StepInitialisationProps {
+  mois: number;
+  annee: number;
+}
+
+function StepInitialisation({ mois, annee }: StepInitialisationProps) {
   return (
     <div className="paie-dashboard">
       <div className="paie-dashboard-header">

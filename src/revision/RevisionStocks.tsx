@@ -108,11 +108,11 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
   const loadSaved = (): void => {
     fetch(`/api/revision/${entiteId}/${exerciceId}/stocks`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
-      .then((data: any) => {
-        if (data.invLignes) { setInvLignes(data.invLignes); if (data.invLignes.length > 0) setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes.map((a: InvStockLigne) => a.id)) + 1 })); }
-        if (data.valoLignes) { setValoLignes(data.valoLignes); if (data.valoLignes.length > 0) setNextIds(prev => ({ ...prev, valo: Math.max(...data.valoLignes.map((a: ValoLigne) => a.id)) + 1 })); }
-        if (data.encoursLignes) { setEncoursLignes(data.encoursLignes); if (data.encoursLignes.length > 0) setNextIds(prev => ({ ...prev, enc: Math.max(...data.encoursLignes.map((a: EncoursRouteLigne) => a.id)) + 1 })); }
-        if (data.deprecLignes) { setDeprecLignes(data.deprecLignes); if (data.deprecLignes.length > 0) setNextIds(prev => ({ ...prev, deprec: Math.max(...data.deprecLignes.map((a: DeprecLigne) => a.id)) + 1 })); }
+      .then((data: { invLignes?: InvStockLigne[]; valoLignes?: ValoLigne[]; encoursLignes?: EncoursRouteLigne[]; deprecLignes?: DeprecLigne[]; varEdit?: Record<string, { soldeN1: number; variation: number }>; odEcritures?: ODEcriture[] }) => {
+        if (data.invLignes) { setInvLignes(data.invLignes); if (data.invLignes.length > 0) setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes!.map((a: InvStockLigne) => a.id)) + 1 })); }
+        if (data.valoLignes) { setValoLignes(data.valoLignes); if (data.valoLignes.length > 0) setNextIds(prev => ({ ...prev, valo: Math.max(...data.valoLignes!.map((a: ValoLigne) => a.id)) + 1 })); }
+        if (data.encoursLignes) { setEncoursLignes(data.encoursLignes); if (data.encoursLignes.length > 0) setNextIds(prev => ({ ...prev, enc: Math.max(...data.encoursLignes!.map((a: EncoursRouteLigne) => a.id)) + 1 })); }
+        if (data.deprecLignes) { setDeprecLignes(data.deprecLignes); if (data.deprecLignes.length > 0) setNextIds(prev => ({ ...prev, deprec: Math.max(...data.deprecLignes!.map((a: DeprecLigne) => a.id)) + 1 })); }
         if (data.varEdit) setVarEdit(data.varEdit);
         if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })

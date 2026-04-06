@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState } from 'react';
 import Icon from '../../dashboard/Icon';
 import PaieMainDashboard from './PaieMainDashboard';
@@ -10,6 +9,7 @@ import AvantagesNaturePage from './AvantagesNaturePage';
 import DeclarationsPage from './DeclarationsPage';
 import LivrePaiePage from './LivrePaiePage';
 import RubriquesPage from './RubriquesPage';
+import type { Salarie, Etablissement, SalarieAvantagesNature } from './wizardTypes';
 
 interface NavChild {
   id: string;
@@ -21,43 +21,6 @@ interface NavItem {
   label: string;
   icon: string;
   children?: NavChild[];
-}
-
-interface Etablissement {
-  id: number | string;
-  raison_sociale?: string;
-  [key: string]: string | number | Record<string, string | number | undefined> | undefined;
-}
-
-interface SalarieIdentite {
-  nom?: string;
-  prenom?: string;
-}
-
-interface SalarieEmploi {
-  etablissement?: string;
-}
-
-interface SalarieSalaireHoraires {
-  salaire_base?: string;
-}
-
-interface SalarieAvantagesNature {
-  logement?: number;
-  domesticite?: number;
-  electricite?: number;
-  voiture?: number;
-  telephone?: number;
-  nourriture?: number;
-}
-
-interface Salarie {
-  id: number | string;
-  identite?: SalarieIdentite;
-  emploi?: SalarieEmploi;
-  salaire_horaires?: SalarieSalaireHoraires;
-  avantages_nature?: SalarieAvantagesNature;
-  [key: string]: string | number | SalarieIdentite | SalarieEmploi | SalarieSalaireHoraires | SalarieAvantagesNature | null | undefined;
 }
 
 const PAIE_NAV_ITEMS: NavItem[] = [

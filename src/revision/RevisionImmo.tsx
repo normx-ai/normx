@@ -119,12 +119,12 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
   const loadSaved = (): void => {
     fetch(`/api/revision/${entiteId}/${exerciceId}/immo`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
-      .then((data: any) => {
-        if (data.invLignes) { setInvLignes(data.invLignes); if (data.invLignes.length > 0) setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes.map((a: InvLigne) => a.id)) + 1 })); }
-        if (data.encoursLignes) { setEncoursLignes(data.encoursLignes); if (data.encoursLignes.length > 0) setNextIds(prev => ({ ...prev, enc: Math.max(...data.encoursLignes.map((a: EncoursLigne) => a.id)) + 1 })); }
-        if (data.sortieLignes) { setSortieLignes(data.sortieLignes); if (data.sortieLignes.length > 0) setNextIds(prev => ({ ...prev, sort: Math.max(...data.sortieLignes.map((a: SortieLigne) => a.id)) + 1 })); }
-        if (data.amortLignes) { setAmortLignes(data.amortLignes); if (data.amortLignes.length > 0) setNextIds(prev => ({ ...prev, amort: Math.max(...data.amortLignes.map((a: AmortLigne) => a.id)) + 1 })); }
-        if (data.chargeImmoLignes) { setChargeImmoLignes(data.chargeImmoLignes); if (data.chargeImmoLignes.length > 0) setNextIds(prev => ({ ...prev, charge: Math.max(...data.chargeImmoLignes.map((a: ChargeImmoLigne) => a.id)) + 1 })); }
+      .then((data: { invLignes?: InvLigne[]; encoursLignes?: EncoursLigne[]; sortieLignes?: SortieLigne[]; amortLignes?: AmortLigne[]; chargeImmoLignes?: ChargeImmoLigne[]; rapprochEdit?: Record<string, number>; odEcritures?: ODEcriture[] }) => {
+        if (data.invLignes) { setInvLignes(data.invLignes); if (data.invLignes.length > 0) setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes!.map((a: InvLigne) => a.id)) + 1 })); }
+        if (data.encoursLignes) { setEncoursLignes(data.encoursLignes); if (data.encoursLignes.length > 0) setNextIds(prev => ({ ...prev, enc: Math.max(...data.encoursLignes!.map((a: EncoursLigne) => a.id)) + 1 })); }
+        if (data.sortieLignes) { setSortieLignes(data.sortieLignes); if (data.sortieLignes.length > 0) setNextIds(prev => ({ ...prev, sort: Math.max(...data.sortieLignes!.map((a: SortieLigne) => a.id)) + 1 })); }
+        if (data.amortLignes) { setAmortLignes(data.amortLignes); if (data.amortLignes.length > 0) setNextIds(prev => ({ ...prev, amort: Math.max(...data.amortLignes!.map((a: AmortLigne) => a.id)) + 1 })); }
+        if (data.chargeImmoLignes) { setChargeImmoLignes(data.chargeImmoLignes); if (data.chargeImmoLignes.length > 0) setNextIds(prev => ({ ...prev, charge: Math.max(...data.chargeImmoLignes!.map((a: ChargeImmoLigne) => a.id)) + 1 })); }
         if (data.rapprochEdit) setRapprochEdit(data.rapprochEdit);
         if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })

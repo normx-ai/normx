@@ -12,8 +12,8 @@ interface BalanceLigneWithMeta extends BalanceLigne {
 interface ImportBalanceTableProps {
   lignes: BalanceLigneWithMeta[];
   editingBalance: boolean;
-  getEditedValue: (ligne: BalanceLigneWithMeta, field: string) => string;
-  updateEditedLigne: (ligneId: number, field: string, value: string) => void;
+  getEditedValue: (ligne: BalanceLigneWithMeta, field: keyof BalanceLigneWithMeta) => string;
+  updateEditedLigne: (ligneId: number, field: keyof BalanceLigneWithMeta, value: string) => void;
 }
 
 function ImportBalanceTable({

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useState, useEffect, useCallback } from 'react';
 import './Paie.css';
 import Icon from '../dashboard/Icon';
@@ -9,6 +8,8 @@ import SalarieWizard from './components/SalarieWizard';
 import AssistantDeclarations from './components/AssistantDeclarations';
 import PaieApp from './components/PaieApp';
 import API_BASE from '../utils/api';
+import type { Salarie, Etablissement, SalarieIdentite, SalarieEmploi, SalarieSalaireHoraires, SalarieAvantagesNature } from './components/wizardTypes';
+import type { EtablissementFormData } from './components/EtablissementWizard';
 
 const MOIS: string[] = [
   'Janvier','Février','Mars','Avril','Mai','Juin',
@@ -27,33 +28,6 @@ const STEPS: StepItem[] = [
   { id: 4, label: 'Salariés' },
   { id: 5, label: 'Finalisation' },
 ];
-
-interface SalarieIdentite {
-  nom?: string;
-  prenom?: string;
-  code?: string;
-}
-
-interface SalarieEmploi {
-  etablissement?: string;
-}
-
-interface Salarie {
-  id: number | string;
-  etablissement_id?: number | string | null;
-  identite?: SalarieIdentite;
-  emploi?: SalarieEmploi;
-  [key: string]: string | number | SalarieIdentite | SalarieEmploi | null | undefined;
-}
-
-interface Etablissement {
-  id: number | string;
-  raison_sociale?: string;
-  raisonSociale?: string;
-  nui?: string | null;
-  data?: string | Record<string, string | number | undefined>;
-  [key: string]: string | number | Record<string, string | number | undefined> | null | undefined;
-}
 
 interface CreatedSalarie {
   code: string;
@@ -116,18 +90,25 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
       }
 
       if (etabData.etablissements) {
-        setEtablissements(etabData.etablissements.map((e: Etablissement) => ({
-          ...e,
-          ...(typeof e.data === 'string' ? JSON.parse(e.data) : e.data || {}),
+        setEtablissements(etabData.etablissements.map((e: { id: number | string; raison_sociale?: string; nui?: string }) => ({
+          id: e.id,
+          raison_sociale: e.raison_sociale,
+          nui: e.nui,
         })));
       }
 
       if (salData.salaries) {
-        setSalaries(salData.salaries.map((s: { id: number | string; etablissement_id?: number | string | null; data?: string | Record<string, string | number | undefined> }) => ({
-          id: s.id,
-          etablissement_id: s.etablissement_id,
-          ...(typeof s.data === 'string' ? JSON.parse(s.data) : s.data || {}),
-        })));
+        setSalaries(salData.salaries.map((s: { id: number | string; etablissement_id?: number | string; data?: string | Record<string, SalarieIdentite | SalarieEmploi | SalarieSalaireHoraires | SalarieAvantagesNature | undefined> }) => {
+          const d = typeof s.data === 'string' ? JSON.parse(s.data) as Record<string, SalarieIdentite | SalarieEmploi | SalarieSalaireHoraires | SalarieAvantagesNature | undefined> : s.data || {};
+          return {
+            id: s.id,
+            etablissement_id: s.etablissement_id,
+            identite: d.identite as SalarieIdentite | undefined,
+            emploi: d.emploi as SalarieEmploi | undefined,
+            salaire_horaires: d.salaire_horaires as SalarieSalaireHoraires | undefined,
+            avantages_nature: d.avantages_nature as SalarieAvantagesNature | undefined,
+          };
+        }));
       }
 
       setConfigLoaded(true);
@@ -169,9 +150,15 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
     }
   };
 
-  const handleAddEtablissement = async (etab: Etablissement): Promise<void> => {
+  const toEtablissement = (etab: EtablissementFormData, id: number | string): Etablissement => ({
+    id,
+    raison_sociale: etab.raison_sociale,
+    nui: etab.nui || undefined,
+  });
+
+  const handleAddEtablissement = async (etab: EtablissementFormData): Promise<void> => {
     if (!entiteId) {
-      setEtablissements(prev => [...prev, { ...etab, id: Date.now() }]);
+      setEtablissements(prev => [...prev, toEtablissement(etab, Date.now())]);
       return;
     }
     try {
@@ -179,35 +166,41 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-                    raison_sociale: etab.raison_sociale || etab.raisonSociale || '',
+          raison_sociale: etab.raison_sociale,
           nui: etab.nui || null,
           data: etab,
         }),
       });
       const result = await res.json();
       if (result.etablissement) {
-        const saved = result.etablissement as Etablissement;
-        setEtablissements(prev => [...prev, {
-          ...saved,
-          ...(typeof saved.data === 'string' ? JSON.parse(saved.data) : saved.data || {}),
-        }]);
+        const saved = result.etablissement as { id: number; raison_sociale?: string; nui?: string };
+        setEtablissements(prev => [...prev, { id: saved.id, raison_sociale: saved.raison_sociale, nui: saved.nui }]);
       }
     } catch {
-      setEtablissements(prev => [...prev, { ...etab, id: Date.now() }]);
+      setEtablissements(prev => [...prev, toEtablissement(etab, Date.now())]);
     }
   };
 
+  const dataToSalarie = (data: Record<string, Record<string, string | number | boolean | null | undefined>>, id: number | string): Salarie => ({
+    id,
+    identite: data.identite as SalarieIdentite | undefined,
+    emploi: data.emploi as SalarieEmploi | undefined,
+    salaire_horaires: data.salaire_horaires as SalarieSalaireHoraires | undefined,
+    avantages_nature: data.avantages_nature as SalarieAvantagesNature | undefined,
+    etablissement_id: data.emploi?.etablissement as string | undefined,
+  });
+
   const handleAddSalarie = async (data: Record<string, Record<string, string | number | boolean | null | undefined>>): Promise<void> => {
-    const etabId = (data.emploi as Record<string, string | number | boolean | null | undefined> | undefined)?.etablissement || null;
+    const etabId = data.emploi?.etablissement || null;
 
     if (!entiteId) {
-      const newSalarie = { ...data, id: Date.now() } as Salarie;
+      const newSalarie = dataToSalarie(data, Date.now());
       setSalaries(prev => [...prev, newSalarie]);
       setShowSalarieWizard(false);
       setLastCreatedSalarie({
-        code: (newSalarie.identite as SalarieIdentite | undefined)?.code || '0001',
-        nom: (newSalarie.identite as SalarieIdentite | undefined)?.nom || '',
-        prenom: (newSalarie.identite as SalarieIdentite | undefined)?.prenom || '',
+        code: newSalarie.identite?.code || '0001',
+        nom: newSalarie.identite?.nom || '',
+        prenom: newSalarie.identite?.prenom || '',
       });
       setShowAssistantDeclarations(true);
       return;
@@ -218,18 +211,15 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-                    etablissement_id: etabId ? Number(etabId) : null,
+          etablissement_id: etabId ? Number(etabId) : null,
           data: data,
         }),
       });
       const result = await res.json();
       if (result.salarie) {
-        const saved = result.salarie as { id: number | string; etablissement_id?: number | string | null; data?: string | Record<string, string | number | undefined> };
-        const newSalarie: Salarie = {
-          id: saved.id,
-          etablissement_id: saved.etablissement_id,
-          ...(typeof saved.data === 'string' ? JSON.parse(saved.data) : saved.data || {}),
-        };
+        const saved = result.salarie as { id: number | string; etablissement_id?: number | string; data?: string | Record<string, Record<string, string | number | boolean | null | undefined>> };
+        const d = typeof saved.data === 'string' ? JSON.parse(saved.data) as Record<string, Record<string, string | number | boolean | null | undefined>> : saved.data || {};
+        const newSalarie = dataToSalarie(d, saved.id);
         setSalaries(prev => [...prev, newSalarie]);
         setShowSalarieWizard(false);
         setLastCreatedSalarie({
@@ -240,7 +230,7 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
         setShowAssistantDeclarations(true);
       }
     } catch {
-      const newSalarie = { ...data, id: Date.now() } as Salarie;
+      const newSalarie = dataToSalarie(data, Date.now());
       setSalaries(prev => [...prev, newSalarie]);
       setShowSalarieWizard(false);
     }

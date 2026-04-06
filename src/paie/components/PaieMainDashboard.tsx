@@ -1,21 +1,10 @@
-// @ts-nocheck
 import React from 'react';
 import { formaterMontant } from '../utils/calculPaie';
-
-interface SalarieWithSalaire {
-  salaire_horaires?: {
-    salaire_base?: string | number;
-  };
-}
-
-interface EtablissementItem {
-  id: string | number;
-  raison_sociale?: string;
-}
+import type { Salarie, Etablissement } from './wizardTypes';
 
 interface PaieMainDashboardProps {
-  salaries: SalarieWithSalaire[];
-  etablissements: EtablissementItem[];
+  salaries: Salarie[];
+  etablissements: Etablissement[];
 }
 
 function PaieMainDashboard({ salaries, etablissements }: PaieMainDashboardProps) {
@@ -35,7 +24,7 @@ function PaieMainDashboard({ salaries, etablissements }: PaieMainDashboardProps)
         <div style={{ background: '#fff', padding: 20, border: '1px solid #e2e5ea' }}>
           <div style={{ fontSize: 12, color: '#6b7280', marginBottom: 4 }}>Masse salariale</div>
           <div style={{ fontSize: 24, fontWeight: 700, color: '#1A3A5C' }}>
-            {formaterMontant(salaries.reduce((s: number, sal: SalarieWithSalaire) => s + (parseInt(String(sal.salaire_horaires?.salaire_base)) || 0), 0))}
+            {formaterMontant(salaries.reduce((s: number, sal: Salarie) => s + (parseInt(String(sal.salaire_horaires?.salaire_base)) || 0), 0))}
           </div>
         </div>
         <div style={{ background: '#fff', padding: 20, border: '1px solid #e2e5ea' }}>

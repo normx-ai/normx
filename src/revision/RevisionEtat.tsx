@@ -95,14 +95,14 @@ function RevisionEtat({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
   const loadSaved = (): void => {
     fetch(`/api/revision/${entiteId}/${exerciceId}/etat`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
-      .then((data: any) => {
-        if (data.isLignes) { setIsLignes(data.isLignes); if (data.isLignes.length > 0) setNextIds(prev => ({ ...prev, is: Math.max(...data.isLignes.map((a: ISVerifLigne) => a.id)) + 1 })); }
+      .then((data: { isLignes?: ISVerifLigne[]; tauxIS?: number; tvaCollecteeLignes?: TVACollecteeLigne[]; tvaDeductibleLignes?: TVADeductibleLigne[]; autresImpotsLignes?: AutresImpotsLigne[]; dettesFiscalesLignes?: DettesFiscalesLigne[]; redressementLignes?: RedressementLigne[]; odEcritures?: ODEcriture[] }) => {
+        if (data.isLignes) { setIsLignes(data.isLignes); if (data.isLignes.length > 0) setNextIds(prev => ({ ...prev, is: Math.max(...data.isLignes!.map((a: ISVerifLigne) => a.id)) + 1 })); }
         if (data.tauxIS !== undefined) setTauxIS(data.tauxIS);
-        if (data.tvaCollecteeLignes) { setTvaCollecteeLignes(data.tvaCollecteeLignes); if (data.tvaCollecteeLignes.length > 0) setNextIds(prev => ({ ...prev, tvac: Math.max(...data.tvaCollecteeLignes.map((a: TVACollecteeLigne) => a.id)) + 1 })); }
-        if (data.tvaDeductibleLignes) { setTvaDeductibleLignes(data.tvaDeductibleLignes); if (data.tvaDeductibleLignes.length > 0) setNextIds(prev => ({ ...prev, tvad: Math.max(...data.tvaDeductibleLignes.map((a: TVADeductibleLigne) => a.id)) + 1 })); }
-        if (data.autresImpotsLignes) { setAutresImpotsLignes(data.autresImpotsLignes); if (data.autresImpotsLignes.length > 0) setNextIds(prev => ({ ...prev, autres: Math.max(...data.autresImpotsLignes.map((a: AutresImpotsLigne) => a.id)) + 1 })); }
-        if (data.dettesFiscalesLignes) { setDettesFiscalesLignes(data.dettesFiscalesLignes); if (data.dettesFiscalesLignes.length > 0) setNextIds(prev => ({ ...prev, dettes: Math.max(...data.dettesFiscalesLignes.map((a: DettesFiscalesLigne) => a.id)) + 1 })); }
-        if (data.redressementLignes) { setRedressementLignes(data.redressementLignes); if (data.redressementLignes.length > 0) setNextIds(prev => ({ ...prev, redress: Math.max(...data.redressementLignes.map((a: RedressementLigne) => a.id)) + 1 })); }
+        if (data.tvaCollecteeLignes) { setTvaCollecteeLignes(data.tvaCollecteeLignes); if (data.tvaCollecteeLignes.length > 0) setNextIds(prev => ({ ...prev, tvac: Math.max(...data.tvaCollecteeLignes!.map((a: TVACollecteeLigne) => a.id)) + 1 })); }
+        if (data.tvaDeductibleLignes) { setTvaDeductibleLignes(data.tvaDeductibleLignes); if (data.tvaDeductibleLignes.length > 0) setNextIds(prev => ({ ...prev, tvad: Math.max(...data.tvaDeductibleLignes!.map((a: TVADeductibleLigne) => a.id)) + 1 })); }
+        if (data.autresImpotsLignes) { setAutresImpotsLignes(data.autresImpotsLignes); if (data.autresImpotsLignes.length > 0) setNextIds(prev => ({ ...prev, autres: Math.max(...data.autresImpotsLignes!.map((a: AutresImpotsLigne) => a.id)) + 1 })); }
+        if (data.dettesFiscalesLignes) { setDettesFiscalesLignes(data.dettesFiscalesLignes); if (data.dettesFiscalesLignes.length > 0) setNextIds(prev => ({ ...prev, dettes: Math.max(...data.dettesFiscalesLignes!.map((a: DettesFiscalesLigne) => a.id)) + 1 })); }
+        if (data.redressementLignes) { setRedressementLignes(data.redressementLignes); if (data.redressementLignes.length > 0) setNextIds(prev => ({ ...prev, redress: Math.max(...data.redressementLignes!.map((a: RedressementLigne) => a.id)) + 1 })); }
         if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })
       .catch(() => {});

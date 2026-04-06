@@ -192,7 +192,7 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
   const loadSaved = (): void => {
     fetch(`/api/revision/${entiteId}/${exerciceId}/personnel`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
-      .then((data: any) => {
+      .then((data: { congesData?: ProvisionCongesData; avancesEdit?: Record<string, { anteriorite: string; accordFormalise: string; observations: string }>; dettesCommentaires?: Record<string, string>; odEcritures?: ODEcriture[] }) => {
         if (data.congesData) setCongesData(data.congesData);
         if (data.avancesEdit) setAvancesEdit(data.avancesEdit);
         if (data.dettesCommentaires) setDettesCommentaires(data.dettesCommentaires);

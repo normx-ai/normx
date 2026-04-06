@@ -60,12 +60,12 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
   const loadSaved = (): void => {
     fetch(`/api/revision/${entiteId}/${exerciceId}/clients`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
-      .then((data: any) => {
-        if (data.recouvLignes) { setRecouvLignes(data.recouvLignes); if (data.recouvLignes.length > 0) setNextIds(prev => ({ ...prev, recouv: Math.max(...data.recouvLignes.map((a: RecouvLigne) => a.id)) + 1 })); }
-        if (data.douteuseLignes) { setDouteuseLignes(data.douteuseLignes); if (data.douteuseLignes.length > 0) setNextIds(prev => ({ ...prev, dout: Math.max(...data.douteuseLignes.map((a: CreanceDouteuseLigne) => a.id)) + 1 })); }
+      .then((data: { recouvLignes?: RecouvLigne[]; douteuseLignes?: CreanceDouteuseLigne[]; deprecEdit?: Record<string, { soldeN1: number; dotations: number; reprises: number }>; deviseLignes?: CreanceDeviseLigne[]; circularLignes?: CircularClientLigne[]; prodRecevoirEdit?: Record<string, { commentaire: string }>; odEcritures?: ODEcriture[] }) => {
+        if (data.recouvLignes) { setRecouvLignes(data.recouvLignes); if (data.recouvLignes.length > 0) setNextIds(prev => ({ ...prev, recouv: Math.max(...data.recouvLignes!.map((a: RecouvLigne) => a.id)) + 1 })); }
+        if (data.douteuseLignes) { setDouteuseLignes(data.douteuseLignes); if (data.douteuseLignes.length > 0) setNextIds(prev => ({ ...prev, dout: Math.max(...data.douteuseLignes!.map((a: CreanceDouteuseLigne) => a.id)) + 1 })); }
         if (data.deprecEdit) setDeprecEdit(data.deprecEdit);
-        if (data.deviseLignes) { setDeviseLignes(data.deviseLignes); if (data.deviseLignes.length > 0) setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes.map((a: CreanceDeviseLigne) => a.id)) + 1 })); }
-        if (data.circularLignes) { setCircularLignes(data.circularLignes); if (data.circularLignes.length > 0) setNextIds(prev => ({ ...prev, circ: Math.max(...data.circularLignes.map((a: CircularClientLigne) => a.id)) + 1 })); }
+        if (data.deviseLignes) { setDeviseLignes(data.deviseLignes); if (data.deviseLignes.length > 0) setNextIds(prev => ({ ...prev, dev: Math.max(...data.deviseLignes!.map((a: CreanceDeviseLigne) => a.id)) + 1 })); }
+        if (data.circularLignes) { setCircularLignes(data.circularLignes); if (data.circularLignes.length > 0) setNextIds(prev => ({ ...prev, circ: Math.max(...data.circularLignes!.map((a: CircularClientLigne) => a.id)) + 1 })); }
         if (data.prodRecevoirEdit) setProdRecevoirEdit(data.prodRecevoirEdit);
         if (data.odEcritures) { setOdEcritures(data.odEcritures); if (data.odEcritures.length > 0) setNextOdId(Math.max(...data.odEcritures.map((e: ODEcriture) => e.id)) + 1); }
       })

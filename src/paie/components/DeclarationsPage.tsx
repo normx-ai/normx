@@ -42,7 +42,7 @@ interface SalarieEmploi {
 }
 
 interface SalarieSalaireHoraires {
-  salaire_base?: string;
+  salaire_base?: string | number;
 }
 
 interface SalarieAvantagesNature {
@@ -56,19 +56,20 @@ interface SalarieAvantagesNature {
 
 interface SalarieItem {
   id: number | string;
+  etablissement_id?: number | string;
   identite?: SalarieIdentite;
   emploi?: SalarieEmploi;
   salaire_horaires?: SalarieSalaireHoraires;
   avantages_nature?: SalarieAvantagesNature;
-  [key: string]: string | number | SalarieIdentite | SalarieEmploi | SalarieSalaireHoraires | SalarieAvantagesNature | null | undefined;
 }
 
 interface EtablissementItem {
   id: number | string;
   raison_sociale?: string;
+  raisonSociale?: string;
   numero_cnss?: string;
   nui?: string;
-  [key: string]: string | number | Record<string, string | number | undefined> | undefined;
+  nb_salaries?: number;
 }
 
 interface DeclarationsPageProps {
