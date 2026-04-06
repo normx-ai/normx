@@ -159,6 +159,9 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
   };
 
   // Calculer un montant depuis la balance pour des prefixes donnes
+  // Pour les comptes 81/82 : utiliser les mouvements (debit/credit) car ces comptes
+  // sont soldes en cloture (debit = credit, solde = 0)
+  // Pour les comptes 2x/28x : utiliser les mouvements aussi (sorties d'actif = credit sur 2x)
   const balanceSum = (prefixes: string[], type: 'debit' | 'credit'): number => {
     if (prefixes.length === 0) return 0;
     let total = 0;
@@ -166,9 +169,9 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
       const num = (l.numero_compte || '').trim();
       if (!prefixes.some(p => num.startsWith(p))) continue;
       if (type === 'debit') {
-        total += parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur ?? l.debit)) || 0;
+        total += parseFloat(String(l.debit)) || 0;
       } else {
-        total += parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur ?? l.credit)) || 0;
+        total += parseFloat(String(l.credit)) || 0;
       }
     }
     return total;
