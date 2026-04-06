@@ -113,6 +113,39 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .mt td{padding:8px;border-bottom:1px solid #f3f4f6}
         .lp .mt .num{text-align:right;font-family:'Inter',monospace;font-weight:600}
 
+        /* HERO ANIMATIONS */
+        @keyframes lp-fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes lp-fadeRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+        @keyframes lp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        @keyframes lp-scaleIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+        @keyframes lp-shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        @keyframes lp-countUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes lp-rowSlide{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
+
+        .lp .hero-text{animation:lp-fadeUp .8s ease-out both}
+        .lp .hero-badge{animation:lp-fadeUp .6s ease-out both}
+        .lp .hero h1{animation:lp-fadeUp .8s ease-out .15s both}
+        .lp .hero p{animation:lp-fadeUp .8s ease-out .25s both}
+        .lp .hero-btns{animation:lp-fadeUp .8s ease-out .35s both}
+        .lp .hero-visual{animation:lp-fadeRight .9s ease-out .3s both}
+        .lp .hero-visual>div{animation:lp-float 5s ease-in-out 1.2s infinite}
+        .lp .hero-visual .mt tbody tr:nth-child(1){animation:lp-rowSlide .5s ease-out .8s both}
+        .lp .hero-visual .mt tbody tr:nth-child(2){animation:lp-rowSlide .5s ease-out .95s both}
+        .lp .hero-visual .mt tbody tr:nth-child(3){animation:lp-rowSlide .5s ease-out 1.1s both}
+        .lp .hero-visual .mt tbody tr:nth-child(4){animation:lp-rowSlide .5s ease-out 1.25s both}
+        .lp .hero-visual .mt tbody tr:nth-child(5){animation:lp-rowSlide .5s ease-out 1.4s both}
+        .lp .stats{animation:lp-scaleIn .7s ease-out .5s both}
+        .lp .stat:nth-child(1){animation:lp-countUp .6s ease-out .7s both}
+        .lp .stat:nth-child(2){animation:lp-countUp .6s ease-out .85s both}
+        .lp .stat:nth-child(3){animation:lp-countUp .6s ease-out 1s both}
+        .lp .stat:nth-child(4){animation:lp-countUp .6s ease-out 1.15s both}
+
+        /* Shimmer on hero badge */
+        .lp .hero-badge{background:linear-gradient(90deg,var(--primary-bg) 0%,rgba(212,168,67,.18) 50%,var(--primary-bg) 100%);background-size:200% 100%;animation:lp-fadeUp .6s ease-out both,lp-shimmer 3s ease-in-out 1.5s infinite}
+
+        /* Hover lift on MacBook */
+        .lp .hero-visual>div{transition:transform .4s ease,box-shadow .4s ease}
+
         @media(max-width:900px){
           .lp .hero-inner,.lp .section-inner{grid-template-columns:1fr;text-align:center}
           .lp .hero p{margin:0 auto 28px}
