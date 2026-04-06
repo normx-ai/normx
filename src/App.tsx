@@ -32,6 +32,7 @@ function AppContent(): React.JSX.Element {
   const [onboardingDone, setOnboardingDone] = React.useState<boolean | null>(null);
   const [tenantLoading, setTenantLoading] = React.useState(true);
   const [tenantName, setTenantName] = React.useState('');
+  const [tenantType, setTenantType] = React.useState<string>('');
   const [subscriptionRequired, setSubscriptionRequired] = React.useState(false);
 
   // Charger le tenant depuis l'API au login
@@ -64,6 +65,7 @@ function AppContent(): React.JSX.Element {
         }
 
         setTenantName(data.tenant.nom || '');
+        setTenantType(data.tenant.type || '');
 
         // Charger les entités depuis l'API
         try {
@@ -193,7 +195,7 @@ function AppContent(): React.JSX.Element {
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <Dashboard
         userName={user ? user.name : 'Utilisateur'}
-        isCabinet={entites.length > 1 || tenantName !== (ent?.nom || '')}
+        isCabinet={tenantType === 'cabinet'}
         entiteName={ent ? ent.nom : tenantName || 'Mon Entité'}
         entiteId={ent ? ent.id : 0}
         userId={user ? parseInt(user.sub.replace(/-/g, '').substring(0, 8), 16) : 0}
