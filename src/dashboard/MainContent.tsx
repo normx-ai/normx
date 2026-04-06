@@ -189,7 +189,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
     note_1_sys: ['16', '17'],
     note_2_sys: [], // toujours applicable (informations obligatoires)
     note_3a_sys: ['21', '22', '23', '24', '25'],
-    note_3b_sys: [],  // manuelle (biens en location-acquisition)
+    note_3b_sys: ['17'],  // biens en location-acquisition (compte 17 = dettes de location-acquisition)
     note_3c_sys: ['28'],
     note_3d_sys: ['21', '22', '23', '24', '25'],
     note_3e_sys: ['21', '22', '23', '24', '25'],
@@ -239,7 +239,6 @@ function MainContent(props: MainContentProps): React.ReactElement {
 
   // Notes manuelles : visibles si l'utilisateur a saisi des donnees
   const MANUAL_NOTE_PARAMS: Record<string, string> = {
-    note_3b_sys: 'note3b_values',
     note_16c_sys: 'note16c_values',
     note_35_sys: 'note35_values',
   };
