@@ -14,24 +14,11 @@ import logger from '../logger';
  * Active uniquement si le header X-Client-Slug est present.
  */
 /**
- * Bloque les requetes d'un cabinet qui n'a pas selectionne de client.
- * A utiliser sur les routes de donnees (balance, ecritures, paie, etc.)
- * mais PAS sur les routes de listing (GET /api/entites).
+ * Le cabinet peut travailler :
+ * - Sur ses propres donnees (pas de X-Client-Slug, schema cabinet)
+ * - Sur les donnees d'un client (X-Client-Slug, schema client)
+ * Les deux cas sont valides — pas de blocage.
  */
-export function requireClientForCabinet(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
-  if (req.isCabinetUser && req.tenant?.type === 'cabinet') {
-    res.status(400).json({
-      error: 'Veuillez selectionner un dossier client avant d\'acceder aux donnees.',
-      code: 'CLIENT_REQUIRED',
-    });
-    return;
-  }
-  next();
-}
 
 export async function switchClientMiddleware(
   req: Request,
