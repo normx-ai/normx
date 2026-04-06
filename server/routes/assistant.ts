@@ -390,6 +390,11 @@ const router = express.Router();
 router.get('/conversations/:userId', async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
+    // Securite : verifier que l'utilisateur accede a ses propres conversations
+    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
+    if (jwtUserId && userId !== jwtUserId) {
+      return res.status(403).json({ error: 'Acces interdit.' });
+    }
     const result = await pool.query(
       'SELECT id, titre, created_at, updated_at FROM conversations WHERE user_id = $1 ORDER BY updated_at DESC',
       [userId]
@@ -416,6 +421,13 @@ router.post('/conversations', async (req: Request, res: Response) => {
 router.get('/conversations/:convId/messages', async (req: Request, res: Response) => {
   try {
     const { convId } = req.params;
+    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
+    // Securite : verifier que la conversation appartient a l'utilisateur
+    const convCheck = await pool.query('SELECT user_id FROM conversations WHERE id = $1', [convId]);
+    if (convCheck.rows.length === 0) return res.status(404).json({ error: 'Conversation non trouvee.' });
+    if (jwtUserId && String(convCheck.rows[0].user_id) !== jwtUserId) {
+      return res.status(403).json({ error: 'Acces interdit.' });
+    }
     const result = await pool.query(
       'SELECT id, role, content, articles_refs, created_at FROM conversation_messages WHERE conversation_id = $1 ORDER BY created_at ASC',
       [convId]
@@ -429,7 +441,9 @@ router.get('/conversations/:convId/messages', async (req: Request, res: Response
 router.delete('/conversations/:convId', async (req: Request, res: Response) => {
   try {
     const { convId } = req.params;
-    await pool.query('DELETE FROM conversations WHERE id = $1', [convId]);
+    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
+    // Securite : ne supprimer que ses propres conversations
+    await pool.query('DELETE FROM conversations WHERE id = $1 AND user_id = $2', [convId, jwtUserId]);
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
@@ -589,9 +603,14 @@ router.get('/agents', (_req: Request, res: Response) => {
 
 router.get('/memory/:userId', async (req: Request, res: Response) => {
   try {
+    const { userId } = req.params;
+    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
+    if (jwtUserId && userId !== jwtUserId) {
+      return res.status(403).json({ error: 'Acces interdit.' });
+    }
     const result = await pool.query(
       'SELECT id, cle, valeur, updated_at FROM assistant_memory WHERE user_id = $1 ORDER BY updated_at DESC',
-      [req.params.userId]
+      [userId]
     );
     res.json(result.rows);
   } catch (err) {
@@ -601,7 +620,9 @@ router.get('/memory/:userId', async (req: Request, res: Response) => {
 
 router.delete('/memory/:id', async (req: Request, res: Response) => {
   try {
-    await pool.query('DELETE FROM assistant_memory WHERE id = $1', [req.params.id]);
+    const jwtUserId = req.user ? String(parseInt(req.user.sub.replace(/-/g, '').substring(0, 8), 16)) : null;
+    // Securite : ne supprimer que ses propres memoires
+    await pool.query('DELETE FROM assistant_memory WHERE id = $1 AND user_id = $2', [req.params.id, jwtUserId]);
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: getErrorMessage(err as { message?: string }) });

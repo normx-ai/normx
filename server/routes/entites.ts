@@ -48,7 +48,12 @@ router.get('/', async (req: Request, res: Response) => {
 
 // GET /api/entites/:id
 router.get('/:id', async (req: Request, res: Response) => {
-  const tenant = await tenantService.getTenantById(parseInt(req.params.id));
+  const id = parseInt(req.params.id, 10);
+  if (!req.tenant) return res.status(400).json({ error: 'Tenant non résolu.' });
+  const allowed = req.tenant.id === id || (req.accessibleTenants && req.accessibleTenants.includes(id));
+  if (!allowed) return res.status(403).json({ error: 'Accès interdit à cette entité.' });
+
+  const tenant = await tenantService.getTenantById(id);
   if (!tenant) return res.status(404).json({ error: 'Entité non trouvée.' });
   const { modules, sigle, adresse, nif, telephone, email, ...data } = (tenant.settings || {}) as Record<string, unknown>;
   res.json({
@@ -113,7 +118,11 @@ router.post('/', async (req: Request, res: Response) => {
 
 // PUT /api/entites/:id — Modifier une entité
 router.put('/:id', async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id, 10);
+  if (!req.tenant) return res.status(400).json({ error: 'Tenant non résolu.' });
+  const allowed = req.tenant.id === id || (req.accessibleTenants && req.accessibleTenants.includes(id));
+  if (!allowed) return res.status(403).json({ error: 'Accès interdit à cette entité.' });
+
   const { nom, modules, sigle, adresse, nif, telephone, email, data } = req.body;
 
   try {
@@ -154,7 +163,11 @@ router.put('/:id', async (req: Request, res: Response) => {
 
 // DELETE /api/entites/:id — Archiver/supprimer une entité
 router.delete('/:id', async (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id, 10);
+  if (!req.tenant) return res.status(400).json({ error: 'Tenant non résolu.' });
+  const allowed = req.tenant.id === id || (req.accessibleTenants && req.accessibleTenants.includes(id));
+  if (!allowed) return res.status(403).json({ error: 'Accès interdit à cette entité.' });
+
   try {
     const deleted = await tenantService.deleteTenant(id);
     if (!deleted) return res.status(404).json({ error: 'Entité non trouvée.' });

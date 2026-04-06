@@ -128,13 +128,6 @@ export async function updateTenant(
   );
 }
 
-// ============ CONTEXTE ============
-
-export async function setTenantContext(schemaName: string): Promise<void> {
-  const validated = getValidatedSchemaName(schemaName);
-  await pool.query(`SET search_path TO "${validated}", public`);
-}
-
 // ============ SUPPRESSION ============
 
 export async function deleteTenant(id: number): Promise<boolean> {

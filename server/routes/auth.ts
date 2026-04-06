@@ -41,8 +41,7 @@ router.post('/callback', verifyTurnstile, async (req: Request, res: Response) =>
     });
 
     if (!response.ok) {
-      const body = await response.text();
-      logger.error('Keycloak token exchange failed: ' + body);
+      logger.error('Keycloak token exchange failed with status: ' + response.status);
       return res.status(401).json({ error: 'Echange de code echoue.' });
     }
 

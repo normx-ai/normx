@@ -41,9 +41,6 @@ export async function tenantMiddleware(
     req.tenant = tenant;
     req.tenantSchema = tenant.schema_name;
 
-    // Configurer le search_path pour cette connexion
-    await tenantService.setTenantContext(tenant.schema_name);
-
     // Si l'utilisateur appartient à un cabinet, charger ses clients accessibles
     if (tenant.type === 'cabinet') {
       req.isCabinetUser = true;

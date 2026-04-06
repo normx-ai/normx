@@ -41,7 +41,6 @@ export async function switchClientMiddleware(
     // Basculer le contexte vers le client
     req.tenant = clientTenant;
     req.tenantSchema = clientTenant.schema_name;
-    await tenantService.setTenantContext(clientTenant.schema_name);
 
     next();
   } catch (err) {

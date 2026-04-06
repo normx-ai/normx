@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import pool from '../db';
+import { getValidatedSchemaName } from '../utils/tenant.utils';
 
 interface AuditEntry {
   utilisateur_id: string | null;
@@ -12,8 +13,9 @@ interface AuditEntry {
 }
 
 export async function logAudit(schema: string, entry: AuditEntry): Promise<void> {
+  const s = getValidatedSchemaName(schema);
   await pool.query(
-    `INSERT INTO "${schema}".audit_log (utilisateur_id, action, module, entite, entite_id, details, ip_address)
+    `INSERT INTO "${s}".audit_log (utilisateur_id, action, module, entite, entite_id, details, ip_address)
      VALUES ($1, $2, $3, $4, $5, $6, $7)`,
     [entry.utilisateur_id, entry.action, entry.module, entry.entite, entry.entite_id, JSON.stringify(entry.details), entry.ip_address]
   );
