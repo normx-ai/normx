@@ -3,6 +3,7 @@ import { LuTriangleAlert, LuCircleCheck, LuCircleX, LuInfo } from 'react-icons/l
 import { BalanceLigne } from '../types';
 import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from '../etats/anomaliesComptes';
 import type { AnomalieCompte } from '../etats/anomaliesComptes';
+import { getSD, getSC } from './revisionTypes';
 
 interface AlertesCompteProps {
   /** Lignes de la balance pour cette section */
@@ -62,8 +63,8 @@ function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElemen
       if (!num || num.length <= 2) continue;
       const anomalies = detectAnomalies(l);
       if (anomalies.length > 0) {
-        const sd = parseFloat(String(l.solde_debiteur)) || 0;
-        const sc = parseFloat(String(l.solde_crediteur)) || 0;
+        const sd = getSD(l);
+        const sc = getSC(l);
         const sa = getSoldeAttendu(num);
         result.push({
           numero: num,
@@ -83,8 +84,8 @@ function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElemen
     for (const l of lignes) {
       const num = (l.numero_compte || '').trim();
       if (!num) continue;
-      const sd = parseFloat(String(l.solde_debiteur)) || 0;
-      const sc = parseFloat(String(l.solde_crediteur)) || 0;
+      const sd = getSD(l);
+      const sc = getSC(l);
       if (sd < 0.5 && sc < 0.5) continue;
 
       for (const rule of EXCLUSION_RULES) {
@@ -111,8 +112,8 @@ function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElemen
   const comptesAttente = useMemo(() => {
     return lignes.filter(l => {
       const num = (l.numero_compte || '').trim();
-      const sd = parseFloat(String(l.solde_debiteur)) || 0;
-      const sc = parseFloat(String(l.solde_crediteur)) || 0;
+      const sd = getSD(l);
+      const sc = getSC(l);
       return (num.startsWith('471') || num.startsWith('585') || num.startsWith('588')) && (sd > 0.5 || sc > 0.5);
     });
   }, [lignes]);

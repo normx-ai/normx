@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
+import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, soldeCreditNet, totalSoldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -85,8 +85,7 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
   // Comptes 631 (autres charges d'emprunt)
   const comptes631 = balanceN.filter(l => l.numero_compte.startsWith('631'));
 
-  const totalSolde16Balance = comptes16.reduce((s, l) =>
-    s + ((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0)), 0);
+  const totalSolde16Balance = totalSoldeCreditNet(comptes16);
 
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
@@ -189,7 +188,7 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
     const interetsCourus = decalage > 0 ? (c.interetsMensuels * decalage) / 31 : 0;
     // Chercher solde balance sur 166x (intérêts courus au bilan)
     const balLigne = comptes166.find(l => l.numero_compte === c.compte) || comptes166.find(l => l.numero_compte.startsWith(c.compte));
-    const balanceGenerale = balLigne ? (parseFloat(String(balLigne.solde_crediteur)) || 0) - (parseFloat(String(balLigne.solde_debiteur)) || 0) : 0;
+    const balanceGenerale = balLigne ? soldeCreditNet(balLigne) : 0;
     const ecart = balanceGenerale - interetsCourus;
     return { ...c, decalage, interetsCourus, balanceGenerale, ecart };
   });
@@ -312,7 +311,7 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
           <ul>
             {comptes16.map(l => (
               <li key={l.numero_compte}>
-                <strong>{l.numero_compte}</strong> — {l.libelle_compte} : {fmt((parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0))}
+                <strong>{l.numero_compte}</strong> — {l.libelle_compte} : {fmt(soldeCreditNet(l))}
               </li>
             ))}
           </ul>

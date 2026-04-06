@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2, LuCheck, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue } from './revisionTypes';
+import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, soldeNet, soldeCreditNet } from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
 
@@ -94,11 +94,9 @@ function RevisionAutresTiers({ balanceN, exerciceAnnee, entiteId, exerciceId }: 
     setOpenControls(prev => ({ ...prev, [n]: !prev[n] }));
   };
 
-  // --- Helper ---
-  const soldeDebit = (l: BalanceLigne): number =>
-    (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
-  const soldeCredit = (l: BalanceLigne): number =>
-    (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0);
+  // --- Helper (utilise valeurs revisees avec fallback) ---
+  const soldeDebit = soldeNet;
+  const soldeCredit = soldeCreditNet;
 
   // --- Comptes balance ---
   const comptes476 = balanceN.filter(l => l.numero_compte.startsWith('476'));
