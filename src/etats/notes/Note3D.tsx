@@ -16,36 +16,40 @@ interface Rubrique {
   label: string;
   immoPrefixes: string[];   // comptes 2x (montant brut)
   amortPrefixes: string[];  // comptes 28x (amortissements)
+  vncPrefixes: string[];    // comptes 81x/654x (VNC des cessions)
+  prixPrefixes: string[];   // comptes 82x/754x (produits des cessions)
   bold?: boolean;
   isSousTotal?: boolean;
   isTotal?: boolean;
   isSeparator?: boolean;
 }
 
-// Rubriques fidèles au PDF officiel SYSCOHADA
+// Rubriques fideles au PDF officiel SYSCOHADA
+// VNC cessions : 811 incorporelles, 812 corporelles, 813/814 financieres (HAO) + 654 (courantes)
+// Prix cession : 821 incorporelles, 822 corporelles, 823/824 financieres (HAO) + 754 (courantes)
 const ALL_RUBRIQUES: Rubrique[] = [
   // INCORPORELLES
-  { label: 'Frais de développement et de prospection', immoPrefixes: ['211'], amortPrefixes: ['2811'] },
-  { label: 'Brevets, licences, logiciels et droits similaires', immoPrefixes: ['212', '213'], amortPrefixes: ['2812', '2813'] },
-  { label: 'Fonds commercial et droit au bail', immoPrefixes: ['215', '216'], amortPrefixes: ['2815', '2816'] },
-  { label: 'Autres immobilisations incorporelles', immoPrefixes: ['214', '217', '218', '219'], amortPrefixes: ['2814', '2817', '2818', '2819'] },
-  { label: 'SOUS TOTAL : IMMOBILISATIONS INCORPORELLES', immoPrefixes: [], amortPrefixes: [], bold: true, isSousTotal: true },
-  { label: '', immoPrefixes: [], amortPrefixes: [], isSeparator: true },
+  { label: 'Frais de développement et de prospection', immoPrefixes: ['211'], amortPrefixes: ['2811'], vncPrefixes: ['8111'], prixPrefixes: ['8211'] },
+  { label: 'Brevets, licences, logiciels et droits similaires', immoPrefixes: ['212', '213'], amortPrefixes: ['2812', '2813'], vncPrefixes: ['8112', '8113'], prixPrefixes: ['8212', '8213'] },
+  { label: 'Fonds commercial et droit au bail', immoPrefixes: ['215', '216'], amortPrefixes: ['2815', '2816'], vncPrefixes: ['8115', '8116'], prixPrefixes: ['8215', '8216'] },
+  { label: 'Autres immobilisations incorporelles', immoPrefixes: ['214', '217', '218', '219'], amortPrefixes: ['2814', '2817', '2818', '2819'], vncPrefixes: ['8114', '8117', '8118', '8119'], prixPrefixes: ['8214', '8217', '8218', '8219'] },
+  { label: 'SOUS TOTAL : IMMOBILISATIONS INCORPORELLES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isSousTotal: true },
+  { label: '', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], isSeparator: true },
   // CORPORELLES
-  { label: 'Terrains', immoPrefixes: ['22'], amortPrefixes: ['282'] },
-  { label: 'Bâtiments', immoPrefixes: ['231', '232', '233', '234'], amortPrefixes: ['2831', '2832', '2833', '2834'] },
-  { label: 'Aménagements, agencements et installations', immoPrefixes: ['235', '236', '237', '238'], amortPrefixes: ['2835', '2836', '2837', '2838'] },
-  { label: 'Matériel, mobilier et actifs biologiques', immoPrefixes: ['241', '242', '243', '244'], amortPrefixes: ['2841', '2842', '2843', '2844'] },
-  { label: 'Matériel de transport', immoPrefixes: ['245'], amortPrefixes: ['2845'] },
-  { label: 'SOUS TOTAL : IMMOBILISATIONS CORPORELLES', immoPrefixes: [], amortPrefixes: [], bold: true, isSousTotal: true },
-  { label: '', immoPrefixes: [], amortPrefixes: [], isSeparator: true },
+  { label: 'Terrains', immoPrefixes: ['22'], amortPrefixes: ['282'], vncPrefixes: ['8122'], prixPrefixes: ['8222'] },
+  { label: 'Bâtiments', immoPrefixes: ['231', '232', '233', '234'], amortPrefixes: ['2831', '2832', '2833', '2834'], vncPrefixes: ['81231', '81232', '81233', '81234'], prixPrefixes: ['82231', '82232', '82233', '82234'] },
+  { label: 'Aménagements, agencements et installations', immoPrefixes: ['235', '236', '237', '238'], amortPrefixes: ['2835', '2836', '2837', '2838'], vncPrefixes: ['81235', '81236', '81237', '81238'], prixPrefixes: ['82235', '82236', '82237', '82238'] },
+  { label: 'Matériel, mobilier et actifs biologiques', immoPrefixes: ['241', '242', '243', '244'], amortPrefixes: ['2841', '2842', '2843', '2844'], vncPrefixes: ['8124'], prixPrefixes: ['8224'] },
+  { label: 'Matériel de transport', immoPrefixes: ['245'], amortPrefixes: ['2845'], vncPrefixes: ['81245'], prixPrefixes: ['82245'] },
+  { label: 'SOUS TOTAL : IMMOBILISATIONS CORPORELLES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isSousTotal: true },
+  { label: '', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], isSeparator: true },
   // FINANCIERES
-  { label: 'Titres de participations', immoPrefixes: ['26'], amortPrefixes: [] },
-  { label: 'Autres immobilisations financières', immoPrefixes: ['27'], amortPrefixes: [] },
-  { label: 'SOUS TOTAL : IMMOBILISATIONS FINANCIERES', immoPrefixes: [], amortPrefixes: [], bold: true, isSousTotal: true },
-  { label: '', immoPrefixes: [], amortPrefixes: [], isSeparator: true },
+  { label: 'Titres de participations', immoPrefixes: ['26'], amortPrefixes: [], vncPrefixes: ['813', '8126'], prixPrefixes: ['823', '8226'] },
+  { label: 'Autres immobilisations financières', immoPrefixes: ['27'], amortPrefixes: [], vncPrefixes: ['814', '8127'], prixPrefixes: ['824', '8227'] },
+  { label: 'SOUS TOTAL : IMMOBILISATIONS FINANCIERES', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isSousTotal: true },
+  { label: '', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], isSeparator: true },
   // TOTAL
-  { label: 'TOTAL GENERAL', immoPrefixes: [], amortPrefixes: [], bold: true, isTotal: true },
+  { label: 'TOTAL GENERAL', immoPrefixes: [], amortPrefixes: [], vncPrefixes: [], prixPrefixes: [], bold: true, isTotal: true },
 ];
 
 const DEFAULT_COMMENTAIRE = `Mentionner la justification de la cession ainsi que la date d'acquisition et la date de sortie.`;
@@ -145,7 +149,7 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
     return total;
   })();
 
-  // Toutes les colonnes sont en saisie manuelle (stockées dans cessions[label_field])
+  // Saisie manuelle avec pre-remplissage depuis la balance
   const getVal = (label: string, field: string): number => {
     return cessions[label + '_' + field] || 0;
   };
@@ -153,12 +157,40 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
     setCessions(prev => ({ ...prev, [label + '_' + field]: value }));
   };
 
+  // Calculer un montant depuis la balance pour des prefixes donnes
+  const balanceSum = (prefixes: string[], type: 'debit' | 'credit'): number => {
+    if (prefixes.length === 0) return 0;
+    let total = 0;
+    for (const l of lignesN) {
+      const num = (l.numero_compte || '').trim();
+      if (!prefixes.some(p => num.startsWith(p))) continue;
+      if (type === 'debit') {
+        total += parseFloat(String(l.solde_debiteur_revise ?? l.solde_debiteur ?? l.debit)) || 0;
+      } else {
+        total += parseFloat(String(l.solde_crediteur_revise ?? l.solde_crediteur ?? l.credit)) || 0;
+      }
+    }
+    return total;
+  };
+
   const computeRow = (r: Rubrique) => {
-    const a = getVal(r.label, 'brut');       // Valeur brute saisie
-    const b = getVal(r.label, 'amort');      // Amortissements saisis
-    const c = a - b;                          // VNC calculée
-    const d = getVal(r.label, 'prix');        // Prix de cession saisi
-    const e = d - c;                          // Plus/moins-value calculée
+    // Valeur brute : mouvement credit des comptes immo (sortie d'actif)
+    const brutBalance = balanceSum(r.immoPrefixes, 'credit');
+    const a = getVal(r.label, 'brut') || brutBalance;
+
+    // Amortissements cumules : mouvement debit des comptes 28x (reprise amort sur sortie)
+    const amortBalance = balanceSum(r.amortPrefixes, 'debit');
+    const b = getVal(r.label, 'amort') || amortBalance;
+
+    // VNC = brut - amortissements
+    const c = a - b;
+
+    // Prix de cession : pre-rempli depuis comptes 82x/754x (solde crediteur)
+    const prixBalance = balanceSum(r.prixPrefixes, 'credit');
+    const d = getVal(r.label, 'prix') || prixBalance;
+
+    // Plus/moins-value = prix - VNC
+    const e = d - c;
     return { a, b, c, d, e };
   };
 
