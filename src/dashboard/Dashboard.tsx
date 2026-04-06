@@ -192,7 +192,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   // Si modules changent (ex: switch client), re-selectionner le premier module pour non-cabinet
   useEffect(() => {
     if (!activeModule && !isCabinet && modules.length > 0) setActiveModule(modules[0]);
-  }, [modules]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [modules]); // eslint-disable-line
 
   // Reset module if not available after client switch
   useEffect(() => {
