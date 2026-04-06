@@ -11,6 +11,8 @@ import { getValidatedSchemaName } from '../utils/tenant.utils';
 
 // ============ INTERFACES ============
 
+export type BulletinData = Record<string, string | number | boolean | null>;
+
 export type StatutBulletin = 'brouillon' | 'valide' | 'verrouille';
 
 export interface BulletinWorkflow {
@@ -54,7 +56,7 @@ export async function saveBulletin(
   salarieId: number,
   mois: number,
   annee: number,
-  data: Record<string, unknown>,
+  data: BulletinData,
 ): Promise<BulletinWorkflow> {
   const s = getValidatedSchemaName(schema);
 
@@ -84,7 +86,7 @@ export async function getBulletin(
   salarieId: number,
   mois: number,
   annee: number,
-): Promise<{ id: number; data: Record<string, unknown>; statut: string } | null> {
+): Promise<{ id: number; data: BulletinData; statut: string } | null> {
   const s = getValidatedSchemaName(schema);
   const result = await pool.query(
     `SELECT id, data, statut FROM "${s}".bulletins_paie
@@ -100,7 +102,7 @@ export async function genererBulletinsBatch(
   schema: string,
   mois: number,
   annee: number,
-  bulletins: { salarieId: number; data: Record<string, unknown> }[],
+  bulletins: { salarieId: number; data: BulletinData }[],
 ): Promise<number> {
   const s = getValidatedSchemaName(schema);
   let count = 0;

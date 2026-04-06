@@ -1,5 +1,8 @@
-import { QdrantClient } from "@qdrant/js-client-rest";
+import { QdrantClient, Schemas } from "@qdrant/js-client-rest";
 import logger from "./logger";
+
+type QdrantFilter = Schemas['Filter'];
+type QdrantPayload = Record<string, string | number | string[]>;
 
 const qdrant = new QdrantClient({
   url: process.env.QDRANT_URL || "http://localhost:6333",
@@ -72,7 +75,7 @@ export async function search(
   collectionName: string,
   query: string,
   limit = 8,
-  filter: Record<string, unknown> | null = null
+  filter: QdrantFilter | null = null
 ) {
   const queryVector = await embed(query);
   const results = await qdrant.search(collectionName, {
@@ -86,7 +89,7 @@ export async function search(
 
 export async function upsertPoints(
   collectionName: string,
-  points: { id: number | string; vector: number[]; payload: Record<string, unknown> }[]
+  points: { id: number | string; vector: number[]; payload: QdrantPayload }[]
 ) {
   const BATCH = 5;
   for (let i = 0; i < points.length; i += BATCH) {

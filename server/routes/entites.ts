@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import logger from '../logger';
 import * as tenantService from '../services/tenant.service';
+import type { TenantSettings } from '../services/tenant.service';
 
 const router = express.Router();
 
@@ -56,7 +57,7 @@ router.get('/:id', async (req: Request, res: Response) => {
 
   const tenant = await tenantService.getTenantById(id);
   if (!tenant) return res.status(404).json({ error: 'Entité non trouvée.' });
-  const { modules, sigle, adresse, nif, telephone, email, ...data } = (tenant.settings || {}) as Record<string, unknown>;
+  const { modules, sigle, adresse, nif, telephone, email, ...data } = (tenant.settings || {}) as TenantSettings;
   res.json({
     id: tenant.id,
     nom: tenant.nom,
@@ -128,7 +129,7 @@ router.put('/:id', async (req: Request, res: Response) => {
 
   try {
     // Merge data (parametres DSF) into settings
-    const settings: Record<string, unknown> = { modules, sigle, adresse, nif, telephone, email };
+    const settings: TenantSettings = { modules, sigle, adresse, nif, telephone, email };
     if (data && typeof data === 'object') {
       Object.assign(settings, data);
     }

@@ -2,6 +2,7 @@
    DONNEES DU WIZARD SALARIE - Normx Paie Congo
    ======================================== */
 import type { WizardStep, SelectOption, NiveauDiplome, ClassificationItem } from '../types/paie.types';
+import type { SalarieForm } from '../components/wizardTypes';
 
 // Les 15 etapes du wizard creation salarie (sans parametres_declaration / DSN)
 export const SALARIE_STEPS: WizardStep[] = [
@@ -219,7 +220,7 @@ export const ABSENCES_CONGES_PAYEES: string[] = [
   'Congé formation',
 ];
 
-export function getEmptySalarieForm(): Record<string, unknown> {
+export function getEmptySalarieForm(): SalarieForm {
   return {
     identite: {
       code: '', civilite: 'Madame', nom: '', prenom: '', nom_jeune_fille: '',

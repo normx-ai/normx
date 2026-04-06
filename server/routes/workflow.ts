@@ -65,7 +65,7 @@ router.post('/bulletins/batch', asyncHandler(async (req: Request, res: Response)
     schema,
     Number(mois),
     Number(annee),
-    bulletins.map((b: { salarieId: number; data: Record<string, unknown> }) => ({
+    bulletins.map((b: { salarieId: number; data: workflowService.BulletinData }) => ({
       salarieId: b.salarieId,
       data: b.data || {},
     })),

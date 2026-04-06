@@ -2,20 +2,20 @@ import { createLogger } from '../logger';
 
 const log = createLogger('cache');
 
-interface CacheEntry<T> {
-  value: T;
+interface CacheEntry {
+  value: string | number | boolean | object | null;
   expiresAt: number;
 }
 
 class CacheService {
-  private store = new Map<string, CacheEntry<unknown>>();
+  private store = new Map<string, CacheEntry>();
   private maxSize: number;
 
   constructor(maxSize = 1000) {
     this.maxSize = maxSize;
   }
 
-  get<T>(key: string): T | undefined {
+  get<T extends CacheEntry['value']>(key: string): T | undefined {
     const entry = this.store.get(key);
     if (!entry) return undefined;
 
@@ -27,7 +27,7 @@ class CacheService {
     return entry.value as T;
   }
 
-  set<T>(key: string, value: T, ttlMs: number): void {
+  set<T extends CacheEntry['value']>(key: string, value: T, ttlMs: number): void {
     // LRU: supprimer la plus ancienne si plein
     if (this.store.size >= this.maxSize) {
       const firstKey = this.store.keys().next().value;

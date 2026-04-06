@@ -365,7 +365,7 @@ export async function importerEcritures(schema: string, declarationId: number) {
 
     // Bulk insert TVA collectee
     {
-      const bulkValues: unknown[] = [];
+      const bulkValues: (string | number | boolean | null)[] = [];
       const bulkPlaceholders: string[] = [];
       for (const row of collectee.rows) {
         const montantTaxe = parseFloat(row.credit) - parseFloat(row.debit);
@@ -401,7 +401,7 @@ export async function importerEcritures(schema: string, declarationId: number) {
 
     // Bulk insert TVA deductible
     {
-      const bulkValues: unknown[] = [];
+      const bulkValues: (string | number | boolean | null)[] = [];
       const bulkPlaceholders: string[] = [];
       for (const row of deductible.rows) {
         const montantTaxe = parseFloat(row.debit) - parseFloat(row.credit);

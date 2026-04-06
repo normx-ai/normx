@@ -88,7 +88,7 @@ export async function createEcriture(schema: string, input: CreateEcritureInput)
     const ecritureId: number = ecr.rows[0].id;
 
     if (lignes.length > 0) {
-      const values: unknown[] = [];
+      const values: (string | number | boolean | null)[] = [];
       const placeholders = lignes.map((l, i) => {
         const o = i * 6;
         values.push(ecritureId, l.numero_compte, l.libelle_compte || '', parseFloat(String(l.debit)) || 0, parseFloat(String(l.credit)) || 0, l.tiers_id || null);
@@ -214,7 +214,7 @@ export async function updateEcriture(schema: string, id: number, input: { date_e
     await client.query(`DELETE FROM "${s}".ecriture_lignes WHERE ecriture_id = $1`, [id]);
 
     if (lignes.length > 0) {
-      const values: unknown[] = [];
+      const values: (string | number | boolean | null)[] = [];
       const placeholders = lignes.map((l, i) => {
         const o = i * 6;
         values.push(id, l.numero_compte, l.libelle_compte || '', parseFloat(String(l.debit)) || 0, parseFloat(String(l.credit)) || 0, l.tiers_id || null);

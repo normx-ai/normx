@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import logger from '../logger';
 
-type AsyncRouteHandler = (req: Request, res: Response, next: NextFunction) => Promise<any>;
+type AsyncRouteHandler = (req: Request, res: Response, next: NextFunction) => Promise<void | Response>;
 
 export function asyncHandler(fn: AsyncRouteHandler) {
   return (req: Request, res: Response, next: NextFunction): void => {

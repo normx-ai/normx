@@ -3,6 +3,9 @@
  * Les cookies sont envoyes automatiquement via credentials: 'include'
  */
 
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+type JsonBody = Record<string, JsonValue>;
+
 function authHeaders(): Record<string, string> {
   return { 'Content-Type': 'application/json' };
 }
@@ -16,7 +19,7 @@ export async function apiGet<T>(url: string): Promise<T> {
   return res.json();
 }
 
-export async function apiPost<T>(url: string, body: unknown): Promise<T> {
+export async function apiPost<T>(url: string, body: JsonBody): Promise<T> {
   const res = await fetch(url, {
     method: 'POST',
     headers: authHeaders(),
@@ -30,7 +33,7 @@ export async function apiPost<T>(url: string, body: unknown): Promise<T> {
   return res.json();
 }
 
-export async function apiPut<T>(url: string, body: unknown): Promise<T> {
+export async function apiPut<T>(url: string, body: JsonBody): Promise<T> {
   const res = await fetch(url, {
     method: 'PUT',
     headers: authHeaders(),

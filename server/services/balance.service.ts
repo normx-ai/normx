@@ -133,7 +133,7 @@ export async function importBalance(schema: string, input: ImportBalanceInput) {
 
     // Bulk insert des lignes
     if (lignes.length > 0) {
-      const values: unknown[] = [];
+      const values: (string | number | boolean | null)[] = [];
       const placeholders = lignes.map((l, i) => {
         const o = i * 9;
         values.push(

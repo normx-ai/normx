@@ -88,13 +88,15 @@ export function mapHeaders(headers: string[]): Record<string, number> {
   return colMap;
 }
 
-export const parseNum = (val: unknown): number => {
+type CellValue = string | number | boolean | null;
+
+export const parseNum = (val: CellValue): number => {
   if (val == null) return 0;
   if (typeof val === 'number') return val;
   return parseFloat(String(val).replace(/\s/g, '').replace(',', '.')) || 0;
 };
 
-export function rowsToBalanceLignes(rows: unknown[][], headers: string[]): BalanceLigne[] {
+export function rowsToBalanceLignes(rows: CellValue[][], headers: string[]): BalanceLigne[] {
   const colMap = mapHeaders(headers);
   return rows.map(cols => ({
     numero_compte: String(cols[colMap.numero_compte] ?? '').trim(),
@@ -119,7 +121,7 @@ export function parseCSV(text: string): BalanceLigne[] {
 export function parseExcel(buffer: ArrayBuffer): BalanceLigne[] {
   const wb = XLSX.read(buffer, { type: 'array' });
   const ws = wb.Sheets[wb.SheetNames[0]];
-  const data: unknown[][] = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+  const data: CellValue[][] = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' }) as CellValue[][];
   if (data.length < 2) return [];
   const headers = (data[0] as string[]).map(h => String(h));
   return rowsToBalanceLignes(data.slice(1), headers);

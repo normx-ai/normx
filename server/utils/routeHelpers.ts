@@ -4,7 +4,7 @@
 
 import { Request, Response } from 'express';
 
-export function getErrorMessage(err: unknown): string {
+export function getErrorMessage(err: Error | { message?: string } | string | number | null | undefined): string {
   if (err && typeof err === 'object' && 'message' in err) {
     return (err as { message?: string }).message || 'Erreur inconnue';
   }
