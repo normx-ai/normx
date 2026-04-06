@@ -13,6 +13,26 @@ import logger from '../logger';
  * Permet a un cabinet de basculer le contexte vers un de ses clients.
  * Active uniquement si le header X-Client-Slug est present.
  */
+/**
+ * Bloque les requetes d'un cabinet qui n'a pas selectionne de client.
+ * A utiliser sur les routes de donnees (balance, ecritures, paie, etc.)
+ * mais PAS sur les routes de listing (GET /api/entites).
+ */
+export function requireClientForCabinet(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  if (req.isCabinetUser && req.tenant?.type === 'cabinet') {
+    res.status(400).json({
+      error: 'Veuillez selectionner un dossier client avant d\'acceder aux donnees.',
+      code: 'CLIENT_REQUIRED',
+    });
+    return;
+  }
+  next();
+}
+
 export async function switchClientMiddleware(
   req: Request,
   res: Response,

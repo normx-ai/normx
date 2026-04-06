@@ -141,12 +141,15 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     onConfirm: () => void;
   }>({ open: false, title: '', message: '', variant: 'danger', onConfirm: () => {} });
 
-  const handleDelete = async (id: number, nom: string): Promise<void> => {
-    // Vérifier si l'entité a des données (exercices)
+  const handleDelete = async (id: number, nom: string, slug?: string): Promise<void> => {
+    // Vérifier si l'entité a des données (exercices) dans le schema du client
     let hasData = false;
     try {
+      const headers: Record<string, string> = {};
+      if (slug) headers['X-Client-Slug'] = slug;
       const res = await fetch(`/api/balance/exercices/${id}`, {
         credentials: 'include',
+        headers,
       });
       if (res.ok) {
         const exercices = await res.json();
@@ -285,7 +288,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
                     <button className="gc-action-btn" title="Modifier" onClick={() => openEditForm(ent)}>
                       <LuPenLine size={15} />
                     </button>
-                    <button className="gc-action-btn gc-action-danger" title="Désactiver" onClick={() => handleDelete(ent.id, ent.nom)}>
+                    <button className="gc-action-btn gc-action-danger" title="Désactiver" onClick={() => handleDelete(ent.id, ent.nom, ent.slug)}>
                       <LuTrash2 size={15} />
                     </button>
                   </div>

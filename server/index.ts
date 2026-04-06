@@ -31,7 +31,7 @@ import tenantRoutes from "./routes/tenant";
 import { authenticateToken } from "./middleware/auth";
 import { requireSubscription } from "./middleware/subscription.middleware";
 import { tenantMiddleware } from "./middleware/tenant.middleware";
-import { switchClientMiddleware } from "./middleware/tenant.guards";
+import { switchClientMiddleware, requireClientForCabinet } from "./middleware/tenant.guards";
 import { requireModule, requireAnyModule } from "./middleware/moduleGuard";
 
 const app = express();
@@ -117,24 +117,26 @@ if (process.env.NODE_ENV !== 'production') {
 const tenantChain = [authenticateToken, requireSubscription('normx'), tenantMiddleware, switchClientMiddleware];
 
 // Routes protegees (tenant requis)
-// Balance et entites : partages entre compta et etats
-app.use("/api/balance", ...tenantChain, requireAnyModule('compta', 'etats'), balanceRoutes);
+// Entites et permissions : pas de requireClientForCabinet (le cabinet doit lister ses clients)
 app.use("/api/entites", ...tenantChain, entitesRoutes);
 app.use("/api/notifications", ...tenantChain, notificationsRoutes);
 app.use("/api/permissions", ...tenantChain, permissionsRoutes);
-app.use("/api/assistant", ...tenantChain, chatLimiter, assistantRoutes);
 
-// Module COMPTA : ecritures, tiers, plan comptable, tva, revision
-app.use("/api/ecritures", ...tenantChain, requireModule('compta'), ecrituresRoutes);
-app.use("/api/plan-comptable", ...tenantChain, requireModule('compta'), planComptableRoutes);
-app.use("/api/tiers", ...tenantChain, requireModule('compta'), tiersRoutes);
-app.use("/api/tva", ...tenantChain, requireModule('compta'), tvaRoutes);
-app.use("/api/revision", ...tenantChain, requireAnyModule('compta', 'etats'), revisionRoutes);
+// Routes de donnees : requireClientForCabinet oblige les cabinets a selectionner un client
+app.use("/api/balance", ...tenantChain, requireClientForCabinet, requireAnyModule('compta', 'etats'), balanceRoutes);
+app.use("/api/assistant", ...tenantChain, requireClientForCabinet, chatLimiter, assistantRoutes);
 
-// Module PAIE : salaries, bulletins, workflow, rubriques
-app.use("/api/paie", ...tenantChain, requireModule('paie'), paieRoutes);
-app.use("/api/paie/workflow", ...tenantChain, requireModule('paie'), workflowRoutes);
-app.use("/api/paie/rubriques", ...tenantChain, requireModule('paie'), rubriquesRoutes);
+// Module COMPTA
+app.use("/api/ecritures", ...tenantChain, requireClientForCabinet, requireModule('compta'), ecrituresRoutes);
+app.use("/api/plan-comptable", ...tenantChain, requireClientForCabinet, requireModule('compta'), planComptableRoutes);
+app.use("/api/tiers", ...tenantChain, requireClientForCabinet, requireModule('compta'), tiersRoutes);
+app.use("/api/tva", ...tenantChain, requireClientForCabinet, requireModule('compta'), tvaRoutes);
+app.use("/api/revision", ...tenantChain, requireClientForCabinet, requireAnyModule('compta', 'etats'), revisionRoutes);
+
+// Module PAIE
+app.use("/api/paie", ...tenantChain, requireClientForCabinet, requireModule('paie'), paieRoutes);
+app.use("/api/paie/workflow", ...tenantChain, requireClientForCabinet, requireModule('paie'), workflowRoutes);
+app.use("/api/paie/rubriques", ...tenantChain, requireClientForCabinet, requireModule('paie'), rubriquesRoutes);
 
 /**
  * @swagger
