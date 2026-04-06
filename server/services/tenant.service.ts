@@ -11,6 +11,17 @@ import { slugToSchemaName, getValidatedSchemaName } from '../utils/tenant.utils'
 
 // ============ INTERFACES ============
 
+export interface TenantSettings {
+  modules?: string[];
+  offre?: string;
+  sigle?: string;
+  adresse?: string;
+  nif?: string;
+  telephone?: string;
+  email?: string;
+  [key: string]: string | number | boolean | string[] | null | undefined;
+}
+
 export interface Tenant {
   id: number;
   slug: string;
@@ -20,7 +31,7 @@ export interface Tenant {
   schema_name: string;
   plan: string;
   actif: boolean;
-  settings: Record<string, string | number | boolean | null>;
+  settings: TenantSettings | null;
   created_at: string;
 }
 

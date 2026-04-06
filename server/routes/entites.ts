@@ -16,13 +16,13 @@ router.get('/', async (req: Request, res: Response) => {
       id: c.id,
       nom: c.nom,
       type_activite: 'entreprise' as const,
-      offre: (c.settings?.offre as string) || ((c.settings?.modules as unknown as string[])?.includes('compta') ? 'comptabilite' : 'etats'),
-      modules: (c.settings?.modules as unknown as string[]) || ['compta', 'paie'],
-      sigle: (c.settings?.sigle as string) || '',
-      adresse: (c.settings?.adresse as string) || '',
-      nif: (c.settings?.nif as string) || '',
-      telephone: (c.settings?.telephone as string) || '',
-      email: (c.settings?.email as string) || '',
+      offre: c.settings?.offre || (c.settings?.modules?.includes('compta') ? 'comptabilite' : 'etats'),
+      modules: c.settings?.modules || [],
+      sigle: c.settings?.sigle || '',
+      adresse: c.settings?.adresse || '',
+      nif: c.settings?.nif || '',
+      telephone: c.settings?.telephone || '',
+      email: c.settings?.email || '',
       actif: c.actif,
       created_at: c.created_at,
     }));
@@ -30,17 +30,18 @@ router.get('/', async (req: Request, res: Response) => {
   }
 
   // Entreprise simple : retourner l'entité elle-même
+  const s = req.tenant.settings;
   res.json([{
     id: req.tenant.id,
     nom: req.tenant.nom,
     type_activite: 'entreprise',
-    offre: (req.tenant.settings?.offre as string) || 'comptabilite',
-    modules: (req.tenant.settings?.modules as unknown as string[]) || ['compta', 'etats', 'paie'],
-    sigle: (req.tenant.settings?.sigle as string) || '',
-    adresse: (req.tenant.settings?.adresse as string) || '',
-    nif: (req.tenant.settings?.nif as string) || '',
-    telephone: (req.tenant.settings?.telephone as string) || '',
-    email: (req.tenant.settings?.email as string) || '',
+    offre: s?.offre || 'comptabilite',
+    modules: s?.modules || [],
+    sigle: s?.sigle || '',
+    adresse: s?.adresse || '',
+    nif: s?.nif || '',
+    telephone: s?.telephone || '',
+    email: s?.email || '',
     actif: req.tenant.actif,
     created_at: req.tenant.created_at,
   }]);
