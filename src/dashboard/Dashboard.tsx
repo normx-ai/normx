@@ -46,6 +46,11 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
       window.history.replaceState({}, '', window.location.pathname);
       return mod;
     }
+    // Restaurer le module depuis sessionStorage
+    const savedModule = sessionStorage.getItem('normx_activeModule');
+    if (savedModule && (savedModule === 'compta' || savedModule === 'etats' || savedModule === 'paie')) {
+      return savedModule as NormxModule;
+    }
     // Cabinet : rester sur le portail (null = page clients/dossiers)
     if (isCabinet) return null;
     // Non-cabinet : aller directement sur le premier module disponible
@@ -57,9 +62,31 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const moduleSwitcherRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState('accueil');
-  const [openTabs, setOpenTabs] = useState<TabItem[]>([{ id: 'accueil', label: 'Accueil', icon: LuHouse, closable: false }]);
+  const [activeTab, setActiveTab] = useState(() => sessionStorage.getItem('normx_activeTab') || 'accueil');
+  const [openTabs, setOpenTabs] = useState<TabItem[]>(() => {
+    try {
+      const saved = sessionStorage.getItem('normx_openTabs');
+      if (saved) {
+        const parsed = JSON.parse(saved) as { id: string; label: string; closable: boolean }[];
+        if (parsed.length > 0) return parsed.map(t => ({ ...t, icon: LuFileText }));
+      }
+    } catch { /* ignore */ }
+    return [{ id: 'accueil', label: 'Accueil', icon: LuHouse, closable: false }];
+  });
   const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  // Persister l'etat de navigation dans sessionStorage
+  useEffect(() => {
+    if (activeModule) sessionStorage.setItem('normx_activeModule', activeModule);
+    else sessionStorage.removeItem('normx_activeModule');
+  }, [activeModule]);
+  useEffect(() => {
+    sessionStorage.setItem('normx_activeTab', activeTab);
+  }, [activeTab]);
+  useEffect(() => {
+    const toSave = openTabs.map(t => ({ id: t.id, label: t.label, closable: t.closable }));
+    sessionStorage.setItem('normx_openTabs', JSON.stringify(toSave));
+  }, [openTabs]);
 
   // Exercice + confirm modal logic
   const ex = useExercices(entiteId);
@@ -105,6 +132,15 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     if (etat) return { label: etat.titre, icon: etat.navIcon };
     return { label: id, icon: LuFileText };
   };
+
+  // Restaurer les icones des onglets apres rechargement de page
+  useEffect(() => {
+    setOpenTabs(prev => prev.map(t => {
+      if (t.id === 'accueil') return { ...t, icon: LuHouse };
+      const info = findMenuItem(t.id);
+      return { ...t, icon: info.icon, label: info.label };
+    }));
+  }, [activeModule]); // eslint-disable-line
 
   const openTab = (id: string): void => {
     setActiveTab(id);
