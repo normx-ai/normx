@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { LuUpload, LuFileSpreadsheet, LuTrash2, LuTriangleAlert, LuChevronDown, LuChevronRight, LuCheck, LuPenLine, LuSave } from 'react-icons/lu';
+import React, { useState, useEffect } from 'react';
+import { LuFileSpreadsheet } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
 import ConfirmModal from '../components/ConfirmModal';
-import { parseCSV, parseExcel, formatMontant, PlanCompte, CompteAnomalie, isCompteInEtats, findSuggestionByNumero, findSimilarByLibelle } from './ImportBalance.parsers';
-import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from './anomaliesComptes';
-import type { AnomalieCompte, SoldeAttendu } from './anomaliesComptes';
+import { parseCSV, parseExcel } from './ImportBalance.parsers';
+import ImportBalanceUpload from './ImportBalanceUpload';
+import ImportBalanceAnalyse from './ImportBalanceAnalyse';
+import ImportBalanceTable from './ImportBalanceTable';
 import './ImportBalance.css';
 
 interface ImportBalanceProps {
@@ -30,7 +31,6 @@ interface ExerciceRecord {
   annee: number;
 }
 
-
 function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exerciceAnnee }: ImportBalanceProps): React.JSX.Element {
   const [annee, setAnnee] = useState<number>(exerciceAnnee ?? new Date().getFullYear());
   const [exercice, setExercice] = useState<ExerciceRecord | null>(null);
@@ -45,222 +45,68 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
   const [editingBalance, setEditingBalance] = useState(false);
   const [savingBalance, setSavingBalance] = useState(false);
   const [editedLignes, setEditedLignes] = useState<Record<number, Partial<BalanceLigneWithMeta>>>({});
+  const [deleteConfirm, setDeleteConfirm] = useState<{ open: boolean; balanceId: number | null }>({ open: false, balanceId: null });
 
-  // Sync annee si le parent change d'exercice
   useEffect(() => {
-    if (exerciceAnnee && exerciceAnnee !== annee) {
-      setAnnee(exerciceAnnee);
-    }
+    if (exerciceAnnee && exerciceAnnee !== annee) setAnnee(exerciceAnnee);
   }, [exerciceAnnee]);
 
-  // Charger exercice existant (ne crée plus automatiquement)
   useEffect(() => {
     if (!entiteId) return;
-    // Si le parent fournit un exerciceId, l'utiliser directement
     if (parentExerciceId) {
-      fetch('/api/balance/exercices/' + entiteId)
-        .then(r => r.json())
+      fetch('/api/balance/exercices/' + entiteId).then(r => r.json())
         .then((data: ExerciceRecord[]) => {
           const match = data.find((e: ExerciceRecord) => e.id === parentExerciceId);
-          if (match) {
-            setExercice(match);
-            setAnnee(match.annee);
-            loadBalances(match.id);
-          }
-        })
-        .catch(() => {});
+          if (match) { setExercice(match); setAnnee(match.annee); loadBalances(match.id); }
+        }).catch(() => {});
       return;
     }
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
+    fetch('/api/balance/exercices/' + entiteId).then(r => r.json())
       .then((data: ExerciceRecord[]) => {
         const match = data.find((e: ExerciceRecord) => e.annee === annee) || data[0];
-        if (match) {
-          setExercice(match);
-          setAnnee(match.annee);
-          loadBalances(match.id);
-        }
-      })
-      .catch(() => {});
+        if (match) { setExercice(match); setAnnee(match.annee); loadBalances(match.id); }
+      }).catch(() => {});
   }, [entiteId, annee, parentExerciceId]);
 
   const loadBalances = (exId: number): void => {
-    fetch(`/api/balance/${entiteId}/${exId}/N`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => {
-      setBalanceN(d.balance);
-      setLignesN(d.lignes);
-    });
-    fetch(`/api/balance/${entiteId}/${exId}/N-1`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => {
-      setBalanceN1(d.balance);
-      setLignesN1(d.lignes);
-    });
+    fetch(`/api/balance/${entiteId}/${exId}/N`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => { setBalanceN(d.balance); setLignesN(d.lignes); });
+    fetch(`/api/balance/${entiteId}/${exId}/N-1`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => { setBalanceN1(d.balance); setLignesN1(d.lignes); });
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, typeBalance: 'N' | 'N-1'): void => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    setLoading(true);
-    setError('');
-    setMessage('');
-
+    setLoading(true); setError(''); setMessage('');
     const isExcel = /\.(xlsx?|xls)$/i.test(file.name);
-
     const reader = new FileReader();
     reader.onload = async (evt: ProgressEvent<FileReader>): Promise<void> => {
       try {
-        const lignes = isExcel
-          ? parseExcel(evt.target?.result as ArrayBuffer)
-          : parseCSV(evt.target?.result as string);
-        if (lignes.length === 0) {
-          setError('Aucune ligne valide trouvee dans le fichier.');
-          setLoading(false);
-          return;
-        }
-
+        const lignes = isExcel ? parseExcel(evt.target?.result as ArrayBuffer) : parseCSV(evt.target?.result as string);
+        if (lignes.length === 0) { setError('Aucune ligne valide trouvee dans le fichier.'); setLoading(false); return; }
         const res = await fetch('/api/balance/import', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            entite_id: entiteId,
-            exercice_id: exercice!.id,
-            type_balance: typeBalance,
-            nom_fichier: file.name,
-            lignes,
-          }),
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ entite_id: entiteId, exercice_id: exercice!.id, type_balance: typeBalance, nom_fichier: file.name, lignes }),
         });
         const data: { error?: string; message?: string } = await res.json();
         if (!res.ok) setError(data.error || 'Erreur inconnue');
-        else {
-          setMessage(data.message || '');
-          loadBalances(exercice!.id);
-        }
-      } catch {
-        setError('Erreur lors de l\'import.');
-      } finally {
-        setLoading(false);
-      }
+        else { setMessage(data.message || ''); loadBalances(exercice!.id); }
+      } catch { setError('Erreur lors de l\'import.'); }
+      finally { setLoading(false); }
     };
-    if (isExcel) {
-      reader.readAsArrayBuffer(file);
-    } else {
-      reader.readAsText(file, 'UTF-8');
-    }
+    if (isExcel) reader.readAsArrayBuffer(file); else reader.readAsText(file, 'UTF-8');
     e.target.value = '';
   };
-
-
-  const [deleteConfirm, setDeleteConfirm] = useState<{ open: boolean; balanceId: number | null }>({ open: false, balanceId: null });
 
   const handleDeleteBalance = async (balanceId: number): Promise<void> => {
     try {
       const res = await fetch(`/api/balance/${balanceId}`, { method: 'DELETE' });
-      if (res.ok) {
-        setMessage('Balance supprimée.');
-        loadBalances(exercice!.id);
-      } else {
-        setError('Erreur lors de la suppression.');
-      }
-    } catch {
-      setError('Erreur lors de la suppression.');
-    }
+      if (res.ok) { setMessage('Balance supprimée.'); loadBalances(exercice!.id); }
+      else setError('Erreur lors de la suppression.');
+    } catch { setError('Erreur lors de la suppression.'); }
   };
 
   const currentBalance: BalanceRecord | null = tab === 'N' ? balanceN : balanceN1;
   const currentLignes: BalanceLigneWithMeta[] = tab === 'N' ? lignesN : lignesN1;
-
-  const totalSID: number = currentLignes.reduce((s: number, l: BalanceLigneWithMeta) => s + (parseFloat(String(l.si_debit)) || 0), 0);
-  const totalSIC: number = currentLignes.reduce((s: number, l: BalanceLigneWithMeta) => s + (parseFloat(String(l.si_credit)) || 0), 0);
-  const totalDebit: number = currentLignes.reduce((s: number, l: BalanceLigneWithMeta) => s + (parseFloat(String(l.debit)) || 0), 0);
-  const totalCredit: number = currentLignes.reduce((s: number, l: BalanceLigneWithMeta) => s + (parseFloat(String(l.credit)) || 0), 0);
-  const totalSD: number = currentLignes.reduce((s: number, l: BalanceLigneWithMeta) => s + (parseFloat(String(l.solde_debiteur)) || 0), 0);
-  const totalSC: number = currentLignes.reduce((s: number, l: BalanceLigneWithMeta) => s + (parseFloat(String(l.solde_crediteur)) || 0), 0);
-
-  // ========== ANALYSE PLAN COMPTABLE ==========
-  const [planComptable, setPlanComptable] = useState<PlanCompte[]>([]);
-  const [showAnalyse, setShowAnalyse] = useState(false);
-  const [corrections, setCorrections] = useState<Record<number, string>>({});
-
-  // Charger le plan comptable
-  useEffect(() => {
-    fetch('/api/plan-comptable?referentiel=syscohada')
-      .then(r => r.json())
-      .then((data: PlanCompte[]) => setPlanComptable(data))
-      .catch(() => {});
-  }, []);
-
-  const [comptesValides, setComptesValides] = useState<Set<number>>(new Set());
-  const [correctionsMapping, setCorrectionsMapping] = useState<Record<number, string>>({});
-
-  // Comptes non couverts par les mappings des états financiers
-  const comptesNonMappes: { ligneId: number; numero: string; libelle: string }[] = useMemo(() => {
-    if (currentLignes.length === 0) return [];
-    const result: { ligneId: number; numero: string; libelle: string }[] = [];
-    for (const l of currentLignes) {
-      const num = (l.numero_compte || '').trim();
-      if (!num || num.length !== 4) continue;
-      if (!isCompteInEtats(num)) {
-        result.push({ ligneId: l.id, numero: num, libelle: l.libelle_compte || '' });
-      }
-    }
-    return result;
-  }, [currentLignes]);
-
-  // Comptes à plus de 6 chiffres — proposer troncature à 4 chiffres
-  const comptesTooLong: { ligneId: number; numero: string; libelle: string; suggestion: string }[] = useMemo(() => {
-    if (currentLignes.length === 0) return [];
-    const result: { ligneId: number; numero: string; libelle: string; suggestion: string }[] = [];
-    for (const l of currentLignes) {
-      const num = (l.numero_compte || '').trim();
-      if (!num || num.length <= 6) continue;
-      result.push({ ligneId: l.id, numero: num, libelle: l.libelle_compte || '', suggestion: num.slice(0, 4) });
-    }
-    return result;
-  }, [currentLignes]);
-
-  // Détecter les comptes non reconnus
-  const anomalies: CompteAnomalie[] = useMemo(() => {
-    if (planComptable.length === 0 || currentLignes.length === 0) return [];
-    const pcSet = new Set(planComptable.map(p => p.numero));
-    const result: CompteAnomalie[] = [];
-
-    for (const l of currentLignes) {
-      const num = (l.numero_compte || '').trim();
-      if (!num) continue;
-      // Vérifier si le compte ou un de ses préfixes existe dans le plan
-      let found = false;
-      for (let len = num.length; len >= 2; len--) {
-        if (pcSet.has(num.slice(0, len))) { found = true; break; }
-      }
-      if (!found) {
-        result.push({
-          ligneId: l.id,
-          numero: num,
-          libelle: l.libelle_compte || '',
-          suggestion: findSuggestionByNumero(num, planComptable),
-          similarites: findSimilarByLibelle(num, l.libelle_compte || '', planComptable),
-        });
-      }
-    }
-    return result;
-  }, [planComptable, currentLignes]);
-
-  const handleCorrection = async (ligneId: number, newNumero: string): Promise<void> => {
-    try {
-      const res = await fetch(`/api/balance/ligne/${ligneId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ numero_compte: newNumero }),
-      });
-      if (res.ok) {
-        // Recharger les balances
-        loadBalances(exercice!.id);
-        setCorrections(prev => ({ ...prev, [ligneId]: newNumero }));
-        setMessage(`Compte corrigé : ${newNumero}`);
-      }
-    } catch {
-      setError('Erreur lors de la correction.');
-    }
-  };
 
   const updateEditedLigne = (ligneId: number, field: string, value: string) => {
     setEditedLignes(prev => ({ ...prev, [ligneId]: { ...(prev[ligneId] || {}), [field]: value } }));
@@ -277,93 +123,46 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
     try {
       const entries = Object.entries(editedLignes);
       for (const [ligneId, fields] of entries) {
-        await fetch(`/api/balance/ligne/${ligneId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(fields),
-        });
+        await fetch(`/api/balance/ligne/${ligneId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fields) });
       }
       if (exercice) loadBalances(exercice.id);
-      setEditedLignes({});
-      setEditingBalance(false);
+      setEditedLignes({}); setEditingBalance(false);
       setMessage(`${entries.length} ligne(s) modifiée(s)`);
       setTimeout(() => setMessage(''), 3000);
-    } catch {
-      setError('Erreur lors de la sauvegarde.');
-    }
+    } catch { setError('Erreur lors de la sauvegarde.'); }
     setSavingBalance(false);
   };
-
-  const displayedLignes = currentLignes;
 
   return (
     <div className="import-balance">
       <div className="ib-header">
         <h2><LuFileSpreadsheet /> Import des balances</h2>
-        {exercice && (
-          <div className="ib-annee">
-            <label>Exercice : {exercice.annee}</label>
-          </div>
-        )}
+        {exercice && <div className="ib-annee"><label>Exercice : {exercice.annee}</label></div>}
       </div>
 
       {message && <div className="ib-message success">{message}</div>}
       {error && <div className="ib-message error">{error}</div>}
 
-      {/* Onglets N / N-1 — uniquement si un exercice existe */}
       {exercice && (
         <div className="ib-tabs">
           <button className={`ib-tab ${tab === 'N' ? 'active' : ''}`} onClick={() => setTab('N')}>
-            Balance N ({annee})
-            {balanceN && <span className={`ib-statut-badge ${balanceN.statut}`}>{balanceN.statut}</span>}
+            Balance N ({annee}) {balanceN && <span className={`ib-statut-badge ${balanceN.statut}`}>{balanceN.statut}</span>}
           </button>
           <button className={`ib-tab ${tab === 'N-1' ? 'active' : ''}`} onClick={() => setTab('N-1')}>
-            Balance N-1 ({annee - 1})
-            {balanceN1 && <span className={`ib-statut-badge ${balanceN1.statut}`}>{balanceN1.statut}</span>}
+            Balance N-1 ({annee - 1}) {balanceN1 && <span className={`ib-statut-badge ${balanceN1.statut}`}>{balanceN1.statut}</span>}
           </button>
         </div>
       )}
 
-      {/* Zone import + actions */}
-      {exercice && <div className="ib-actions">
-        <label className="ib-upload-btn">
-          <LuUpload /> Importer fichier ({tab})
-          <input type="file" accept=".csv,.txt,.xlsx,.xls" onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleFileUpload(e, tab)} hidden />
-        </label>
+      {exercice && (
+        <ImportBalanceUpload
+          tab={tab} annee={annee} currentBalance={currentBalance} currentLignesCount={currentLignes.length}
+          editingBalance={editingBalance} savingBalance={savingBalance} editedLignesCount={Object.keys(editedLignes).length}
+          onFileUpload={handleFileUpload} onDeleteRequest={(id) => setDeleteConfirm({ open: true, balanceId: id })}
+          onStartEditing={() => setEditingBalance(true)} onSaveBalance={handleSaveBalance}
+        />
+      )}
 
-        {currentBalance && (
-          <span className="ib-file-info">
-            {currentBalance.nom_fichier} - {currentLignes.length} lignes
-            <button
-              className="ib-delete-btn"
-              onClick={() => setDeleteConfirm({ open: true, balanceId: currentBalance.id })}
-              title="Supprimer cette balance"
-            >
-              <LuTrash2 size={14} />
-            </button>
-          </span>
-        )}
-        {currentLignes.length > 0 && (
-          !editingBalance ? (
-            <button
-              onClick={() => setEditingBalance(true)}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#D4A843', color: '#fff', border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
-            >
-              <LuPenLine size={15} /> Modifier
-            </button>
-          ) : (
-            <button
-              onClick={handleSaveBalance}
-              disabled={savingBalance || Object.keys(editedLignes).length === 0}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: '#059669', color: '#fff', border: 'none', borderRadius: 6, fontSize: 13, fontWeight: 600, cursor: 'pointer', opacity: Object.keys(editedLignes).length === 0 ? 0.5 : 1 }}
-            >
-              <LuSave size={15} /> {savingBalance ? 'Sauvegarde...' : `Sauvegarder (${Object.keys(editedLignes).length})`}
-            </button>
-          )
-        )}
-      </div>}
-
-      {/* Format attendu */}
       {!currentBalance && (
         <div className="ib-format-info">
           <h4>Formats acceptés : Excel (.xlsx) ou CSV (séparateur point-virgule)</h4>
@@ -371,397 +170,18 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
         </div>
       )}
 
-      {/* Analyse plan comptable */}
-      {currentLignes.length > 0 && anomalies.length > 0 && (
-        <div className="ib-analyse-banner has-warnings">
-          <div className="ib-analyse-header" onClick={() => setShowAnalyse(!showAnalyse)} style={{ cursor: 'pointer' }}>
-            <span className="ib-anomaly-count">
-              <LuTriangleAlert size={16} />
-              {anomalies.length} compte{anomalies.length > 1 ? 's' : ''} non reconnu{anomalies.length > 1 ? 's' : ''} dans le plan comptable SYSCOHADA
-            </span>
-            <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
-          </div>
-          {showAnalyse && (
-            <div className="ib-analyse-detail">
-              <table className="ib-analyse-table">
-                <thead>
-                  <tr>
-                    <th>Compte importé</th>
-                    <th>Libellé</th>
-                    <th>Suggestion</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {anomalies.map(a => {
-                    const corrected = corrections[a.ligneId];
-                    return (
-                      <tr key={a.ligneId} className={corrected ? 'corrected' : ''}>
-                        <td className="compte-anomalie">{a.numero}</td>
-                        <td>{a.libelle}</td>
-                        <td>
-                          {a.similarites.length > 0 ? (
-                            <select
-                              defaultValue={a.similarites[0]?.numero || ''}
-                              className="ib-suggestion-select"
-                              id={`suggest-${a.ligneId}`}
-                            >
-                              {a.suggestion && !a.similarites.find(s => s.numero === a.suggestion!.numero) && (
-                                <option value={a.suggestion.numero}>{a.suggestion.numero} — {a.suggestion.libelle} (préfixe)</option>
-                              )}
-                              {a.similarites.map(s => (
-                                <option key={s.numero} value={s.numero}>{s.numero} — {s.libelle}</option>
-                              ))}
-                            </select>
-                          ) : a.suggestion ? (
-                            <span className="ib-suggestion">{a.suggestion.numero} — {a.suggestion.libelle}</span>
-                          ) : (
-                            <span className="ib-no-suggestion">Aucune suggestion</span>
-                          )}
-                        </td>
-                        <td>
-                          {corrected ? (
-                            <span className="ib-corrected"><LuCheck size={14} /> {corrected}</span>
-                          ) : (
-                            <button
-                              className="ib-correct-btn"
-                              onClick={() => {
-                                const select = document.getElementById(`suggest-${a.ligneId}`) as HTMLSelectElement | null;
-                                const val = select ? select.value : (a.suggestion?.numero || '');
-                                if (val) handleCorrection(a.ligneId, val);
-                              }}
-                            >
-                              Corriger
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      )}
+      <ImportBalanceAnalyse
+        currentLignes={currentLignes} exerciceId={exercice?.id}
+        loadBalances={loadBalances} setMessage={setMessage} setError={setError}
+      />
 
-      {/* Comptes à plus de 6 chiffres — proposer troncature */}
-      {currentLignes.length > 0 && comptesTooLong.length > 0 && (
-        <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#8b5cf6' }}>
-          <div className="ib-analyse-header" onClick={() => setShowAnalyse(!showAnalyse)} style={{ cursor: 'pointer' }}>
-            <span className="ib-anomaly-count" style={{ color: '#8b5cf6' }}>
-              <LuTriangleAlert size={16} />
-              {comptesTooLong.length} compte{comptesTooLong.length > 1 ? 's' : ''} à plus de 6 chiffres (troncature à 4 chiffres suggérée)
-            </span>
-            <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
-          </div>
-          {showAnalyse && (
-            <div className="ib-analyse-detail">
-              <table className="ib-analyse-table">
-                <thead>
-                  <tr>
-                    <th>Compte actuel</th>
-                    <th>Libellé</th>
-                    <th>Compte suggéré (4 chiffres)</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {comptesTooLong.map(c => {
-                    const corrected = corrections[c.ligneId];
-                    return (
-                      <tr key={c.ligneId} className={corrected ? 'corrected' : ''}>
-                        <td className="compte-anomalie">{c.numero}</td>
-                        <td>{c.libelle}</td>
-                        <td>
-                          {corrected ? (
-                            <span className="ib-corrected"><LuCheck size={14} /> {corrected}</span>
-                          ) : (
-                            <input
-                              id={`toolong-fix-${c.ligneId}`}
-                              defaultValue={c.suggestion}
-                              className="ib-suggestion-select"
-                              style={{ width: 100, padding: '4px 8px', fontSize: 13, border: '1px solid #d1d5db', borderRadius: 4 }}
-                            />
-                          )}
-                        </td>
-                        <td>
-                          {!corrected && (
-                            <button
-                              className="ib-correct-btn"
-                              style={{ background: '#8b5cf6', color: '#fff', border: 'none', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontSize: 12 }}
-                              onClick={() => {
-                                const input = document.getElementById(`toolong-fix-${c.ligneId}`) as HTMLInputElement | null;
-                                const val = input ? input.value.trim() : c.suggestion;
-                                if (val) handleCorrection(c.ligneId, val);
-                              }}
-                            >
-                              Corriger
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      )}
+      <ImportBalanceTable lignes={currentLignes} editingBalance={editingBalance} getEditedValue={getEditedValue} updateEditedLigne={updateEditedLigne} />
 
-      {/* Anomalies de sens — comptes à solde inversé pouvant affecter le TFT */}
-      {(() => {
-        if (currentLignes.length === 0) return null;
-        const sensAnomalies = currentLignes
-          .filter(l => (l.numero_compte || '').length > 2)
-          .map(l => {
-            const a = detectAnomalies(l);
-            const sensErr = a.find(x => x.type === 'solde_inverse');
-            if (!sensErr) return null;
-            const sa = getSoldeAttendu(l.numero_compte);
-            const sd = parseFloat(String(l.solde_debiteur)) || 0;
-            const sc = parseFloat(String(l.solde_crediteur)) || 0;
-            return { id: l.id, numero: l.numero_compte, libelle: l.libelle_compte || '', message: sensErr.message, sensAttendu: sa, sd, sc };
-          })
-          .filter(Boolean) as { id: number; numero: string; libelle: string; message: string; sensAttendu: SoldeAttendu; sd: number; sc: number }[];
-
-        if (sensAnomalies.length === 0) return null;
-        return (
-          <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#dc2626', background: '#fef2f2' }}>
-            <div className="ib-analyse-header" onClick={() => setShowAnalyse(!showAnalyse)} style={{ cursor: 'pointer' }}>
-              <span className="ib-anomaly-count" style={{ color: '#dc2626' }}>
-                <LuTriangleAlert size={16} />
-                {sensAnomalies.length} compte{sensAnomalies.length > 1 ? 's' : ''} avec solde inversé — impact probable sur le TFT
-              </span>
-              <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
-            </div>
-            {showAnalyse && (
-              <div className="ib-analyse-detail">
-                <p style={{ fontSize: 12, color: '#991b1b', margin: '4px 0 8px', lineHeight: 1.4 }}>
-                  Ces comptes ont un solde contraire au sens normal SYSCOHADA. Cela peut fausser le calcul du TFT (Tableau des Flux de Trésorerie) si le solde est interprété dans le mauvais sens.
-                </p>
-                <table className="ib-analyse-table">
-                  <thead>
-                    <tr>
-                      <th>Statut</th>
-                      <th>Compte</th>
-                      <th>Libellé</th>
-                      <th>SF Débit</th>
-                      <th>SF Crédit</th>
-                      <th>Sens attendu</th>
-                      <th>Anomalie</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sensAnomalies.map(a => (
-                      <tr key={a.id}>
-                        <td style={{ textAlign: 'center', color: '#dc2626', fontWeight: 700, fontSize: 16 }}>&#10007;</td>
-                        <td className="compte-anomalie">{a.numero}</td>
-                        <td>{a.libelle}</td>
-                        <td className="num">{formatMontant(a.sd)}</td>
-                        <td className="num">{formatMontant(a.sc)}</td>
-                        <td style={{ textAlign: 'center', fontSize: 12 }}>{a.sensAttendu === 'debiteur' ? 'Débiteur' : a.sensAttendu === 'crediteur' ? 'Créditeur' : 'Variable'}</td>
-                        <td style={{ fontSize: 12, color: '#dc2626' }}>{a.message}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        );
-      })()}
-
-      {currentLignes.length > 0 && anomalies.length === 0 && comptesNonMappes.length === 0 && comptesTooLong.length === 0 && planComptable.length > 0 && (
-        <div className="ib-analyse-banner clean">
-          <span className="ib-anomaly-count">
-            <LuCheck size={16} /> Tous les comptes sont conformes au plan comptable SYSCOHADA
-          </span>
-        </div>
-      )}
-
-      {/* Comptes non couverts par les états financiers */}
-      {currentLignes.length > 0 && comptesNonMappes.length > 0 && (
-        <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#e67e22' }}>
-          <div className="ib-analyse-header" onClick={() => setShowAnalyse(!showAnalyse)} style={{ cursor: 'pointer' }}>
-            <span className="ib-anomaly-count" style={{ color: '#e67e22' }}>
-              <LuTriangleAlert size={16} />
-              {comptesNonMappes.length} compte{comptesNonMappes.length > 1 ? 's' : ''} non repris dans les états financiers (Bilan, CR, TFT)
-            </span>
-            <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
-          </div>
-          {showAnalyse && (
-            <div className="ib-analyse-detail">
-              <table className="ib-analyse-table">
-                <thead>
-                  <tr>
-                    <th>Compte</th>
-                    <th>Libellé</th>
-                    <th>Nouveau N° suggéré</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {comptesNonMappes.map(c => {
-                    const corrected = corrections[c.ligneId];
-                    const validated = comptesValides.has(c.ligneId);
-                    return (
-                      <tr key={c.ligneId} className={corrected || validated ? 'corrected' : ''}>
-                        <td className="compte-anomalie">{c.numero}</td>
-                        <td>{c.libelle}</td>
-                        <td>
-                          {corrected ? (
-                            <span className="ib-corrected"><LuCheck size={14} /> {corrected}</span>
-                          ) : validated ? (
-                            <span style={{ color: '#059669', fontSize: 12 }}>Validé tel quel</span>
-                          ) : (() => {
-                            const sims = findSimilarByLibelle(c.numero, c.libelle, planComptable);
-                            const suggestion = findSuggestionByNumero(c.numero, planComptable);
-                            return (
-                              <select
-                                id={`mapping-fix-${c.ligneId}`}
-                                defaultValue={sims.length > 0 ? sims[0].numero : (suggestion?.numero || c.numero)}
-                                className="ib-suggestion-select"
-                              >
-                                {sims.map(s => {
-                                  const padded = s.numero.padEnd(6, '0');
-                                  return <option key={s.numero} value={padded}>{padded} — {s.libelle}</option>;
-                                })}
-                                {suggestion && !sims.find(s => s.numero === suggestion.numero) && (() => {
-                                  const padded = suggestion.numero.padEnd(6, '0');
-                                  return <option value={padded}>{padded} — {suggestion.libelle} (préfixe)</option>;
-                                })()}
-                                <option value={c.numero}>{c.numero} — Garder tel quel</option>
-                              </select>
-                            );
-                          })()}
-                        </td>
-                        <td>
-                          {!corrected && !validated && (
-                            <div style={{ display: 'flex', gap: 6 }}>
-                              <button
-                                className="ib-correct-btn"
-                                style={{ background: '#059669', color: '#fff', border: 'none', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontSize: 12 }}
-                                onClick={() => setComptesValides(prev => new Set(prev).add(c.ligneId))}
-                              >
-                                Valider
-                              </button>
-                              <button
-                                className="ib-correct-btn"
-                                style={{ background: '#D4A843', color: '#fff', border: 'none', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontSize: 12 }}
-                                onClick={() => {
-                                  const select = document.getElementById(`mapping-fix-${c.ligneId}`) as HTMLSelectElement | null;
-                                  const val = select ? select.value.trim() : '';
-                                  if (val && val !== c.numero) handleCorrection(c.ligneId, val);
-                                }}
-                              >
-                                Corriger
-                              </button>
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Tableau balance */}
-      {currentLignes.length > 0 && (
-        <div className="ib-table-wrapper">
-          <table className="ib-table">
-            <thead>
-              <tr>
-                <th style={{ width: 36, textAlign: 'center' }}>St.</th>
-                <th>Compte</th>
-                <th>Libellé</th>
-                <th className="num">SI Débit</th>
-                <th className="num">SI Crédit</th>
-                <th className="num">Débit</th>
-                <th className="num">Crédit</th>
-                <th className="num">SF Débit</th>
-                <th className="num">SF Crédit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayedLignes.map((l: BalanceLigneWithMeta) => {
-                const compteAnomalies: AnomalieCompte[] = (l.numero_compte || '').length > 2 ? detectAnomalies(l) : [];
-                const hasError = compteAnomalies.some(a => a.severity === 'error');
-                const hasWarning = compteAnomalies.some(a => a.severity === 'warning');
-                const tooltipText = compteAnomalies.map(a => a.message).join('\n');
-                return (
-                <tr key={l.id} style={hasError ? { background: '#fef2f2' } : hasWarning ? { background: '#fffbeb' } : {}}>
-                  <td style={{ textAlign: 'center' }} title={tooltipText || 'OK'}>
-                    {(l.numero_compte || '').length <= 2 ? '' : compteAnomalies.length === 0 ? (
-                      <span style={{ color: '#059669', fontSize: 15, fontWeight: 700 }}>&#10003;</span>
-                    ) : hasError ? (
-                      <span style={{ color: '#dc2626', fontSize: 15, fontWeight: 700, cursor: 'help' }}>&#10007;</span>
-                    ) : (
-                      <span style={{ color: '#f59e0b', fontSize: 14, fontWeight: 700, cursor: 'help' }}>&#9888;</span>
-                    )}
-                  </td>
-                  <td className="compte">
-                    {editingBalance ? (
-                      <input value={getEditedValue(l, 'numero_compte')} onChange={e => updateEditedLigne(l.id, 'numero_compte', e.target.value)} style={{ width: 70, padding: '2px 4px', fontSize: 12, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0' }} />
-                    ) : l.numero_compte}
-                  </td>
-                  <td>
-                    {editingBalance ? (
-                      <input value={getEditedValue(l, 'libelle_compte')} onChange={e => updateEditedLigne(l.id, 'libelle_compte', e.target.value)} style={{ width: '100%', padding: '2px 4px', fontSize: 12, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0' }} />
-                    ) : l.libelle_compte}
-                  </td>
-                  <td className="num">{formatMontant(parseFloat(String(l.si_debit)))}</td>
-                  <td className="num">{formatMontant(parseFloat(String(l.si_credit)))}</td>
-                  <td className="num">{formatMontant(parseFloat(String(l.debit)))}</td>
-                  <td className="num">{formatMontant(parseFloat(String(l.credit)))}</td>
-                  <td className="num">{formatMontant(parseFloat(String(l.solde_debiteur)))}</td>
-                  <td className="num">{formatMontant(parseFloat(String(l.solde_crediteur)))}</td>
-                </tr>
-                );
-              })}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td></td>
-                <td colSpan={2}><strong>TOTAUX</strong></td>
-                <td className="num"><strong>{formatMontant(totalSID)}</strong></td>
-                <td className="num"><strong>{formatMontant(totalSIC)}</strong></td>
-                <td className="num"><strong>{formatMontant(totalDebit)}</strong></td>
-                <td className="num"><strong>{formatMontant(totalCredit)}</strong></td>
-                <td className="num"><strong>{formatMontant(totalSD)}</strong></td>
-                <td className="num"><strong>{formatMontant(totalSC)}</strong></td>
-              </tr>
-              <tr className="equilibre-row">
-                <td colSpan={3}>Équilibre</td>
-                <td colSpan={2} className={`num ${Math.abs(totalSID - totalSIC) < 0.01 ? 'ok' : 'ko'}`}>
-                  {Math.abs(totalSID - totalSIC) < 0.01 ? 'OK' : `Écart: ${formatMontant(totalSID - totalSIC)}`}
-                </td>
-                <td colSpan={2} className={`num ${Math.abs(totalDebit - totalCredit) < 0.01 ? 'ok' : 'ko'}`}>
-                  {Math.abs(totalDebit - totalCredit) < 0.01 ? 'OK' : `Écart: ${formatMontant(totalDebit - totalCredit)}`}
-                </td>
-                <td colSpan={2} className={`num ${Math.abs(totalSD - totalSC) < 0.01 ? 'ok' : 'ko'}`}>
-                  {Math.abs(totalSD - totalSC) < 0.01 ? 'OK' : `Écart: ${formatMontant(totalSD - totalSC)}`}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      )}
       <ConfirmModal
-        open={deleteConfirm.open}
-        title="Supprimer la balance"
+        open={deleteConfirm.open} title="Supprimer la balance"
         message="Supprimer cette balance importée et toutes ses lignes ? Cette action est irréversible."
-        variant="danger"
-        confirmLabel="Supprimer"
-        onConfirm={() => {
-          if (deleteConfirm.balanceId) handleDeleteBalance(deleteConfirm.balanceId);
-          setDeleteConfirm({ open: false, balanceId: null });
-        }}
+        variant="danger" confirmLabel="Supprimer"
+        onConfirm={() => { if (deleteConfirm.balanceId) handleDeleteBalance(deleteConfirm.balanceId); setDeleteConfirm({ open: false, balanceId: null }); }}
         onCancel={() => setDeleteConfirm({ open: false, balanceId: null })}
       />
     </div>
