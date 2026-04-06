@@ -7,25 +7,18 @@ import Toast from './components/Toast';
 import type { Entite } from './types';
 import './App.css';
 
-// Intercepteur global : injecter le token Keycloak sur toutes les requêtes /api
+// Intercepteur global : envoyer les cookies httpOnly sur toutes les requêtes /api
 const originalFetch = window.fetch;
 window.fetch = function (input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
   const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
   if (url.startsWith('/api')) {
-    const token = localStorage.getItem('normx_kc_access_token');
-    if (token) {
-      const headers = new Headers(init?.headers);
-      if (!headers.has('Authorization')) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      init = { ...init, headers };
-    }
+    init = { ...init, credentials: 'include' };
   }
   return originalFetch.call(window, input, init);
 };
 
 function AppContent(): React.JSX.Element {
-  const { user, accessToken, isAuthenticated, isLoading, login, logout } = useKeycloak();
+  const { user, isAuthenticated, isLoading, login, logout } = useKeycloak();
   const [entites, setEntites] = React.useState<Entite[]>([]);
   const [currentEntite, setCurrentEntite] = React.useState<Entite | null>(null);
   const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
@@ -37,14 +30,12 @@ function AppContent(): React.JSX.Element {
 
   // Charger le tenant depuis l'API au login
   React.useEffect(() => {
-    if (!isAuthenticated || !accessToken) {
+    if (!isAuthenticated) {
       setTenantLoading(false);
       return;
     }
 
-    const headers = { 'Authorization': `Bearer ${accessToken}` };
-
-    fetch('/api/tenant/me', { headers })
+    fetch('/api/tenant/me', { credentials: 'include' })
       .then(async r => {
         if (r.status === 403) {
           const err = await r.json();
@@ -69,7 +60,7 @@ function AppContent(): React.JSX.Element {
 
         // Charger les entités depuis l'API
         try {
-          const entitesRes = await fetch('/api/entites', { headers });
+          const entitesRes = await fetch('/api/entites', { credentials: 'include' });
           if (entitesRes.ok) {
             const entitesList: Entite[] = await entitesRes.json();
             setEntites(entitesList);
@@ -102,7 +93,7 @@ function AppContent(): React.JSX.Element {
         setOnboardingDone(false);
         setTenantLoading(false);
       });
-  }, [isAuthenticated, accessToken]);
+  }, [isAuthenticated]);
 
   const handleLogout = (): void => {
     setEntites([]);

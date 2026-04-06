@@ -145,9 +145,8 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     // Vérifier si l'entité a des données (exercices)
     let hasData = false;
     try {
-      const token = localStorage.getItem('normx_kc_access_token');
       const res = await fetch(`/api/balance/exercices/${id}`, {
-        headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+        credentials: 'include',
       });
       if (res.ok) {
         const exercices = await res.json();

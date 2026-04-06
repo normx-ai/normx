@@ -94,6 +94,19 @@ export async function createTenant(input: CreateTenantInput): Promise<Tenant> {
 
     await pool.query(schemaSql);
     logger.info('Schema "%s" provisionne avec succes', schemaName);
+
+    // Appliquer la migration RLS (defense en profondeur)
+    try {
+      const rlsPath = join(__dirname, '..', 'migrations', '004-enable-rls.sql');
+      const rlsSql = readFileSync(rlsPath, 'utf-8');
+      const rlsSchemaSql = rlsSql.replace(/\$\{schema_name\}/g, schemaName);
+      await pool.query(rlsSchemaSql);
+      logger.info('RLS active sur le schema "%s"', schemaName);
+    } catch (rlsErr) {
+      // RLS est un filet de securite — ne pas bloquer la creation du tenant si ca echoue
+      const rlsMsg = rlsErr instanceof Error ? rlsErr.message : String(rlsErr);
+      logger.warn('RLS non applique sur "%s": %s', schemaName, rlsMsg);
+    }
   } catch (err) {
     // Rollback: supprimer le tenant si le schema echoue
     await pool.query('DELETE FROM public.tenants WHERE id = $1', [tenant.id]);

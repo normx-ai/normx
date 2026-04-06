@@ -61,7 +61,7 @@ app.use(cors({
   origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Platform", "X-Mobile-Timestamp", "X-Mobile-Signature"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Platform", "X-Mobile-Timestamp", "X-Mobile-Signature", "X-Client-Slug"],
 }));
 
 // Rate limiting global (toutes les routes)

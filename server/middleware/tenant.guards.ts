@@ -5,6 +5,8 @@
 
 import { Request, Response, NextFunction } from 'express';
 import * as tenantService from '../services/tenant.service';
+import pool from '../db';
+import { getValidatedSchemaName } from '../utils/tenant.utils';
 import logger from '../logger';
 
 /**
@@ -36,6 +38,26 @@ export async function switchClientMiddleware(
         error: "Ce client n'appartient pas a votre cabinet.",
       });
       return;
+    }
+
+    // Audit log : tracer le switch cabinet → client
+    try {
+      const cabinetSchema = getValidatedSchemaName(req.tenantSchema!);
+      await pool.query(
+        `INSERT INTO "${cabinetSchema}".audit_log (utilisateur_id, action, module, entite, entite_id, details, ip_address)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [
+          req.user?.sub || 'unknown',
+          'switch_client',
+          'admin',
+          clientTenant.nom || clientSlug,
+          String(clientTenant.id),
+          JSON.stringify({ from_tenant: req.tenant?.slug, to_client: clientSlug }),
+          req.ip || req.headers['x-forwarded-for'] || 'unknown',
+        ]
+      );
+    } catch (auditErr) {
+      logger.warn('Audit log switch client echoue: %s', auditErr instanceof Error ? auditErr.message : String(auditErr));
     }
 
     // Basculer le contexte vers le client

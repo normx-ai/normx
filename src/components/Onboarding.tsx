@@ -96,13 +96,12 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     setError('');
 
     try {
-      const token = localStorage.getItem('normx_kc_access_token');
       const resp = await fetch('/api/tenant/setup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
+        credentials: 'include',
         body: JSON.stringify({
           nom: entiteNom.trim(),
           type: tenantType,

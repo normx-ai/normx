@@ -1,20 +1,14 @@
 /**
- * Helper API — injecte automatiquement le token Keycloak
+ * Helper API — utilise les cookies httpOnly (plus de localStorage)
+ * Les cookies sont envoyes automatiquement via credentials: 'include'
  */
 
-function getToken(): string | null {
-  return localStorage.getItem('normx_kc_access_token');
-}
-
 function authHeaders(): Record<string, string> {
-  const token = getToken();
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-  if (token) headers['Authorization'] = `Bearer ${token}`;
-  return headers;
+  return { 'Content-Type': 'application/json' };
 }
 
 export async function apiGet<T>(url: string): Promise<T> {
-  const res = await fetch(url, { headers: authHeaders() });
+  const res = await fetch(url, { headers: authHeaders(), credentials: 'include' });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
     throw new Error(data.error || `Erreur ${res.status}`);
@@ -26,6 +20,7 @@ export async function apiPost<T>(url: string, body: unknown): Promise<T> {
   const res = await fetch(url, {
     method: 'POST',
     headers: authHeaders(),
+    credentials: 'include',
     body: JSON.stringify(body),
   });
   if (!res.ok) {
@@ -39,6 +34,7 @@ export async function apiPut<T>(url: string, body: unknown): Promise<T> {
   const res = await fetch(url, {
     method: 'PUT',
     headers: authHeaders(),
+    credentials: 'include',
     body: JSON.stringify(body),
   });
   if (!res.ok) {
@@ -49,7 +45,7 @@ export async function apiPut<T>(url: string, body: unknown): Promise<T> {
 }
 
 export async function apiDelete(url: string): Promise<void> {
-  const res = await fetch(url, { method: 'DELETE', headers: authHeaders() });
+  const res = await fetch(url, { method: 'DELETE', headers: authHeaders(), credentials: 'include' });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
     throw new Error(data.error || `Erreur ${res.status}`);

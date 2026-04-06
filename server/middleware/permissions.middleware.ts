@@ -18,12 +18,6 @@ export function requirePermission(module: ModuleNormx, action: ActionPermission)
       return;
     }
 
-    // Le role admin contourne la verification des permissions
-    if (req.user?.roles.includes('admin')) {
-      next();
-      return;
-    }
-
     try {
       const allowed = await permissionsService.hasPermission(schema, userId, module, action);
       if (!allowed) {

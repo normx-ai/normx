@@ -37,6 +37,26 @@ export async function tenantMiddleware(
       return;
     }
 
+    // Verification croisee : le tenantSlug/tenantId du JWT doit correspondre au tenant resolu
+    const jwtTenantSlug = req.user.tenantSlug;
+    const jwtTenantId = req.user.tenantId;
+    if (jwtTenantSlug && jwtTenantSlug !== tenant.slug) {
+      logger.warn(
+        'Mismatch tenant slug: JWT=%s, resolu=%s (user=%s)',
+        jwtTenantSlug, tenant.slug, req.user.sub
+      );
+      res.status(403).json({ error: 'Incohérence de contexte tenant.' });
+      return;
+    }
+    if (jwtTenantId && String(jwtTenantId) !== String(tenant.id)) {
+      logger.warn(
+        'Mismatch tenant id: JWT=%s, resolu=%s (user=%s)',
+        jwtTenantId, tenant.id, req.user.sub
+      );
+      res.status(403).json({ error: 'Incohérence de contexte tenant.' });
+      return;
+    }
+
     // Attacher au request
     req.tenant = tenant;
     req.tenantSchema = tenant.schema_name;
