@@ -5,13 +5,17 @@ types.setTypeParser(1082, (val: string) => val);
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+// SSL : active uniquement si DB_SSL=true (ex: PG distant avec certificat)
+// Par defaut desactive, meme en production (Docker local n'a pas SSL)
+const sslEnabled = process.env.DB_SSL === 'true';
+
 const poolConfig = {
   max: parseInt(process.env.DB_POOL_MAX || '50'),
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
   statement_timeout: 30000,                    // Kill queries > 30s
   idle_in_transaction_session_timeout: 10000,   // Kill idle transactions > 10s
-  ...(isProduction && {
+  ...(sslEnabled && {
     ssl: { rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== 'false' },
   }),
 };
