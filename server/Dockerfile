@@ -10,6 +10,7 @@ COPY sql/ ./sql/
 COPY knowledge-base/ ./knowledge-base/
 COPY server/data/ ./server/data/
 
+USER node
 EXPOSE 5002
 
 CMD ["npx", "tsx", "server/index.ts"]

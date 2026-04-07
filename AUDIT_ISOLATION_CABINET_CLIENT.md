@@ -1,7 +1,7 @@
 # Audit isolation cabinet / client — NORMX
 
 Date : 2026-04-06
-Derniere mise a jour : 2026-04-06 (corrections appliquees)
+Derniere mise a jour : 2026-04-07 (tous les problemes resolus)
 
 ---
 
@@ -57,7 +57,7 @@ Resolu par le fix `X-Client-Slug` + `requireClientForCabinet`. Quand le cabinet 
 Severite : MOYEN
 Statut : CORRIGE (par design)
 
-L'intercepteur global ecrase `window.fetch`. TOUS les appels `fetch()` dans l'app passent par lui et recoivent automatiquement le header `X-Client-Slug` + `credentials: 'include'`.
+L'intercepteur global ecrase `window.fetch`. TOUS les appels `fetch()` dans l'app passent par lui et recoivent automatiquement le header `X-Client-Slug` + `credentials: 'include'` + `X-XSRF-TOKEN` (CSRF).
 
 ---
 
@@ -113,7 +113,7 @@ Les anciennes balances dans le schema cabinet ont ete supprimees. L'utilisateur 
 
 ---
 
-## Matrice de risque (mise a jour)
+## Matrice de risque finale
 
 | # | Severite | Probleme | Statut |
 |---|----------|----------|--------|
@@ -129,3 +129,5 @@ Les anciennes balances dans le schema cabinet ont ete supprimees. L'utilisateur 
 | 4 | MOYEN | Logique entites fragile apres switch | CORRIGE (par design) |
 | 6 | MOYEN | Fetch directs potentiellement sans header | CORRIGE (par design) |
 | 8 | MOYEN | Timing slug au premier chargement | CORRIGE |
+
+Tous les problemes identifies sont resolus. Aucun risque residuel sur l'isolation cabinet/client.

@@ -162,7 +162,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         <nav className="lp-nav">
           <div className="nav-inner">
             <button className="nav-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <div className="nav-icon">N</div> NORMX
+              <img src="/logo-horizontal.png" alt="NORMX AI" style={{ height: 30, width: 'auto' }} />
             </button>
             <div className="nav-links">
               <a href="#fonctionnalites" className="nav-link">Fonctionnalites</a>

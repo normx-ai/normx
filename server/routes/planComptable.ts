@@ -1,14 +1,13 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
+import planSycebnl from '../data/planComptable';
 
 interface CompteComptable {
   numero: string;
   libelle: string;
-  classe: number;
+  classe?: number | string;
 }
-
-const planSycebnl: CompteComptable[] = require(path.join(__dirname, '..', 'data', 'plan_comptable_sycebnl.json'));
 
 // Chargement SYSCOHADA (lazy, au premier appel)
 let planSyscohada: CompteComptable[] | null = null;

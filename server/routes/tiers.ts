@@ -3,13 +3,14 @@ import * as tiersService from '../services/tiers.service';
 import { asyncHandler } from '../middleware/asyncHandler';
 import { validateBody } from '../middleware/validate';
 import { createTiersBody, updateTiersBody } from '../schemas/tiers.schema';
+import { getTenantSchema } from '../utils/routeHelpers';
 
 const router = express.Router();
 
 // Lister les tiers (avec filtres optionnels)
 router.get('/:entite_id', asyncHandler(async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
-  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
+  const schema = getTenantSchema(req, res);
+  if (!schema) return;
   const { type, search, actif } = req.query;
   const rows = await tiersService.listTiers(schema, { type: type as string, search: search as string, actif: actif as string });
   res.json(rows);
@@ -17,8 +18,8 @@ router.get('/:entite_id', asyncHandler(async (req: Request, res: Response) => {
 
 // Obtenir un tiers par ID
 router.get('/detail/:id', asyncHandler(async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
-  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
+  const schema = getTenantSchema(req, res);
+  if (!schema) return;
   const tiers = await tiersService.getTiersById(schema, parseInt(req.params.id, 10));
   if (!tiers) return res.status(404).json({ error: 'Tiers non trouve.' });
   res.json(tiers);
@@ -26,8 +27,8 @@ router.get('/detail/:id', asyncHandler(async (req: Request, res: Response) => {
 
 // Creer un tiers
 router.post('/', validateBody(createTiersBody), asyncHandler(async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
-  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
+  const schema = getTenantSchema(req, res);
+  if (!schema) return;
   const { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data } = req.body;
   if (!type || !nom) {
     return res.status(400).json({ error: 'Champs obligatoires: type, nom.' });
@@ -38,8 +39,8 @@ router.post('/', validateBody(createTiersBody), asyncHandler(async (req: Request
 
 // Modifier un tiers
 router.put('/:id', validateBody(updateTiersBody), asyncHandler(async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
-  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
+  const schema = getTenantSchema(req, res);
+  if (!schema) return;
   const { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data, actif } = req.body;
   if (!nom) return res.status(400).json({ error: 'Le nom est obligatoire.' });
   const tiers = await tiersService.updateTiers(schema, parseInt(req.params.id, 10), { type, code_tiers, nom, compte_comptable, telephone, email, adresse, data, actif });
@@ -49,8 +50,8 @@ router.put('/:id', validateBody(updateTiersBody), asyncHandler(async (req: Reque
 
 // Supprimer un tiers
 router.delete('/:id', asyncHandler(async (req: Request, res: Response) => {
-  const schema = req.tenantSchema;
-  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
+  const schema = getTenantSchema(req, res);
+  if (!schema) return;
   const deleted = await tiersService.deleteTiers(schema, parseInt(req.params.id, 10));
   if (!deleted) return res.status(404).json({ error: 'Tiers non trouve.' });
   res.json({ message: 'Tiers supprime.' });

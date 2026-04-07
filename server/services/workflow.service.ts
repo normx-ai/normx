@@ -105,24 +105,33 @@ export async function genererBulletinsBatch(
   bulletins: { salarieId: number; data: BulletinData }[],
 ): Promise<number> {
   const s = getValidatedSchemaName(schema);
-  let count = 0;
+
+  if (bulletins.length === 0) return 0;
+
+  // Batch INSERT : tous les bulletins en une seule requete
+  const values: string[] = [];
+  const params: (number | string)[] = [];
+  let idx = 1;
 
   for (const b of bulletins) {
-    await pool.query(
-      `INSERT INTO "${s}".bulletins_paie (salarie_id, mois, annee, data, statut)
-       VALUES ($1, $2, $3, $4, 'brouillon')
-       ON CONFLICT (salarie_id, mois, annee)
-       DO UPDATE SET data = $4, statut = CASE
-         WHEN "${s}".bulletins_paie.statut = 'verrouille' THEN "${s}".bulletins_paie.statut
-         ELSE 'brouillon'
-       END`,
-      [b.salarieId, mois, annee, JSON.stringify(b.data)],
-    );
-    count++;
+    values.push(`($${idx}, $${idx + 1}, $${idx + 2}, $${idx + 3}, 'brouillon')`);
+    params.push(b.salarieId, mois, annee, JSON.stringify(b.data));
+    idx += 4;
   }
 
-  logger.info('Batch %d bulletins generes mois=%d/%d schema=%s', count, mois, annee, s);
-  return count;
+  await pool.query(
+    `INSERT INTO "${s}".bulletins_paie (salarie_id, mois, annee, data, statut)
+     VALUES ${values.join(', ')}
+     ON CONFLICT (salarie_id, mois, annee)
+     DO UPDATE SET data = EXCLUDED.data, statut = CASE
+       WHEN "${s}".bulletins_paie.statut = 'verrouille' THEN "${s}".bulletins_paie.statut
+       ELSE 'brouillon'
+     END`,
+    params,
+  );
+
+  logger.info('Batch %d bulletins generes mois=%d/%d schema=%s', bulletins.length, mois, annee, s);
+  return bulletins.length;
 }
 
 // ============ BULLETINS PAR PERIODE ============

@@ -7,8 +7,9 @@
   height: 54px; position: sticky; top: 0; z-index: 100;
 }
 .topbar-left { display: flex; align-items: center; gap: 20px; }
-.topbar-logo { font-family: 'Inter', 'Georgia', serif; font-size: 28px; font-weight: bold; color: #D4A843; letter-spacing: -1px; display: flex; align-items: center; gap: 4px; }
-.topbar-logo-accent { color: #e8e6e1; font-weight: 400; }
+.topbar-logo { display: flex; align-items: center; gap: 8px; }
+.topbar-logo-img { height: 32px; width: auto; }
+.topbar-logo-accent { color: #e8e6e1; font-weight: 400; font-size: 16px; font-family: 'Inter', sans-serif; }
 
 /* MODULE SWITCHER (style Sage) */
 .module-switcher-wrapper { position: relative; display: inline-flex; margin-left: 4px; }

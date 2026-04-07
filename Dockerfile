@@ -17,5 +17,6 @@ RUN npm ci --omit=dev --ignore-scripts
 COPY server/ server/
 COPY --from=frontend /app/build public
 
+USER node
 EXPOSE 5002
 CMD ["node", "server/index.js"]

@@ -325,3 +325,15 @@ CREATE INDEX IF NOT EXISTS idx_salaries_etablissement ON "${schema_name}".salari
 CREATE INDEX IF NOT EXISTS idx_declarations_tva_exercice ON "${schema_name}".declarations_tva(exercice_id);
 CREATE INDEX IF NOT EXISTS idx_declaration_tva_lignes_declaration ON "${schema_name}".declaration_tva_lignes(declaration_id, onglet);
 CREATE INDEX IF NOT EXISTS idx_balance_lignes_numero_compte ON "${schema_name}".balance_lignes(numero_compte);
+
+-- ========== INDEX PERFORMANCE (migration 005) ==========
+
+CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_ecriture ON "${schema_name}".ecriture_lignes(ecriture_id);
+CREATE INDEX IF NOT EXISTS idx_exercices_entite ON "${schema_name}".exercices(entite_id);
+CREATE INDEX IF NOT EXISTS idx_balance_lignes_balance ON "${schema_name}".balance_lignes(balance_id);
+CREATE INDEX IF NOT EXISTS idx_ecritures_exercice_statut ON "${schema_name}".ecritures(exercice_id, statut);
+CREATE INDEX IF NOT EXISTS idx_ecritures_validees ON "${schema_name}".ecritures(exercice_id, date_ecriture) WHERE statut = 'validee';
+CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_ecriture_compte ON "${schema_name}".ecriture_lignes(ecriture_id, numero_compte);
+CREATE INDEX IF NOT EXISTS idx_balance_lignes_balance_compte ON "${schema_name}".balance_lignes(balance_id, numero_compte);
+CREATE INDEX IF NOT EXISTS idx_bulletins_paie_periode ON "${schema_name}".bulletins_paie(mois, annee, salarie_id);
+CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_lettrage ON "${schema_name}".ecriture_lignes(tiers_id, lettrage_code);

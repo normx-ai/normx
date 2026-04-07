@@ -9,6 +9,7 @@ import cache from '../utils/cache';
 
 const log = createLogger('ecritures');
 import { getValidatedSchemaName } from '../utils/tenant.utils';
+import { withTransaction } from '../utils/withTransaction';
 
 // ============ INTERFACES ============
 
@@ -76,10 +77,7 @@ export async function createEcriture(schema: string, input: CreateEcritureInput)
   const s = getValidatedSchemaName(schema);
   const { exercice_id, date_ecriture, journal, numero_piece, libelle, lignes } = input;
 
-  const client = await pool.connect();
-  try {
-    await client.query('BEGIN');
-
+  return withTransaction(async (client) => {
     const ecr = await client.query(
       `INSERT INTO "${s}".ecritures (exercice_id, date_ecriture, journal, numero_piece, libelle)
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
@@ -101,14 +99,8 @@ export async function createEcriture(schema: string, input: CreateEcritureInput)
       );
     }
 
-    await client.query('COMMIT');
     return ecr.rows[0];
-  } catch (err) {
-    await client.query('ROLLBACK');
-    throw err;
-  } finally {
-    try { client.release(); } catch { /* ignore */ }
-  }
+  });
 }
 
 export async function listEcritures(schema: string, exercice_id: number, filters: EcritureFilters, pagination?: { limit: number; offset: number }) {
@@ -365,7 +357,7 @@ export async function getGrandLivreTiers(schema: string, exercice_id: number, fi
     idx++;
   }
 
-  query += ` ORDER BY t.nom, e.date_ecriture, e.id`;
+  query += ` ORDER BY t.nom, e.date_ecriture, e.id LIMIT 5000`;
   const result = await pool.query(query, params);
   return result.rows;
 }
@@ -488,6 +480,7 @@ export async function getBalanceAgee(schema: string, exercice_id: number) {
       AND el.tiers_id IS NOT NULL
       AND (el.lettrage_code IS NULL OR el.lettrage_code = '')
     ORDER BY t.nom, e.date_ecriture
+    LIMIT 5000
   `, [exercice_id]);
   return result.rows;
 }
@@ -552,30 +545,44 @@ export async function getComparatif(schema: string, exercice_id: number, exercic
 export async function getTableauBord(schema: string, exercice_id: number) {
   const s = getValidatedSchemaName(schema);
 
-  const classes = await pool.query(`
-    SELECT LEFT(el.numero_compte, 1) AS classe,
-           COALESCE(SUM(el.debit), 0) AS debit, COALESCE(SUM(el.credit), 0) AS credit
-    FROM "${s}".ecriture_lignes el JOIN "${s}".ecritures e ON e.id = el.ecriture_id
-    WHERE e.exercice_id = $1 AND e.statut = 'validee'
-    GROUP BY LEFT(el.numero_compte, 1) ORDER BY classe
+  // Une seule requete pour les 3 agregations (classes, mensuel, tresorerie)
+  const result = await pool.query(`
+    WITH base AS (
+      SELECT el.numero_compte, el.debit, el.credit, e.date_ecriture
+      FROM "${s}".ecriture_lignes el
+      JOIN "${s}".ecritures e ON e.id = el.ecriture_id
+      WHERE e.exercice_id = $1 AND e.statut = 'validee'
+    )
+    SELECT 'classe' AS metric, LEFT(numero_compte, 1) AS key, NULL::int AS mois,
+           COALESCE(SUM(debit), 0) AS val1, COALESCE(SUM(credit), 0) AS val2
+    FROM base GROUP BY LEFT(numero_compte, 1)
+    UNION ALL
+    SELECT 'mensuel' AS metric, NULL AS key, EXTRACT(MONTH FROM date_ecriture)::int AS mois,
+           COALESCE(SUM(CASE WHEN numero_compte LIKE '7%' THEN credit - debit ELSE 0 END), 0) AS val1,
+           COALESCE(SUM(CASE WHEN numero_compte LIKE '6%' THEN debit - credit ELSE 0 END), 0) AS val2
+    FROM base GROUP BY EXTRACT(MONTH FROM date_ecriture)::int
+    UNION ALL
+    SELECT 'treso' AS metric, NULL AS key, NULL AS mois,
+           COALESCE(SUM(debit), 0) AS val1, COALESCE(SUM(credit), 0) AS val2
+    FROM base WHERE numero_compte LIKE '5%'
+    ORDER BY metric, key, mois
   `, [exercice_id]);
 
-  const mensuel = await pool.query(`
-    SELECT EXTRACT(MONTH FROM e.date_ecriture)::int AS mois,
-           COALESCE(SUM(CASE WHEN el.numero_compte LIKE '7%' THEN el.credit - el.debit ELSE 0 END), 0) AS produits,
-           COALESCE(SUM(CASE WHEN el.numero_compte LIKE '6%' THEN el.debit - el.credit ELSE 0 END), 0) AS charges
-    FROM "${s}".ecriture_lignes el JOIN "${s}".ecritures e ON e.id = el.ecriture_id
-    WHERE e.exercice_id = $1 AND e.statut = 'validee'
-    GROUP BY mois ORDER BY mois
-  `, [exercice_id]);
+  const classes: { classe: string; debit: number; credit: number }[] = [];
+  const mensuel: { mois: number; produits: number; charges: number }[] = [];
+  let tresorerie = { debit: 0, credit: 0 };
 
-  const treso = await pool.query(`
-    SELECT COALESCE(SUM(el.debit), 0) AS debit, COALESCE(SUM(el.credit), 0) AS credit
-    FROM "${s}".ecriture_lignes el JOIN "${s}".ecritures e ON e.id = el.ecriture_id
-    WHERE e.exercice_id = $1 AND e.statut = 'validee' AND el.numero_compte LIKE '5%'
-  `, [exercice_id]);
+  for (const row of result.rows) {
+    if (row.metric === 'classe') {
+      classes.push({ classe: row.key, debit: row.val1, credit: row.val2 });
+    } else if (row.metric === 'mensuel') {
+      mensuel.push({ mois: row.mois, produits: row.val1, charges: row.val2 });
+    } else if (row.metric === 'treso') {
+      tresorerie = { debit: row.val1, credit: row.val2 };
+    }
+  }
 
-  return { classes: classes.rows, mensuel: mensuel.rows, tresorerie: treso.rows[0] };
+  return { classes, mensuel, tresorerie };
 }
 
 export async function getEcheancier(schema: string, exercice_id: number, filters: EcheancierFilters) {
@@ -597,7 +604,7 @@ export async function getEcheancier(schema: string, exercice_id: number, filters
   if (date_du) { query += ` AND e.date_ecriture >= $${idx}`; params.push(date_du); idx++; }
   if (date_au) { query += ` AND e.date_ecriture <= $${idx}`; params.push(date_au); idx++; }
 
-  query += ` ORDER BY e.date_ecriture, t.nom`;
+  query += ` ORDER BY e.date_ecriture, t.nom LIMIT 5000`;
   const result = await pool.query(query, params);
   return result.rows;
 }

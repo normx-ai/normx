@@ -5,6 +5,7 @@
 
 import express, { Request, Response } from 'express';
 import multer from 'multer';
+import { fromBuffer } from 'file-type';
 import logger from '../logger';
 import { processDocument } from '../services/ocr-import.service';
 
@@ -38,8 +39,14 @@ router.post('/extract', upload.single('file'), async (req: Request, res: Respons
     return res.status(400).json({ error: 'Fichier requis.' });
   }
 
+  // Verification magic bytes : le contenu reel doit correspondre au MIME declare
+  const detected = await fromBuffer(req.file.buffer);
+  if (!detected || !ALLOWED_MIMES.includes(detected.mime)) {
+    return res.status(400).json({ error: 'Le contenu du fichier ne correspond pas au format declare.' });
+  }
+
   try {
-    const result = await processDocument(req.file.buffer, req.file.mimetype, schema);
+    const result = await processDocument(req.file.buffer, detected.mime, schema);
     res.json(result);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);

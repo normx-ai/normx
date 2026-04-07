@@ -118,31 +118,43 @@ async function applyOdToBalance(schema: string, exerciceId: number) {
     return;
   }
 
-  // Reset tous les soldes revises
-  await pool.query(
-    `UPDATE "${s}".balance_lignes SET solde_debiteur_revise = NULL, solde_crediteur_revise = NULL WHERE balance_id = $1`,
-    [balanceId],
-  );
+  // Batch UPDATE : reset + appliquer les impacts en une seule requete via CTE
+  // Construire la table des impacts comme VALUES
+  const impactValues: string[] = [];
+  const params: (number | string)[] = [balanceId];
+  let idx = 2;
 
-  // Appliquer les impacts
   for (const compte of comptesImpactes) {
     const impact = impactParCompte[compte];
-    const ligneResult = await pool.query(
-      `SELECT id, solde_debiteur, solde_crediteur FROM "${s}".balance_lignes WHERE balance_id = $1 AND numero_compte = $2`,
-      [balanceId, compte],
-    );
-    if (ligneResult.rows.length === 0) continue;
-
-    const ligne = ligneResult.rows[0];
-    const sd = parseFloat(ligne.solde_debiteur) || 0;
-    const sc = parseFloat(ligne.solde_crediteur) || 0;
-    const soldeNet = (sc - sd) + impact.credit - impact.debit;
-    const newSD = soldeNet < 0 ? Math.abs(soldeNet) : 0;
-    const newSC = soldeNet >= 0 ? soldeNet : 0;
-
-    await pool.query(
-      `UPDATE "${s}".balance_lignes SET solde_debiteur_revise = $1, solde_crediteur_revise = $2 WHERE id = $3`,
-      [newSD, newSC, ligne.id],
-    );
+    impactValues.push(`($${idx}::text, $${idx + 1}::numeric, $${idx + 2}::numeric)`);
+    params.push(compte, impact.debit, impact.credit);
+    idx += 3;
   }
+
+  await pool.query(
+    `WITH impacts(numero_compte, impact_debit, impact_credit) AS (
+       VALUES ${impactValues.join(', ')}
+     )
+     UPDATE "${s}".balance_lignes bl SET
+       solde_debiteur_revise = CASE
+         WHEN (COALESCE(bl.solde_crediteur, 0) - COALESCE(bl.solde_debiteur, 0) + i.impact_credit - i.impact_debit) < 0
+         THEN ABS(COALESCE(bl.solde_crediteur, 0) - COALESCE(bl.solde_debiteur, 0) + i.impact_credit - i.impact_debit)
+         ELSE 0
+       END,
+       solde_crediteur_revise = CASE
+         WHEN (COALESCE(bl.solde_crediteur, 0) - COALESCE(bl.solde_debiteur, 0) + i.impact_credit - i.impact_debit) >= 0
+         THEN COALESCE(bl.solde_crediteur, 0) - COALESCE(bl.solde_debiteur, 0) + i.impact_credit - i.impact_debit
+         ELSE 0
+       END
+     FROM impacts i
+     WHERE bl.balance_id = $1 AND bl.numero_compte = i.numero_compte`,
+    params,
+  );
+
+  // Reset les comptes non impactes
+  await pool.query(
+    `UPDATE "${s}".balance_lignes SET solde_debiteur_revise = NULL, solde_crediteur_revise = NULL
+     WHERE balance_id = $1 AND numero_compte NOT IN (${comptesImpactes.map((_, i) => `$${i + 2}`).join(', ')})`,
+    [balanceId, ...comptesImpactes],
+  );
 }

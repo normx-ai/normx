@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import compression from "compression";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -34,15 +35,19 @@ import { requireSubscription } from "./middleware/subscription.middleware";
 import { tenantMiddleware } from "./middleware/tenant.middleware";
 import { switchClientMiddleware } from "./middleware/tenant.guards";
 import { requireModule, requireAnyModule } from "./middleware/moduleGuard";
+import { csrfProtection } from "./middleware/csrf";
 
 const app = express();
 
 // Trust proxy (Nginx reverse proxy envoie X-Forwarded-For)
 app.set('trust proxy', 1);
 
+// Compression gzip/brotli
+app.use(compression());
+
 // Securite : headers HTTP
 app.use(helmet({
-  contentSecurityPolicy: process.env.NODE_ENV === 'production' ? {
+  contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
@@ -53,7 +58,7 @@ app.use(helmet({
       objectSrc: ["'none'"],
       frameSrc: ["'none'"],
     },
-  } : false,
+  },
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
 
@@ -65,7 +70,7 @@ app.use(cors({
   origin: allowedOrigins,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Platform", "X-Mobile-Timestamp", "X-Mobile-Signature", "X-Client-Slug"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Platform", "X-Mobile-Timestamp", "X-Mobile-Signature", "X-Client-Slug", "X-XSRF-TOKEN"],
 }));
 
 // Rate limiting global (toutes les routes)
@@ -95,13 +100,33 @@ const chatLimiter = rateLimit({
   message: { error: 'Limite de requetes IA atteinte, reessayez plus tard.' },
 });
 
+// Rate limiting pour routes de donnees (anti-exfiltration)
+const dataLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: process.env.NODE_ENV === 'production' ? 100 : 500,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Trop de requetes de donnees, reessayez dans 1 minute.' },
+});
+
 app.use(globalLimiter);
 
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
+app.use(csrfProtection);
 
-// Servir le frontend React build
-app.use(express.static(path.join(__dirname, "public")));
+// Servir le frontend React build avec cache
+app.use(express.static(path.join(__dirname, "public"), {
+  maxAge: process.env.NODE_ENV === 'production' ? '1y' : 0,
+  etag: true,
+  setHeaders: (res, filePath) => {
+    // Les fichiers avec hash dans le nom (ex: main.a1b2c3.js) peuvent etre caches longtemps
+    // index.html ne doit pas etre cache (pour forcer le rechargement des assets)
+    if (filePath.endsWith('.html')) {
+      res.setHeader('Cache-Control', 'no-cache');
+    }
+  },
+}));
 
 // Routes auth (pas de middleware - publiques)
 app.use("/api/auth", sensitiveLimiter, authRoutes);
@@ -127,21 +152,21 @@ app.use("/api/notifications", ...tenantChain, notificationsRoutes);
 app.use("/api/permissions", ...tenantChain, permissionsRoutes);
 
 // Routes de donnees
-app.use("/api/balance", ...tenantChain, requireAnyModule('compta', 'etats'), balanceRoutes);
+app.use("/api/balance", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), balanceRoutes);
 app.use("/api/assistant", ...tenantChain, chatLimiter, assistantRoutes);
 
 // Module COMPTA
 app.use("/api/ocr-import", ...tenantChain, requireModule('compta'), chatLimiter, ocrImportRoutes);
-app.use("/api/ecritures", ...tenantChain, requireModule('compta'), ecrituresRoutes);
-app.use("/api/plan-comptable", ...tenantChain, requireAnyModule('compta', 'etats'), planComptableRoutes);
-app.use("/api/tiers", ...tenantChain, requireModule('compta'), tiersRoutes);
-app.use("/api/tva", ...tenantChain, requireModule('compta'), tvaRoutes);
-app.use("/api/revision", ...tenantChain, requireAnyModule('compta', 'etats'), revisionRoutes);
+app.use("/api/ecritures", ...tenantChain, dataLimiter, requireModule('compta'), ecrituresRoutes);
+app.use("/api/plan-comptable", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), planComptableRoutes);
+app.use("/api/tiers", ...tenantChain, dataLimiter, requireModule('compta'), tiersRoutes);
+app.use("/api/tva", ...tenantChain, dataLimiter, requireModule('compta'), tvaRoutes);
+app.use("/api/revision", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), revisionRoutes);
 
 // Module PAIE
-app.use("/api/paie", ...tenantChain, requireModule('paie'), paieRoutes);
-app.use("/api/paie/workflow", ...tenantChain, requireModule('paie'), workflowRoutes);
-app.use("/api/paie/rubriques", ...tenantChain, requireModule('paie'), rubriquesRoutes);
+app.use("/api/paie", ...tenantChain, dataLimiter, requireModule('paie'), paieRoutes);
+app.use("/api/paie/workflow", ...tenantChain, dataLimiter, requireModule('paie'), workflowRoutes);
+app.use("/api/paie/rubriques", ...tenantChain, dataLimiter, requireModule('paie'), rubriquesRoutes);
 
 /**
  * @swagger

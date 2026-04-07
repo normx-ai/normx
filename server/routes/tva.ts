@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express';
-import path from 'path';
 import logger from '../logger';
 import * as tvaService from '../services/tva.service';
 import { getErrorMessage } from '../utils/routeHelpers';
@@ -73,8 +72,7 @@ router.get('/montants-comptes/:entiteId/:exerciceId', async (req: Request, res: 
 // GET /plan-comptable-44
 router.get('/plan-comptable-44', (_req: Request, res: Response) => {
   try {
-    const planComptable: PlanCompte[] = require(path.join(__dirname, '..', 'data', 'plan_comptable_sycebnl.json'));
-    const comptes44 = planComptable.filter((c: PlanCompte) => c.numero.startsWith('44'));
+    const comptes44 = (await import('../data/planComptable')).default.filter((c: { numero: string }) => c.numero.startsWith('44'));
     res.json(comptes44);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));

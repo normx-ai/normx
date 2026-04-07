@@ -62,7 +62,8 @@ function ComptaSidebar({
 
         {!sidebarCollapsed && (
           <div className="compta-sidebar-bottom">
-            <span className="logo-n">N</span>ormX {moduleLabel}
+            <img src="/logo-carre-dark.png" alt="NORMX AI" style={{ height: 28, width: 'auto', marginRight: 6, verticalAlign: 'middle' }} />
+            {moduleLabel}
           </div>
         )}
       </aside>

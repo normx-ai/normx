@@ -1,14 +1,14 @@
 import express, { Request, Response } from 'express';
-import path from 'path';
 import logger from '../logger';
 import * as ecrituresService from '../services/ecritures.service';
-import { getErrorMessage } from '../utils/routeHelpers';
+import { getErrorMessage, getTenantSchema } from '../utils/routeHelpers';
 import { getPagination, paginatedResponse } from '../utils/pagination';
+import planComptable from '../data/planComptable';
 
 interface PlanCompte {
   numero: string;
   libelle: string;
-  classe: number;
+  classe?: number | string;
 }
 
 interface EcritureLigne {
@@ -24,8 +24,6 @@ interface EcheancierRow {
   credit: string;
   lettrage_code: string | null;
 }
-
-const planComptable: PlanCompte[] = require(path.join(__dirname, '..', 'data', 'plan_comptable_sycebnl.json'));
 const pcNums = new Set(planComptable.map((c: PlanCompte) => c.numero));
 
 // Verifier un compte padde : "101100" -> cherche "1011", "101", "10" etc.
@@ -41,28 +39,36 @@ const isCompteValide = (numero: string): boolean => {
 
 const router = express.Router();
 
-// Creer une ecriture avec ses lignes
-router.post('/', async (req: Request, res: Response) => {
-  const { exercice_id, date_ecriture, journal, numero_piece, libelle, lignes } = req.body;
-  const schema = req.tenantSchema;
-  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-
-  if (!exercice_id || !date_ecriture || !libelle || !lignes || lignes.length < 2) {
-    return res.status(400).json({ error: 'Donnees incompletes. Minimum 2 lignes.' });
-  }
-
+/** Valide les lignes d'ecriture : equilibre debit/credit + comptes valides */
+function validateEcritureLines(lignes: EcritureLigne[]): { valid: boolean; error?: string } {
   const totalDebit = lignes.reduce((s: number, l: EcritureLigne) => s + (parseFloat(l.debit) || 0), 0);
   const totalCredit = lignes.reduce((s: number, l: EcritureLigne) => s + (parseFloat(l.credit) || 0), 0);
   if (Math.abs(totalDebit - totalCredit) > 0.01) {
-    return res.status(400).json({ error: 'Ecriture desequilibree. Debit: ' + totalDebit + ', Credit: ' + totalCredit });
+    return { valid: false, error: `Ecriture desequilibree. Debit: ${totalDebit}, Credit: ${totalCredit}` };
   }
-
   const comptesInvalides = lignes
     .filter((l: EcritureLigne) => l.numero_compte && (parseFloat(l.debit) || parseFloat(l.credit)))
     .filter((l: EcritureLigne) => !isCompteValide(l.numero_compte))
     .map((l: EcritureLigne) => l.numero_compte);
   if (comptesInvalides.length > 0) {
-    return res.status(400).json({ error: 'Comptes invalides (absents du plan comptable SYCEBNL) : ' + comptesInvalides.join(', ') });
+    return { valid: false, error: 'Comptes invalides (absents du plan comptable SYCEBNL) : ' + comptesInvalides.join(', ') };
+  }
+  return { valid: true };
+}
+
+// Creer une ecriture avec ses lignes
+router.post('/', async (req: Request, res: Response) => {
+  const { exercice_id, date_ecriture, journal, numero_piece, libelle, lignes } = req.body;
+  const schema = getTenantSchema(req, res);
+  if (!schema) return;
+
+  if (!exercice_id || !date_ecriture || !libelle || !lignes || lignes.length < 2) {
+    return res.status(400).json({ error: 'Donnees incompletes. Minimum 2 lignes.' });
+  }
+
+  const validation = validateEcritureLines(lignes);
+  if (!validation.valid) {
+    return res.status(400).json({ error: validation.error });
   }
 
   try {
@@ -126,25 +132,16 @@ router.post('/devalider', async (req: Request, res: Response) => {
 // Modifier une ecriture (brouillard uniquement)
 router.put('/:id', async (req: Request, res: Response) => {
   const { date_ecriture, journal, numero_piece, libelle, lignes } = req.body;
-  const schema = req.tenantSchema;
-  if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
+  const schema = getTenantSchema(req, res);
+  if (!schema) return;
 
   if (!date_ecriture || !libelle || !lignes || lignes.length < 2) {
     return res.status(400).json({ error: 'Donnees incompletes.' });
   }
 
-  const totalDebit = lignes.reduce((s: number, l: EcritureLigne) => s + (parseFloat(l.debit) || 0), 0);
-  const totalCredit = lignes.reduce((s: number, l: EcritureLigne) => s + (parseFloat(l.credit) || 0), 0);
-  if (Math.abs(totalDebit - totalCredit) > 0.01) {
-    return res.status(400).json({ error: 'Ecriture desequilibree.' });
-  }
-
-  const comptesInvalides = lignes
-    .filter((l: EcritureLigne) => l.numero_compte && (parseFloat(l.debit) || parseFloat(l.credit)))
-    .filter((l: EcritureLigne) => !isCompteValide(l.numero_compte))
-    .map((l: EcritureLigne) => l.numero_compte);
-  if (comptesInvalides.length > 0) {
-    return res.status(400).json({ error: 'Comptes invalides : ' + comptesInvalides.join(', ') });
+  const validation = validateEcritureLines(lignes);
+  if (!validation.valid) {
+    return res.status(400).json({ error: validation.error });
   }
 
   try {

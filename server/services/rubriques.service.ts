@@ -304,25 +304,29 @@ export async function initRubriquesDefaut(schema: string): Promise<Rubrique[]> {
     return getRubriques(schema);
   }
 
-  // Inserer les rubriques par defaut
-  const inserted: Rubrique[] = [];
+  // Batch INSERT : toutes les rubriques en une seule requete
+  const values: string[] = [];
+  const params: (string | number | boolean | null)[] = [];
+  let idx = 1;
+
   for (const rub of RUBRIQUES_DEFAUT) {
-    const result = await pool.query(
-      `INSERT INTO "${s}".rubriques (code, libelle, type, mode, taux, montant, plafond, base, imposable, actif, ordre)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, true, $10)
-       ON CONFLICT (code) DO NOTHING
-       RETURNING *`,
-      [
-        rub.code, rub.libelle, rub.type, rub.mode,
-        rub.taux, rub.montant, rub.plafond, rub.base,
-        rub.imposable, rub.ordre,
-      ],
+    values.push(`($${idx}, $${idx + 1}, $${idx + 2}, $${idx + 3}, $${idx + 4}, $${idx + 5}, $${idx + 6}, $${idx + 7}, $${idx + 8}, true, $${idx + 9})`);
+    params.push(
+      rub.code, rub.libelle, rub.type, rub.mode,
+      rub.taux, rub.montant, rub.plafond, rub.base,
+      rub.imposable, rub.ordre,
     );
-    if (result.rows[0]) {
-      inserted.push(result.rows[0]);
-    }
+    idx += 10;
   }
 
-  logger.info('Rubriques par defaut initialisees: %d rubrique(s) pour schema %s', inserted.length, s);
-  return inserted;
+  const result = await pool.query(
+    `INSERT INTO "${s}".rubriques (code, libelle, type, mode, taux, montant, plafond, base, imposable, actif, ordre)
+     VALUES ${values.join(', ')}
+     ON CONFLICT (code) DO NOTHING
+     RETURNING *`,
+    params,
+  );
+
+  logger.info('Rubriques par defaut initialisees: %d rubrique(s) pour schema %s', result.rows.length, s);
+  return result.rows;
 }

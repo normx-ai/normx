@@ -131,11 +131,38 @@ export async function initDefaultPermissions(
   utilisateurId: string,
   role: string
 ): Promise<void> {
+  const validSchema = getValidatedSchemaName(schema);
   const rolePermissions = buildRolePermissions(role);
 
+  if (rolePermissions.length === 0) return;
+
+  // Batch INSERT : toutes les permissions en une seule requete
+  const values: string[] = [];
+  const params: (string | boolean)[] = [];
+  let idx = 1;
+
   for (const entry of rolePermissions) {
-    await setPermission(schema, utilisateurId, entry.module, entry.perms);
+    values.push(`($${idx}, $${idx + 1}, $${idx + 2}, $${idx + 3}, $${idx + 4}, $${idx + 5})`);
+    params.push(
+      utilisateurId, entry.module,
+      entry.perms.peut_lire, entry.perms.peut_creer,
+      entry.perms.peut_modifier, entry.perms.peut_supprimer,
+    );
+    idx += 6;
   }
+
+  await pool.query(
+    `INSERT INTO "${validSchema}".permissions_modules
+       (utilisateur_id, module, peut_lire, peut_creer, peut_modifier, peut_supprimer)
+     VALUES ${values.join(', ')}
+     ON CONFLICT (utilisateur_id, module)
+     DO UPDATE SET
+       peut_lire = EXCLUDED.peut_lire,
+       peut_creer = EXCLUDED.peut_creer,
+       peut_modifier = EXCLUDED.peut_modifier,
+       peut_supprimer = EXCLUDED.peut_supprimer`,
+    params,
+  );
 
   logger.info('Permissions initialisees pour %s (role: %s, schema: %s)', utilisateurId, role, schema);
 }

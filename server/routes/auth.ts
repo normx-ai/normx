@@ -13,11 +13,12 @@ const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
 const KEYCLOAK_REALM = process.env.KEYCLOAK_REALM || 'normx';
 const KEYCLOAK_CLIENT_ID = process.env.KEYCLOAK_CLIENT_ID || 'normx-app';
 const TOKEN_URL = `${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token`;
+const LOGOUT_URL = `${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/logout`;
 
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax' as const,
+  sameSite: 'strict' as const,
   path: '/',
 };
 
@@ -132,8 +133,26 @@ router.post('/refresh', async (req: Request, res: Response) => {
   }
 });
 
-// POST /api/auth/logout - Supprime les cookies
-router.post('/logout', (_req: Request, res: Response) => {
+// POST /api/auth/logout - Revoque le token Keycloak + supprime les cookies
+router.post('/logout', async (req: Request, res: Response) => {
+  const refreshToken = req.cookies?.normx_refresh_token;
+
+  // Revoquer le refresh token cote Keycloak
+  if (refreshToken) {
+    try {
+      await fetch(LOGOUT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          client_id: KEYCLOAK_CLIENT_ID,
+          refresh_token: refreshToken,
+        }),
+      });
+    } catch (err) {
+      logger.error('Keycloak logout error: ' + (err instanceof Error ? err.message : String(err)));
+    }
+  }
+
   res.clearCookie('normx_access_token', { path: '/' });
   res.clearCookie('normx_refresh_token', { path: '/' });
   res.json({ message: 'Deconnecte.' });
