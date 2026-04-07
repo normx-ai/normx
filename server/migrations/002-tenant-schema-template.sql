@@ -77,6 +77,9 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".ecritures (
   journal VARCHAR(10),
   numero_piece VARCHAR(50),
   libelle TEXT NOT NULL,
+  statut VARCHAR(20) DEFAULT 'brouillard',
+  validee_par TEXT,
+  date_validation TIMESTAMP,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
