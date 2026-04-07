@@ -152,7 +152,10 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
 
   // Saisie manuelle avec pre-remplissage depuis la balance
   const getVal = (label: string, field: string): number => {
-    return cessions[label + '_' + field] || 0;
+    return cessions[label + '_' + field] ?? 0;
+  };
+  const hasVal = (label: string, field: string): boolean => {
+    return (label + '_' + field) in cessions;
   };
   const setVal = (label: string, field: string, value: number) => {
     setCessions(prev => ({ ...prev, [label + '_' + field]: value }));
@@ -214,20 +217,20 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
   const prixFin = distribuePrix(finRows, ['823', '824']);
 
   const computeRow = (r: Rubrique) => {
-    // Valeur brute : mouvement credit des comptes immo (sortie d'actif)
+    // Valeur brute : saisie manuelle prioritaire, sinon balance
     const brutBalance = balanceSum(r.immoPrefixes, 'credit');
-    const a = getVal(r.label, 'brut') || brutBalance;
+    const a = hasVal(r.label, 'brut') ? getVal(r.label, 'brut') : brutBalance;
 
-    // Amortissements cumules : mouvement debit des comptes 28x (reprise amort sur sortie)
+    // Amortissements : saisie manuelle prioritaire, sinon balance
     const amortBalance = balanceSum(r.amortPrefixes, 'debit');
-    const b = getVal(r.label, 'amort') || amortBalance;
+    const b = hasVal(r.label, 'amort') ? getVal(r.label, 'amort') : amortBalance;
 
     // VNC = brut - amortissements
     const c = a - b;
 
-    // Prix de cession : distribue depuis 82x proportionnellement au credit des comptes 2x
+    // Prix de cession : saisie manuelle prioritaire, sinon distribue
     const prixDistribue = prixIncorp.get(r.label) || prixCorp.get(r.label) || prixFin.get(r.label) || 0;
-    const d = getVal(r.label, 'prix') || prixDistribue;
+    const d = hasVal(r.label, 'prix') ? getVal(r.label, 'prix') : prixDistribue;
 
     // Plus/moins-value = prix - VNC
     const e = d - c;
