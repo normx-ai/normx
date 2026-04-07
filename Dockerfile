@@ -17,6 +17,7 @@ RUN npm ci --omit=dev --ignore-scripts
 COPY server/ server/
 COPY --from=frontend /app/build public
 
+RUN mkdir -p /app/server/logs && chown -R node:node /app
 USER node
 EXPOSE 5002
 CMD ["node", "server/index.js"]

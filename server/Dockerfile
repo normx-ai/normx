@@ -10,6 +10,7 @@ COPY sql/ ./sql/
 COPY knowledge-base/ ./knowledge-base/
 COPY server/data/ ./server/data/
 
+RUN mkdir -p /app/server/logs && chown -R node:node /app
 USER node
 EXPOSE 5002
 
