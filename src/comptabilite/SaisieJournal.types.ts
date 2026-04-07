@@ -75,6 +75,7 @@ export interface EcrituresStatsProps {
   onDevalider: () => void;
   onBack: () => void;
   onOpenCreate: () => void;
+  onOpenImport?: () => void;
 }
 
 export interface EcrituresFiltersProps {

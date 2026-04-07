@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuPlus, LuCheck, LuUndo } from 'react-icons/lu';
+import { LuPlus, LuCheck, LuUndo, LuFileUp } from 'react-icons/lu';
 import type { EcrituresStatsProps } from './SaisieJournal.types';
 import { fmt } from '../utils/formatters';
 
@@ -12,6 +12,7 @@ function EcrituresStats({
   onDevalider,
   onBack,
   onOpenCreate,
+  onOpenImport,
 }: EcrituresStatsProps): React.JSX.Element {
   const listTotalDebit = ecritures.reduce((s, e) =>
     s + e.lignes.reduce((s2, l) => s2 + (parseFloat(String(l.debit)) || 0), 0), 0);
@@ -38,6 +39,11 @@ function EcrituresStats({
             </button>
           )}
           <button className="compta-action-btn" onClick={onBack}>&larr; Retour</button>
+          {onOpenImport && (
+            <button className="compta-action-btn" onClick={onOpenImport} style={{ background: '#eff6ff', color: '#1e40af', border: '1px solid #bfdbfe' }}>
+              <LuFileUp /> Importer
+            </button>
+          )}
           <button className="compta-action-btn primary" onClick={onOpenCreate}>
             <LuPlus /> Creer
           </button>

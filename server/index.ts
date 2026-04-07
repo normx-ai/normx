@@ -25,6 +25,7 @@ import rubriquesRoutes from "./routes/rubriques";
 import notificationsRoutes from "./routes/notifications";
 import permissionsRoutes from "./routes/permissions";
 import revisionRoutes from "./routes/revision";
+import ocrImportRoutes from "./routes/ocr-import";
 import authRoutes from "./routes/auth";
 
 import tenantRoutes from "./routes/tenant";
@@ -130,6 +131,7 @@ app.use("/api/balance", ...tenantChain, requireAnyModule('compta', 'etats'), bal
 app.use("/api/assistant", ...tenantChain, chatLimiter, assistantRoutes);
 
 // Module COMPTA
+app.use("/api/ocr-import", ...tenantChain, requireModule('compta'), chatLimiter, ocrImportRoutes);
 app.use("/api/ecritures", ...tenantChain, requireModule('compta'), ecrituresRoutes);
 app.use("/api/plan-comptable", ...tenantChain, requireAnyModule('compta', 'etats'), planComptableRoutes);
 app.use("/api/tiers", ...tenantChain, requireModule('compta'), tiersRoutes);

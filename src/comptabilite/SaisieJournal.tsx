@@ -7,6 +7,7 @@ import EcrituresStats from './EcrituresStats';
 import EcrituresFilters from './EcrituresFilters';
 import EcrituresList from './EcrituresList';
 import SaisieOverlay from './SaisieOverlay';
+import ImportDocumentModal from './ImportDocumentModal';
 import './Comptabilite.css';
 
 function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJournalProps): React.JSX.Element {
@@ -137,7 +138,19 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     setEditingId(null);
   };
 
+  const [showImportModal, setShowImportModal] = useState(false);
+
   const openCreate = (): void => { resetForm(); setShowOverlay(true); };
+
+  const openFromImport = (data: { journal: string; dateEcriture: string; numeroPiece: string; libelle: string; lignes: EcritureRow[] }): void => {
+    resetForm();
+    setJournal(data.journal);
+    setDateEcriture(data.dateEcriture);
+    setNumeroPiece(data.numeroPiece);
+    setLibelle(data.libelle);
+    setLignes(data.lignes);
+    setShowOverlay(true);
+  };
 
   const openEdit = (ecr: EcritureAPI): void => {
     setEditingId(ecr.id); setJournal(ecr.journal || 'OD'); setDateEcriture(ecr.date_ecriture);
@@ -278,7 +291,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     <div className="compta-wrapper">
       <EcrituresStats ecritures={ecritures} stats={stats} nbSelectedBrouillard={nbSelectedBrouillard}
         nbSelectedValidee={nbSelectedValidee} onValider={validerSelection} onDevalider={devaliderSelection}
-        onBack={onBack} onOpenCreate={openCreate} />
+        onBack={onBack} onOpenCreate={openCreate} onOpenImport={() => setShowImportModal(true)} />
 
       <EcrituresFilters filterJournal={filterJournal} setFilterJournal={setFilterJournal}
         filterStatut={filterStatut} setFilterStatut={setFilterStatut} filterMois={filterMois} setFilterMois={setFilterMois}
@@ -287,6 +300,11 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
 
       <EcrituresList ecritures={ecritures} selectedIds={selectedIds} onToggleSelect={toggleSelect}
         onToggleSelectAll={toggleSelectAll} onEdit={openEdit} onDelete={deleteEcriture} />
+
+      {showImportModal && (
+        <ImportDocumentModal entiteId={entiteId} exerciceId={exerciceId}
+          onClose={() => setShowImportModal(false)} onImport={openFromImport} />
+      )}
 
       {showOverlay && (
         <SaisieOverlay editingId={editingId} journal={journal} setJournal={setJournal}
