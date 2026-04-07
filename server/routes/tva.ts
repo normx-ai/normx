@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import logger from '../logger';
 import * as tvaService from '../services/tva.service';
 import { getErrorMessage } from '../utils/routeHelpers';
+import planComptable from '../data/planComptable';
 
 interface PlanCompte {
   numero: string;
@@ -72,7 +73,7 @@ router.get('/montants-comptes/:entiteId/:exerciceId', async (req: Request, res: 
 // GET /plan-comptable-44
 router.get('/plan-comptable-44', (_req: Request, res: Response) => {
   try {
-    const comptes44 = (await import('../data/planComptable')).default.filter((c: { numero: string }) => c.numero.startsWith('44'));
+    const comptes44 = planComptable.filter((c: { numero: string }) => c.numero.startsWith('44'));
     res.json(comptes44);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
