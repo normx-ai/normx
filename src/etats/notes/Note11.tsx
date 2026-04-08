@@ -22,17 +22,20 @@ interface RubriqueDispo {
 
 const RUBRIQUES_BRUT: RubriqueDispo[] = [
   { label: 'Banques locales', prefixes: ['521'] },
-  { label: 'Banques autres états région', prefixes: ['522'] },
-  { label: 'Banques, dépôt à terme', prefixes: ['523'] },
-  { label: 'Autres Banques', prefixes: ['524', '525', '526', '527', '528'] },
-  { label: 'Banques intérêts courus', prefixes: ['529'] },
+  { label: 'Banques autres États Région', prefixes: ['522'] },
+  { label: 'Banques autres États zone monétaire', prefixes: ['523'] },
+  { label: 'Banques hors zone monétaire', prefixes: ['524'] },
+  { label: 'Banques, dépôt à terme', prefixes: ['525'] },
+  { label: 'Banques, intérêts courus', prefixes: ['526'] },
   { label: 'Chèques postaux', prefixes: ['531'] },
-  { label: 'Autres établissement financiers', prefixes: ['532', '533', '534', '535', '536', '537', '538'] },
-  { label: 'Etablissement financiers intérêts courus', prefixes: ['539'] },
+  { label: 'Trésor', prefixes: ['532'] },
+  { label: 'Sociétés de gestion et d\'intermédiation (S.G.I.)', prefixes: ['533'] },
+  { label: 'Établissements financiers, intérêts courus', prefixes: ['536'] },
+  { label: 'Autres organismes financiers', prefixes: ['538'] },
   { label: 'Instruments de trésorerie', prefixes: ['54'] },
-  { label: 'Caisse', prefixes: ['571'] },
-  { label: 'Caisse électronique mobile', prefixes: ['572'] },
-  { label: 'Régies d\'avances et virements accréditifs', prefixes: ['581', '582'] },
+  { label: 'Instruments de monnaie électronique', prefixes: ['55'] },
+  { label: 'Caisse', prefixes: ['57'] },
+  { label: 'Régies d\'avances, accrédtifs et virements internes', prefixes: ['58'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueDispo[] = [
