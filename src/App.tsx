@@ -144,8 +144,7 @@ function AppContent(): React.JSX.Element {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
-          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
-          <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement...</p>
+          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16, display: 'block' }} />
         </div>
       </div>
     );
@@ -180,8 +179,7 @@ function AppContent(): React.JSX.Element {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
-          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
-          <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement...</p>
+          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16, display: 'block' }} />
         </div>
       </div>
     );

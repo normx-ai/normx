@@ -251,8 +251,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     return (
       <div className="dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ width: 48, height: 48, borderRadius: 12, background: '#D4A843', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px', fontSize: 24, fontWeight: 900, color: '#0F2A42', animation: 'pulse 1.5s infinite' }}>N</div>
-          <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement des modules...</p>
+          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16, display: 'block' }} />
         </div>
       </div>
     );
