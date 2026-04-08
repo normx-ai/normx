@@ -29,11 +29,11 @@ const RUBRIQUES_DEPRECIATION: RubriqueHAO[] = [
 
 // Dettes circulantes HAO
 const RUBRIQUES_DETTES: RubriqueHAO[] = [
-  { label: 'Fournisseurs d\'investissements', prefixes: ['481'] },
-  { label: 'Fournisseurs d\'investissements effets à payer', prefixes: ['482'] },
-  { label: 'Versements restant à effectuer sur titres non libérés', prefixes: ['483'] },
+  { label: 'Fournisseurs d\'investissements', prefixes: ['4811', '4812', '4816', '4817'] },
+  { label: 'Fournisseurs d\'investissements — factures non parvenues', prefixes: ['4818'] },
+  { label: 'Fournisseurs d\'investissements — effets à payer', prefixes: ['482'] },
+  { label: 'Versements restant à effectuer sur titres non libérés', prefixes: ['4813'] },
   { label: 'Autres dettes hors activités ordinaires', prefixes: ['484'] },
-  { label: 'Fournisseurs d\'investissements — factures non parvenues', prefixes: ['486'] },
 ];
 
 function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Props): React.JSX.Element {
