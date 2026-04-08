@@ -27,7 +27,7 @@ const RUBRIQUES_BRUT: RubriqueTitre[] = [
   { label: 'Bons de souscription', prefixes: ['504'] },
   { label: 'Titres négociables hors régions', prefixes: ['505'] },
   { label: 'Intérêts courus', prefixes: ['506'] },
-  { label: 'Autres valeurs assimilés', prefixes: ['507', '508', '509'] },
+  { label: 'Autres titres de placement et créances assimilées', prefixes: ['508'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueTitre[] = [
