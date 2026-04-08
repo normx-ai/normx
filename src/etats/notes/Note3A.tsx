@@ -377,7 +377,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
               const editableCell = (adjField: string, displayVal: number, baseBalance: number) => {
                 if (!editing || !isDetail) return fmtM(displayVal);
                 return (
-                  <input type="number" value={displayVal || ''} onChange={e => {
+                  <input value={displayVal || ''} onChange={e => {
                     const newVal = parseFloat(e.target.value) || 0;
                     setAdj(r.label, adjField, newVal - baseBalance);
                   }}

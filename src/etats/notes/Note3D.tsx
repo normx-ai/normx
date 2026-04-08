@@ -66,16 +66,21 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [hideEmpty, setHideEmpty] = useState(false);
   const [commentaire, setCommentaire] = useState(DEFAULT_COMMENTAIRE);
-  const [cessions, setCessions] = useState<Record<string, number>>({});
+  const [adjustments, setAdjustments] = useState<Record<string, Record<string, number>>>({});
 
   const pageRef = useRef<HTMLDivElement>(null);
+
+  const setAdj = (label: string, field: string, value: number) => {
+    setAdjustments(prev => ({ ...prev, [label]: { ...(prev[label] || {}), [field]: value } }));
+  };
+  const getAdj = (label: string, field: string): number => adjustments[label]?.[field] || 0;
 
   // Initialiser les champs editables depuis les params charges
   useEffect(() => {
     if (!params || Object.keys(params).length === 0) return;
     setCommentaire(params['note3d_commentaire'] || DEFAULT_COMMENTAIRE);
-    if (params['note3d_cessions']) {
-      try { setCessions(JSON.parse(params['note3d_cessions'])); } catch { /* */ }
+    if (params['note3d_adjustments']) {
+      try { setAdjustments(JSON.parse(params['note3d_adjustments'])); } catch { /* */ }
     }
   }, [params]);
 
@@ -104,7 +109,7 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
     const data: Record<string, string> = {
       ...params,
       note3d_commentaire: commentaire,
-      note3d_cessions: JSON.stringify(cessions),
+      note3d_adjustments: JSON.stringify(adjustments),
     };
     await saveParams(data);
   };
@@ -150,16 +155,6 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
     return total;
   })();
 
-  // Saisie manuelle avec pre-remplissage depuis la balance
-  const getVal = (label: string, field: string): number => {
-    return cessions[label + '_' + field] ?? 0;
-  };
-  const hasVal = (label: string, field: string): boolean => {
-    return (label + '_' + field) in cessions;
-  };
-  const setVal = (label: string, field: string, value: number) => {
-    setCessions(prev => ({ ...prev, [label + '_' + field]: value }));
-  };
 
   // Calculer un montant depuis la balance pour des prefixes donnes
   // Pour les comptes 81/82 : utiliser les mouvements (debit/credit) car ces comptes
@@ -216,23 +211,21 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
   const prixCorp = distribuePrix(corpRows, ['822']);
   const prixFin = distribuePrix(finRows, ['823', '824']);
 
+  // Bases balance pour chaque rubrique (avant ajustement)
+  const getBase = (r: Rubrique) => {
+    const brutBal = balanceSum(r.immoPrefixes, 'credit');
+    const amortBal = balanceSum(r.amortPrefixes, 'debit');
+    const prixBal = prixIncorp.get(r.label) || prixCorp.get(r.label) || prixFin.get(r.label) || 0;
+    return { brutBal, amortBal, prixBal };
+  };
+
   const computeRow = (r: Rubrique) => {
-    // Valeur brute : saisie manuelle prioritaire, sinon balance
-    const brutBalance = balanceSum(r.immoPrefixes, 'credit');
-    const a = hasVal(r.label, 'brut') ? getVal(r.label, 'brut') : brutBalance;
-
-    // Amortissements : saisie manuelle prioritaire, sinon balance
-    const amortBalance = balanceSum(r.amortPrefixes, 'debit');
-    const b = hasVal(r.label, 'amort') ? getVal(r.label, 'amort') : amortBalance;
-
-    // VNC = brut - amortissements
+    const base = getBase(r);
+    // Valeur = base balance + ajustement manuel
+    const a = base.brutBal + getAdj(r.label, 'brut_adj');
+    const b = base.amortBal + getAdj(r.label, 'amort_adj');
     const c = a - b;
-
-    // Prix de cession : saisie manuelle prioritaire, sinon distribue
-    const prixDistribue = prixIncorp.get(r.label) || prixCorp.get(r.label) || prixFin.get(r.label) || 0;
-    const d = hasVal(r.label, 'prix') ? getVal(r.label, 'prix') : prixDistribue;
-
-    // Plus/moins-value = prix - VNC
+    const d = base.prixBal + getAdj(r.label, 'prix_adj');
     const e = d - c;
     return { a, b, c, d, e };
   };
@@ -482,31 +475,29 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
                 );
               }
 
-              // Ligne de détail — toutes les colonnes saisies manuellement
+              // Ligne de détail — pre-rempli avec balance, modifiable par ajustement
               const vals = computeRow(r);
+              const base = getBase(r);
               if (hideEmpty && vals.a === 0 && vals.b === 0 && vals.c === 0 && vals.d === 0 && vals.e === 0) return null;
+
+              // Cellule editable : affiche valeur complete, stocke la difference avec la base
+              const editCell = (adjField: string, displayVal: number, baseBal: number) => {
+                if (!editing) return fmtM(displayVal);
+                return (
+                  <input value={displayVal || ''} onChange={e => {
+                    const newVal = parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0;
+                    setAdj(r.label, adjField, newVal - baseBal);
+                  }} placeholder={fmtM(baseBal)} style={inputSt} />
+                );
+              };
+
               return (
                 <tr key={i}>
                   <td style={tdStyle}>{r.label}</td>
-                  <td style={tdRight}>
-                    {editing ? (
-                      <input type="number" value={vals.a || ''} onChange={e => setVal(r.label, 'brut', parseFloat(e.target.value) || 0)}
-                        placeholder="0" style={inputSt} />
-                    ) : fmtM(vals.a)}
-                  </td>
-                  <td style={tdRight}>
-                    {editing ? (
-                      <input type="number" value={vals.b || ''} onChange={e => setVal(r.label, 'amort', parseFloat(e.target.value) || 0)}
-                        placeholder="0" style={inputSt} />
-                    ) : fmtM(vals.b)}
-                  </td>
+                  <td style={tdRight}>{editCell('brut_adj', vals.a, base.brutBal)}</td>
+                  <td style={tdRight}>{editCell('amort_adj', vals.b, base.amortBal)}</td>
                   <td style={tdRight}>{fmtM(vals.c)}</td>
-                  <td style={tdRight}>
-                    {editing ? (
-                      <input type="number" value={vals.d || ''} onChange={e => setVal(r.label, 'prix', parseFloat(e.target.value) || 0)}
-                        placeholder="0" style={inputSt} />
-                    ) : fmtM(vals.d)}
-                  </td>
+                  <td style={tdRight}>{editCell('prix_adj', vals.d, base.prixBal)}</td>
                   <td style={tdRight}>{fmtM(vals.e)}</td>
                 </tr>
               );

@@ -382,7 +382,7 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
                   <td style={tdRight}>{fmtM(vals.b)}</td>
                   <td style={tdRight}>
                     {editing ? (
-                      <input type="number" value={vals.c || ''} onChange={e => {
+                      <input value={vals.c || ''} onChange={e => {
                         const newVal = parseFloat(e.target.value) || 0;
                         setAdj(r.label, 'c_adj', newVal - vals.baseC);
                       }} placeholder="0" style={inputSt} />
