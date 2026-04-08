@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -22,10 +22,10 @@ interface Rubrique {
 }
 
 const RUBRIQUES_FOURNISSEURS: Rubrique[] = [
-  { label: 'Fournisseurs dettes en compte', prefixes: ['401'], crediteur: true },
-  { label: 'Fournisseurs effets a payer', prefixes: ['402'], crediteur: true },
-  { label: 'Fournisseurs dettes et effets a payer groupe', prefixes: ['403', '404'], crediteur: true },
-  { label: 'Fournisseurs factures non parvenues', prefixes: ['408'], crediteur: true },
+  { label: 'Fournisseurs, dettes en compte', prefixes: ['401'], crediteur: true },
+  { label: 'Fournisseurs, effets à payer', prefixes: ['402'], crediteur: true },
+  { label: 'Fournisseurs, acquisitions courantes d\'immobilisations', prefixes: ['404'], crediteur: true },
+  { label: 'Fournisseurs, factures non parvenues', prefixes: ['408'], crediteur: true },
 ];
 
 const RUBRIQUES_DEBITEURS: Rubrique[] = [
@@ -175,6 +175,17 @@ function Note17({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note17P
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 17" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 17
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Comptes fournisseurs (401, 402, 404, 408) : solde créditeur = dettes fournisseurs.</li>
+          <li>Fournisseurs débiteurs (409) : avances et acomptes versés, solde débiteur.</li>
+          <li>Échéances : à renseigner manuellement (1 an, 1-2 ans, plus de 2 ans).</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}
