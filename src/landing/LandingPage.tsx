@@ -202,8 +202,8 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         <section className="hero torn-wrap torn-bottom">
           <div className="hero-inner">
             <div className="hero-text">
-              <div className="hero-badge">&#10024; Comptabilite augmentee par l'IA</div>
-              <h1>Gardez le controle de votre <span>comptabilite OHADA</span></h1>
+              <div className="hero-badge">&#10024; Comptabilité augmentée par l'IA</div>
+              <h1>Gardez le contrôle de votre <span>comptabilité OHADA</span></h1>
               <p>Saisie d'ecritures, grand livre, balance, etats financiers et assistant IA — conforme SYSCOHADA et SYCEBNL pour l'espace OHADA.</p>
               <div className="hero-btns">
                 <button className="btn-primary" onClick={onLogin}>Commencer gratuitement →</button>
@@ -229,7 +229,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
                           <div key={t} style={{ padding: '6px 8px', borderRadius: 5, fontSize: 8, color: 'rgba(255,255,255,.5)', marginBottom: 2 }}>{t}</div>
                         ))}
                         <div style={{ padding: '6px 8px', borderRadius: 5, background: 'rgba(37,99,235,.25)', fontSize: 8, color: '#60a5fa', fontWeight: 700, marginBottom: 2 }}>Grand Livre</div>
-                        {['Balance', 'Etats financiers', 'Plan comptable', 'Assistant IA'].map(t => (
+                        {['Balance', 'États financiers', 'Plan comptable', 'Assistant IA'].map(t => (
                           <div key={t} style={{ padding: '6px 8px', borderRadius: 5, fontSize: 8, color: 'rgba(255,255,255,.5)', marginBottom: 2 }}>{t}</div>
                         ))}
                       </div>
@@ -329,8 +329,8 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
           <div className="section-inner reverse">
             <div>
               <div className="section-label" style={{ color: 'var(--green)' }}>ETATS COMPTABLES</div>
-              <h2>Balance, grand livre et etats de synthese en un clic</h2>
-              <p>Generez instantanement vos etats comptables conformes SYSCOHADA et SYCEBNL avec correspondances automatiques.</p>
+              <h2>Balance, grand livre et états de synthèse en un clic</h2>
+              <p>Générez instantanément vos états comptables conformes SYSCOHADA et SYCEBNL avec correspondances automatiques.</p>
               <ul className="checks">
                 <li><span className="ci">&#10003;</span> Balance generale et balance des tiers</li>
                 <li><span className="ci">&#10003;</span> Grand livre par compte et par periode</li>
@@ -383,7 +383,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
                 <li><span className="ci">&#10003;</span> Recherche de comptes par mot-cle</li>
                 <li><span className="ci">&#10003;</span> Explication des normes OHADA</li>
                 <li><span className="ci">&#10003;</span> Aide a la saisie et au lettrage</li>
-                <li><span className="ci">&#10003;</span> Generation des notes annexes</li>
+                <li><span className="ci">&#10003;</span> Génération des notes annexes</li>
               </ul>
             </div>
             <div>
@@ -457,7 +457,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
               <div className="price">1EUR</div>
               <div className="period">offre beta — acces complet</div>
               <div className="feat"><span className="ci" style={{ color: 'var(--primary)' }}>&#10003;</span> Tout le plan Decouverte</div>
-              <div className="feat"><span className="ci" style={{ color: 'var(--primary)' }}>&#10003;</span> Etats financiers complets</div>
+              <div className="feat"><span className="ci" style={{ color: 'var(--primary)' }}>&#10003;</span> États financiers complets</div>
               <div className="feat"><span className="ci" style={{ color: 'var(--primary)' }}>&#10003;</span> 37 notes annexes OHADA</div>
               <div className="feat"><span className="ci" style={{ color: 'var(--primary)' }}>&#10003;</span> Export PDF professionnel</div>
               <div className="feat"><span className="ci" style={{ color: 'var(--primary)' }}>&#10003;</span> Assistant IA illimite</div>
@@ -470,8 +470,8 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         {/* CTA */}
         <section className="cta-section">
           <div className="cta-box">
-            <h2>Pret a simplifier votre comptabilite ?</h2>
-            <p>Accedez a la comptabilite SYSCOHADA propulsee par l'IA. Conforme, rapide, fiable.</p>
+            <h2>Prêt à simplifier votre comptabilité ?</h2>
+            <p>Accédez à la comptabilité SYSCOHADA propulsée par l'IA. Conforme, rapide, fiable.</p>
             <button className="btn-primary" onClick={onLogin}>Commencer gratuitement →</button>
             <div style={{ marginTop: 16, fontSize: 13, color: 'var(--text3)' }}>Connexion securisee via NORMX AI</div>
           </div>
