@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -34,16 +34,18 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Intérêts courus', prefixes: ['166'], group: 'emprunts' },
   { label: 'Avances assorties de conditions particulières', prefixes: ['167'], group: 'emprunts' },
   { label: 'Autres emprunts et dettes', prefixes: ['168'], group: 'emprunts' },
-  { label: 'Dettes liées à des participations', prefixes: ['171'], group: 'emprunts' },
-  { label: 'Comptes permanents bloqués des établissements et succursales', prefixes: ['172'], group: 'emprunts' },
-  { label: 'Intérêts courus sur emprunts et dettes', prefixes: ['173'], group: 'emprunts' },
-  { label: 'Dettes rattachées à des participations', prefixes: ['174'], group: 'emprunts' },
+  { label: 'Dettes liées à des participations', prefixes: ['181'], group: 'emprunts' },
+  { label: 'Dettes liées à des sociétés en participation', prefixes: ['182'], group: 'emprunts' },
+  { label: 'Intérêts courus sur dettes liées à des participations', prefixes: ['183'], group: 'emprunts' },
+  { label: 'Comptes permanents bloqués des établissements', prefixes: ['184'], group: 'emprunts' },
+  { label: 'Comptes permanents non bloqués des établissements', prefixes: ['185'], group: 'emprunts' },
   { label: 'TOTAL EMPRUNTS ET DETTES FINANCIERES', prefixes: [], bold: true, isTotal: true, group: 'emprunts' },
-  // Location-acquisition
-  { label: 'Crédit bail', prefixes: ['181'], group: 'location' },
-  { label: 'Location-vente', prefixes: ['182'], group: 'location' },
-  { label: 'Intérêts courus', prefixes: ['183'], group: 'location' },
-  { label: 'Autres location-acquisition', prefixes: ['184', '185', '186'], group: 'location' },
+  // Dettes de location-acquisition (17x)
+  { label: 'Crédit-bail immobilier', prefixes: ['172'], group: 'location' },
+  { label: 'Crédit-bail mobilier', prefixes: ['173'], group: 'location' },
+  { label: 'Location-vente', prefixes: ['174'], group: 'location' },
+  { label: 'Intérêts courus sur location-acquisition', prefixes: ['176'], group: 'location' },
+  { label: 'Autres dettes de location-acquisition', prefixes: ['178'], group: 'location' },
   { label: 'TOTAL DETTES DE LOCATION-ACQUISITION', prefixes: [], bold: true, isTotal: true, group: 'location' },
   // Provisions financières pour risques et charges
   { label: 'Provisions pour litiges', prefixes: ['191'], group: 'provisions' },
@@ -218,6 +220,18 @@ function Note16A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 16A" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 16A
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Emprunts et dettes assimilées (161-168) et dettes liées à des participations (181-185) : solde créditeur.</li>
+          <li>Dettes de location-acquisition (172-178) : crédit-bail immobilier, mobilier, location-vente.</li>
+          <li>Provisions pour risques et charges (191-198) : solde créditeur.</li>
+          <li>Échéances : à renseigner manuellement (1 an, 1-2 ans, plus de 2 ans).</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}
