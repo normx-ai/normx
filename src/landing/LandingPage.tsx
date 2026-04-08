@@ -177,7 +177,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
                   <div className="nav-dropdown-grid">
                     <a href="https://normx-ai.com" className="nav-dropdown-item">
                       <div className="dd-icon" style={{ background: '#08080d' }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-                      <div><div className="dd-name">NORMX Finance</div><div className="dd-desc">Comptabilité, états financiers & paie</div></div>
+                      <div><div className="dd-name">NORMX AI</div><div className="dd-desc">Plateforme unifiée OHADA</div></div>
                     </a>
                     <a href="https://tax.normx-ai.com" className="nav-dropdown-item">
                       <div className="dd-icon" style={{ background: 'var(--gold)' }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F2A42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></div>
