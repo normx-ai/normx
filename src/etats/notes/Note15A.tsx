@@ -25,24 +25,25 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
-  // Subventions
-  { label: 'État', prefixes: ['141'], group: 'subventions' },
-  { label: 'Régions', prefixes: ['142'], group: 'subventions' },
-  { label: 'Départements', prefixes: ['143'], group: 'subventions' },
-  { label: 'Communes et collectivités publiques décentralisées', prefixes: ['144'], group: 'subventions' },
-  { label: 'Entités publiques ou mixtes', prefixes: ['145'], group: 'subventions' },
-  { label: 'Entités et organismes privés', prefixes: ['146'], group: 'subventions' },
-  { label: 'Organismes internationaux', prefixes: ['147'], group: 'subventions' },
-  { label: 'Autres', prefixes: ['148', '149'], group: 'subventions' },
+  // Subventions d'investissement (détail sous 1411-1418)
+  { label: 'État', prefixes: ['1411'], group: 'subventions' },
+  { label: 'Régions', prefixes: ['1412'], group: 'subventions' },
+  { label: 'Départements', prefixes: ['1413'], group: 'subventions' },
+  { label: 'Communes et collectivités publiques décentralisées', prefixes: ['1414'], group: 'subventions' },
+  { label: 'Entités publiques ou mixtes', prefixes: ['1415'], group: 'subventions' },
+  { label: 'Entités et organismes privés', prefixes: ['1416'], group: 'subventions' },
+  { label: 'Organismes internationaux', prefixes: ['1417'], group: 'subventions' },
+  { label: 'Autres', prefixes: ['1418', '142', '148'], group: 'subventions' },
   { label: 'TOTAL SUBVENTIONS', prefixes: [], bold: true, isTotal: true, group: 'subventions' },
-  // Provisions réglementées
+  // Provisions réglementées et fonds assimilés
   { label: 'Amortissements dérogatoires', prefixes: ['151'], group: 'provisions' },
-  { label: 'Plus-value de cession à réinvestir', prefixes: ['152'], group: 'provisions' },
-  { label: 'Provisions spéciales de réévaluation', prefixes: ['153'], note: '3E', group: 'provisions' },
-  { label: 'Provisions réglementées relatives aux immobilisations', prefixes: ['154'], group: 'provisions' },
-  { label: 'Provisions réglementés relatives aux stocks', prefixes: ['155'], group: 'provisions' },
-  { label: 'Provisions pour investissement', prefixes: ['156'], group: 'provisions' },
-  { label: 'Autres provisions et fonds réglementées', prefixes: ['157', '158'], group: 'provisions' },
+  { label: 'Plus-values de cession à réinvestir', prefixes: ['152'], group: 'provisions' },
+  { label: 'Fonds réglementés', prefixes: ['153'], group: 'provisions' },
+  { label: 'Provisions spéciales de réévaluation', prefixes: ['154'], note: '3E', group: 'provisions' },
+  { label: 'Provisions réglementées relatives aux immobilisations', prefixes: ['155'], group: 'provisions' },
+  { label: 'Provisions réglementées relatives aux stocks', prefixes: ['156'], group: 'provisions' },
+  { label: 'Provisions pour investissement', prefixes: ['157'], group: 'provisions' },
+  { label: 'Autres provisions et fonds réglementés', prefixes: ['158'], group: 'provisions' },
   { label: 'TOTAL PROVISIONS REGLEMENTEES', prefixes: [], bold: true, isTotal: true, group: 'provisions' },
   // Grand total
   { label: 'TOTAL SUBVENTIONS ET PROVISIONS REGLEMENTEES', prefixes: [], bold: true, isTotal: true },
