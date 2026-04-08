@@ -93,7 +93,11 @@ jobs:
             # --- Connecter nginx au reseau normx ---
             docker network connect normx_normx-net cgi242-nginx 2>/dev/null || true
 
+            # --- Restart nginx pour servir le nouveau build ---
+            cd /opt/cgi242 && docker compose restart nginx 2>/dev/null || true
+
             # --- Verifier ---
+            cd ${{ env.APP_DIR }}
             sleep 15
             curl -sf http://localhost:5002/health || echo "WARN: Health check failed"
 
