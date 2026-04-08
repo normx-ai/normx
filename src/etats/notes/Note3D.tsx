@@ -457,15 +457,13 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
 
               if (r.isTotal) {
                 const detailSum = sumRowVals(detailRows);
-                // Total : comptes 81/82 + cessions courantes 654/754
-                const vncBal = balanceSum(r.vncPrefixes, 'debit');
-                const prixBal = balanceSum(r.prixPrefixes, 'credit');
+                // Total = somme des lignes detail, C = A - B toujours
                 const vals = {
                   a: detailSum.a,
                   b: detailSum.b,
-                  c: vncBal > 0 ? vncBal : detailSum.c,
-                  d: prixBal > 0 ? prixBal : detailSum.d,
-                  e: prixBal > 0 ? prixBal - (vncBal > 0 ? vncBal : detailSum.c) : detailSum.e,
+                  c: detailSum.c,
+                  d: detailSum.d,
+                  e: detailSum.e,
                 };
                 return (
                   <tr key={i} style={{ borderTop: '2px solid #000' }}>
