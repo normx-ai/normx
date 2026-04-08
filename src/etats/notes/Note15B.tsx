@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -21,7 +21,10 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Écart de réévaluation', prefixes: ['106'] },
+  { label: 'Avances bloquées pour augmentation du capital', prefixes: ['1671'] },
+  { label: 'Avances conditionnées par l\'État', prefixes: ['1672'] },
+  { label: 'Avances conditionnées par les autres organismes africains', prefixes: ['1673'] },
+  { label: 'Avances conditionnées par les organismes internationaux', prefixes: ['1674'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Justifier l'inscription de ces dettes dans une rubrique spécifique du passif du bilan « Autres fonds propres » (faible probabilité de remboursement, absence d'échéancier...)\n• Justifier le caractère significatif du montant total de cette rubrique.\n• Commenter toute variation significative.`;
@@ -148,6 +151,17 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 15B" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 15B
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Compte 167 — Avances assorties de conditions particulières : solde créditeur.</li>
+          <li>Comprend : titres participatifs, TSDI (obligations perpétuelles), ORA, avances conditionnées de l'État et organismes internationaux.</li>
+          <li>Ces ressources ont une faible probabilité de remboursement ou sont remboursables en capitaux propres, d'où leur classement entre capitaux propres et dettes.</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}
