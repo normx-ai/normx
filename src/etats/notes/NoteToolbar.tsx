@@ -19,12 +19,13 @@ interface NoteToolbarProps {
   onSave: () => void;
   onPreview: () => void;
   onBack?: () => void;
+  children?: React.ReactNode;
 }
 
 export default function NoteToolbar({
   title, exercices, selectedExercice,
   onSelectExercice, editing, saving, saved,
-  onEdit, onSave, onPreview, onBack,
+  onEdit, onSave, onPreview, onBack, children,
 }: NoteToolbarProps): React.JSX.Element {
   return (
     <div className="etat-toolbar">
@@ -68,6 +69,7 @@ export default function NoteToolbar({
         <button className="etat-action-btn" onClick={onPreview}>
           <LuEye size={16} /> Apercu
         </button>
+        {children}
       </div>
     </div>
   );
