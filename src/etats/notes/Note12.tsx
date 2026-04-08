@@ -117,9 +117,9 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
   // 781 = Transferts de charges d'exploitation
   const solde781N = computeSolde(lignesN, '781', 'crediteur');
   const solde781N1 = computeSolde(lignesN1, '781', 'crediteur');
-  // 791 = Transferts de charges financieres
-  const solde791N = computeSolde(lignesN, '791', 'crediteur');
-  const solde791N1 = computeSolde(lignesN1, '791', 'crediteur');
+  // 787 = Transferts de charges financieres
+  const solde787N = computeSolde(lignesN, '787', 'crediteur');
+  const solde787N1 = computeSolde(lignesN1, '787', 'crediteur');
 
   const fmtSolde = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');
 
@@ -244,7 +244,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
           { label: 'Ecarts de conversion actif (478)', prefixes: ['478'] },
           { label: 'Ecarts de conversion passif (479)', prefixes: ['479'] },
           { label: 'Transferts charges exploitation (781)', prefixes: ['781'] },
-          { label: 'Transferts charges financieres (791)', prefixes: ['791'] },
+          { label: 'Transferts charges financieres (787)', prefixes: ['787'] },
         ]}
         title="Soldes balance — Ecarts de conversion et Transferts"
       />
