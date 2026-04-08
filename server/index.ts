@@ -211,7 +211,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 
 const PORT = parseInt(process.env.PORT || "5002");
 const server = app.listen(PORT, () => {
-  logger.info(`Normx - Serveur demarre sur http://localhost:${PORT}`);
+  logger.info(`NORMX Finance - Serveur demarre sur http://localhost:${PORT}`);
 });
 
 // Graceful shutdown

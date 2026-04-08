@@ -162,7 +162,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         <nav className="lp-nav">
           <div className="nav-inner">
             <button className="nav-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img src="/logo-horizontal.png" alt="NORMX AI" style={{ height: 30, width: 'auto' }} />
+              <img src="/logo-horizontal.png" alt="NORMX Finance" style={{ height: 30, width: 'auto' }} />
             </button>
             <div className="nav-links">
               <a href="#fonctionnalites" className="nav-link">Fonctionnalites</a>
@@ -177,7 +177,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
                   <div className="nav-dropdown-grid">
                     <a href="https://normx-ai.com" className="nav-dropdown-item">
                       <div className="dd-icon" style={{ background: '#08080d' }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-                      <div><div className="dd-name">NORMX AI</div><div className="dd-desc">Plateforme principale</div></div>
+                      <div><div className="dd-name">NORMX Finance</div><div className="dd-desc">Comptabilité, états financiers & paie</div></div>
                     </a>
                     <a href="https://tax.normx-ai.com" className="nav-dropdown-item">
                       <div className="dd-icon" style={{ background: 'var(--gold)' }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F2A42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg></div>
@@ -221,7 +221,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
                       <span style={{ width: 7, height: 7, borderRadius: 4, background: '#ef4444' }} />
                       <span style={{ width: 7, height: 7, borderRadius: 4, background: '#f59e0b' }} />
                       <span style={{ width: 7, height: 7, borderRadius: 4, background: '#22c55e' }} />
-                      <span style={{ flex: 1, textAlign: 'center', fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,.6)' }}>NORMX Compta — Grand Livre</span>
+                      <span style={{ flex: 1, textAlign: 'center', fontSize: 9, fontWeight: 600, color: 'rgba(255,255,255,.6)' }}>NORMX Finance — Grand Livre</span>
                     </div>
                     <div style={{ display: 'flex' }}>
                       <div style={{ width: 110, background: 'var(--dark)', padding: '10px 8px', minHeight: 260 }}>
@@ -473,7 +473,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
             <h2>Prêt à simplifier votre comptabilité ?</h2>
             <p>Accédez à la comptabilité SYSCOHADA propulsée par l'IA. Conforme, rapide, fiable.</p>
             <button className="btn-primary" onClick={onLogin}>Commencer gratuitement →</button>
-            <div style={{ marginTop: 16, fontSize: 13, color: 'var(--text3)' }}>Connexion securisee via NORMX AI</div>
+            <div style={{ marginTop: 16, fontSize: 13, color: 'var(--text3)' }}>Connexion securisee via NORMX Finance</div>
           </div>
         </section>
 
@@ -486,7 +486,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
             </div>
             <div className="footer-col">
               <h4>Produits</h4>
-              <a href="https://app.normx-ai.com">NORMX</a>
+              <a href="https://app.normx-ai.com">NORMX Finance</a>
               <a href="https://tax.normx-ai.com">NORMX Tax</a>
               <a href="https://legal.normx-ai.com">NORMX Legal</a>
             </div>

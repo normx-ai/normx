@@ -60,7 +60,7 @@ function Topbar({
     <header className="topbar">
       <div className="topbar-left">
         <div className="topbar-logo">
-          <img src="/logo-horizontal.png" alt="NORMX AI" className="topbar-logo-img" />
+          <img src="/logo-horizontal.png" alt="NORMX Finance" className="topbar-logo-img" />
           <span className="topbar-logo-accent">{moduleLabel}</span>
           <div className="module-switcher-wrapper" ref={moduleSwitcherRef}>
             <button className="module-switcher-btn" onClick={() => setModuleSwitcherOpen(!moduleSwitcherOpen)}>

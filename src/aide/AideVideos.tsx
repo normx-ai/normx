@@ -16,7 +16,7 @@ const CATEGORIES = [
   { id: 'saisie', label: 'Saisie comptable', icon: LuPenLine },
   { id: 'etats', label: 'États financiers', icon: LuChartBarIncreasing },
   { id: 'fiscalite', label: 'Fiscalité Congo', icon: LuFileText },
-  { id: 'guide', label: 'Guide Normx', icon: LuBookOpen },
+  { id: 'guide', label: 'Guide NORMX Finance', icon: LuBookOpen },
 ];
 
 const VIDEOS: Video[] = [
@@ -458,7 +458,7 @@ function AideVideos(): React.JSX.Element {
           gap: 16,
         }}>
           <div>
-            <div style={{ fontWeight: 700, fontSize: 17 }}>Normx Compta — Chaîne YouTube</div>
+            <div style={{ fontWeight: 700, fontSize: 17 }}>NORMX Finance — Chaîne YouTube</div>
             <div style={{ fontSize: 14, opacity: 0.9, marginTop: 4 }}>
               Abonnez-vous pour ne manquer aucun tutoriel comptabilité SYSCOHADA
             </div>

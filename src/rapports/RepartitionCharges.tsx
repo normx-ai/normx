@@ -304,7 +304,7 @@ function RepartitionCharges({ entiteId, exerciceId, exerciceAnnee, offre, entite
     pdf.setTextColor(150, 150, 150);
     pdf.setFontSize(7);
     pdf.setFont('helvetica', 'normal');
-    pdf.text(`Normx — Imprimé le ${new Date().toLocaleDateString('fr-FR')}`, w / 2, 290, { align: 'center' });
+    pdf.text(`NORMX Finance — Imprimé le ${new Date().toLocaleDateString('fr-FR')}`, w / 2, 290, { align: 'center' });
 
     const blob = pdf.output('blob');
     const url = URL.createObjectURL(blob);

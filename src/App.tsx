@@ -144,7 +144,7 @@ function AppContent(): React.JSX.Element {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
-          <img src="/logo-carre.png" alt="NORMX AI" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
+          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
           <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement...</p>
         </div>
       </div>
@@ -159,10 +159,10 @@ function AppContent(): React.JSX.Element {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center', maxWidth: 440, padding: 32 }}>
-          <img src="/logo-carre.png" alt="NORMX AI" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
+          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
           <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0F2A42', marginBottom: 12 }}>Abonnement requis</h2>
           <p style={{ color: '#6b7280', fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>
-            Votre compte n'a pas acces a NORMX Compta. Contactez-nous pour activer votre abonnement.
+            Votre compte n'a pas acces a NORMX Finance. Contactez-nous pour activer votre abonnement.
           </p>
           <a href="mailto:info-contact@normx-ai.com" style={{ display: 'inline-block', padding: '12px 24px', background: '#D4A843', color: '#0F2A42', fontWeight: 700, borderRadius: 8, textDecoration: 'none', marginBottom: 12 }}>
             Contacter NORMX AI
@@ -180,7 +180,7 @@ function AppContent(): React.JSX.Element {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
-          <img src="/logo-carre.png" alt="NORMX AI" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
+          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 48, height: 48, borderRadius: 12, margin: '0 auto 16px', display: 'block' }} />
           <p style={{ color: '#6b7280', fontSize: 14 }}>Chargement...</p>
         </div>
       </div>
