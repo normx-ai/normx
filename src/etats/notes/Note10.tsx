@@ -26,7 +26,7 @@ const RUBRIQUES_BRUT: RubriqueValeur[] = [
   { label: 'Chèques à encaisser', prefixes: ['513'] },
   { label: 'Chèques à l\'encaissement', prefixes: ['514'] },
   { label: 'Cartes de crédit à encaisser', prefixes: ['515'] },
-  { label: 'Autres valeurs à encaisser', prefixes: ['516', '517', '518', '519'] },
+  { label: 'Autres valeurs à l\'encaissement', prefixes: ['518'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueValeur[] = [
