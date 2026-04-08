@@ -490,20 +490,20 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
                   <td style={tdStyle}>{r.label}</td>
                   <td style={tdRight}>
                     {editing ? (
-                      <input type="number" value={getVal(r.label, 'brut') || ''} onChange={e => setVal(r.label, 'brut', parseFloat(e.target.value) || 0)}
+                      <input type="number" value={vals.a || ''} onChange={e => setVal(r.label, 'brut', parseFloat(e.target.value) || 0)}
                         placeholder="0" style={inputSt} />
                     ) : fmtM(vals.a)}
                   </td>
                   <td style={tdRight}>
                     {editing ? (
-                      <input type="number" value={getVal(r.label, 'amort') || ''} onChange={e => setVal(r.label, 'amort', parseFloat(e.target.value) || 0)}
+                      <input type="number" value={vals.b || ''} onChange={e => setVal(r.label, 'amort', parseFloat(e.target.value) || 0)}
                         placeholder="0" style={inputSt} />
                     ) : fmtM(vals.b)}
                   </td>
                   <td style={tdRight}>{fmtM(vals.c)}</td>
                   <td style={tdRight}>
                     {editing ? (
-                      <input type="number" value={getVal(r.label, 'prix') || ''} onChange={e => setVal(r.label, 'prix', parseFloat(e.target.value) || 0)}
+                      <input type="number" value={vals.d || ''} onChange={e => setVal(r.label, 'prix', parseFloat(e.target.value) || 0)}
                         placeholder="0" style={inputSt} />
                     ) : fmtM(vals.d)}
                   </td>
