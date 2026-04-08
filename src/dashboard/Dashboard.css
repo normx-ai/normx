@@ -8,7 +8,7 @@
 }
 .topbar-left { display: flex; align-items: center; gap: 20px; }
 .topbar-logo { display: flex; align-items: center; gap: 8px; }
-.topbar-logo-img { height: 32px; width: auto; filter: brightness(0) invert(1); }
+.topbar-logo-img { height: 32px; width: auto; }
 .topbar-logo-accent { color: #e8e6e1; font-weight: 400; font-size: 16px; font-family: 'Inter', sans-serif; }
 
 /* MODULE SWITCHER (style Sage) */
