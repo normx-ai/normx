@@ -236,8 +236,13 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   // Reset module if not available after client switch
   useEffect(() => {
     if (activeModule && modules.length > 0 && !modules.includes(activeModule)) {
+      // compta donne acces aux etats, mais seulement si le tenant a explicitement compta
       if (activeModule === 'etats' && modules.includes('compta')) return;
-      setActiveModule(null);
+      if (activeModule === 'compta' && modules.includes('etats')) {
+        setActiveModule('etats');
+        return;
+      }
+      setActiveModule(modules[0]);
     }
   }, [modules, activeModule]);
 
