@@ -273,8 +273,12 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
 
       <BalanceSourcePanel
         lignes={lignesN}
-        groups={DEFAULT_POSTES.map(p => ({ label: p.label, prefixes: p.prefixes }))}
-        title="Soldes balance — Reevaluations"
+        groups={[
+          { label: 'Écarts de réévaluation (106)', prefixes: ['106'] },
+          { label: 'Provisions spéciales de réévaluation (154)', prefixes: ['154'] },
+          ...DEFAULT_POSTES.map(p => ({ label: p.label + ' (coût historique)', prefixes: p.prefixes })),
+        ]}
+        title="Soldes balance — Réévaluations"
       />
 
       <div ref={pageRef} style={{
