@@ -27,6 +27,7 @@ const RUBRIQUES_BRUT: RubriqueCreance[] = [
   { label: 'Organismes internationaux', prefixes: ['45'] },
   { label: 'Associés et groupe', prefixes: ['46'] },
   { label: 'Débiteurs divers', prefixes: ['471', '472', '473', '474'] },
+  { label: 'Compte transitoire, ajustement spécial', prefixes: ['475'] },
   { label: 'Charges constatées d\'avance', prefixes: ['476'] },
 ];
 
@@ -220,9 +221,9 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
       )}
 
       <BalanceSourcePanel
-        lignes={lignesN}
+        lignes={lignesN.filter(l => parseFloat(String(l.solde_debiteur)) > 0 || RUBRIQUES_DEPRECIATION.some(r => r.prefixes.some(p => (l.numero_compte || '').trim().startsWith(p))))}
         groups={[...RUBRIQUES_BRUT, ...RUBRIQUES_DEPRECIATION].map(r => ({ label: r.label, prefixes: r.prefixes }))}
-        title="Soldes balance — Autres creances"
+        title="Soldes balance — Autres creances (soldes debiteurs uniquement)"
       />
 
       <div ref={pageRef} style={{
