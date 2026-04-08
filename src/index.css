@@ -3,6 +3,8 @@
   --couleur-primaire: #D4A843;
   --couleur-primaire-hover: #c49a38;
   --couleur-primaire-light: rgba(212, 168, 67, 0.08);
+  --couleur-primaire-shadow: rgba(212, 168, 67, 0.3);
+  --couleur-primaire-shadow-hover: rgba(212, 168, 67, 0.4);
 
   /* Layout */
   --couleur-sidebar: #0F2A42;
