@@ -27,7 +27,7 @@ const RUBRIQUES_STOCKS: RubriqueStock[] = [
   { label: 'Produits en cours', prefixes: ['34'] },
   { label: 'Services en cours', prefixes: ['35'] },
   { label: 'Produits finis', prefixes: ['36'] },
-  { label: 'Produits intermédiaires', prefixes: ['37'] },
+  { label: 'Produits intermédiaires et résiduels', prefixes: ['37'] },
   { label: 'Stocks en cours de route, en consignation ou en dépôt', prefixes: ['38'] },
 ];
 
