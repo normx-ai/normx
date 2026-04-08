@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -179,6 +179,17 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 18" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 18
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Dettes sociales (421-438) : solde créditeur = dettes envers le personnel et organismes sociaux.</li>
+          <li>Dettes fiscales (441-449) : solde créditeur = dettes envers l'État (impôts, TVA, retenues à la source).</li>
+          <li>Échéances : à renseigner manuellement (1 an, 1-2 ans, plus de 2 ans).</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}
