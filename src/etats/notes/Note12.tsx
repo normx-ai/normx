@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -237,6 +237,19 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 12" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 12
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Saisie manuelle :</strong> Les écarts de conversion et les transferts de charges sont à renseigner manuellement.</li>
+          <li><strong>Écarts de conversion — Actif (478) :</strong> Pertes latentes de change sur créances et dettes en devises (diminution créances / augmentation dettes).</li>
+          <li><strong>Écarts de conversion — Passif (479) :</strong> Gains latents de change sur créances et dettes en devises (augmentation créances / diminution dettes).</li>
+          <li><strong>Transferts de charges d'exploitation (781) :</strong> Charges d'exploitation transférées à l'actif ou à un autre exercice.</li>
+          <li><strong>Transferts de charges financières (787) :</strong> Charges financières transférées à l'actif ou à un autre exercice.</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}

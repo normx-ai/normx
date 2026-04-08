@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -188,6 +188,16 @@ function Note10({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note10P
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 10" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 10
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Comptes 511-518 : effets, chèques et autres valeurs à encaisser.</li>
+          <li>Dépréciations (591) : solde créditeur, vient en déduction.</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}

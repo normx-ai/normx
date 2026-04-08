@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -219,6 +219,17 @@ function Note8({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8Pro
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 8" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 8
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Comptes 42 à 47 : seul le solde débiteur est repris (créances).</li>
+          <li>Les soldes créditeurs de ces mêmes comptes sont des dettes (Notes 17-19).</li>
+          <li>Dépréciations (492-497) : solde créditeur, vient en déduction.</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN.filter(l => parseFloat(String(l.solde_debiteur)) > 0 || RUBRIQUES_DEPRECIATION.some(r => r.prefixes.some(p => (l.numero_compte || '').trim().startsWith(p))))}
