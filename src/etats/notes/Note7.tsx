@@ -23,14 +23,13 @@ interface RubriqueClient {
 
 // Clients brut (comptes débiteurs classe 41)
 const RUBRIQUES_CLIENTS_BRUT: RubriqueClient[] = [
-  { label: 'Clients (hors réserves de propriété Groupe)', prefixes: ['411'] },
-  { label: 'Clients effets à recevoir (hors réserves de propriété groupe)', prefixes: ['412'] },
-  { label: 'Clients et effets à recevoir avec réserves de propriété', prefixes: ['413'] },
-  { label: 'Clients et effets à recevoir Groupe', prefixes: ['414'] },
-  { label: 'Créances sur cession d\'immobilisations', prefixes: ['415'] },
-  { label: 'Créances litigieuses ou douteuses', prefixes: ['416'] },
-  { label: 'Clients effets escomptés et non échus', prefixes: ['417'] },
-  { label: 'Clients produits à recevoir', prefixes: ['418'] },
+  { label: 'Clients', prefixes: ['411'] },
+  { label: 'Clients, effets à recevoir en portefeuille', prefixes: ['412'] },
+  { label: 'Clients, chèques, effets et autres valeurs impayés', prefixes: ['413'] },
+  { label: 'Créances sur cessions courantes d\'immobilisations', prefixes: ['414'] },
+  { label: 'Clients, effets escomptés non échus', prefixes: ['415'] },
+  { label: 'Créances clients litigieuses ou douteuses', prefixes: ['416'] },
+  { label: 'Clients, produits à recevoir', prefixes: ['418'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueClient[] = [
