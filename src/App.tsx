@@ -67,15 +67,19 @@ function AppContent(): React.JSX.Element {
         // Charger les entités depuis l'API
         try {
           // Ne PAS envoyer X-Client-Slug ici : on veut la liste complete du cabinet
+          const savedSlug = sessionStorage.getItem('normx_client_slug');
           sessionStorage.removeItem('normx_client_slug');
           const entitesRes = await fetch('/api/entites', { credentials: 'include' });
           if (entitesRes.ok) {
             const entitesList: Entite[] = await entitesRes.json();
             setEntites(entitesList);
             if (entitesList.length > 0) {
-              setCurrentEntite(entitesList[0]);
-              if (entitesList[0].slug) {
-                sessionStorage.setItem('normx_client_slug', entitesList[0].slug);
+              // Restaurer le client selectionne avant l'actualisation
+              const restored = savedSlug ? entitesList.find(e => e.slug === savedSlug) : null;
+              const selected = restored || entitesList[0];
+              setCurrentEntite(selected);
+              if (selected.slug) {
+                sessionStorage.setItem('normx_client_slug', selected.slug);
               }
             }
           } else {
