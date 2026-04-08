@@ -33,6 +33,7 @@ const RUBRIQUES_DETTES: RubriqueHAO[] = [
   { label: 'Fournisseurs d\'investissements effets à payer', prefixes: ['482'] },
   { label: 'Versements restant à effectuer sur titres non libérés', prefixes: ['483'] },
   { label: 'Autres dettes hors activités ordinaires', prefixes: ['484'] },
+  { label: 'Fournisseurs d\'investissements — factures non parvenues', prefixes: ['486'] },
 ];
 
 function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Props): React.JSX.Element {
