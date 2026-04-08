@@ -88,13 +88,13 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
     load();
   }, [entiteId, selectedExercice, balanceSource]);
 
-  // Montant coûts historiques = solde initial débiteur (valeur à l'ouverture)
+  // Montant coûts historiques = solde débiteur (valeur brute des immobilisations)
   const getMontantBalance = (prefixes: string[]): number => {
     let total = 0;
     for (const l of lignesN) {
       const num = (l.numero_compte || '').trim();
       if (!prefixes.some(p => num.startsWith(p))) continue;
-      total += parseFloat(String(l.si_debit)) || 0;
+      total += parseFloat(String(l.solde_debiteur)) || 0;
     }
     return total;
   };
