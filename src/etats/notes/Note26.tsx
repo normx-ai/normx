@@ -133,10 +133,9 @@ function Note26({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note26P
         exercices={exercices} selectedExercice={selectedExercice} onSelectExercice={setSelectedExercice}
         editing={editing} saving={saving} saved={saved}
         onEdit={() => setEditing(true)} onSave={handleSave} onPreview={pdf.openPreview} onBack={onBack}
-      />
-      <div className="etat-toolbar-actions" style={{ justifyContent: 'flex-end', padding: '0 16px' }}>
+      >
         <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
-      </div>
+      </NoteToolbar>
 
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 26" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
