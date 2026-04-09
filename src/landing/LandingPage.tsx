@@ -14,7 +14,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
 
         /* NAV */
         .lp-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-        .lp .nav-inner{max-width:1200px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:64px}
+        .lp .nav-inner{max-width:1600px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:64px}
         .lp .nav-logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;color:var(--dark);cursor:pointer;background:none;border:none}
         .lp .nav-icon{width:34px;height:34px;border-radius:10px;background:var(--primary);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:var(--dark)}
         .lp .nav-links{display:flex;align-items:center;gap:6px}
@@ -45,7 +45,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
 
         /* HERO */
         .lp .hero{padding:120px 16px 80px;background:var(--bg2);position:relative}
-        .lp .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+        .lp .hero-inner{max-width:1600px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
         .lp .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary-bg);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:600;color:var(--primary);margin-bottom:20px}
         .lp .hero h1{font-size:clamp(30px,4vw,48px);font-weight:700;color:var(--dark);line-height:1.15;margin-bottom:16px;letter-spacing:-.5px}
         .lp .hero h1 span{color:var(--primary)}
@@ -63,7 +63,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         /* SECTIONS */
         .lp .section{padding:80px 16px;position:relative}
         .lp .section.alt{background:var(--bg2)}
-        .lp .section-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+        .lp .section-inner{max-width:1600px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
         .lp .section-inner.reverse{direction:rtl}
         .lp .section-inner.reverse>*{direction:ltr}
         .lp .section-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
@@ -79,7 +79,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .how-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--primary);margin-bottom:12px}
         .lp .how-head h2{font-size:clamp(24px,3vw,36px);font-weight:700;color:var(--dark);margin-bottom:12px;line-height:1.2}
         .lp .how-head p{font-size:16px;color:var(--text2);line-height:1.7}
-        .lp .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto}
+        .lp .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1600px;margin:0 auto}
         .lp .how-card{padding:28px;border-radius:16px;border:1px solid var(--border);background:var(--bg2);text-align:center;transition:transform .3s ease,box-shadow .3s ease}
         .lp .how-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.08)}
         .lp .how-icon{width:56px;height:56px;border-radius:28px;background:var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative}
@@ -94,7 +94,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .who-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#2563eb;margin-bottom:12px}
         .lp .who-head h2{font-size:clamp(24px,3vw,36px);font-weight:700;color:var(--dark);margin-bottom:12px;line-height:1.2}
         .lp .who-head p{font-size:16px;color:var(--text2);line-height:1.7}
-        .lp .who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto}
+        .lp .who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1600px;margin:0 auto}
         .lp .who-card{padding:24px;border-radius:16px;background:#fff;border:1px solid var(--border);transition:all .3s ease}
         .lp .who-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.06)}
         .lp .who-iconbox{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
@@ -137,7 +137,7 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
 
         /* FOOTER */
         .lp footer{background:#0F2A42;border-top:1px solid rgba(255,255,255,0.08);padding:48px 16px 0}
-        .lp .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px}
+        .lp .footer-inner{max-width:1600px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px}
         .lp .footer-brand h3{font-size:19px;font-weight:700;color:#e8e6e1;margin-bottom:8px}
         .lp .footer-brand h3 span{color:var(--primary)}
         .lp .footer-brand p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.6}
