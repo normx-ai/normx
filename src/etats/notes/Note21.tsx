@@ -25,17 +25,23 @@ interface Rubrique {
 
 const RUBRIQUES: Rubrique[] = [
   // Ventes marchandises
-  { label: 'Ventes de marchandises', prefixes: ['701'], group: 'marchandises' },
+  { label: 'Ventes dans la Région', prefixes: ['7011'], group: 'marchandises' },
+  { label: 'Ventes hors Région', prefixes: ['7012'], group: 'marchandises' },
+  { label: 'Ventes Groupe', prefixes: ['7013', '7014'], group: 'marchandises' },
   { label: 'TOTAL : VENTES MARCHANDISES', prefixes: [], bold: true, isTotal: true, group: 'marchandises' },
   // Produits fabriqués
-  { label: 'Ventes de produits fabriqués', prefixes: ['702'], group: 'produits_fabriques' },
+  { label: 'Ventes dans la Région', prefixes: ['7021', '7031', '7041'], group: 'produits_fabriques' },
+  { label: 'Ventes hors Région', prefixes: ['7022', '7032', '7042'], group: 'produits_fabriques' },
+  { label: 'Ventes Groupe', prefixes: ['7023', '7024', '7033', '7034', '7043', '7044'], group: 'produits_fabriques' },
   { label: 'TOTAL : VENTES DE PRODUITS FABRIQUES', prefixes: [], bold: true, isTotal: true, group: 'produits_fabriques' },
   // Travaux et services
-  { label: 'Travaux, services et produits annexes vendus', prefixes: ['705'], group: 'travaux_services' },
-  { label: 'TOTAL : VENTES DE TRAVAUX ET SERVICES VENDUS', prefixes: [], bold: true, isTotal: true, group: 'travaux_services' },
+  { label: 'Ventes dans la Région', prefixes: ['7051', '7061'], group: 'travaux_services' },
+  { label: 'Ventes hors Région', prefixes: ['7052', '7062'], group: 'travaux_services' },
+  { label: 'Ventes Groupe', prefixes: ['7053', '7054', '7063', '7064'], group: 'travaux_services' },
+  { label: 'TOTAL : VENTES DE TRAVAUX ET SERVICES', prefixes: [], bold: true, isTotal: true, group: 'travaux_services' },
   // Produits accessoires + Total CA
-  { label: 'Produits accessoires', prefixes: ['706', '707'] },
-  { label: 'TOTAL : CHIFFRES D\'AFFAIRES', prefixes: [], bold: true, isTotal: true, group: 'ca' },
+  { label: 'Produits accessoires', prefixes: ['707'] },
+  { label: 'TOTAL : CHIFFRE D\'AFFAIRES', prefixes: [], bold: true, isTotal: true, group: 'ca' },
   // Autres produits
   { label: 'Production immobilisée', prefixes: ['72'] },
   { label: 'Subventions d\'exploitation', prefixes: ['71'] },

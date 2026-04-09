@@ -15,20 +15,19 @@ interface Note30Props extends EtatBaseProps { onGoToParametres?: () => void; }
 interface Rubrique { label: string; prefixes: string[]; group: 'charges' | 'produits'; debit?: boolean; }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Charges HAO constatées (1) à détailler', prefixes: ['811'], group: 'charges', debit: true },
-  { label: 'Pertes sur créances HAO', prefixes: ['812'], group: 'charges', debit: true },
-  { label: 'Dons et libéralités accordés', prefixes: ['813'], group: 'charges', debit: true },
-  { label: 'Abandons de créances consentis', prefixes: ['814'], group: 'charges', debit: true },
-  { label: 'Charges provisionnées HAO', prefixes: ['816'], group: 'charges', debit: true },
+  { label: 'Charges HAO constatées (1) à détailler', prefixes: ['831'], group: 'charges', debit: true },
+  { label: 'Pertes sur créances HAO', prefixes: ['832'], group: 'charges', debit: true },
+  { label: 'Dons et libéralités accordés', prefixes: ['833'], group: 'charges', debit: true },
+  { label: 'Abandons de créances consentis', prefixes: ['834'], group: 'charges', debit: true },
+  { label: 'Charges provisionnées HAO', prefixes: ['835'], group: 'charges', debit: true },
   { label: 'Dotations hors activités ordinaires', prefixes: ['85'], group: 'charges', debit: true },
   { label: 'Participation des travailleurs', prefixes: ['87'], group: 'charges', debit: true },
   { label: 'Subventions d\'équilibre', prefixes: ['88'], group: 'charges', debit: true },
-  { label: 'Produits HAO constatés (1) à détailler', prefixes: ['821'], group: 'produits' },
-  { label: 'Dons et libéralités obtenus', prefixes: ['822'], group: 'produits' },
-  { label: 'Abandons de créances obtenus', prefixes: ['823'], group: 'produits' },
+  { label: 'Produits HAO constatés (1) à détailler', prefixes: ['841'], group: 'produits' },
+  { label: 'Dons et libéralités obtenus', prefixes: ['842'], group: 'produits' },
+  { label: 'Abandons de créances obtenus', prefixes: ['843'], group: 'produits' },
   { label: 'Transferts de charges HAO', prefixes: ['848'], group: 'produits' },
   { label: 'Reprises des charges pour dépréciations et provisions à court terme HAO', prefixes: ['86'], group: 'produits' },
-  { label: 'Reprises hors activités ordinaires', prefixes: ['84'], group: 'produits' },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;

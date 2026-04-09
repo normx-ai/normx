@@ -17,10 +17,10 @@ interface Rubrique { label: string; prefixes: string[]; }
 
 const RUBRIQUES: Rubrique[] = [
   { label: 'Transports sur ventes', prefixes: ['611'] },
-  { label: 'Transports pour le compte de tiers', prefixes: ['612'] },
-  { label: 'Transport du personnel', prefixes: ['613'] },
-  { label: 'Transports de plis', prefixes: ['614'] },
-  { label: 'Autres transports', prefixes: ['615', '616', '617', '618'] },
+  { label: 'Transports pour le compte de tiers', prefixes: ['613'] },
+  { label: 'Transport du personnel', prefixes: ['614'] },
+  { label: 'Transports de plis', prefixes: ['616'] },
+  { label: 'Autres transports', prefixes: ['615', '617', '618'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;

@@ -22,15 +22,32 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Achats de marchandises', prefixes: ['601'], group: 'marchandises' },
-  { label: 'Achats de matières premières et fournitures liées', prefixes: ['602'], group: 'matieres' },
-  { label: 'Variations de stocks', prefixes: ['603'], group: 'autres' },
-  { label: 'Achats stockés de matières et fournitures consommables', prefixes: ['604'], group: 'autres' },
-  { label: 'Achats d\'eau, électricité et autres énergies', prefixes: ['605'], group: 'autres' },
-  { label: 'Achats de petit matériel et fournitures', prefixes: ['606'], group: 'autres' },
-  { label: 'Achats de marchandises et matières en cours de route', prefixes: ['607'], group: 'autres' },
-  { label: 'Achats d\'études et prestations de services', prefixes: ['608'], group: 'autres' },
+  // Marchandises
+  { label: 'Achats dans la région', prefixes: ['6011'], group: 'marchandises' },
+  { label: 'Achats hors région', prefixes: ['6012'], group: 'marchandises' },
+  { label: 'Achats groupe', prefixes: ['6013', '6014'], group: 'marchandises' },
+  { label: 'TOTAL : ACHATS DE MARCHANDISES', prefixes: [], bold: true, isTotal: true, group: 'marchandises' },
+  // Matières premières
+  { label: 'Achats dans la région', prefixes: ['6021'], group: 'matieres' },
+  { label: 'Achats hors région', prefixes: ['6022'], group: 'matieres' },
+  { label: 'Achats groupe', prefixes: ['6023', '6024'], group: 'matieres' },
+  { label: 'TOTAL : ACHATS MATIERES PREMIERES ET FOURNITURES LIEES', prefixes: [], bold: true, isTotal: true, group: 'matieres' },
+  // Autres achats détaillés
+  { label: 'Matières consommables', prefixes: ['6041'], group: 'autres' },
+  { label: 'Matières combustibles', prefixes: ['6042'], group: 'autres' },
+  { label: 'Produits d\'entretien', prefixes: ['6043'], group: 'autres' },
+  { label: 'Fournitures d\'atelier, d\'usine et de magasin', prefixes: ['6044'], group: 'autres' },
+  { label: 'Eau', prefixes: ['6051'], group: 'autres' },
+  { label: 'Electricité', prefixes: ['6052'], group: 'autres' },
+  { label: 'Autres énergies', prefixes: ['6053'], group: 'autres' },
+  { label: 'Fournitures d\'entretien', prefixes: ['6054'], group: 'autres' },
+  { label: 'Fourniture de bureau', prefixes: ['6055'], group: 'autres' },
+  { label: 'Petit matériel et outillages', prefixes: ['6056'], group: 'autres' },
+  { label: 'Achats études, prestations de services, de travaux matériels et équipements', prefixes: ['608'], group: 'autres' },
+  { label: 'Achats d\'emballages', prefixes: ['6081'], group: 'autres' },
+  { label: 'Frais sur achats', prefixes: ['6082'], group: 'autres' },
   { label: 'Rabais, remises et ristournes obtenus', prefixes: ['609'], group: 'autres' },
+  { label: 'TOTAL : AUTRES ACHATS', prefixes: [], bold: true, isTotal: true, group: 'autres' },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;

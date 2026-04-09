@@ -16,10 +16,10 @@ interface Rubrique { label: string; prefixes: string[]; }
 
 const RUBRIQUES: Rubrique[] = [
   { label: 'Impots et taxes directs', prefixes: ['641'] },
-  { label: 'Impots et taxes indirects', prefixes: ['642'] },
-  { label: 'Droits d\'enregistrement', prefixes: ['643'] },
-  { label: 'Penalites et amendes fiscales', prefixes: ['644', '645'] },
-  { label: 'Autres impots et taxes', prefixes: ['646', '647', '648'] },
+  { label: 'Impots et taxes indirects', prefixes: ['645'] },
+  { label: 'Droits d\'enregistrement', prefixes: ['646'] },
+  { label: 'Penalites et amendes fiscales', prefixes: ['647'] },
+  { label: 'Autres impots et taxes', prefixes: ['648'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Detailler les penalites et amendes et indiquer la cause.`;
