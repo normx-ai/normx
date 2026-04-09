@@ -73,6 +73,47 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
         .lp .checks li{display:flex;align-items:start;gap:10px;padding:6px 0;font-size:15px}
         .lp .checks li .ci{color:var(--green);font-size:18px;margin-top:2px;flex-shrink:0}
 
+        /* HOW IT WORKS */
+        .lp .how-section{padding:80px 16px;background:#fff;text-align:center}
+        .lp .how-head{max-width:700px;margin:0 auto 48px}
+        .lp .how-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--primary);margin-bottom:12px}
+        .lp .how-head h2{font-size:clamp(24px,3vw,36px);font-weight:700;color:var(--dark);margin-bottom:12px;line-height:1.2}
+        .lp .how-head p{font-size:16px;color:var(--text2);line-height:1.7}
+        .lp .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto}
+        .lp .how-card{padding:28px;border-radius:16px;border:1px solid var(--border);background:var(--bg2);text-align:center;transition:transform .3s ease,box-shadow .3s ease}
+        .lp .how-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.08)}
+        .lp .how-icon{width:56px;height:56px;border-radius:28px;background:var(--primary);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative}
+        .lp .how-num{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:12px;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--primary)}
+        .lp .how-card h3{font-size:18px;font-weight:700;color:var(--dark);margin-bottom:8px}
+        .lp .how-card p{font-size:14px;color:var(--text2);line-height:1.6}
+        @media(max-width:900px){.lp .how-grid{grid-template-columns:1fr}}
+
+        /* POUR QUI */
+        .lp .who-section{padding:80px 16px;background:var(--bg2)}
+        .lp .who-head{max-width:700px;margin:0 auto 48px;text-align:center}
+        .lp .who-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#2563eb;margin-bottom:12px}
+        .lp .who-head h2{font-size:clamp(24px,3vw,36px);font-weight:700;color:var(--dark);margin-bottom:12px;line-height:1.2}
+        .lp .who-head p{font-size:16px;color:var(--text2);line-height:1.7}
+        .lp .who-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto}
+        .lp .who-card{padding:24px;border-radius:16px;background:#fff;border:1px solid var(--border);transition:all .3s ease}
+        .lp .who-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,.06)}
+        .lp .who-iconbox{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+        .lp .who-card h3{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px}
+        .lp .who-card p{font-size:13px;color:var(--text2);line-height:1.6}
+        @media(max-width:900px){.lp .who-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:600px){.lp .who-grid{grid-template-columns:1fr}}
+
+        /* FAQ */
+        .lp .faq-section{padding:80px 16px;background:#fff}
+        .lp .faq-head{max-width:700px;margin:0 auto 48px;text-align:center}
+        .lp .faq-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+        .lp .faq-head h2{font-size:clamp(24px,3vw,36px);font-weight:700;color:var(--dark);margin-bottom:12px;line-height:1.2}
+        .lp .faq-list{max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+        .lp .faq-item{padding:24px;border-radius:12px;background:var(--bg2);border:1px solid var(--border)}
+        .lp .faq-q{display:flex;align-items:flex-start;gap:12px;font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px}
+        .lp .faq-q .qi{color:var(--primary);font-size:20px;flex-shrink:0}
+        .lp .faq-a{font-size:14px;color:var(--text2);line-height:1.6;margin-left:32px}
+
         /* PRICING */
         .lp .pricing{padding:60px 16px;text-align:center}
         .lp .pricing h2{font-size:clamp(26px,3vw,40px);font-weight:700;color:var(--dark);margin-bottom:8px}
@@ -432,6 +473,114 @@ export default function LandingPage({ onLogin }: LandingPageProps) {
                   <div style={{ width: 60, height: 4, borderRadius: 2, background: '#555', margin: '6px auto 0' }} />
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* HOW IT WORKS */}
+        <section className="how-section">
+          <div className="how-head">
+            <div className="how-label">Comment ça marche</div>
+            <h2>Votre comptabilité SYSCOHADA en 3 étapes</h2>
+            <p>De la saisie à l'état financier, tout est automatisé. Plus d'Excel, plus de doubles saisies.</p>
+          </div>
+          <div className="how-grid">
+            <div className="how-card">
+              <div className="how-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F2A42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span className="how-num">1</span>
+              </div>
+              <h3>Saisissez vos écritures</h3>
+              <p>Multi-journaux (OD, Achats, Ventes, Banque, Caisse), plan SYSCOHADA 1 409 comptes, lettrage automatique.</p>
+            </div>
+            <div className="how-card">
+              <div className="how-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F2A42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                <span className="how-num">2</span>
+              </div>
+              <h3>Générez vos états</h3>
+              <p>Balance, grand livre, bilan, compte de résultat, TFT, 37 notes annexes OHADA. Tout en un clic.</p>
+            </div>
+            <div className="how-card">
+              <div className="how-icon">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F2A42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span className="how-num">3</span>
+              </div>
+              <h3>Exportez et partagez</h3>
+              <p>Export PDF professionnel des états financiers, conformes SYSCOHADA/SYCEBNL. Prêts pour vos CAC.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* POUR QUI */}
+        <section className="who-section">
+          <div className="who-head">
+            <div className="who-label">Pour qui</div>
+            <h2>Conçu pour tous les acteurs de la comptabilité OHADA</h2>
+            <p>Experts-comptables, PME, associations, étudiants — chacun y trouve son intérêt.</p>
+          </div>
+          <div className="who-grid">
+            <div className="who-card">
+              <div className="who-iconbox" style={{ background: 'rgba(212,168,67,.15)' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4A843" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <h3>Experts-comptables</h3>
+              <p>Gérez tous vos clients en multi-dossiers. Gagnez du temps sur les états de synthèse.</p>
+            </div>
+            <div className="who-card">
+              <div className="who-iconbox" style={{ background: 'rgba(37,99,235,.15)' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <h3>PME & dirigeants</h3>
+              <p>Pilotez votre activité sans dépendre d'un comptable extérieur. Visualisez votre situation en temps réel.</p>
+            </div>
+            <div className="who-card">
+              <div className="who-iconbox" style={{ background: 'rgba(124,58,237,.15)' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+              </div>
+              <h3>Associations & SYCEBNL</h3>
+              <p>Supporte le référentiel SYCEBNL pour les entités à but non lucratif. États financiers adaptés.</p>
+            </div>
+            <div className="who-card">
+              <div className="who-iconbox" style={{ background: 'rgba(217,119,6,.15)' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <h3>Étudiants & formateurs</h3>
+              <p>Apprenez la comptabilité SYSCOHADA en pratique. Exemples concrets, assistant IA pédagogique.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="faq-section">
+          <div className="faq-head">
+            <div className="faq-label">Questions fréquentes</div>
+            <h2>Tout ce qu'il faut savoir</h2>
+          </div>
+          <div className="faq-list">
+            <div className="faq-item">
+              <div className="faq-q"><span className="qi">?</span>Est-ce conforme SYSCOHADA révisé ?</div>
+              <div className="faq-a">Oui, NORMX Finance intègre le plan comptable SYSCOHADA AUDCIF révisé avec 1 409 comptes et les 37 notes annexes officielles. Nous supportons aussi le référentiel SYCEBNL pour les entités à but non lucratif.</div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-q"><span className="qi">?</span>Puis-je importer mes écritures depuis Excel ?</div>
+              <div className="faq-a">Oui, l'import Excel/CSV est supporté. Vous pouvez aussi importer une balance depuis un autre logiciel comptable pour générer directement vos états financiers.</div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-q"><span className="qi">?</span>Comment fonctionne l'assistant IA ?</div>
+              <div className="faq-a">L'assistant IA est formé sur le plan comptable SYSCOHADA et les normes OHADA. Il répond à vos questions comptables, vous aide à trouver le bon compte, explique les écritures et peut générer des notes annexes.</div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-q"><span className="qi">?</span>Combien d'exercices puis-je gérer ?</div>
+              <div className="faq-a">Illimité en offre Pro. Vous pouvez gérer plusieurs entités et plusieurs exercices par entité, avec comparatifs N / N-1 automatiques dans les états financiers.</div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-q"><span className="qi">?</span>Les états financiers sont-ils exportables en PDF ?</div>
+              <div className="faq-a">Oui, tous les états (bilan, compte de résultat, TFT, annexes, liasse fiscale) sont exportables en PDF professionnel, prêts à remettre à vos CAC ou à l'administration fiscale.</div>
+            </div>
+            <div className="faq-item">
+              <div className="faq-q"><span className="qi">?</span>Y a-t-il une version d'essai ?</div>
+              <div className="faq-a">Oui, l'offre Découverte est gratuite pendant 7 jours et donne accès à la saisie, au grand livre, à la balance et à 5 questions IA. Aucune carte bancaire requise.</div>
             </div>
           </div>
         </section>
