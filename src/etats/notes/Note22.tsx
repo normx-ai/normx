@@ -19,6 +19,8 @@ interface Rubrique {
   label: string;
   prefixes: string[];
   group: 'marchandises' | 'matieres' | 'autres';
+  bold?: boolean;
+  isTotal?: boolean;
 }
 
 const RUBRIQUES: Rubrique[] = [
@@ -148,9 +150,9 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
     return { anneeN: n, anneeN1: n1, variation };
   };
 
-  const marchandisesRows = RUBRIQUES.filter(r => r.group === 'marchandises');
-  const matieresRows = RUBRIQUES.filter(r => r.group === 'matieres');
-  const autresRows = RUBRIQUES.filter(r => r.group === 'autres' || !r.group);
+  const marchandisesRows = RUBRIQUES.filter(r => r.group === 'marchandises' && !r.isTotal);
+  const matieresRows = RUBRIQUES.filter(r => r.group === 'matieres' && !r.isTotal);
+  const autresRows = RUBRIQUES.filter(r => (r.group === 'autres' || !r.group) && !r.isTotal);
 
   const sumGroupRows = (rows: Rubrique[]) => rows.reduce((a, r) => { const v = computeRow(r, RUBRIQUES.indexOf(r)); return { anneeN: a.anneeN + v.anneeN, anneeN1: a.anneeN1 + v.anneeN1 }; }, { anneeN: 0, anneeN1: 0 });
 
@@ -207,7 +209,7 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
 
       <BalanceSourcePanel
         lignes={lignesN}
-        groups={RUBRIQUES.map(r => ({ label: r.label, prefixes: r.prefixes }))}
+        groups={RUBRIQUES.filter(r => !r.isTotal).map(r => ({ label: r.label, prefixes: r.prefixes }))}
         title="Soldes balance — Achats"
       />
 
