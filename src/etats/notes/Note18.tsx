@@ -22,11 +22,13 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
+  { label: 'Personnel, avances et acomptes', prefixes: ['421'], group: 'sociales' },
   { label: 'Personnel, remunerations dues', prefixes: ['422'], group: 'sociales' },
   { label: 'Personnel, oppositions, saisies-arrets', prefixes: ['423'], group: 'sociales' },
   { label: 'Personnel, oeuvres sociales internes', prefixes: ['424'], group: 'sociales' },
   { label: 'Representant du personnel', prefixes: ['425'], group: 'sociales' },
   { label: 'Syndicats', prefixes: ['426'], group: 'sociales' },
+  { label: 'Personnel, depots recus', prefixes: ['427'], group: 'sociales' },
   { label: 'Personnel, charges a payer et produits a recevoir', prefixes: ['428'], group: 'sociales' },
   { label: 'Caisse de securite sociale', prefixes: ['431'], group: 'sociales' },
   { label: 'Caisses de retraite', prefixes: ['432'], group: 'sociales' },
@@ -34,8 +36,7 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Autres organismes sociaux', prefixes: ['434', '435', '436', '437', '438'], group: 'sociales' },
   { label: 'Etat, impots sur les benefices', prefixes: ['441'], group: 'fiscales' },
   { label: 'Etat, autres impots et taxes', prefixes: ['442', '443'], group: 'fiscales' },
-  { label: 'Etat, TVA due', prefixes: ['4441'], group: 'fiscales' },
-  { label: 'Etat, TVA recuperable', prefixes: ['4449', '445'], group: 'fiscales' },
+  { label: 'Etat, TVA due', prefixes: ['4441', '4443'], group: 'fiscales' },
   { label: 'Etat, autres taxes sur le chiffre d\'affaires', prefixes: ['446'], group: 'fiscales' },
   { label: 'Etat, impots retenus a la source', prefixes: ['447'], group: 'fiscales' },
   { label: 'Etat, charges a payer et produits a recevoir', prefixes: ['448'], group: 'fiscales' },
@@ -107,7 +108,7 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
 
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
-    for (const l of lignes) { const num = (l.numero_compte || '').trim(); if (!prefixes.some(p => num.startsWith(p))) continue; total += (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0); }
+    for (const l of lignes) { const num = (l.numero_compte || '').trim(); if (!prefixes.some(p => num.startsWith(p))) continue; total += parseFloat(String(l.solde_crediteur)) || 0; }
     return total;
   };
 

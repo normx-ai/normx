@@ -22,9 +22,10 @@ interface RubriqueCreance {
 
 const RUBRIQUES_BRUT: RubriqueCreance[] = [
   { label: 'Personnel, avances et acomptes', prefixes: ['421'] },
-  { label: 'Personnel, autres creances', prefixes: ['422', '423', '424', '425', '426', '427', '428'] },
+  { label: 'Personnel, deficits de remuneration', prefixes: ['429'] },
   { label: 'Organismes sociaux', prefixes: ['43'] },
-  { label: 'Etat et collectivites publiques', prefixes: ['44'] },
+  { label: 'Etat, TVA recuperable et credits de TVA', prefixes: ['4449', '445'] },
+  { label: 'Etat, autres creances fiscales', prefixes: ['441', '442', '443', '4441', '4443', '446', '447', '448', '449'] },
   { label: 'Organismes internationaux', prefixes: ['45'] },
   { label: 'Associes et groupe', prefixes: ['46'] },
   { label: 'Debiteurs divers', prefixes: ['471', '472', '473', '474'] },
