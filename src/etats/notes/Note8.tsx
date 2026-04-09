@@ -21,14 +21,15 @@ interface RubriqueCreance {
 }
 
 const RUBRIQUES_BRUT: RubriqueCreance[] = [
-  { label: 'Personnel', prefixes: ['42'] },
+  { label: 'Personnel, avances et acomptes', prefixes: ['421'] },
+  { label: 'Personnel, autres creances', prefixes: ['422', '423', '424', '425', '426', '427', '428'] },
   { label: 'Organismes sociaux', prefixes: ['43'] },
-  { label: 'État et collectivités publiques', prefixes: ['44'] },
+  { label: 'Etat et collectivites publiques', prefixes: ['44'] },
   { label: 'Organismes internationaux', prefixes: ['45'] },
-  { label: 'Associés et groupe', prefixes: ['46'] },
-  { label: 'Débiteurs divers', prefixes: ['471', '472', '473', '474'] },
-  { label: 'Compte transitoire, ajustement spécial', prefixes: ['475'] },
-  { label: 'Charges constatées d\'avance', prefixes: ['476'] },
+  { label: 'Associes et groupe', prefixes: ['46'] },
+  { label: 'Debiteurs divers', prefixes: ['471', '472', '473', '474'] },
+  { label: 'Compte transitoire, ajustement special', prefixes: ['475'] },
+  { label: 'Charges constatees d\'avance', prefixes: ['476'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueCreance[] = [

@@ -22,17 +22,24 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Personnel avances et acomptes', prefixes: ['421'], group: 'sociales' },
-  { label: 'Personnel remunerations dues', prefixes: ['422'], group: 'sociales' },
-  { label: 'Autres personnel', prefixes: ['423', '424', '425', '426', '427', '428'], group: 'sociales' },
+  { label: 'Personnel, remunerations dues', prefixes: ['422'], group: 'sociales' },
+  { label: 'Personnel, oppositions, saisies-arrets', prefixes: ['423'], group: 'sociales' },
+  { label: 'Personnel, oeuvres sociales internes', prefixes: ['424'], group: 'sociales' },
+  { label: 'Representant du personnel', prefixes: ['425'], group: 'sociales' },
+  { label: 'Syndicats', prefixes: ['426'], group: 'sociales' },
+  { label: 'Personnel, charges a payer et produits a recevoir', prefixes: ['428'], group: 'sociales' },
   { label: 'Caisse de securite sociale', prefixes: ['431'], group: 'sociales' },
-  { label: 'Caisse de retraite', prefixes: ['432'], group: 'sociales' },
-  { label: 'Autres organismes sociaux', prefixes: ['433', '438'], group: 'sociales' },
+  { label: 'Caisses de retraite', prefixes: ['432'], group: 'sociales' },
+  { label: 'Mutuelles', prefixes: ['433'], group: 'sociales' },
+  { label: 'Autres organismes sociaux', prefixes: ['434', '435', '436', '437', '438'], group: 'sociales' },
   { label: 'Etat, impots sur les benefices', prefixes: ['441'], group: 'fiscales' },
-  { label: 'Etat, impots et taxes', prefixes: ['442', '443'], group: 'fiscales' },
-  { label: 'Etat, TVA', prefixes: ['444', '445'], group: 'fiscales' },
+  { label: 'Etat, autres impots et taxes', prefixes: ['442', '443'], group: 'fiscales' },
+  { label: 'Etat, TVA due', prefixes: ['4441'], group: 'fiscales' },
+  { label: 'Etat, TVA recuperable', prefixes: ['4449', '445'], group: 'fiscales' },
+  { label: 'Etat, autres taxes sur le chiffre d\'affaires', prefixes: ['446'], group: 'fiscales' },
   { label: 'Etat, impots retenus a la source', prefixes: ['447'], group: 'fiscales' },
-  { label: 'Autres dettes Etat', prefixes: ['446', '448', '449'], group: 'fiscales' },
+  { label: 'Etat, charges a payer et produits a recevoir', prefixes: ['448'], group: 'fiscales' },
+  { label: 'Etat, creances et dettes diverses', prefixes: ['449'], group: 'fiscales' },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Commenter les dettes anciennes.`;
@@ -185,7 +192,7 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
           <LuInfo size={14} /> Note d'information — Note 18
         </div>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
-          <li>Dettes sociales (421-438) : solde créditeur = dettes envers le personnel et organismes sociaux.</li>
+          <li>Dettes sociales (422-438) : solde créditeur = dettes envers le personnel et organismes sociaux. Le compte 421 (avances) est une créance, traitée en Note 8.</li>
           <li>Dettes fiscales (441-449) : solde créditeur = dettes envers l'État (impôts, TVA, retenues à la source).</li>
           <li>Échéances : à renseigner manuellement (1 an, 1-2 ans, plus de 2 ans).</li>
         </ul>
