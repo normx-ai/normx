@@ -36,7 +36,7 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
-  const pdf = usePDFPreview({ pageRef, fileName: `Note15B_${annee}.pdf`, editing, setEditing });
+  const pdf = usePDFPreview({ pageRef, fileName: `Note15B_${annee}.pdf`, editing, setEditing, orientation: 'l' });
 
   const [hideEmpty, setHideEmpty] = useState(false);
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
@@ -170,7 +170,7 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
       />
 
       <div ref={pageRef} style={{
-        width: '210mm', minHeight: '297mm', background: '#fff',
+        width: '297mm', minHeight: '210mm', background: '#fff',
         margin: '0 auto 20px', padding: '8mm 10mm',
         boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
         fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',

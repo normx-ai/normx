@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -22,23 +22,22 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Organismes internationaux', prefixes: ['451'], group: 'associes' },
-  { label: 'Apporteurs, opérations sur le capital', prefixes: ['452'], group: 'associes' },
-  { label: 'Associés, compte courant', prefixes: ['453'], group: 'associes' },
-  { label: 'Associés dividendes à payer', prefixes: ['454'], group: 'associes' },
-  { label: 'Groupe, comptes courants', prefixes: ['455'], group: 'associes' },
-  { label: 'Autres dettes associés', prefixes: ['456', '457', '458'], group: 'associes' },
-  { label: 'Créditeurs divers', prefixes: ['471'], group: 'crediteurs' },
-  { label: 'Obligataires', prefixes: ['472'], group: 'crediteurs' },
-  { label: 'Rémunérations d\'administrateurs', prefixes: ['473'], group: 'crediteurs' },
-  { label: 'Compte du factor', prefixes: ['474'], group: 'crediteurs' },
-  { label: 'Versements restant à effectuer sur titres de placement non libérés', prefixes: ['475'], group: 'crediteurs' },
-  { label: 'Compte transitoire ajustement spécial lié à la révision du SYSCOHADA', prefixes: ['478'], group: 'crediteurs' },
-  { label: 'Autres créditeurs divers', prefixes: ['479'], group: 'crediteurs' },
-  { label: 'Comptes permanents non bloqués des établissements et des succursales', prefixes: ['481'], group: 'liaison' },
-  { label: 'Comptes de liaison charges et produits', prefixes: ['482'], group: 'liaison' },
-  { label: 'Comptes de liaison des sociétés en participation', prefixes: ['483'], group: 'liaison' },
-  { label: 'Provisions pour risques à court terme (voir note 28)', prefixes: ['499'], group: 'provisions' },
+  // Organismes internationaux (45)
+  { label: 'Organismes internationaux', prefixes: ['45'], group: 'associes' },
+  // Apporteurs, associés et groupe (46)
+  { label: 'Apporteurs, opérations sur le capital', prefixes: ['461'], group: 'associes' },
+  { label: 'Associés, comptes courants', prefixes: ['462'], group: 'associes' },
+  { label: 'Associés, opérations faites en commun et GIE', prefixes: ['463'], group: 'associes' },
+  { label: 'Associés, dividendes à payer', prefixes: ['465'], group: 'associes' },
+  { label: 'Groupe, comptes courants', prefixes: ['466'], group: 'associes' },
+  { label: 'Apporteurs restant dû sur capital appelé', prefixes: ['467'], group: 'associes' },
+  // Créditeurs divers (47)
+  { label: 'Créditeurs divers', prefixes: ['4712', '4713', '4715', '4716'], group: 'crediteurs' },
+  { label: 'Dettes sur titres de placement', prefixes: ['4726'], group: 'crediteurs' },
+  { label: 'Compte transitoire ajustement spécial (passif)', prefixes: ['4752'], group: 'crediteurs' },
+  { label: 'Produits constatés d\'avance', prefixes: ['477'], group: 'crediteurs' },
+  // Provisions pour risques à court terme (499)
+  { label: 'Provisions pour risques à court terme', prefixes: ['499'], group: 'provisions' },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Indiquer le taux de rémunération si compte courant rémunéré.\n• Commenter les dettes anciennes.\n• Compte transitoire ajustement spécial, indiquer le détail du compte et la durée restant pour l'apurement.`;
@@ -202,6 +201,18 @@ function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19P
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 19" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 19
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li>Organismes internationaux (45) et Associés/Groupe (46) : solde créditeur = dettes.</li>
+          <li>Créditeurs divers (47) : solde créditeur uniquement. Les soldes débiteurs sont des créances (Note 8).</li>
+          <li>Produits constatés d'avance (477) : solde créditeur.</li>
+          <li>Provisions pour risques à court terme (499) : solde créditeur.</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}

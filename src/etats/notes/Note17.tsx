@@ -24,7 +24,9 @@ interface Rubrique {
 const RUBRIQUES_FOURNISSEURS: Rubrique[] = [
   { label: 'Fournisseurs, dettes en compte', prefixes: ['401'], crediteur: true },
   { label: 'Fournisseurs, effets à payer', prefixes: ['402'], crediteur: true },
-  { label: 'Fournisseurs, acquisitions courantes d\'immobilisations', prefixes: ['404'], crediteur: true },
+  { label: 'Fournisseurs, retenues de garantie et cautionnements', prefixes: ['403'], crediteur: true },
+  { label: 'Fournisseurs d\'immobilisations', prefixes: ['404'], crediteur: true },
+  { label: 'Fournisseurs d\'immobilisations, effets à payer', prefixes: ['405'], crediteur: true },
   { label: 'Fournisseurs, factures non parvenues', prefixes: ['408'], crediteur: true },
 ];
 
