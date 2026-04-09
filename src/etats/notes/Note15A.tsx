@@ -38,12 +38,11 @@ const RUBRIQUES: Rubrique[] = [
   // Provisions réglementées et fonds assimilés
   { label: 'Amortissements dérogatoires', prefixes: ['151'], group: 'provisions' },
   { label: 'Plus-values de cession à réinvestir', prefixes: ['152'], group: 'provisions' },
-  { label: 'Fonds réglementés', prefixes: ['153'], group: 'provisions' },
   { label: 'Provisions spéciales de réévaluation', prefixes: ['154'], note: '3E', group: 'provisions' },
   { label: 'Provisions réglementées relatives aux immobilisations', prefixes: ['155'], group: 'provisions' },
   { label: 'Provisions réglementées relatives aux stocks', prefixes: ['156'], group: 'provisions' },
   { label: 'Provisions pour investissement', prefixes: ['157'], group: 'provisions' },
-  { label: 'Autres provisions et fonds réglementés', prefixes: ['158'], group: 'provisions' },
+  { label: 'Autres provisions et fonds réglementés', prefixes: ['153', '158'], group: 'provisions' },
   { label: 'TOTAL PROVISIONS REGLEMENTEES', prefixes: [], bold: true, isTotal: true, group: 'provisions' },
   // Grand total
   { label: 'TOTAL SUBVENTIONS ET PROVISIONS REGLEMENTEES', prefixes: [], bold: true, isTotal: true },

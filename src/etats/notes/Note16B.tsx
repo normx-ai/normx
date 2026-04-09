@@ -38,9 +38,23 @@ const SENSIBILITE = [
   'Taux de depart du personnel (variation de ...%)',
 ];
 
+const ACTIF_PASSIF_NET = [
+  'Valeur actuelle de l\'obligation resultant de regimes finances',
+  'Valeur actuelle des actifs affectes aux plans de retraite',
+  'Excedent / Deficit de regime',
+];
+
+const ACTIFS_REGIME = [
+  'Actions',
+  'Obligations',
+  'Autres',
+];
+
 const DEFAULT_COMM_HYP = '• Commenter les variations d\'hypotheses actuarielles utilisees pour le calcul des engagements de retraite et avantages assimiles.';
 const DEFAULT_COMM_VAR = '• Indiquer le montant de la charge par nature comptabilisee au cours de l\'exercice.';
 const DEFAULT_COMM_SENS = '• Indiquer l\'impact des variations obtenues sur le montant des engagements de retraite.';
+const DEFAULT_COMM_AP_NET = '• Indiquer le montant comptabilise au passif (si actif) ou a l\'actif (si deficit) a la cloture de l\'exercice.';
+const DEFAULT_COMM_ACTIFS = '• Expliquer comment les taux de rendement attendus par categorie d\'actifs et global ont ete determines.\n• Indiquer le montant des rendements reels des actifs affectes aux plans en N et N-1.';
 
 function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16BProps): React.JSX.Element {
   const {
@@ -55,6 +69,8 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
   const [commentaireHyp, setCommentaireHyp] = useState(DEFAULT_COMM_HYP);
   const [commentaireVar, setCommentaireVar] = useState(DEFAULT_COMM_VAR);
   const [commentaireSens, setCommentaireSens] = useState(DEFAULT_COMM_SENS);
+  const [commentaireAPNet, setCommentaireAPNet] = useState(DEFAULT_COMM_AP_NET);
+  const [commentaireActifs, setCommentaireActifs] = useState(DEFAULT_COMM_ACTIFS);
 
   const getVal = (key: string): string => data[key] || '';
   const setVal = (key: string, value: string) => setData(prev => ({ ...prev, [key]: value }));
@@ -66,6 +82,8 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
     setCommentaireHyp(params['note16b_comm_hyp'] || DEFAULT_COMM_HYP);
     setCommentaireVar(params['note16b_comm_var'] || DEFAULT_COMM_VAR);
     setCommentaireSens(params['note16b_comm_sens'] || DEFAULT_COMM_SENS);
+    setCommentaireAPNet(params['note16b_comm_apnet'] || DEFAULT_COMM_AP_NET);
+    setCommentaireActifs(params['note16b_comm_actifs'] || DEFAULT_COMM_ACTIFS);
   }, [params]);
 
   const handleSave = () => saveParams({
@@ -74,6 +92,8 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
     note16b_comm_hyp: commentaireHyp,
     note16b_comm_var: commentaireVar,
     note16b_comm_sens: commentaireSens,
+    note16b_comm_apnet: commentaireAPNet,
+    note16b_comm_actifs: commentaireActifs,
   });
 
   const fmtDateShort = (d: string): string => {
@@ -173,6 +193,71 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
         <div style={{ border: '0.5px solid #000', borderTop: 'none', padding: '6px 10px', marginBottom: 14 }}>
           <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, marginTop: 0 }}>Commentaire :</p>
           <EditableComment value={commentaireVar} onChange={setCommentaireVar} editing={editing} minHeight={35} />
+        </div>
+
+        {/* ACTIF / PASSIF NET COMPTABILISE AU TITRE DES REGIMES FINANCES */}
+        <div style={{ textAlign: 'center', fontWeight: 700, fontSize: 13, margin: '10px 0 6px', border: '0.5px solid #000', padding: 6, background: '#f9f9f9' }}>ACTIF / PASSIF NET COMPTABILISE AU TITRE DES REGIMES FINANCES</div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
+          <thead>
+            <tr>
+              <th style={{ ...thStyle, width: '60%' }}>Libelles</th>
+              <th style={thStyle}>Annee N</th>
+              <th style={thStyle}>Annee N-1</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ACTIF_PASSIF_NET.map((l, i) => (
+              <tr key={i}>
+                <td style={i === ACTIF_PASSIF_NET.length - 1 ? { ...tdStyle, fontWeight: 700 } : tdStyle}>{l}</td>
+                <td style={tdRight}>{renderInput(`apnet_${i}_n`)}</td>
+                <td style={tdRight}>{renderInput(`apnet_${i}_n1`)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div style={{ border: '0.5px solid #000', borderTop: 'none', padding: '6px 10px', marginBottom: 14 }}>
+          <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, marginTop: 0 }}>Commentaire :</p>
+          <EditableComment value={commentaireAPNet} onChange={setCommentaireAPNet} editing={editing} minHeight={35} />
+        </div>
+
+        {/* VALEUR ACTUELLE DES ACTIFS DE REGIME */}
+        <div style={{ textAlign: 'center', fontWeight: 700, fontSize: 13, margin: '10px 0 6px', border: '0.5px solid #000', padding: 6, background: '#f9f9f9' }}>VALEUR ACTUELLE DES ACTIFS DE REGIME</div>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 0 }}>
+          <thead>
+            <tr>
+              <th style={{ ...thStyle, width: '40%' }} rowSpan={2}>Libelles</th>
+              <th style={thStyle} colSpan={2}>Annee N</th>
+              <th style={thStyle} colSpan={2}>Annee N-1</th>
+            </tr>
+            <tr>
+              <th style={thStyle}>Rendement attendu</th>
+              <th style={thStyle}>Juste valeur des actifs</th>
+              <th style={thStyle}>Rendement attendu</th>
+              <th style={thStyle}>Juste valeur des actifs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ACTIFS_REGIME.map((l, i) => (
+              <tr key={i}>
+                <td style={tdStyle}>{l}</td>
+                <td style={tdRight}>{renderInput(`actifs_${i}_n_rend`)}</td>
+                <td style={tdRight}>{renderInput(`actifs_${i}_n_juste`)}</td>
+                <td style={tdRight}>{renderInput(`actifs_${i}_n1_rend`)}</td>
+                <td style={tdRight}>{renderInput(`actifs_${i}_n1_juste`)}</td>
+              </tr>
+            ))}
+            <tr>
+              <td style={{ ...tdStyle, fontWeight: 700 }}>Total</td>
+              <td style={tdRight}>{renderInput(`actifs_total_n_rend`)}</td>
+              <td style={tdRight}>{renderInput(`actifs_total_n_juste`)}</td>
+              <td style={tdRight}>{renderInput(`actifs_total_n1_rend`)}</td>
+              <td style={tdRight}>{renderInput(`actifs_total_n1_juste`)}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style={{ border: '0.5px solid #000', borderTop: 'none', padding: '6px 10px', marginBottom: 14 }}>
+          <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 4, marginTop: 0 }}>Commentaire :</p>
+          <EditableComment value={commentaireActifs} onChange={setCommentaireActifs} editing={editing} minHeight={35} />
         </div>
 
         {/* ANALYSE DE SENSIBILITE */}

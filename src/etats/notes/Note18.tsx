@@ -18,19 +18,21 @@ interface Note18Props extends EtatBaseProps {
 interface Rubrique {
   label: string;
   prefixes: string[];
+  group: 'sociales' | 'fiscales';
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Personnel, avances et acomptes', prefixes: ['421'] },
-  { label: 'Personnel, deficits de remuneration', prefixes: ['429'] },
-  { label: 'Organismes sociaux', prefixes: ['43'] },
-  { label: 'Etat, TVA recuperable et credits de TVA', prefixes: ['4449', '445'] },
-  { label: 'Etat, autres creances fiscales', prefixes: ['441', '442', '443', '4441', '4443', '446', '447', '448', '449'] },
-  { label: 'Organismes internationaux', prefixes: ['45'] },
-  { label: 'Associes et groupe', prefixes: ['46'] },
-  { label: 'Debiteurs divers', prefixes: ['471', '472', '473', '474'] },
-  { label: 'Compte transitoire, ajustement special', prefixes: ['475'] },
-  { label: 'Charges constatees d\'avance', prefixes: ['476'] },
+  { label: 'Personnel, avances et acomptes', prefixes: ['421'], group: 'sociales' },
+  { label: 'Personnel, rémunérations dues', prefixes: ['422'], group: 'sociales' },
+  { label: 'Autres personnel', prefixes: ['423', '424', '425', '426', '427', '428', '429'], group: 'sociales' },
+  { label: 'Caisse de sécurité sociale', prefixes: ['431'], group: 'sociales' },
+  { label: 'Caisse de retraite', prefixes: ['432'], group: 'sociales' },
+  { label: 'Autres organismes sociaux', prefixes: ['433', '434', '435', '436', '437', '438'], group: 'sociales' },
+  { label: 'État, impôts sur les bénéfices', prefixes: ['441'], group: 'fiscales' },
+  { label: 'État, impôts et taxes', prefixes: ['442', '443'], group: 'fiscales' },
+  { label: 'État, TVA', prefixes: ['4441', '4443', '4449', '445'], group: 'fiscales' },
+  { label: 'État, impôts retenus à la source', prefixes: ['447'], group: 'fiscales' },
+  { label: 'Autres dettes État', prefixes: ['446', '448', '449'], group: 'fiscales' },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Commenter les dettes anciennes.`;
@@ -110,9 +112,14 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
     return { anneeN: n, anneeN1: n1, variationAbs, variationPct };
   };
 
-  const rows = RUBRIQUES.map(r => ({ ...r, vals: computeRow(r) }));
+  const socialesRows = RUBRIQUES.filter(r => r.group === 'sociales').map(r => ({ ...r, vals: computeRow(r) }));
+  const fiscalesRows = RUBRIQUES.filter(r => r.group === 'fiscales').map(r => ({ ...r, vals: computeRow(r) }));
 
-  const totalGeneral = rows.reduce((a, r) => ({ anneeN: a.anneeN + r.vals.anneeN, anneeN1: a.anneeN1 + r.vals.anneeN1 }), { anneeN: 0, anneeN1: 0 });
+  const sumGroup = (rs: { vals: { anneeN: number; anneeN1: number } }[]) => rs.reduce((a, r) => ({ anneeN: a.anneeN + r.vals.anneeN, anneeN1: a.anneeN1 + r.vals.anneeN1 }), { anneeN: 0, anneeN1: 0 });
+
+  const totalSociales = sumGroup(socialesRows);
+  const totalFiscales = sumGroup(fiscalesRows);
+  const totalGeneral = { anneeN: totalSociales.anneeN + totalFiscales.anneeN, anneeN1: totalSociales.anneeN1 + totalFiscales.anneeN1 };
 
   const renderAdjInput = (label: string, field: string, baseValue: number) => {
     if (!editing) return fmtM(baseValue);
@@ -234,8 +241,12 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
             </tr>
           </thead>
           <tbody>
-            {rows.map(r => renderRow(r))}
-            {renderTotalRow('TOTAL DETTES FISCALES ET SOCIALES', totalGeneral)}
+            {socialesRows.map(r => renderRow(r))}
+            {renderTotalRow('TOTAL DETTES SOCIALES', totalSociales)}
+            {fiscalesRows.map(r => renderRow(r))}
+            {renderTotalRow('TOTAL DETTES FISCALES', totalFiscales)}
+            <tr><td colSpan={8} style={{ ...tdStyle, height: 6 }}></td></tr>
+            {renderTotalRow('TOTAL DETTES SOCIALES ET FISCALES', totalGeneral)}
           </tbody>
         </table>
 

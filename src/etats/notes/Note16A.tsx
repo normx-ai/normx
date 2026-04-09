@@ -32,7 +32,6 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Avances reçues et comptes courants bloqués', prefixes: ['164'], group: 'emprunts' },
   { label: 'Dépôts et cautionnements reçus', prefixes: ['165'], group: 'emprunts' },
   { label: 'Intérêts courus', prefixes: ['166'], group: 'emprunts' },
-  { label: 'Avances assorties de conditions particulières', prefixes: ['167'], group: 'emprunts' },
   { label: 'Autres emprunts et dettes', prefixes: ['168'], group: 'emprunts' },
   { label: 'Dettes liées à des participations', prefixes: ['181'], group: 'emprunts' },
   { label: 'Dettes liées à des sociétés en participation', prefixes: ['182'], group: 'emprunts' },

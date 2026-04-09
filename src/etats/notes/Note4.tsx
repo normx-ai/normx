@@ -29,12 +29,12 @@ interface RubriqueImmoFin {
 
 const RUBRIQUES_BRUT: RubriqueImmoFin[] = [
   { label: 'Titres de participation', prefixes: ['26'] },
-  { label: 'Prêts et créances', prefixes: ['271', '272'] },
-  { label: 'Prêt au personnel', prefixes: ['273'] },
-  { label: 'Créances sur l\'état', prefixes: ['274'] },
-  { label: 'Titres immobilisés', prefixes: ['275'] },
-  { label: 'Dépôts et cautionnements', prefixes: ['276'] },
-  { label: 'Intérêts courus', prefixes: ['277'] },
+  { label: 'Prêts et créances', prefixes: ['271'] },
+  { label: 'Prêt au personnel', prefixes: ['272'] },
+  { label: 'Créances sur l\'état', prefixes: ['273'] },
+  { label: 'Titres immobilisés', prefixes: ['274'] },
+  { label: 'Dépôts et cautionnements', prefixes: ['275'] },
+  { label: 'Intérêts courus', prefixes: ['276'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueImmoFin[] = [

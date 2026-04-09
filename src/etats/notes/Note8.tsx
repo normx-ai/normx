@@ -21,16 +21,16 @@ interface RubriqueCreance {
 }
 
 const RUBRIQUES_BRUT: RubriqueCreance[] = [
-  { label: 'Personnel, avances et acomptes', prefixes: ['421'] },
-  { label: 'Personnel, deficits de remuneration', prefixes: ['429'] },
+  { label: 'Personnel', prefixes: ['42'] },
   { label: 'Organismes sociaux', prefixes: ['43'] },
-  { label: 'Etat, TVA recuperable et credits de TVA', prefixes: ['4449', '445'] },
-  { label: 'Etat, autres creances fiscales', prefixes: ['441', '442', '443', '4441', '4443', '446', '447', '448', '449'] },
+  { label: 'Etat et Collectivites publiques', prefixes: ['44'] },
   { label: 'Organismes internationaux', prefixes: ['45'] },
-  { label: 'Associes et groupe', prefixes: ['46'] },
-  { label: 'Debiteurs divers', prefixes: ['471', '472', '473', '474'] },
-  { label: 'Compte transitoire, ajustement special', prefixes: ['475'] },
-  { label: 'Charges constatees d\'avance', prefixes: ['476'] },
+  { label: 'Apporteurs, associes et groupe', prefixes: ['46'] },
+  { label: 'Compte transitoire ajustement special lie a la revision du SYSCOHADA', prefixes: ['475'] },
+  { label: 'Autres debiteurs divers', prefixes: ['471', '472', '473', '474', '478'] },
+  { label: 'Comptes permanents non bloques des etablissements et des succursales', prefixes: ['185'] },
+  { label: 'Comptes de charges a payer et produits a recevoir', prefixes: ['476', '477'] },
+  { label: 'Comptes de liaison des societes en participation', prefixes: ['188'] },
 ];
 
 const RUBRIQUES_DEPRECIATION: RubriqueCreance[] = [

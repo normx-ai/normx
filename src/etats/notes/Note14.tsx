@@ -23,17 +23,19 @@ interface RubriquePrime {
 }
 
 const RUBRIQUES: RubriquePrime[] = [
-  { label: 'Primes d\'émission', prefixes: ['1051'] },
-  { label: 'Primes d\'apport', prefixes: ['1052'] },
+  { label: 'Primes d\'apport', prefixes: ['1051'] },
+  { label: 'Primes d\'émission', prefixes: ['1052'] },
   { label: 'Primes de fusion', prefixes: ['1053'] },
   { label: 'Primes de conversion', prefixes: ['1054'] },
   { label: 'Autres primes', prefixes: ['1058'] },
   { label: 'TOTAL PRIMES', prefixes: [], bold: true, isTotal: true },
-  { label: 'Réserve légale', prefixes: ['111'] },
+  { label: 'Réserves légales', prefixes: ['111'] },
   { label: 'Réserves statutaires ou contractuelles', prefixes: ['112'] },
-  { label: 'Réserves réglementées', prefixes: ['113'] },
-  { label: 'Autres réserves', prefixes: ['118'] },
+  { label: 'Réserves de plus-values nettes à long terme', prefixes: ['1131'] },
+  { label: 'Réserves d\'attribution gratuite d\'actions au personnel salarié et aux dirigeants', prefixes: ['1132'] },
+  { label: 'Autres réserves réglementées', prefixes: ['1138'] },
   { label: 'TOTAL RESERVES INDISPONIBLES', prefixes: [], bold: true, isTotal: true },
+  { label: 'Réserves libres', prefixes: ['118'] },
   { label: 'Report à nouveau', prefixes: ['12'] },
 ];
 

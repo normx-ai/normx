@@ -22,16 +22,17 @@ interface Rubrique {
 }
 
 const RUBRIQUES_FOURNISSEURS: Rubrique[] = [
-  { label: 'Fournisseurs, dettes en compte', prefixes: ['401'], crediteur: true },
-  { label: 'Fournisseurs, effets à payer', prefixes: ['402'], crediteur: true },
-  { label: 'Fournisseurs, retenues de garantie et cautionnements', prefixes: ['403'], crediteur: true },
-  { label: 'Fournisseurs d\'immobilisations', prefixes: ['404'], crediteur: true },
-  { label: 'Fournisseurs d\'immobilisations, effets à payer', prefixes: ['405'], crediteur: true },
-  { label: 'Fournisseurs, factures non parvenues', prefixes: ['408'], crediteur: true },
+  { label: 'Fournisseurs, dettes en compte (hors groupe)', prefixes: ['401', '403'], crediteur: true },
+  { label: 'Fournisseurs, effets à payer (hors groupe)', prefixes: ['402'], crediteur: true },
+  { label: 'Fournisseurs, dettes et effets à payer Groupe', prefixes: [], crediteur: true },
+  { label: 'Fournisseurs, factures non parvenues (hors groupe)', prefixes: ['408'], crediteur: true },
+  { label: 'Fournisseurs, factures non parvenues Groupe', prefixes: [], crediteur: true },
 ];
 
 const RUBRIQUES_DEBITEURS: Rubrique[] = [
-  { label: 'Fournisseurs, avances et acomptes verses', prefixes: ['409'] },
+  { label: 'Fournisseurs, avances et acomptes (hors groupe)', prefixes: ['409'] },
+  { label: 'Fournisseurs, avances et acomptes Groupe', prefixes: [] },
+  { label: 'Autres fournisseurs débiteurs', prefixes: [] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Indiquer pour les dettes du groupe le nom de la societe du groupe et le % de titres detenus.\n• Commenter les dettes anciennes.`;

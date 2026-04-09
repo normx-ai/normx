@@ -21,10 +21,11 @@ interface Rubrique {
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Avances bloquées pour augmentation du capital', prefixes: ['1671'] },
-  { label: 'Avances conditionnées par l\'État', prefixes: ['1672'] },
-  { label: 'Avances conditionnées par les autres organismes africains', prefixes: ['1673'] },
-  { label: 'Avances conditionnées par les organismes internationaux', prefixes: ['1674'] },
+  { label: 'Titres participatifs', prefixes: ['1671'] },
+  { label: 'Avances conditionnées', prefixes: ['1672', '1673', '1674'] },
+  { label: 'Titres subordonnés à durée indéterminée (T.S.D.I.)', prefixes: ['1676'] },
+  { label: 'Obligations remboursables en actions (O.R.A.)', prefixes: ['1675'] },
+  { label: 'Autres', prefixes: ['1677', '1678'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Justifier l'inscription de ces dettes dans une rubrique spécifique du passif du bilan « Autres fonds propres » (faible probabilité de remboursement, absence d'échéancier...)\n• Justifier le caractère significatif du montant total de cette rubrique.\n• Commenter toute variation significative.`;

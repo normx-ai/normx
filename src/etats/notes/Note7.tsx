@@ -23,10 +23,10 @@ interface RubriqueClient {
 
 // Clients brut (comptes débiteurs classe 41)
 const RUBRIQUES_CLIENTS_BRUT: RubriqueClient[] = [
-  { label: 'Clients', prefixes: ['411'] },
-  { label: 'Clients, effets à recevoir en portefeuille', prefixes: ['412'] },
-  { label: 'Clients, chèques, effets et autres valeurs impayés', prefixes: ['413'] },
-  { label: 'Créances sur cessions courantes d\'immobilisations', prefixes: ['414'] },
+  { label: 'Clients hors réserves de propriété (Hors Groupe)', prefixes: ['411'] },
+  { label: 'Clients, effets à recevoir (hors réserves de propriété)', prefixes: ['412'] },
+  { label: 'Clients et effets à recevoir avec réserves de propriété', prefixes: ['413'] },
+  { label: 'Clients et effets à recevoir, Groupe', prefixes: ['414'] },
   { label: 'Clients, effets escomptés non échus', prefixes: ['415'] },
   { label: 'Créances clients litigieuses ou douteuses', prefixes: ['416'] },
   { label: 'Clients, produits à recevoir', prefixes: ['418'] },
@@ -38,7 +38,9 @@ const RUBRIQUES_DEPRECIATION: RubriqueClient[] = [
 
 // Clients créditeurs (avances reçues)
 const RUBRIQUES_CLIENTS_CREDITEURS: RubriqueClient[] = [
-  { label: 'Clients, avances et acomptes reçus', prefixes: ['419'] },
+  { label: 'Clients, avances reçues hors Groupe', prefixes: ['4191'] },
+  { label: 'Clients, avances reçues Groupe', prefixes: ['4192'] },
+  { label: 'Autres clients créditeurs', prefixes: ['4193', '4194', '4195', '4196', '4197', '4198', '4199'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Commenter les créances anciennes.\n• Indiquer pour les créances du groupe, le nom de la société du groupe et le % de titres détenus.\n• Indiquer les événements et circonstances qui ont conduit à la dépréciation et à la reprise.`;
