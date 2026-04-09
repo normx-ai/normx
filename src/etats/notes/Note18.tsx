@@ -18,30 +18,19 @@ interface Note18Props extends EtatBaseProps {
 interface Rubrique {
   label: string;
   prefixes: string[];
-  group: 'sociales' | 'fiscales';
 }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Personnel, avances et acomptes', prefixes: ['421'], group: 'sociales' },
-  { label: 'Personnel, remunerations dues', prefixes: ['422'], group: 'sociales' },
-  { label: 'Personnel, oppositions, saisies-arrets', prefixes: ['423'], group: 'sociales' },
-  { label: 'Personnel, oeuvres sociales internes', prefixes: ['424'], group: 'sociales' },
-  { label: 'Representant du personnel', prefixes: ['425'], group: 'sociales' },
-  { label: 'Syndicats', prefixes: ['426'], group: 'sociales' },
-  { label: 'Personnel, depots recus', prefixes: ['427'], group: 'sociales' },
-  { label: 'Personnel, conges a payer', prefixes: ['4281'], group: 'sociales' },
-  { label: 'Personnel, autres charges a payer', prefixes: ['4282', '4283', '4284', '4285', '4286', '4287', '4288', '4289'], group: 'sociales' },
-  { label: 'Caisse de securite sociale', prefixes: ['431'], group: 'sociales' },
-  { label: 'Caisses de retraite', prefixes: ['432'], group: 'sociales' },
-  { label: 'Mutuelles', prefixes: ['433'], group: 'sociales' },
-  { label: 'Autres organismes sociaux', prefixes: ['434', '435', '436', '437', '438'], group: 'sociales' },
-  { label: 'Etat, impots sur les benefices', prefixes: ['441'], group: 'fiscales' },
-  { label: 'Etat, autres impots et taxes', prefixes: ['442', '443'], group: 'fiscales' },
-  { label: 'Etat, TVA due', prefixes: ['4441', '4443'], group: 'fiscales' },
-  { label: 'Etat, autres taxes sur le chiffre d\'affaires', prefixes: ['446'], group: 'fiscales' },
-  { label: 'Etat, impots retenus a la source', prefixes: ['447'], group: 'fiscales' },
-  { label: 'Etat, charges a payer et produits a recevoir', prefixes: ['448'], group: 'fiscales' },
-  { label: 'Etat, creances et dettes diverses', prefixes: ['449'], group: 'fiscales' },
+  { label: 'Personnel, avances et acomptes', prefixes: ['421'] },
+  { label: 'Personnel, deficits de remuneration', prefixes: ['429'] },
+  { label: 'Organismes sociaux', prefixes: ['43'] },
+  { label: 'Etat, TVA recuperable et credits de TVA', prefixes: ['4449', '445'] },
+  { label: 'Etat, autres creances fiscales', prefixes: ['441', '442', '443', '4441', '4443', '446', '447', '448', '449'] },
+  { label: 'Organismes internationaux', prefixes: ['45'] },
+  { label: 'Associes et groupe', prefixes: ['46'] },
+  { label: 'Debiteurs divers', prefixes: ['471', '472', '473', '474'] },
+  { label: 'Compte transitoire, ajustement special', prefixes: ['475'] },
+  { label: 'Charges constatees d\'avance', prefixes: ['476'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Commenter les dettes anciennes.`;
@@ -121,14 +110,9 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
     return { anneeN: n, anneeN1: n1, variationAbs, variationPct };
   };
 
-  const socialesRows = RUBRIQUES.filter(r => r.group === 'sociales').map(r => ({ ...r, vals: computeRow(r) }));
-  const fiscalesRows = RUBRIQUES.filter(r => r.group === 'fiscales').map(r => ({ ...r, vals: computeRow(r) }));
+  const rows = RUBRIQUES.map(r => ({ ...r, vals: computeRow(r) }));
 
-  const sumGroup = (rows: { vals: { anneeN: number; anneeN1: number } }[]) => rows.reduce((a, r) => ({ anneeN: a.anneeN + r.vals.anneeN, anneeN1: a.anneeN1 + r.vals.anneeN1 }), { anneeN: 0, anneeN1: 0 });
-
-  const totalSociales = sumGroup(socialesRows);
-  const totalFiscales = sumGroup(fiscalesRows);
-  const totalGeneral = { anneeN: totalSociales.anneeN + totalFiscales.anneeN, anneeN1: totalSociales.anneeN1 + totalFiscales.anneeN1 };
+  const totalGeneral = rows.reduce((a, r) => ({ anneeN: a.anneeN + r.vals.anneeN, anneeN1: a.anneeN1 + r.vals.anneeN1 }), { anneeN: 0, anneeN1: 0 });
 
   const renderAdjInput = (label: string, field: string, baseValue: number) => {
     if (!editing) return fmtM(baseValue);
@@ -194,8 +178,9 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
           <LuInfo size={14} /> Note d'information — Note 18
         </div>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
-          <li>Dettes sociales (422-438) : solde créditeur = dettes envers le personnel et organismes sociaux. Le compte 421 (avances) est une créance, traitée en Note 8.</li>
-          <li>Dettes fiscales (441-449) : solde créditeur = dettes envers l'État (impôts, TVA, retenues à la source).</li>
+          <li>Comptes 42 à 47 : seul le solde créditeur est repris (dettes).</li>
+          <li>Les soldes débiteurs de ces mêmes comptes sont des créances (Note 8).</li>
+          <li>Mêmes rubriques que la Note 8, mais filtrées par sens du solde.</li>
           <li>Échéances : à renseigner manuellement (1 an, 1-2 ans, plus de 2 ans).</li>
         </ul>
       </div>
@@ -249,12 +234,8 @@ function Note18({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note18P
             </tr>
           </thead>
           <tbody>
-            {socialesRows.map(r => renderRow(r))}
-            {renderTotalRow('TOTAL DETTES SOCIALES', totalSociales)}
-            {fiscalesRows.map(r => renderRow(r))}
-            {renderTotalRow('TOTAL DETTES FISCALES', totalFiscales)}
-            <tr><td colSpan={8} style={{ ...tdStyle, height: 6 }}></td></tr>
-            {renderTotalRow('TOTAL DETTES SOCIALES ET FISCALES', totalGeneral)}
+            {rows.map(r => renderRow(r))}
+            {renderTotalRow('TOTAL DETTES FISCALES ET SOCIALES', totalGeneral)}
           </tbody>
         </table>
 
