@@ -63,7 +63,10 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     try {
       const qs = params.toString() ? '?' + params.toString() : '';
       const res = await fetch('/api/ecritures/' + entiteId + '/' + exerciceId + qs);
-      if (res.ok) setEcritures(await res.json());
+      if (res.ok) {
+        const data = await res.json();
+        setEcritures(Array.isArray(data) ? data : data.ecritures || []);
+      }
     } catch (_err) { /* silently ignore */ }
   }, [entiteId, exerciceId, filterJournal, filterStatut, filterDateDu, filterDateAu, searchTerm]);
 
