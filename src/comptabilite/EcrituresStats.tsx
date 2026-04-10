@@ -14,10 +14,10 @@ function EcrituresStats({
   onOpenCreate,
   onOpenImport,
 }: EcrituresStatsProps): React.JSX.Element {
-  const listTotalDebit = ecritures.reduce((s, e) =>
-    s + e.lignes.reduce((s2, l) => s2 + (parseFloat(String(l.debit)) || 0), 0), 0);
-  const listTotalCredit = ecritures.reduce((s, e) =>
-    s + e.lignes.reduce((s2, l) => s2 + (parseFloat(String(l.credit)) || 0), 0), 0);
+  const listTotalDebit = (ecritures || []).reduce((s, e) =>
+    s + (e.lignes || []).reduce((s2, l) => s2 + (parseFloat(String(l.debit)) || 0), 0), 0);
+  const listTotalCredit = (ecritures || []).reduce((s, e) =>
+    s + (e.lignes || []).reduce((s2, l) => s2 + (parseFloat(String(l.credit)) || 0), 0), 0);
 
   return (
     <>
