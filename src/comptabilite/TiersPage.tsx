@@ -124,7 +124,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
     setLoading(true);
     try {
       const res = await fetch('/api/tiers/' + entiteId);
-      if (res.ok) setTiers(await res.json());
+      if (res.ok) { const j = await res.json(); setTiers(Array.isArray(j) ? j : j.data || j.tiers || []); }
     } catch (_err) {
       // silently ignore
     } finally {

@@ -89,7 +89,7 @@ function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, enti
       if (filterDateAu) params.set('date_au', filterDateAu);
       const qs = params.toString() ? '?' + params.toString() : '';
       const res = await fetch('/api/ecritures/grand-livre-tiers/' + entiteId + '/' + exerciceId + qs);
-      if (res.ok) setData(await res.json());
+      if (res.ok) { const j = await res.json(); setData(Array.isArray(j) ? j : j.data || j.lignes || []); }
     } catch (_err) {
       // silently ignore
     } finally {

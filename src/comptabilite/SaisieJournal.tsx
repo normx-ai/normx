@@ -73,7 +73,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
   const loadPlanComptable = useCallback(async (): Promise<void> => {
     try {
       const res = await fetch('/api/plan-comptable');
-      if (res.ok) setPlanComptable(await res.json());
+      if (res.ok) { const j = await res.json(); setPlanComptable(Array.isArray(j) ? j : j.data || j.comptes || []); }
     } catch (_err) { /* silently ignore */ }
   }, []);
 
@@ -81,7 +81,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     if (!entiteId) return;
     try {
       const res = await fetch('/api/tiers/' + entiteId);
-      if (res.ok) setTiersList(await res.json());
+      if (res.ok) { const j = await res.json(); setTiersList(Array.isArray(j) ? j : j.data || j.tiers || []); }
     } catch (_err) { /* silently ignore */ }
   }, [entiteId]);
 

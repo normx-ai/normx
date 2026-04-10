@@ -80,7 +80,10 @@ function BalanceTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteS
       if (filterDateAu) params.set('date_au', filterDateAu);
       const qs = params.toString() ? '?' + params.toString() : '';
       const res = await fetch('/api/ecritures/balance-tiers/' + entiteId + '/' + exerciceId + qs);
-      if (res.ok) setData(await res.json());
+      if (res.ok) {
+        const json = await res.json();
+        setData(Array.isArray(json) ? json : json.data || json.lignes || json.balance || []);
+      }
     } catch (_err) {
       // silently ignore
     } finally {

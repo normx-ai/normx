@@ -99,7 +99,7 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
     setLoading(true);
     try {
       const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + exerciceId);
-      if (res.ok) setBalance(await res.json());
+      if (res.ok) { const j = await res.json(); setBalance(Array.isArray(j) ? j : j.data || j.lignes || j.balance || []); }
     } catch (_err) {
       // silently ignore
     } finally {

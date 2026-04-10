@@ -77,7 +77,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     try {
       const typeFilter = selectedTypes.length < ALL_TYPES.length ? `?type_tiers=${selectedTypes.join(',')}` : '';
       const res = await fetch(`/api/ecritures/lettrage/tiers/${entiteId}/${exerciceId}${typeFilter}`);
-      if (res.ok) setTiersList(await res.json());
+      if (res.ok) { const j = await res.json(); setTiersList(Array.isArray(j) ? j : j.data || j.tiers || []); }
     } catch (_e) {
       // silently ignore
     }
