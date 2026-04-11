@@ -1,6 +1,5 @@
 import React from 'react';
 import { KeycloakProvider, useKeycloak } from './auth/KeycloakProvider';
-import LandingPage from './landing/LandingPage';
 import Dashboard from './dashboard/Dashboard';
 import Onboarding from './components/Onboarding';
 import Toast from './components/Toast';
@@ -151,7 +150,16 @@ function AppContent(): React.JSX.Element {
   }
 
   if (!isAuthenticated) {
-    return <LandingPage onLogin={login} />;
+    // Landing HTML statique servie par nginx — ici on lance l'auth Keycloak
+    login();
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
+        <div style={{ textAlign: 'center' }}>
+          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16, display: 'block' }} />
+          <p style={{ color: '#6b7280', marginTop: 16 }}>Redirection vers la connexion...</p>
+        </div>
+      </div>
+    );
   }
 
   if (subscriptionRequired) {
