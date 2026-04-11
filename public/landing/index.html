@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NORMX AI — Comptabilité, Fiscalité, Paie et Droit OHADA</title>
+  <meta name="description" content="NORMX AI — La plateforme complète pour les Etats membres OHADA.">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary:#D4A843;--primary-light:#e8c96a;--primary-bg:rgba(212,168,67,.08);--dark:#1A3A5C;--dark2:#0d2b45;--text:#1f2937;--text2:#6b7280;--text3:#9ca3af;--bg:#fff;--bg-warm:#faf8f5;--border:rgba(0,0,0,.08);--green:#059669;--blue:#2563eb;--purple:#7c3aed;--orange:#d97706;--r:16px;--r-sm:10px;--shadow-lg:0 20px 60px rgba(0,0,0,.08)}
+    html{scroll-behavior:smooth}
+    body{user-select:none;-webkit-user-select:none;font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%}
+
+    @keyframes fadeLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes fadeRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+    .reveal-left.visible{opacity:1;transform:translateX(0)}
+    .reveal-right{opacity:0;transform:translateX(40px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+    .reveal-right.visible{opacity:1;transform:translateX(0)}
+    .stagger>*{opacity:0;transform:translateY(30px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+    .stagger.visible>*:nth-child(1){transition-delay:.05s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(2){transition-delay:.15s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(3){transition-delay:.25s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(4){transition-delay:.35s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(5){transition-delay:.45s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(6){transition-delay:.55s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(7){transition-delay:.65s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(8){transition-delay:.7s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(9){transition-delay:.75s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(10){transition-delay:.8s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(11){transition-delay:.85s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(12){transition-delay:.9s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(13){transition-delay:.95s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(14){transition-delay:1s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(15){transition-delay:1.05s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(16){transition-delay:1.1s;opacity:1;transform:translateY(0)}
+    .stagger.visible>*:nth-child(17){transition-delay:1.15s;opacity:1;transform:translateY(0)}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+    nav.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+    .nav-inner{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px}
+    .nav-logo img{height:32px;width:auto}
+    .nav-links{display:flex;align-items:center;gap:6px}
+    .nav-link{padding:8px 14px;font-size:16px;font-weight:600;color:var(--text2);border-radius:8px;transition:all .2s;position:relative}
+    .nav-link:hover{color:var(--text);background:rgba(0,0,0,.04)}
+    .nav-link::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;background:var(--primary);transform:scaleX(0);transition:transform .2s}
+    .nav-link:hover::after{transform:scaleX(1)}
+    .nav-cta{padding:9px 20px;background:var(--dark);color:#fff;font-size:14px;font-weight:700;border-radius:8px;transition:all .2s}
+    .nav-cta:hover{background:var(--dark2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+    .nav-dropdown{position:relative}
+    .nav-dropdown-menu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-4px);margin-top:4px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.12);width:520px;padding:24px;opacity:0;pointer-events:none;transition:all .2s;z-index:200}
+    .nav-dropdown:hover .nav-dropdown-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+    .nav-dropdown-header{margin-bottom:16px}
+    .nav-dropdown-header h3{font-size:16px;font-weight:700;color:var(--dark);margin-bottom:4px}
+    .nav-dropdown-header p{font-size:13px;color:var(--text2)}
+    .nav-dropdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+    .dd-item{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:10px;transition:background .15s}
+    .dd-item:hover{background:var(--bg-warm)}
+    .dd-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+    .dd-name{font-size:14px;font-weight:600;color:var(--dark)}
+    .dd-desc{font-size:12px;color:var(--text2);line-height:1.4;margin-top:2px}
+    .nav-dropdown-footer{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);text-align:center}
+    .nav-dropdown-footer a{font-size:13px;font-weight:500;color:var(--primary)}
+    @media(max-width:768px){.nav-links{display:none}.nav-dropdown-menu{width:90vw;right:-60px;left:auto}}
+
+    .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background:url('/img/hero-bg.jpg') center/cover no-repeat}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(15,42,66,.88) 0%,rgba(26,58,92,.75) 50%,rgba(15,42,66,.65) 100%)}
+    .hero-inner{position:relative;z-index:1;max-width:1800px;margin:0 auto;padding:140px 48px 80px 15%;display:grid;grid-template-columns:1fr;gap:60px;align-items:center;width:100%}
+    .hero-text{animation:fadeLeft 1s ease-out}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,67,.15);border:1px solid rgba(212,168,67,.3);border-radius:100px;padding:8px 20px;font-size:13px;font-weight:600;color:var(--primary);margin-bottom:24px;backdrop-filter:blur(10px)}
+    .hero-text h1{font-size:clamp(34px,5vw,56px);font-weight:800;line-height:1.1;margin-bottom:20px;color:#fff;letter-spacing:-.5px}
+    .hero-text h1 span{color:var(--primary)}
+    .hero-text p{font-size:18px;color:rgba(255,255,255,.8);line-height:1.7;margin-bottom:36px;max-width:480px}
+    .hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:var(--primary);color:var(--dark);font-size:16px;font-weight:700;border-radius:var(--r-sm);transition:all .3s}
+    .btn-primary:hover{background:var(--primary-light);transform:translateY(-2px);box-shadow:0 12px 32px rgba(212,168,67,.35)}
+    .btn-outline{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:rgba(255,255,255,.1);color:#fff;font-size:16px;font-weight:600;border-radius:var(--r-sm);border:1.5px solid rgba(255,255,255,.25);backdrop-filter:blur(10px);transition:all .3s}
+    .btn-outline:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
+    .hero-social{display:flex;align-items:center;gap:24px;color:rgba(255,255,255,.6);font-size:13px}
+    .hero-social .stars{color:var(--primary)}
+    .hero-visual{animation:fadeRight 1s ease-out .3s both}
+    .hero-mockup{border-radius:16px;box-shadow:0 40px 80px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1)}
+    @media(max-width:900px){.hero-inner{grid-template-columns:1fr;text-align:center;padding-top:120px}.hero-text p{margin:0 auto 36px}.hero-btns{justify-content:center}.hero-social{justify-content:center}.hero-visual{display:none}}
+
+    .trust{padding:48px 24px;text-align:center;background:var(--bg)}
+    .trust p{font-size:15px;color:var(--text2);margin-bottom:24px}
+    .flags{display:flex;justify-content:center;align-items:center;gap:20px;flex-wrap:wrap}
+    .flag-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;border-radius:10px;transition:all .25s}
+    .flag-item:hover{background:var(--bg-warm);transform:translateY(-2px)}
+    .flag-item .emoji{font-size:28px}
+    .flag-item .name{font-size:10px;font-weight:600;color:var(--text3)}
+
+    .section{padding:100px 24px}
+    .section.alt{background:var(--bg-warm)}
+    .section-header{text-align:center;margin-bottom:60px}
+    .section-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+    .section-header h2{font-size:clamp(26px,3.5vw,42px);font-weight:700;line-height:1.2;margin-bottom:16px;color:var(--dark)}
+    .section-header p{font-size:16px;color:var(--text2);max-width:600px;margin:0 auto}
+
+    .feature-row{max-width:1200px;margin:0 auto 100px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+    .feature-row:last-child{margin-bottom:0}
+    .feature-row.reverse{direction:rtl}
+    .feature-row.reverse>*{direction:ltr}
+    .feature-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+    .feature-content h2{font-size:clamp(24px,3vw,34px);font-weight:700;line-height:1.2;margin-bottom:16px;color:var(--dark)}
+    .feature-content p{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:24px}
+    .feature-checks{list-style:none;margin-bottom:28px}
+    .feature-checks li{display:flex;align-items:start;gap:10px;padding:6px 0;font-size:15px}
+    .feature-checks li i{color:var(--green);font-size:18px;margin-top:2px}
+    .feature-img{width:100%;border-radius:20px 20px 0 0;box-shadow:0 35px 70px rgba(0,0,0,.25),0 15px 30px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.08);transition:transform .4s}
+    .feature-row.reverse .feature-img{border-radius:0 0 20px 20px}
+    .feature-img:hover{transform:translateY(-6px)}
+    .feature-link{display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--primary);transition:gap .2s}
+    .feature-link:hover{gap:12px}
+    @media(max-width:800px){.feature-row,.feature-row.reverse{grid-template-columns:1fr;direction:ltr}}
+
+    .products-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .product-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .3s}
+    .product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:rgba(212,168,67,.3)}
+    .product-card img{width:100%;height:200px;object-fit:cover}
+    .product-card .content{padding:28px}
+    .product-card h3{font-size:20px;font-weight:700;margin-bottom:8px}
+    .product-card p{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:16px}
+    .product-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--primary);transition:gap .2s}
+    .product-link:hover{gap:10px}
+    @media(max-width:800px){.products-grid{grid-template-columns:1fr}}
+
+    .stats{padding:40px 0;background:var(--dark);overflow:hidden;position:relative}
+    .stats::before,.stats::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+    .stats::before{left:0;background:linear-gradient(to right,var(--dark),transparent)}
+    .stats::after{right:0;background:linear-gradient(to left,var(--dark),transparent)}
+    .stats-track{display:flex;animation:scrollStats 30s linear infinite;width:max-content}
+    .stats-track:hover{animation-play-state:paused}
+    .stat{text-align:center;flex-shrink:0;padding:20px 80px}
+    .stat .number{font-size:44px;font-weight:800;color:var(--primary)}
+    .stat .label{font-size:14px;color:rgba(255,255,255,.7);margin-top:4px;white-space:nowrap}
+    @keyframes scrollStats{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    .reviews-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .review-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:32px;text-align:center;transition:all .3s}
+    .review-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+    .review-card img{width:72px;height:72px;border-radius:50%;object-fit:cover;margin-bottom:16px;border:3px solid var(--bg-warm)}
+    .review-stars{color:var(--primary);font-size:16px;margin-bottom:12px}
+    .review-card h4{font-size:16px;font-weight:700;margin-bottom:4px}
+    .review-card .role{font-size:12px;color:var(--text3);margin-bottom:12px}
+    .review-card blockquote{font-size:14px;color:var(--text2);line-height:1.6;font-style:italic}
+    @media(max-width:800px){.reviews-grid{grid-template-columns:1fr}}
+
+    .newsletter{padding:80px 24px;background:var(--dark);text-align:center}
+    .newsletter h2{font-size:28px;font-weight:700;color:#fff;margin-bottom:12px}
+    .newsletter p{font-size:16px;color:rgba(255,255,255,.7);margin-bottom:32px}
+    .newsletter-form{display:flex;gap:12px;max-width:480px;margin:0 auto}
+    .newsletter-form input{flex:1;padding:14px 20px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:15px;outline:none}
+    .newsletter-form input::placeholder{color:rgba(255,255,255,.5)}
+    .newsletter-form button{padding:14px 28px;background:var(--primary);color:var(--dark);font-size:15px;font-weight:700;border:none;border-radius:var(--r-sm);cursor:pointer;transition:all .2s}
+    .newsletter-form button:hover{background:var(--primary-light);transform:translateY(-1px)}
+    @media(max-width:500px){.newsletter-form{flex-direction:column}}
+
+    footer{background:var(--dark2);padding:60px 24px 0}
+    .footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px}
+    .footer-brand h3{font-size:20px;font-weight:700;color:#e8e6e1;margin-bottom:12px}
+    .footer-brand h3 span{color:var(--primary)}
+    .footer-brand p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+    .footer-social{display:flex;gap:12px;margin-top:16px}
+    .footer-social a{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);font-size:16px;transition:all .2s}
+    .footer-social a:hover{background:var(--primary);color:var(--dark)}
+    .footer-col h4{font-size:12px;font-weight:600;color:#e8e6e1;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+    .footer-col a{display:block;font-size:14px;color:rgba(255,255,255,.55);padding:3px 0;transition:color .2s}
+    .footer-col a:hover{color:var(--primary)}
+    .footer-bottom{margin-top:48px;padding:20px 0;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:13px;color:rgba(255,255,255,.35)}
+    @media(max-width:800px){.footer-inner{grid-template-columns:1fr 1fr}}
+    @media(max-width:500px){.footer-inner{grid-template-columns:1fr}}
+
+    /* ══ RESPONSIVE MOBILE RENFORCE ══ */
+    @media(max-width:768px){
+      .hero-inner{padding:120px 20px 60px 20px!important}
+      .hero-text h1{font-size:28px}
+      .hero-text p{font-size:15px}
+      .hero-badge{font-size:11px;padding:6px 14px}
+      .btn-primary,.btn-outline{padding:12px 20px;font-size:14px;width:100%;justify-content:center}
+      .hero-btns{flex-direction:column}
+      .section{padding:60px 16px}
+      .section-header h2{font-size:24px}
+      .feature-row{gap:30px;margin-bottom:60px}
+      .feature-content h2{font-size:22px}
+      .feature-checks li{font-size:13px}
+      .stat .number{font-size:32px}
+      .stat{padding:16px 40px}
+      .review-card{padding:24px}
+      .review-card blockquote{font-size:13px}
+      .trust{padding:32px 16px}
+      .flags{gap:10px}
+      .flag-item{padding:6px 8px}
+      .flag-item .emoji{font-size:22px}
+      .flag-item .name{font-size:8px}
+      .nav-inner{padding:0 16px}
+      div[style*="display:grid;grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
+    }
+    @media(max-width:400px){
+      .hero-text h1{font-size:24px}
+      .stat .number{font-size:26px}
+      .stat{padding:12px 24px}
+    }
+
+    /* ══ CONTACT FORM FEEDBACK ══ */
+    .contact-success{display:none;padding:20px;background:rgba(5,150,105,.1);border:1px solid var(--green);border-radius:var(--r-sm);text-align:center;color:var(--green);font-weight:600}
+    .contact-error{display:none;padding:20px;background:rgba(239,68,68,.1);border:1px solid #ef4444;border-radius:var(--r-sm);text-align:center;color:#ef4444;font-weight:600}
+  </style>
+</head>
+<body>
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><img src="/img/logo-horizontal.png" alt="NORMX AI"></a>
+    <div class="nav-links">
+      <a href="#products" class="nav-link">Produits</a>
+      <a href="#features" class="nav-link">Fonctionnalités</a>
+      <a href="#reviews" class="nav-link">Témoignages</a>
+      <a href="#contact" class="nav-link"><i class="bi bi-telephone"></i> Contact</a>
+    </div>
+    <div style="display:flex;gap:4px;align-items:center">
+      <a href="https://app.normx-ai.com" class="nav-cta">Connexion</a>
+      <a href="https://app.normx-ai.com" class="nav-cta" style="background:var(--primary);color:var(--dark)">S'inscrire</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge"><i class="bi bi-stars"></i> Comptabilité OHADA propulsée par l'IA</div>
+      <h1>Votre <span>comptabilité</span> OHADA<br>simplifiée par l'<span>IA</span></h1>
+      <p>Saisie d'écritures, grand livre, balance, bilan, compte de résultat, TFT, 37 notes annexes — conforme SYSCOHADA et SYCEBNL.</p>
+      <div class="hero-btns">
+        <a href="https://app.normx-ai.com" class="btn-primary">Commencer gratuitement <i class="bi bi-arrow-right"></i></a>
+        <a href="#products" class="btn-outline">Voir les produits</a>
+      </div>
+      <div class="hero-social">
+        <span class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></span>
+        <span>4.7/5</span><span>|</span><span>Disponible sur Web</span>
+      </div>
+    </div>
+    <div class="hero-visual"></div>
+  </div>
+</section>
+
+<div class="trust reveal">
+  <p>Conçu pour les 17 pays de l'espace OHADA</p>
+  <div class="flags stagger">
+    <div class="flag-item"><span class="emoji">🇧🇯</span><span class="name">Benin</span></div>
+    <div class="flag-item"><span class="emoji">🇧🇫</span><span class="name">Burkina</span></div>
+    <div class="flag-item"><span class="emoji">🇨🇲</span><span class="name">Cameroun</span></div>
+    <div class="flag-item"><span class="emoji">🇨🇫</span><span class="name">RCA</span></div>
+    <div class="flag-item"><span class="emoji">🇰🇲</span><span class="name">Comores</span></div>
+    <div class="flag-item"><span class="emoji">🇨🇬</span><span class="name">Congo</span></div>
+    <div class="flag-item"><span class="emoji">🇨🇮</span><span class="name">Cote d'Ivoire</span></div>
+    <div class="flag-item"><span class="emoji">🇨🇩</span><span class="name">RDC</span></div>
+    <div class="flag-item"><span class="emoji">🇬🇦</span><span class="name">Gabon</span></div>
+    <div class="flag-item"><span class="emoji">🇬🇶</span><span class="name">Guinee Eq.</span></div>
+    <div class="flag-item"><span class="emoji">🇬🇼</span><span class="name">Guinee-B.</span></div>
+    <div class="flag-item"><span class="emoji">🇬🇳</span><span class="name">Guinee</span></div>
+    <div class="flag-item"><span class="emoji">🇲🇱</span><span class="name">Mali</span></div>
+    <div class="flag-item"><span class="emoji">🇳🇪</span><span class="name">Niger</span></div>
+    <div class="flag-item"><span class="emoji">🇸🇳</span><span class="name">Senegal</span></div>
+    <div class="flag-item"><span class="emoji">🇹🇩</span><span class="name">Tchad</span></div>
+    <div class="flag-item"><span class="emoji">🇹🇬</span><span class="name">Togo</span></div>
+  </div>
+</div>
+
+<section class="section" id="features">
+  <div class="section-header reveal"><div class="section-label" style="color:var(--primary)">Fonctionnalités</div><h2>Tout ce dont vous avez besoin, au meme endroit</h2><p>De la saisie d'écritures aux états financiers, de la fiscalité au droit des affaires.</p></div>
+  <div class="feature-row">
+    <div class="feature-content reveal-left"><div class="feature-label" style="color:var(--blue)">Comptabilité OHADA</div><h2>Gardez le contrôle de vos écritures</h2><p>Saisie multi-journaux, plan comptable SYSCOHADA avec 1 409 comptes, lettrage automatique et import Excel.</p><ul class="feature-checks"><li><i class="bi bi-check-circle-fill"></i> Bilan, compte de résultat, TFT conformes</li><li><i class="bi bi-check-circle-fill"></i> 37 notes annexes SYSCOHADA</li><li><i class="bi bi-check-circle-fill"></i> Export PDF professionnel</li></ul><a href="https://app.normx-ai.com" class="feature-link">Essayer NORMX Finance <i class="bi bi-arrow-right"></i></a></div>
+    <div class="reveal-right"><img src="/img/screenshot.jpg" alt="Comptabilité" class="feature-img"></div>
+  </div>
+  <div class="feature-row reverse">
+    <div class="feature-content reveal-right"><div class="feature-label" style="color:var(--primary)">Fiscalité CGI 2026</div><h2>Accédez instantanément au CGI et au Code Social</h2><p>16 simulateurs fiscaux et sociaux, +3 700 articles indexés, assistant IA et calendrier des échéances.</p><ul class="feature-checks"><li><i class="bi bi-check-circle-fill"></i> ITS, IS, TVA, Patente, IRCM, IRF</li><li><i class="bi bi-check-circle-fill"></i> Code fiscal et social, conventions collectives</li><li><i class="bi bi-check-circle-fill"></i> Assistant IA fiscal 24h/24</li></ul><a href="https://tax.normx-ai.com" class="feature-link">Essayer NORMX Tax <i class="bi bi-arrow-right"></i></a></div>
+    <div class="reveal-left"><img src="/img/feature-fiscal.jpg" alt="Fiscalité" class="feature-img"></div>
+  </div>
+  <div class="feature-row">
+    <div class="feature-content reveal-left"><div class="feature-label" style="color:var(--purple)">Droit OHADA</div><h2>Générez vos actes juridiques</h2><p>59 modèles de documents conformes aux Actes uniformes OHADA — statuts, PV, cessions, convocations.</p><ul class="feature-checks"><li><i class="bi bi-check-circle-fill"></i> SARL, SAS, SA, SNC, GIE et plus</li><li><i class="bi bi-check-circle-fill"></i> Export Word et PDF instantané</li><li><i class="bi bi-check-circle-fill"></i> Assistant IA juridique</li></ul><a href="https://legal.normx-ai.com" class="feature-link">Essayer NORMX Legal <i class="bi bi-arrow-right"></i></a></div>
+    <div class="reveal-right"><img src="/img/feature-legal.jpg" alt="Droit OHADA" class="feature-img"></div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stats-track">
+    <div class="stat"><div class="number">1 409</div><div class="label">Comptes SYSCOHADA</div></div>
+    <div class="stat"><div class="number">5</div><div class="label">Journaux comptables</div></div>
+    <div class="stat"><div class="number">59</div><div class="label">Modèles juridiques</div></div>
+    <div class="stat"><div class="number">16</div><div class="label">Simulateurs fiscaux</div></div>
+    <div class="stat"><div class="number">17</div><div class="label">Pays OHADA couverts</div></div>
+    <div class="stat"><div class="number">37</div><div class="label">Notes annexes OHADA</div></div>
+    <div class="stat"><div class="number">IA</div><div class="label">Assistant intelligent</div></div>
+    <div style="flex-shrink:0;width:200px;display:flex;align-items:center;justify-content:center;gap:12px">
+      <span style="width:8px;height:8px;border-radius:50%;background:rgba(212,168,67,.4)"></span>
+      <span style="width:10px;height:10px;border-radius:50%;background:var(--primary)"></span>
+      <span style="width:8px;height:8px;border-radius:50%;background:rgba(212,168,67,.4)"></span>
+    </div>
+    <!-- Dupliqué pour boucle infinie -->
+    <div class="stat"><div class="number">1 409</div><div class="label">Comptes SYSCOHADA</div></div>
+    <div class="stat"><div class="number">5</div><div class="label">Journaux comptables</div></div>
+    <div class="stat"><div class="number">59</div><div class="label">Modèles juridiques</div></div>
+    <div class="stat"><div class="number">16</div><div class="label">Simulateurs fiscaux</div></div>
+    <div class="stat"><div class="number">17</div><div class="label">Pays OHADA couverts</div></div>
+    <div class="stat"><div class="number">37</div><div class="label">Notes annexes OHADA</div></div>
+    <div class="stat"><div class="number">IA</div><div class="label">Assistant intelligent</div></div>
+  </div>
+</div>
+
+<section class="section alt" id="products">
+  <div class="section-header reveal"><div class="section-label" style="color:var(--primary)">Nos produits</div><h2>Une suite logicielle complète</h2><p>Trois applications spécialisées, une seule plateforme.</p></div>
+  <div class="products-grid stagger">
+    <div class="product-card"><img src="/img/product-tax.jpg" alt="NORMX Finance"><div class="content"><h3>NORMX Finance</h3><p>Comptabilité SYSCOHADA, états financiers, 37 notes annexes, paie et assistant IA comptable.</p><a href="https://app.normx-ai.com" class="product-link">Accéder <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="product-card"><img src="/img/product-finance.jpg" alt="NORMX Tax"><div class="content"><h3>NORMX Tax</h3><p>Simulateurs fiscaux CGI 2026, Code Social, calendrier des échéances et assistant IA fiscal.</p><a href="https://tax.normx-ai.com" class="product-link">Accéder <i class="bi bi-arrow-right"></i></a></div></div>
+    <div class="product-card"><img src="/img/product-legal.jpg" alt="NORMX Legal"><div class="content"><h3>NORMX Legal</h3><p>59 modèles de documents juridiques OHADA : statuts, PV, cessions, convocations, rapports.</p><a href="https://legal.normx-ai.com" class="product-link">Accéder <i class="bi bi-arrow-right"></i></a></div></div>
+  </div>
+</section>
+
+<section class="section" id="reviews">
+  <div class="section-header reveal"><div class="section-label" style="color:var(--orange)">Témoignages</div><h2>Ils nous font confiance</h2><p>Découvrez ce que disent nos utilisateurs.</p></div>
+  <div class="reviews-grid stagger">
+    <div class="review-card"><img src="/img/review-1.jpg" alt="Temoignage"><div class="review-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div><h4>Jean-Pierre M.</h4><div class="role">Expert-comptable, Brazzaville</div><blockquote>"NORMX Finance m'a fait gagner un temps considérable sur les états financiers SYSCOHADA."</blockquote></div>
+    <div class="review-card"><img src="/img/review-2.jpg" alt="Temoignage"><div class="review-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div><h4>Marie-Claire A.</h4><div class="role">Directrice financière, Pointe-Noire</div><blockquote>"L'assistant IA fiscal répond a toutes mes questions sur le CGI. C'est comme avoir un fiscaliste 24h/24."</blockquote></div>
+    <div class="review-card"><img src="/img/review-3.jpg" alt="Temoignage"><div class="review-stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div><h4>Patrick O.</h4><div class="role">Avocat d'affaires, Douala</div><blockquote>"NORMX Legal génère mes statuts et PV en quelques minutes. La conformité OHADA est impeccable."</blockquote></div>
+  </div>
+</section>
+
+
+<section class="newsletter">
+  <h2>Restez informé des mises à jour</h2>
+  <p>Recevez les nouveautés fiscales, comptables et juridiques OHADA.</p>
+  <div class="newsletter-form"><input type="email" placeholder="Votre adresse e-mail"><button>S'inscrire</button></div>
+</section>
+
+<section class="section" id="contact" style="background:var(--bg-warm)">
+  <div class="section-header reveal">
+    <div class="section-label" style="color:var(--primary)"><i class="bi bi-envelope"></i> Contact</div>
+    <h2>Une question ? Ecrivez-nous</h2>
+    <p>Remplissez le formulaire et nous vous repondrons dans les plus brefs delais.</p>
+  </div>
+  <div style="max-width:600px;margin:0 auto">
+    <form id="contactForm" style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <input type="text" name="nom" placeholder="Nom" required style="padding:14px 18px;border-radius:var(--r-sm);border:1px solid var(--border);font-size:15px;font-family:inherit;outline:none;background:var(--bg)">
+        <input type="text" name="prenom" placeholder="Prenom" required style="padding:14px 18px;border-radius:var(--r-sm);border:1px solid var(--border);font-size:15px;font-family:inherit;outline:none;background:var(--bg)">
+      </div>
+      <input type="email" name="email" placeholder="Adresse e-mail" required style="padding:14px 18px;border-radius:var(--r-sm);border:1px solid var(--border);font-size:15px;font-family:inherit;outline:none;background:var(--bg)">
+      <input type="text" name="sujet" placeholder="Sujet" required style="padding:14px 18px;border-radius:var(--r-sm);border:1px solid var(--border);font-size:15px;font-family:inherit;outline:none;background:var(--bg)">
+      <textarea name="message" placeholder="Votre message..." rows="5" required style="padding:14px 18px;border-radius:var(--r-sm);border:1px solid var(--border);font-size:15px;font-family:inherit;outline:none;resize:vertical;background:var(--bg)"></textarea>
+      <button type="submit" id="contactBtn" style="padding:16px 32px;background:var(--primary);color:var(--dark);font-size:16px;font-weight:700;border:none;border-radius:var(--r-sm);cursor:pointer;transition:all .3s;align-self:flex-start" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--primary)'">Envoyer <i class="bi bi-send"></i></button>
+    </form>
+    <div id="contactSuccess" class="contact-success" style="margin-top:16px"><i class="bi bi-check-circle"></i> Message envoye avec succes. Nous vous repondrons rapidement.</div>
+    <div id="contactError" class="contact-error" style="margin-top:16px"><i class="bi bi-exclamation-circle"></i> Erreur lors de l'envoi. Veuillez reessayer ou contacter info-contact@normx-ai.com</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><h3>NORMX <span>AI</span></h3><p>Plateforme d'intelligence comptable, fiscale, sociale et juridique pour les professionnels africains.</p><div class="footer-social"><a href="#"><i class="bi bi-linkedin"></i></a><a href="#"><i class="bi bi-twitter-x"></i></a><a href="#"><i class="bi bi-facebook"></i></a></div></div>
+    <div class="footer-col"><h4>Produits</h4><a href="https://app.normx-ai.com">NORMX Finance</a><a href="https://tax.normx-ai.com">NORMX Tax</a><a href="https://legal.normx-ai.com">NORMX Legal</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="mailto:info-contact@normx-ai.com" style="color:var(--primary)">info-contact@normx-ai.com</a><a href="mailto:support@normx-ai.com">support@normx-ai.com</a><span style="font-size:14px;color:rgba(255,255,255,.45);display:block;padding:3px 0">71 rue Daire, 80000 Amiens</span></div>
+    <div class="footer-col"><h4>Legal</h4><a href="https://tax.normx-ai.com/legal/cgu">Conditions générales</a><a href="https://tax.normx-ai.com/legal/confidentialité">Politique de confidentialité</a><a href="https://tax.normx-ai.com/legal/mentions">Mentions légales</a></div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 NORMX AI SAS — 71 rue Daire, 80000 Amiens, France</div>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20)});
+if(typeof IntersectionObserver!=='undefined'){const o=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach(e=>o.observe(e))}
+
+// Contact form
+document.getElementById('contactForm').addEventListener('submit',async function(e){
+  e.preventDefault();
+  const btn=document.getElementById('contactBtn');
+  const ok=document.getElementById('contactSuccess');
+  const err=document.getElementById('contactError');
+  ok.style.display='none';err.style.display='none';
+  btn.textContent='Envoi en cours...';btn.disabled=true;
+  try{
+    const fd=new FormData(this);
+    const data={nom:fd.get('nom'),prenom:fd.get('prenom'),email:fd.get('email'),sujet:fd.get('sujet'),message:fd.get('message')};
+    const res=await fetch('https://tax.normx-ai.com/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    if(res.ok){ok.style.display='block';this.reset()}
+    else{err.style.display='block'}
+  }catch(_){err.style.display='block'}
+  btn.innerHTML='Envoyer <i class="bi bi-send"></i>';btn.disabled=false;
+})
+</script>
+</body>
+</html>
