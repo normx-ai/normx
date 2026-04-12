@@ -45,10 +45,10 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Fournitures d\'entretien', prefixes: ['6054'], group: 'autres' },
   { label: 'Fourniture de bureau', prefixes: ['6055'], group: 'autres' },
   { label: 'Petit matériel et outillages', prefixes: ['6056'], group: 'autres' },
-  { label: 'Achats études, prestations de services, de travaux matériels et équipements', prefixes: ['608'], group: 'autres' },
+  { label: 'Achats études, prestations de services, de travaux matériels et équipements', prefixes: ['6057', '6058'], group: 'autres' },
   { label: 'Achats d\'emballages', prefixes: ['6081'], group: 'autres' },
   { label: 'Frais sur achats', prefixes: ['6082'], group: 'autres' },
-  { label: 'Rabais, remises et ristournes obtenus', prefixes: ['609'], group: 'autres' },
+  { label: 'Rabais, remises et ristournes obtenus', prefixes: ['609', '6019', '6029', '6049', '6059', '6089'], group: 'autres' },
   { label: 'TOTAL : AUTRES ACHATS', prefixes: [], bold: true, isTotal: true, group: 'autres' },
 ];
 
