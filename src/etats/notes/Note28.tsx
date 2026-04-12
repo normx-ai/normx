@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps } from '../../types';
+import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
 import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
@@ -15,6 +15,7 @@ interface Note28Props extends EtatBaseProps { onGoToParametres?: () => void; }
 interface LigneProvision {
   num: string;
   label: string;
+  prefixes?: string[];      // comptes bilan pour ouverture/cloture auto
   ouverture: string;
   aug_exploitation: string;
   aug_financieres: string;
@@ -28,20 +29,21 @@ interface LigneProvision {
   group?: 'dotations' | 'charges';
 }
 
+// Prefixes : comptes bilan SYSCOHADA. Ouverture = si_credit, Cloture = solde_crediteur.
 const LIGNES_INIT: Omit<LigneProvision, 'ouverture' | 'aug_exploitation' | 'aug_financieres' | 'aug_hao' | 'dim_exploitation' | 'dim_financieres' | 'dim_hao' | 'cloture'>[] = [
-  { num: '1.', label: 'Provisions réglementées', group: 'dotations' },
-  { num: '2.', label: 'Provisions financières pour risques et charges', group: 'dotations' },
-  { num: '3.', label: 'Dépréciations des immobilisations', group: 'dotations' },
+  { num: '1.', label: 'Provisions réglementées', group: 'dotations', prefixes: ['151', '152', '153', '154', '155', '156', '157', '158'] },
+  { num: '2.', label: 'Provisions financières pour risques et charges', group: 'dotations', prefixes: ['191', '192', '193', '194', '195', '196', '197', '198'] },
+  { num: '3.', label: 'Dépréciations des immobilisations', group: 'dotations', prefixes: ['29'] },
   { num: '', label: 'TOTAL : DOTATIONS', bold: true, isTotal: true, group: 'dotations' },
-  { num: '4.', label: 'Dépréciations des stocks', group: 'charges' },
-  { num: '5.', label: 'Dépréciations actif circulant HAO', group: 'charges' },
-  { num: '6.', label: 'Dépréciations clients', group: 'charges' },
-  { num: '7.', label: 'Dépréciations autres créances', group: 'charges' },
-  { num: '8.', label: 'Dépréciations titres de placement', group: 'charges' },
-  { num: '9.', label: 'Dépréciations valeurs à encaisser', group: 'charges' },
-  { num: '10.', label: 'Dépréciations disponibilités', group: 'charges' },
-  { num: '11.', label: 'Provisions pour risques à court terme exploitation', group: 'charges' },
-  { num: '12.', label: 'Provisions pour risques à court terme à caractère financier', group: 'charges' },
+  { num: '4.', label: 'Dépréciations des stocks', group: 'charges', prefixes: ['39'] },
+  { num: '5.', label: 'Dépréciations actif circulant HAO', group: 'charges', prefixes: ['498'] },
+  { num: '6.', label: 'Dépréciations clients', group: 'charges', prefixes: ['491'] },
+  { num: '7.', label: 'Dépréciations autres créances', group: 'charges', prefixes: ['492', '493', '494', '495', '496', '497'] },
+  { num: '8.', label: 'Dépréciations titres de placement', group: 'charges', prefixes: ['590'] },
+  { num: '9.', label: 'Dépréciations valeurs à encaisser', group: 'charges', prefixes: ['591'] },
+  { num: '10.', label: 'Dépréciations disponibilités', group: 'charges', prefixes: ['592', '593', '594'] },
+  { num: '11.', label: 'Provisions pour risques à court terme exploitation', group: 'charges', prefixes: ['499'] },
+  { num: '12.', label: 'Provisions pour risques à court terme à caractère financier', group: 'charges', prefixes: ['599'] },
   { num: '', label: 'TOTAL : CHARGES POUR DEPRECIATIONS ET PROVISIONS A COURT TERME', bold: true, isTotal: true, group: 'charges' },
   { num: '', label: 'TOTAL', bold: true, isTotal: true },
 ];
@@ -50,7 +52,7 @@ const emptyVals = { ouverture: '', aug_exploitation: '', aug_financieres: '', au
 
 const DEFAULT_COMMENTAIRE = `• Indiquer les événements et circonstances qui ont conduit à la constitution et à la reprise de la dépréciation et de la provision.`;
 
-function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): React.JSX.Element {
+function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
     params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
@@ -61,6 +63,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
 
   const [lignes, setLignes] = useState<LigneProvision[]>(LIGNES_INIT.map(l => ({ ...l, ...emptyVals })));
   const [commentaire, setCommentaire] = useState(DEFAULT_COMMENTAIRE);
+  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
 
   // Charger donnees depuis params
   useEffect(() => {
@@ -70,6 +73,41 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
       try { const p = JSON.parse(params['note28_lignes']); if (Array.isArray(p) && p.length > 0) setLignes(p); } catch { /* */ }
     }
   }, [params]);
+
+  // Charger la balance N pour calcul auto de ouverture / cloture
+  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
+  useEffect(() => {
+    if (!entiteId || !selectedExercice) return;
+    const load = async () => {
+      try {
+        let bl: BalanceLigne[] = [];
+        if (balanceSource === 'ecritures') {
+          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const data = await res.json();
+          bl = data.lignes || [];
+        } else {
+          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const data = await res.json();
+          bl = data.lignes || [];
+        }
+        setLignesN(bl);
+      } catch { setLignesN([]); }
+    };
+    load();
+  }, [entiteId, selectedExercice, balanceSource]);
+
+  // Auto-calcul ouverture (si_credit) et cloture (solde_crediteur) pour une ligne
+  const computeAuto = (prefixes: string[] | undefined) => {
+    if (!prefixes || prefixes.length === 0) return { ouverture: 0, cloture: 0 };
+    let ouv = 0, clo = 0;
+    for (const l of lignesN) {
+      const num = (l.numero_compte || '').trim();
+      if (!prefixes.some(p => num.startsWith(p))) continue;
+      ouv += parseFloat(String(l.si_credit)) || 0;
+      clo += parseFloat(String(l.solde_crediteur)) || 0;
+    }
+    return { ouverture: ouv, cloture: clo };
+  };
 
   const handleSave = () => saveParams({
     ...params,
@@ -89,16 +127,20 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
     setLignes(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
   };
 
-  // Calcul automatique des totaux
+  // Calcul automatique des totaux (ouverture/cloture pris depuis la balance)
   const dotationsDetail = lignes.filter(l => l.group === 'dotations' && !l.isTotal);
   const chargesDetail = lignes.filter(l => l.group === 'charges' && !l.isTotal);
   const allDetail = [...dotationsDetail, ...chargesDetail];
 
+  const getOuverture = (l: LigneProvision) => computeAuto(l.prefixes).ouverture;
+  const getCloture = (l: LigneProvision) => computeAuto(l.prefixes).cloture;
+
   const sumFields = (rows: LigneProvision[]) => {
-    const fields: (keyof LigneProvision)[] = ['ouverture', 'aug_exploitation', 'aug_financieres', 'aug_hao', 'dim_exploitation', 'dim_financieres', 'dim_hao'];
+    const mouvFields: (keyof LigneProvision)[] = ['aug_exploitation', 'aug_financieres', 'aug_hao', 'dim_exploitation', 'dim_financieres', 'dim_hao'];
     const result: Record<string, number> = {};
-    for (const f of fields) result[f] = rows.reduce((s, r) => s + parseN(r[f] as string), 0);
-    result.cloture = result.ouverture + result.aug_exploitation + result.aug_financieres + result.aug_hao - result.dim_exploitation - result.dim_financieres - result.dim_hao;
+    result.ouverture = rows.reduce((s, r) => s + getOuverture(r), 0);
+    for (const f of mouvFields) result[f] = rows.reduce((s, r) => s + parseN(r[f] as string), 0);
+    result.cloture = rows.reduce((s, r) => s + getCloture(r), 0);
     return result;
   };
 
@@ -111,13 +153,6 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
     if (l.label.includes('CHARGES')) return totalCharges;
     if (l.label === 'TOTAL') return totalGeneral;
     return null;
-  };
-
-  const computeCloture = (l: LigneProvision): string => {
-    const o = parseN(l.ouverture); const ae = parseN(l.aug_exploitation); const af = parseN(l.aug_financieres); const ah = parseN(l.aug_hao);
-    const de = parseN(l.dim_exploitation); const df = parseN(l.dim_financieres); const dh = parseN(l.dim_hao);
-    const c = o + ae + af + ah - de - df - dh;
-    return c !== 0 ? fmtM(c) : '';
   };
 
   // Note-specific styles (smaller font for landscape table)
@@ -134,7 +169,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
     return <input value={val} onChange={e => updateLigne(idx, field, e.target.value)} style={inp} />;
   };
 
-  const FIELDS: (keyof LigneProvision)[] = ['ouverture', 'aug_exploitation', 'aug_financieres', 'aug_hao', 'dim_exploitation', 'dim_financieres', 'dim_hao'];
+  const MOUV_FIELDS: (keyof LigneProvision)[] = ['aug_exploitation', 'aug_financieres', 'aug_hao', 'dim_exploitation', 'dim_financieres', 'dim_hao'];
 
   return (
     <div>
@@ -195,7 +230,8 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
                 return (
                   <tr key={i}>
                     <td style={tdB}>{l.num ? l.num + ' ' : ''}{l.label}</td>
-                    {FIELDS.map(f => <td key={f} style={tdBR}>{fmtM(tot[f])}</td>)}
+                    <td style={tdBR}>{fmtM(tot.ouverture)}</td>
+                    {MOUV_FIELDS.map(f => <td key={f} style={tdBR}>{fmtM(tot[f])}</td>)}
                     <td style={tdBR}>{fmtM(tot.cloture)}</td>
                   </tr>
                 );
@@ -203,8 +239,9 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
               return (
                 <tr key={i}>
                   <td style={td}>{l.num ? l.num + ' ' : ''}{l.label}</td>
-                  {FIELDS.map(f => <td key={f} style={tdR}>{renderInput(i, f)}</td>)}
-                  <td style={{ ...tdR, background: '#fafafa' }}>{computeCloture(l)}</td>
+                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(getOuverture(l))}</td>
+                  {MOUV_FIELDS.map(f => <td key={f} style={tdR}>{renderInput(i, f)}</td>)}
+                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(getCloture(l))}</td>
                 </tr>
               );
             })}
