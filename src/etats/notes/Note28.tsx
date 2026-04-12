@@ -121,7 +121,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   };
 
   const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => { if (v === 0) return ''; return Math.round(v).toLocaleString('fr-FR'); };
+  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   const updateLigne = (idx: number, field: keyof LigneProvision, value: string) => {
     setLignes(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
