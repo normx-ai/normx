@@ -10,47 +10,13 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
 
 interface Note22Props extends EtatBaseProps {
   onGoToParametres?: () => void;
 }
 
-interface Rubrique {
-  label: string;
-  prefixes: string[];
-  group: 'marchandises' | 'matieres' | 'autres';
-  bold?: boolean;
-  isTotal?: boolean;
-}
-
-const RUBRIQUES: Rubrique[] = [
-  // Marchandises
-  { label: 'Achats dans la région', prefixes: ['6011'], group: 'marchandises' },
-  { label: 'Achats hors région', prefixes: ['6012'], group: 'marchandises' },
-  { label: 'Achats groupe', prefixes: ['6013', '6014'], group: 'marchandises' },
-  { label: 'TOTAL : ACHATS DE MARCHANDISES', prefixes: [], bold: true, isTotal: true, group: 'marchandises' },
-  // Matières premières
-  { label: 'Achats dans la région', prefixes: ['6021'], group: 'matieres' },
-  { label: 'Achats hors région', prefixes: ['6022'], group: 'matieres' },
-  { label: 'Achats groupe', prefixes: ['6023', '6024'], group: 'matieres' },
-  { label: 'TOTAL : ACHATS MATIERES PREMIERES ET FOURNITURES LIEES', prefixes: [], bold: true, isTotal: true, group: 'matieres' },
-  // Autres achats détaillés
-  { label: 'Matières consommables', prefixes: ['6041'], group: 'autres' },
-  { label: 'Matières combustibles', prefixes: ['6042'], group: 'autres' },
-  { label: 'Produits d\'entretien', prefixes: ['6043'], group: 'autres' },
-  { label: 'Fournitures d\'atelier, d\'usine et de magasin', prefixes: ['6044', '6046'], group: 'autres' },
-  { label: 'Eau', prefixes: ['6051'], group: 'autres' },
-  { label: 'Electricité', prefixes: ['6052'], group: 'autres' },
-  { label: 'Autres énergies', prefixes: ['6053'], group: 'autres' },
-  { label: 'Fournitures d\'entretien', prefixes: ['6054'], group: 'autres' },
-  { label: 'Fourniture de bureau', prefixes: ['6047', '6055'], group: 'autres' },
-  { label: 'Petit matériel et outillages', prefixes: ['6056'], group: 'autres' },
-  { label: 'Achats études, prestations de services, de travaux matériels et équipements', prefixes: ['6057', '6058'], group: 'autres' },
-  { label: 'Achats d\'emballages', prefixes: ['6081', '6082', '6083'], group: 'autres' },
-  { label: 'Frais sur achats', prefixes: ['6015', '6025', '6045', '6085'], group: 'autres' },
-  { label: 'Rabais, remises et ristournes obtenus', prefixes: ['6019', '6029', '6049', '6059', '6089'], group: 'autres' },
-  { label: 'TOTAL : AUTRES ACHATS', prefixes: [], bold: true, isTotal: true, group: 'autres' },
-];
+const RUBRIQUES: Rubrique[] = buildRubriques('note_22_sys');
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;
 

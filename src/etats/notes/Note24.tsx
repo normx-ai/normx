@@ -10,28 +10,11 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
 
 interface Note24Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
-interface Rubrique { label: string; prefixes: string[]; }
-
-const RUBRIQUES: Rubrique[] = [
-  { label: 'Sous-traitance generale', prefixes: ['621'] },
-  { label: 'Locations et charges locatives', prefixes: ['622'] },
-  { label: 'Redevances de location acquisition', prefixes: ['623'] },
-  { label: 'Entretien, reparations et maintenance', prefixes: ['624'] },
-  { label: 'Primes d\'assurance', prefixes: ['625'] },
-  { label: 'Etudes, recherches et documentation', prefixes: ['626'] },
-  { label: 'Publicite, publications, relations publiques', prefixes: ['627'] },
-  { label: 'Frais de telecommunications', prefixes: ['628'] },
-  { label: 'Frais bancaires', prefixes: ['631'] },
-  { label: 'Remunerations d\'intermediaires et de conseils', prefixes: ['632'] },
-  { label: 'Frais de formation du personnel', prefixes: ['633'] },
-  { label: 'Redevances pour brevets, licences, logiciels, concession et droits similaires', prefixes: ['634'] },
-  { label: 'Cotisations', prefixes: ['635'] },
-  { label: 'Personnel exterieur a l\'entite', prefixes: ['637'] },
-  { label: 'Autres charges externes', prefixes: ['638'] },
-];
+const RUBRIQUES: Rubrique[] = buildRubriques('note_24_sys');
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;
 

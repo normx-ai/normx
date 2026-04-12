@@ -10,18 +10,11 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
 
 interface Note23Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
-interface Rubrique { label: string; prefixes: string[]; }
-
-const RUBRIQUES: Rubrique[] = [
-  { label: 'Transports sur ventes', prefixes: ['612'] },
-  { label: 'Transports pour le compte de tiers', prefixes: ['613'] },
-  { label: 'Transport du personnel', prefixes: ['614'] },
-  { label: 'Transports de plis', prefixes: ['616'] },
-  { label: 'Autres frais de transport', prefixes: ['618'] },
-];
+const RUBRIQUES: Rubrique[] = buildRubriques('note_23_sys');
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;
 
