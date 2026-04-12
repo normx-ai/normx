@@ -105,12 +105,30 @@ export const PLAN_NOTES_SYSCOHADA: NoteCompteEntry[] = [
   { numero: '638', label: 'Autres charges externes', note: 'note_24_sys' },
 
   // ==========================================
-  // Note 25 — Impôts et taxes
+  // Note 25 — Impôts et taxes (detail par sous-compte du plan)
   // ==========================================
-  { numero: '641', label: 'Impôts et taxes directs', note: 'note_25_sys' },
+  // 641 Impôts et taxes directs
+  { numero: '6411', label: 'Impôts fonciers et taxes annexes', note: 'note_25_sys' },
+  { numero: '6412', label: 'Patentes, licences et taxes annexes', note: 'note_25_sys' },
+  { numero: '6413', label: 'Taxes sur appointements et salaires', note: 'note_25_sys' },
+  { numero: '6414', label: "Taxes d'apprentissage", note: 'note_25_sys' },
+  { numero: '6415', label: 'Formation professionnelle continue', note: 'note_25_sys' },
+  { numero: '6418', label: 'Autres impôts et taxes directs', note: 'note_25_sys' },
+  // 645 Impôts et taxes indirects
   { numero: '645', label: 'Impôts et taxes indirects', note: 'note_25_sys' },
-  { numero: '646', label: "Droits d'enregistrement", note: 'note_25_sys' },
-  { numero: '647', label: 'Pénalités et amendes fiscales', note: 'note_25_sys' },
+  // 646 Droits d'enregistrement
+  { numero: '6461', label: 'Droits de mutation', note: 'note_25_sys' },
+  { numero: '6462', label: 'Droits de timbre', note: 'note_25_sys' },
+  { numero: '6463', label: 'Taxes sur les véhicules de société', note: 'note_25_sys' },
+  { numero: '6464', label: 'Vignettes', note: 'note_25_sys' },
+  { numero: '6468', label: "Autres droits d'enregistrement", note: 'note_25_sys' },
+  // 647 Pénalités, amendes fiscales
+  { numero: '6471', label: "Pénalités d'assiette, impôts directs", note: 'note_25_sys' },
+  { numero: '6472', label: "Pénalités d'assiette, impôts indirects", note: 'note_25_sys' },
+  { numero: '6473', label: 'Pénalités de recouvrement, impôts directs', note: 'note_25_sys' },
+  { numero: '6474', label: 'Pénalités de recouvrement, impôts indirects', note: 'note_25_sys' },
+  { numero: '6478', label: 'Autres pénalités et amendes fiscales', note: 'note_25_sys' },
+  // 648 Autres impôts et taxes
   { numero: '648', label: 'Autres impôts et taxes', note: 'note_25_sys' },
 
   // ==========================================
