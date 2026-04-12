@@ -45,9 +45,12 @@ const RUBRIQUES: Rubrique[] = [
   // Produits accessoires + Total CA
   { label: 'Produits accessoires', prefixes: ['707'] },
   { label: 'TOTAL : CHIFFRE D\'AFFAIRES', prefixes: [], bold: true, isTotal: true, group: 'ca' },
-  // Autres produits — compte 75 uniquement (71 subventions et 72
-  // production immobilisee sont des lignes distinctes du compte de
-  // resultat, pas agregees dans cette note)
+  // Lignes standalone (pas dans le groupe 'autres')
+  // Production immobilisee (72) et Subventions d'exploitation (71) sont
+  // affichees comme lignes distinctes et entrent dans le grand TOTAL, mais
+  // ne sont pas agregees dans "TOTAL : AUTRES PRODUITS" (= compte 75 seul)
+  { label: 'Production immobilisée', prefixes: ['72'] },
+  { label: 'Subventions d\'exploitation', prefixes: ['71'] },
   { label: 'Autres produits', prefixes: ['75'] },
   { label: 'TOTAL : AUTRES PRODUITS', prefixes: [], bold: true, isTotal: true, group: 'autres' },
 ];
@@ -156,10 +159,18 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
   const produitsAccessoires = computeRow(RUBRIQUES.find(r => r.label === 'Produits accessoires')!);
   const totalCA = { anneeN: totalMarchandises.anneeN + totalProduitsFab.anneeN + totalTravaux.anneeN + produitsAccessoires.anneeN, anneeN1: totalMarchandises.anneeN1 + totalProduitsFab.anneeN1 + totalTravaux.anneeN1 + produitsAccessoires.anneeN1 };
 
-  const autresDetail = RUBRIQUES.filter(r => !r.isTotal && !r.bold && !r.group && r.label !== 'Produits accessoires');
-  const totalAutres = autresDetail.reduce((a, r) => { const v = computeRow(r); return { anneeN: a.anneeN + v.anneeN, anneeN1: a.anneeN1 + v.anneeN1 }; }, { anneeN: 0, anneeN1: 0 });
+  // "Autres produits" (TOTAL) = compte 75 uniquement
+  const autresProduits = computeRow(RUBRIQUES.find(r => r.label === 'Autres produits')!);
+  const totalAutres = { anneeN: autresProduits.anneeN, anneeN1: autresProduits.anneeN1 };
 
-  const totalGeneral = { anneeN: totalCA.anneeN + totalAutres.anneeN, anneeN1: totalCA.anneeN1 + totalAutres.anneeN1 };
+  // Lignes standalone qui entrent dans le grand TOTAL sans etre dans "autres produits"
+  const productionImmo = computeRow(RUBRIQUES.find(r => r.label === 'Production immobilisée')!);
+  const subventions = computeRow(RUBRIQUES.find(r => r.label === 'Subventions d\'exploitation')!);
+
+  const totalGeneral = {
+    anneeN: totalCA.anneeN + productionImmo.anneeN + subventions.anneeN + totalAutres.anneeN,
+    anneeN1: totalCA.anneeN1 + productionImmo.anneeN1 + subventions.anneeN1 + totalAutres.anneeN1,
+  };
   const calcVar = (t: { anneeN: number; anneeN1: number }) => t.anneeN1 !== 0 ? ((t.anneeN - t.anneeN1) / Math.abs(t.anneeN1) * 100) : 0;
 
   const renderAdjInput = (label: string, group: string, field: string, baseValue: number) => {
