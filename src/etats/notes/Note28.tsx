@@ -8,7 +8,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle as thBase, tdStyle as tdBase } from './noteStyles';
-import { LuInfo } from 'react-icons/lu';
+import { LuInfo, LuEyeOff } from 'react-icons/lu';
 
 interface Note28Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -64,6 +64,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   const [lignes, setLignes] = useState<LigneProvision[]>(LIGNES_INIT.map(l => ({ ...l, ...emptyVals })));
   const [commentaire, setCommentaire] = useState(DEFAULT_COMMENTAIRE);
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
+  const [hideEmpty, setHideEmpty] = useState(false);
 
   // Charger donnees depuis params
   useEffect(() => {
@@ -178,7 +179,9 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
         exercices={exercices} selectedExercice={selectedExercice} onSelectExercice={setSelectedExercice}
         editing={editing} saving={saving} saved={saved}
         onEdit={() => setEditing(true)} onSave={handleSave} onPreview={pdf.openPreview} onBack={onBack}
-      />
+      >
+        <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
+      </NoteToolbar>
 
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 28" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
@@ -236,12 +239,17 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
                   </tr>
                 );
               }
+              // Masquer les lignes vides si hideEmpty
+              const ouv = getOuverture(l);
+              const clo = getCloture(l);
+              const mouvSum = MOUV_FIELDS.reduce((s, f) => s + parseN(l[f] as string), 0);
+              if (hideEmpty && ouv === 0 && clo === 0 && mouvSum === 0) return null;
               return (
                 <tr key={i}>
                   <td style={td}>{l.num ? l.num + ' ' : ''}{l.label}</td>
-                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(getOuverture(l))}</td>
+                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(ouv)}</td>
                   {MOUV_FIELDS.map(f => <td key={f} style={tdR}>{renderInput(i, f)}</td>)}
-                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(getCloture(l))}</td>
+                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(clo)}</td>
                 </tr>
               );
             })}
