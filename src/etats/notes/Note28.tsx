@@ -97,17 +97,25 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
     load();
   }, [entiteId, selectedExercice, balanceSource]);
 
-  // Auto-calcul ouverture (si_credit) et cloture (solde_crediteur) pour une ligne
+  // Auto-calcul depuis la balance pour une ligne
+  // - ouverture = si_credit (solde initial credit = ouverture)
+  // - cloture   = solde_crediteur
+  // - aug_base  = credit mouvement (dotations de l'exercice, toutes catégories)
+  // - dim_base  = debit mouvement (reprises de l'exercice, toutes catégories)
+  // Les dotations/reprises sont pre-remplies sur la colonne "exploitation" par
+  // defaut. L'utilisateur peut les ventiler manuellement vers financier/HAO.
   const computeAuto = (prefixes: string[] | undefined) => {
-    if (!prefixes || prefixes.length === 0) return { ouverture: 0, cloture: 0 };
-    let ouv = 0, clo = 0;
+    if (!prefixes || prefixes.length === 0) return { ouverture: 0, cloture: 0, aug_base: 0, dim_base: 0 };
+    let ouv = 0, clo = 0, augB = 0, dimB = 0;
     for (const l of lignesN) {
       const num = (l.numero_compte || '').trim();
       if (!prefixes.some(p => num.startsWith(p))) continue;
       ouv += parseFloat(String(l.si_credit)) || 0;
       clo += parseFloat(String(l.solde_crediteur)) || 0;
+      augB += parseFloat(String(l.credit)) || 0;
+      dimB += parseFloat(String(l.debit)) || 0;
     }
-    return { ouverture: ouv, cloture: clo };
+    return { ouverture: ouv, cloture: clo, aug_base: augB, dim_base: dimB };
   };
 
   const handleSave = () => saveParams({
@@ -136,11 +144,21 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   const getOuverture = (l: LigneProvision) => computeAuto(l.prefixes).ouverture;
   const getCloture = (l: LigneProvision) => computeAuto(l.prefixes).cloture;
 
+  // Valeur affichee pour un champ mouvement = base balance + ajustement saisi
+  // Sur 'aug_exploitation' et 'dim_exploitation', la base est le credit/debit
+  // de la balance. Sur les autres (financieres, hao), pas de base auto.
+  const getFieldValue = (l: LigneProvision, field: keyof LigneProvision): number => {
+    const adj = parseN(l[field] as string);
+    if (field === 'aug_exploitation') return computeAuto(l.prefixes).aug_base + adj;
+    if (field === 'dim_exploitation') return computeAuto(l.prefixes).dim_base + adj;
+    return adj;
+  };
+
   const sumFields = (rows: LigneProvision[]) => {
     const mouvFields: (keyof LigneProvision)[] = ['aug_exploitation', 'aug_financieres', 'aug_hao', 'dim_exploitation', 'dim_financieres', 'dim_hao'];
     const result: Record<string, number> = {};
     result.ouverture = rows.reduce((s, r) => s + getOuverture(r), 0);
-    for (const f of mouvFields) result[f] = rows.reduce((s, r) => s + parseN(r[f] as string), 0);
+    for (const f of mouvFields) result[f] = rows.reduce((s, r) => s + getFieldValue(r, f), 0);
     result.cloture = rows.reduce((s, r) => s + getCloture(r), 0);
     return result;
   };
@@ -164,10 +182,27 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   const tdBR: React.CSSProperties = { ...tdR, fontWeight: 700, background: '#f0f0f0' };
   const inp: React.CSSProperties = { width: '100%', padding: '5px 8px', fontSize: 10, border: '1px solid #D4A843', borderRadius: 2, background: '#fffbf0', textAlign: 'right', boxSizing: 'border-box' };
 
-  const renderInput = (idx: number, field: keyof LigneProvision) => {
-    const val = lignes[idx][field] as string;
-    if (!editing) return val;
-    return <input value={val} onChange={e => updateLigne(idx, field, e.target.value)} style={inp} />;
+  // Rendu d'une cellule mouvement : affiche la valeur complete (base + ajustement)
+  // Quand l'utilisateur modifie, on stocke la difference avec la base balance
+  const renderMouvCell = (idx: number, field: keyof LigneProvision) => {
+    const l = lignes[idx];
+    const displayVal = getFieldValue(l, field);
+    if (!editing) return fmtM(displayVal);
+    const auto = computeAuto(l.prefixes);
+    let base = 0;
+    if (field === 'aug_exploitation') base = auto.aug_base;
+    else if (field === 'dim_exploitation') base = auto.dim_base;
+    return (
+      <input
+        value={displayVal === 0 ? '' : String(displayVal)}
+        onChange={e => {
+          const newVal = parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0;
+          updateLigne(idx, field, String(newVal - base));
+        }}
+        placeholder="0"
+        style={inp}
+      />
+    );
   };
 
   const MOUV_FIELDS: (keyof LigneProvision)[] = ['aug_exploitation', 'aug_financieres', 'aug_hao', 'dim_exploitation', 'dim_financieres', 'dim_hao'];
@@ -242,13 +277,13 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
               // Masquer les lignes vides si hideEmpty
               const ouv = getOuverture(l);
               const clo = getCloture(l);
-              const mouvSum = MOUV_FIELDS.reduce((s, f) => s + parseN(l[f] as string), 0);
+              const mouvSum = MOUV_FIELDS.reduce((s, f) => s + getFieldValue(l, f), 0);
               if (hideEmpty && ouv === 0 && clo === 0 && mouvSum === 0) return null;
               return (
                 <tr key={i}>
                   <td style={td}>{l.num ? l.num + ' ' : ''}{l.label}</td>
                   <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(ouv)}</td>
-                  {MOUV_FIELDS.map(f => <td key={f} style={tdR}>{renderInput(i, f)}</td>)}
+                  {MOUV_FIELDS.map(f => <td key={f} style={tdR}>{renderMouvCell(i, f)}</td>)}
                   <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(clo)}</td>
                 </tr>
               );
