@@ -10,17 +10,11 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
 
 interface Note25Props extends EtatBaseProps { onGoToParametres?: () => void; }
-interface Rubrique { label: string; prefixes: string[]; }
 
-const RUBRIQUES: Rubrique[] = [
-  { label: 'Impots et taxes directs', prefixes: ['641'] },
-  { label: 'Impots et taxes indirects', prefixes: ['645'] },
-  { label: 'Droits d\'enregistrement', prefixes: ['646'] },
-  { label: 'Penalites et amendes fiscales', prefixes: ['647'] },
-  { label: 'Autres impots et taxes', prefixes: ['648'] },
-];
+const RUBRIQUES: Rubrique[] = buildRubriques('note_25_sys');
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Detailler les penalites et amendes et indiquer la cause.`;
 

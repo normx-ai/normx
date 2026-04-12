@@ -11,17 +11,11 @@ import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
 
-interface Note27AProps extends EtatBaseProps { onGoToParametres?: () => void; }
-interface Rubrique { label: string; prefixes: string[]; }
+import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
 
-const RUBRIQUES: Rubrique[] = [
-  { label: 'Rémunérations directes versées au personnel', prefixes: ['661', '662'] },
-  { label: 'Indemnités forfaitaires versées au personnel', prefixes: ['663'] },
-  { label: 'Charges sociales', prefixes: ['664'] },
-  { label: 'Rémunérations et charges sociales de l\'exploitant individuel', prefixes: ['666'] },
-  { label: 'Rémunération transférée de personnel extérieur', prefixes: ['667'] },
-  { label: 'Autres charges sociales', prefixes: ['668'] },
-];
+interface Note27AProps extends EtatBaseProps { onGoToParametres?: () => void; }
+
+const RUBRIQUES: Rubrique[] = buildRubriques('note_27a_sys');
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Indiquer la nature et la durée du contrat du personnel extérieur.`;
 

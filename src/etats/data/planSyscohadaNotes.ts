@@ -103,6 +103,26 @@ export const PLAN_NOTES_SYSCOHADA: NoteCompteEntry[] = [
   { numero: '635', label: 'Cotisations', note: 'note_24_sys' },
   { numero: '637', label: "Personnel extérieur à l'entité", note: 'note_24_sys' },
   { numero: '638', label: 'Autres charges externes', note: 'note_24_sys' },
+
+  // ==========================================
+  // Note 25 — Impôts et taxes
+  // ==========================================
+  { numero: '641', label: 'Impôts et taxes directs', note: 'note_25_sys' },
+  { numero: '645', label: 'Impôts et taxes indirects', note: 'note_25_sys' },
+  { numero: '646', label: "Droits d'enregistrement", note: 'note_25_sys' },
+  { numero: '647', label: 'Pénalités et amendes fiscales', note: 'note_25_sys' },
+  { numero: '648', label: 'Autres impôts et taxes', note: 'note_25_sys' },
+
+  // ==========================================
+  // Note 27A — Charges de personnel
+  // ==========================================
+  { numero: '661', label: 'Rémunérations directes versées au personnel', note: 'note_27a_sys' },
+  { numero: '662', label: 'Rémunérations directes versées au personnel', note: 'note_27a_sys' },
+  { numero: '663', label: 'Indemnités forfaitaires versées au personnel', note: 'note_27a_sys' },
+  { numero: '664', label: 'Charges sociales', note: 'note_27a_sys' },
+  { numero: '666', label: "Rémunérations et charges sociales de l'exploitant individuel", note: 'note_27a_sys' },
+  { numero: '667', label: 'Rémunération transférée de personnel extérieur', note: 'note_27a_sys' },
+  { numero: '668', label: 'Autres charges sociales', note: 'note_27a_sys' },
 ];
 
 /**
