@@ -7,6 +7,7 @@ import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
+import BalanceSourcePanel from './BalanceSourcePanel';
 import { thStyle as thBase, tdStyle as tdBase } from './noteStyles';
 import { LuInfo, LuEyeOff } from 'react-icons/lu';
 
@@ -236,6 +237,12 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
           <li>Les reprises doivent etre justifiees (disparition du risque, realisation de la charge).</li>
         </ul>
       </div>
+
+      <BalanceSourcePanel
+        lignes={lignesN}
+        groups={LIGNES_INIT.filter(l => !l.isTotal && l.prefixes).map(l => ({ label: l.label, prefixes: l.prefixes as string[] }))}
+        title="Soldes balance — Provisions et depreciations"
+      />
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 8mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 10, color: '#1a1a1a' }}>
         <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
