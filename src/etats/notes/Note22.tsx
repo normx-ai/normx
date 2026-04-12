@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff , LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -212,6 +212,20 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
         groups={RUBRIQUES.filter(r => !r.isTotal).map(r => ({ label: r.label, prefixes: r.prefixes }))}
         title="Soldes balance — Achats"
       />
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 22
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Achats consommes :</strong> Comptes 601 a 605 — marchandises, matieres premieres, fournitures consommables.</li>
+          <li><strong>Variation de stocks :</strong> Incluse pour obtenir les achats reellement consommes (compte 603).</li>
+          <li><strong>Ristournes obtenues :</strong> Rabais, remises et ristournes sur achats (compte 609) viennent en deduction.</li>
+          <li>Doit correspondre au total Achats - Variation stocks du compte de resultat.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

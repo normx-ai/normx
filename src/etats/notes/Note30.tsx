@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff , LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -144,6 +144,21 @@ function Note30({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note30P
         groups={RUBRIQUES.map(r => ({ label: r.label, prefixes: r.prefixes }))}
         title="Soldes balance — Charges et produits HAO"
       />
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 30
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Operations HAO :</strong> Operations non liees a l'activite ordinaire (cessions d'immobilisations, restructurations).</li>
+          <li><strong>Valeurs comptables cedees :</strong> Compte 81 — valeur nette comptable des immobilisations sorties.</li>
+          <li><strong>Produits de cession :</strong> Compte 82 — prix de vente des immobilisations cedees.</li>
+          <li><strong>Autres charges / produits HAO :</strong> Subventions d'equilibre, indemnites d'assurance sur sinistre, amendes.</li>
+          <li>Le resultat HAO impacte directement le resultat net de l'exercice.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a' }}>
         <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>

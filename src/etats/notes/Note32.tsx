@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuPlus, LuTrash2 , LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps } from '../../types';
@@ -94,6 +94,20 @@ function Note32({ entiteName, entiteNif = '', entiteId, onBack }: Note32Props): 
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 32" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 32
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Production vendue :</strong> Chiffre d'affaires sur produits fabriques (compte 702).</li>
+          <li><strong>Production stockee :</strong> Variation des stocks de produits finis et en cours (compte 73).</li>
+          <li><strong>Production immobilisee :</strong> Travaux faits par l'entite pour elle-meme (compte 72).</li>
+          <li>Indicateur cle pour mesurer l'activite industrielle, distinct du chiffre d'affaires global.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 6mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 9, color: '#1a1a1a' }}>
         <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>

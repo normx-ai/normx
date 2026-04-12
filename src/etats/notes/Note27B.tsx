@@ -8,6 +8,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle as thBase, tdStyle as tdBase } from './noteStyles';
+import { LuInfo } from 'react-icons/lu';
 
 interface Note27BProps extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -143,6 +144,20 @@ function Note27B({ entiteName, entiteNif = '', entiteId, onBack }: Note27BProps)
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 27B" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 27B
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Effectif moyen :</strong> Calcule au prorata temporis sur l'exercice, par categorie (cadres, employes, ouvriers).</li>
+          <li><strong>Masse salariale brute :</strong> Salaires bruts + primes, avant cotisations sociales.</li>
+          <li><strong>Personnel exterieur :</strong> Interimaires et mises a disposition — comptabilises en services exterieurs (compte 637), distingues ici.</li>
+          <li><strong>Ventilation :</strong> Par qualification, par sexe, par nationalite si pertinent.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 6mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 10, color: '#1a1a1a' }}>
         <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>

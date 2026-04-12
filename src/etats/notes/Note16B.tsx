@@ -8,6 +8,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, inputSt } from './noteStyles';
+import { LuInfo } from 'react-icons/lu';
 
 interface Note16BProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -118,6 +119,20 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 16B" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 16B
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Engagement actuariel :</strong> Calcule selon la methode des unites de credit projetees (IAS 19 adapte SYSCOHADA).</li>
+          <li><strong>Hypotheses cles :</strong> Taux d'actualisation, taux de rotation du personnel, taux d'augmentation des salaires, table de mortalite.</li>
+          <li><strong>Comptabilisation :</strong> Provision au passif (compte 197) si methode retenue, sinon information en hors bilan.</li>
+          <li>Doit etre reevalue chaque cloture par un actuaire ou une methode simplifiee documentee.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

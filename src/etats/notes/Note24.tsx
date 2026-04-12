@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff , LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -153,6 +153,22 @@ function Note24({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note24P
         groups={RUBRIQUES.map(r => ({ label: r.label, prefixes: r.prefixes }))}
         title="Soldes balance — Services exterieurs"
       />
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 24
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Sous-traitance generale :</strong> Travaux executes par un tiers pour le compte de l'entite (compte 621).</li>
+          <li><strong>Locations et charges locatives :</strong> Loyers immobiliers et mobiliers, charges refacturees (comptes 622/623).</li>
+          <li><strong>Entretien, reparations, maintenance :</strong> Compte 624 — distinguer courant (charge) et majeur (immobilisable).</li>
+          <li><strong>Primes d'assurance :</strong> Compte 625 — ventilation par nature de risque (locaux, vehicules, RC).</li>
+          <li><strong>Honoraires :</strong> Compte 632 — commissaire aux comptes, avocats, conseils.</li>
+          <li>Poste sensible au controle fiscal : pieces justificatives obligatoires.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '8mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a' }}>
         <div className="etat-header-officiel">

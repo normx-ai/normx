@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuPlus, LuTrash2 , LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps } from '../../types';
@@ -100,6 +100,20 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 13" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 13
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Capital social :</strong> Montant souscrit, appele et verse par les associes ou actionnaires.</li>
+          <li><strong>Nombre de titres :</strong> Actions ou parts sociales en circulation a la cloture, valeur nominale unitaire.</li>
+          <li><strong>Mouvements de l'exercice :</strong> Augmentations (apports, incorporation de reserves), reductions ou amortissements du capital.</li>
+          <li>Compte 101 — doit correspondre aux statuts a jour.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

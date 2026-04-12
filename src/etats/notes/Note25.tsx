@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff , LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -143,6 +143,20 @@ function Note25({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note25P
         groups={RUBRIQUES.map(r => ({ label: r.label, prefixes: r.prefixes }))}
         title="Soldes balance — Impots et taxes"
       />
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 25
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Perimetre :</strong> Impots et taxes autres que l'impot sur le resultat (compte 64).</li>
+          <li><strong>Principaux postes :</strong> Patente, taxes fonciere et sur vehicules, TVA non deductible, droits d'enregistrement, taxe sur salaires.</li>
+          <li><strong>Impot sur le resultat :</strong> Exclu — voir Note 31 (repartition du resultat) et le compte 891.</li>
+          <li>Ventilation utile : impots directs / taxes assises sur salaires / autres taxes.</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '8mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a' }}>
         <div className="etat-header-officiel">

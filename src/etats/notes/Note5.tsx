@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff , LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -263,6 +263,20 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
         groups={[...RUBRIQUES_ACTIF, ...RUBRIQUES_DEPRECIATION, ...RUBRIQUES_DETTES].map(r => ({ label: r.label, prefixes: r.prefixes }))}
         title="Soldes balance — Actif/Dettes HAO"
       />
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 5
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Actif circulant HAO :</strong> Creances et valeurs liees aux operations hors activites ordinaires (cessions, litiges, indemnites a recevoir).</li>
+          <li><strong>Dettes circulantes HAO :</strong> Dettes issues d'operations exceptionnelles (indemnites a payer, cessions d'immobilisations).</li>
+          <li><strong>Comptes concernes :</strong> 46 (creances et dettes HAO), 48 (creances et dettes HAO a long terme).</li>
+          <li>Doit rester coherent avec le compte de resultat HAO (Note 30).</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',

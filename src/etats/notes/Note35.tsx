@@ -6,6 +6,7 @@ import { useNoteData } from './useNoteData';
 import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
+import { LuInfo } from 'react-icons/lu';
 
 interface Note35Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -154,6 +155,20 @@ function Note35({ entiteName, entiteNif = '', entiteId, onBack }: Note35Props): 
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 35" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 35
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Emploi :</strong> Effectifs par categorie, conditions de travail, formation, egalite professionnelle.</li>
+          <li><strong>Environnement :</strong> Consommation d'energie et d'eau, emissions, gestion des dechets, certifications.</li>
+          <li><strong>Societal :</strong> Actions en faveur des communautes locales, relations avec les parties prenantes.</li>
+          <li>Obligatoire pour les grandes entites — recommande pour les autres (bonne pratique RSE).</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 8mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 9, color: '#1a1a1a' }}>
         <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>

@@ -8,6 +8,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle as thBase, tdStyle as tdBase } from './noteStyles';
+import { LuInfo } from 'react-icons/lu';
 
 interface Note28Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -147,6 +148,21 @@ function Note28({ entiteName, entiteNif = '', entiteId, onBack }: Note28Props): 
       {pdf.previewUrl && (
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 28" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 28
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Provisions pour risques :</strong> Comptes 19 — litiges, garanties donnees, amendes et penalites probables.</li>
+          <li><strong>Provisions pour charges :</strong> Charges probables non encore realisees (gros entretien, restructurations).</li>
+          <li><strong>Depreciations :</strong> Comptes 29 (immobilisations), 39 (stocks), 49 (creances), 59 (titres).</li>
+          <li><strong>Tableau de variation :</strong> Dotations et reprises de l'exercice par nature — explication des mouvements significatifs.</li>
+          <li>Les reprises doivent etre justifiees (disparition du risque, realisation de la charge).</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 8mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 10, color: '#1a1a1a' }}>
         <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>

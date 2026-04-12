@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuEyeOff } from 'react-icons/lu';
+import { LuEyeOff , LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
@@ -211,6 +211,20 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
         groups={RUBRIQUES.filter(r => !r.isTotal).map(r => ({ label: r.label, prefixes: r.prefixes }))}
         title="Soldes balance — Chiffre d'affaires et autres produits"
       />
+
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 21
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Chiffre d'affaires :</strong> Ventes de marchandises, de produits fabriques, de travaux et services (comptes 70).</li>
+          <li><strong>Ventilation :</strong> Par nature d'activite, par zone geographique ou par segment si information sectorielle.</li>
+          <li><strong>Comptabilisation :</strong> A la livraison pour les biens, a l'avancement ou a l'achevement pour les services et contrats longs.</li>
+          <li>Doit rester coherent avec le compte de resultat et la Note 32 (production de l'exercice).</li>
+        </ul>
+      </div>
 
       <div ref={pageRef} style={{
         width: '210mm', minHeight: '297mm', background: '#fff',
