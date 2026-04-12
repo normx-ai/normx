@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 , LuEyeOff } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 , LuEyeOff, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -391,6 +391,19 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
           </div>
         </div>
       )}
+
+      {/* Bulle d'information */}
+      <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
+        <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <LuInfo size={14} /> Note d'information — Note 4
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18 }}>
+          <li><strong>Titres de participation :</strong> Actions/parts détenues durablement (≥ 10 % du capital de l'émetteur) pour exercer une influence ou un contrôle.</li>
+          <li><strong>Autres immobilisations financières :</strong> Titres immobilisés de l'activité de portefeuille, prêts, dépôts et cautionnements versés.</li>
+          <li><strong>Dépréciations :</strong> Constatées lorsque la valeur actuelle devient durablement inférieure à la valeur nette comptable (compte 29).</li>
+          <li>Les montants bruts alimentent le compte 26/27 au bilan ; les dépréciations viennent en déduction.</li>
+        </ul>
+      </div>
 
       <BalanceSourcePanel
         lignes={lignesN}
