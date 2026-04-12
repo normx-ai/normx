@@ -29,7 +29,8 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Frais de formation du personnel', prefixes: ['633'] },
   { label: 'Redevances pour brevets, licences, logiciels, concession et droits similaires', prefixes: ['634'] },
   { label: 'Cotisations', prefixes: ['635'] },
-  { label: 'Autres charges externes', prefixes: ['636', '637', '638'] },
+  { label: 'Personnel exterieur a l\'entite', prefixes: ['637'] },
+  { label: 'Autres charges externes', prefixes: ['638'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;
