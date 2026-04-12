@@ -45,9 +45,9 @@ const RUBRIQUES: Rubrique[] = [
   // Produits accessoires + Total CA
   { label: 'Produits accessoires', prefixes: ['707'] },
   { label: 'TOTAL : CHIFFRE D\'AFFAIRES', prefixes: [], bold: true, isTotal: true, group: 'ca' },
-  // Autres produits
-  { label: 'Production immobilisée', prefixes: ['72'] },
-  { label: 'Subventions d\'exploitation', prefixes: ['71'] },
+  // Autres produits — compte 75 uniquement (71 subventions et 72
+  // production immobilisee sont des lignes distinctes du compte de
+  // resultat, pas agregees dans cette note)
   { label: 'Autres produits', prefixes: ['75'] },
   { label: 'TOTAL : AUTRES PRODUITS', prefixes: [], bold: true, isTotal: true, group: 'autres' },
 ];
