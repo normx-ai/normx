@@ -16,13 +16,11 @@ interface Note23Props extends EtatBaseProps { onGoToParametres?: () => void; }
 interface Rubrique { label: string; prefixes: string[]; }
 
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Transports sur ventes', prefixes: ['611'] },
-  { label: 'Transports sur achats', prefixes: ['612'] },
+  { label: 'Transports sur ventes', prefixes: ['612'] },
   { label: 'Transports pour le compte de tiers', prefixes: ['613'] },
   { label: 'Transport du personnel', prefixes: ['614'] },
   { label: 'Transports de plis', prefixes: ['616'] },
-  { label: 'Autres transports', prefixes: ['615', '617', '618'] },
-  { label: 'Rabais, remises et ristournes obtenus', prefixes: ['619'] },
+  { label: 'Autres frais de transport', prefixes: ['618'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;
