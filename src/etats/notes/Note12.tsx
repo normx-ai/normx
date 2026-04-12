@@ -121,7 +121,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
   const solde787N = computeSolde(lignesN, '787', 'crediteur');
   const solde787N1 = computeSolde(lignesN1, '787', 'crediteur');
 
-  const fmtSolde = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');
+  const fmtSolde = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   const handleSave = () => saveParams({
     ...params,

@@ -87,7 +87,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
   };
 
   const fmtMontant = (val: number): string => {
-    if (!val || val === 0) return '';
+    if (!val || val === 0) return '0';
     return Math.round(val).toLocaleString('fr-FR');
   };
 
