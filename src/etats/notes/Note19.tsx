@@ -121,7 +121,7 @@ function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19P
     for (const l of lignes) {
       const num = (l.numero_compte || '').trim();
       if (!prefixes.some(p => num.startsWith(p))) continue;
-      total += (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0);
+      total += parseFloat(String(l.solde_crediteur)) || 0;
     }
     return total;
   };
