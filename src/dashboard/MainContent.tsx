@@ -206,7 +206,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
     note_13_sys: ['10'],
     note_14_sys: ['11'],
     note_15a_sys: ['14', '15'],
-    note_15b_sys: ['12', '13'],
+    note_15b_sys: ['167'],
     note_16a_sys: ['16', '17'],
     note_16b_sys: ['19'],
     note_16c_sys: [],  // manuel
