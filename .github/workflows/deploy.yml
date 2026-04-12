@@ -43,7 +43,7 @@ jobs:
 
       - name: Upload frontend build
         run: |
-          rsync -az --delete build/ ${{ env.VPS_USER }}@${{ env.VPS_HOST }}:/var/www/normx-app/
+          rsync -az --delete build/ ${{ env.VPS_USER }}@${{ env.VPS_HOST }}:${{ env.APP_DIR }}/build/
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
@@ -58,20 +58,14 @@ jobs:
             git checkout -- .
             git pull origin main
 
-            # --- Generer .env (Docker Compose) ---
-            cat > .env << 'ENVEOF'
-            POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-            ENVEOF
-            chmod 600 .env
-
-            # --- Generer .env.production (API) ---
-            cat > .env.production << 'ENVEOF'
+            # .env.production — hostnames adaptes au compose infra
+            cat > .env.production << ENVEOF
             NODE_ENV=production
             PORT=5002
-            DATABASE_URL=postgresql://normx:${{ secrets.POSTGRES_PASSWORD }}@normx-postgres:5432/normx
+            DATABASE_URL=postgresql://normx:${{ secrets.POSTGRES_PASSWORD }}@normx-db:5432/normx
             ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
             VOYAGE_API_KEY=${{ secrets.VOYAGE_API_KEY }}
-            QDRANT_URL=http://cgi242-qdrant:6333
+            QDRANT_URL=http://qdrant:6333
             CORS_ORIGIN=https://app.normx-ai.com,https://normx-ai.com
             KEYCLOAK_URL=https://auth.normx-ai.com
             KEYCLOAK_REALM=normx
@@ -84,21 +78,11 @@ jobs:
             ENVEOF
             chmod 600 .env.production
 
-            # --- Rebuild et restart API ---
-            # Nettoyer les containers fantomes avant rebuild
-            docker compose down --remove-orphans 2>/dev/null || true
-            docker compose build --no-cache api
-            docker compose up -d
+            # Rebuild normx-api via le compose infra
+            cd /opt/infra
+            sudo docker compose up -d --build normx-api
 
-            # --- Connecter nginx au reseau normx ---
-            docker network connect normx_normx-net cgi242-nginx 2>/dev/null || true
-
-            # --- Restart nginx pour servir le nouveau build ---
-            cd /opt/cgi242 && docker compose restart nginx 2>/dev/null || true
-
-            # --- Verifier ---
-            cd ${{ env.APP_DIR }}
             sleep 15
-            curl -sf http://localhost:5002/health || echo "WARN: Health check failed"
+            curl -sf https://app.normx-ai.com/health || echo "WARN: Health check failed"
 
-            echo "Deploiement Normx termine avec succes"
+            echo "Deploiement normx termine avec succes"
