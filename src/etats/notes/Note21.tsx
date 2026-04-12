@@ -156,7 +156,7 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
   const produitsAccessoires = computeRow(RUBRIQUES.find(r => r.label === 'Produits accessoires')!);
   const totalCA = { anneeN: totalMarchandises.anneeN + totalProduitsFab.anneeN + totalTravaux.anneeN + produitsAccessoires.anneeN, anneeN1: totalMarchandises.anneeN1 + totalProduitsFab.anneeN1 + totalTravaux.anneeN1 + produitsAccessoires.anneeN1 };
 
-  const autresDetail = RUBRIQUES.filter(r => !r.isTotal && !r.bold && !r.group && r.label !== 'Produits accessoires').concat(RUBRIQUES.filter(r => !r.isTotal && ['Production immobilisée', 'Subventions d\'exploitation', 'Autres produits'].includes(r.label)));
+  const autresDetail = RUBRIQUES.filter(r => !r.isTotal && !r.bold && !r.group && r.label !== 'Produits accessoires');
   const totalAutres = autresDetail.reduce((a, r) => { const v = computeRow(r); return { anneeN: a.anneeN + v.anneeN, anneeN1: a.anneeN1 + v.anneeN1 }; }, { anneeN: 0, anneeN1: 0 });
 
   const totalGeneral = { anneeN: totalCA.anneeN + totalAutres.anneeN, anneeN1: totalCA.anneeN1 + totalAutres.anneeN1 };
