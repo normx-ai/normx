@@ -114,6 +114,21 @@ export const PLAN_NOTES_SYSCOHADA: NoteCompteEntry[] = [
   { numero: '648', label: 'Autres impôts et taxes', note: 'note_25_sys' },
 
   // ==========================================
+  // Note 26 — Autres charges
+  // ==========================================
+  { numero: '6511', label: 'Pertes sur créances clients', note: 'note_26_sys' },
+  { numero: '6515', label: 'Pertes sur autres débiteurs', note: 'note_26_sys' },
+  { numero: '652', label: 'Quote-part de résultat sur opérations faites en commun', note: 'note_26_sys' },
+  { numero: '654', label: "Valeur comptable des cessions courantes d'immobilisations", note: 'note_26_sys' },
+  { numero: '656', label: 'Perte de change sur créances et dettes commerciales', note: 'note_26_sys' },
+  { numero: '657', label: 'Pénalités et amendes pénales', note: 'note_26_sys' },
+  { numero: '6581', label: "Indemnités de fonction et autres rémunérations d'administrateurs", note: 'note_26_sys' },
+  { numero: '6582', label: 'Dons et mécénat', note: 'note_26_sys' },
+  { numero: '6583', label: 'Dons et mécénat', note: 'note_26_sys' },
+  { numero: '6588', label: 'Autres charges diverses', note: 'note_26_sys' },
+  { numero: '659', label: "Charges pour dépréciations et provisions pour risques à court terme d'exploitation (voir note 28)", note: 'note_26_sys' },
+
+  // ==========================================
   // Note 27A — Charges de personnel
   // ==========================================
   { numero: '661', label: 'Rémunérations directes versées au personnel', note: 'note_27a_sys' },

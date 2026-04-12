@@ -10,20 +10,11 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
 
 interface Note26Props extends EtatBaseProps { onGoToParametres?: () => void; }
-interface Rubrique { label: string; prefixes: string[]; }
 
-const RUBRIQUES: Rubrique[] = [
-  { label: 'Pertes sur creances clients', prefixes: ['651'] },
-  { label: 'Pertes sur autres debiteurs', prefixes: ['652'] },
-  { label: 'Quote-part de resultat sur operations faites en commun', prefixes: ['653'] },
-  { label: 'Valeur comptable des cessions courantes d\'immobilisations', prefixes: ['654'] },
-  { label: 'Indemnites de fonction et autres remunerations d\'administrateurs', prefixes: ['655'] },
-  { label: 'Dons et mecenat', prefixes: ['656'] },
-  { label: 'Autres charges diverses', prefixes: ['657', '658'] },
-  { label: 'Charges pour provisions et provisions pour risques a court terme d\'exploitation (voir note 28)', prefixes: ['659'] },
-];
+const RUBRIQUES: Rubrique[] = buildRubriques('note_26_sys');
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Indiquer la date du PV de l'AGO ou du CA qui fixe les remunerations des administrateurs.\n• Indiquer les organismes beneficiaires des dons.`;
 
