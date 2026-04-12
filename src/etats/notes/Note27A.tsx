@@ -18,9 +18,9 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Rémunérations directes versées au personnel', prefixes: ['661', '662'] },
   { label: 'Indemnités forfaitaires versées au personnel', prefixes: ['663'] },
   { label: 'Charges sociales', prefixes: ['664'] },
-  { label: 'Rémunérations et charges sociales de l\'exploitant individuel', prefixes: ['665'] },
+  { label: 'Rémunérations et charges sociales de l\'exploitant individuel', prefixes: ['666'] },
   { label: 'Rémunération transférée de personnel extérieur', prefixes: ['667'] },
-  { label: 'Autres charges sociales', prefixes: ['666', '668'] },
+  { label: 'Autres charges sociales', prefixes: ['668'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Indiquer la nature et la durée du contrat du personnel extérieur.`;
