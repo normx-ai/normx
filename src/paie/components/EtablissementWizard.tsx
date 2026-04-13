@@ -145,7 +145,7 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
         return (
           <div className="wizard-form-section">
             <h4>Coordonnées bancaires</h4>
-            <p style={{ fontSize: 13, color: '#7a8a9b', marginBottom: 12 }}>Ajoutez les coordonnées bancaires de l'établissement.</p>
+            <p style={{ fontSize: 14, color: '#7a8a9b', marginBottom: 12 }}>Ajoutez les coordonnées bancaires de l'établissement.</p>
             <button className="btn-add-small" onClick={() => { setShowBanqueForm(true); setBanqueForm({ nom: '', code: '', agence: '', rib: '', iban: '', swift: '' }); }}>+ Ajouter une banque</button>
 
             {showBanqueForm && (
@@ -202,7 +202,7 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
               </div>
             )}
 
-            {form.banques.length === 0 && !showBanqueForm && <p style={{ fontSize: 13, color: '#9ca3af', marginTop: 12 }}>Aucune banque ajoutée.</p>}
+            {form.banques.length === 0 && !showBanqueForm && <p style={{ fontSize: 14, color: '#9ca3af', marginTop: 12 }}>Aucune banque ajoutée.</p>}
             {form.banques.length > 0 && (
               <table className="wizard-table" style={{ marginTop: 16 }}>
                 <thead>
@@ -228,7 +228,7 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
         return (
           <div className="wizard-form-section">
             <h4>Contacts</h4>
-            <p style={{ fontSize: 13, color: '#7a8a9b', marginBottom: 12 }}>Responsable RH, responsable paie, etc.</p>
+            <p style={{ fontSize: 14, color: '#7a8a9b', marginBottom: 12 }}>Responsable RH, responsable paie, etc.</p>
             <button className="btn-add-small" onClick={() => { setShowContactForm(true); setContactForm({ nom: '', fonction: '', email: '', telephone: '' }); }}>+ Ajouter un contact</button>
 
             {showContactForm && (
@@ -296,14 +296,14 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
         return (
           <div className="wizard-form-section">
             <h4>Organismes sociaux et fiscaux</h4>
-            <p style={{ fontSize: 13, color: '#7a8a9b', marginBottom: 16 }}>Renseignez vos numéros d'affiliation auprès de chaque organisme.</p>
+            <p style={{ fontSize: 14, color: '#7a8a9b', marginBottom: 16 }}>Renseignez vos numéros d'affiliation auprès de chaque organisme.</p>
             {CONFIG_CONGO.organismes.map(org => {
               const isOpen = ((form.organismes._open || []) as string[]).includes(org.key);
               return (
                 <div key={org.key} className="wizard-accordion" style={{ marginBottom: 12, border: '1px solid #e5e5e5', borderRadius: 8, overflow: 'hidden' }}>
                   <div
                     className="wizard-accordion-header"
-                    style={{ padding: '12px 16px', background: isOpen ? '#f5f0e0' : '#fafafa', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: 15, borderLeft: '3px solid #D4A843' }}
+                    style={{ padding: '12px 16px', background: isOpen ? '#f5f0e0' : '#fafafa', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 600, fontSize: 16, borderLeft: '3px solid #D4A843' }}
                     onClick={() => {
                       const openList = (form.organismes._open || []) as string[];
                       const newOpen = isOpen ? openList.filter(k => k !== org.key) : [...openList, org.key];
@@ -315,7 +315,7 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
                   </div>
                   {isOpen && (
                     <div style={{ padding: 16, background: '#fff' }}>
-                      <p style={{ fontSize: 13, color: '#888', marginBottom: 12 }}>{org.description}</p>
+                      <p style={{ fontSize: 14, color: '#888', marginBottom: 12 }}>{org.description}</p>
                       {org.champs.map(champ => (
                         <div key={champ.id} className="wizard-form-group" style={{ marginBottom: 12 }}>
                           <label>{champ.label} {champ.required && <span className="required">*</span>}</label>
@@ -346,7 +346,7 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
                       ))}
                       {org.taux && org.taux.length > 0 && (
                         <div style={{ marginTop: 12 }}>
-                          <p style={{ fontSize: 13, fontWeight: 600, color: '#1A3A5C', marginBottom: 6 }}>Taux applicables :</p>
+                          <p style={{ fontSize: 14, fontWeight: 600, color: '#1A3A5C', marginBottom: 8 }}>Taux applicables :</p>
                           <table className="wizard-table">
                             <thead>
                               <tr><th>Élément</th><th>Taux</th><th>Plafond</th></tr>
@@ -370,7 +370,7 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
         return (
           <div className="wizard-form-section">
             <h4>Paramètres des organismes</h4>
-            <p style={{ fontSize: 13, color: '#7a8a9b', marginBottom: 12 }}>Informations complémentaires pour les déclarations.</p>
+            <p style={{ fontSize: 14, color: '#7a8a9b', marginBottom: 12 }}>Informations complémentaires pour les déclarations.</p>
             <div className="wizard-form-row">
               <div className="wizard-form-group">
                 <label>Mode de déclaration CNSS</label>
@@ -431,7 +431,7 @@ function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWiza
             <div className="wizard-accordion">
               <div className="wizard-accordion-header">Planning hebdomadaire</div>
               <div className="wizard-accordion-body">
-                <p style={{ fontSize: 13, color: '#7a8a9b', marginBottom: 8 }}>
+                <p style={{ fontSize: 14, color: '#7a8a9b', marginBottom: 8 }}>
                   Horaires par défaut : {CONFIG_CONGO.planningDefaults.heuresJour}h/jour, {CONFIG_CONGO.planningDefaults.heuresSemaine}h/semaine, {CONFIG_CONGO.planningDefaults.heuresMois}h/mois
                 </p>
               </div>
