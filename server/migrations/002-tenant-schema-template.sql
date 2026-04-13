@@ -100,6 +100,10 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".balances (
   exercice_id INTEGER REFERENCES "${schema_name}".exercices(id),
   type_balance VARCHAR(50),
   nom_fichier VARCHAR(200),
+  statut VARCHAR(20) DEFAULT 'brut',
+  revise_par INTEGER,
+  date_revision TIMESTAMP,
+  revision_notes TEXT,
   created_at TIMESTAMP DEFAULT NOW()
 );
 
@@ -113,7 +117,12 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".balance_lignes (
   debit DECIMAL(15,2) DEFAULT 0,
   credit DECIMAL(15,2) DEFAULT 0,
   solde_debiteur DECIMAL(15,2) DEFAULT 0,
-  solde_crediteur DECIMAL(15,2) DEFAULT 0
+  solde_crediteur DECIMAL(15,2) DEFAULT 0,
+  debit_revise DECIMAL(15,2),
+  credit_revise DECIMAL(15,2),
+  solde_debiteur_revise DECIMAL(15,2),
+  solde_crediteur_revise DECIMAL(15,2),
+  note_revision TEXT
 );
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".tiers (
