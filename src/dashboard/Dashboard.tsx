@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
 import { LuHouse, LuFileText } from 'react-icons/lu';
 const Paie = lazy(() => import('../paie/Paie'));
 import GestionClients from './GestionClients';
@@ -232,10 +232,22 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     />
   );
 
-  // Si modules changent (ex: switch client), re-selectionner le premier module pour non-cabinet
+  // Helper : choisir un module avec priorite compta > etats > paie
+  const pickDefaultModule = useCallback((): NormxModule | null => {
+    const priority: NormxModule[] = ['compta', 'etats', 'paie'];
+    for (const m of priority) {
+      if (modules.includes(m)) return m;
+    }
+    return null;
+  }, [modules]);
+
+  // Si modules changent (ex: switch client), re-selectionner un module par defaut pour non-cabinet
   useEffect(() => {
-    if (!activeModule && !isCabinet && modules.length > 0) setActiveModule(modules[0]);
-  }, [modules, activeModule, isCabinet, setActiveModule]);
+    if (!activeModule && !isCabinet && modules.length > 0) {
+      const def = pickDefaultModule();
+      if (def) setActiveModule(def);
+    }
+  }, [modules, activeModule, isCabinet, setActiveModule, pickDefaultModule]);
 
   // Reset module if not available after client switch
   useEffect(() => {
@@ -246,9 +258,10 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
         setActiveModule('etats');
         return;
       }
-      setActiveModule(modules[0]);
+      const def = pickDefaultModule();
+      if (def) setActiveModule(def);
     }
-  }, [modules, activeModule]);
+  }, [modules, activeModule, pickDefaultModule]);
 
   // ==================== CHARGEMENT ====================
   if (!activeModule && !isCabinet && modules.length === 0) {
