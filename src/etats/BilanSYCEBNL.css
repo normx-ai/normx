@@ -227,6 +227,21 @@
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
+.bilan-table .col-anomalie {
+  color: #c1121f;
+  font-weight: 600;
+  background: #fff4f4;
+}
+@media print {
+  .bilan-table .col-anomalie {
+    color: inherit;
+    font-weight: inherit;
+    background: transparent;
+  }
+  .bilan-table .col-anomalie .anomalie-icon {
+    display: none;
+  }
+}
 
 /* Row styles */
 .bilan-table .row-section td {

@@ -270,6 +270,7 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [showN1Detail, setShowN1Detail] = useState<boolean>(false);
+  const [isExporting, setIsExporting] = useState<boolean>(false);
 
   const pageActifRef = useRef<HTMLDivElement>(null);
   const pagePassifRef = useRef<HTMLDivElement>(null);
@@ -427,22 +428,31 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
 
   const generatePDF = async (): Promise<jsPDF> => {
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    // Masquer les indicateurs d'anomalies avant le screenshot
+    setIsExporting(true);
+    // Laisser React rendre la frame sans les anomalies
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
-    const currentRef = page === 'passif' ? pagePassifRef : pageActifRef;
-    if (currentRef.current) {
-      const canvas = await html2canvas(currentRef.current, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: '#ffffff',
-      });
-      const imgData = canvas.toDataURL('image/png');
-      const pdfWidth = 210;
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    try {
+      const pdf = new jsPDF('p', 'mm', 'a4');
+
+      const currentRef = page === 'passif' ? pagePassifRef : pageActifRef;
+      if (currentRef.current) {
+        const canvas = await html2canvas(currentRef.current, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+        });
+        const imgData = canvas.toDataURL('image/png');
+        const pdfWidth = 210;
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      }
+
+      return pdf;
+    } finally {
+      setIsExporting(false);
     }
-
-    return pdf;
   };
 
   const openPreview = async (): Promise<void> => {
@@ -607,6 +617,11 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
                   netN1 = actifN1[ref] ? actifN1[ref].net : 0;
                 }
 
+                // Anomalie : amort > brut ⇒ net negatif (impossible en compta)
+                // Masquee a l'export PDF pour ne pas polluer le document client
+                const anomalieN = !isExporting && amort > brut + 0.5 && (brut > 0.5 || amort > 0.5);
+                const anomalieN1 = !isExporting && amortN1 > brutN1 + 0.5 && (brutN1 > 0.5 || amortN1 > 0.5);
+                const anomalieTitle = "Anomalie : l'amortissement depasse la valeur brute. Verifiez la balance (compte 28xx vs 2xx).";
                 return (
                   <tr key={i} className={rowClass}>
                     <td className="col-ref">{ref}</td>
@@ -614,10 +629,14 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
                     <td className="col-note">{row.note || ''}</td>
                     <td className="col-montant">{formatMontant(brut)}</td>
                     <td className="col-montant">{formatMontant(amort)}</td>
-                    <td className="col-montant">{formatMontant(netN)}</td>
+                    <td className={`col-montant${anomalieN ? ' col-anomalie' : ''}`} title={anomalieN ? anomalieTitle : undefined}>
+                      {anomalieN && <span className="anomalie-icon">⚠ </span>}{formatMontant(netN)}
+                    </td>
                     {showN1Detail && <td className="col-montant n1-detail">{formatMontant(brutN1)}</td>}
                     {showN1Detail && <td className="col-montant n1-detail">{formatMontant(amortN1)}</td>}
-                    <td className="col-montant">{formatMontant(netN1)}</td>
+                    <td className={`col-montant${anomalieN1 ? ' col-anomalie' : ''}`} title={anomalieN1 ? anomalieTitle : undefined}>
+                      {anomalieN1 && <span className="anomalie-icon">⚠ </span>}{formatMontant(netN1)}
+                    </td>
                   </tr>
                 );
               })}
