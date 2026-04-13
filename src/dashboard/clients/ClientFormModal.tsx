@@ -1,6 +1,7 @@
 import React from 'react';
 import { LuX, LuBookOpen, LuFileSpreadsheet, LuCoins } from 'react-icons/lu';
-import { TypeActivite, Offre } from '../../types';
+import { TypeActivite, Offre, NormxModule } from '../../types';
+import { isModuleEnabled } from '../../config/modules';
 
 export interface NewClientForm {
   nom: string;
@@ -132,23 +133,24 @@ function ClientFormModal({ open, editingId, formData, setFormData, loading, erro
           <div className="gc-form-group">
             <label>Modules <span className="required">*</span></label>
             <div className="gc-module-picker">
-              {Object.entries(MODULE_LABELS).map(([key, info]) => {
-                const isSelected = formData.modules.has(key);
-                const ModIcon = info.icon;
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    className={`gc-module-pick ${isSelected ? 'selected' : ''}`}
-                    style={isSelected ? { borderColor: info.color, background: info.color + '10', color: info.color } : {}}
-                    onClick={() => toggleModule(key)}
-                  >
-                    <ModIcon size={16} /> {info.label}
-                  </button>
-                );
-              })}
+              {Object.entries(MODULE_LABELS)
+                .filter(([key]) => isModuleEnabled(key as NormxModule))
+                .map(([key, info]) => {
+                  const isSelected = formData.modules.has(key);
+                  const ModIcon = info.icon;
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      className={`gc-module-pick ${isSelected ? 'selected' : ''}`}
+                      style={isSelected ? { borderColor: info.color, background: info.color + '10', color: info.color } : {}}
+                      onClick={() => toggleModule(key)}
+                    >
+                      <ModIcon size={16} /> {info.label}
+                    </button>
+                  );
+                })}
             </div>
-            <p className="gc-form-hint">Comptabilité et États financiers ne peuvent pas être combinés.</p>
           </div>
         </div>
 

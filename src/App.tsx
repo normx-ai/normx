@@ -3,7 +3,8 @@ import { KeycloakProvider, useKeycloak } from './auth/KeycloakProvider';
 import Dashboard from './dashboard/Dashboard';
 import Onboarding from './components/Onboarding';
 import Toast from './components/Toast';
-import type { Entite } from './types';
+import type { Entite, NormxModule } from './types';
+import { ENABLED_MODULES, filterEnabledModules } from './config/modules';
 import './App.css';
 
 // Intercepteur global : cookies httpOnly + header X-Client-Slug pour les cabinets
@@ -70,11 +71,16 @@ function AppContent(): React.JSX.Element {
           sessionStorage.removeItem('normx_client_slug');
           const entitesRes = await fetch('/api/entites', { credentials: 'include' });
           if (entitesRes.ok) {
-            const entitesList: Entite[] = await entitesRes.json();
+            const rawList: Entite[] = await entitesRes.json();
+            // Filtrer les modules non actives (compta/paie pour l'instant)
+            const entitesList: Entite[] = rawList.map((e) => ({
+              ...e,
+              modules: filterEnabledModules((e.modules || []) as NormxModule[]),
+            }));
             setEntites(entitesList);
             if (entitesList.length > 0) {
               // Restaurer le client selectionne avant l'actualisation
-              const restored = savedSlug ? entitesList.find(e => e.slug === savedSlug) : null;
+              const restored = savedSlug ? entitesList.find((e) => e.slug === savedSlug) : null;
               const selected = restored || entitesList[0];
               setCurrentEntite(selected);
               if (selected.slug) {
@@ -84,22 +90,23 @@ function AppContent(): React.JSX.Element {
           } else {
             // Fallback : utiliser le tenant comme entité
             const t = data.tenant;
-            const modules = (t.settings?.modules as string[]) || [];
+            const rawModules = (t.settings?.modules as NormxModule[]) || [];
+            const modules = filterEnabledModules(rawModules);
             const entite: Entite = {
               id: t.id,
               nom: t.nom,
               type_activite: 'entreprise',
-              offre: modules.includes('compta') ? 'comptabilite' : 'etats',
-              modules: modules as ('compta' | 'etats' | 'paie')[],
+              offre: 'etats',
+              modules,
             };
             setEntites([entite]);
             setCurrentEntite(entite);
           }
         } catch {
-          // Fallback
+          // Fallback : on force aux modules actives
           const t = data.tenant;
-          const modules = (t.settings?.modules as string[]) || ['compta', 'etats', 'paie'];
-          setEntites([{ id: t.id, nom: t.nom, type_activite: 'entreprise', offre: modules.includes('compta') ? 'comptabilite' : 'etats', modules: modules as ('compta' | 'etats' | 'paie')[] }]);
+          const modules = [...ENABLED_MODULES];
+          setEntites([{ id: t.id, nom: t.nom, type_activite: 'entreprise', offre: 'etats', modules }]);
         }
 
         setOnboardingDone(true);

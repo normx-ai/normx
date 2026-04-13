@@ -3,6 +3,7 @@ import { LuHouse, LuFileText } from 'react-icons/lu';
 const Paie = lazy(() => import('../paie/Paie'));
 import GestionClients from './GestionClients';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Entite } from '../types';
+import { ENABLED_MODULES, isModuleEnabled } from '../config/modules';
 import { MenuItem, MenuChild, TabItem } from './types';
 import ConfirmModal from '../components/ConfirmModal';
 import Topbar from './Topbar';
@@ -38,26 +39,26 @@ interface DashboardProps {
 }
 
 function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, typeActivite, offre = 'comptabilite', modules = [], entiteSigle = '', entiteAdresse = '', entiteNif = '', entites = [], onSwitchEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onLogout }: DashboardProps): React.ReactElement {
+  // Feature flag : filtrer les modules non actives (compta/paie pour l'instant)
+  const enabledModules: NormxModule[] = modules.filter((m) => isModuleEnabled(m));
   const [activeModule, setActiveModule] = useState<NormxModule | null>(() => {
     const params = new URLSearchParams(window.location.search);
     const mod = params.get('module') || sessionStorage.getItem('normx_redirect_module');
     sessionStorage.removeItem('normx_redirect_module');
-    if (mod === 'compta' || mod === 'etats' || mod === 'paie') {
+    if (mod && (mod === 'compta' || mod === 'etats' || mod === 'paie') && isModuleEnabled(mod as NormxModule)) {
       window.history.replaceState({}, '', window.location.pathname);
-      return mod;
+      return mod as NormxModule;
     }
-    // Restaurer le module depuis sessionStorage
+    // Restaurer le module depuis sessionStorage uniquement s'il est toujours active
     const savedModule = sessionStorage.getItem('normx_activeModule');
-    if (savedModule && (savedModule === 'compta' || savedModule === 'etats' || savedModule === 'paie')) {
+    if (savedModule && (savedModule === 'compta' || savedModule === 'etats' || savedModule === 'paie') && isModuleEnabled(savedModule as NormxModule)) {
       return savedModule as NormxModule;
     }
     // Cabinet : rester sur le portail (null = page clients/dossiers)
     if (isCabinet) return null;
-    // Non-cabinet : choisir un module par defaut avec priorite compta > etats > paie
-    // (on evite de tomber direct dans le wizard Paie quand il y a un autre module)
-    const priority: NormxModule[] = ['compta', 'etats', 'paie'];
-    for (const m of priority) {
-      if (modules.includes(m)) return m;
+    // Non-cabinet : premier module actif parmi ceux de l'entite
+    for (const m of ENABLED_MODULES) {
+      if (enabledModules.includes(m)) return m;
     }
     return null;
   });
@@ -105,8 +106,9 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [moduleSwitcherOpen, userMenuOpen]);
 
-  const availableModules: NormxModule[] = modules.length > 0 ? modules : ['etats'];
+  const availableModules: NormxModule[] = enabledModules.length > 0 ? enabledModules : ['etats'];
   const hasModule = (mod: NormxModule): boolean => {
+    if (!isModuleEnabled(mod)) return false;
     if (!availableModules.includes(mod)) return false;
     if (mod === 'etats' && availableModules.includes('compta')) return false;
     return true;
@@ -114,6 +116,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const etats: EtatFinancier[] = getEtats(typeActivite);
 
   const switchModule = (mod: NormxModule): void => {
+    if (!isModuleEnabled(mod)) return; // Ignore silencieusement les modules desactives
     setActiveModule(mod);
     setModuleSwitcherOpen(false);
     setActiveTab('accueil');
@@ -200,7 +203,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     moduleSwitcherOpen, setModuleSwitcherOpen,
     userMenuOpen, setUserMenuOpen,
     moduleSwitcherRef, userMenuRef,
-    moduleList: MODULE_LIST, hasModule,
+    moduleList: MODULE_LIST.filter((m) => isModuleEnabled(m.id)), hasModule,
     onSwitchModule: switchModule,
     onGoToPortail: () => setActiveModule(null),
     onLogout, isCabinet,
@@ -232,36 +235,30 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     />
   );
 
-  // Helper : choisir un module avec priorite compta > etats > paie
+  // Helper : choisir un module parmi ceux actives (ENABLED_MODULES), en respectant
+  // l'ordre de priorite de la config et les modules disponibles pour l'entite.
   const pickDefaultModule = useCallback((): NormxModule | null => {
-    const priority: NormxModule[] = ['compta', 'etats', 'paie'];
-    for (const m of priority) {
-      if (modules.includes(m)) return m;
+    for (const m of ENABLED_MODULES) {
+      if (enabledModules.includes(m)) return m;
     }
     return null;
-  }, [modules]);
+  }, [enabledModules]);
 
   // Si modules changent (ex: switch client), re-selectionner un module par defaut pour non-cabinet
   useEffect(() => {
-    if (!activeModule && !isCabinet && modules.length > 0) {
+    if (!activeModule && !isCabinet && enabledModules.length > 0) {
       const def = pickDefaultModule();
       if (def) setActiveModule(def);
     }
-  }, [modules, activeModule, isCabinet, setActiveModule, pickDefaultModule]);
+  }, [enabledModules, activeModule, isCabinet, setActiveModule, pickDefaultModule]);
 
-  // Reset module if not available after client switch
+  // Reset module si le module actif n'est plus disponible (switch client) ou s'il a ete desactive
   useEffect(() => {
-    if (activeModule && modules.length > 0 && !modules.includes(activeModule)) {
-      // compta donne acces aux etats, mais seulement si le tenant a explicitement compta
-      if (activeModule === 'etats' && modules.includes('compta')) return;
-      if (activeModule === 'compta' && modules.includes('etats')) {
-        setActiveModule('etats');
-        return;
-      }
+    if (activeModule && (!isModuleEnabled(activeModule) || (enabledModules.length > 0 && !enabledModules.includes(activeModule)))) {
       const def = pickDefaultModule();
-      if (def) setActiveModule(def);
+      setActiveModule(def);
     }
-  }, [modules, activeModule, pickDefaultModule]);
+  }, [enabledModules, activeModule, pickDefaultModule]);
 
   // ==================== CHARGEMENT ====================
   if (!activeModule && !isCabinet && modules.length === 0) {

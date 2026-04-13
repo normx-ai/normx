@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LuSearch, LuPlus } from 'react-icons/lu';
 import { Entite, NormxModule } from '../types';
 import { apiPost, apiPut, apiDelete, ApiError } from '../api';
+import { ENABLED_MODULES } from '../config/modules';
 import ConfirmModal from '../components/ConfirmModal';
 import ClientsTable from './clients/ClientsTable';
 import ClientFormModal, { NewClientForm } from './clients/ClientFormModal';
@@ -21,8 +22,9 @@ interface GestionClientsProps {
 const EMPTY_FORM: NewClientForm = {
   nom: '',
   type_activite: 'entreprise',
-  offre: 'comptabilite',
-  modules: new Set(['compta']),
+  offre: 'etats',
+  // Par defaut on coche le premier module active (Etats pour l'instant)
+  modules: new Set(ENABLED_MODULES),
   sigle: '',
   adresse: '',
   nif: '',
@@ -59,7 +61,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
 
   const openNewForm = (): void => {
     setEditingId(null);
-    setFormData({ ...EMPTY_FORM, modules: new Set(['compta']) });
+    setFormData({ ...EMPTY_FORM, modules: new Set(ENABLED_MODULES) });
     setShowForm(true);
     setError('');
   };
