@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import {
-  LuSearch, LuPlus, LuPenLine, LuTrash2, LuChevronDown,
-  LuBuilding2, LuBookOpen, LuFileSpreadsheet, LuCoins,
-  LuExternalLink, LuX, LuArchive
-} from 'react-icons/lu';
-import { Entite, TypeActivite, Offre, NormxModule } from '../types';
+import { LuSearch, LuPlus } from 'react-icons/lu';
+import { Entite, NormxModule } from '../types';
 import { apiPost, apiPut, apiDelete, ApiError } from '../api';
 import ConfirmModal from '../components/ConfirmModal';
+import ClientsTable from './clients/ClientsTable';
+import ClientFormModal, { NewClientForm } from './clients/ClientFormModal';
+import CabinetExerciceModal from './clients/CabinetExerciceModal';
 import './GestionClients.css';
 
 interface GestionClientsProps {
@@ -19,57 +18,39 @@ interface GestionClientsProps {
   onOpenModule: (entite: Entite, mod: NormxModule) => void;
 }
 
-interface NewClientForm {
-  nom: string;
-  type_activite: TypeActivite;
-  offre: Offre;
-  modules: Set<string>;
-  sigle: string;
-  adresse: string;
-  nif: string;
-  telephone: string;
-  email: string;
-}
-
-const MODULE_LABELS: Record<string, { label: string; icon: React.ComponentType<{ size?: number }>; color: string }> = {
-  compta: { label: 'Comptabilité', icon: LuBookOpen, color: '#1A3A5C' },
-  etats: { label: 'États', icon: LuFileSpreadsheet, color: '#1A3A5C' },
-  paie: { label: 'Paie', icon: LuCoins, color: '#16a34a' },
+const EMPTY_FORM: NewClientForm = {
+  nom: '',
+  type_activite: 'entreprise',
+  offre: 'comptabilite',
+  modules: new Set(['compta']),
+  sigle: '',
+  adresse: '',
+  nif: '',
+  telephone: '',
+  email: '',
 };
-
-function getTypeLabel(t: TypeActivite): string {
-  switch (t) {
-    case 'entreprise': return 'Entreprise';
-    case 'association': return 'Association';
-    case 'ordre_professionnel': return 'Ordre professionnel';
-    case 'projet_developpement': return 'Projet';
-    case 'smt': return 'Entreprise (SMT)';
-    default: return t;
-  }
-}
 
 function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onOpenModule }: GestionClientsProps): React.ReactElement {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState<'nom' | 'type' | 'date'>('nom');
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [formData, setFormData] = useState<NewClientForm>({
-    nom: '', type_activite: 'entreprise', offre: 'comptabilite', modules: new Set(['compta']),
-    sigle: '', adresse: '', nif: '', telephone: '', email: ''
-  });
+  const [formData, setFormData] = useState<NewClientForm>(EMPTY_FORM);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [exerciceModalOpen, setExerciceModalOpen] = useState(false);
-  const [exerciceForm, setExerciceForm] = useState({
-    annee: new Date().getFullYear(),
-    date_debut: `${new Date().getFullYear()}-01-01`,
-    date_fin: `${new Date().getFullYear()}-12-31`,
-  });
-  const [exerciceLoading, setExerciceLoading] = useState(false);
-  const [exerciceError, setExerciceError] = useState('');
+
+  const [confirmState, setConfirmState] = useState<{
+    open: boolean;
+    title: string;
+    message: string;
+    variant: 'danger' | 'archive';
+    confirmLabel?: string;
+    onConfirm: () => void;
+  }>({ open: false, title: '', message: '', variant: 'danger', onConfirm: () => {} });
 
   const filtered = entites
-    .filter(e => e.nom.toLowerCase().includes(search.toLowerCase()) || (e.sigle || '').toLowerCase().includes(search.toLowerCase()))
+    .filter((e) => e.nom.toLowerCase().includes(search.toLowerCase()) || (e.sigle || '').toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => {
       if (sortBy === 'nom') return a.nom.localeCompare(b.nom);
       if (sortBy === 'type') return a.type_activite.localeCompare(b.type_activite);
@@ -78,10 +59,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
 
   const openNewForm = (): void => {
     setEditingId(null);
-    setFormData({
-      nom: '', type_activite: 'entreprise', offre: 'comptabilite', modules: new Set(['compta']),
-      sigle: '', adresse: '', nif: '', telephone: '', email: ''
-    });
+    setFormData({ ...EMPTY_FORM, modules: new Set(['compta']) });
     setShowForm(true);
     setError('');
   };
@@ -103,19 +81,6 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     setError('');
   };
 
-  const toggleModule = (mod: string): void => {
-    const next = new Set(formData.modules);
-    if (next.has(mod)) {
-      next.delete(mod);
-    } else {
-      if (mod === 'compta' && next.has('etats')) next.delete('etats');
-      if (mod === 'etats' && next.has('compta')) next.delete('compta');
-      next.add(mod);
-    }
-    const offre: Offre = next.has('compta') ? 'comptabilite' : 'etats';
-    setFormData({ ...formData, modules: next, offre });
-  };
-
   const handleSubmit = async (): Promise<void> => {
     if (!formData.nom.trim()) { setError('Le nom est obligatoire.'); return; }
     if (formData.modules.size === 0) { setError('Sélectionnez au moins un module.'); return; }
@@ -134,9 +99,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
       }
       setShowForm(false);
     } catch (err) {
-      // Cas special : le cabinet n'a pas encore d'exercice → on propose de le creer
       if (err instanceof ApiError && err.code === 'EXERCICE_REQUIRED') {
-        setExerciceError('');
         setExerciceModalOpen(true);
       } else {
         setError(err instanceof Error ? err.message : 'Impossible de contacter le serveur.');
@@ -146,53 +109,30 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     }
   };
 
-  const handleCreateCabinetExercice = async (): Promise<void> => {
-    if (!exerciceForm.annee || !exerciceForm.date_debut || !exerciceForm.date_fin) {
-      setExerciceError('Tous les champs sont requis.');
-      return;
-    }
-    setExerciceLoading(true);
-    setExerciceError('');
-    try {
-      await apiPost('/api/tenant/exercice', {
-        annee: exerciceForm.annee,
-        date_debut: exerciceForm.date_debut,
-        date_fin: exerciceForm.date_fin,
-      });
-      setExerciceModalOpen(false);
-      // Retry la creation du client
-      await handleSubmit();
-    } catch (err) {
-      setExerciceError(err instanceof Error ? err.message : 'Erreur lors de la creation de l\'exercice.');
-    } finally {
-      setExerciceLoading(false);
-    }
+  const handleExerciceCreated = async (): Promise<void> => {
+    setExerciceModalOpen(false);
+    await handleSubmit();
   };
 
-  const [confirmState, setConfirmState] = useState<{
-    open: boolean;
-    title: string;
-    message: string;
-    variant: 'danger' | 'archive';
-    confirmLabel?: string;
-    onConfirm: () => void;
-  }>({ open: false, title: '', message: '', variant: 'danger', onConfirm: () => {} });
-
   const handleDelete = async (id: number, nom: string, slug?: string): Promise<void> => {
-    // Vérifier si l'entité a des données (exercices) dans le schema du client
     let hasData = false;
     try {
       const headers: Record<string, string> = {};
       if (slug) headers['X-Client-Slug'] = slug;
-      const res = await fetch(`/api/balance/exercices/${id}`, {
-        credentials: 'include',
-        headers,
-      });
+      const res = await fetch(`/api/balance/exercices/${id}`, { credentials: 'include', headers });
       if (res.ok) {
         const exercices = await res.json();
         hasData = exercices.length > 0;
       }
     } catch { /* ignore */ }
+
+    const runDelete = async (): Promise<void> => {
+      setConfirmState((prev) => ({ ...prev, open: false }));
+      try {
+        await apiDelete(`/api/entites/${id}`);
+        onEntiteDeleted(id);
+      } catch { /* silently fail */ }
+    };
 
     if (hasData) {
       setConfirmState({
@@ -201,13 +141,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
         message: 'Ce dossier contient des exercices et des données comptables. Il sera archivé et pourra être restauré ultérieurement.',
         variant: 'archive',
         confirmLabel: 'Archiver',
-        onConfirm: async () => {
-          setConfirmState(prev => ({ ...prev, open: false }));
-          try {
-            await apiDelete(`/api/entites/${id}`);
-            onEntiteDeleted(id);
-          } catch { /* silently fail */ }
-        },
+        onConfirm: runDelete,
       });
     } else {
       setConfirmState({
@@ -216,20 +150,13 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
         message: 'Ce dossier ne contient aucune donnée. Il sera définitivement supprimé.',
         variant: 'danger',
         confirmLabel: 'Supprimer',
-        onConfirm: async () => {
-          setConfirmState(prev => ({ ...prev, open: false }));
-          try {
-            await apiDelete(`/api/entites/${id}`);
-            onEntiteDeleted(id);
-          } catch { /* silently fail */ }
-        },
+        onConfirm: runDelete,
       });
     }
   };
 
   return (
     <div className="gc-container">
-      {/* Header */}
       <div className="gc-header">
         <div>
           <h2 className="gc-title">Clients et dossiers</h2>
@@ -240,7 +167,6 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
         </button>
       </div>
 
-      {/* Toolbar */}
       <div className="gc-toolbar">
         <div className="gc-search">
           <LuSearch size={16} />
@@ -248,12 +174,12 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
             type="text"
             placeholder="Rechercher un client..."
             value={search}
-            onChange={e => setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="gc-sort">
           <span>Trier par</span>
-          <select value={sortBy} onChange={e => setSortBy(e.target.value as 'nom' | 'type' | 'date')}>
+          <select value={sortBy} onChange={(e) => setSortBy(e.target.value as 'nom' | 'type' | 'date')}>
             <option value="nom">Nom de A à Z</option>
             <option value="type">Type d'activité</option>
             <option value="date">Date de création</option>
@@ -261,197 +187,31 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
         </div>
       </div>
 
-      {/* Table */}
-      <div className="gc-table-wrap">
-        <table className="gc-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Nom</th>
-              <th>Type d'entité</th>
-              <th>Modules</th>
-              <th>Téléphone</th>
-              <th>E-mail</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.length === 0 && (
-              <tr><td colSpan={7} className="gc-empty">
-                {entites.length === 0
-                  ? 'Aucun dossier client. Cliquez sur "Nouveau client" pour créer votre premier dossier.'
-                  : 'Aucun client trouvé pour cette recherche.'}
-              </td></tr>
-            )}
-            {filtered.map(ent => (
-              <tr key={ent.id} className={ent.id === currentEntiteId ? 'gc-row-active' : ''}>
-                <td className="gc-icon-cell"><LuBuilding2 size={18} /></td>
-                <td>
-                  <button className="gc-name-link" onClick={() => onSelectEntite(ent)}>
-                    {ent.nom}
-                  </button>
-                  {ent.sigle && <span className="gc-sigle">{ent.sigle}</span>}
-                </td>
-                <td>
-                  <span className={`gc-type-badge ${ent.type_activite}`}>{getTypeLabel(ent.type_activite)}</span>
-                </td>
-                <td>
-                  <div className="gc-modules">
-                    {(ent.modules || []).map(mod => {
-                      const info = MODULE_LABELS[mod];
-                      if (!info) return null;
-                      const ModIcon = info.icon;
-                      return (
-                        <button
-                          key={mod}
-                          className="gc-module-tag"
-                          style={{ borderColor: info.color, color: info.color }}
-                          onClick={() => onOpenModule(ent, mod as NormxModule)}
-                          title={`Ouvrir ${info.label}`}
-                        >
-                          <ModIcon size={12} /> {info.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </td>
-                <td className="gc-cell-light">{ent.telephone || '-'}</td>
-                <td className="gc-cell-light">{ent.email || '-'}</td>
-                <td>
-                  <div className="gc-actions">
-                    <button className="gc-action-btn" title="Ouvrir" onClick={() => onSelectEntite(ent)}>
-                      <LuExternalLink size={15} />
-                    </button>
-                    <button className="gc-action-btn" title="Modifier" onClick={() => openEditForm(ent)}>
-                      <LuPenLine size={15} />
-                    </button>
-                    <button className="gc-action-btn gc-action-danger" title="Désactiver" onClick={() => handleDelete(ent.id, ent.nom, ent.slug)}>
-                      <LuTrash2 size={15} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ClientsTable
+        entites={filtered}
+        currentEntiteId={currentEntiteId}
+        onSelectEntite={onSelectEntite}
+        onOpenModule={onOpenModule}
+        onEdit={openEditForm}
+        onDelete={handleDelete}
+      />
 
-      {/* Modal formulaire */}
-      {showForm && (
-        <div className="gc-modal-overlay" onClick={() => setShowForm(false)}>
-          <div className="gc-modal" onClick={e => e.stopPropagation()}>
-            <div className="gc-modal-header">
-              <h3>{editingId ? 'Modifier le dossier' : 'Nouveau client'}</h3>
-              <button className="gc-modal-close" onClick={() => setShowForm(false)}><LuX size={18} /></button>
-            </div>
+      <ClientFormModal
+        open={showForm}
+        editingId={editingId}
+        formData={formData}
+        setFormData={setFormData}
+        loading={loading}
+        error={error}
+        onClose={() => setShowForm(false)}
+        onSubmit={handleSubmit}
+      />
 
-            {error && <div className="gc-modal-error">{error}</div>}
-
-            <div className="gc-modal-body">
-              <div className="gc-form-row">
-                <div className="gc-form-group gc-form-wide">
-                  <label>Nom de l'entité <span className="required">*</span></label>
-                  <input type="text" value={formData.nom} onChange={e => setFormData({ ...formData, nom: e.target.value })} placeholder="Nom du client / dossier" />
-                </div>
-              </div>
-
-              <div className="gc-form-row">
-                <div className="gc-form-group">
-                  <label>Sigle</label>
-                  <input type="text" value={formData.sigle} onChange={e => setFormData({ ...formData, sigle: e.target.value })} placeholder="Abréviation" />
-                </div>
-                <div className="gc-form-group">
-                  <label>Type d'activité <span className="required">*</span></label>
-                  <select value={formData.type_activite === 'smt' ? 'entreprise' : formData.type_activite} onChange={e => setFormData({ ...formData, type_activite: e.target.value as TypeActivite })}>
-                    <option value="entreprise">Entreprise</option>
-                    <option value="association">Association</option>
-                    <option value="ordre_professionnel">Ordre professionnel</option>
-                    <option value="projet_developpement">Projet de développement</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Sous-choix système comptable pour Entreprise */}
-              {(formData.type_activite === 'entreprise' || formData.type_activite === 'smt') && (
-                <div className="gc-form-row">
-                  <div className="gc-form-group gc-form-wide">
-                    <label>Système comptable</label>
-                    <div className="gc-module-picker">
-                      <button
-                        type="button"
-                        className={`gc-module-pick ${formData.type_activite === 'entreprise' ? 'selected' : ''}`}
-                        style={formData.type_activite === 'entreprise' ? { borderColor: '#1A3A5C', background: '#1A3A5C10', color: '#1A3A5C' } : {}}
-                        onClick={() => setFormData({ ...formData, type_activite: 'entreprise' })}
-                      >
-                        Système normal (SYSCOHADA)
-                      </button>
-                      <button
-                        type="button"
-                        className={`gc-module-pick ${formData.type_activite === 'smt' ? 'selected' : ''}`}
-                        style={formData.type_activite === 'smt' ? { borderColor: '#D4A843', background: '#D4A84310', color: '#D4A843' } : {}}
-                        onClick={() => setFormData({ ...formData, type_activite: 'smt' })}
-                      >
-                        SMT (très petite entité)
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="gc-form-row">
-                <div className="gc-form-group">
-                  <label>NIF</label>
-                  <input type="text" value={formData.nif} onChange={e => setFormData({ ...formData, nif: e.target.value })} />
-                </div>
-                <div className="gc-form-group">
-                  <label>Adresse</label>
-                  <input type="text" value={formData.adresse} onChange={e => setFormData({ ...formData, adresse: e.target.value })} />
-                </div>
-              </div>
-
-              <div className="gc-form-row">
-                <div className="gc-form-group">
-                  <label>Téléphone</label>
-                  <input type="tel" value={formData.telephone} onChange={e => setFormData({ ...formData, telephone: e.target.value })} placeholder="+XXX XX XXX XX XX" />
-                </div>
-                <div className="gc-form-group">
-                  <label>E-mail</label>
-                  <input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="contact@entite.com" />
-                </div>
-              </div>
-
-              <div className="gc-form-group">
-                <label>Modules <span className="required">*</span></label>
-                <div className="gc-module-picker">
-                  {Object.entries(MODULE_LABELS).map(([key, info]) => {
-                    const isSelected = formData.modules.has(key);
-                    const ModIcon = info.icon;
-                    return (
-                      <button
-                        key={key}
-                        type="button"
-                        className={`gc-module-pick ${isSelected ? 'selected' : ''}`}
-                        style={isSelected ? { borderColor: info.color, background: info.color + '10', color: info.color } : {}}
-                        onClick={() => toggleModule(key)}
-                      >
-                        <ModIcon size={16} /> {info.label}
-                      </button>
-                    );
-                  })}
-                </div>
-                <p className="gc-form-hint">Comptabilité et États financiers ne peuvent pas être combinés.</p>
-              </div>
-            </div>
-
-            <div className="gc-modal-footer">
-              <button className="gc-btn-cancel" onClick={() => setShowForm(false)}>Annuler</button>
-              <button className="gc-btn-save" onClick={handleSubmit} disabled={loading}>
-                {loading ? 'Enregistrement...' : editingId ? 'Enregistrer' : 'Créer le dossier'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <CabinetExerciceModal
+        open={exerciceModalOpen}
+        onClose={() => setExerciceModalOpen(false)}
+        onCreated={handleExerciceCreated}
+      />
 
       <ConfirmModal
         open={confirmState.open}
@@ -460,62 +220,8 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
         variant={confirmState.variant}
         confirmLabel={confirmState.confirmLabel}
         onConfirm={confirmState.onConfirm}
-        onCancel={() => setConfirmState(prev => ({ ...prev, open: false }))}
+        onCancel={() => setConfirmState((prev) => ({ ...prev, open: false }))}
       />
-
-      {exerciceModalOpen && (
-        <div className="modal-overlay" onClick={() => !exerciceLoading && setExerciceModalOpen(false)}>
-          <div className="modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
-            <div className="modal-header">
-              <h3>Créer l'exercice du cabinet</h3>
-              <button className="modal-close" onClick={() => setExerciceModalOpen(false)} disabled={exerciceLoading}><LuX /></button>
-            </div>
-            <div className="modal-body">
-              <p style={{ fontSize: 14, color: '#6b7280', marginBottom: 16, lineHeight: 1.5 }}>
-                Votre cabinet n'a pas encore d'exercice. Créez-le ici — il sera automatiquement copié vers tous vos clients (existants et futurs).
-              </p>
-              {exerciceError && (
-                <div style={{ padding: '10px 12px', background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 6, color: '#991b1b', fontSize: 13, marginBottom: 12 }}>
-                  {exerciceError}
-                </div>
-              )}
-              <div className="form-row">
-                <label>Année <span style={{ color: '#ef4444' }}>*</span></label>
-                <input
-                  type="number"
-                  value={exerciceForm.annee}
-                  onChange={(e) => {
-                    const annee = parseInt(e.target.value, 10) || new Date().getFullYear();
-                    setExerciceForm({ annee, date_debut: `${annee}-01-01`, date_fin: `${annee}-12-31` });
-                  }}
-                />
-              </div>
-              <div className="form-row">
-                <label>Date de début <span style={{ color: '#ef4444' }}>*</span></label>
-                <input
-                  type="date"
-                  value={exerciceForm.date_debut}
-                  onChange={(e) => setExerciceForm({ ...exerciceForm, date_debut: e.target.value })}
-                />
-              </div>
-              <div className="form-row">
-                <label>Date de fin <span style={{ color: '#ef4444' }}>*</span></label>
-                <input
-                  type="date"
-                  value={exerciceForm.date_fin}
-                  onChange={(e) => setExerciceForm({ ...exerciceForm, date_fin: e.target.value })}
-                />
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button className="btn-secondary" onClick={() => setExerciceModalOpen(false)} disabled={exerciceLoading}>Annuler</button>
-              <button className="btn-primary" onClick={handleCreateCabinetExercice} disabled={exerciceLoading}>
-                {exerciceLoading ? 'Création...' : 'Créer et continuer'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
