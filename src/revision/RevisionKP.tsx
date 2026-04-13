@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
+import { createLogger } from '../utils/logger';
 import { KPLigne, ODEcriture, Suggestion, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
+
+const logger = createLogger('RevisionKP');
 import ControleAffectation from './ControleAffectation';
 import ControleReserveLegale from './ControleReserveLegale';
 import ControleNiveauKP from './ControleNiveauKP';
@@ -115,13 +118,16 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
       });
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({}));
-        setSaveNotif({ type: 'error', message: err.error || `Erreur ${resp.status}` });
+        const msg = (err as { error?: string }).error || `Erreur ${resp.status}`;
+        logger.error(`save failed (${resp.status})`, msg);
+        setSaveNotif({ type: 'error', message: msg });
         return;
       }
       setSaved(true);
       setSaveNotif({ type: 'success', message: 'Revision sauvegardee' });
       setTimeout(() => setSaveNotif(null), 3000);
-    } catch {
+    } catch (err) {
+      logger.error('save network error', err instanceof Error ? err : String(err));
       setSaveNotif({ type: 'error', message: 'Erreur reseau' });
     }
   };
