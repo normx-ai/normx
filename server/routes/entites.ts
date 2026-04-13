@@ -102,14 +102,31 @@ router.post('/', async (req: Request, res: Response) => {
   }
 
   try {
-    // Verifier que le cabinet a au moins un exercice
+    // Chercher un template d'exercices : d'abord le cabinet, sinon un client existant
     const cabinetSchema = getValidatedSchemaName(req.tenant.schema_name);
-    const exercicesResult = await pool.query(
+    let exercicesRows = (await pool.query(
       `SELECT * FROM "${cabinetSchema}".exercices ORDER BY annee DESC`
-    );
-    if (exercicesResult.rows.length === 0) {
+    )).rows;
+
+    if (exercicesRows.length === 0) {
+      // Fallback : un client existant du cabinet peut servir de template
+      const existingClients = await tenantService.getCabinetClients(req.tenant.id);
+      for (const c of existingClients) {
+        const cSchema = getValidatedSchemaName(c.schema_name);
+        const r = await pool.query(
+          `SELECT * FROM "${cSchema}".exercices ORDER BY annee DESC`
+        );
+        if (r.rows.length > 0) {
+          exercicesRows = r.rows;
+          logger.info('Template d\'exercices pris sur le client "%s" (cabinet sans exercice propre)', c.nom);
+          break;
+        }
+      }
+    }
+
+    if (exercicesRows.length === 0) {
       return res.status(400).json({
-        error: 'Vous devez d\'abord créer un exercice pour votre cabinet avant d\'ajouter des clients.',
+        error: 'Vous devez d\'abord créer un exercice (sur votre cabinet ou un client existant) avant d\'ajouter des clients.',
         code: 'EXERCICE_REQUIRED',
       });
     }
@@ -128,9 +145,9 @@ router.post('/', async (req: Request, res: Response) => {
       settings: { modules, sigle, adresse, nif, telephone, email },
     });
 
-    // Copier les exercices du cabinet dans le schema client
+    // Copier les exercices template dans le schema client
     const clientSchema = getValidatedSchemaName(client.schema_name);
-    for (const ex of exercicesResult.rows) {
+    for (const ex of exercicesRows) {
       await pool.query(
         `INSERT INTO "${clientSchema}".exercices (annee, date_debut, date_fin, duree_mois, statut)
          VALUES ($1, $2, $3, $4, $5)
@@ -138,7 +155,7 @@ router.post('/', async (req: Request, res: Response) => {
         [ex.annee, ex.date_debut, ex.date_fin, ex.duree_mois, ex.statut || 'ouvert']
       );
     }
-    logger.info('Exercices du cabinet copies vers le client "%s" (%d exercice(s))', nom, exercicesResult.rows.length);
+    logger.info('Exercices template copies vers le client "%s" (%d exercice(s))', nom, exercicesRows.length);
 
     const updated = await tenantService.getTenantById(client.id);
     res.status(201).json({
