@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import CONFIG_CONGO from '../data/configCongo';
+import type {
+  BanqueEntry,
+  ContactEntry,
+  EtablissementFormAdresse,
+  EtablissementFormData,
+} from './wizardTypes';
+
+export type { EtablissementFormData } from './wizardTypes';
 
 interface StepLabel {
   id: string;
@@ -13,84 +21,60 @@ const STEP_LABELS: StepLabel[] = CONFIG_CONGO.steps.map((s, i) => ({
   num: i + 1,
 }));
 
-interface BanqueForm {
-  nom: string;
-  code: string;
-  agence: string;
-  rib: string;
-  iban: string;
-  swift: string;
-}
-
-interface BanqueEntry extends BanqueForm {
-  id: number;
-}
-
-interface ContactForm {
-  nom: string;
-  fonction: string;
-  email: string;
-  telephone: string;
-}
-
-interface ContactEntry extends ContactForm {
-  id: number;
-}
-
-interface EtablissementFormAdresse {
-  numero: string;
-  voie: string;
-  complement: string;
-  code_postal: string;
-  ville: string;
-}
-
-export interface EtablissementFormData {
-  raison_sociale: string;
-  nui: string;
-  forme_juridique?: string;
-  adresse: EtablissementFormAdresse;
-  banques: BanqueEntry[];
-  contacts: ContactEntry[];
-  organismes: Record<string, string | string[]>;
-  param_organismes: Record<string, string>;
-  taux: Record<string, string>;
-  parametres: {
-    planning: { heuresJour: string; heuresSemaine: number; heuresMois: number };
-    paiement: { mode: string; jour: string };
-  };
-  retraite: Record<string, string>;
-  specificites: Record<string, string>;
-  [key: string]: string | EtablissementFormAdresse | BanqueEntry[] | ContactEntry[] | Record<string, string | string[]> | Record<string, string> | { planning: { heuresJour: string; heuresSemaine: number; heuresMois: number }; paiement: { mode: string; jour: string } } | undefined;
-}
+type BanqueForm = Omit<BanqueEntry, 'id'>;
+type ContactForm = Omit<ContactEntry, 'id'>;
 
 interface EtablissementWizardProps {
   onClose: () => void;
   onSave: (data: EtablissementFormData) => void;
+  initialData?: EtablissementFormData;
 }
 
-function EtablissementWizard({ onClose, onSave }: EtablissementWizardProps): React.ReactElement {
+const EMPTY_FORM: EtablissementFormData = {
+  raison_sociale: '',
+  nui: '',
+  adresse: { numero: '', voie: '', complement: '', code_postal: '', ville: '' },
+  banques: [],
+  contacts: [],
+  organismes: {},
+  param_organismes: {},
+  taux: {},
+  parametres: {
+    planning: CONFIG_CONGO.planningDefaults,
+    paiement: { mode: 'Virement', jour: 'Dernier jour du mois' },
+  },
+  retraite: {},
+  specificites: {},
+};
+
+function mergeInitial(data?: EtablissementFormData): EtablissementFormData {
+  if (!data) return EMPTY_FORM;
+  return {
+    ...EMPTY_FORM,
+    ...data,
+    adresse: { ...EMPTY_FORM.adresse, ...(data.adresse || {}) },
+    banques: data.banques || [],
+    contacts: data.contacts || [],
+    organismes: data.organismes || {},
+    param_organismes: data.param_organismes || {},
+    taux: data.taux || {},
+    parametres: {
+      planning: { ...EMPTY_FORM.parametres.planning, ...(data.parametres?.planning || {}) },
+      paiement: { ...EMPTY_FORM.parametres.paiement, ...(data.parametres?.paiement || {}) },
+    },
+    retraite: data.retraite || {},
+    specificites: data.specificites || {},
+  };
+}
+
+function EtablissementWizard({ onClose, onSave, initialData }: EtablissementWizardProps): React.ReactElement {
+  const isEdit = !!initialData;
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [showBanqueForm, setShowBanqueForm] = useState<boolean>(false);
   const [banqueForm, setBanqueForm] = useState<BanqueForm>({ nom: '', code: '', agence: '', rib: '', iban: '', swift: '' });
   const [showContactForm, setShowContactForm] = useState<boolean>(false);
   const [contactForm, setContactForm] = useState<ContactForm>({ nom: '', fonction: '', email: '', telephone: '' });
-  const [form, setForm] = useState<EtablissementFormData>({
-    raison_sociale: '',
-    nui: '',
-    adresse: { numero: '', voie: '', complement: '', code_postal: '', ville: '' },
-    banques: [],
-    contacts: [],
-    organismes: {},
-    param_organismes: {},
-    taux: {},
-    parametres: {
-      planning: CONFIG_CONGO.planningDefaults,
-      paiement: { mode: 'Virement', jour: 'Dernier jour du mois' },
-    },
-    retraite: {},
-    specificites: {},
-  });
+  const [form, setForm] = useState<EtablissementFormData>(() => mergeInitial(initialData));
 
   const updateForm = (field: string, value: string | EtablissementFormAdresse | BanqueEntry[] | ContactEntry[] | Record<string, string | string[]> | Record<string, string>): void => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -531,7 +515,7 @@ function EtablissementWizard({ onClose, onSave }: EtablissementWizardProps): Rea
     <div className="wizard-overlay">
       <div className="wizard-modal">
         <div className="wizard-modal-header">
-          <h3>Nouvel établissement</h3>
+          <h3>{isEdit ? "Modifier l'établissement" : 'Nouvel établissement'}</h3>
           <button className="wizard-close-btn" onClick={onClose}>&times;</button>
         </div>
 

@@ -1,9 +1,67 @@
+export interface BanqueEntry {
+  id: number;
+  nom: string;
+  code: string;
+  agence: string;
+  rib: string;
+  iban: string;
+  swift: string;
+}
+
+export interface ContactEntry {
+  id: number;
+  nom: string;
+  fonction: string;
+  email: string;
+  telephone: string;
+}
+
+export interface EtablissementFormAdresse {
+  numero: string;
+  voie: string;
+  complement: string;
+  code_postal: string;
+  ville: string;
+}
+
+export interface EtablissementParametres {
+  planning: { heuresJour: string; heuresSemaine: number; heuresMois: number };
+  paiement: { mode: string; jour: string };
+}
+
+export type EtablissementFormValue =
+  | string
+  | EtablissementFormAdresse
+  | BanqueEntry[]
+  | ContactEntry[]
+  | Record<string, string | string[]>
+  | Record<string, string>
+  | EtablissementParametres
+  | undefined;
+
+export interface EtablissementFormData {
+  raison_sociale: string;
+  nui: string;
+  forme_juridique?: string;
+  adresse: EtablissementFormAdresse;
+  banques: BanqueEntry[];
+  contacts: ContactEntry[];
+  organismes: Record<string, string | string[]>;
+  param_organismes: Record<string, string>;
+  taux: Record<string, string>;
+  parametres: EtablissementParametres;
+  retraite: Record<string, string>;
+  specificites: Record<string, string>;
+  [key: string]: EtablissementFormValue;
+}
+
 export interface Etablissement {
   id: number | string;
   raison_sociale?: string;
   raisonSociale?: string;
   nui?: string;
   nb_salaries?: number;
+  data?: EtablissementFormData;
 }
 
 export interface SalarieIdentite {

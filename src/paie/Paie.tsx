@@ -90,11 +90,15 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
       }
 
       if (etabData.etablissements) {
-        setEtablissements(etabData.etablissements.map((e: { id: number | string; raison_sociale?: string; nui?: string }) => ({
-          id: e.id,
-          raison_sociale: e.raison_sociale,
-          nui: e.nui,
-        })));
+        setEtablissements(etabData.etablissements.map((e: { id: number | string; raison_sociale?: string; nui?: string; data?: string | EtablissementFormData }) => {
+          const parsedData = typeof e.data === 'string' ? JSON.parse(e.data) as EtablissementFormData : e.data;
+          return {
+            id: e.id,
+            raison_sociale: e.raison_sociale,
+            nui: e.nui,
+            data: parsedData,
+          };
+        }));
       }
 
       if (salData.salaries) {
@@ -154,6 +158,7 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
     id,
     raison_sociale: etab.raison_sociale,
     nui: etab.nui || undefined,
+    data: etab,
   });
 
   const handleAddEtablissement = async (etab: EtablissementFormData): Promise<void> => {
@@ -174,10 +179,35 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
       const result = await res.json();
       if (result.etablissement) {
         const saved = result.etablissement as { id: number; raison_sociale?: string; nui?: string };
-        setEtablissements(prev => [...prev, { id: saved.id, raison_sociale: saved.raison_sociale, nui: saved.nui }]);
+        setEtablissements(prev => [...prev, { id: saved.id, raison_sociale: saved.raison_sociale, nui: saved.nui, data: etab }]);
       }
     } catch {
       setEtablissements(prev => [...prev, toEtablissement(etab, Date.now())]);
+    }
+  };
+
+  const handleUpdateEtablissement = async (id: number | string, etab: EtablissementFormData): Promise<void> => {
+    if (!entiteId) {
+      setEtablissements(prev => prev.map(e => e.id === id ? { ...e, raison_sociale: etab.raison_sociale, nui: etab.nui || undefined, data: etab } : e));
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/api/paie/etablissements/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          raison_sociale: etab.raison_sociale,
+          nui: etab.nui || null,
+          data: etab,
+        }),
+      });
+      const result = await res.json();
+      if (result.etablissement) {
+        const saved = result.etablissement as { id: number; raison_sociale?: string; nui?: string };
+        setEtablissements(prev => prev.map(e => e.id === saved.id ? { ...e, raison_sociale: saved.raison_sociale, nui: saved.nui, data: etab } : e));
+      }
+    } catch {
+      setEtablissements(prev => prev.map(e => e.id === id ? { ...e, raison_sociale: etab.raison_sociale, nui: etab.nui || undefined, data: etab } : e));
     }
   };
 
@@ -314,6 +344,7 @@ function Paie({ entiteId }: PaieProps): React.ReactElement {
             <PaieDashboard
               etablissements={etablissements}
               onAddEtablissement={handleAddEtablissement}
+              onUpdateEtablissement={handleUpdateEtablissement}
               entiteId={entiteId}
             />
           )}

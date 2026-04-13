@@ -9,17 +9,44 @@ interface PaieDashboardEtablissement extends Etablissement {
 interface PaieDashboardProps {
   etablissements: PaieDashboardEtablissement[];
   onAddEtablissement: (data: EtablissementFormData) => void;
+  onUpdateEtablissement: (id: number | string, data: EtablissementFormData) => void;
   entiteId?: string | number | null;
 }
 
-function PaieDashboard({ etablissements, onAddEtablissement }: PaieDashboardProps): React.ReactElement {
+function PaieDashboard({ etablissements, onAddEtablissement, onUpdateEtablissement }: PaieDashboardProps): React.ReactElement {
   const [showWizard, setShowWizard] = useState<boolean>(false);
+  const [editingId, setEditingId] = useState<number | string | null>(null);
+  const [editingData, setEditingData] = useState<EtablissementFormData | null>(null);
   const [searchRS, setSearchRS] = useState<string>('');
   const [searchNUI, setSearchNUI] = useState<string>('');
 
   const handleSaveEtablissement = (data: EtablissementFormData) => {
-    onAddEtablissement(data);
+    if (editingId !== null) {
+      onUpdateEtablissement(editingId, data);
+    } else {
+      onAddEtablissement(data);
+    }
     setShowWizard(false);
+    setEditingId(null);
+    setEditingData(null);
+  };
+
+  const handleCloseWizard = () => {
+    setShowWizard(false);
+    setEditingId(null);
+    setEditingData(null);
+  };
+
+  const handleEdit = (etab: PaieDashboardEtablissement) => {
+    setEditingId(etab.id);
+    setEditingData(etab.data || null);
+    setShowWizard(true);
+  };
+
+  const handleNew = () => {
+    setEditingId(null);
+    setEditingData(null);
+    setShowWizard(true);
   };
 
   const filtered = etablissements.filter((e: Etablissement) =>
@@ -36,7 +63,7 @@ function PaieDashboard({ etablissements, onAddEtablissement }: PaieDashboardProp
       </div>
 
       <div className="paie-dashboard-actions">
-        <button className="btn-add-etab" onClick={() => setShowWizard(true)}>
+        <button className="btn-add-etab" onClick={handleNew}>
           + Ajouter un établissement
         </button>
         <button className="btn-actions-dropdown">Actions &#9660;</button>
@@ -68,8 +95,8 @@ function PaieDashboard({ etablissements, onAddEtablissement }: PaieDashboardProp
             {filtered.length === 0 ? (
               <tr><td colSpan={3} className="etab-table-empty">Aucune donnée</td></tr>
             ) : (
-              filtered.map((etab: Etablissement) => (
-                <tr key={etab.id}>
+              filtered.map((etab: PaieDashboardEtablissement) => (
+                <tr key={etab.id} onClick={() => handleEdit(etab)} style={{ cursor: 'pointer' }}>
                   <td>{etab.raison_sociale}</td>
                   <td>{etab.nui || '-'}</td>
                   <td>{etab.nb_salaries || 0}</td>
@@ -88,8 +115,9 @@ function PaieDashboard({ etablissements, onAddEtablissement }: PaieDashboardProp
 
       {showWizard && (
         <EtablissementWizard
-          onClose={() => setShowWizard(false)}
+          onClose={handleCloseWizard}
           onSave={handleSaveEtablissement}
+          initialData={editingData || undefined}
         />
       )}
     </div>
