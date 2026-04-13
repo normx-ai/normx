@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import type { TypeActivite, NormxModule, Entite } from '../types';
+import type { NormxModule, Entite } from '../types';
+import { ENABLED_MODULES, isModuleEnabled } from '../config/modules';
 
 interface OnboardingProps {
   userName: string;
@@ -19,7 +20,7 @@ interface ModuleOption {
   features: string[];
 }
 
-const MODULES: ModuleOption[] = [
+const ALL_MODULES: ModuleOption[] = [
   {
     id: 'compta',
     label: 'Compta',
@@ -43,6 +44,9 @@ const MODULES: ModuleOption[] = [
   },
 ];
 
+// Filtre en temps reel : seuls les modules actives sont montres
+const MODULES: ModuleOption[] = ALL_MODULES.filter((m) => isModuleEnabled(m.id));
+
 type TenantType = 'enterprise' | 'cabinet';
 
 const TENANT_TYPES: { id: TenantType; label: string; desc: string; icon: string }[] = [
@@ -51,19 +55,33 @@ const TENANT_TYPES: { id: TenantType; label: string; desc: string; icon: string 
 ];
 
 export default function Onboarding({ userName, onComplete, defaultModule }: OnboardingProps): React.JSX.Element {
-  const [step, setStep] = useState<1 | 2>(1);
-  const [selectedModules, setSelectedModules] = useState<NormxModule[]>(
-    defaultModule && MODULES.some(m => m.id === defaultModule) ? [defaultModule as NormxModule] : []
-  );
+  // Si un seul module est actif, on skip l'etape de selection (auto-assignee)
+  const singleModuleMode = MODULES.length === 1;
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+
+  const initialModules: NormxModule[] = singleModuleMode
+    ? MODULES.map((m) => m.id)
+    : defaultModule && MODULES.some((m) => m.id === defaultModule)
+      ? [defaultModule as NormxModule]
+      : [];
+
+  const [selectedModules, setSelectedModules] = useState<NormxModule[]>(initialModules);
   const [entiteNom, setEntiteNom] = useState('');
   const [tenantType, setTenantType] = useState<TenantType>('enterprise');
+
+  // Etape 3 : premier exercice
+  const currentYear = new Date().getFullYear();
+  const [exerciceAnnee, setExerciceAnnee] = useState<number>(currentYear);
+  const [exerciceDebut, setExerciceDebut] = useState<string>(`${currentYear}-01-01`);
+  const [exerciceFin, setExerciceFin] = useState<string>(`${currentYear}-12-31`);
+  const [createdTenantId, setCreatedTenantId] = useState<number | null>(null);
 
   const comptaIncludesEtats = selectedModules.includes('compta');
 
   const toggleModule = (id: NormxModule): void => {
     if (id === 'etats' && comptaIncludesEtats) return; // etats grise si compta coche
-    setSelectedModules(prev => {
-      let next = prev.includes(id) ? prev.filter(m => m !== id) : [...prev, id];
+    setSelectedModules((prev) => {
+      let next = prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id];
       // Si on coche compta, ajouter etats automatiquement
       if (id === 'compta' && next.includes('compta') && !next.includes('etats')) {
         next = [...next, 'etats'];
@@ -76,7 +94,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     if (selectedModules.length === MODULES.length) {
       setSelectedModules([]);
     } else {
-      setSelectedModules(MODULES.map(m => m.id));
+      setSelectedModules(MODULES.map((m) => m.id));
     }
   };
 
@@ -84,13 +102,13 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
   const [error, setError] = useState('');
 
   const isCabinet = tenantType === 'cabinet';
-  // Compta inclut etats, ne pas stocker etats separement
   const cleanModules = (mods: NormxModule[]): NormxModule[] =>
-    mods.includes('compta') ? mods.filter(m => m !== 'etats') : mods;
-  const finalModules = isCabinet ? cleanModules(MODULES.map(m => m.id)) : cleanModules(selectedModules);
+    mods.includes('compta') ? mods.filter((m) => m !== 'etats') : mods;
+  const finalModules = isCabinet ? cleanModules([...ENABLED_MODULES]) : cleanModules(selectedModules);
   const canFinish = (isCabinet || selectedModules.length > 0) && entiteNom.trim() && !saving;
 
-  const handleFinish = async (): Promise<void> => {
+  // Etape 1-2 : creer le tenant
+  const handleCreateTenant = async (): Promise<void> => {
     if (!canFinish) return;
     setSaving(true);
     setError('');
@@ -98,9 +116,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     try {
       const resp = await fetch('/api/tenant/setup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({
           nom: entiteNom.trim(),
@@ -115,19 +131,63 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
       }
 
       const data = await resp.json();
-
-      const entite: Entite = {
-        id: data.tenant?.id || 1,
-        nom: entiteNom.trim(),
-        type_activite: tenantType === 'cabinet' ? 'entreprise' : 'entreprise',
-        offre: selectedModules.includes('compta') ? 'comptabilite' : 'etats',
-        modules: selectedModules,
-      };
-      onComplete(entite);
+      setCreatedTenantId(data.tenant?.id || 1);
+      setSaving(false);
+      setStep(3);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors de la configuration');
       setSaving(false);
     }
+  };
+
+  // Etape 3 : creer le premier exercice + finaliser
+  const handleCreateExercice = async (): Promise<void> => {
+    if (!exerciceAnnee || !exerciceDebut || !exerciceFin) {
+      setError('Tous les champs de l\'exercice sont requis.');
+      return;
+    }
+    setSaving(true);
+    setError('');
+    try {
+      const resp = await fetch('/api/tenant/exercice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          annee: exerciceAnnee,
+          date_debut: exerciceDebut,
+          date_fin: exerciceFin,
+        }),
+      });
+      if (!resp.ok) {
+        const data = await resp.json().catch(() => ({}));
+        throw new Error(data.error || 'Erreur lors de la creation de l\'exercice.');
+      }
+
+      const entite: Entite = {
+        id: createdTenantId || 1,
+        nom: entiteNom.trim(),
+        type_activite: 'entreprise',
+        offre: finalModules.includes('compta') ? 'comptabilite' : 'etats',
+        modules: finalModules,
+      };
+      onComplete(entite);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors de la creation de l\'exercice');
+      setSaving(false);
+    }
+  };
+
+  // Bouton "Continuer sans creer d'exercice" : l'user peut skipper et le faire plus tard
+  const handleSkipExercice = (): void => {
+    const entite: Entite = {
+      id: createdTenantId || 1,
+      nom: entiteNom.trim(),
+      type_activite: 'entreprise',
+      offre: finalModules.includes('compta') ? 'comptabilite' : 'etats',
+      modules: finalModules,
+    };
+    onComplete(entite);
   };
 
   const allSelected = selectedModules.length === MODULES.length;
@@ -138,19 +198,20 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
 
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <div style={{ width: 48, height: 48, borderRadius: 0, background: PRIMARY, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 24, fontWeight: 900, color: DARK, marginBottom: 12 }}>N</div>
+          <img src="/logo-horizontal.png" alt="NORMX" style={{ height: 36, width: 'auto', display: 'inline-block', marginBottom: 16 }} />
           <h1 style={{ fontSize: 28, fontWeight: 900, color: DARK, margin: '0 0 8px' }}>
             Bienvenue{userName ? `, ${userName.split(' ')[0]}` : ''} !
           </h1>
           <p style={{ color: '#6b7280', fontSize: 15 }}>
-            {step === 1 ? 'Configurez votre entité' : 'Sélectionnez vos modules'}
+            {step === 1 ? 'Configurez votre entité' : step === 2 ? 'Sélectionnez vos modules' : 'Creez votre premier exercice'}
           </p>
-          {!(tenantType === 'cabinet' && step === 1) && (
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
-              <div style={{ width: 32, height: 4, borderRadius: 2, background: PRIMARY }} />
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 16 }}>
+            <div style={{ width: 32, height: 4, borderRadius: 2, background: PRIMARY }} />
+            {!singleModuleMode && !isCabinet && (
               <div style={{ width: 32, height: 4, borderRadius: 2, background: step >= 2 ? PRIMARY : '#e5e7eb' }} />
-            </div>
-          )}
+            )}
+            <div style={{ width: 32, height: 4, borderRadius: 2, background: step >= 3 ? PRIMARY : '#e5e7eb' }} />
+          </div>
         </div>
 
         {/* Step 1 — Nom + Type */}
@@ -208,8 +269,10 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
             <button
               onClick={() => {
                 if (!entiteNom.trim()) return;
-                if (tenantType === 'cabinet') {
-                  handleFinish();
+                // Cabinet ou mode single-module : on skip la selection de modules et on cree le tenant direct,
+                // puis on passe a l'etape exercice
+                if (tenantType === 'cabinet' || singleModuleMode) {
+                  handleCreateTenant();
                 } else {
                   setStep(2);
                 }
@@ -226,9 +289,9 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                 cursor: entiteNom.trim() ? 'pointer' : 'default',
               }}
             >
-              {tenantType === 'cabinet' ? (saving ? 'Création...' : 'Commencer') : 'Continuer'}
+              {saving ? 'Création...' : 'Continuer'}
             </button>
-            {error && tenantType === 'cabinet' && (
+            {error && (
               <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '10px 14px', marginTop: 12, fontSize: 14, color: '#dc2626' }}>
                 {error}
               </div>
@@ -351,7 +414,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                 Retour
               </button>
               <button
-                onClick={handleFinish}
+                onClick={handleCreateTenant}
                 disabled={!canFinish}
                 style={{
                   flex: 2,
@@ -365,7 +428,120 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
                   cursor: entiteNom.trim() ? 'pointer' : 'default',
                 }}
               >
-                Commencer
+                {saving ? 'Création...' : 'Continuer'}
+              </button>
+            </div>
+          </>
+        )}
+
+        {/* Step 3 — Premier exercice */}
+        {step === 3 && (
+          <>
+            <div style={{ marginBottom: 20, padding: '14px 16px', background: 'rgba(212,168,67,0.06)', border: '1px solid rgba(212,168,67,0.2)' }}>
+              <p style={{ fontSize: 13, color: '#6b7280', margin: 0, lineHeight: 1.6 }}>
+                Un exercice comptable correspond a une annee fiscale. Vous pourrez ensuite importer
+                votre balance et generer vos etats financiers pour cette periode.
+              </p>
+            </div>
+
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: DARK, marginBottom: 6 }}>
+                Annee de l'exercice
+              </label>
+              <input
+                type="number"
+                value={exerciceAnnee}
+                onChange={(e) => {
+                  const annee = parseInt(e.target.value, 10) || currentYear;
+                  setExerciceAnnee(annee);
+                  setExerciceDebut(`${annee}-01-01`);
+                  setExerciceFin(`${annee}-12-31`);
+                }}
+                style={{
+                  width: '100%',
+                  padding: '12px 14px',
+                  border: '1.5px solid rgba(0,0,0,0.12)',
+                  fontSize: 15,
+                  outline: 'none',
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: 12, marginBottom: 24 }}>
+              <div style={{ flex: 1 }}>
+                <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: DARK, marginBottom: 6 }}>
+                  Date de debut
+                </label>
+                <input
+                  type="date"
+                  value={exerciceDebut}
+                  onChange={(e) => setExerciceDebut(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    border: '1.5px solid rgba(0,0,0,0.12)',
+                    fontSize: 15,
+                    outline: 'none',
+                  }}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={{ display: 'block', fontSize: 14, fontWeight: 600, color: DARK, marginBottom: 6 }}>
+                  Date de fin
+                </label>
+                <input
+                  type="date"
+                  value={exerciceFin}
+                  onChange={(e) => setExerciceFin(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px',
+                    border: '1.5px solid rgba(0,0,0,0.12)',
+                    fontSize: 15,
+                    outline: 'none',
+                  }}
+                />
+              </div>
+            </div>
+
+            {error && (
+              <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '10px 14px', marginBottom: 16, fontSize: 14, color: '#dc2626' }}>
+                {error}
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: 12 }}>
+              <button
+                onClick={handleSkipExercice}
+                disabled={saving}
+                style={{
+                  flex: 1,
+                  padding: '14px 28px',
+                  background: '#fff',
+                  color: DARK,
+                  border: '1.5px solid rgba(0,0,0,0.12)',
+                  fontSize: 15,
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                }}
+              >
+                Plus tard
+              </button>
+              <button
+                onClick={handleCreateExercice}
+                disabled={saving}
+                style={{
+                  flex: 2,
+                  padding: '14px 28px',
+                  background: saving ? '#e5e7eb' : PRIMARY,
+                  color: saving ? '#9ca3af' : DARK,
+                  border: 'none',
+                  fontSize: 16,
+                  fontWeight: 700,
+                  cursor: saving ? 'default' : 'pointer',
+                }}
+              >
+                {saving ? 'Création...' : 'Créer l\'exercice'}
               </button>
             </div>
           </>
