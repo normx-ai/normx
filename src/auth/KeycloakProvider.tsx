@@ -105,7 +105,12 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
 
     if (code) {
       const redirectUri = `${window.location.origin}${window.location.pathname}`;
-      // Nettoyer l'URL immediatement
+      // Si on revient sur /auth/callback (depuis la landing), on rebascule
+      // sur la home une fois l'echange reussi. Sinon on reste sur la page
+      // courante (ex: reauth depuis /paie).
+      const landedOnCallback = window.location.pathname === '/auth/callback';
+      // Nettoyer l'URL immediatement (on garde le pathname actuel le temps
+      // de l'echange, puis on redirigera si landedOnCallback)
       window.history.replaceState({}, document.title, window.location.pathname);
 
       // Echanger le code via le backend (qui stocke les tokens en cookies httpOnly)
@@ -121,10 +126,16 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
           setUser(apiUserToKeycloakUser(data.user));
           scheduleRefresh(data.expires_in);
           setIsLoading(false);
+          if (landedOnCallback) {
+            window.history.replaceState({}, document.title, '/');
+          }
         })
         .catch(() => {
           clearSession();
           setIsLoading(false);
+          if (landedOnCallback) {
+            window.history.replaceState({}, document.title, '/');
+          }
         });
       return;
     }
