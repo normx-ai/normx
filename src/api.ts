@@ -18,6 +18,17 @@ function authHeaders(): Record<string, string> {
   return headers;
 }
 
+export class ApiError extends Error {
+  status: number;
+  code?: string;
+  constructor(message: string, status: number, code?: string) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+    this.code = code;
+  }
+}
+
 export async function apiPost<T>(url: string, body: JsonBody): Promise<T> {
   const res = await fetch(url, {
     method: 'POST',
@@ -26,8 +37,8 @@ export async function apiPost<T>(url: string, body: JsonBody): Promise<T> {
     body: JSON.stringify(body),
   });
   if (!res.ok) {
-    const data = await res.json().catch(() => ({}));
-    throw new Error(data.error || `Erreur ${res.status}`);
+    const data = await res.json().catch(() => ({} as { error?: string; code?: string }));
+    throw new ApiError(data.error || `Erreur ${res.status}`, res.status, data.code);
   }
   return res.json();
 }

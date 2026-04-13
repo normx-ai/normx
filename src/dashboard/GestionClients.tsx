@@ -5,7 +5,7 @@ import {
   LuExternalLink, LuX, LuArchive
 } from 'react-icons/lu';
 import { Entite, TypeActivite, Offre, NormxModule } from '../types';
-import { apiPost, apiPut, apiDelete } from '../api';
+import { apiPost, apiPut, apiDelete, ApiError } from '../api';
 import ConfirmModal from '../components/ConfirmModal';
 import './GestionClients.css';
 
@@ -59,6 +59,14 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [exerciceModalOpen, setExerciceModalOpen] = useState(false);
+  const [exerciceForm, setExerciceForm] = useState({
+    annee: new Date().getFullYear(),
+    date_debut: `${new Date().getFullYear()}-01-01`,
+    date_fin: `${new Date().getFullYear()}-12-31`,
+  });
+  const [exerciceLoading, setExerciceLoading] = useState(false);
+  const [exerciceError, setExerciceError] = useState('');
 
   const filtered = entites
     .filter(e => e.nom.toLowerCase().includes(search.toLowerCase()) || (e.sigle || '').toLowerCase().includes(search.toLowerCase()))
@@ -126,9 +134,38 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
       }
       setShowForm(false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Impossible de contacter le serveur.');
+      // Cas special : le cabinet n'a pas encore d'exercice → on propose de le creer
+      if (err instanceof ApiError && err.code === 'EXERCICE_REQUIRED') {
+        setExerciceError('');
+        setExerciceModalOpen(true);
+      } else {
+        setError(err instanceof Error ? err.message : 'Impossible de contacter le serveur.');
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCreateCabinetExercice = async (): Promise<void> => {
+    if (!exerciceForm.annee || !exerciceForm.date_debut || !exerciceForm.date_fin) {
+      setExerciceError('Tous les champs sont requis.');
+      return;
+    }
+    setExerciceLoading(true);
+    setExerciceError('');
+    try {
+      await apiPost('/api/tenant/exercice', {
+        annee: exerciceForm.annee,
+        date_debut: exerciceForm.date_debut,
+        date_fin: exerciceForm.date_fin,
+      });
+      setExerciceModalOpen(false);
+      // Retry la creation du client
+      await handleSubmit();
+    } catch (err) {
+      setExerciceError(err instanceof Error ? err.message : 'Erreur lors de la creation de l\'exercice.');
+    } finally {
+      setExerciceLoading(false);
     }
   };
 
@@ -425,6 +462,60 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
         onConfirm={confirmState.onConfirm}
         onCancel={() => setConfirmState(prev => ({ ...prev, open: false }))}
       />
+
+      {exerciceModalOpen && (
+        <div className="modal-overlay" onClick={() => !exerciceLoading && setExerciceModalOpen(false)}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 460 }}>
+            <div className="modal-header">
+              <h3>Créer l'exercice du cabinet</h3>
+              <button className="modal-close" onClick={() => setExerciceModalOpen(false)} disabled={exerciceLoading}><LuX /></button>
+            </div>
+            <div className="modal-body">
+              <p style={{ fontSize: 14, color: '#6b7280', marginBottom: 16, lineHeight: 1.5 }}>
+                Votre cabinet n'a pas encore d'exercice. Créez-le ici — il sera automatiquement copié vers tous vos clients (existants et futurs).
+              </p>
+              {exerciceError && (
+                <div style={{ padding: '10px 12px', background: '#fee2e2', border: '1px solid #fca5a5', borderRadius: 6, color: '#991b1b', fontSize: 13, marginBottom: 12 }}>
+                  {exerciceError}
+                </div>
+              )}
+              <div className="form-row">
+                <label>Année <span style={{ color: '#ef4444' }}>*</span></label>
+                <input
+                  type="number"
+                  value={exerciceForm.annee}
+                  onChange={(e) => {
+                    const annee = parseInt(e.target.value, 10) || new Date().getFullYear();
+                    setExerciceForm({ annee, date_debut: `${annee}-01-01`, date_fin: `${annee}-12-31` });
+                  }}
+                />
+              </div>
+              <div className="form-row">
+                <label>Date de début <span style={{ color: '#ef4444' }}>*</span></label>
+                <input
+                  type="date"
+                  value={exerciceForm.date_debut}
+                  onChange={(e) => setExerciceForm({ ...exerciceForm, date_debut: e.target.value })}
+                />
+              </div>
+              <div className="form-row">
+                <label>Date de fin <span style={{ color: '#ef4444' }}>*</span></label>
+                <input
+                  type="date"
+                  value={exerciceForm.date_fin}
+                  onChange={(e) => setExerciceForm({ ...exerciceForm, date_fin: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn-secondary" onClick={() => setExerciceModalOpen(false)} disabled={exerciceLoading}>Annuler</button>
+              <button className="btn-primary" onClick={handleCreateCabinetExercice} disabled={exerciceLoading}>
+                {exerciceLoading ? 'Création...' : 'Créer et continuer'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
