@@ -53,8 +53,12 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     }
     // Cabinet : rester sur le portail (null = page clients/dossiers)
     if (isCabinet) return null;
-    // Non-cabinet : aller directement sur le premier module disponible
-    if (modules.length > 0) return modules[0];
+    // Non-cabinet : choisir un module par defaut avec priorite compta > etats > paie
+    // (on evite de tomber direct dans le wizard Paie quand il y a un autre module)
+    const priority: NormxModule[] = ['compta', 'etats', 'paie'];
+    for (const m of priority) {
+      if (modules.includes(m)) return m;
+    }
     return null;
   });
   const [moduleSwitcherOpen, setModuleSwitcherOpen] = useState(false);
