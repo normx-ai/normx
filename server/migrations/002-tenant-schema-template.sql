@@ -158,8 +158,11 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".revision_data (
   id SERIAL PRIMARY KEY,
   entite_id INTEGER REFERENCES "${schema_name}".entites(id),
   exercice_id INTEGER REFERENCES "${schema_name}".exercices(id),
+  section VARCHAR(50),
   data JSONB DEFAULT '{}',
-  created_at TIMESTAMP DEFAULT NOW()
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  UNIQUE (exercice_id, section)
 );
 
 -- ========== PAIE ==========
