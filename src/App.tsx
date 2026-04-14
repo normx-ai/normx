@@ -34,89 +34,98 @@ function AppContent(): React.JSX.Element {
   const [tenantType, setTenantType] = React.useState<string>('');
   const [subscriptionRequired, setSubscriptionRequired] = React.useState(false);
 
-  // Charger le tenant depuis l'API au login
+  // Charger le tenant + entites depuis l'API. Extrait dans un callback
+  // pour pouvoir le rappeler apres l'onboarding (sinon tenantType reste '',
+  // isCabinet reste false et le cabinet atterrit dans un module au lieu du portail).
+  const loadTenantAndEntites = React.useCallback(async (): Promise<void> => {
+    try {
+      const r = await fetch('/api/tenant/me', { credentials: 'include' });
+      if (r.status === 403) {
+        const err = await r.json().catch(() => ({}));
+        if (err.code === 'SUBSCRIPTION_REQUIRED') {
+          setSubscriptionRequired(true);
+          setTenantLoading(false);
+          return;
+        }
+      }
+      const data = await r.json();
+      if (!data) return;
+      if (data.onboardingRequired || !data.tenant) {
+        setOnboardingDone(false);
+        setTenantLoading(false);
+        return;
+      }
+
+      setTenantName(data.tenant.nom || '');
+      setTenantType(data.tenant.type || '');
+
+      // Purger un eventuel module actif restant d'une session precedente :
+      // pour un cabinet on veut toujours atterrir sur le portail apres
+      // (re)chargement initial, pas dans un module.
+      if (data.tenant.type === 'cabinet') {
+        sessionStorage.removeItem('normx_activeModule');
+      }
+
+      // Charger les entités depuis l'API
+      try {
+        // Ne PAS envoyer X-Client-Slug ici : on veut la liste complete du cabinet
+        const savedSlug = sessionStorage.getItem('normx_client_slug');
+        sessionStorage.removeItem('normx_client_slug');
+        const entitesRes = await fetch('/api/entites', { credentials: 'include' });
+        if (entitesRes.ok) {
+          const rawList: Entite[] = await entitesRes.json();
+          // Filtrer les modules non actives (compta/paie pour l'instant)
+          const entitesList: Entite[] = rawList.map((e) => ({
+            ...e,
+            modules: filterEnabledModules((e.modules || []) as NormxModule[]),
+          }));
+          setEntites(entitesList);
+          if (entitesList.length > 0) {
+            // Restaurer le client selectionne avant l'actualisation
+            const restored = savedSlug ? entitesList.find((e) => e.slug === savedSlug) : null;
+            const selected = restored || entitesList[0];
+            setCurrentEntite(selected);
+            if (selected.slug) {
+              sessionStorage.setItem('normx_client_slug', selected.slug);
+            }
+          }
+        } else {
+          // Fallback : utiliser le tenant comme entité
+          const t = data.tenant;
+          const rawModules = (t.settings?.modules as NormxModule[]) || [];
+          const modules = filterEnabledModules(rawModules);
+          const entite: Entite = {
+            id: t.id,
+            nom: t.nom,
+            type_activite: 'entreprise',
+            offre: 'etats',
+            modules,
+          };
+          setEntites([entite]);
+          setCurrentEntite(entite);
+        }
+      } catch {
+        // Fallback : on force aux modules actives
+        const t = data.tenant;
+        const modules = [...ENABLED_MODULES];
+        setEntites([{ id: t.id, nom: t.nom, type_activite: 'entreprise', offre: 'etats', modules }]);
+      }
+
+      setOnboardingDone(true);
+      setTenantLoading(false);
+    } catch {
+      setOnboardingDone(false);
+      setTenantLoading(false);
+    }
+  }, []);
+
   React.useEffect(() => {
     if (!isAuthenticated) {
       setTenantLoading(false);
       return;
     }
-
-    fetch('/api/tenant/me', { credentials: 'include' })
-      .then(async r => {
-        if (r.status === 403) {
-          const err = await r.json();
-          if (err.code === 'SUBSCRIPTION_REQUIRED') {
-            setSubscriptionRequired(true);
-            setTenantLoading(false);
-            return null;
-          }
-        }
-        return r.json();
-      })
-      .then(async (data) => {
-        if (!data) return;
-        if (data.onboardingRequired || !data.tenant) {
-          setOnboardingDone(false);
-          setTenantLoading(false);
-          return;
-        }
-
-        setTenantName(data.tenant.nom || '');
-        setTenantType(data.tenant.type || '');
-
-        // Charger les entités depuis l'API
-        try {
-          // Ne PAS envoyer X-Client-Slug ici : on veut la liste complete du cabinet
-          const savedSlug = sessionStorage.getItem('normx_client_slug');
-          sessionStorage.removeItem('normx_client_slug');
-          const entitesRes = await fetch('/api/entites', { credentials: 'include' });
-          if (entitesRes.ok) {
-            const rawList: Entite[] = await entitesRes.json();
-            // Filtrer les modules non actives (compta/paie pour l'instant)
-            const entitesList: Entite[] = rawList.map((e) => ({
-              ...e,
-              modules: filterEnabledModules((e.modules || []) as NormxModule[]),
-            }));
-            setEntites(entitesList);
-            if (entitesList.length > 0) {
-              // Restaurer le client selectionne avant l'actualisation
-              const restored = savedSlug ? entitesList.find((e) => e.slug === savedSlug) : null;
-              const selected = restored || entitesList[0];
-              setCurrentEntite(selected);
-              if (selected.slug) {
-                sessionStorage.setItem('normx_client_slug', selected.slug);
-              }
-            }
-          } else {
-            // Fallback : utiliser le tenant comme entité
-            const t = data.tenant;
-            const rawModules = (t.settings?.modules as NormxModule[]) || [];
-            const modules = filterEnabledModules(rawModules);
-            const entite: Entite = {
-              id: t.id,
-              nom: t.nom,
-              type_activite: 'entreprise',
-              offre: 'etats',
-              modules,
-            };
-            setEntites([entite]);
-            setCurrentEntite(entite);
-          }
-        } catch {
-          // Fallback : on force aux modules actives
-          const t = data.tenant;
-          const modules = [...ENABLED_MODULES];
-          setEntites([{ id: t.id, nom: t.nom, type_activite: 'entreprise', offre: 'etats', modules }]);
-        }
-
-        setOnboardingDone(true);
-        setTenantLoading(false);
-      })
-      .catch(() => {
-        setOnboardingDone(false);
-        setTenantLoading(false);
-      });
-  }, [isAuthenticated]);
+    loadTenantAndEntites();
+  }, [isAuthenticated, loadTenantAndEntites]);
 
   const handleLogout = (): void => {
     setEntites([]);
@@ -208,10 +217,12 @@ function AppContent(): React.JSX.Element {
       <Onboarding
         userName={user?.name || ''}
         defaultModule={moduleParam}
-        onComplete={(entite) => {
-          setEntites([entite]);
-          setCurrentEntite(entite);
-          setOnboardingDone(true);
+        onComplete={() => {
+          // Recharger tenant + entites depuis l'API apres l'onboarding
+          // pour que tenantType (cabinet vs entreprise) soit a jour et que
+          // le Dashboard atterrisse sur le portail au lieu d'un module.
+          setTenantLoading(true);
+          loadTenantAndEntites();
         }}
       />
     );
