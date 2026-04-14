@@ -108,6 +108,33 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
     }).filter(Boolean) as { id: number; numero: string; libelle: string; message: string; sensAttendu: SoldeAttendu; sd: number; sc: number }[];
   }, [currentLignes]);
 
+  // Controle d'equilibre des colonnes SI, mouvements et solde. Une balance
+  // peut avoir le solde final equilibre (SD = SC) alors que les colonnes
+  // intermediaires sont desequilibrees (les ecarts se compensent entre SI
+  // et mouvements). Ce cas n'etait pas signale au niveau bandeau, seulement
+  // dans le pied de tableau.
+  const equilibreEcarts = useMemo(() => {
+    if (currentLignes.length === 0) return null;
+    const totalSID = currentLignes.reduce((s, l) => s + (parseFloat(String(l.si_debit)) || 0), 0);
+    const totalSIC = currentLignes.reduce((s, l) => s + (parseFloat(String(l.si_credit)) || 0), 0);
+    const totalDebit = currentLignes.reduce((s, l) => s + (parseFloat(String(l.debit)) || 0), 0);
+    const totalCredit = currentLignes.reduce((s, l) => s + (parseFloat(String(l.credit)) || 0), 0);
+    const totalSD = currentLignes.reduce((s, l) => s + (parseFloat(String(l.solde_debiteur)) || 0), 0);
+    const totalSC = currentLignes.reduce((s, l) => s + (parseFloat(String(l.solde_crediteur)) || 0), 0);
+    const ecartSI = totalSID - totalSIC;
+    const ecartMvt = totalDebit - totalCredit;
+    const ecartSolde = totalSD - totalSC;
+    const EPS = 0.5;
+    return {
+      totalSID, totalSIC, totalDebit, totalCredit, totalSD, totalSC,
+      ecartSI, ecartMvt, ecartSolde,
+      hasSIError: Math.abs(ecartSI) > EPS,
+      hasMvtError: Math.abs(ecartMvt) > EPS,
+      hasSoldeError: Math.abs(ecartSolde) > EPS,
+      hasAnyError: Math.abs(ecartSI) > EPS || Math.abs(ecartMvt) > EPS || Math.abs(ecartSolde) > EPS,
+    };
+  }, [currentLignes]);
+
   const handleCorrection = async (ligneId: number, newNumero: string): Promise<void> => {
     try {
       const res = await fetch(`/api/balance/ligne/${ligneId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ numero_compte: newNumero }) });
@@ -125,6 +152,53 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
 
   return (
     <>
+      {equilibreEcarts && equilibreEcarts.hasAnyError && (
+        <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#dc2626', background: '#fef2f2' }}>
+          <div className="ib-analyse-header" onClick={toggleAnalyse} style={{ cursor: 'pointer' }}>
+            <span className="ib-anomaly-count" style={{ color: '#dc2626' }}>
+              <LuTriangleAlert size={16} /> Balance déséquilibrée —
+              {equilibreEcarts.hasSIError && ` SI (écart ${formatMontant(equilibreEcarts.ecartSI)})`}
+              {equilibreEcarts.hasMvtError && `${equilibreEcarts.hasSIError ? ',' : ''} mouvements (écart ${formatMontant(equilibreEcarts.ecartMvt)})`}
+              {equilibreEcarts.hasSoldeError && `${equilibreEcarts.hasSIError || equilibreEcarts.hasMvtError ? ',' : ''} solde final (écart ${formatMontant(equilibreEcarts.ecartSolde)})`}
+            </span>
+            <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
+          </div>
+          {showAnalyse && (
+            <div className="ib-analyse-detail">
+              <p style={{ fontSize: 12, color: '#991b1b', margin: '4px 0 8px', lineHeight: 1.4 }}>
+                Les totaux débit et crédit doivent être égaux sur chaque section (situation initiale, mouvements, solde final). Un écart indique soit une erreur dans le fichier source, soit un décalage de colonnes lors de l'import. Une compensation entre SI et mouvements peut masquer l'erreur dans le solde final — il faut corriger la ligne fautive.
+              </p>
+              <table className="ib-analyse-table">
+                <thead><tr><th>Section</th><th className="num">Total débit</th><th className="num">Total crédit</th><th className="num">Écart (D − C)</th><th>Statut</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Situation initiale</strong></td>
+                    <td className="num">{formatMontant(equilibreEcarts.totalSID)}</td>
+                    <td className="num">{formatMontant(equilibreEcarts.totalSIC)}</td>
+                    <td className="num" style={{ color: equilibreEcarts.hasSIError ? '#dc2626' : '#059669', fontWeight: 700 }}>{formatMontant(equilibreEcarts.ecartSI)}</td>
+                    <td style={{ textAlign: 'center', color: equilibreEcarts.hasSIError ? '#dc2626' : '#059669', fontWeight: 700 }}>{equilibreEcarts.hasSIError ? '✗' : '✓'}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mouvements</strong></td>
+                    <td className="num">{formatMontant(equilibreEcarts.totalDebit)}</td>
+                    <td className="num">{formatMontant(equilibreEcarts.totalCredit)}</td>
+                    <td className="num" style={{ color: equilibreEcarts.hasMvtError ? '#dc2626' : '#059669', fontWeight: 700 }}>{formatMontant(equilibreEcarts.ecartMvt)}</td>
+                    <td style={{ textAlign: 'center', color: equilibreEcarts.hasMvtError ? '#dc2626' : '#059669', fontWeight: 700 }}>{equilibreEcarts.hasMvtError ? '✗' : '✓'}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Solde final</strong></td>
+                    <td className="num">{formatMontant(equilibreEcarts.totalSD)}</td>
+                    <td className="num">{formatMontant(equilibreEcarts.totalSC)}</td>
+                    <td className="num" style={{ color: equilibreEcarts.hasSoldeError ? '#dc2626' : '#059669', fontWeight: 700 }}>{formatMontant(equilibreEcarts.ecartSolde)}</td>
+                    <td style={{ textAlign: 'center', color: equilibreEcarts.hasSoldeError ? '#dc2626' : '#059669', fontWeight: 700 }}>{equilibreEcarts.hasSoldeError ? '✗' : '✓'}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
       {anomalies.length > 0 && (
         <div className="ib-analyse-banner has-warnings">
           <div className="ib-analyse-header" onClick={toggleAnalyse} style={{ cursor: 'pointer' }}>
@@ -163,8 +237,8 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
         </div>
       )}
 
-      {anomalies.length === 0 && comptesNonMappes.length === 0 && planComptable.length > 0 && (
-        <div className="ib-analyse-banner clean"><span className="ib-anomaly-count"><LuCheck size={16} /> Tous les comptes sont conformes au plan comptable SYSCOHADA</span></div>
+      {anomalies.length === 0 && comptesNonMappes.length === 0 && planComptable.length > 0 && !(equilibreEcarts && equilibreEcarts.hasAnyError) && (
+        <div className="ib-analyse-banner clean"><span className="ib-anomaly-count"><LuCheck size={16} /> Tous les comptes sont conformes au plan comptable SYSCOHADA et la balance est équilibrée</span></div>
       )}
 
       {comptesNonMappes.length > 0 && (
