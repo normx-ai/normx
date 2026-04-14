@@ -13,6 +13,8 @@ import TabsBar from './TabsBar';
 import MainContent from './MainContent';
 import FloatingCalculator from '../components/FloatingCalculator';
 import DossierSelector from './DossierSelector';
+import PortailSidebar, { PortailSection } from './PortailSidebar';
+import CabinetPanel from './CabinetPanel';
 import { MODULE_LIST, getEtats } from './constants';
 import { buildMenuItems } from './menuConfig';
 import { useExercices } from './useExercices';
@@ -65,6 +67,13 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const [moduleSwitcherOpen, setModuleSwitcherOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [portailSection, setPortailSection] = useState<PortailSection>('clients');
+
+  // Separer le cabinet (type_activite='cabinet') de la liste des dossiers clients.
+  // Le cabinet est accessible via la section dediee "Mon cabinet" du portail,
+  // pas via la liste des dossiers ni le selecteur de dossier.
+  const cabinetEntite = entites.find((e) => e.type_activite === 'cabinet');
+  const clientEntites = entites.filter((e) => e.type_activite !== 'cabinet');
   const moduleSwitcherRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState(() => sessionStorage.getItem('normx_activeTab') || 'accueil');
@@ -189,10 +198,10 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     return null;
   })();
 
-  // Dossier selector
+  // Dossier selector — le cabinet n'est pas un dossier, on le filtre
   const dossierSelector = (
     <DossierSelector
-      entiteName={entiteName} entiteId={entiteId} entites={entites}
+      entiteName={entiteName} entiteId={entiteId} entites={clientEntites}
       onSwitchEntite={(ent: Entite) => { onSwitchEntite(ent); setActiveModule(null); }}
       onNewDossier={() => openTab('nouveau_dossier')}
     />
@@ -276,13 +285,24 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     return (
       <div className="dashboard">
         <Topbar {...topbarProps} moduleLabel="AI" dossierSelector={dossierSelector} />
-        <div className="portail-body portail-body-full">
-          <GestionClients
-            entites={entites} currentEntiteId={entiteId}
-            onSelectEntite={(ent: Entite) => { onSwitchEntite(ent); }}
-            onEntiteCreated={onEntiteCreated} onEntiteUpdated={onEntiteUpdated} onEntiteDeleted={onEntiteDeleted}
-            onOpenModule={(ent: Entite, mod: NormxModule) => { onSwitchEntite(ent); setTimeout(() => switchModule(mod), 100); }}
+        <div className="portail-body portail-body-with-sidebar">
+          <PortailSidebar
+            active={portailSection}
+            onChange={setPortailSection}
+            cabinetNom={cabinetEntite?.nom || entiteName}
           />
+          <div className="portail-main">
+            {portailSection === 'clients' ? (
+              <GestionClients
+                entites={clientEntites} currentEntiteId={entiteId}
+                onSelectEntite={(ent: Entite) => { onSwitchEntite(ent); }}
+                onEntiteCreated={onEntiteCreated} onEntiteUpdated={onEntiteUpdated} onEntiteDeleted={onEntiteDeleted}
+                onOpenModule={(ent: Entite, mod: NormxModule) => { onSwitchEntite(ent); setTimeout(() => switchModule(mod), 100); }}
+              />
+            ) : (
+              <CabinetPanel cabinet={cabinetEntite} clientsCount={clientEntites.length} />
+            )}
+          </div>
         </div>
         {exerciceModalElement}
         {confirmModalElement}
