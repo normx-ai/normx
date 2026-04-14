@@ -4,6 +4,8 @@ import { BalanceLigne } from '../types';
 import { PlanCompte, CompteAnomalie, isCompteInEtats, findSuggestionByNumero, findSimilarByLibelle, formatMontant } from './ImportBalance.parsers';
 import { detectAnomalies, getSoldeAttendu } from './anomaliesComptes';
 import type { SoldeAttendu } from './anomaliesComptes';
+import BannerBalanceEquilibre, { useEquilibreEcarts } from './banners/BannerBalanceEquilibre';
+import BannerCompte13Art20, { useCompte13Anomaly } from './banners/BannerCompte13Art20';
 
 interface BalanceLigneWithMeta extends BalanceLigne {
   id: number;
@@ -108,32 +110,10 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
     }).filter(Boolean) as { id: number; numero: string; libelle: string; message: string; sensAttendu: SoldeAttendu; sd: number; sc: number }[];
   }, [currentLignes]);
 
-  // Controle d'equilibre des colonnes SI, mouvements et solde. Une balance
-  // peut avoir le solde final equilibre (SD = SC) alors que les colonnes
-  // intermediaires sont desequilibrees (les ecarts se compensent entre SI
-  // et mouvements). Ce cas n'etait pas signale au niveau bandeau, seulement
-  // dans le pied de tableau.
-  const equilibreEcarts = useMemo(() => {
-    if (currentLignes.length === 0) return null;
-    const totalSID = currentLignes.reduce((s, l) => s + (parseFloat(String(l.si_debit)) || 0), 0);
-    const totalSIC = currentLignes.reduce((s, l) => s + (parseFloat(String(l.si_credit)) || 0), 0);
-    const totalDebit = currentLignes.reduce((s, l) => s + (parseFloat(String(l.debit)) || 0), 0);
-    const totalCredit = currentLignes.reduce((s, l) => s + (parseFloat(String(l.credit)) || 0), 0);
-    const totalSD = currentLignes.reduce((s, l) => s + (parseFloat(String(l.solde_debiteur)) || 0), 0);
-    const totalSC = currentLignes.reduce((s, l) => s + (parseFloat(String(l.solde_crediteur)) || 0), 0);
-    const ecartSI = totalSID - totalSIC;
-    const ecartMvt = totalDebit - totalCredit;
-    const ecartSolde = totalSD - totalSC;
-    const EPS = 0.5;
-    return {
-      totalSID, totalSIC, totalDebit, totalCredit, totalSD, totalSC,
-      ecartSI, ecartMvt, ecartSolde,
-      hasSIError: Math.abs(ecartSI) > EPS,
-      hasMvtError: Math.abs(ecartMvt) > EPS,
-      hasSoldeError: Math.abs(ecartSolde) > EPS,
-      hasAnyError: Math.abs(ecartSI) > EPS || Math.abs(ecartMvt) > EPS || Math.abs(ecartSolde) > EPS,
-    };
-  }, [currentLignes]);
+  // Hooks extraits : detection du residuel compte 13 (Art. 20 AUDCIF) et
+  // desequilibre des colonnes SI / mouvements / solde.
+  const compte13Anomaly = useCompte13Anomaly(currentLignes);
+  const equilibreEcarts = useEquilibreEcarts(currentLignes);
 
   const handleCorrection = async (ligneId: number, newNumero: string): Promise<void> => {
     try {
@@ -146,57 +126,79 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
     } catch { setError('Erreur lors de la correction.'); }
   };
 
+  // Ajustement Article 20 AUDCIF : transferer le residuel du compte 13 vers
+  // le compte 12 (Report a nouveau). Utilise la revision non destructive :
+  // les valeurs originales importees sont conservees, on ecrit dans les
+  // colonnes *_revise qui prennent precedence dans tous les calculs d'etats.
+  const [art20Applied, setArt20Applied] = useState(false);
+  const handleArt20Correction = async (): Promise<void> => {
+    if (!compte13Anomaly) return;
+    const { net13, lignes13, ligneReportCreditor, ligneReportDebitor, isProfit } = compte13Anomaly;
+    const cible = isProfit ? ligneReportCreditor : ligneReportDebitor;
+    if (!cible) {
+      setError(`Compte ${isProfit ? '121 Report à nouveau créditeur' : '129 Report à nouveau débiteur'} introuvable dans la balance — l'ajustement ne peut pas être appliqué automatiquement.`);
+      return;
+    }
+    try {
+      // 1. Neutraliser le residuel de compte 13 en alignant SD et SC (net = 0)
+      for (const l of lignes13) {
+        const sd = parseFloat(String(l.solde_debiteur)) || 0;
+        const sc = parseFloat(String(l.solde_crediteur)) || 0;
+        const target = Math.max(sd, sc);
+        await fetch(`/api/balance/revision/${l.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            solde_debiteur_revise: target,
+            solde_crediteur_revise: target,
+            note_revision: `Ajustement Art. 20 AUDCIF : résiduel transféré vers compte ${isProfit ? '121' : '129'} Report à nouveau`,
+          }),
+        });
+      }
+      // 2. Reporter le residuel sur la ligne 12x cible
+      const sdCible = parseFloat(String(cible.solde_debiteur)) || 0;
+      const scCible = parseFloat(String(cible.solde_crediteur)) || 0;
+      const delta = Math.abs(net13);
+      const newSd = isProfit ? sdCible : sdCible + delta;
+      const newSc = isProfit ? scCible + delta : scCible;
+      await fetch(`/api/balance/revision/${cible.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          solde_debiteur_revise: newSd,
+          solde_crediteur_revise: newSc,
+          note_revision: `Ajustement Art. 20 AUDCIF : +${formatMontant(delta)} reçu du compte 13 Résultat en instance d'affectation`,
+        }),
+      });
+      setArt20Applied(true);
+      setMessage(`Ajustement Art. 20 AUDCIF appliqué : ${formatMontant(delta)} FCFA transféré de 13 vers ${isProfit ? '121' : '129'}`);
+      if (exerciceId) loadBalances(exerciceId);
+    } catch {
+      setError('Erreur lors de l\'application de l\'ajustement.');
+    }
+  };
+
   if (currentLignes.length === 0) return <></>;
 
   const toggleAnalyse = () => setShowAnalyse(!showAnalyse);
 
   return (
     <>
+      {compte13Anomaly && !art20Applied && (
+        <BannerCompte13Art20
+          anomaly={compte13Anomaly}
+          open={showAnalyse}
+          onToggle={toggleAnalyse}
+          onApply={handleArt20Correction}
+        />
+      )}
+
       {equilibreEcarts && equilibreEcarts.hasAnyError && (
-        <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#dc2626', background: '#fef2f2' }}>
-          <div className="ib-analyse-header" onClick={toggleAnalyse} style={{ cursor: 'pointer' }}>
-            <span className="ib-anomaly-count" style={{ color: '#dc2626' }}>
-              <LuTriangleAlert size={16} /> Balance déséquilibrée —
-              {equilibreEcarts.hasSIError && ` SI (écart ${formatMontant(equilibreEcarts.ecartSI)})`}
-              {equilibreEcarts.hasMvtError && `${equilibreEcarts.hasSIError ? ',' : ''} mouvements (écart ${formatMontant(equilibreEcarts.ecartMvt)})`}
-              {equilibreEcarts.hasSoldeError && `${equilibreEcarts.hasSIError || equilibreEcarts.hasMvtError ? ',' : ''} solde final (écart ${formatMontant(equilibreEcarts.ecartSolde)})`}
-            </span>
-            <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
-          </div>
-          {showAnalyse && (
-            <div className="ib-analyse-detail">
-              <p style={{ fontSize: 12, color: '#991b1b', margin: '4px 0 8px', lineHeight: 1.4 }}>
-                Les totaux débit et crédit doivent être égaux sur chaque section (situation initiale, mouvements, solde final). Un écart indique soit une erreur dans le fichier source, soit un décalage de colonnes lors de l'import. Une compensation entre SI et mouvements peut masquer l'erreur dans le solde final — il faut corriger la ligne fautive.
-              </p>
-              <table className="ib-analyse-table">
-                <thead><tr><th>Section</th><th className="num">Total débit</th><th className="num">Total crédit</th><th className="num">Écart (D − C)</th><th>Statut</th></tr></thead>
-                <tbody>
-                  <tr>
-                    <td><strong>Situation initiale</strong></td>
-                    <td className="num">{formatMontant(equilibreEcarts.totalSID)}</td>
-                    <td className="num">{formatMontant(equilibreEcarts.totalSIC)}</td>
-                    <td className="num" style={{ color: equilibreEcarts.hasSIError ? '#dc2626' : '#059669', fontWeight: 700 }}>{formatMontant(equilibreEcarts.ecartSI)}</td>
-                    <td style={{ textAlign: 'center', color: equilibreEcarts.hasSIError ? '#dc2626' : '#059669', fontWeight: 700 }}>{equilibreEcarts.hasSIError ? '✗' : '✓'}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Mouvements</strong></td>
-                    <td className="num">{formatMontant(equilibreEcarts.totalDebit)}</td>
-                    <td className="num">{formatMontant(equilibreEcarts.totalCredit)}</td>
-                    <td className="num" style={{ color: equilibreEcarts.hasMvtError ? '#dc2626' : '#059669', fontWeight: 700 }}>{formatMontant(equilibreEcarts.ecartMvt)}</td>
-                    <td style={{ textAlign: 'center', color: equilibreEcarts.hasMvtError ? '#dc2626' : '#059669', fontWeight: 700 }}>{equilibreEcarts.hasMvtError ? '✗' : '✓'}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Solde final</strong></td>
-                    <td className="num">{formatMontant(equilibreEcarts.totalSD)}</td>
-                    <td className="num">{formatMontant(equilibreEcarts.totalSC)}</td>
-                    <td className="num" style={{ color: equilibreEcarts.hasSoldeError ? '#dc2626' : '#059669', fontWeight: 700 }}>{formatMontant(equilibreEcarts.ecartSolde)}</td>
-                    <td style={{ textAlign: 'center', color: equilibreEcarts.hasSoldeError ? '#dc2626' : '#059669', fontWeight: 700 }}>{equilibreEcarts.hasSoldeError ? '✗' : '✓'}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
+        <BannerBalanceEquilibre
+          ecarts={equilibreEcarts}
+          open={showAnalyse}
+          onToggle={toggleAnalyse}
+        />
       )}
 
       {anomalies.length > 0 && (
@@ -237,7 +239,7 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
         </div>
       )}
 
-      {anomalies.length === 0 && comptesNonMappes.length === 0 && planComptable.length > 0 && !(equilibreEcarts && equilibreEcarts.hasAnyError) && (
+      {anomalies.length === 0 && comptesNonMappes.length === 0 && planComptable.length > 0 && !(equilibreEcarts && equilibreEcarts.hasAnyError) && !(compte13Anomaly && !art20Applied) && (
         <div className="ib-analyse-banner clean"><span className="ib-anomaly-count"><LuCheck size={16} /> Tous les comptes sont conformes au plan comptable SYSCOHADA et la balance est équilibrée</span></div>
       )}
 
