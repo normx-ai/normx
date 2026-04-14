@@ -98,12 +98,6 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
       .map(l => ({ ligneId: l.id, numero: (l.numero_compte || '').trim(), libelle: l.libelle_compte || '' }));
   }, [currentLignes]);
 
-  const comptesTooLong = useMemo(() => {
-    if (currentLignes.length === 0) return [];
-    return currentLignes.filter(l => { const num = (l.numero_compte || '').trim(); return num && num.length > 6; })
-      .map(l => ({ ligneId: l.id, numero: (l.numero_compte || '').trim(), libelle: l.libelle_compte || '', suggestion: (l.numero_compte || '').trim().slice(0, 4) }));
-  }, [currentLignes]);
-
   const sensAnomalies = useMemo(() => {
     if (currentLignes.length === 0) return [];
     return currentLignes.filter(l => (l.numero_compte || '').length > 2).map(l => {
@@ -141,33 +135,6 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
         </div>
       )}
 
-      {comptesTooLong.length > 0 && (
-        <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#8b5cf6' }}>
-          <div className="ib-analyse-header" onClick={toggleAnalyse} style={{ cursor: 'pointer' }}>
-            <span className="ib-anomaly-count" style={{ color: '#8b5cf6' }}><LuTriangleAlert size={16} /> {comptesTooLong.length} compte{comptesTooLong.length > 1 ? 's' : ''} à plus de 6 chiffres (troncature à 4 chiffres suggérée)</span>
-            <span style={{ fontSize: 12 }}>{showAnalyse ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />} {showAnalyse ? 'Masquer' : 'Détail'}</span>
-          </div>
-          {showAnalyse && (
-            <div className="ib-analyse-detail">
-              <table className="ib-analyse-table">
-                <thead><tr><th>Compte actuel</th><th>Libellé</th><th>Compte suggéré (4 chiffres)</th><th>Action</th></tr></thead>
-                <tbody>
-                  {comptesTooLong.map(c => {
-                    const corrected = corrections[c.ligneId];
-                    return (
-                      <tr key={c.ligneId} className={corrected ? 'corrected' : ''}>
-                        <td className="compte-anomalie">{c.numero}</td><td>{c.libelle}</td>
-                        <td>{corrected ? <span className="ib-corrected"><LuCheck size={14} /> {corrected}</span> : <input id={`toolong-fix-${c.ligneId}`} defaultValue={c.suggestion} className="ib-suggestion-select" style={{ width: 100, padding: '4px 8px', fontSize: 13, border: '1px solid #d1d5db', borderRadius: 4 }} />}</td>
-                        <td>{!corrected && <button className="ib-correct-btn" style={{ background: '#8b5cf6', color: '#fff', border: 'none', borderRadius: 4, padding: '4px 10px', cursor: 'pointer', fontSize: 12 }} onClick={() => { const input = document.getElementById(`toolong-fix-${c.ligneId}`) as HTMLInputElement | null; handleCorrection(c.ligneId, input ? input.value.trim() : c.suggestion); }}>Corriger</button>}</td>
-                      </tr>);
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      )}
-
       {sensAnomalies.length > 0 && (
         <div className="ib-analyse-banner has-warnings" style={{ borderColor: '#dc2626', background: '#fef2f2' }}>
           <div className="ib-analyse-header" onClick={toggleAnalyse} style={{ cursor: 'pointer' }}>
@@ -196,7 +163,7 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
         </div>
       )}
 
-      {anomalies.length === 0 && comptesNonMappes.length === 0 && comptesTooLong.length === 0 && planComptable.length > 0 && (
+      {anomalies.length === 0 && comptesNonMappes.length === 0 && planComptable.length > 0 && (
         <div className="ib-analyse-banner clean"><span className="ib-anomaly-count"><LuCheck size={16} /> Tous les comptes sont conformes au plan comptable SYSCOHADA</span></div>
       )}
 
