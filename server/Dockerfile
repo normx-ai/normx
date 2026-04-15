@@ -1,5 +1,11 @@
 FROM node:20-alpine
 
+# Couche de compatibilite glibc requise par onnxruntime-node (utilise par
+# @xenova/transformers dans qdrant.ts pour la generation d'embeddings).
+# Alpine est base sur musl, et onnxruntime-node ne ship que des binaires
+# compiles contre glibc. gcompat fournit le shim necessaire.
+RUN apk add --no-cache gcompat libstdc++
+
 WORKDIR /app
 
 COPY package*.json ./
