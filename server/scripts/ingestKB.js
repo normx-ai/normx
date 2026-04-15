@@ -29,15 +29,73 @@ function loadJSON(filePath) {
 
 // -------------------- Préparation des documents --------------------
 
+// Certains fichiers de la KB utilisent des formats alternatifs :
+// - Cadre conceptuel : sections[] → sous_sections[] → (texte, titre, numero)
+// - Definitions : termes[] → (terme, definition)
+// Cette fonction normalise le contenu du fichier vers un tableau d'articles
+// plat que prepareKBArticles peut ingerer.
+function extractArticlesFromKB(kb, parentTitle = '') {
+  if (!kb || typeof kb !== 'object') return [];
+
+  // Format standard : { articles: [...] }
+  if (Array.isArray(kb.articles)) return kb.articles;
+
+  // Format definitions : { termes: [{ terme, definition }] }
+  if (Array.isArray(kb.termes)) {
+    return kb.termes.map((t, i) => ({
+      numero: t.terme || String(i + 1),
+      titre: t.terme || '',
+      texte: [t.definition || ''],
+      chapitre: parentTitle || kb.meta?.partie || '',
+    }));
+  }
+
+  // Format cadre conceptuel : sections[] → sous_sections[] → (numero, titre, texte)
+  // On descend recursivement en aplatissant les feuilles (sous_sections avec texte).
+  const out = [];
+  const walk = (nodes, ancestryTitle) => {
+    if (!Array.isArray(nodes)) return;
+    for (const node of nodes) {
+      if (!node || typeof node !== 'object') continue;
+      const currentTitle = ancestryTitle
+        ? `${ancestryTitle} — ${node.titre || ''}`
+        : (node.titre || '');
+      if (Array.isArray(node.sous_sections) && node.sous_sections.length > 0) {
+        walk(node.sous_sections, currentTitle);
+      } else if (node.texte || node.contenu) {
+        out.push({
+          numero: node.numero || '',
+          titre: node.titre || '',
+          texte: node.texte,
+          contenu: node.contenu,
+          mots_cles: node.mots_cles || [],
+          chapitre: ancestryTitle || kb.meta?.partie || '',
+        });
+      }
+    }
+  };
+
+  if (Array.isArray(kb.sections)) {
+    walk(kb.sections, parentTitle || kb.meta?.partie || '');
+  } else if (Array.isArray(kb)) {
+    return kb;
+  }
+
+  return out;
+}
+
 function prepareKBArticles(articles, source) {
   // KB classique : { numero, titre, texte[], mots_cles[], statut }
   // KB fonctionnement : { numero, titre, contenu, fonctionnement{credit[], debit[]}, exclusions[], controles[] }
+  // AUDCIF : { numero, titre, chapitre, texte[] }
   return articles.map((a, i) => {
     const texteStr = Array.isArray(a.texte) ? a.texte.join('\n') : (a.texte || '');
     const motsCles = (a.mots_cles || []).join(', ');
 
     // Construire le texte enrichi pour embedding
-    let fullText = `${a.titre || ''}\n${motsCles}\n`;
+    let fullText = `${a.titre || ''}\n`;
+    if (a.chapitre) fullText += `${a.chapitre}\n`;
+    if (motsCles) fullText += `${motsCles}\n`;
     if (a.contenu) fullText += `Contenu: ${a.contenu}\n`;
     if (texteStr) fullText += texteStr + '\n';
     if (a.fonctionnement) {
@@ -61,6 +119,7 @@ function prepareKBArticles(articles, source) {
         source,
         numero: a.numero || '',
         titre: a.titre || '',
+        chapitre: a.chapitre || '',
         texte: (a.contenu || texteStr).substring(0, 2000),
         contenu: a.contenu || '',
         fonctionnement: a.fonctionnement || null,
@@ -275,6 +334,56 @@ async function main() {
     const docs = prepareKBArticles(articles, 'ressources_durables');
     sources.push(...docs);
     console.log(`Ressources Durables KB: ${docs.length} articles`);
+  }
+
+  // Sources 14+ : AUDCIF (Journal Officiel OHADA), cadre conceptuel SYSCOHADA,
+  // chapitres thematiques et sources complementaires. Boucle compacte pour
+  // eviter de multiplier les blocs if/loadJSON/push identiques.
+  const additionalSources = [
+    // Acte uniforme relatif au droit comptable et a l'information financiere
+    { file: 'audcif_articles.json', label: 'audcif', title: 'AUDCIF (Journal Officiel OHADA)' },
+
+    // Cadre conceptuel SYSCOHADA (principes comptables fondamentaux)
+    { file: 'syscohada_cadre_conceptuel_chap1_2.json', label: 'cadre_conceptuel_ch1_2', title: 'Cadre conceptuel SYSCOHADA ch.1-2' },
+    { file: 'syscohada_cadre_conceptuel_chap3.json', label: 'cadre_conceptuel_ch3', title: 'Cadre conceptuel SYSCOHADA ch.3' },
+    { file: 'syscohada_cadre_conceptuel_chap4.json', label: 'cadre_conceptuel_ch4', title: 'Cadre conceptuel SYSCOHADA ch.4' },
+    { file: 'syscohada_cadre_conceptuel_chap5.json', label: 'cadre_conceptuel_ch5', title: 'Cadre conceptuel SYSCOHADA ch.5' },
+    { file: 'syscohada_cadre_conceptuel_chap7.json', label: 'cadre_conceptuel_ch7', title: 'Cadre conceptuel SYSCOHADA ch.7' },
+
+    // Chapitres thematiques SYSCOHADA (rules d'evaluation et de presentation)
+    { file: 'syscohada_ops_chap1.json', label: 'syscohada_ops_ch1', title: 'SYSCOHADA ch.1 operations' },
+    { file: 'syscohada_chapitre7_amortissements.json', label: 'syscohada_ch7_amort', title: 'SYSCOHADA ch.7 amortissements' },
+    { file: 'syscohada_chapitre8_provisions_depreciations.json', label: 'syscohada_ch8_prov', title: 'SYSCOHADA ch.8 provisions/depreciations' },
+    { file: 'syscohada_chapitre10_produits.json', label: 'syscohada_ch10_prod', title: 'SYSCOHADA ch.10 produits' },
+    { file: 'syscohada_chapitre12_tiers_chapitre13_gie.json', label: 'syscohada_ch12_13_tiers_gie', title: 'SYSCOHADA ch.12-13 tiers et GIE' },
+    { file: 'syscohada_definitions_termes_chap6.json', label: 'syscohada_ch6_defs', title: 'SYSCOHADA ch.6 definitions' },
+
+    // Soldes intermediaires de gestion et tableau flux de tresorerie
+    { file: 'sig_chapitre_11.json', label: 'sig_ch11', title: 'SIG chapitre 11' },
+    { file: 'tft_formules.json', label: 'tft_formules', title: 'TFT formules' },
+
+    // SYCEBNL — cadre conceptuel et dispositions specifiques associations/OSBL
+    { file: 'sycebnl_partie1_definitions_cadre_conceptuel.json', label: 'sycebnl_p1_cadre', title: 'SYCEBNL partie 1 cadre conceptuel' },
+    { file: 'sycebnl_partie3_operations_specifiques.json', label: 'sycebnl_p3_ops', title: 'SYCEBNL partie 3 operations specifiques' },
+    { file: 'sycebnl_partie4_etats_financiers_tft.json', label: 'sycebnl_p4_etats', title: 'SYCEBNL partie 4 etats financiers et TFT' },
+  ];
+
+  for (const src of additionalSources) {
+    const kb = loadJSON(path.join(kbDir, src.file));
+    if (!kb) {
+      console.log(`  [skip] ${src.file} introuvable`);
+      continue;
+    }
+    // Normalise formats alternatifs (sections/sous_sections, termes, etc.)
+    // vers un tableau d'articles plat exploitable par prepareKBArticles.
+    const articles = extractArticlesFromKB(kb);
+    if (articles.length === 0) {
+      console.log(`  [vide] ${src.file} : aucun article extrait (format inconnu ?)`);
+      continue;
+    }
+    const docs = prepareKBArticles(articles, src.label);
+    sources.push(...docs);
+    console.log(`${src.title}: ${docs.length} articles`);
   }
 
   // Source 5: Comptes enrichis (RAG)
