@@ -11,9 +11,52 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '..', '.e
 
 const fs = require('fs');
 const path = require('path');
+const winston = require('winston');
 const { embed, embedBatch, ensureCollection, upsertPoints, qdrant } = require('../qdrant');
 
 const COLLECTION = 'normx_kb';
+
+// Logger aligne sur server/logger.ts : meme winston, meme format, memes
+// fichiers de rotation. On ne fait pas require('../logger.ts') directement
+// car ce script est du JavaScript pur et ne passe pas par ts-node lors
+// d'une execution autonome (`node server/scripts/ingestKB.js`).
+const isProduction = process.env.NODE_ENV === 'production';
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || (isProduction ? 'info' : 'debug'),
+  defaultMeta: { service: 'normx', context: 'ingest-kb' },
+  format: isProduction
+    ? winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.errors({ stack: true }),
+        winston.format.json()
+      )
+    : winston.format.combine(
+        winston.format.colorize(),
+        winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
+        winston.format.errors({ stack: true }),
+        winston.format.printf(({ timestamp, level, message, context, stack, ...meta }) => {
+          const ctx = context ? `[${context}] ` : '';
+          const metaStr = Object.keys(meta).filter(k => k !== 'service').length
+            ? ' ' + JSON.stringify(Object.fromEntries(Object.entries(meta).filter(([k]) => k !== 'service')))
+            : '';
+          if (stack) return `${timestamp} ${level} ${ctx}${message}\n${stack}${metaStr}`;
+          return `${timestamp} ${level} ${ctx}${message}${metaStr}`;
+        })
+      ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({
+      filename: path.join(__dirname, '..', 'logs', 'combined.log'),
+      maxsize: 10 * 1024 * 1024,
+      maxFiles: 5,
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.errors({ stack: true }),
+        winston.format.json()
+      ),
+    }),
+  ],
+});
 
 // -------------------- Chargement des sources --------------------
 
@@ -22,7 +65,7 @@ function loadJSON(filePath) {
     const raw = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(raw);
   } catch (err) {
-    console.error(`Erreur chargement ${filePath}: ${err.message}`);
+    logger.error(`Erreur chargement ${filePath}`, { error: err.message });
     return null;
   }
 }
@@ -202,13 +245,13 @@ function stringToId(str) {
 async function main() {
   const doReset = process.argv.includes('--reset');
 
-  console.log('=== Ingestion Knowledge Base dans Qdrant ===\n');
+  logger.info('=== Ingestion Knowledge Base dans Qdrant ===');
 
   // 1. Créer/reset la collection
   if (doReset) {
     try {
       await qdrant.deleteCollection(COLLECTION);
-      console.log(`Collection "${COLLECTION}" supprimee`);
+      logger.info(`Collection "${COLLECTION}" supprimee`);
     } catch (_) {}
   }
   await ensureCollection(COLLECTION);
@@ -225,7 +268,7 @@ async function main() {
     const articles = syscohadaKB.articles || syscohadaKB;
     const docs = prepareKBArticles(articles, 'syscohada');
     sources.push(...docs);
-    console.log(`SYSCOHADA KB: ${docs.length} articles`);
+    logger.info(`SYSCOHADA KB: ${docs.length} articles`);
   }
 
   // Source 2: SYCEBNL KB
@@ -234,7 +277,7 @@ async function main() {
     const articles = sycebnlKB.articles || sycebnlKB;
     const docs = prepareKBArticles(articles, 'sycebnl');
     sources.push(...docs);
-    console.log(`SYCEBNL KB: ${docs.length} articles`);
+    logger.info(`SYCEBNL KB: ${docs.length} articles`);
   }
 
   // Source 3: SMT KB
@@ -243,7 +286,7 @@ async function main() {
     const articles = smtKB.articles || smtKB;
     const docs = prepareKBArticles(articles, 'smt');
     sources.push(...docs);
-    console.log(`SMT KB: ${docs.length} articles`);
+    logger.info(`SMT KB: ${docs.length} articles`);
   }
 
   // Source 4: SIG KB
@@ -252,7 +295,7 @@ async function main() {
     const articles = sigKB.articles || sigKB;
     const docs = prepareKBArticles(articles, 'sig');
     sources.push(...docs);
-    console.log(`SIG KB: ${docs.length} articles`);
+    logger.info(`SIG KB: ${docs.length} articles`);
   }
 
   // Source 6: Fonctionnement des comptes — Classe 1
@@ -261,7 +304,7 @@ async function main() {
     const articles = fonctC1KB.articles || fonctC1KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe1');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 1: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 1: ${docs.length} articles`);
   }
 
   // Source 7: Fonctionnement des comptes — Classe 2
@@ -270,7 +313,7 @@ async function main() {
     const articles = fonctC2KB.articles || fonctC2KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe2');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 2: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 2: ${docs.length} articles`);
   }
 
   // Source 8: Fonctionnement des comptes — Classe 3
@@ -279,7 +322,7 @@ async function main() {
     const articles = fonctC3KB.articles || fonctC3KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe3');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 3: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 3: ${docs.length} articles`);
   }
 
   // Source 9: Fonctionnement des comptes — Classe 4
@@ -288,7 +331,7 @@ async function main() {
     const articles = fonctC4KB.articles || fonctC4KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe4');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 4: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 4: ${docs.length} articles`);
   }
 
   // Source 9: Fonctionnement des comptes — Classe 5
@@ -297,7 +340,7 @@ async function main() {
     const articles = fonctC5KB.articles || fonctC5KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe5');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 5: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 5: ${docs.length} articles`);
   }
 
   // Source 10: Fonctionnement des comptes — Classe 6
@@ -306,7 +349,7 @@ async function main() {
     const articles = fonctC6KB.articles || fonctC6KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe6');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 6: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 6: ${docs.length} articles`);
   }
 
   // Source 11: Fonctionnement des comptes — Classe 7
@@ -315,7 +358,7 @@ async function main() {
     const articles = fonctC7KB.articles || fonctC7KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe7');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 7: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 7: ${docs.length} articles`);
   }
 
   // Source 12: Fonctionnement des comptes — Classe 8
@@ -324,7 +367,7 @@ async function main() {
     const articles = fonctC8KB.articles || fonctC8KB;
     const docs = prepareKBArticles(articles, 'fonctionnement_classe8');
     sources.push(...docs);
-    console.log(`Fonctionnement Comptes Classe 8: ${docs.length} articles`);
+    logger.info(`Fonctionnement Comptes Classe 8: ${docs.length} articles`);
   }
 
   // Source 13: Ressources Durables (Chapitre 6)
@@ -333,7 +376,7 @@ async function main() {
     const articles = resDurKB.articles || resDurKB;
     const docs = prepareKBArticles(articles, 'ressources_durables');
     sources.push(...docs);
-    console.log(`Ressources Durables KB: ${docs.length} articles`);
+    logger.info(`Ressources Durables KB: ${docs.length} articles`);
   }
 
   // Sources 14+ : AUDCIF (Journal Officiel OHADA), cadre conceptuel SYSCOHADA,
@@ -371,19 +414,19 @@ async function main() {
   for (const src of additionalSources) {
     const kb = loadJSON(path.join(kbDir, src.file));
     if (!kb) {
-      console.log(`  [skip] ${src.file} introuvable`);
+      logger.warn(`Source introuvable: ${src.file}`);
       continue;
     }
     // Normalise formats alternatifs (sections/sous_sections, termes, etc.)
     // vers un tableau d'articles plat exploitable par prepareKBArticles.
     const articles = extractArticlesFromKB(kb);
     if (articles.length === 0) {
-      console.log(`  [vide] ${src.file} : aucun article extrait (format inconnu ?)`);
+      logger.warn(`Aucun article extrait: ${src.file}`, { raison: 'format inconnu' });
       continue;
     }
     const docs = prepareKBArticles(articles, src.label);
     sources.push(...docs);
-    console.log(`${src.title}: ${docs.length} articles`);
+    logger.info(`${src.title}: ${docs.length} articles`);
   }
 
   // Source 5: Comptes enrichis (RAG)
@@ -392,18 +435,18 @@ async function main() {
     const accounts = Array.isArray(enriched) ? enriched : [];
     const docs = prepareEnrichedAccounts(accounts);
     sources.push(...docs);
-    console.log(`Comptes enrichis: ${docs.length} comptes`);
+    logger.info(`Comptes enrichis: ${docs.length} comptes`);
   }
 
-  console.log(`\nTotal: ${sources.length} documents a vectoriser\n`);
+  logger.info(`Total: ${sources.length} documents a vectoriser`);
 
   if (sources.length === 0) {
-    console.log('Aucun document a ingerer.');
+    logger.warn('Aucun document a ingerer.');
     return;
   }
 
   // 3. Générer les embeddings
-  console.log('Generation des embeddings (premiere execution = telechargement du modele)...\n');
+  logger.info('Generation des embeddings (premiere execution = telechargement du modele)...');
   const texts = sources.map(s => s.text);
   const vectors = await embedBatch(texts);
 
@@ -422,7 +465,7 @@ async function main() {
   });
 
   // 5. Upsert dans Qdrant (avec retry)
-  console.log('Upsert dans Qdrant...');
+  logger.info('Upsert dans Qdrant...');
   // Attendre que la collection soit bien prête
   await new Promise(r => setTimeout(r, 1000));
 
@@ -437,23 +480,23 @@ async function main() {
       } catch (err) {
         retries--;
         if (retries === 0) throw err;
-        console.log(`Retry upsert batch ${i}... (${retries} restants)`);
+        logger.warn(`Retry upsert batch ${i}`, { restants: retries });
         await new Promise(r => setTimeout(r, 500));
       }
     }
     if ((i + BATCH) % 50 === 0) {
-      console.log(`Upsert: ${Math.min(i + BATCH, points.length)}/${points.length}`);
+      logger.info(`Upsert: ${Math.min(i + BATCH, points.length)}/${points.length}`);
     }
   }
-  console.log(`Upsert termine: ${points.length} points`);
+  logger.info(`Upsert termine: ${points.length} points`);
 
   // 6. Vérification
   const info = await qdrant.getCollection(COLLECTION);
-  console.log(`\nCollection "${COLLECTION}": ${info.points_count} points indexes`);
-  console.log('Ingestion terminee avec succes !');
+  logger.info(`Collection "${COLLECTION}": ${info.points_count} points indexes`);
+  logger.info('Ingestion terminee avec succes');
 }
 
 main().catch(err => {
-  console.error('Erreur fatale:', err);
+  logger.error('Erreur fatale', { error: err instanceof Error ? err.stack || err.message : String(err) });
   process.exit(1);
 });
