@@ -149,17 +149,35 @@ export function getSoldeAttendu(numero: string): SoldeAttendu {
   if (c.startsWith('5')) return 'debiteur';
 
   // ==================== CLASSE 6 — CHARGES ====================
-  // Normalement débiteur (consommations)
-  // Sauf 603 (Variations des stocks de biens achetés) = variable
-  // Sauf 659 (Charges provisionnées d'exploitation) = débiteur mais peut être ajusté
+  // Normalement débiteur (consommations).
+  // Exceptions :
+  // - 603 : Variations des stocks de biens achetés (peut être D ou C)
+  // - Sous-comptes de RRR obtenus (contre-parties créditrices) :
+  //   - 6X9 : 609, 619, 629, 639, 649, 659 (générique par nature de charge)
+  //   - 6XX9 : 6019, 6029, 6039, 6049, 6059, 6089 (RRR par sous-type)
+  //   Pattern SYSCOHADA : la position 3 ou 4 a '9' = contre-partie
   if (c3 === '603') return 'les_deux';
-  if (c.startsWith('6')) return 'debiteur';
+  if (c.startsWith('6')) {
+    const hasRRRObtenuMarker = (c.length >= 3 && c.charAt(2) === '9')
+                            || (c.length >= 4 && c.charAt(3) === '9');
+    if (hasRRRObtenuMarker) return 'crediteur';
+    return 'debiteur';
+  }
 
   // ==================== CLASSE 7 — PRODUITS ====================
-  // Normalement créditeur (ressources)
-  // Sauf 73 (Variations des stocks de biens produits) = variable (débiteur si destockage)
+  // Normalement créditeur (ressources).
+  // Exceptions :
+  // - 73 : Variations des stocks de biens produits (peut être D ou C)
+  // - Sous-comptes de RRR accordés (contre-parties débitrices) :
+  //   - 7X9 : 709, 719, 729, 739, 749, 759 (générique par nature de produit)
+  //   - 7XX9 : 7019, 7029, 7049 (RRR accordés par l'entreprise)
   if (c2 === '73') return 'les_deux';
-  if (c.startsWith('7')) return 'crediteur';
+  if (c.startsWith('7')) {
+    const hasRRRAccordeMarker = (c.length >= 3 && c.charAt(2) === '9')
+                             || (c.length >= 4 && c.charAt(3) === '9');
+    if (hasRRRAccordeMarker) return 'debiteur';
+    return 'crediteur';
+  }
 
   // ==================== CLASSE 8 — HAO + IMPOTS ====================
   // Charges HAO = débiteur : 81, 83, 85, 87, 89
