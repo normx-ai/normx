@@ -103,7 +103,7 @@ const ComparatifNN1 = lazy(() => import('../rapports/ComparatifNN1'));
 // Lazy-loaded modules — Outils
 const AssistantChat = lazy(() => import('../assistant/AssistantChat'));
 const AideVideos = lazy(() => import('../aide/AideVideos'));
-const ParametresEntite = lazy(() => import('../settings/ParametresEntite'));
+const ParametresTabs = lazy(() => import('../settings/ParametresTabs'));
 
 function getTypeLabel(typeActivite: TypeActivite): string {
   switch (typeActivite) {
@@ -764,7 +764,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
       )}
       {activeTab === 'aide_videos' && <AideVideos />}
       {activeTab === 'parametres' && (
-        <ParametresEntite entiteId={entiteId} onUpdate={(data: Record<string, string>) => {
+        <ParametresTabs entiteId={entiteId} onUpdate={(data: Record<string, string>) => {
           if (onEntiteUpdated) {
             onEntiteUpdated({
               id: entiteId,
