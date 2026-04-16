@@ -10,7 +10,7 @@
 
 import type { NormxModule } from '../types';
 
-export const ENABLED_MODULES: readonly NormxModule[] = ['etats'];
+export const ENABLED_MODULES: readonly NormxModule[] = ['compta', 'etats'];
 
 export function isModuleEnabled(m: NormxModule): boolean {
   return ENABLED_MODULES.includes(m);
