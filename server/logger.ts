@@ -8,6 +8,7 @@ const devFormat = winston.format.combine(
   winston.format.colorize(),
   winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
   winston.format.errors({ stack: true }),
+  winston.format.splat(),
   winston.format.printf(({ timestamp, level, message, context, stack, ...meta }) => {
     const ctx = context ? `[${context}] ` : '';
     const metaStr = Object.keys(meta).length ? ' ' + JSON.stringify(meta) : '';
@@ -19,9 +20,13 @@ const devFormat = winston.format.combine(
 );
 
 // Format JSON structure pour la production (parsable par ELK/Datadog)
+// splat() interpole les placeholders util.format (%s, %d, %j) dans le
+// message a partir des arguments supplementaires passes a logger.x(...).
+// Sans splat, logger.error('foo: %s', msg) laisse litteralement "%s".
 const prodFormat = winston.format.combine(
   winston.format.timestamp(),
   winston.format.errors({ stack: true }),
+  winston.format.splat(),
   winston.format.json()
 );
 
@@ -39,6 +44,7 @@ const logger = winston.createLogger({
       format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.errors({ stack: true }),
+        winston.format.splat(),
         winston.format.json()
       ),
     }),
@@ -49,6 +55,7 @@ const logger = winston.createLogger({
       format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.errors({ stack: true }),
+        winston.format.splat(),
         winston.format.json()
       ),
     }),
