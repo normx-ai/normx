@@ -291,7 +291,7 @@
     "numero": "1309",
     "libelle": "Resultat en instance d'affectation : Perte",
     "classe": 1,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "131",
@@ -3381,37 +3381,37 @@
     "numero": "409",
     "libelle": "Fournisseurs debiteurs",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4091",
     "libelle": "Fournisseurs avances et acomptes verses",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4092",
     "libelle": "Fournisseurs - Groupe avances et acomptes verses",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4093",
     "libelle": "Fournisseurs sous-traitants avances et acomptes verses",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4094",
     "libelle": "Fournisseurs creances pour emballages et materiels a rendre",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4098",
     "libelle": "Fournisseurs, rabais, remises, ristournes et autres avoirs a obtenir",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "41",
@@ -3603,31 +3603,31 @@
     "numero": "419",
     "libelle": "Clients crediteurs",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "4191",
     "libelle": "Clients, avances et acomptes recus",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "4192",
     "libelle": "Clients - Groupe, avances et acomptes recus",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "4194",
     "libelle": "Clients, dettes pour emballages et materiels consignes",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "4198",
     "libelle": "Clients, rabais, remises, ristournes et autres avoirs a accorder",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "42",
@@ -3639,25 +3639,25 @@
     "numero": "421",
     "libelle": "Personnel, avances et acomptes",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4211",
     "libelle": "Personnel, avances",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4212",
     "libelle": "Personnel, acomptes",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "4213",
     "libelle": "Frais avances et fournitures au personnel",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "422",
@@ -3897,7 +3897,7 @@
     "numero": "44",
     "libelle": "Etat et collectivites publiques",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "441",
@@ -3987,19 +3987,19 @@
     "numero": "444",
     "libelle": "Etat, T.V.A. due ou credit de T.V.A.",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4441",
     "libelle": "Etat, T.V.A. due",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "4445",
     "libelle": "Etat, Degrevement T.V.A.",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4449",
@@ -4095,613 +4095,613 @@
     "numero": "448",
     "libelle": "Etat, charges a payer et produits a recevoir",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4486",
     "libelle": "Charges a payer",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4487",
     "libelle": "Produits a recevoir",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "449",
     "libelle": "Etat, creances et dettes diverses",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4491",
     "libelle": "Etat, obligations cautionnees",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4492",
     "libelle": "Etat, avances et acomptes verses sur impots",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4493",
     "libelle": "Etat, fonds de dotation a recevoir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4494",
     "libelle": "Etat, subventions d'investissement a recevoir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4495",
     "libelle": "Etat, subventions d'exploitation a recevoir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4496",
     "libelle": "Etat, subventions d'equilibre a recevoir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4497",
     "libelle": "Etat avances sur subventions",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4499",
     "libelle": "Etat, fonds reglementes provisionnes",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "45",
     "libelle": "Organismes internationaux",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "451",
     "libelle": "Operations avec les organismes africains",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "452",
     "libelle": "Operations avec les autres organismes internationaux",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "458",
     "libelle": "Organismes internationaux, fonds de dotation et subventions a recevoir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4581",
     "libelle": "Organismes internationaux, fonds de dotation a recevoir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4582",
     "libelle": "Organismes internationaux, subventions a recevoir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "46",
     "libelle": "Apporteurs, associes et groupe",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "461",
     "libelle": "Apporteurs, operations sur le capital",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4611",
     "libelle": "Apporteurs, apports en nature",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4612",
     "libelle": "Apporteurs, apports en numeraire",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4613",
     "libelle": "Apporteurs, capital appele, non verse",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4614",
     "libelle": "Apporteurs, compte d'apport, operations de restructuration (fusion...)",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4615",
     "libelle": "Apporteurs, versements recus sur augmentation de capital",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4616",
     "libelle": "Apporteurs, versements anticipes",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4617",
     "libelle": "Apporteurs defaillants",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4618",
     "libelle": "Apporteurs, titres a echanger",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4619",
     "libelle": "Apporteurs, capital a rembourser",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "462",
     "libelle": "Associes, comptes courants",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4621",
     "libelle": "Principal",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4626",
     "libelle": "Interets courus",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "463",
     "libelle": "Associes, operations faites en commun et GIE",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4631",
     "libelle": "Operations courantes",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4636",
     "libelle": "Interets courus",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "465",
     "libelle": "Associes, dividendes a payer",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "466",
     "libelle": "Groupe, comptes courants",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "467",
     "libelle": "Apporteurs restant du sur capital appele",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "469",
     "libelle": "Entites dividendes a recevoir",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "47",
     "libelle": "Debiteurs et crediteurs divers",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "471",
     "libelle": "Debiteurs et crediteurs divers",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4711",
     "libelle": "Debiteurs divers",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4712",
     "libelle": "Crediteurs divers",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4713",
     "libelle": "Obligataires",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4715",
     "libelle": "Remunerations d'administrateurs non associes",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4716",
     "libelle": "Compte d'affacturage et de titrisation",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4717",
     "libelle": "Debiteurs divers - retenues de garantie",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4718",
     "libelle": "Apport, compte de fusion et operations assimilees",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4719",
     "libelle": "Bons de souscription d'actions et d'obligations",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "472",
     "libelle": "Creances et dettes sur titres de placement",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4721",
     "libelle": "Creances sur cessions de titres de placement",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4726",
     "libelle": "Versements restant a effectuer sur titres de placement non liberes",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "473",
     "libelle": "Intermediaires - operations faites pour compte de tiers",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4731",
     "libelle": "Mandants",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4732",
     "libelle": "Mandataires",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4733",
     "libelle": "Committants",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4734",
     "libelle": "Commissionnaires",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4739",
     "libelle": "Etat, Collectivites publiques, fonds global d'allocation",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "474",
     "libelle": "Compte de repartition periodique des charges et des produits",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4746",
     "libelle": "Compte de repartition periodique des charges",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4747",
     "libelle": "Compte de repartition periodique des produits",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "475",
     "libelle": "Compte transitoire, ajustement special lie a la revision du SYSCOHADA",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4751",
     "libelle": "Compte-actif",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4752",
     "libelle": "Compte-passif",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "476",
     "libelle": "Charges constatees d'avance",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "477",
     "libelle": "Produits constates d'avance",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "478",
     "libelle": "Ecarts de conversion - actif",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4781",
     "libelle": "Diminution des creances d'exploitation et H.A.O.",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4782",
     "libelle": "Diminution des creances financieres",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4783",
     "libelle": "Augmentation des dettes d'exploitation et H.A.O.",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4784",
     "libelle": "Augmentation des dettes financieres",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4786",
     "libelle": "Differences d'evaluation sur instruments de tresorerie",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4788",
     "libelle": "Differences compensees par couverture de change",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "479",
     "libelle": "Ecarts de conversion - passif",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4791",
     "libelle": "Augmentation des creances d'exploitation et H.A.O.",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4792",
     "libelle": "Augmentation des creances financieres",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4793",
     "libelle": "Diminution des dettes d'exploitation et H.A.O.",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4794",
     "libelle": "Diminution des dettes financieres",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4797",
     "libelle": "Differences d'evaluation sur instruments de tresorerie",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4798",
     "libelle": "Differences compensees par couverture de change",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "48",
     "libelle": "Creances et dettes hors activites ordinaires (H.A.O.)",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "481",
     "libelle": "Fournisseurs d'investissements",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4811",
     "libelle": "Immobilisations incorporelles",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4812",
     "libelle": "Immobilisations corporelles",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4813",
     "libelle": "Versements restant a effectuer sur titres de participation et titres immobilises non liberes",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4816",
     "libelle": "Reserve de propriete",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4817",
     "libelle": "Retenues de garantie",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4818",
     "libelle": "Factures non parvenues",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "482",
     "libelle": "Fournisseurs d'investissements, effets a payer",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4821",
     "libelle": "Immobilisations incorporelles",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "4822",
     "libelle": "Immobilisations corporelles",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "484",
     "libelle": "Autres dettes hors activites ordinaires (H.A.O.)",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "485",
     "libelle": "Creances sur cessions d'immobilisations",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4851",
     "libelle": "En compte, immobilisations incorporelles",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4852",
     "libelle": "En compte, immobilisations corporelles",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4853",
     "libelle": "Effets a recevoir, immobilisations incorporelles",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4854",
     "libelle": "Effets a recevoir, immobilisations corporelles",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4855",
     "libelle": "Effets escomptes non echus",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4856",
     "libelle": "Immobilisations financieres",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4857",
     "libelle": "Retenues de garantie",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "4858",
     "libelle": "Factures a etablir",
     "classe": 4,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "488",
     "libelle": "Autres creances hors activites ordinaires (H.A.O.)",
     "classe": 4,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "49",
@@ -5175,37 +5175,37 @@
     "numero": "54",
     "libelle": "Instruments de tresorerie",
     "classe": 5,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "541",
     "libelle": "Options de taux d'interet",
     "classe": 5,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "542",
     "libelle": "Options de taux de change",
     "classe": 5,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "543",
     "libelle": "Options de taux boursiers",
     "classe": 5,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "544",
     "libelle": "Instruments de marches a terme",
     "classe": 5,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "545",
     "libelle": "Avoirs d'or et autres metaux precieux",
     "classe": 5,
-    "sens": "debiteur"
+    "sens": "mixte"
   },
   {
     "numero": "55",
@@ -5451,7 +5451,7 @@
     "numero": "6019",
     "libelle": "Rabais, Remises et Ristournes obtenus (non ventiles)",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "602",
@@ -5493,7 +5493,7 @@
     "numero": "6029",
     "libelle": "Rabais, Remises et Ristournes obtenus (non ventiles)",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "603",
@@ -5571,7 +5571,7 @@
     "numero": "6049",
     "libelle": "Rabais, Remises et Ristournes obtenus (non ventiles)",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "605",
@@ -5631,7 +5631,7 @@
     "numero": "6059",
     "libelle": "Rabais, Remises et Ristournes obtenus (non ventiles)",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "608",
@@ -5667,7 +5667,7 @@
     "numero": "6089",
     "libelle": "Rabais, Remises et Ristournes obtenus (non ventiles)",
     "classe": 6,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "61",
@@ -7059,7 +7059,7 @@
     "numero": "7019",
     "libelle": "Rabais, remises, ristournes accordes (non ventiles)",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "702",
@@ -7101,7 +7101,7 @@
     "numero": "7029",
     "libelle": "Rabais, remises, ristournes accordes (non ventiles)",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "703",
@@ -7143,7 +7143,7 @@
     "numero": "7039",
     "libelle": "Rabais, remises, ristournes accordes (non ventiles)",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "704",
@@ -7185,7 +7185,7 @@
     "numero": "7049",
     "libelle": "Rabais, remises, ristournes accordes (non ventiles)",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "705",
@@ -7227,7 +7227,7 @@
     "numero": "7059",
     "libelle": "Rabais, remises, ristournes accordes (non ventiles)",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "706",
@@ -7269,7 +7269,7 @@
     "numero": "7069",
     "libelle": "Rabais, remises, ristournes accordes (non ventiles)",
     "classe": 7,
-    "sens": "crediteur"
+    "sens": "debiteur"
   },
   {
     "numero": "707",
@@ -8055,31 +8055,31 @@
     "numero": "88",
     "libelle": "Subventions d'equilibre",
     "classe": 8,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "881",
     "libelle": "Etat",
     "classe": 8,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "884",
     "libelle": "Collectivites publiques",
     "classe": 8,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "886",
     "libelle": "Groupe",
     "classe": 8,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "888",
     "libelle": "Autres",
     "classe": 8,
-    "sens": "debiteur"
+    "sens": "crediteur"
   },
   {
     "numero": "89",
