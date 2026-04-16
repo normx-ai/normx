@@ -26,12 +26,18 @@ au 31/12/2025). Ne pas utiliser DAISY DEL (reste en mode Etats).
       avec une fonction `defaultModule()` qui priorise compta si activé.
 
 ### 1.2 Paramétrage initial
-- ☐ Le plan comptable SYSCOHADA est chargé par défaut (1409 comptes)
-- ☐ Possibilité d'ajouter / désactiver des comptes du plan
-- ☐ Liste des journaux par défaut : Achats (AC), Ventes (VT), Caisse (CA),
-      Banque (BQ), OD
-- ☐ Possibilité d'ajouter un journal personnalisé
-- ☐ Paramètres TVA (taux par défaut, type de régime) modifiables
+- ✅ Le plan comptable SYSCOHADA est chargé par défaut (1409 comptes) —
+      visible via Paramètres → Plan comptable, endpoint
+      `/api/comptes-custom/plan-fusionne`
+- ✅ Possibilité d'ajouter / désactiver des comptes du plan —
+      bouton "Ajouter un compte" et icônes toggle actif/désactivé
+      (table `comptes_custom` avec type `custom` ou `disabled`)
+- ✅ Liste des journaux par défaut : Achats (AC), Ventes (VT),
+      Caisse (CA), Banque (BQ), OD — seed auto à la création du tenant
+- ✅ Possibilité d'ajouter un journal personnalisé —
+      Paramètres → Journaux → "Ajouter un journal"
+- ✅ Paramètres TVA (taux par défaut, type de régime) modifiables —
+      Paramètres → TVA, défaut Congo 18% / 5% / régime normal
 
 ### 1.3 Exercice comptable
 - ☐ Création d'un exercice 01/01/2025 → 31/12/2025
