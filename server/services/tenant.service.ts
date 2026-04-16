@@ -116,7 +116,7 @@ export async function createTenant(input: CreateTenantInput): Promise<Tenant> {
 
 export async function updateTenant(
   id: number,
-  data: { nom?: string; type?: string; settings?: Record<string, string | number | boolean | string[] | null> }
+  data: { nom?: string; type?: string; settings?: TenantSettings }
 ): Promise<void> {
   const updates: string[] = [];
   const values: (string | number | boolean | null)[] = [];
