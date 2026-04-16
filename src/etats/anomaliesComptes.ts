@@ -51,10 +51,15 @@ export function getSoldeAttendu(numero: string): SoldeAttendu {
   const c3 = c.substring(0, 3);
 
   // ==================== CLASSE 1 — CAPITAUX PROPRES ====================
-  // Normalement créditeur (ressources permanentes)
-  // Sauf 109 (Capital souscrit non appelé) = débiteur (actif)
-  // Sauf 129 (Report à nouveau débiteur / Pertes) = débiteur
-  if (c3 === '109' || c3 === '129') return 'debiteur';
+  // Normalement créditeur (ressources permanentes).
+  // Exceptions à solde débiteur (pertes / contre-parties) :
+  // - 109 : Capital souscrit non appelé (actif)
+  // - 129 : Report à nouveau débiteur (pertes antérieures)
+  // - 139 : Résultat net de l'exercice : perte
+  // - 1309 : Résultat en instance d'affectation : Perte (sous-compte de 130)
+  const c4 = c.substring(0, 4);
+  if (c3 === '109' || c3 === '129' || c3 === '139') return 'debiteur';
+  if (c4 === '1309') return 'debiteur';
   if (c.startsWith('1')) return 'crediteur';
 
   // ==================== CLASSE 2 — IMMOBILISATIONS ====================
