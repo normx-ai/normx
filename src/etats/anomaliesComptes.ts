@@ -1,9 +1,40 @@
 // ===================== DETECTION D'ANOMALIES DE SOLDE =====================
-// Basé sur le fonctionnement des comptes SYSCOHADA révisé
+// Le sens attendu d'un compte (debiteur/crediteur/mixte) est lu directement
+// depuis le plan comptable SYSCOHADA charge par l'API /api/plan-comptable.
+// Chacun des 1409 comptes du plan possede un champ `sens` officiel. On evite
+// ainsi toute regle codee en dur qui derive du plan reel et provoque des
+// faux positifs (ex: 6594 Charges provisionnees exploitation, 1309 Resultat
+// perte pending, etc.).
 
 import { BalanceLigne } from '../types';
 
 export type SoldeAttendu = 'debiteur' | 'crediteur' | 'les_deux';
+
+// Entree du plan comptable telle que retournee par l'API /api/plan-comptable
+export interface PlanCompteEntry {
+  numero: string;
+  libelle: string;
+  classe?: string | number;
+  sens?: 'debiteur' | 'crediteur' | 'mixte';
+}
+
+// Map numero -> sens, construite une fois pour eviter de parser le plan a
+// chaque appel de getSoldeAttendu.
+export type PlanComptableSensMap = Map<string, SoldeAttendu>;
+
+function normalizeSens(s: string | undefined): SoldeAttendu {
+  if (s === 'debiteur') return 'debiteur';
+  if (s === 'crediteur') return 'crediteur';
+  return 'les_deux';
+}
+
+export function buildPlanComptableSensMap(plan: PlanCompteEntry[]): PlanComptableSensMap {
+  const map = new Map<string, SoldeAttendu>();
+  for (const c of plan) {
+    if (c.numero) map.set(c.numero, normalizeSens(c.sens));
+  }
+  return map;
+}
 
 export interface AnomalieCompte {
   type: 'solde_inverse' | 'solde_residuel' | 'desequilibre';
@@ -44,151 +75,20 @@ export function detectDesequilibres(lignes: BalanceLigne[]): AnomalieEquilibre[]
   return anomalies;
 }
 
-// Solde normal attendu par compte selon le fonctionnement SYSCOHADA
-export function getSoldeAttendu(numero: string): SoldeAttendu {
-  const c = numero.replace(/\s/g, '');
-  const c2 = c.substring(0, 2);
-  const c3 = c.substring(0, 3);
-
-  // ==================== CLASSE 1 — CAPITAUX PROPRES ====================
-  // Normalement créditeur (ressources permanentes).
-  // Exceptions à solde débiteur (pertes / contre-parties) :
-  // - 109 : Capital souscrit non appelé (actif)
-  // - 129 : Report à nouveau débiteur (pertes antérieures)
-  // - 139 : Résultat net de l'exercice : perte
-  // - 1309 : Résultat en instance d'affectation : Perte (sous-compte de 130)
-  const c4 = c.substring(0, 4);
-  if (c3 === '109' || c3 === '129' || c3 === '139') return 'debiteur';
-  if (c4 === '1309') return 'debiteur';
-  if (c.startsWith('1')) return 'crediteur';
-
-  // ==================== CLASSE 2 — IMMOBILISATIONS ====================
-  // Normalement débiteur (actif immobilisé)
-  // Sauf 28 (Amortissements) = créditeur (en diminution de l'actif)
-  // Sauf 29 (Provisions pour dépréciation) = créditeur
-  if (c2 === '28') return 'crediteur';
-  if (c2 === '29') return 'crediteur';
-  if (c.startsWith('2')) return 'debiteur';
-
-  // ==================== CLASSE 3 — STOCKS ====================
-  // Normalement débiteur (actif circulant)
-  // Sauf 39 (Dépréciations des stocks) = créditeur
-  if (c2 === '39') return 'crediteur';
-  if (c.startsWith('3')) return 'debiteur';
-
-  // ==================== CLASSE 4 — TIERS ====================
-
-  // 40 — Fournisseurs : créditeur (dette)
-  // Sauf 409 (Avances et acomptes versés aux fournisseurs) = débiteur (créance)
-  if (c3 === '409') return 'debiteur';
-  if (c2 === '40') return 'crediteur';
-
-  // 41 — Clients : débiteur (créance)
-  // Sauf 419 (Avances et acomptes reçus des clients) = créditeur (dette)
-  if (c3 === '419') return 'crediteur';
-  if (c2 === '41') return 'debiteur';
-
-  // 42 — Personnel
-  // 421 (Avances au personnel) = débiteur (créance sur le salarié)
-  // 422 (Rémunérations dues) = créditeur (dette envers le salarié)
-  // 423-428 = créditeur (dettes)
-  if (c3 === '421') return 'debiteur';
-  if (c2 === '42') return 'crediteur';
-
-  // 43 — Organismes sociaux = créditeur (dettes sociales)
-  if (c2 === '43') return 'crediteur';
-
-  // 44 — État et collectivités publiques
-  // 441 (État, impôt sur les bénéfices) = créditeur (dette fiscale)
-  // 442 (État, autres impôts et taxes) = créditeur (dette fiscale)
-  // 443 (État, TVA facturée/collectée) = créditeur (TVA à reverser)
-  // 4441 (État, TVA due) = créditeur (dette TVA envers l'État)
-  // 4449 (État, crédit de TVA à reporter) = débiteur (créance sur l'État)
-  // 445 (État, TVA récupérable) = débiteur (créance TVA)
-  // 446 (État, autres taxes sur le CA) = créditeur
-  // 447 (État, impôts retenus à la source) = créditeur (dette)
-  // 449 (État, créances et dettes diverses) = variable
-  if (c3 === '441' || c3 === '442' || c3 === '443' || c3 === '446' || c3 === '447') return 'crediteur';
-  if (c.substring(0, 4) === '4441') return 'crediteur';
-  if (c.substring(0, 4) === '4449') return 'debiteur';
-  if (c3 === '444') return 'les_deux';
-  if (c3 === '445') return 'debiteur';
-  if (c2 === '44') return 'les_deux';
-
-  // 45 — Organismes internationaux / Associés = variable
-  if (c2 === '45') return 'les_deux';
-
-  // 46 — Débiteurs et créditeurs divers = variable
-  if (c2 === '46') return 'les_deux';
-
-  // 47 — Comptes transitoires ou d'attente = variable
-  if (c2 === '47') return 'les_deux';
-
-  // 48 — Créances et dettes HAO = variable
-  if (c2 === '48') return 'les_deux';
-
-  // 49 — Dépréciations et risques provisionnés (Tiers) = créditeur
-  if (c2 === '49') return 'crediteur';
-
-  if (c.startsWith('4')) return 'les_deux';
-
-  // ==================== CLASSE 5 — TRESORERIE ====================
-  // Normalement débiteur (actif disponible)
-  // 50 (Titres de placement) = débiteur
-  // 51 (Valeurs à encaisser) = débiteur
-  // 52 (Banques) = débiteur (avoir en banque)
-  // 53 (Établissements financiers) = débiteur
-  // 54 (Instruments de trésorerie) = les deux
-  // 56 (Banques, crédits de trésorerie / découvert) = créditeur
-  // 57 (Caisse) = débiteur
-  // 58 (Régies d'avances et accréditifs) = débiteur
-  // 59 (Dépréciations et risques provisionnés) = créditeur
-  if (c2 === '56') return 'crediteur';
-  if (c2 === '59') return 'crediteur';
-  if (c2 === '54') return 'les_deux';
-  if (c.startsWith('5')) return 'debiteur';
-
-  // ==================== CLASSE 6 — CHARGES ====================
-  // Normalement débiteur (consommations).
-  // Exceptions :
-  // - 603 : Variations des stocks de biens achetés (peut être D ou C)
-  // - Sous-comptes de RRR obtenus (contre-parties créditrices) :
-  //   - 6X9 : 609, 619, 629, 639, 649, 659 (générique par nature de charge)
-  //   - 6XX9 : 6019, 6029, 6039, 6049, 6059, 6089 (RRR par sous-type)
-  //   Pattern SYSCOHADA : la position 3 ou 4 a '9' = contre-partie
-  if (c3 === '603') return 'les_deux';
-  if (c.startsWith('6')) {
-    const hasRRRObtenuMarker = (c.length >= 3 && c.charAt(2) === '9')
-                            || (c.length >= 4 && c.charAt(3) === '9');
-    if (hasRRRObtenuMarker) return 'crediteur';
-    return 'debiteur';
+// Solde normal attendu par compte — resolu depuis le plan comptable officiel.
+// On cherche le plus long prefixe du numero de compte qui existe dans le
+// plan. Si aucun prefixe ne matche, on retourne 'les_deux' (ne flaggera rien)
+// pour eviter les faux positifs sur des comptes analytiques non standards.
+export function getSoldeAttendu(numero: string, plan?: PlanComptableSensMap): SoldeAttendu {
+  if (!plan || plan.size === 0) return 'les_deux';
+  const c = (numero || '').replace(/\s/g, '');
+  if (!c) return 'les_deux';
+  // Plus long prefixe match : on part du numero complet et on tronque
+  // progressivement jusqu'a trouver un match (ou jusqu'a 1 caractere).
+  for (let len = c.length; len >= 1; len--) {
+    const sens = plan.get(c.substring(0, len));
+    if (sens !== undefined) return sens;
   }
-
-  // ==================== CLASSE 7 — PRODUITS ====================
-  // Normalement créditeur (ressources).
-  // Exceptions :
-  // - 73 : Variations des stocks de biens produits (peut être D ou C)
-  // - Sous-comptes de RRR accordés (contre-parties débitrices) :
-  //   - 7X9 : 709, 719, 729, 739, 749, 759 (générique par nature de produit)
-  //   - 7XX9 : 7019, 7029, 7049 (RRR accordés par l'entreprise)
-  if (c2 === '73') return 'les_deux';
-  if (c.startsWith('7')) {
-    const hasRRRAccordeMarker = (c.length >= 3 && c.charAt(2) === '9')
-                             || (c.length >= 4 && c.charAt(3) === '9');
-    if (hasRRRAccordeMarker) return 'debiteur';
-    return 'crediteur';
-  }
-
-  // ==================== CLASSE 8 — HAO + IMPOTS ====================
-  // Charges HAO = débiteur : 81, 83, 85, 87, 89
-  // Produits HAO = créditeur : 82, 84, 86, 88
-  if (c2 === '81' || c2 === '83' || c2 === '85' || c2 === '87' || c2 === '89') return 'debiteur';
-  if (c2 === '82' || c2 === '84' || c2 === '86' || c2 === '88') return 'crediteur';
-  if (c.startsWith('8')) return 'les_deux';
-
-  // ==================== CLASSE 9 — ENGAGEMENTS HORS BILAN ====================
-  if (c.startsWith('9')) return 'les_deux';
-
   return 'les_deux';
 }
 
@@ -198,11 +98,11 @@ export function getLibelleSoldeAttendu(sa: SoldeAttendu): string {
   return 'Solde variable';
 }
 
-export function detectAnomalies(ligne: BalanceLigne): AnomalieCompte[] {
+export function detectAnomalies(ligne: BalanceLigne, plan?: PlanComptableSensMap): AnomalieCompte[] {
   const anomalies: AnomalieCompte[] = [];
   const sd = parseFloat(String(ligne.solde_debiteur)) || 0;
   const sc = parseFloat(String(ligne.solde_crediteur)) || 0;
-  const soldeAttendu = getSoldeAttendu(ligne.numero_compte);
+  const soldeAttendu = getSoldeAttendu(ligne.numero_compte, plan);
 
   // Solde inversé
   if (soldeAttendu === 'debiteur' && sc > 0.5 && sd < 0.5) {

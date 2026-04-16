@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { BalanceLigne } from '../types';
 import { formatMontant } from './ImportBalance.parsers';
-import { detectAnomalies } from './anomaliesComptes';
-import type { AnomalieCompte } from './anomaliesComptes';
+import { detectAnomalies, buildPlanComptableSensMap } from './anomaliesComptes';
+import type { AnomalieCompte, PlanCompteEntry, PlanComptableSensMap } from './anomaliesComptes';
 
 interface BalanceLigneWithMeta extends BalanceLigne {
   id: number;
@@ -14,6 +14,8 @@ interface ImportBalanceTableProps {
   editingBalance: boolean;
   getEditedValue: (ligne: BalanceLigneWithMeta, field: keyof BalanceLigneWithMeta) => string;
   updateEditedLigne: (ligneId: number, field: keyof BalanceLigneWithMeta, value: string) => void;
+  /** Map sens attendu depuis le plan comptable. Si omis, charge le plan SYSCOHADA via l'API. */
+  planSensMap?: PlanComptableSensMap;
 }
 
 function ImportBalanceTable({
@@ -21,7 +23,22 @@ function ImportBalanceTable({
   editingBalance,
   getEditedValue,
   updateEditedLigne,
+  planSensMap: planSensMapProp,
 }: ImportBalanceTableProps): React.JSX.Element {
+  // Fallback : si le parent ne passe pas la map, charger le plan SYSCOHADA
+  // nous-memes pour que l'affichage des anomalies reste fonctionnel.
+  const [planComptable, setPlanComptable] = useState<PlanCompteEntry[]>([]);
+  useEffect(() => {
+    if (planSensMapProp) return;
+    fetch('/api/plan-comptable?referentiel=syscohada')
+      .then(r => r.json())
+      .then((data: PlanCompteEntry[]) => setPlanComptable(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, [planSensMapProp]);
+  const planSensMap = useMemo(
+    () => planSensMapProp || buildPlanComptableSensMap(planComptable),
+    [planSensMapProp, planComptable]
+  );
   const totalSID = lignes.reduce((s, l) => s + (parseFloat(String(l.si_debit)) || 0), 0);
   const totalSIC = lignes.reduce((s, l) => s + (parseFloat(String(l.si_credit)) || 0), 0);
   const totalDebit = lignes.reduce((s, l) => s + (parseFloat(String(l.debit)) || 0), 0);
@@ -49,7 +66,7 @@ function ImportBalanceTable({
         </thead>
         <tbody>
           {lignes.map((l: BalanceLigneWithMeta) => {
-            const compteAnomalies: AnomalieCompte[] = (l.numero_compte || '').length > 2 ? detectAnomalies(l) : [];
+            const compteAnomalies: AnomalieCompte[] = (l.numero_compte || '').length > 2 ? detectAnomalies(l, planSensMap) : [];
             const hasError = compteAnomalies.some(a => a.severity === 'error');
             const hasWarning = compteAnomalies.some(a => a.severity === 'warning');
             const tooltipText = compteAnomalies.map(a => a.message).join('\n');

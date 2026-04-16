@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { LuChevronLeft, LuDownload, LuX } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
 import type { BalanceLigne } from '../types';
-import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from '../etats/anomaliesComptes';
-import type { AnomalieCompte } from '../etats/anomaliesComptes';
+import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu, buildPlanComptableSensMap } from '../etats/anomaliesComptes';
+import type { AnomalieCompte, PlanCompteEntry } from '../etats/anomaliesComptes';
 import { fmt, MOIS } from '../utils/formatters';
 
 /* -- Shared inline components -- */
@@ -93,6 +93,17 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
   const [comparerCumul, setComparerCumul] = useState<boolean>(false);
   const [exclureSoldeNul, setExclureSoldeNul] = useState<boolean>(false);
   const [inclureReport, setInclureReport] = useState<boolean>(false);
+
+  // Plan comptable OHADA : source de verite pour le sens attendu
+  // (debiteur/crediteur/mixte) de chaque compte. Charge une fois au montage.
+  const [planComptable, setPlanComptable] = useState<PlanCompteEntry[]>([]);
+  useEffect(() => {
+    fetch('/api/plan-comptable?referentiel=syscohada')
+      .then(r => r.json())
+      .then((data: PlanCompteEntry[]) => setPlanComptable(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
+  const planSensMap = useMemo(() => buildPlanComptableSensMap(planComptable), [planComptable]);
 
   const loadBalance = useCallback(async (): Promise<void> => {
     if (!entiteId || !exerciceId) return;
@@ -342,11 +353,11 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
               <tbody>
                 {balance.map(l => {
                   const solde = computeSolde(l);
-                  const anomalies: AnomalieCompte[] = detectAnomalies(l);
+                  const anomalies: AnomalieCompte[] = detectAnomalies(l, planSensMap);
                   const hasError = anomalies.some(a => a.severity === 'error');
                   const hasWarning = anomalies.some(a => a.severity === 'warning');
                   const isOk = anomalies.length === 0;
-                  const soldeAttendu = getSoldeAttendu(l.numero_compte);
+                  const soldeAttendu = getSoldeAttendu(l.numero_compte, planSensMap);
                   const tooltipText = anomalies.map(a => a.message).join('\n');
                   const isClassRow = l.numero_compte.length <= 2;
 
@@ -386,7 +397,7 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
 
             {/* -- Résumé anomalies -- */}
             {(() => {
-              const allAnomalies = balance.filter(l => l.numero_compte.length > 2).map(l => ({ compte: l.numero_compte, libelle: l.libelle_compte, anomalies: detectAnomalies(l) })).filter(a => a.anomalies.length > 0);
+              const allAnomalies = balance.filter(l => l.numero_compte.length > 2).map(l => ({ compte: l.numero_compte, libelle: l.libelle_compte, anomalies: detectAnomalies(l, planSensMap) })).filter(a => a.anomalies.length > 0);
               const errors = allAnomalies.filter(a => a.anomalies.some(x => x.severity === 'error'));
               const warnings = allAnomalies.filter(a => a.anomalies.some(x => x.severity === 'warning') && !a.anomalies.some(x => x.severity === 'error'));
               if (allAnomalies.length === 0) return null;

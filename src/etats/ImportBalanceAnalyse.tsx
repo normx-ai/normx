@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import { LuTriangleAlert, LuChevronDown, LuChevronRight, LuCheck } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
 import { PlanCompte, CompteAnomalie, isCompteInEtats, findSuggestionByNumero, findSimilarByLibelle, formatMontant } from './ImportBalance.parsers';
-import { detectAnomalies, getSoldeAttendu } from './anomaliesComptes';
+import { detectAnomalies, getSoldeAttendu, buildPlanComptableSensMap } from './anomaliesComptes';
 import type { SoldeAttendu } from './anomaliesComptes';
 import BannerBalanceEquilibre, { useEquilibreEcarts } from './banners/BannerBalanceEquilibre';
 import BannerCompte13Art20, { useCompte13Anomaly } from './banners/BannerCompte13Art20';
@@ -100,15 +100,19 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
       .map(l => ({ ligneId: l.id, numero: (l.numero_compte || '').trim(), libelle: l.libelle_compte || '' }));
   }, [currentLignes]);
 
+  // Map numero -> sens construite depuis le plan comptable OHADA officiel.
+  // C'est la seule source de verite pour le sens attendu d'un compte.
+  const planSensMap = useMemo(() => buildPlanComptableSensMap(planComptable), [planComptable]);
+
   const sensAnomalies = useMemo(() => {
-    if (currentLignes.length === 0) return [];
+    if (currentLignes.length === 0 || planSensMap.size === 0) return [];
     return currentLignes.filter(l => (l.numero_compte || '').length > 2).map(l => {
-      const a = detectAnomalies(l); const sensErr = a.find(x => x.type === 'solde_inverse');
+      const a = detectAnomalies(l, planSensMap); const sensErr = a.find(x => x.type === 'solde_inverse');
       if (!sensErr) return null;
       return { id: l.id, numero: l.numero_compte, libelle: l.libelle_compte || '', message: sensErr.message,
-        sensAttendu: getSoldeAttendu(l.numero_compte), sd: parseFloat(String(l.solde_debiteur)) || 0, sc: parseFloat(String(l.solde_crediteur)) || 0 };
+        sensAttendu: getSoldeAttendu(l.numero_compte, planSensMap), sd: parseFloat(String(l.solde_debiteur)) || 0, sc: parseFloat(String(l.solde_crediteur)) || 0 };
     }).filter(Boolean) as { id: number; numero: string; libelle: string; message: string; sensAttendu: SoldeAttendu; sd: number; sc: number }[];
-  }, [currentLignes]);
+  }, [currentLignes, planSensMap]);
 
   // Hooks extraits : detection du residuel compte 13 (Art. 20 AUDCIF) et
   // desequilibre des colonnes SI / mouvements / solde.

@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { LuTriangleAlert, LuCircleCheck, LuCircleX, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu } from '../etats/anomaliesComptes';
-import type { AnomalieCompte } from '../etats/anomaliesComptes';
+import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu, buildPlanComptableSensMap } from '../etats/anomaliesComptes';
+import type { AnomalieCompte, PlanCompteEntry } from '../etats/anomaliesComptes';
 import { getSD, getSC } from './revisionTypes';
 
 interface AlertesCompteProps {
@@ -56,16 +56,27 @@ const EXCLUSION_RULES: ExclusionRule[] = [
 ];
 
 function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElement | null {
+  // Plan comptable OHADA : source du sens attendu de chaque compte.
+  const [planComptable, setPlanComptable] = useState<PlanCompteEntry[]>([]);
+  useEffect(() => {
+    fetch('/api/plan-comptable?referentiel=syscohada')
+      .then(r => r.json())
+      .then((data: PlanCompteEntry[]) => setPlanComptable(Array.isArray(data) ? data : []))
+      .catch(() => {});
+  }, []);
+  const planSensMap = useMemo(() => buildPlanComptableSensMap(planComptable), [planComptable]);
+
   const alertes = useMemo<CompteAlerte[]>(() => {
+    if (planSensMap.size === 0) return [];
     const result: CompteAlerte[] = [];
     for (const l of lignes) {
       const num = (l.numero_compte || '').trim();
       if (!num || num.length <= 2) continue;
-      const anomalies = detectAnomalies(l);
+      const anomalies = detectAnomalies(l, planSensMap);
       if (anomalies.length > 0) {
         const sd = getSD(l);
         const sc = getSC(l);
-        const sa = getSoldeAttendu(num);
+        const sa = getSoldeAttendu(num, planSensMap);
         result.push({
           numero: num,
           libelle: l.libelle_compte || '',
@@ -76,7 +87,7 @@ function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElemen
       }
     }
     return result;
-  }, [lignes]);
+  }, [lignes, planSensMap]);
 
   // Vérifier les règles d'exclusion
   const exclusions = useMemo(() => {
