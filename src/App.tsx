@@ -122,7 +122,17 @@ function AppContent(): React.JSX.Element {
   React.useEffect(() => {
     if (!isAuthenticated) {
       setTenantLoading(false);
+      // Retirer le flag pour que la landing accepte un retour sans auth
+      try { localStorage.removeItem('normx_auth'); } catch (_e) { /* ignore */ }
       return;
+    }
+    // Poser le flag pour que la landing puisse detecter une session existante
+    // et rediriger automatiquement vers /app lors d'un refresh sur /.
+    try { localStorage.setItem('normx_auth', '1'); } catch (_e) { /* ignore */ }
+    // Forcer l'URL a /app si on est sur la racine pour que F5 ne retombe
+    // pas sur la landing. /app est servie par la React app via nginx.
+    if (window.location.pathname === '/') {
+      window.history.replaceState({}, '', '/app' + window.location.search + window.location.hash);
     }
     loadTenantAndEntites();
   }, [isAuthenticated, loadTenantAndEntites]);
@@ -130,6 +140,7 @@ function AppContent(): React.JSX.Element {
   const handleLogout = (): void => {
     setEntites([]);
     setCurrentEntite(null);
+    try { localStorage.removeItem('normx_auth'); } catch (_e) { /* ignore */ }
     logout();
   };
 
