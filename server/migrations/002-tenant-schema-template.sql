@@ -349,3 +349,56 @@ CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_ecriture_compte ON "${schema_name
 CREATE INDEX IF NOT EXISTS idx_balance_lignes_balance_compte ON "${schema_name}".balance_lignes(balance_id, numero_compte);
 CREATE INDEX IF NOT EXISTS idx_bulletins_paie_periode ON "${schema_name}".bulletins_paie(mois, annee, salarie_id);
 CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_lettrage ON "${schema_name}".ecriture_lignes(tiers_id, lettrage_code);
+
+-- ========== PARAMETRAGE COMPTA (migration 008 intégrée au template) ==========
+
+CREATE TABLE IF NOT EXISTS "${schema_name}".journaux (
+  id SERIAL PRIMARY KEY,
+  code VARCHAR(10) NOT NULL UNIQUE,
+  libelle VARCHAR(100) NOT NULL,
+  type VARCHAR(20) NOT NULL DEFAULT 'od',
+  contrepartie_defaut VARCHAR(20),
+  actif BOOLEAN DEFAULT true,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  CONSTRAINT journaux_type_check CHECK (type IN ('achat','vente','tresorerie','od'))
+);
+CREATE INDEX IF NOT EXISTS idx_journaux_code ON "${schema_name}".journaux(code);
+CREATE INDEX IF NOT EXISTS idx_journaux_actif ON "${schema_name}".journaux(actif) WHERE actif = true;
+
+INSERT INTO "${schema_name}".journaux (code, libelle, type, contrepartie_defaut) VALUES
+  ('AC', 'Achats', 'achat', '401'),
+  ('VT', 'Ventes', 'vente', '411'),
+  ('CA', 'Caisse', 'tresorerie', '571'),
+  ('BQ', 'Banque', 'tresorerie', '521'),
+  ('OD', 'Opérations diverses', 'od', NULL)
+ON CONFLICT (code) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS "${schema_name}".tva_config (
+  id INTEGER PRIMARY KEY DEFAULT 1,
+  taux_normal NUMERIC(5,2) NOT NULL DEFAULT 18.00,
+  taux_reduit NUMERIC(5,2),
+  regime VARCHAR(20) NOT NULL DEFAULT 'normal',
+  numero_assujetti VARCHAR(50),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  CONSTRAINT tva_config_singleton CHECK (id = 1),
+  CONSTRAINT tva_config_regime_check CHECK (regime IN ('normal','simplifie','non_assujetti'))
+);
+INSERT INTO "${schema_name}".tva_config (id, taux_normal, taux_reduit, regime) VALUES
+  (1, 18.00, 5.00, 'normal')
+ON CONFLICT (id) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS "${schema_name}".comptes_custom (
+  id SERIAL PRIMARY KEY,
+  numero VARCHAR(20) NOT NULL UNIQUE,
+  libelle VARCHAR(200),
+  classe SMALLINT,
+  sens VARCHAR(20),
+  type VARCHAR(20) NOT NULL DEFAULT 'custom',
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  CONSTRAINT comptes_custom_type_check CHECK (type IN ('custom','disabled')),
+  CONSTRAINT comptes_custom_sens_check CHECK (sens IS NULL OR sens IN ('debiteur','crediteur','mixte'))
+);
+CREATE INDEX IF NOT EXISTS idx_comptes_custom_numero ON "${schema_name}".comptes_custom(numero);
+CREATE INDEX IF NOT EXISTS idx_comptes_custom_type ON "${schema_name}".comptes_custom(type);
