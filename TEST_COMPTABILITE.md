@@ -16,11 +16,14 @@ au 31/12/2025). Ne pas utiliser DAISY DEL (reste en mode Etats).
 ## 1. Création dossier et paramétrage
 
 ### 1.1 Création du dossier
-- ☐ Formulaire de création client expose bien le module « Comptabilité »
-- ☐ Création du tenant aboutit sans erreur côté frontend et backend
-- ☐ Le schéma Postgres `tenant_<slug>` est bien provisionné
-- ☐ Les tables compta (ecritures, journaux, plans_compte, etc.) existent
-- ☐ Le dossier apparaît dans la liste des clients du cabinet
+- ✅ Formulaire de création client expose bien le module « Comptabilité »
+- ✅ Création du tenant aboutit sans erreur côté frontend et backend
+- ✅ Le schéma Postgres `tenant_<slug>` est bien provisionné
+- ✅ Les tables compta (ecritures, journaux, plans_compte, etc.) existent
+- ✅ Le dossier apparaît dans la liste des clients du cabinet
+- ✅ Formulaire : un seul module coché par défaut (compta) pour respecter
+      l'exclusion mutuelle compta/etats. Corrigé dans `GestionClients.tsx`
+      avec une fonction `defaultModule()` qui priorise compta si activé.
 
 ### 1.2 Paramétrage initial
 - ☐ Le plan comptable SYSCOHADA est chargé par défaut (1409 comptes)

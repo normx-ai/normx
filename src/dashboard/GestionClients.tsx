@@ -19,12 +19,21 @@ interface GestionClientsProps {
   onOpenModule: (entite: Entite, mod: NormxModule) => void;
 }
 
+// Module par defaut : compta si disponible, sinon etats, sinon le 1er
+// module active de la liste ENABLED_MODULES. Une seule case cochee a
+// l'ouverture du modal puisque compta et etats sont mutuellement exclusifs
+// (la compta genere nativement ses etats, cocher les deux na pas de sens).
+function defaultModule(): Set<string> {
+  if (ENABLED_MODULES.includes('compta')) return new Set(['compta']);
+  if (ENABLED_MODULES.includes('etats')) return new Set(['etats']);
+  return new Set(ENABLED_MODULES.slice(0, 1));
+}
+
 const EMPTY_FORM: NewClientForm = {
   nom: '',
   type_activite: 'entreprise',
-  offre: 'etats',
-  // Par defaut on coche le premier module active (Etats pour l'instant)
-  modules: new Set(ENABLED_MODULES),
+  offre: 'comptabilite',
+  modules: defaultModule(),
   sigle: '',
   adresse: '',
   nif: '',
@@ -61,7 +70,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
 
   const openNewForm = (): void => {
     setEditingId(null);
-    setFormData({ ...EMPTY_FORM, modules: new Set(ENABLED_MODULES) });
+    setFormData({ ...EMPTY_FORM, modules: defaultModule() });
     setShowForm(true);
     setError('');
   };
