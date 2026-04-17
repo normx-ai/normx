@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -23,7 +25,7 @@ const emptyLigne = (): LigneJT => ({
 const MOIS = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
 function JournalTresorerieSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }: EtatBaseProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]); const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({}); const [editing, setEditing] = useState(false); const [saving, setSaving] = useState(false);
   const [selectedMois, setSelectedMois] = useState(new Date().getMonth());
@@ -35,21 +37,19 @@ function JournalTresorerieSMT({ entiteName, entiteNif = '', entiteId, offre, onB
   const dataKey = `smt_jt_${annee}_${selectedMois}`;
   const reportKey = `smt_jt_report_${annee}_${selectedMois}`;
 
-  useEffect(() => { if (!entiteId) return; fetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d[dataKey]) { try { const p = JSON.parse(d[dataKey]); if (Array.isArray(p) && p.length > 0) setLignes(p); else setLignes(Array.from({ length: 15 }, emptyLigne)); } catch { setLignes(Array.from({ length: 15 }, emptyLigne)); } } else { setLignes(Array.from({ length: 15 }, emptyLigne)); } setReportNouveau(d[reportKey] || ''); }).catch(() => {}); }, [entiteId, dataKey, reportKey]);
-
-  useEffect(() => { if (!entiteId) return; fetch('/api/balance/exercices/' + entiteId).then(r => r.json()).then((d: Exercice[]) => { setExercices(d); if (d.length > 0) { const now = new Date(); const y = now.getFullYear(); const m = now.getMonth(); const py = m <= 2 ? y - 1 : y; setSelectedExercice(d.find(e => e.annee === py) || d.find(e => e.annee === y) || d.find(e => e.annee === y - 1) || d[0]); } }).catch(() => {}); }, [entiteId]);
+  useEffect(() => { if (!entiteId) return; clientFetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d[dataKey]) { try { const p = JSON.parse(d[dataKey]); if (Array.isArray(p) && p.length > 0) setLignes(p); else setLignes(Array.from({ length: 15 }, emptyLigne)); } catch { setLignes(Array.from({ length: 15 }, emptyLigne)); } } else { setLignes(Array.from({ length: 15 }, emptyLigne)); } setReportNouveau(d[reportKey] || ''); }).catch(() => {}); }, [entiteId, dataKey, reportKey]);
 
   // Reload data when month/year changes
   useEffect(() => {
     if (!entiteId) return;
-    fetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => {
+    clientFetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => {
       const d = ent.data || {}; setParams(d);
       if (d[dataKey]) { try { const p = JSON.parse(d[dataKey]); if (Array.isArray(p) && p.length > 0) setLignes(p); else setLignes(Array.from({ length: 15 }, emptyLigne)); } catch { setLignes(Array.from({ length: 15 }, emptyLigne)); } } else { setLignes(Array.from({ length: 15 }, emptyLigne)); }
       setReportNouveau(d[reportKey] || '');
     }).catch(() => {});
   }, [selectedMois, annee, entiteId, dataKey, reportKey]);
 
-  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, [dataKey]: JSON.stringify(lignes), [reportKey]: reportNouveau }; const r = await fetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
+  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, [dataKey]: JSON.stringify(lignes), [reportKey]: reportNouveau }; const r = await clientFetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
 
   const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
   const fmtM = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');

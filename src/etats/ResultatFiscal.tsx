@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -112,8 +114,7 @@ const DEDUCTIONS_TYPES: { libelle: string; article: string }[] = [
 let nextId = 1;
 
 function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [balanceFound, setBalanceFound] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -134,26 +135,8 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
 
   const pageRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear) || data.find(e => e.annee === year) || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await fetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
     if (!res.ok) return [];
     const data: BalanceApiRow[] = await res.json();
     return data.map((row: BalanceApiRow): BalanceLigne => ({
@@ -178,7 +161,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
         result = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
         source = 'Ecritures comptables';
       } else {
-        const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+        const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
         const data = await res.json();
         result = data.lignes || [];
         source = 'Import balance';

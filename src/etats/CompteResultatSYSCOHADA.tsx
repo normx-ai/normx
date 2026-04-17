@@ -1,9 +1,12 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { clientFetch } from '../lib/api';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import type { BalanceLigne, Exercice, EtatBaseProps, CRMapping, Offre } from '../types';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 
 // ===================== TABLEAU DE CORRESPONDANCE — COMPTE DE RESULTAT SYSCOHADA =====================
 
@@ -178,105 +181,47 @@ interface CompteResultatSYSCOHADAProps extends EtatBaseProps {
 }
 
 function CompteResultatSYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: CompteResultatSYSCOHADAProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
-  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
-  const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
-  const [balanceFound, setBalanceFound] = useState<boolean>(false);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const balanceSource: string = offre === 'comptabilite' ? 'ecritures' : 'import';
-  const [sourceUsed, setSourceUsed] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
 
   const pageRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await fetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
     if (!res.ok) return [];
     const data: BalanceLigne[] = await res.json();
     return data.map(row => ({
-      numero_compte: row.numero_compte,
-      libelle_compte: row.libelle_compte,
-      debit: parseFloat(String(row.debit)) || 0,
-      credit: parseFloat(String(row.credit)) || 0,
-      solde_debiteur: parseFloat(String(row.solde_debiteur)) || 0,
-      solde_crediteur: parseFloat(String(row.solde_crediteur)) || 0,
+      numero_compte: row.numero_compte, libelle_compte: row.libelle_compte,
+      debit: parseFloat(String(row.debit)) || 0, credit: parseFloat(String(row.credit)) || 0,
+      solde_debiteur: parseFloat(String(row.solde_debiteur)) || 0, solde_crediteur: parseFloat(String(row.solde_crediteur)) || 0,
       solde_debiteur_revise: row.solde_debiteur_revise != null ? parseFloat(String(row.solde_debiteur_revise)) : undefined,
       solde_crediteur_revise: row.solde_crediteur_revise != null ? parseFloat(String(row.solde_crediteur_revise)) : undefined,
     }));
   };
 
-  const loadBalance = useCallback(async (): Promise<void> => {
-    if (!entiteId || !selectedExercice) return;
-    setLoading(true);
-
-    try {
-      let lignesNResult: BalanceLigne[] = [];
-      let lignesN1Result: BalanceLigne[] = [];
-      let source = '';
-
-      if (balanceSource === 'ecritures') {
-        lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
-        source = 'Ecritures comptables';
-      } else {
-        const resN = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
-        const dataN = await resN.json();
-        lignesNResult = dataN.lignes || [];
-        source = 'Import balance';
-      }
-
-      setLignesN(lignesNResult);
-      setBalanceFound(lignesNResult.length > 0);
-      setSourceUsed(source);
-
-      const prevExercice = exercices.find(e => e.annee === selectedExercice.annee - 1);
-      if (prevExercice) {
-        if (balanceSource === 'ecritures') {
-          lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
-        } else {
-          const resN1 = await fetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
-          const dataN1 = await resN1.json();
-          lignesN1Result = dataN1.lignes || [];
-        }
-      } else if (balanceSource === 'import') {
-        const resN1 = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
-        const dataN1 = await resN1.json();
-        lignesN1Result = dataN1.lignes || [];
-      }
-
-      setLignesN1(lignesN1Result);
-    } catch (_err) {
-      // Erreur chargement balance silencieuse
-    } finally {
-      setLoading(false);
-    }
+  const loadBalanceFn = useCallback(async () => {
+    if (!entiteId || !selectedExercice) return { lignesN: [] as BalanceLigne[], lignesN1: [] as BalanceLigne[], source: '' };
+    let lignesNResult: BalanceLigne[] = [], lignesN1Result: BalanceLigne[] = [], source = '';
+    if (balanceSource === 'ecritures') { lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id); source = 'Ecritures comptables'; }
+    else { const resN = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N'); const dataN = await resN.json(); lignesNResult = dataN.lignes || []; source = 'Import balance'; }
+    const prevExercice = exercices.find(e => e.annee === selectedExercice.annee - 1);
+    if (prevExercice) {
+      if (balanceSource === 'ecritures') lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
+      else { const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N'); const dataN1 = await resN1.json(); lignesN1Result = dataN1.lignes || []; }
+    } else if (balanceSource === 'import') { const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1'); const dataN1 = await resN1.json(); lignesN1Result = dataN1.lignes || []; }
+    return { lignesN: lignesNResult, lignesN1: lignesN1Result, source };
   }, [entiteId, selectedExercice, exercices, balanceSource]);
 
-  useEffect(() => {
-    loadBalance();
-  }, [loadBalance]);
+  const { data: balanceData, isLoading: loading } = useQuery({
+    queryKey: ['balance', entiteId, selectedExercice?.id, balanceSource],
+    queryFn: loadBalanceFn, staleTime: 2 * 60 * 1000, enabled: !!entiteId && !!selectedExercice,
+  });
+  const lignesN = balanceData?.lignesN ?? [];
+  const lignesN1 = balanceData?.lignesN1 ?? [];
+  const balanceFound = lignesN.length > 0;
+  const sourceUsed = balanceData?.source ?? '';
 
   // Compute all values for N and N-1
   const computeAll = (lignes: BalanceLigne[]): Record<string, CRBalanceResult> => {

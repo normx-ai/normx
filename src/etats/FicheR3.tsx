@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -11,8 +13,7 @@ interface FicheR3Props extends EtatBaseProps {
 }
 
 function FicheR3({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', entiteId, onBack, onGoToParametres }: FicheR3Props): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({});
@@ -21,7 +22,7 @@ function FicheR3({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif =
 
   useEffect(() => {
     if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
+    clientFetch('/api/entites/' + entiteId)
       .then(r => r.json())
       .then(ent => {
         setParams({
@@ -31,27 +32,6 @@ function FicheR3({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif =
           nif: ent.nif || '',
           ...(ent.data || {}),
         });
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
       })
       .catch(() => {});
   }, [entiteId]);

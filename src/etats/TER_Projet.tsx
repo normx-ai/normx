@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -188,8 +190,7 @@ function formatMontant(val: number): string {
 // ===================== COMPOSANT PRINCIPAL =====================
 
 function TER_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.ReactElement {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
   const balanceSource: string = offre === 'comptabilite' ? 'ecritures' : 'import';
@@ -200,30 +201,8 @@ function TER_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNi
 
   const tableRef = useRef<HTMLDivElement>(null);
 
-  // Load exercices
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then((r: Response) => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await fetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
     if (!res.ok) return [];
     const data: BalanceLigne[] = await res.json();
     return data.map((row: BalanceLigne) => ({
@@ -250,7 +229,7 @@ function TER_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNi
         lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
         source = 'Écritures comptables';
       } else {
-        const resN = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+        const resN = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
         const dataN: { lignes?: BalanceLigne[] } = await resN.json();
         lignesNResult = dataN.lignes || [];
         source = 'Import balance';
@@ -264,7 +243,7 @@ function TER_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNi
         if (balanceSource === 'ecritures') {
           lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
         } else {
-          const resN1 = await fetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
+          const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
           const dataN1: { lignes?: BalanceLigne[] } = await resN1.json();
           lignesN1Result = dataN1.lignes || [];
         }

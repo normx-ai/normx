@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -32,8 +34,7 @@ function computeCAHT(lignes: BalanceLigne[]): number {
 }
 
 function FicheIdentification({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', entiteId, offre, onBack, onGoToParametres, page = 'R1' }: FicheIdentificationProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({});
@@ -44,7 +45,7 @@ function FicheIdentification({ entiteName, entiteSigle = '', entiteAdresse = '',
   // Charger entité complète (paramètres depuis data jsonb)
   useEffect(() => {
     if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
+    clientFetch('/api/entites/' + entiteId)
       .then(r => r.json())
       .then(ent => {
         setParams({
@@ -60,27 +61,6 @@ function FicheIdentification({ entiteName, entiteSigle = '', entiteAdresse = '',
       .catch(() => {});
   }, [entiteId]);
 
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
   // Charger la balance pour calculer le CA HT
   const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
   useEffect(() => {
@@ -89,11 +69,11 @@ function FicheIdentification({ entiteName, entiteSigle = '', entiteAdresse = '',
       try {
         let lignes: BalanceLigne[] = [];
         if (balanceSource === 'ecritures') {
-          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
           const data = await res.json();
           lignes = data.lignes || [];
         } else {
-          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
           const data = await res.json();
           lignes = data.lignes || [];
         }

@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -74,8 +76,7 @@ const NOTE_LABELS: Record<string, string> = {
 };
 
 function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToParametres }: FicheR4Props): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({});
@@ -151,7 +152,7 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToPa
   // Load saved states from entité params
   useEffect(() => {
     if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
+    clientFetch('/api/entites/' + entiteId)
       .then(r => r.json())
       .then(ent => {
         const data = ent.data || {};
@@ -168,27 +169,6 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToPa
       .catch(() => {});
   }, [entiteId]);
 
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
   // Charger la balance pour détection auto A/NA
   const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
   useEffect(() => {
@@ -196,10 +176,10 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToPa
     const load = async () => {
       try {
         if (balanceSource === 'ecritures') {
-          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
           setLignesN((await res.json()).lignes || []);
         } else {
-          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
           setLignesN((await res.json()).lignes || []);
         }
       } catch { setLignesN([]); }
@@ -237,7 +217,7 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToPa
       data['r4_' + n.id] = noteStates[n.id] || 'A';
     });
     try {
-      const res = await fetch(`/api/entites/${entiteId}`, {
+      const res = await clientFetch(`/api/entites/${entiteId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data }),

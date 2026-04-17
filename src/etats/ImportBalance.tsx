@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { clientFetch } from '../lib/api';
 import { LuFileSpreadsheet } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
 import ConfirmModal from '../components/ConfirmModal';
@@ -54,14 +56,14 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
   useEffect(() => {
     if (!entiteId) return;
     if (parentExerciceId) {
-      fetch('/api/balance/exercices/' + entiteId).then(r => r.json())
+      clientFetch('/api/balance/exercices/' + entiteId).then(r => r.json())
         .then((data: ExerciceRecord[]) => {
           const match = data.find((e: ExerciceRecord) => e.id === parentExerciceId);
           if (match) { setExercice(match); setAnnee(match.annee); loadBalances(match.id); }
         }).catch(() => {});
       return;
     }
-    fetch('/api/balance/exercices/' + entiteId).then(r => r.json())
+    clientFetch('/api/balance/exercices/' + entiteId).then(r => r.json())
       .then((data: ExerciceRecord[]) => {
         const match = data.find((e: ExerciceRecord) => e.annee === annee) || data[0];
         if (match) { setExercice(match); setAnnee(match.annee); loadBalances(match.id); }
@@ -69,8 +71,8 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
   }, [entiteId, annee, parentExerciceId]);
 
   const loadBalances = (exId: number): void => {
-    fetch(`/api/balance/${entiteId}/${exId}/N`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => { setBalanceN(d.balance); setLignesN(d.lignes); });
-    fetch(`/api/balance/${entiteId}/${exId}/N-1`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => { setBalanceN1(d.balance); setLignesN1(d.lignes); });
+    clientFetch(`/api/balance/${entiteId}/${exId}/N`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => { setBalanceN(d.balance); setLignesN(d.lignes); });
+    clientFetch(`/api/balance/${entiteId}/${exId}/N-1`).then(r => r.json()).then((d: { balance: BalanceRecord | null; lignes: BalanceLigneWithMeta[] }) => { setBalanceN1(d.balance); setLignesN1(d.lignes); });
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, typeBalance: 'N' | 'N-1'): void => {
@@ -83,7 +85,7 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
       try {
         const lignes = isExcel ? parseExcel(evt.target?.result as ArrayBuffer) : parseCSV(evt.target?.result as string);
         if (lignes.length === 0) { setError('Aucune ligne valide trouvee dans le fichier.'); setLoading(false); return; }
-        const res = await fetch('/api/balance/import', {
+        const res = await clientFetch('/api/balance/import', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ entite_id: entiteId, exercice_id: exercice!.id, type_balance: typeBalance, nom_fichier: file.name, lignes }),
         });
@@ -99,7 +101,7 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
 
   const handleDeleteBalance = async (balanceId: number): Promise<void> => {
     try {
-      const res = await fetch(`/api/balance/${balanceId}`, { method: 'DELETE' });
+      const res = await clientFetch(`/api/balance/${balanceId}`, { method: 'DELETE' });
       if (res.ok) { setMessage('Balance supprimée.'); loadBalances(exercice!.id); }
       else setError('Erreur lors de la suppression.');
     } catch { setError('Erreur lors de la suppression.'); }
@@ -123,7 +125,7 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
     try {
       const entries = Object.entries(editedLignes);
       for (const [ligneId, fields] of entries) {
-        await fetch(`/api/balance/ligne/${ligneId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fields) });
+        await clientFetch(`/api/balance/ligne/${ligneId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(fields) });
       }
       if (exercice) loadBalances(exercice.id);
       setEditedLignes({}); setEditingBalance(false);

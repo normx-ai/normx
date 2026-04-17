@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -17,7 +19,7 @@ const emptyStock = (): LigneStock => ({ reference: '', designation: '', quantite
 const emptyCD = (): LigneCreanceDette => ({ date: '', nom: '', montant_fin: '', montant_debut: '', variation: '' });
 
 function NotesAnnexesSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }: NotesAnnexesSMTProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]); const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({}); const [editing, setEditing] = useState(false); const [saving, setSaving] = useState(false);
 
@@ -32,10 +34,8 @@ function NotesAnnexesSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }
   const page2Ref = useRef<HTMLDivElement>(null);
   const page3Ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { if (!entiteId) return; fetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d['smt_materiel']) { try { const p = JSON.parse(d['smt_materiel']); if (Array.isArray(p) && p.length > 0) setMateriel(p); } catch { /* */ } } if (d['smt_stocks']) { try { const p = JSON.parse(d['smt_stocks']); if (Array.isArray(p) && p.length > 0) setStocks(p); } catch { /* */ } } if (d['smt_stock_final']) setStockFinal(d['smt_stock_final']); if (d['smt_stock_initial']) setStockInitial(d['smt_stock_initial']); if (d['smt_creances']) { try { const p = JSON.parse(d['smt_creances']); if (Array.isArray(p) && p.length > 0) setCreances(p); } catch { /* */ } } if (d['smt_dettes']) { try { const p = JSON.parse(d['smt_dettes']); if (Array.isArray(p) && p.length > 0) setDettes(p); } catch { /* */ } } }).catch(() => {}); }, [entiteId]);
-  useEffect(() => { if (!entiteId) return; fetch('/api/balance/exercices/' + entiteId).then(r => r.json()).then((d: Exercice[]) => { setExercices(d); if (d.length > 0) { const now = new Date(); const y = now.getFullYear(); const m = now.getMonth(); const py = m <= 2 ? y - 1 : y; setSelectedExercice(d.find(e => e.annee === py) || d.find(e => e.annee === y) || d.find(e => e.annee === y - 1) || d[0]); } }).catch(() => {}); }, [entiteId]);
-
-  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, smt_materiel: JSON.stringify(materiel), smt_stocks: JSON.stringify(stocks), smt_stock_final: stockFinal, smt_stock_initial: stockInitial, smt_creances: JSON.stringify(creances), smt_dettes: JSON.stringify(dettes) }; const r = await fetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
+  useEffect(() => { if (!entiteId) return; clientFetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d['smt_materiel']) { try { const p = JSON.parse(d['smt_materiel']); if (Array.isArray(p) && p.length > 0) setMateriel(p); } catch { /* */ } } if (d['smt_stocks']) { try { const p = JSON.parse(d['smt_stocks']); if (Array.isArray(p) && p.length > 0) setStocks(p); } catch { /* */ } } if (d['smt_stock_final']) setStockFinal(d['smt_stock_final']); if (d['smt_stock_initial']) setStockInitial(d['smt_stock_initial']); if (d['smt_creances']) { try { const p = JSON.parse(d['smt_creances']); if (Array.isArray(p) && p.length > 0) setCreances(p); } catch { /* */ } } if (d['smt_dettes']) { try { const p = JSON.parse(d['smt_dettes']); if (Array.isArray(p) && p.length > 0) setDettes(p); } catch { /* */ } } }).catch(() => {}); }, [entiteId]);
+  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, smt_materiel: JSON.stringify(materiel), smt_stocks: JSON.stringify(stocks), smt_stock_final: stockFinal, smt_stock_initial: stockInitial, smt_creances: JSON.stringify(creances), smt_dettes: JSON.stringify(dettes) }; const r = await clientFetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
 
   const duree = selectedExercice?.duree_mois || 12;
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;

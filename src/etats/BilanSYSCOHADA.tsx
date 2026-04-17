@@ -1,9 +1,12 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { clientFetch } from '../lib/api';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import type { BalanceLigne, Exercice, EtatBaseProps, Offre, BilanMode } from '../types';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import {
   ACTIF_MAPPING,
   PASSIF_MAPPING,
@@ -27,16 +30,10 @@ interface BilanSYSCOHADAProps extends EtatBaseProps {
 }
 
 function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: BilanSYSCOHADAProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
-  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
-  const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
-  const [balanceFound, setBalanceFound] = useState<boolean>(false);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   // Source automatique selon l'offre
   const balanceSource: string = offre === 'comptabilite' ? 'ecritures' : 'import';
-  const [sourceUsed, setSourceUsed] = useState<string>(''); // info affichee
   const [_notes] = useState<Record<string, string>>({});
-  const [loading, setLoading] = useState<boolean>(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [showN1Detail, setShowN1Detail] = useState<boolean>(false);
@@ -45,31 +42,9 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
   const pageActifRef = useRef<HTMLDivElement>(null);
   const pagePassifRef = useRef<HTMLDivElement>(null);
 
-  // Load exercices
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
-
   // Charger balance depuis les ecritures et convertir au format balance_lignes
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await fetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
     if (!res.ok) return [];
     const data: BalanceLigne[] = await res.json();
     // Convertir au meme format que balance_lignes
@@ -85,58 +60,55 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
     }));
   };
 
-  // Load balance when exercice changes
-  const loadBalance = useCallback(async (): Promise<void> => {
-    if (!entiteId || !selectedExercice) return;
-    setLoading(true);
+  // Load balance — fetches N and N-1
+  const loadBalanceFn = useCallback(async (): Promise<{ lignesN: BalanceLigne[]; lignesN1: BalanceLigne[]; source: string }> => {
+    if (!entiteId || !selectedExercice) return { lignesN: [], lignesN1: [], source: '' };
 
-    try {
-      let lignesNResult: BalanceLigne[] = [];
-      let lignesN1Result: BalanceLigne[] = [];
-      let source = '';
+    let lignesNResult: BalanceLigne[] = [];
+    let lignesN1Result: BalanceLigne[] = [];
+    let source = '';
 
-      // --- Balance N ---
+    // --- Balance N ---
+    if (balanceSource === 'ecritures') {
+      lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
+      source = 'Ecritures comptables';
+    } else {
+      const resN = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+      const dataN = await resN.json();
+      lignesNResult = dataN.lignes || [];
+      source = 'Import balance';
+    }
+
+    // --- Balance N-1 ---
+    const prevExercice = exercices.find(e => e.annee === selectedExercice.annee - 1);
+    if (prevExercice) {
       if (balanceSource === 'ecritures') {
-        lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
-        source = 'Ecritures comptables';
+        lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
       } else {
-        const resN = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
-        const dataN = await resN.json();
-        lignesNResult = dataN.lignes || [];
-        source = 'Import balance';
-      }
-
-      setLignesN(lignesNResult);
-      setBalanceFound(lignesNResult.length > 0);
-      setSourceUsed(source);
-
-      // --- Balance N-1 ---
-      const prevExercice = exercices.find(e => e.annee === selectedExercice.annee - 1);
-      if (prevExercice) {
-        if (balanceSource === 'ecritures') {
-          lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
-        } else {
-          const resN1 = await fetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
-          const dataN1 = await resN1.json();
-          lignesN1Result = dataN1.lignes || [];
-        }
-      } else if (balanceSource === 'import') {
-        const resN1 = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
+        const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
         const dataN1 = await resN1.json();
         lignesN1Result = dataN1.lignes || [];
       }
-
-      setLignesN1(lignesN1Result);
-    } catch (_err) {
-      // Erreur chargement balance silencieuse
-    } finally {
-      setLoading(false);
+    } else if (balanceSource === 'import') {
+      const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
+      const dataN1 = await resN1.json();
+      lignesN1Result = dataN1.lignes || [];
     }
+
+    return { lignesN: lignesNResult, lignesN1: lignesN1Result, source };
   }, [entiteId, selectedExercice, exercices, balanceSource]);
 
-  useEffect(() => {
-    loadBalance();
-  }, [loadBalance]);
+  const { data: balanceData, isLoading: loading } = useQuery({
+    queryKey: ['balance', entiteId, selectedExercice?.id, balanceSource],
+    queryFn: loadBalanceFn,
+    staleTime: 2 * 60 * 1000,
+    enabled: !!entiteId && !!selectedExercice,
+  });
+
+  const lignesN = balanceData?.lignesN ?? [];
+  const lignesN1 = balanceData?.lignesN1 ?? [];
+  const balanceFound = lignesN.length > 0;
+  const sourceUsed = balanceData?.source ?? '';
 
   // Compute values
   const actifN = computeActifFromBalance(lignesN, ACTIF_MAPPING);

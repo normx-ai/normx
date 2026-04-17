@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
+import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -12,7 +14,7 @@ interface LigneJournal { date: string; num_facture: string; nom: string; montant
 const emptyLigne = (): LigneJournal => ({ date: '', num_facture: '', nom: '', montant: '', date_paiement: '' });
 
 function JournauxSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }: JournauxSMTProps): React.JSX.Element {
-  const [exercices, setExercices] = useState<Exercice[]>([]); const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({}); const [editing, setEditing] = useState(false); const [saving, setSaving] = useState(false);
 
@@ -22,10 +24,8 @@ function JournauxSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }: Jo
   const page1Ref = useRef<HTMLDivElement>(null);
   const page2Ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { if (!entiteId) return; fetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d['smt_creances_impayees']) { try { const p = JSON.parse(d['smt_creances_impayees']); if (Array.isArray(p) && p.length > 0) setCreancesImpayees(p); } catch { /* */ } } if (d['smt_dettes_a_payer']) { try { const p = JSON.parse(d['smt_dettes_a_payer']); if (Array.isArray(p) && p.length > 0) setDettesAPayer(p); } catch { /* */ } } }).catch(() => {}); }, [entiteId]);
-  useEffect(() => { if (!entiteId) return; fetch('/api/balance/exercices/' + entiteId).then(r => r.json()).then((d: Exercice[]) => { setExercices(d); if (d.length > 0) { const now = new Date(); const y = now.getFullYear(); const m = now.getMonth(); const py = m <= 2 ? y - 1 : y; setSelectedExercice(d.find(e => e.annee === py) || d.find(e => e.annee === y) || d.find(e => e.annee === y - 1) || d[0]); } }).catch(() => {}); }, [entiteId]);
-
-  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, smt_creances_impayees: JSON.stringify(creancesImpayees), smt_dettes_a_payer: JSON.stringify(dettesAPayer) }; const r = await fetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
+  useEffect(() => { if (!entiteId) return; clientFetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d['smt_creances_impayees']) { try { const p = JSON.parse(d['smt_creances_impayees']); if (Array.isArray(p) && p.length > 0) setCreancesImpayees(p); } catch { /* */ } } if (d['smt_dettes_a_payer']) { try { const p = JSON.parse(d['smt_dettes_a_payer']); if (Array.isArray(p) && p.length > 0) setDettesAPayer(p); } catch { /* */ } } }).catch(() => {}); }, [entiteId]);
+  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, smt_creances_impayees: JSON.stringify(creancesImpayees), smt_dettes_a_payer: JSON.stringify(dettesAPayer) }; const r = await clientFetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
 
   const duree = selectedExercice?.duree_mois || 12;
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;
