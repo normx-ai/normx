@@ -870,28 +870,28 @@
   {
     "numero": "176200",
     "numero_original": "1762",
-    "libelle": "sur dettes de location-acquisition credit-bail immobilier",
+    "libelle": "Intérêts courus sur dettes de location-acquisition crédit-bail immobilier",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "176300",
     "numero_original": "1763",
-    "libelle": "sur dettes de location-acquisition credit-bail mobilier",
+    "libelle": "Intérêts courus sur dettes de location-acquisition crédit-bail mobilier",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "176400",
     "numero_original": "1764",
-    "libelle": "sur dettes de location-acquisition location-vente",
+    "libelle": "Intérêts courus sur dettes de location-acquisition location-vente",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "176800",
     "numero_original": "1768",
-    "libelle": "sur autres dettes de location acquisition",
+    "libelle": "Intérêts courus sur autres dettes de location-acquisition",
     "classe": 1,
     "sens": "crediteur"
   },
