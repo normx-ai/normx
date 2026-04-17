@@ -24,14 +24,14 @@ function getPlanSyscohada(): CompteComptable[] {
 }
 
 function getPlan(referentiel: string | undefined): CompteComptable[] {
-  if (referentiel === 'syscohada') return getPlanSyscohada();
-  return planSycebnl;
+  if (referentiel === 'sycebnl') return planSycebnl;
+  return getPlanSyscohada();
 }
 
 const router = express.Router();
 
 // GET /api/plan-comptable — liste complete ou filtree
-// ?referentiel=syscohada|sycebnl (defaut: sycebnl)
+// ?referentiel=syscohada|sycebnl (defaut: syscohada)
 router.get('/', (req: Request, res: Response) => {
   const { classe, search, referentiel } = req.query;
   let result = getPlan(referentiel as string | undefined);
