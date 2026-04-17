@@ -245,15 +245,76 @@ export function computeResultatNet(lignes: BalanceLigne[]): number {
   return produits - charges;
 }
 
-// CAFG (methode soustractive) = Resultat net + Dotations nettes + VNC cessions - Produits cessions
-// NB: 81/82 s'annulent avec FF/FG/FI dans ZG (effet net = 0)
+// ===================== CAFG — Methode officielle SYSCOHADA =====================
+// Conforme au guide d'application SYSCOHADA (CAF.png / CAF1.png).
+// Construite a partir des postes du Compte de Resultat (SIG), pas des
+// comptes individuels. L'EBE exclut nativement les dotations/reprises/
+// provisions (68, 69, 659, 79, 759) donc pas de probleme de matching
+// avec les variations de provisions au bilan.
+//
+// CAFG = EBE (poste XD)
+//      + SD compte 654 (VNC cessions courantes d'immobilisations)
+//      - SC compte 754 (produits cessions courantes d'immobilisations)
+//      + Resultat financier (poste XF = TK + TL + TM - RM - RN)
+//      + Autres produits HAO (poste TO)
+//      - Autres charges HAO (poste RP)
+//      - Participation des travailleurs (poste RQ)
+//      - Impots sur le resultat (poste RS)
+
+function computeSIGPoste(lignes: BalanceLigne[], prodComptes: string[], chrgComptes: string[]): number {
+  let val = 0;
+  for (const l of lignes) {
+    const num = (l.numero_compte || '').trim();
+    const sd = getSD(l), sc = getSC(l);
+    if (prodComptes.some(p => num.startsWith(p))) val += sc - sd;
+    if (chrgComptes.some(p => num.startsWith(p))) val -= sd - sc;
+  }
+  return val;
+}
+
+export function computeEBE(lignes: BalanceLigne[]): number {
+  // EBE = XC - RK
+  // XC = XA + XB = Marge commerciale + Valeur ajoutee
+  // XA = TA - RA - RB
+  // XB = TB + TC + TD + TE + TF + TG + TH + TI - RC - RD - RE - RF - RG - RH - RI - RJ
+  // XC = XA + XB
+  // XD = XC - RK
+  // En pratique : Produits exploitation encaissables (70-75, 781) - Charges exploitation decaissables (60-66)
+  // Cela exclut automatiquement 68, 69, 659, 679, 79, 759, 779
+  const produitsExploit = ['70', '71', '72', '73', '75', '781'];
+  const chargesExploit = ['60', '61', '62', '63', '64', '65', '66'];
+  // 791/798/799 sont des reprises (poste TJ) qui viennent APRES l'EBE
+  return computeSIGPoste(lignes, produitsExploit, chargesExploit);
+}
+
 export function computeCAFG(lignes: BalanceLigne[]): number {
-  const resultatNet = computeResultatNet(lignes);
-  const dotations = sumSoldeDebiteur(lignes, DOTATIONS_PREFIXES);
-  const reprises = sumSoldeCrediteur(lignes, REPRISES_PREFIXES_TFT);
-  const chargesCessions = sumSoldeDebiteur(lignes, ['81']);
-  const produitsCessions = sumSoldeCrediteur(lignes, ['82']);
-  return resultatNet + (dotations - reprises) + (chargesCessions - produitsCessions);
+  const ebe = computeEBE(lignes);
+
+  // VNC cessions courantes (SD compte 654) - Produits cessions (SC compte 754)
+  const vnc654 = rawSD(lignes, ['654']);
+  const prod754 = rawSC(lignes, ['754']);
+
+  // Resultat financier ENCAISSABLE (pas le poste XF complet).
+  // Le tableau detaille CAF.png ne retient que les elements cash :
+  // + Revenus financiers (77) + Transferts charges financieres (787)
+  // - Frais financiers (67)
+  // EXCLUS : 697 (dotations provisions fin) et 797 (reprises provisions fin)
+  // car ce sont des elements non-cash.
+  const resultatFinancier = computeSIGPoste(lignes, ['77', '787'], ['67']);
+
+  // Produits HAO (poste TO = 84, 86, 88)
+  const produitsHAO = sumSoldeCrediteur(lignes, ['84', '86', '88']);
+
+  // Charges HAO (poste RP = 83, 85)
+  const chargesHAO = sumSoldeDebiteur(lignes, ['83', '85']);
+
+  // Participation (poste RQ = 87)
+  const participation = sumSoldeDebiteur(lignes, ['87']);
+
+  // Impots sur le resultat (poste RS = 89)
+  const impotResultat = sumSoldeDebiteur(lignes, ['89']);
+
+  return ebe + vnc654 - prod754 + resultatFinancier + produitsHAO - chargesHAO - participation - impotResultat;
 }
 
 // ===================== COMPUTE ALL FLUX =====================
