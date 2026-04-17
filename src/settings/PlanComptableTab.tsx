@@ -186,7 +186,7 @@ export default function PlanComptableTab(): React.ReactElement {
         </div>
       )}
 
-      <div style={{ maxHeight: 520, overflow: 'auto', border: '1px solid #e5e7eb', borderRadius: 8 }}>
+      <div style={{ border: '1px solid #e5e7eb', borderRadius: 8 }}>
         <table style={tbl}>
           <thead style={{ position: 'sticky', top: 0, zIndex: 1 }}>
             <tr>
