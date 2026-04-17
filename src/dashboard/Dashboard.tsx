@@ -246,17 +246,13 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     />
   );
 
-  // Si le module dans l'URL n'est pas disponible pour cette entite,
-  // rediriger vers le portail ou le premier module actif.
-  useEffect(() => {
-    if (activeModule && !enabledModules.includes(activeModule)) {
-      const first = ENABLED_MODULES.find(m => enabledModules.includes(m));
-      navigate(first ? `/app/${first}/accueil` : '/app/portail', { replace: true });
-    }
-  }, [activeModule, enabledModules, navigate]);
-
   // ==================== CHARGEMENT ====================
-  if (!activeModule && !isCabinet && modules.length === 0) {
+  // Si les modules ne sont pas encore charges (entites en cours de fetch
+  // dans App.tsx), on affiche un loader au lieu de prendre des decisions
+  // de navigation sur un etat incomplet. C'est App.tsx qui gate le rendu
+  // du Dashboard via tenantLoading, mais le modules=[] initial peut
+  // persister brievement le temps que React propage les props.
+  if (modules.length === 0 && !isCabinet) {
     return (
       <div className="dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
