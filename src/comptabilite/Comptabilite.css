@@ -208,27 +208,36 @@
 .saisie-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 16px 0 0;
+  justify-content: center;
+  padding: 20px 24px;
   border: 1px solid var(--couleur-bordure);
+  border-radius: 10px;
   margin-top: 24px;
+  background: var(--couleur-fond-carte);
+  text-align: center;
 }
 .saisie-footer-count {
-  font-size: 13px;
-  color: #888;
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 12px;
+  text-align: center;
+  width: 100%;
 }
 .saisie-footer-totaux {
   display: flex;
-  gap: 20px;
+  gap: 32px;
+  justify-content: center;
+  width: 100%;
 }
 .footer-total-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
+  align-items: center;
+  gap: 4px;
+  min-width: 120px;
 }
 .footer-total-amount {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   color: #1a1a1a;
   font-variant-numeric: tabular-nums;
@@ -237,9 +246,10 @@
 .footer-total-amount.ko { color: #dc2626; }
 .footer-total-label {
   font-size: 11px;
-  color: #999;
+  color: #9ca3af;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 /* ===== OVERLAY ECRITURE ===== */

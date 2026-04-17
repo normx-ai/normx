@@ -52,8 +52,8 @@ function EcrituresStats({
         </div>
       </div>
 
-      {/* Footer totaux */}
-      <div className="saisie-footer">
+      {/* Footer totaux — centré */}
+      <div className="saisie-footer" style={{ flexDirection: 'column' }}>
         <div className="saisie-footer-count">
           {ecritures.length} écriture{ecritures.length > 1 ? 's' : ''}
           {stats && <span> | {stats.nb_comptes} comptes mouvementés</span>}
