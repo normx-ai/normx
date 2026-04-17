@@ -25,7 +25,7 @@ function EcrituresStats({
       <div className="compta-page-header">
         <div>
           <h1 className="compta-page-title">Saisie des ecritures</h1>
-          <p className="compta-page-subtitle">Saisissez les ecritures comptables selon le plan SYCEBNL</p>
+          <p className="compta-page-subtitle">Saisissez les ecritures comptables selon le plan comptable OHADA</p>
         </div>
         <div className="compta-header-actions">
           {nbSelectedBrouillard > 0 && (

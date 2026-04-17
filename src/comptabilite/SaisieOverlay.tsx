@@ -104,7 +104,7 @@ function SaisieOverlay({
         <div className="ecriture-overlay-header">
           <div>
             <h2>{editingId ? 'Modifier l\'ecriture' : 'Nouvelle ecriture'}</h2>
-            <p>Saisissez les comptes au debit et au credit selon le plan SYCEBNL</p>
+            <p>Saisissez les comptes au debit et au credit selon le plan comptable OHADA</p>
           </div>
           <button className="overlay-close-btn" onClick={onClose}><LuX /></button>
         </div>
@@ -251,7 +251,7 @@ function SaisieOverlay({
               <div className="validation-error">
                 Compte{comptesInvalides.length > 1 ? 's' : ''} invalide{comptesInvalides.length > 1 ? 's' : ''} :{' '}
                 {comptesInvalides.map(l => l.numero_compte).join(', ')}
-                {' '}— doit exister dans le plan comptable SYCEBNL
+                {' '}— doit exister dans le plan comptable OHADA
               </div>
             )}
           </div>
