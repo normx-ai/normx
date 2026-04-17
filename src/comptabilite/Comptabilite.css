@@ -106,7 +106,7 @@
   background: var(--couleur-fond-carte);
   border: 1px solid var(--couleur-bordure);
   border-radius: 8px;
-  margin-top: 16px;
+  margin-bottom: 16px;
 }
 .ecritures-main-table {
   width: 100%;
