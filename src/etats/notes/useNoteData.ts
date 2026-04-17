@@ -1,4 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { clientFetch } from '../../lib/api';
+import { useExercicesQuery } from '../../hooks/useExercicesQuery';
 import type { Exercice } from '../../types';
 
 interface UseNoteDataOptions {
@@ -7,6 +10,7 @@ interface UseNoteDataOptions {
 
 interface UseNoteDataResult {
   exercices: Exercice[];
+  exercicesLoading: boolean;
   selectedExercice: Exercice | null;
   setSelectedExercice: (e: Exercice | null) => void;
   params: Record<string, string>;
@@ -26,8 +30,13 @@ interface UseNoteDataResult {
 }
 
 export function useNoteData({ entiteId }: UseNoteDataOptions): UseNoteDataResult {
-  const [exercices, setExercices] = useState<Exercice[]>([]);
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const queryClient = useQueryClient();
+  const {
+    exercices, isLoading: exercicesLoading,
+    selectedExercice, setSelectedExercice,
+    annee, dateFin, duree,
+  } = useExercicesQuery(entiteId);
+
   const [params, setParams] = useState<Record<string, string>>({});
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
@@ -35,81 +44,49 @@ export function useNoteData({ entiteId }: UseNoteDataOptions): UseNoteDataResult
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
-  // Charger les params de l'entite
-  useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
-      .then(r => r.json())
-      .then(ent => {
-        const data = ent.data || {};
-        setParams(data);
-      })
-      .catch(() => {});
-  }, [entiteId]);
+  const { data: entiteParams } = useQuery({
+    queryKey: ['entite-params', entiteId],
+    queryFn: async (): Promise<Record<string, string>> => {
+      const r = await clientFetch('/api/entites/' + entiteId);
+      if (!r.ok) throw new Error('Erreur');
+      const ent = await r.json();
+      return ent.data || {};
+    },
+    staleTime: 5 * 60 * 1000,
+    enabled: entiteId > 0,
+  });
 
-  // Charger les exercices et selection auto
   useEffect(() => {
-    if (!entiteId) return;
-    fetch('/api/balance/exercices/' + entiteId)
-      .then(r => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setSelectedExercice(pick);
-        }
-      })
-      .catch(() => {});
-  }, [entiteId]);
+    if (entiteParams) setParams(entiteParams);
+  }, [entiteParams]);
 
-  // Sauvegarder les params
   const saveParams = useCallback(async (updatedParams: Record<string, string>) => {
     setSaving(true);
     try {
-      const res = await fetch(`/api/entites/${entiteId}`, {
+      const res = await clientFetch(`/api/entites/${entiteId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data: updatedParams }),
       });
       if (res.ok) {
         setParams(updatedParams);
+        queryClient.invalidateQueries({ queryKey: ['entite-params', entiteId] });
         setSaved(true);
         setEditing(false);
         setTimeout(() => setSaved(false), 3000);
       }
     } catch { /* */ }
     setSaving(false);
-  }, [entiteId]);
-
-  // Computed
-  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
-  const dateFin = selectedExercice?.date_fin || '';
-  const duree = selectedExercice?.duree_mois || 12;
+  }, [entiteId, queryClient]);
 
   return {
-    exercices,
-    selectedExercice,
-    setSelectedExercice,
-    params,
-    setParams,
-    previewUrl,
-    setPreviewUrl,
-    pdfBlob,
-    setPdfBlob,
-    editing,
-    setEditing,
-    saving,
-    saved,
-    saveParams,
-    annee,
-    dateFin,
-    duree,
+    exercices, exercicesLoading,
+    selectedExercice, setSelectedExercice,
+    params, setParams,
+    previewUrl, setPreviewUrl,
+    pdfBlob, setPdfBlob,
+    editing, setEditing,
+    saving, saved, saveParams,
+    annee, dateFin, duree,
   };
 }
