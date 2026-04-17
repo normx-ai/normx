@@ -209,8 +209,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0 0;
+  padding: 16px 20px;
   border: 1px solid var(--couleur-bordure);
+  border-radius: 8px;
   margin-top: 24px;
 }
 .saisie-footer-count {
