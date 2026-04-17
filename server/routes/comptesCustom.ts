@@ -30,7 +30,7 @@ interface CompteCustomRow {
 let planOfficiel: CompteStandard[] | null = null;
 function getPlanOfficiel(): CompteStandard[] {
   if (!planOfficiel) {
-    const filePath = path.join(__dirname, '..', 'data', 'plan_comptable_syscohada.json');
+    const filePath = path.join(__dirname, '..', 'data', 'plan_comptable_syscohada_6.json');
     if (fs.existsSync(filePath)) {
       planOfficiel = JSON.parse(fs.readFileSync(filePath, 'utf-8')) as CompteStandard[];
     } else {
