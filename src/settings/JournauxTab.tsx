@@ -1,5 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { LuPlus, LuSave, LuTrash2, LuX } from 'react-icons/lu';
+import { useQueryClient } from '@tanstack/react-query';
+import { useJournaux } from '../lib/queries';
+import { clientFetch } from '../lib/api';
 
 interface Journal {
   id: number;
@@ -27,26 +30,15 @@ const EMPTY_NEW: Pick<Journal, 'code' | 'libelle' | 'type' | 'contrepartie_defau
 };
 
 export default function JournauxTab(): React.ReactElement {
-  const [journaux, setJournaux] = useState<Journal[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
+  const { data: journaux = [] as Journal[], isLoading: loading } = useJournaux() as { data: Journal[] | undefined; isLoading: boolean };
   const [error, setError] = useState<string>('');
   const [showAdd, setShowAdd] = useState(false);
   const [newForm, setNewForm] = useState(EMPTY_NEW);
   const [editing, setEditing] = useState<Record<number, Partial<Journal>>>({});
   const [saving, setSaving] = useState<number | null>(null);
 
-  const load = useCallback(async (): Promise<void> => {
-    setLoading(true); setError('');
-    try {
-      const r = await fetch('/api/journaux');
-      if (!r.ok) throw new Error('Erreur chargement journaux.');
-      const data = await r.json() as Journal[];
-      setJournaux(data);
-    } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
+  const invalidateJournaux = () => queryClient.invalidateQueries({ queryKey: ['journaux'] });
 
   const handleAdd = async (): Promise<void> => {
     setError('');
@@ -55,7 +47,7 @@ export default function JournauxTab(): React.ReactElement {
       return;
     }
     try {
-      const r = await fetch('/api/journaux', {
+      const r = await clientFetch('/api/journaux', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newForm),
@@ -65,7 +57,7 @@ export default function JournauxTab(): React.ReactElement {
         throw new Error(d.error || 'Erreur création.');
       }
       setShowAdd(false); setNewForm(EMPTY_NEW);
-      load();
+      invalidateJournaux();
     } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
   };
 
@@ -74,7 +66,7 @@ export default function JournauxTab(): React.ReactElement {
     if (!patch) return;
     setSaving(j.id);
     try {
-      const r = await fetch(`/api/journaux/${j.id}`, {
+      const r = await clientFetch(`/api/journaux/${j.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(patch),
@@ -84,7 +76,7 @@ export default function JournauxTab(): React.ReactElement {
         throw new Error(d.error || 'Erreur MAJ.');
       }
       setEditing(prev => { const n = { ...prev }; delete n[j.id]; return n; });
-      load();
+      invalidateJournaux();
     } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
     setSaving(null);
   };
@@ -96,12 +88,12 @@ export default function JournauxTab(): React.ReactElement {
     }
     if (!window.confirm(`Supprimer le journal « ${j.code} — ${j.libelle} » ?`)) return;
     try {
-      const r = await fetch(`/api/journaux/${j.id}`, { method: 'DELETE' });
+      const r = await clientFetch(`/api/journaux/${j.id}`, { method: 'DELETE' });
       if (!r.ok && r.status !== 204) {
         const d = await r.json().catch(() => ({}));
         throw new Error(d.error || 'Erreur suppression.');
       }
-      load();
+      invalidateJournaux();
     } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
   };
 

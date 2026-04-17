@@ -1,5 +1,7 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 import { LuPlus, LuSearch, LuX, LuCircleCheck, LuCircleSlash, LuSave } from 'react-icons/lu';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { clientFetch } from '../lib/api';
 
 interface CompteFusionne {
   numero: string;
@@ -26,33 +28,42 @@ const CLASSES = [
 ];
 
 export default function PlanComptableTab(): React.ReactElement {
-  const [comptes, setComptes] = useState<CompteFusionne[]>([]);
-  const [customs, setCustoms] = useState<CompteCustom[]>([]);
-  const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
+
+  const { data: comptes = [], isLoading: loadingPlan } = useQuery<CompteFusionne[]>({
+    queryKey: ['comptes-custom', 'plan-fusionne'],
+    queryFn: async () => {
+      const r = await clientFetch('/api/comptes-custom/plan-fusionne');
+      if (!r.ok) throw new Error('Erreur chargement plan.');
+      return r.json();
+    },
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+  });
+
+  const { data: customs = [], isLoading: loadingCustom } = useQuery<CompteCustom[]>({
+    queryKey: ['comptes-custom'],
+    queryFn: async () => {
+      const r = await clientFetch('/api/comptes-custom');
+      if (!r.ok) throw new Error('Erreur chargement comptes custom.');
+      return r.json();
+    },
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+  });
+
+  const loading = loadingPlan || loadingCustom;
+
+  const invalidateComptes = () => {
+    queryClient.invalidateQueries({ queryKey: ['comptes-custom'] });
+  };
+
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
   const [filterClasse, setFilterClasse] = useState(0);
   const [showDisabled, setShowDisabled] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [newCompte, setNewCompte] = useState({ numero: '', libelle: '', sens: 'debiteur' });
-
-  const load = useCallback(async (): Promise<void> => {
-    setLoading(true); setError('');
-    try {
-      const [rPlan, rCustom] = await Promise.all([
-        fetch('/api/comptes-custom/plan-fusionne'),
-        fetch('/api/comptes-custom'),
-      ]);
-      if (!rPlan.ok || !rCustom.ok) throw new Error('Erreur chargement plan.');
-      const plan = await rPlan.json() as CompteFusionne[];
-      const custom = await rCustom.json() as CompteCustom[];
-      setComptes(plan);
-      setCustoms(custom);
-    } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
 
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -72,7 +83,7 @@ export default function PlanComptableTab(): React.ReactElement {
       setError('Numéro et libellé obligatoires.'); return;
     }
     try {
-      const r = await fetch('/api/comptes-custom', {
+      const r = await clientFetch('/api/comptes-custom', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ numero: newCompte.numero.trim(), libelle: newCompte.libelle.trim(), sens: newCompte.sens, type: 'custom' }),
       });
@@ -81,7 +92,7 @@ export default function PlanComptableTab(): React.ReactElement {
         throw new Error(d.error || 'Erreur création.');
       }
       setShowAdd(false); setNewCompte({ numero: '', libelle: '', sens: 'debiteur' });
-      load();
+      invalidateComptes();
     } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
   };
 
@@ -92,7 +103,7 @@ export default function PlanComptableTab(): React.ReactElement {
     try {
       if (c.source === 'syscohada' && !c.disabled) {
         // Désactiver : créer un override type=disabled
-        const r = await fetch('/api/comptes-custom', {
+        const r = await clientFetch('/api/comptes-custom', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ numero: c.numero, type: 'disabled' }),
         });
@@ -102,10 +113,10 @@ export default function PlanComptableTab(): React.ReactElement {
         }
       } else if (c.disabled && existing) {
         // Réactiver : supprimer l'override disabled
-        const r = await fetch(`/api/comptes-custom/${existing.id}`, { method: 'DELETE' });
+        const r = await clientFetch(`/api/comptes-custom/${existing.id}`, { method: 'DELETE' });
         if (!r.ok && r.status !== 204) throw new Error('Erreur réactivation.');
       }
-      load();
+      invalidateComptes();
     } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
   };
 
@@ -115,9 +126,9 @@ export default function PlanComptableTab(): React.ReactElement {
     if (!existing) return;
     if (!window.confirm(`Supprimer le compte personnalisé « ${c.numero} — ${c.libelle} » ?`)) return;
     try {
-      const r = await fetch(`/api/comptes-custom/${existing.id}`, { method: 'DELETE' });
+      const r = await clientFetch(`/api/comptes-custom/${existing.id}`, { method: 'DELETE' });
       if (!r.ok && r.status !== 204) throw new Error('Erreur suppression.');
-      load();
+      invalidateComptes();
     } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
   };
 

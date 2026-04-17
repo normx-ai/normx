@@ -1,8 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { BalanceLigne } from '../types';
 import { formatMontant } from './ImportBalance.parsers';
 import { detectAnomalies, buildPlanComptableSensMap } from './anomaliesComptes';
 import type { AnomalieCompte, PlanCompteEntry, PlanComptableSensMap } from './anomaliesComptes';
+import { useReferentiel } from '../contexts/ReferentielContext';
+import { usePlanComptable } from '../lib/queries';
 
 interface BalanceLigneWithMeta extends BalanceLigne {
   id: number;
@@ -25,16 +27,11 @@ function ImportBalanceTable({
   updateEditedLigne,
   planSensMap: planSensMapProp,
 }: ImportBalanceTableProps): React.JSX.Element {
-  // Fallback : si le parent ne passe pas la map, charger le plan SYSCOHADA
-  // nous-memes pour que l'affichage des anomalies reste fonctionnel.
-  const [planComptable, setPlanComptable] = useState<PlanCompteEntry[]>([]);
-  useEffect(() => {
-    if (planSensMapProp) return;
-    fetch('/api/plan-comptable?referentiel=syscohada')
-      .then(r => r.json())
-      .then((data: PlanCompteEntry[]) => setPlanComptable(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, [planSensMapProp]);
+  // Fallback : si le parent ne passe pas la map, charger le plan via React Query
+  // pour que l'affichage des anomalies reste fonctionnel.
+  const { referentiel } = useReferentiel();
+  const { data: planComptableData = [] } = usePlanComptable(referentiel);
+  const planComptable = planSensMapProp ? [] : (planComptableData as PlanCompteEntry[]);
   const planSensMap = useMemo(
     () => planSensMapProp || buildPlanComptableSensMap(planComptable),
     [planSensMapProp, planComptable]

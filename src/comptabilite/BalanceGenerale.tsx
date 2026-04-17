@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { LuChevronLeft, LuDownload, LuX } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -7,6 +7,8 @@ import type { BalanceLigne } from '../types';
 import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu, buildPlanComptableSensMap } from '../etats/anomaliesComptes';
 import type { AnomalieCompte, PlanCompteEntry } from '../etats/anomaliesComptes';
 import { fmt, MOIS } from '../utils/formatters';
+import { useReferentiel } from '../contexts/ReferentielContext';
+import { usePlanComptable } from '../lib/queries';
 
 /* -- Shared inline components -- */
 
@@ -95,15 +97,10 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
   const [inclureReport, setInclureReport] = useState<boolean>(false);
 
   // Plan comptable OHADA : source de verite pour le sens attendu
-  // (debiteur/crediteur/mixte) de chaque compte. Charge une fois au montage.
-  const [planComptable, setPlanComptable] = useState<PlanCompteEntry[]>([]);
-  useEffect(() => {
-    fetch('/api/plan-comptable?referentiel=syscohada')
-      .then(r => r.json())
-      .then((data: PlanCompteEntry[]) => setPlanComptable(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, []);
-  const planSensMap = useMemo(() => buildPlanComptableSensMap(planComptable), [planComptable]);
+  // (debiteur/crediteur/mixte) de chaque compte. Cache via React Query.
+  const { referentiel } = useReferentiel();
+  const { data: planComptable = [] } = usePlanComptable(referentiel);
+  const planSensMap = useMemo(() => buildPlanComptableSensMap(planComptable as PlanCompteEntry[]), [planComptable]);
 
   const loadBalance = useCallback(async (): Promise<void> => {
     if (!entiteId || !exerciceId) return;

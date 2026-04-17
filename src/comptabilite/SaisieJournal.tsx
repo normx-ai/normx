@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { CompteComptable } from '../types';
 import type { SaisieJournalProps, EcritureRow, EcritureAPI, StatsData, TiersItem } from './SaisieJournal.types';
 import { MOIS } from './SaisieJournal.types';
 import { useReferentiel } from '../contexts/ReferentielContext';
+import { usePlanComptable } from '../lib/queries';
+import { clientFetch } from '../lib/api';
 import { parseInputNumber } from '../utils/formatters';
 import EcrituresStats from './EcrituresStats';
 import EcrituresFilters from './EcrituresFilters';
@@ -12,14 +15,11 @@ import ImportDocumentModal from './ImportDocumentModal';
 import './Comptabilite.css';
 
 function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJournalProps): React.JSX.Element {
-  const { apiParam } = useReferentiel();
-  const [ecritures, setEcritures] = useState<EcritureAPI[]>([]);
-  const [planComptable, setPlanComptable] = useState<CompteComptable[]>([]);
-  const [tiersList, setTiersList] = useState<TiersItem[]>([]);
+  const { referentiel } = useReferentiel();
+  const queryClient = useQueryClient();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
-  const [stats, setStats] = useState<StatsData | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
   // Filtres
@@ -52,52 +52,65 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     { numero_compte: '', libelle_compte: '', debit: '', credit: '', tiers_id: '' },
   ]);
 
-  // --- API calls ---
+  // --- React Query data fetching ---
 
-  const loadEcritures = useCallback(async (): Promise<void> => {
-    if (!entiteId || !exerciceId) return;
-    const params = new URLSearchParams();
-    if (filterJournal) params.set('journal', filterJournal);
-    if (filterStatut) params.set('statut', filterStatut);
-    if (filterDateDu) params.set('date_du', filterDateDu);
-    if (filterDateAu) params.set('date_au', filterDateAu);
-    if (searchTerm) params.set('search', searchTerm);
-    try {
+  const ecrituresFilters = useMemo(() => {
+    const f: Record<string, string> = {};
+    if (filterJournal) f.journal = filterJournal;
+    if (filterStatut) f.statut = filterStatut;
+    if (filterDateDu) f.date_du = filterDateDu;
+    if (filterDateAu) f.date_au = filterDateAu;
+    if (searchTerm) f.search = searchTerm;
+    return f;
+  }, [filterJournal, filterStatut, filterDateDu, filterDateAu, searchTerm]);
+
+  const { data: ecritures = [] } = useQuery<EcritureAPI[]>({
+    queryKey: ['ecritures', entiteId, exerciceId, ecrituresFilters],
+    queryFn: async () => {
+      const params = new URLSearchParams(ecrituresFilters);
       const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await fetch('/api/ecritures/' + entiteId + '/' + exerciceId + qs);
-      if (res.ok) {
-        const data = await res.json();
-        setEcritures(Array.isArray(data) ? data : data.ecritures || []);
-      }
-    } catch (_err) { /* silently ignore */ }
-  }, [entiteId, exerciceId, filterJournal, filterStatut, filterDateDu, filterDateAu, searchTerm]);
+      const res = await clientFetch('/api/ecritures/' + entiteId + '/' + exerciceId + qs);
+      if (!res.ok) throw new Error('Erreur chargement ecritures');
+      const data = await res.json();
+      return Array.isArray(data) ? data : data.ecritures || [];
+    },
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    enabled: entiteId > 0 && exerciceId > 0,
+  });
 
-  const loadPlanComptable = useCallback(async (): Promise<void> => {
-    try {
-      const res = await fetch('/api/plan-comptable' + apiParam);
-      if (res.ok) { const j = await res.json(); setPlanComptable(Array.isArray(j) ? j : j.data || j.comptes || []); }
-    } catch (_err) { /* silently ignore */ }
-  }, [apiParam]);
+  const { data: planComptableRaw = [] } = usePlanComptable(referentiel);
+  const planComptable = planComptableRaw as CompteComptable[];
 
-  const loadTiers = useCallback(async (): Promise<void> => {
-    if (!entiteId) return;
-    try {
-      const res = await fetch('/api/tiers/' + entiteId);
-      if (res.ok) { const j = await res.json(); setTiersList(Array.isArray(j) ? j : j.data || j.tiers || []); }
-    } catch (_err) { /* silently ignore */ }
-  }, [entiteId]);
+  const { data: tiersList = [] } = useQuery<TiersItem[]>({
+    queryKey: ['tiers', entiteId],
+    queryFn: async () => {
+      const res = await clientFetch('/api/tiers/' + entiteId);
+      if (!res.ok) throw new Error('Erreur chargement tiers');
+      const j = await res.json();
+      return Array.isArray(j) ? j : j.data || j.tiers || [];
+    },
+    staleTime: 5 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    enabled: entiteId > 0,
+  });
 
-  const loadStats = useCallback(async (): Promise<void> => {
-    if (!entiteId || !exerciceId) return;
-    try {
-      const res = await fetch('/api/ecritures/stats/' + entiteId + '/' + exerciceId);
-      if (res.ok) setStats(await res.json());
-    } catch (_err) { /* silently ignore */ }
-  }, [entiteId, exerciceId]);
+  const { data: stats = null } = useQuery<StatsData | null>({
+    queryKey: ['ecritures-stats', entiteId, exerciceId],
+    queryFn: async () => {
+      const res = await clientFetch('/api/ecritures/stats/' + entiteId + '/' + exerciceId);
+      if (!res.ok) throw new Error('Erreur chargement stats');
+      return res.json();
+    },
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    enabled: entiteId > 0 && exerciceId > 0,
+  });
 
-  useEffect(() => {
-    loadEcritures(); loadPlanComptable(); loadStats(); loadTiers();
-  }, [loadEcritures, loadPlanComptable, loadStats, loadTiers]);
+  const invalidateEcrituresAndStats = () => {
+    queryClient.invalidateQueries({ queryKey: ['ecritures', entiteId, exerciceId] });
+    queryClient.invalidateQueries({ queryKey: ['ecritures-stats', entiteId, exerciceId] });
+  };
 
   // Filtrage par mois
   useEffect(() => {
@@ -244,7 +257,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
       const method = editingId ? 'PUT' : 'POST';
       const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (res.ok) {
-        loadEcritures(); loadStats(); resetForm(); setLibelle(''); setNumeroPiece('');
+        invalidateEcrituresAndStats(); resetForm(); setLibelle(''); setNumeroPiece('');
         setLignes([
           { numero_compte: '', libelle_compte: '', debit: '', credit: '', tiers_id: '' },
           { numero_compte: '', libelle_compte: '', debit: '', credit: '', tiers_id: '' },
@@ -256,7 +269,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
 
   const deleteEcriture = async (id: number): Promise<void> => {
     if (!window.confirm('Supprimer cette ecriture ?')) return;
-    try { await fetch('/api/ecritures/' + id, { method: 'DELETE' }); loadEcritures(); loadStats(); } catch (_err) { /* ignore */ }
+    try { await fetch('/api/ecritures/' + id, { method: 'DELETE' }); invalidateEcrituresAndStats(); } catch (_err) { /* ignore */ }
   };
 
   // --- Selection ---
@@ -273,7 +286,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     if (brouillards.length === 0) return;
     try {
       const res = await fetch('/api/ecritures/valider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: brouillards }) });
-      if (res.ok) { setSelectedIds(new Set()); loadEcritures(); loadStats(); }
+      if (res.ok) { setSelectedIds(new Set()); invalidateEcrituresAndStats(); }
       else { const err: { error?: string } = await res.json(); alert(err.error || 'Erreur'); }
     } catch (_err) { alert('Erreur reseau'); }
   };
@@ -284,7 +297,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     if (!window.confirm('Repasser ' + validees.length + ' ecriture(s) en brouillard ?')) return;
     try {
       const res = await fetch('/api/ecritures/devalider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: validees }) });
-      if (res.ok) { setSelectedIds(new Set()); loadEcritures(); loadStats(); }
+      if (res.ok) { setSelectedIds(new Set()); invalidateEcrituresAndStats(); }
       else { const err: { error?: string } = await res.json(); alert(err.error || 'Erreur'); }
     } catch (_err) { alert('Erreur reseau'); }
   };

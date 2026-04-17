@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { LuTriangleAlert, LuChevronDown, LuChevronRight, LuCheck } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
 import { PlanCompte, CompteAnomalie, isCompteInEtats, findSuggestionByNumero, findSimilarByLibelle, formatMontant } from './ImportBalance.parsers';
@@ -6,6 +6,8 @@ import { detectAnomalies, getSoldeAttendu, buildPlanComptableSensMap } from './a
 import type { SoldeAttendu } from './anomaliesComptes';
 import BannerBalanceEquilibre, { useEquilibreEcarts } from './banners/BannerBalanceEquilibre';
 import BannerCompte13Art20, { useCompte13Anomaly } from './banners/BannerCompte13Art20';
+import { useReferentiel } from '../contexts/ReferentielContext';
+import { usePlanComptable } from '../lib/queries';
 
 interface BalanceLigneWithMeta extends BalanceLigne {
   id: number;
@@ -67,15 +69,12 @@ function AnomaliesTable({ anomalies, corrections, onCorrection }: {
 }
 
 function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMessage, setError }: ImportBalanceAnalyseProps): React.JSX.Element {
-  const [planComptable, setPlanComptable] = useState<PlanCompte[]>([]);
+  const { referentiel } = useReferentiel();
+  const { data: planComptableRaw = [] } = usePlanComptable(referentiel);
+  const planComptable = planComptableRaw as PlanCompte[];
   const [showAnalyse, setShowAnalyse] = useState(false);
   const [corrections, setCorrections] = useState<Record<number, string>>({});
   const [comptesValides, setComptesValides] = useState<Set<number>>(new Set());
-
-  useEffect(() => {
-    fetch('/api/plan-comptable?referentiel=syscohada')
-      .then(r => r.json()).then((data: PlanCompte[]) => setPlanComptable(data)).catch(() => {});
-  }, []);
 
   const anomalies: CompteAnomalie[] = useMemo(() => {
     if (planComptable.length === 0 || currentLignes.length === 0) return [];

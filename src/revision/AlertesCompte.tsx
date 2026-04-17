@@ -1,9 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { LuTriangleAlert, LuCircleCheck, LuCircleX, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
 import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu, buildPlanComptableSensMap } from '../etats/anomaliesComptes';
 import type { AnomalieCompte, PlanCompteEntry } from '../etats/anomaliesComptes';
 import { getSD, getSC } from './revisionTypes';
+import { useReferentiel } from '../contexts/ReferentielContext';
+import { usePlanComptable } from '../lib/queries';
 
 interface AlertesCompteProps {
   /** Lignes de la balance pour cette section */
@@ -56,15 +58,10 @@ const EXCLUSION_RULES: ExclusionRule[] = [
 ];
 
 function AlertesCompte({ lignes, titre }: AlertesCompteProps): React.ReactElement | null {
-  // Plan comptable OHADA : source du sens attendu de chaque compte.
-  const [planComptable, setPlanComptable] = useState<PlanCompteEntry[]>([]);
-  useEffect(() => {
-    fetch('/api/plan-comptable?referentiel=syscohada')
-      .then(r => r.json())
-      .then((data: PlanCompteEntry[]) => setPlanComptable(Array.isArray(data) ? data : []))
-      .catch(() => {});
-  }, []);
-  const planSensMap = useMemo(() => buildPlanComptableSensMap(planComptable), [planComptable]);
+  // Plan comptable OHADA : source du sens attendu de chaque compte. Cache via React Query.
+  const { referentiel } = useReferentiel();
+  const { data: planComptable = [] } = usePlanComptable(referentiel);
+  const planSensMap = useMemo(() => buildPlanComptableSensMap(planComptable as PlanCompteEntry[]), [planComptable]);
 
   const alertes = useMemo<CompteAlerte[]>(() => {
     if (planSensMap.size === 0) return [];

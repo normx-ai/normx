@@ -1,5 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LuSave } from 'react-icons/lu';
+import { useQueryClient } from '@tanstack/react-query';
+import { useTvaConfig } from '../lib/queries';
+import { clientFetch } from '../lib/api';
 
 interface TvaConfig {
   id: number;
@@ -17,30 +20,23 @@ const REGIMES: { value: TvaConfig['regime']; label: string; description: string 
 ];
 
 export default function TvaTab(): React.ReactElement {
+  const queryClient = useQueryClient();
+  const { data: tvaData, isLoading: loading } = useTvaConfig();
   const [config, setConfig] = useState<TvaConfig | null>(null);
-  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState('');
 
-  const load = useCallback(async (): Promise<void> => {
-    setLoading(true); setError('');
-    try {
-      const r = await fetch('/api/tva-config');
-      if (!r.ok) throw new Error('Erreur chargement TVA.');
-      const data = await r.json() as TvaConfig;
-      setConfig(data);
-    } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
-    setLoading(false);
-  }, []);
-
-  useEffect(() => { load(); }, [load]);
+  // Sync React Query data into local state for form editing
+  useEffect(() => {
+    if (tvaData && !config) setConfig(tvaData as TvaConfig);
+  }, [tvaData, config]);
 
   const handleSave = async (): Promise<void> => {
     if (!config) return;
     setSaving(true); setError(''); setSaved(false);
     try {
-      const r = await fetch('/api/tva-config', {
+      const r = await clientFetch('/api/tva-config', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -56,6 +52,7 @@ export default function TvaTab(): React.ReactElement {
       }
       const data = await r.json() as TvaConfig;
       setConfig(data);
+      queryClient.invalidateQueries({ queryKey: ['tva-config'] });
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } catch (e) { setError(e instanceof Error ? e.message : 'Erreur.'); }
