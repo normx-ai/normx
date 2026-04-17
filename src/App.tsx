@@ -59,10 +59,11 @@ function AppContent(): React.JSX.Element {
       setTenantName(data.tenant.nom || '');
       setTenantType(data.tenant.type || '');
 
-      // Purger un eventuel module actif restant d'une session precedente :
-      // pour un cabinet on veut toujours atterrir sur le portail apres
-      // (re)chargement initial, pas dans un module.
-      if (data.tenant.type === 'cabinet') {
+      // Pour un cabinet sans dossier client actif, atterrir sur le portail.
+      // Mais si un client_slug est sauvegardé (l'utilisateur travaillait sur
+      // un dossier client), on conserve le module pour que F5 reste sur la
+      // même page. Le slug est lu plus bas (ligne ~72) puis réinjecté.
+      if (data.tenant.type === 'cabinet' && !sessionStorage.getItem('normx_client_slug')) {
         sessionStorage.removeItem('normx_activeModule');
       }
 
