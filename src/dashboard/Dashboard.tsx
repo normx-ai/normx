@@ -248,15 +248,12 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
 
   // Si le module dans l'URL n'est pas disponible pour cette entite,
   // rediriger vers le portail ou le premier module actif.
-  // Ne PAS rediriger tant que les modules ne sont pas charges (modules.length === 0
-  // signifie que le fetch entites est encore en cours, pas que le module est invalide).
   useEffect(() => {
-    if (modules.length === 0) return;
     if (activeModule && !enabledModules.includes(activeModule)) {
       const first = ENABLED_MODULES.find(m => enabledModules.includes(m));
       navigate(first ? `/app/${first}/accueil` : '/app/portail', { replace: true });
     }
-  }, [activeModule, enabledModules, modules.length, navigate]);
+  }, [activeModule, enabledModules, navigate]);
 
   // ==================== CHARGEMENT ====================
   if (!activeModule && !isCabinet && modules.length === 0) {
