@@ -105,15 +105,11 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
 
     if (code) {
       const redirectUri = `${window.location.origin}${window.location.pathname}`;
-      // Si on revient sur /auth/callback (depuis la landing), on rebascule
-      // sur la home une fois l'echange reussi. Sinon on reste sur la page
-      // courante (ex: reauth depuis /paie).
-      const landedOnCallback = window.location.pathname === '/auth/callback';
-      // Nettoyer l'URL immediatement (on garde le pathname actuel le temps
-      // de l'echange, puis on redirigera si landedOnCallback)
+      // Nettoyer les query params (?code=...&state=...) de l'URL tout en
+      // conservant le pathname (ex: /app/compta/saisie). React Router affichera
+      // la bonne page une fois l'echange termine.
       window.history.replaceState({}, document.title, window.location.pathname);
 
-      // Echanger le code via le backend (qui stocke les tokens en cookies httpOnly)
       fetch('/api/auth/callback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -126,16 +122,10 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
           setUser(apiUserToKeycloakUser(data.user));
           scheduleRefresh(data.expires_in);
           setIsLoading(false);
-          if (landedOnCallback) {
-            window.history.replaceState({}, document.title, '/');
-          }
         })
         .catch(() => {
           clearSession();
           setIsLoading(false);
-          if (landedOnCallback) {
-            window.history.replaceState({}, document.title, '/');
-          }
         });
       return;
     }
@@ -160,11 +150,9 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
   }, []);
 
   const login = useCallback(() => {
-    // Sauvegarder le parametre module pour le restaurer apres Keycloak
-    const moduleParam = new URLSearchParams(window.location.search).get('module');
-    if (moduleParam) {
-      sessionStorage.setItem('normx_redirect_module', moduleParam);
-    }
+    // Le module est maintenant encode dans le pathname (ex: /app/compta/saisie),
+    // pas besoin de le sauvegarder separement. Keycloak redirigera vers
+    // la meme URL apres auth, et React Router affichera la bonne page.
     const redirectUri = `${window.location.origin}${window.location.pathname}`;
     window.location.href = getLoginUrl(redirectUri);
   }, []);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { LuHouse, LuFileText } from 'react-icons/lu';
 const Paie = lazy(() => import('../paie/Paie'));
 import GestionClients from './GestionClients';
@@ -41,66 +42,62 @@ interface DashboardProps {
 }
 
 function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, typeActivite, offre = 'comptabilite', modules = [], entiteSigle = '', entiteAdresse = '', entiteNif = '', entites = [], onSwitchEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onLogout }: DashboardProps): React.ReactElement {
-  // Feature flag : filtrer les modules non actives (compta/paie pour l'instant)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const urlParams = useParams<{ module?: string; tab?: string }>();
+
+  // ---- Navigation URL-driven : l'URL est la source de verite ----
+  // /app/portail          → portail cabinet, clients list
+  // /app/portail/cabinet  → portail cabinet, panel "Mon cabinet"
+  // /app/:module/:tab     → module (compta|etats|paie) + tab (accueil|journal|balance|...)
   const enabledModules: NormxModule[] = modules.filter((m) => isModuleEnabled(m));
-  const [activeModule, setActiveModule] = useState<NormxModule | null>(() => {
-    const params = new URLSearchParams(window.location.search);
-    const mod = params.get('module') || sessionStorage.getItem('normx_redirect_module');
-    sessionStorage.removeItem('normx_redirect_module');
-    if (mod && (mod === 'compta' || mod === 'etats' || mod === 'paie') && isModuleEnabled(mod as NormxModule)) {
-      window.history.replaceState({}, '', window.location.pathname);
+
+  const activeModule: NormxModule | null = (() => {
+    const mod = urlParams.module;
+    if (mod && ['compta', 'etats', 'paie'].includes(mod) && isModuleEnabled(mod as NormxModule)) {
       return mod as NormxModule;
     }
-    // Restaurer le module depuis sessionStorage uniquement s'il est toujours active
-    const savedModule = sessionStorage.getItem('normx_activeModule');
-    if (savedModule && (savedModule === 'compta' || savedModule === 'etats' || savedModule === 'paie') && isModuleEnabled(savedModule as NormxModule)) {
-      return savedModule as NormxModule;
-    }
-    // Cabinet : rester sur le portail (null = page clients/dossiers)
-    if (isCabinet) return null;
-    // Non-cabinet : premier module actif parmi ceux de l'entite
-    for (const m of ENABLED_MODULES) {
-      if (enabledModules.includes(m)) return m;
-    }
     return null;
-  });
+  })();
+
+  const activeTab: string = urlParams.tab || 'accueil';
+
+  const portailSection: PortailSection = location.pathname.includes('/portail/cabinet') ? 'cabinet' : 'clients';
+
+  const setActiveModule = useCallback((mod: NormxModule | null) => {
+    if (!mod) navigate('/app/portail');
+    else navigate(`/app/${mod}/accueil`);
+  }, [navigate]);
+
+  const setActiveTab = useCallback((tab: string) => {
+    if (activeModule) navigate(`/app/${activeModule}/${tab}`);
+  }, [navigate, activeModule]);
+
+  const setPortailSection = useCallback((section: PortailSection) => {
+    navigate(section === 'cabinet' ? '/app/portail/cabinet' : '/app/portail');
+  }, [navigate]);
+
   const [moduleSwitcherOpen, setModuleSwitcherOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [portailSection, setPortailSection] = useState<PortailSection>('clients');
 
-  // Separer le cabinet (type_activite='cabinet') de la liste des dossiers clients.
-  // Le cabinet est accessible via la section dediee "Mon cabinet" du portail,
-  // pas via la liste des dossiers ni le selecteur de dossier.
   const cabinetEntite = entites.find((e) => e.type_activite === 'cabinet');
   const clientEntites = entites.filter((e) => e.type_activite !== 'cabinet');
   const moduleSwitcherRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState(() => sessionStorage.getItem('normx_activeTab') || 'accueil');
-  const [openTabs, setOpenTabs] = useState<TabItem[]>(() => {
-    try {
-      const saved = sessionStorage.getItem('normx_openTabs');
-      if (saved) {
-        const parsed = JSON.parse(saved) as { id: string; label: string; closable: boolean }[];
-        if (parsed.length > 0) return parsed.map(t => ({ ...t, icon: LuFileText }));
-      }
-    } catch { /* ignore */ }
-    return [{ id: 'accueil', label: 'Accueil', icon: LuHouse, closable: false }];
-  });
+
+  const [openTabs, setOpenTabs] = useState<TabItem[]>(
+    [{ id: 'accueil', label: 'Accueil', icon: LuHouse, closable: false }]
+  );
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
-  // Persister l'etat de navigation dans sessionStorage
+  // Synchroniser l'onglet actif avec la liste des onglets ouverts.
+  // Quand l'URL change et le tab n'est pas dans openTabs, on l'ajoute.
   useEffect(() => {
-    if (activeModule) sessionStorage.setItem('normx_activeModule', activeModule);
-    else sessionStorage.removeItem('normx_activeModule');
-  }, [activeModule]);
-  useEffect(() => {
-    sessionStorage.setItem('normx_activeTab', activeTab);
-  }, [activeTab]);
-  useEffect(() => {
-    const toSave = openTabs.map(t => ({ id: t.id, label: t.label, closable: t.closable }));
-    sessionStorage.setItem('normx_openTabs', JSON.stringify(toSave));
-  }, [openTabs]);
+    if (activeTab && activeTab !== 'accueil' && !openTabs.some(t => t.id === activeTab)) {
+      setOpenTabs(prev => [...prev, { id: activeTab, label: activeTab, icon: LuFileText, closable: true }]);
+    }
+  }, [activeTab, openTabs]);
 
   // Exercice + confirm modal logic
   const ex = useExercices(entiteId);
@@ -125,12 +122,11 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const etats: EtatFinancier[] = getEtats(typeActivite);
 
   const switchModule = (mod: NormxModule): void => {
-    if (!isModuleEnabled(mod)) return; // Ignore silencieusement les modules desactives
-    setActiveModule(mod);
+    if (!isModuleEnabled(mod)) return;
     setModuleSwitcherOpen(false);
-    setActiveTab('accueil');
     setOpenTabs([{ id: 'accueil', label: 'Accueil', icon: LuHouse, closable: false }]);
     setActiveSection(null);
+    navigate(`/app/${mod}/accueil`);
   };
 
   // Menu items
@@ -162,7 +158,9 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   }, [activeModule, findMenuItem]);
 
   const openTab = (id: string): void => {
-    setActiveTab(id);
+    if (activeModule) {
+      navigate(`/app/${activeModule}/${id}`);
+    }
     setOpenTabs((prev: TabItem[]) => {
       if (prev.some(t => t.id === id)) return prev;
       const info = findMenuItem(id);
@@ -173,7 +171,10 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const closeTab = (id: string): void => {
     setOpenTabs((prev: TabItem[]) => {
       const next = prev.filter(t => t.id !== id);
-      if (activeTab === id) setActiveTab(next.length > 0 ? next[next.length - 1].id : 'accueil');
+      if (activeTab === id) {
+        const fallback = next.length > 0 ? next[next.length - 1].id : 'accueil';
+        if (activeModule) navigate(`/app/${activeModule}/${fallback}`);
+      }
       return next;
     });
   };
@@ -202,7 +203,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const dossierSelector = (
     <DossierSelector
       entiteName={entiteName} entiteId={entiteId} entites={clientEntites}
-      onSwitchEntite={(ent: Entite) => { onSwitchEntite(ent); setActiveModule(null); }}
+      onSwitchEntite={(ent: Entite) => { onSwitchEntite(ent); navigate('/app/portail'); }}
       onNewDossier={() => openTab('nouveau_dossier')}
     />
   );
@@ -214,7 +215,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     moduleSwitcherRef, userMenuRef,
     moduleList: MODULE_LIST.filter((m) => isModuleEnabled(m.id)), hasModule,
     onSwitchModule: switchModule,
-    onGoToPortail: () => setActiveModule(null),
+    onGoToPortail: () => navigate('/app/portail'),
     onLogout, isCabinet,
   };
 
@@ -244,30 +245,14 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     />
   );
 
-  // Helper : choisir un module parmi ceux actives (ENABLED_MODULES), en respectant
-  // l'ordre de priorite de la config et les modules disponibles pour l'entite.
-  const pickDefaultModule = useCallback((): NormxModule | null => {
-    for (const m of ENABLED_MODULES) {
-      if (enabledModules.includes(m)) return m;
-    }
-    return null;
-  }, [enabledModules]);
-
-  // Si modules changent (ex: switch client), re-selectionner un module par defaut pour non-cabinet
+  // Si le module dans l'URL n'est pas disponible pour cette entite,
+  // rediriger vers le portail ou le premier module actif.
   useEffect(() => {
-    if (!activeModule && !isCabinet && enabledModules.length > 0) {
-      const def = pickDefaultModule();
-      if (def) setActiveModule(def);
+    if (activeModule && !enabledModules.includes(activeModule)) {
+      const first = ENABLED_MODULES.find(m => enabledModules.includes(m));
+      navigate(first ? `/app/${first}/accueil` : '/app/portail', { replace: true });
     }
-  }, [enabledModules, activeModule, isCabinet, setActiveModule, pickDefaultModule]);
-
-  // Reset module si le module actif n'est plus disponible (switch client) ou s'il a ete desactive
-  useEffect(() => {
-    if (activeModule && (!isModuleEnabled(activeModule) || (enabledModules.length > 0 && !enabledModules.includes(activeModule)))) {
-      const def = pickDefaultModule();
-      setActiveModule(def);
-    }
-  }, [enabledModules, activeModule, pickDefaultModule]);
+  }, [activeModule, enabledModules, navigate]);
 
   // ==================== CHARGEMENT ====================
   if (!activeModule && !isCabinet && modules.length === 0) {
@@ -297,7 +282,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
                 entites={clientEntites} currentEntiteId={entiteId}
                 onSelectEntite={(ent: Entite) => { onSwitchEntite(ent); }}
                 onEntiteCreated={onEntiteCreated} onEntiteUpdated={onEntiteUpdated} onEntiteDeleted={onEntiteDeleted}
-                onOpenModule={(ent: Entite, mod: NormxModule) => { onSwitchEntite(ent); setTimeout(() => switchModule(mod), 100); }}
+                onOpenModule={(ent: Entite, mod: NormxModule) => { onSwitchEntite(ent); navigate(`/app/${mod}/accueil`); }}
               />
             ) : (
               <CabinetPanel cabinet={cabinetEntite} clientsCount={clientEntites.length} />
