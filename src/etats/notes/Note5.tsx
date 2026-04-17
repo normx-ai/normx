@@ -1,3 +1,4 @@
+import { clientFetch } from '../../lib/api';
 import React, { useState, useRef, useEffect } from 'react';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine , LuEyeOff , LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -77,11 +78,11 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
     const load = async () => {
       try {
         if (balanceSource === 'ecritures') {
-          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
           const data = await res.json();
           setLignesN(data.lignes || []);
         } else {
-          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
           const data = await res.json();
           setLignesN(data.lignes || []);
         }
@@ -90,14 +91,14 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
         const exN1 = exercices.find(e => e.annee === selectedExercice.annee - 1);
         if (exN1) {
           if (balanceSource === 'ecritures') {
-            const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + exN1.id);
+            const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + exN1.id);
             setLignesN1((await res.json()).lignes || []);
           } else {
-            const res = await fetch('/api/balance/' + entiteId + '/' + exN1.id + '/N');
+            const res = await clientFetch('/api/balance/' + entiteId + '/' + exN1.id + '/N');
             setLignesN1((await res.json()).lignes || []);
           }
         } else {
-          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
+          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
           setLignesN1((await res.json()).lignes || []);
         }
       } catch { setLignesN1([]); }

@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { LuEye, LuPrinter, LuDownload, LuX } from 'react-icons/lu';
@@ -189,7 +190,7 @@ function SoldesIntermediaires({ entiteId, exerciceId, exerciceAnnee, exercices, 
       }
     } else {
       // Balance importée : N-1 est dans le même exercice
-      fetchN1 = fetch(`/api/balance/${entiteId}/${exerciceId}/N-1`).then(r => r.json()).then((result: SIGBalanceRow[] | { lignes?: SIGBalanceRow[] }) => {
+      fetchN1 = clientFetch(`/api/balance/${entiteId}/${exerciceId}/N-1`).then(r => r.json()).then((result: SIGBalanceRow[] | { lignes?: SIGBalanceRow[] }) => {
         return Array.isArray(result) ? result : (result.lignes || []);
       }).catch(() => [] as SIGBalanceRow[]);
     }

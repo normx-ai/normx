@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { LuEye, LuPrinter, LuDownload, LuX } from 'react-icons/lu';
@@ -39,7 +40,7 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
       setLoading(true);
       if (offre === 'comptabilite') {
         try {
-          const res: Response = await fetch(`/api/ecritures/rapports/tableau-bord/${entiteId}/${exerciceId}`);
+          const res: Response = await clientFetch(`/api/ecritures/rapports/tableau-bord/${entiteId}/${exerciceId}`);
           if (res.ok) {
             const data: TableauBordApiData = await res.json();
             setClasses(data.classes || []);
@@ -50,7 +51,7 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
         } catch (_e) { /* network error */ }
       } else {
         try {
-          const res = await fetch(`/api/balance/${entiteId}/${exerciceId}/N`);
+          const res = await clientFetch(`/api/balance/${entiteId}/${exerciceId}/N`);
           if (res.ok) {
             const result: BalanceRow[] | { lignes?: BalanceRow[] } = await res.json();
             const rows = Array.isArray(result) ? result : (result.lignes || []);

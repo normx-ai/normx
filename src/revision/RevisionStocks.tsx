@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -106,7 +107,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/stocks`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/stocks`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { invLignes?: InvStockLigne[]; valoLignes?: ValoLigne[]; encoursLignes?: EncoursRouteLigne[]; deprecLignes?: DeprecLigne[]; varEdit?: Record<string, { soldeN1: number; variation: number }>; odEcritures?: ODEcriture[] }) => {
         if (data.invLignes) { setInvLignes(data.invLignes); if (data.invLignes.length > 0) setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes!.map((a: InvStockLigne) => a.id)) + 1 })); }
@@ -121,7 +122,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/stocks`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/stocks`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ invLignes, valoLignes, varEdit, encoursLignes, deprecLignes, odEcritures }),

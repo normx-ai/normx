@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
 import { LuFileText } from 'react-icons/lu';
 import {
   DeclarationTVAProps,
@@ -36,7 +37,7 @@ function DeclarationTVA({ entiteId, exerciceId, exerciceAnnee, entiteName, entit
   const [liveEntite, setLiveEntite] = useState<LiveEntite | null>(null);
   useEffect(() => {
     if (!entiteId) return;
-    fetch(`/api/entites/${entiteId}`).then((r: Response) => r.ok ? r.json() : null).then((data: LiveEntite | null) => {
+    clientFetch(`/api/entites/${entiteId}`).then((r: Response) => r.ok ? r.json() : null).then((data: LiveEntite | null) => {
       if (data) setLiveEntite(data);
     }).catch(() => {});
   }, [entiteId]);
@@ -55,7 +56,7 @@ function DeclarationTVA({ entiteId, exerciceId, exerciceAnnee, entiteName, entit
     if (!entiteId || !exerciceId) return;
     setLoadingDecl(true);
     try {
-      const res: Response = await fetch(`/api/tva/declarations/${entiteId}/${exerciceId}`);
+      const res: Response = await clientFetch(`/api/tva/declarations/${entiteId}/${exerciceId}`);
       if (res.ok) {
         const data: DeclarationItem[] = await res.json();
         setDeclarations(data);
@@ -85,7 +86,7 @@ function DeclarationTVA({ entiteId, exerciceId, exerciceAnnee, entiteName, entit
     if (!selectedDecl || !selectedDecl.id) { setLignes([]); return; }
     setLoadingLignes(true);
     try {
-      const res: Response = await fetch(`/api/tva/lignes/${selectedDecl.id}/${activeTab}`);
+      const res: Response = await clientFetch(`/api/tva/lignes/${selectedDecl.id}/${activeTab}`);
       if (res.ok) { const j = await res.json(); setLignes(Array.isArray(j) ? j : j.data || j.lignes || []); }
       else setLignes([]);
     } catch (_e) { setLignes([]); }
@@ -118,9 +119,9 @@ function DeclarationTVA({ entiteId, exerciceId, exerciceAnnee, entiteName, entit
       const payload = { ...lineForm, declaration_id: selectedDecl ? selectedDecl.id : null, onglet: activeTab };
       let res: Response;
       if (editingLine) {
-        res = await fetch(`/api/tva/ligne/${editingLine.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        res = await clientFetch(`/api/tva/ligne/${editingLine.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       } else {
-        res = await fetch('/api/tva/ligne', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        res = await clientFetch('/api/tva/ligne', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       }
       if (res.ok) { setShowLineModal(false); loadLignes(); loadDeclarations(); }
       else { const data: { error?: string } = await res.json(); alert(data.error || 'Erreur lors de l\'enregistrement.'); }
@@ -130,7 +131,7 @@ function DeclarationTVA({ entiteId, exerciceId, exerciceAnnee, entiteName, entit
   const handleDeleteLine = async (id: number): Promise<void> => {
     if (!window.confirm('Supprimer cette ligne ?')) return;
     try {
-      const res: Response = await fetch(`/api/tva/ligne/${id}`, { method: 'DELETE' });
+      const res: Response = await clientFetch(`/api/tva/ligne/${id}`, { method: 'DELETE' });
       if (res.ok) { loadLignes(); loadDeclarations(); }
     } catch (_e) { /* silently ignore */ }
   };

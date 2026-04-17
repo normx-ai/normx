@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
 import {
   ImpotSectionPanelProps,
   Compte44,
@@ -22,7 +23,7 @@ function ImpotSectionPanel({ selectedImpot, selectedMois, entiteId, exerciceId, 
 
   // Charger la liste des comptes 44x au montage
   useEffect(() => {
-    fetch('/api/tva/plan-comptable-44')
+    clientFetch('/api/tva/plan-comptable-44')
       .then((r: Response) => r.ok ? r.json() : [])
       .then((data: Compte44[]) => setComptes44(data))
       .catch(() => { /* silently ignore */ });
@@ -39,7 +40,7 @@ function ImpotSectionPanel({ selectedImpot, selectedMois, entiteId, exerciceId, 
     }
     setLoadingData(true);
     const mois: number = selectedMois + 1;
-    fetch(`/api/tva/montants-comptes/${entiteId}/${exerciceId}?mois=${mois}&comptes=${selectedComptes.join(',')}`)
+    clientFetch(`/api/tva/montants-comptes/${entiteId}/${exerciceId}?mois=${mois}&comptes=${selectedComptes.join(',')}`)
       .then((r: Response) => r.ok ? r.json() : { lignes: [], total_debit: 0, total_credit: 0, solde: 0 })
       .then((data: ComptesData) => { setComptesData(data); setLoadingData(false); })
       .catch(() => { setLoadingData(false); });

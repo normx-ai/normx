@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -90,7 +91,7 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/df`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/df`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { prets?: PretLigne[]; interets?: InteretLigne[]; interetsCourus?: InteretCoururLigne[]; autresCharges?: AutreChargeLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.prets) {
@@ -119,7 +120,7 @@ function RevisionDF({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionD
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/df`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/df`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prets, interets, interetsCourus, autresCharges, odEcritures }),

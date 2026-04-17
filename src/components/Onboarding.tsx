@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { clientFetch } from '../lib/api';
 import type { NormxModule, Entite } from '../types';
 import { ENABLED_MODULES, isModuleEnabled } from '../config/modules';
 import OnboardingLayout from './onboarding/OnboardingLayout';
@@ -90,7 +91,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     setSaving(true);
     setError('');
     try {
-      const resp = await fetch('/api/tenant/setup', {
+      const resp = await clientFetch('/api/tenant/setup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -122,7 +123,7 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     setSaving(true);
     setError('');
     try {
-      const resp = await fetch('/api/tenant/exercice', {
+      const resp = await clientFetch('/api/tenant/exercice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2, LuCheck, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -125,7 +126,7 @@ function RevisionAutresTiers({ balanceN, exerciceAnnee, entiteId, exerciceId }: 
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { ccaLignes?: CCALigne[]; pcaLignes?: PCALigne[]; attenteLignes?: AttenteLigne[]; diversLignes?: DiversLigne[]; ecartLignes?: EcartConversionLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.ccaLignes) { setCcaLignes(data.ccaLignes); if (data.ccaLignes.length > 0) setNextIds(prev => ({ ...prev, cca: Math.max(...data.ccaLignes!.map((a: CCALigne) => a.id)) + 1 })); }
@@ -140,7 +141,7 @@ function RevisionAutresTiers({ balanceN, exerciceAnnee, entiteId, exerciceId }: 
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/autres-tiers`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ccaLignes, pcaLignes, attenteLignes, diversLignes, ecartLignes, odEcritures }),

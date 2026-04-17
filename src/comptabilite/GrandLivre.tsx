@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useCallback, useEffect } from 'react';
 import { LuChevronLeft, LuDownload } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
@@ -146,7 +147,7 @@ function GrandLivre({ entiteId, exerciceId, exerciceAnnee, entiteName = '', enti
 
   useEffect(() => {
     if (!entiteId || !exerciceId) return;
-    fetch(`/api/ecritures/comptes/${entiteId}/${exerciceId}`)
+    clientFetch(`/api/ecritures/comptes/${entiteId}/${exerciceId}`)
       .then(r => r.ok ? r.json() : [])
       .then((list: CompteComptable[]) => setComptesOptions(list))
       .catch(() => {});

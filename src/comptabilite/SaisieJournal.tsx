@@ -255,7 +255,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
       };
       const url = editingId ? '/api/ecritures/' + editingId : '/api/ecritures';
       const method = editingId ? 'PUT' : 'POST';
-      const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const res = await clientFetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (res.ok) {
         invalidateEcrituresAndStats(); resetForm(); setLibelle(''); setNumeroPiece('');
         setLignes([
@@ -269,7 +269,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
 
   const deleteEcriture = async (id: number): Promise<void> => {
     if (!window.confirm('Supprimer cette ecriture ?')) return;
-    try { await fetch('/api/ecritures/' + id, { method: 'DELETE' }); invalidateEcrituresAndStats(); } catch (_err) { /* ignore */ }
+    try { await clientFetch('/api/ecritures/' + id, { method: 'DELETE' }); invalidateEcrituresAndStats(); } catch (_err) { /* ignore */ }
   };
 
   // --- Selection ---
@@ -285,7 +285,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     const brouillards = [...selectedIds].filter(id => { const ecr = ecritures.find(e => e.id === id); return ecr && ecr.statut !== 'validee'; });
     if (brouillards.length === 0) return;
     try {
-      const res = await fetch('/api/ecritures/valider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: brouillards }) });
+      const res = await clientFetch('/api/ecritures/valider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: brouillards }) });
       if (res.ok) { setSelectedIds(new Set()); invalidateEcrituresAndStats(); }
       else { const err: { error?: string } = await res.json(); alert(err.error || 'Erreur'); }
     } catch (_err) { alert('Erreur reseau'); }
@@ -296,7 +296,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     if (validees.length === 0) return;
     if (!window.confirm('Repasser ' + validees.length + ' ecriture(s) en brouillard ?')) return;
     try {
-      const res = await fetch('/api/ecritures/devalider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: validees }) });
+      const res = await clientFetch('/api/ecritures/devalider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: validees }) });
       if (res.ok) { setSelectedIds(new Set()); invalidateEcrituresAndStats(); }
       else { const err: { error?: string } = await res.json(); alert(err.error || 'Erreur'); }
     } catch (_err) { alert('Erreur reseau'); }

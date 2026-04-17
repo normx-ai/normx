@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuChartBarIncreasing, LuChartPie, LuPrinter, LuDownload, LuX, LuEye } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -132,12 +133,12 @@ function RepartitionCharges({ entiteId, exerciceId, exerciceAnnee, offre, entite
       setLoading(true);
       if (offre === 'comptabilite') {
         try {
-          const res: Response = await fetch(`/api/ecritures/rapports/repartition-charges/${entiteId}/${exerciceId}`);
+          const res: Response = await clientFetch(`/api/ecritures/rapports/repartition-charges/${entiteId}/${exerciceId}`);
           if (res.ok) setData(await res.json());
         } catch (_e) { /* network error */ }
       } else {
         try {
-          const res = await fetch(`/api/balance/${entiteId}/${exerciceId}/N`);
+          const res = await clientFetch(`/api/balance/${entiteId}/${exerciceId}/N`);
           if (res.ok) {
             const result: BalanceRow[] | { lignes?: BalanceRow[] } = await res.json();
             const rows = Array.isArray(result) ? result : (result.lignes || []);

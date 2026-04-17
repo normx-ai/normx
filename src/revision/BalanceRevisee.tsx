@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuFileCheck, LuFilter, LuCheck, LuShieldCheck } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -39,8 +40,8 @@ function BalanceRevisee({ entiteId, exerciceId, exerciceAnnee }: BalanceReviseeP
     setLoading(true);
 
     Promise.all([
-      fetch(`/api/balance/${entiteId}/${exerciceId}/N`).then(r => r.json()),
-      fetch(`/api/revision/${entiteId}/${exerciceId}/all-od`).then(r => r.ok ? r.json() : { odEcritures: [] }),
+      clientFetch(`/api/balance/${entiteId}/${exerciceId}/N`).then(r => r.json()),
+      clientFetch(`/api/revision/${entiteId}/${exerciceId}/all-od`).then(r => r.ok ? r.json() : { odEcritures: [] }),
     ]).then(([balData, odData]) => {
       const balanceN: BalanceLigne[] = balData.lignes || [];
       if (balData.balance?.statut) setStatut(balData.balance.statut);
@@ -109,7 +110,7 @@ function BalanceRevisee({ entiteId, exerciceId, exerciceAnnee }: BalanceReviseeP
     if (!balanceId) return;
     setValidating(true);
     try {
-      const res = await fetch(`/api/balance/statut/${balanceId}`, {
+      const res = await clientFetch(`/api/balance/statut/${balanceId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ statut: 'valide' }),

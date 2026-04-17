@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState } from 'react';
 import { LuSearch, LuPlus } from 'react-icons/lu';
 import { Entite, NormxModule } from '../types';
@@ -130,7 +131,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     try {
       const headers: Record<string, string> = {};
       if (slug) headers['X-Client-Slug'] = slug;
-      const res = await fetch(`/api/balance/exercices/${id}`, { credentials: 'include', headers });
+      const res = await clientFetch(`/api/balance/exercices/${id}`, { credentials: 'include', headers });
       if (res.ok) {
         const exercices = await res.json();
         hasData = exercices.length > 0;

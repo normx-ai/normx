@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -69,7 +70,7 @@ function RevisionTreso({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/treso`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/treso`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { rapprochLignes?: RapprochBancaireLigne[]; caisseLignes?: CaisseLigne[]; titreLignes?: TitrePlacementLigne[]; deviseLignes?: DispoDeviseLigne[]; circularLignes?: CircularisationBancaireLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.rapprochLignes) { setRapprochLignes(data.rapprochLignes); if (data.rapprochLignes.length > 0) setNextIds(prev => ({ ...prev, rapp: Math.max(...data.rapprochLignes!.map((a: RapprochBancaireLigne) => a.id)) + 1 })); }
@@ -84,7 +85,7 @@ function RevisionTreso({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/treso`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/treso`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ rapprochLignes, caisseLignes, titreLignes, deviseLignes, circularLignes, odEcritures }),

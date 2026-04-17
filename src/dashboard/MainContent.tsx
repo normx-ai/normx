@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { clientFetch } from '../lib/api';
 import { LuHandHelping, LuLock, LuTriangleAlert, LuArrowUpRight } from 'react-icons/lu';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';
 import { ExerciceSelector } from './ExerciceManager';
@@ -168,7 +169,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
     const url = balSrc === 'ecritures'
       ? '/api/ecritures/balance/' + entiteId + '/' + exerciceId
       : '/api/balance/' + entiteId + '/' + exerciceId + '/N';
-    fetch(url)
+    clientFetch(url)
       .then(r => r.json())
       .then(data => setBalanceLignes(data.lignes || []))
       .catch(() => setBalanceLignes([]));
@@ -178,7 +179,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
   const [entiteParams, setEntiteParams] = useState<Record<string, string>>({});
   useEffect(() => {
     if (!entiteId) return;
-    fetch('/api/entites/' + entiteId)
+    clientFetch('/api/entites/' + entiteId)
       .then(r => r.json())
       .then(ent => setEntiteParams(ent.data || {}))
       .catch(() => setEntiteParams({}));
@@ -353,11 +354,11 @@ function MainContent(props: MainContentProps): React.ReactElement {
         const offr = etatBaseProps.offre;
         let lignes: { numero_compte: string; solde_crediteur?: number; solde_crediteur_revise?: number; solde_debiteur?: number; solde_debiteur_revise?: number }[] = [];
         if (offr === 'comptabilite') {
-          const res = await fetch(`/api/ecritures/balance/${entiteId}/${exerciceId}`);
+          const res = await clientFetch(`/api/ecritures/balance/${entiteId}/${exerciceId}`);
           const data = await res.json();
           lignes = data.lignes || [];
         } else {
-          const res = await fetch(`/api/balance/${entiteId}/${exerciceId}/N`);
+          const res = await clientFetch(`/api/balance/${entiteId}/${exerciceId}/N`);
           const data = await res.json();
           lignes = data.lignes || [];
         }

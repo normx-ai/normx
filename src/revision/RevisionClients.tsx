@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -58,7 +59,7 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/clients`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/clients`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { recouvLignes?: RecouvLigne[]; douteuseLignes?: CreanceDouteuseLigne[]; deprecEdit?: Record<string, { soldeN1: number; dotations: number; reprises: number }>; deviseLignes?: CreanceDeviseLigne[]; circularLignes?: CircularClientLigne[]; prodRecevoirEdit?: Record<string, { commentaire: string }>; odEcritures?: ODEcriture[] }) => {
         if (data.recouvLignes) { setRecouvLignes(data.recouvLignes); if (data.recouvLignes.length > 0) setNextIds(prev => ({ ...prev, recouv: Math.max(...data.recouvLignes!.map((a: RecouvLigne) => a.id)) + 1 })); }
@@ -74,7 +75,7 @@ function RevisionClients({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revi
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/clients`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/clients`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ recouvLignes, douteuseLignes, deprecEdit, deviseLignes, circularLignes, prodRecevoirEdit, odEcritures }),

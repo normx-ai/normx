@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -59,7 +60,7 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
   }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/subv`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/subv`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { subvAmort?: SubvAmortLigne[]; subvNonAmort?: SubvNonAmortLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.subvAmort) {
@@ -80,7 +81,7 @@ function RevisionSubv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/subv`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/subv`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subvAmort, subvNonAmort, odEcritures }),

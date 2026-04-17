@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { clientFetch } from '../lib/api';
 import { LuUpload, LuX, LuFileText, LuCheck, LuLoader, LuTriangleAlert } from 'react-icons/lu';
 import type { EcritureRow, TiersItem } from './SaisieJournal.types';
 
@@ -85,7 +86,7 @@ function ImportDocumentModal({ entiteId, exerciceId, onClose, onImport }: Import
       formData.append('entite_id', String(entiteId));
       formData.append('exercice_id', String(exerciceId));
 
-      const res = await fetch('/api/ocr-import/extract', {
+      const res = await clientFetch('/api/ocr-import/extract', {
         method: 'POST',
         body: formData,
       });

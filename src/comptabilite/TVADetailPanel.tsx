@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React from 'react';
 import { LuChevronDown, LuPlus, LuDownload, LuRefreshCw } from 'react-icons/lu';
 import {
@@ -152,7 +153,7 @@ function TVADetailPanel(props: TVADetailPanelProps): React.ReactElement {
                     if (!selectedDecl?.id) return;
                     if (!window.confirm('Importer les lignes TVA depuis les écritures comptables du mois ? Les lignes existantes seront remplacées.')) return;
                     try {
-                      const res: Response = await fetch(`/api/tva/importer-ecritures/${selectedDecl.id}`, { method: 'POST' });
+                      const res: Response = await clientFetch(`/api/tva/importer-ecritures/${selectedDecl.id}`, { method: 'POST' });
                       const data: { message?: string; error?: string } = await res.json();
                       if (res.ok) {
                         alert(data.message);

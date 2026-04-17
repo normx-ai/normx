@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { clientFetch } from '../lib/api';
 import { fmt, fmtDate } from '../utils/formatters';
 
 interface LettrageProps {
@@ -76,7 +77,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     setLoadingTiers(true);
     try {
       const typeFilter = selectedTypes.length < ALL_TYPES.length ? `?type_tiers=${selectedTypes.join(',')}` : '';
-      const res = await fetch(`/api/ecritures/lettrage/tiers/${entiteId}/${exerciceId}${typeFilter}`);
+      const res = await clientFetch(`/api/ecritures/lettrage/tiers/${entiteId}/${exerciceId}${typeFilter}`);
       if (res.ok) { const j = await res.json(); setTiersList(Array.isArray(j) ? j : j.data || j.tiers || []); }
     } catch (_e) {
       // silently ignore
@@ -96,7 +97,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
       if (anneeDe) params.append('annee_de', String(anneeDe));
       if (anneeA) params.append('annee_a', String(anneeA));
       const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await fetch(`/api/ecritures/lettrage/ecritures/${entiteId}/${exerciceId}/${selectedTiers.id}${qs}`);
+      const res = await clientFetch(`/api/ecritures/lettrage/ecritures/${entiteId}/${exerciceId}/${selectedTiers.id}${qs}`);
       if (res.ok) {
         setEcritures(await res.json());
         setCheckedIds(new Set());
@@ -157,7 +158,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     if (selectedLines.length < 2) { alert('Sélectionnez au moins 2 lignes.'); return; }
     if (Math.abs(ecartSelected) > 0.01) { alert(`Écart non nul: ${fmt(ecartSelected)}. Les lignes doivent s'équilibrer.`); return; }
     try {
-      const res = await fetch('/api/ecritures/lettrage/lettrer', {
+      const res = await clientFetch('/api/ecritures/lettrage/lettrer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ligne_ids: [...checkedIds], entite_id: entiteId }),
@@ -175,7 +176,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
   const handleDelettrer = async (code: string): Promise<void> => {
     if (!window.confirm(`Supprimer le lettrage ${code} ?`)) return;
     try {
-      const res = await fetch('/api/ecritures/lettrage/delettrer', {
+      const res = await clientFetch('/api/ecritures/lettrage/delettrer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lettrage_code: code, entite_id: entiteId }),

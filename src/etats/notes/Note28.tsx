@@ -1,3 +1,4 @@
+import { clientFetch } from '../../lib/api';
 import React, { useState, useRef, useEffect } from 'react';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
@@ -84,11 +85,11 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
       try {
         let bl: BalanceLigne[] = [];
         if (balanceSource === 'ecritures') {
-          const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
           const data = await res.json();
           bl = data.lignes || [];
         } else {
-          const res = await fetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
           const data = await res.json();
           bl = data.lignes || [];
         }

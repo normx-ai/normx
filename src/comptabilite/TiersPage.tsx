@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { clientFetch } from '../lib/api';
 import { LuPlus, LuPenLine, LuTrash2, LuSearch, LuX, LuSave, LuUsers, LuTruck, LuHandshake, LuUser, LuDownload, LuSheet, LuFileText } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -92,7 +93,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
       try {
         const allResults = await Promise.all(
           typeCfg.prefixes.map(prefix =>
-            fetch('/api/plan-comptable?search=' + encodeURIComponent(prefix))
+            clientFetch('/api/plan-comptable?search=' + encodeURIComponent(prefix))
               .then(r => r.json())
           )
         );
@@ -123,7 +124,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
     if (!entiteId) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/tiers/' + entiteId);
+      const res = await clientFetch('/api/tiers/' + entiteId);
       if (res.ok) { const j = await res.json(); setTiers(Array.isArray(j) ? j : j.data || j.tiers || []); }
     } catch (_err) {
       // silently ignore
@@ -203,7 +204,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
       const body = { ...form, entite_id: entiteId };
       const url = editingTiers ? '/api/tiers/' + editingTiers.id : '/api/tiers';
       const method = editingTiers ? 'PUT' : 'POST';
-      const res = await fetch(url, {
+      const res = await clientFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -225,7 +226,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
   const deleteTiers = async (id: number): Promise<void> => {
     if (!window.confirm('Supprimer ce tiers ?')) return;
     try {
-      await fetch('/api/tiers/' + id, { method: 'DELETE' });
+      await clientFetch('/api/tiers/' + id, { method: 'DELETE' });
       if (selectedTiers?.id === id) setSelectedTiers(null);
       loadTiers();
     } catch (_err) {

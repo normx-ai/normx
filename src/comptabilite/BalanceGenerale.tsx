@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { clientFetch } from '../lib/api';
 import { LuChevronLeft, LuDownload, LuX } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -106,7 +107,7 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const res = await fetch('/api/ecritures/balance/' + entiteId + '/' + exerciceId);
+      const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + exerciceId);
       if (res.ok) { const j = await res.json(); setBalance(Array.isArray(j) ? j : j.data || j.lignes || j.balance || []); }
     } catch (_err) {
       // silently ignore

@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -117,7 +118,7 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/immo`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/immo`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { invLignes?: InvLigne[]; encoursLignes?: EncoursLigne[]; sortieLignes?: SortieLigne[]; amortLignes?: AmortLigne[]; chargeImmoLignes?: ChargeImmoLigne[]; rapprochEdit?: Record<string, number>; odEcritures?: ODEcriture[] }) => {
         if (data.invLignes) { setInvLignes(data.invLignes); if (data.invLignes.length > 0) setNextIds(prev => ({ ...prev, inv: Math.max(...data.invLignes!.map((a: InvLigne) => a.id)) + 1 })); }
@@ -133,7 +134,7 @@ function RevisionImmo({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/immo`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/immo`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ invLignes, rapprochEdit, encoursLignes, sortieLignes, amortLignes, chargeImmoLignes, odEcritures }),

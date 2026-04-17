@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { clientFetch } from '../lib/api';
 import { LuDownload, LuSheet, LuFileText, LuSearch, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -79,7 +80,7 @@ function BalanceTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteS
       if (filterDateDu) params.set('date_du', filterDateDu);
       if (filterDateAu) params.set('date_au', filterDateAu);
       const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await fetch('/api/ecritures/balance-tiers/' + entiteId + '/' + exerciceId + qs);
+      const res = await clientFetch('/api/ecritures/balance-tiers/' + entiteId + '/' + exerciceId + qs);
       if (res.ok) {
         const json = await res.json();
         setData(Array.isArray(json) ? json : json.data || json.lignes || json.balance || []);

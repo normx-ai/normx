@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useCallback } from 'react';
 import { LuChevronLeft, LuDownload, LuFileText } from 'react-icons/lu';
 import { fmt } from '../utils/formatters';
@@ -140,7 +141,7 @@ function Journaux({ entiteId, exerciceId, exerciceAnnee, entiteName, onBack }: J
       if (dateFin) params.append('date_au', dateFin);
       if (journalFilter) params.append('journal', journalFilter);
       const qs = '?' + params.toString();
-      const res = await fetch(`/api/ecritures/${entiteId}/${exerciceId}${qs}`);
+      const res = await clientFetch(`/api/ecritures/${entiteId}/${exerciceId}${qs}`);
       if (res.ok) {
         const ecritures: EcritureAPI[] = await res.json();
         const lines: JournalLine[] = [];
@@ -286,7 +287,7 @@ function Echeancier({ entiteId, exerciceId, exerciceAnnee, onBack }: EcheancierP
       if (typeTiers) params.append('type_tiers', typeTiers);
       if (statutFilter) params.append('statut', statutFilter);
       const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await fetch(`/api/ecritures/rapports/echeancier/${entiteId}/${exerciceId}${qs}`);
+      const res = await clientFetch(`/api/ecritures/rapports/echeancier/${entiteId}/${exerciceId}${qs}`);
       if (res.ok) { setData(await res.json()); setGenerated(true); }
     } catch (_e) {
       // silently ignore
@@ -403,7 +404,7 @@ function BalanceAgee({ entiteId, exerciceId, exerciceAnnee, onBack }: BalanceAge
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/ecritures/rapports/balance-agee/${entiteId}/${exerciceId}${typeTiers ? '?type_tiers=' + typeTiers : ''}`);
+      const res = await clientFetch(`/api/ecritures/rapports/balance-agee/${entiteId}/${exerciceId}${typeTiers ? '?type_tiers=' + typeTiers : ''}`);
       if (res.ok) { setData(await res.json()); setGenerated(true); }
     } catch (_e) {
       // silently ignore

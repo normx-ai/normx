@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -178,7 +179,7 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
   };
 
   const loadSaved = (defaultLignes: ProvLigne[], defaultRC: ProvRCLigne[]): void => {
-    fetch(`/api/revision/${entiteId}/${exerciceId}/prov`)
+    clientFetch(`/api/revision/${entiteId}/${exerciceId}/prov`)
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { lignes?: ProvLigne[]; amortDerog?: AmortDerogLigne[]; provRC?: ProvRCLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.lignes) {
@@ -211,7 +212,7 @@ function RevisionProv({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisio
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await fetch(`/api/revision/${entiteId}/${exerciceId}/prov`, {
+      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/prov`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lignes, amortDerog, provRC, odEcritures }),

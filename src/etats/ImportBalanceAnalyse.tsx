@@ -1,3 +1,4 @@
+import { clientFetch } from '../lib/api';
 import React, { useMemo, useState } from 'react';
 import { LuTriangleAlert, LuChevronDown, LuChevronRight, LuCheck } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -120,7 +121,7 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
 
   const handleCorrection = async (ligneId: number, newNumero: string): Promise<void> => {
     try {
-      const res = await fetch(`/api/balance/ligne/${ligneId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ numero_compte: newNumero }) });
+      const res = await clientFetch(`/api/balance/ligne/${ligneId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ numero_compte: newNumero }) });
       if (res.ok) {
         if (exerciceId) loadBalances(exerciceId);
         setCorrections(prev => ({ ...prev, [ligneId]: newNumero }));
@@ -148,7 +149,7 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
         const sd = parseFloat(String(l.solde_debiteur)) || 0;
         const sc = parseFloat(String(l.solde_crediteur)) || 0;
         const target = Math.max(sd, sc);
-        await fetch(`/api/balance/revision/${l.id}`, {
+        await clientFetch(`/api/balance/revision/${l.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -164,7 +165,7 @@ function ImportBalanceAnalyse({ currentLignes, exerciceId, loadBalances, setMess
       const delta = Math.abs(net13);
       const newSd = isProfit ? sdCible : sdCible + delta;
       const newSc = isProfit ? scCible + delta : scCible;
-      await fetch(`/api/balance/revision/${cible.id}`, {
+      await clientFetch(`/api/balance/revision/${cible.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
