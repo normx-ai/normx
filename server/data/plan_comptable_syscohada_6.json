@@ -702,49 +702,49 @@
   {
     "numero": "166100",
     "numero_original": "1661",
-    "libelle": "sur emprunts obligataires",
+    "libelle": "Intérêts courus sur emprunts obligataires",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166200",
     "numero_original": "1662",
-    "libelle": "sur emprunts et dettes aupres des etablissements de credit",
+    "libelle": "Intérêts courus sur emprunts et dettes aupres des etablissements de credit",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166300",
     "numero_original": "1663",
-    "libelle": "sur avances recues de l'Etat",
+    "libelle": "Intérêts courus sur avances recues de l'Etat",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166400",
     "numero_original": "1664",
-    "libelle": "sur avances recues et comptes courants bloques",
+    "libelle": "Intérêts courus sur avances recues et comptes courants bloques",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166500",
     "numero_original": "1665",
-    "libelle": "sur depots et cautionnements recus",
+    "libelle": "Intérêts courus sur depots et cautionnements recus",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166700",
     "numero_original": "1667",
-    "libelle": "sur avances assorties de conditions particulieres",
+    "libelle": "Intérêts courus sur avances assorties de conditions particulieres",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166800",
     "numero_original": "1668",
-    "libelle": "sur autres emprunts et dettes",
+    "libelle": "Intérêts courus sur autres emprunts et dettes",
     "classe": 1,
     "sens": "crediteur"
   },
