@@ -13,7 +13,7 @@ interface CompteComptable {
 let planSyscohada: CompteComptable[] | null = null;
 function getPlanSyscohada(): CompteComptable[] {
   if (!planSyscohada) {
-    const filePath = path.join(__dirname, '..', 'data', 'plan_comptable_syscohada_6.json');
+    const filePath = path.join(__dirname, '..', 'data', 'plan_comptable_syscohada.json');
     if (fs.existsSync(filePath)) {
       planSyscohada = require(filePath);
     } else {
