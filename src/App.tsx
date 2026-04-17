@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { KeycloakProvider, useKeycloak } from './auth/KeycloakProvider';
+import { ClientProvider, useClient } from './contexts/ClientContext';
+import { cabinetFetch, setApiClientSlug } from './lib/api';
 import Dashboard from './dashboard/Dashboard';
 import Onboarding from './components/Onboarding';
 import Toast from './components/Toast';
@@ -8,27 +10,11 @@ import type { Entite, NormxModule } from './types';
 import { ENABLED_MODULES, filterEnabledModules, isModuleEnabled } from './config/modules';
 import './App.css';
 
-// Intercepteur global : cookies httpOnly + header X-Client-Slug pour les cabinets.
-// Le slug client est stocke en sessionStorage car c'est un contexte API (quel
-// dossier client est actif pour les requetes backend), pas de la navigation.
-const originalFetch = window.fetch;
-window.fetch = function (input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
-  const url = typeof input === 'string' ? input : input instanceof URL ? input.toString() : input.url;
-  if (url.startsWith('/api')) {
-    const headers = new Headers(init?.headers);
-    const clientSlug = sessionStorage.getItem('normx_client_slug');
-    if (clientSlug) {
-      headers.set('X-Client-Slug', clientSlug);
-    }
-    init = { ...init, credentials: 'include', headers };
-  }
-  return originalFetch.call(window, input, init);
-};
-
 function AppContent(): React.JSX.Element {
   const { user, isAuthenticated, isLoading, login, logout } = useKeycloak();
   const navigate = useNavigate();
   const location = useLocation();
+  const { setClientSlug } = useClient();
   const [entites, setEntites] = React.useState<Entite[]>([]);
   const [currentEntite, setCurrentEntite] = React.useState<Entite | null>(null);
   const [toast, setToast] = React.useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null);
@@ -37,10 +23,11 @@ function AppContent(): React.JSX.Element {
   const [tenantName, setTenantName] = React.useState('');
   const [tenantType, setTenantType] = React.useState<string>('');
   const [subscriptionRequired, setSubscriptionRequired] = React.useState(false);
+  const initialRedirectDone = React.useRef(false);
 
   const loadTenantAndEntites = React.useCallback(async (): Promise<void> => {
     try {
-      const r = await fetch('/api/tenant/me', { credentials: 'include' });
+      const r = await cabinetFetch('/api/tenant/me');
       if (r.status === 403) {
         const err = await r.json().catch(() => ({}));
         if (err.code === 'SUBSCRIPTION_REQUIRED') {
@@ -61,8 +48,7 @@ function AppContent(): React.JSX.Element {
       setTenantType(data.tenant.type || '');
 
       try {
-        const savedSlug = sessionStorage.getItem('normx_client_slug');
-        const entitesRes = await fetch('/api/entites', { credentials: 'include' });
+        const entitesRes = await cabinetFetch('/api/entites');
         if (entitesRes.ok) {
           const rawList: Entite[] = await entitesRes.json();
           const entitesList: Entite[] = rawList.map((e) => ({
@@ -71,11 +57,11 @@ function AppContent(): React.JSX.Element {
           }));
           setEntites(entitesList);
           if (entitesList.length > 0) {
-            const restored = savedSlug ? entitesList.find((e) => e.slug === savedSlug) : null;
-            const selected = restored || entitesList[0];
+            const selected = entitesList[0];
             setCurrentEntite(selected);
             if (selected.slug) {
-              sessionStorage.setItem('normx_client_slug', selected.slug);
+              setClientSlug(selected.slug);
+              setApiClientSlug(selected.slug);
             }
           }
         } else {
@@ -94,24 +80,13 @@ function AppContent(): React.JSX.Element {
         setEntites([{ id: t.id, nom: t.nom, type_activite: 'entreprise', offre: 'etats', modules }]);
       }
 
-      // Si l'URL est juste /app (pas de module/tab), rediriger vers le bon
-      // endroit en fonction du type de tenant et du module par defaut.
-      if (location.pathname === '/app' || location.pathname === '/app/') {
-        if (data.tenant.type === 'cabinet' && !sessionStorage.getItem('normx_client_slug')) {
-          navigate('/app/portail', { replace: true });
-        } else {
-          const firstMod = ENABLED_MODULES.find(m => isModuleEnabled(m));
-          navigate(`/app/${firstMod || 'compta'}/accueil`, { replace: true });
-        }
-      }
-
       setOnboardingDone(true);
       setTenantLoading(false);
     } catch {
       setOnboardingDone(false);
       setTenantLoading(false);
     }
-  }, [navigate, location.pathname]);
+  }, [setClientSlug]);
 
   React.useEffect(() => {
     if (!isAuthenticated) {
@@ -121,21 +96,35 @@ function AppContent(): React.JSX.Element {
     loadTenantAndEntites();
   }, [isAuthenticated, loadTenantAndEntites]);
 
+  // Redirect /app vers la bonne page (une seule fois apres le chargement).
+  React.useEffect(() => {
+    if (initialRedirectDone.current || tenantLoading || !onboardingDone) return;
+    if (location.pathname === '/app' || location.pathname === '/app/') {
+      initialRedirectDone.current = true;
+      if (tenantType === 'cabinet') {
+        navigate('/app/portail', { replace: true });
+      } else {
+        const firstMod = ENABLED_MODULES.find(m => isModuleEnabled(m));
+        navigate(`/app/${firstMod || 'compta'}/accueil`, { replace: true });
+      }
+    }
+  }, [tenantLoading, onboardingDone, tenantType, location.pathname, navigate]);
+
   const handleLogout = (): void => {
     setEntites([]);
     setCurrentEntite(null);
-    sessionStorage.removeItem('normx_client_slug');
+    setClientSlug(null);
+    setApiClientSlug(null);
     logout();
   };
 
   const handleSwitchEntite = (entite: Entite): void => {
     setCurrentEntite(entite);
-    if (entite.slug) {
-      sessionStorage.setItem('normx_client_slug', entite.slug);
-    } else {
-      sessionStorage.removeItem('normx_client_slug');
-    }
+    const slug = entite.slug || null;
+    setClientSlug(slug);
+    setApiClientSlug(slug);
   };
+
   const handleEntiteCreated = (entite: Entite): void => {
     setEntites(prev => [...prev, entite]);
     if (!currentEntite) setCurrentEntite(entite);
@@ -149,14 +138,10 @@ function AppContent(): React.JSX.Element {
     if (currentEntite?.id === id) setCurrentEntite(entites.find(e => e.id !== id) || null);
   };
 
-  // --- Ecrans de chargement / auth / onboarding ---
-
   if (isLoading || tenantLoading) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <div style={{ textAlign: 'center' }}>
-          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16, display: 'block' }} />
-        </div>
+        <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16 }} />
       </div>
     );
   }
@@ -165,10 +150,8 @@ function AppContent(): React.JSX.Element {
     login();
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <div style={{ textAlign: 'center' }}>
-          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16, display: 'block' }} />
-          <p style={{ color: '#6b7280', marginTop: 16 }}>Redirection vers la connexion...</p>
-        </div>
+        <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16 }} />
+        <p style={{ color: '#6b7280', marginTop: 16 }}>Redirection vers la connexion...</p>
       </div>
     );
   }
@@ -246,7 +229,9 @@ function AppContent(): React.JSX.Element {
 function App(): React.JSX.Element {
   return (
     <KeycloakProvider>
-      <AppContent />
+      <ClientProvider>
+        <AppContent />
+      </ClientProvider>
     </KeycloakProvider>
   );
 }

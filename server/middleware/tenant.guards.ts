@@ -26,7 +26,7 @@ export async function switchClientMiddleware(
   next: NextFunction
 ): Promise<void> {
   try {
-    const clientSlug = req.headers['x-client-slug'] as string | undefined;
+    const clientSlug = (req.headers['x-client-slug'] as string | undefined)?.trim() || '';
     if (!clientSlug) {
       next();
       return;
