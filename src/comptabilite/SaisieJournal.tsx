@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import type { CompteComptable } from '../types';
 import type { SaisieJournalProps, EcritureRow, EcritureAPI, StatsData, TiersItem } from './SaisieJournal.types';
 import { MOIS } from './SaisieJournal.types';
+import { useReferentiel } from '../contexts/ReferentielContext';
 import { parseInputNumber } from '../utils/formatters';
 import EcrituresStats from './EcrituresStats';
 import EcrituresFilters from './EcrituresFilters';
@@ -11,6 +12,7 @@ import ImportDocumentModal from './ImportDocumentModal';
 import './Comptabilite.css';
 
 function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJournalProps): React.JSX.Element {
+  const { apiParam } = useReferentiel();
   const [ecritures, setEcritures] = useState<EcritureAPI[]>([]);
   const [planComptable, setPlanComptable] = useState<CompteComptable[]>([]);
   const [tiersList, setTiersList] = useState<TiersItem[]>([]);
@@ -72,10 +74,10 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
 
   const loadPlanComptable = useCallback(async (): Promise<void> => {
     try {
-      const res = await fetch('/api/plan-comptable');
+      const res = await fetch('/api/plan-comptable' + apiParam);
       if (res.ok) { const j = await res.json(); setPlanComptable(Array.isArray(j) ? j : j.data || j.comptes || []); }
     } catch (_err) { /* silently ignore */ }
-  }, []);
+  }, [apiParam]);
 
   const loadTiers = useCallback(async (): Promise<void> => {
     if (!entiteId) return;

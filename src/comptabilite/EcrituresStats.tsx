@@ -2,6 +2,7 @@ import React from 'react';
 import { LuPlus, LuCheck, LuUndo, LuFileUp } from 'react-icons/lu';
 import type { EcrituresStatsProps } from './SaisieJournal.types';
 import { fmt } from '../utils/formatters';
+import { useReferentiel } from '../contexts/ReferentielContext';
 
 function EcrituresStats({
   ecritures,
@@ -14,6 +15,7 @@ function EcrituresStats({
   onOpenCreate,
   onOpenImport,
 }: EcrituresStatsProps): React.JSX.Element {
+  const { label: planLabel } = useReferentiel();
   const listTotalDebit = (ecritures || []).reduce((s, e) =>
     s + (e.lignes || []).reduce((s2, l) => s2 + (parseFloat(String(l.debit)) || 0), 0), 0);
   const listTotalCredit = (ecritures || []).reduce((s, e) =>
@@ -25,7 +27,7 @@ function EcrituresStats({
       <div className="compta-page-header">
         <div>
           <h1 className="compta-page-title">Saisie des ecritures</h1>
-          <p className="compta-page-subtitle">Saisissez les ecritures comptables selon le plan comptable OHADA</p>
+          <p className="compta-page-subtitle">Saisissez les ecritures comptables selon le plan {planLabel}</p>
         </div>
         <div className="compta-header-actions">
           {nbSelectedBrouillard > 0 && (

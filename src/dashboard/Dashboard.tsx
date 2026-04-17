@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { LuHouse, LuFileText } from 'react-icons/lu';
+import { ReferentielProvider } from '../contexts/ReferentielContext';
 const Paie = lazy(() => import('../paie/Paie'));
 import GestionClients from './GestionClients';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Entite } from '../types';
@@ -314,28 +315,30 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const moduleLabel = activeModule === 'compta' ? 'Comptabilité' : 'États';
 
   return (
-    <div className="dashboard">
-      <Topbar {...topbarProps} moduleLabel={moduleLabel} entiteName={entiteName} typeActivite={typeActivite} showCompanyInfo />
-      <div className="dashboard-body">
-        <ComptaSidebar
-          menuItems={MENU_ITEMS} activeTab={activeTab} activeSection={activeSection}
-          parentSection={parentSection} sidebarCollapsed={sidebarCollapsed} moduleLabel={moduleLabel}
-          onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
-          onMenuClick={handleMenuClick} onChildClick={openTab} onCloseSection={() => setActiveSection(null)}
-        />
-        <MainContent
-          activeTab={activeTab} activeModule={activeModule} userName={userName} userId={userId}
-          entiteId={entiteId} entiteName={entiteName} entiteSigle={entiteSigle}
-          entiteAdresse={entiteAdresse} entiteNif={entiteNif} typeActivite={typeActivite}
-          offre={offre} etats={etats} moduleLabel={moduleLabel}
-          openTab={openTab} onEntiteUpdated={onEntiteUpdated} {...exerciceSelectorProps}
-        />
+    <ReferentielProvider typeActivite={typeActivite}>
+      <div className="dashboard">
+        <Topbar {...topbarProps} moduleLabel={moduleLabel} entiteName={entiteName} typeActivite={typeActivite} showCompanyInfo />
+        <div className="dashboard-body">
+          <ComptaSidebar
+            menuItems={MENU_ITEMS} activeTab={activeTab} activeSection={activeSection}
+            parentSection={parentSection} sidebarCollapsed={sidebarCollapsed} moduleLabel={moduleLabel}
+            onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+            onMenuClick={handleMenuClick} onChildClick={openTab} onCloseSection={() => setActiveSection(null)}
+          />
+          <MainContent
+            activeTab={activeTab} activeModule={activeModule} userName={userName} userId={userId}
+            entiteId={entiteId} entiteName={entiteName} entiteSigle={entiteSigle}
+            entiteAdresse={entiteAdresse} entiteNif={entiteNif} typeActivite={typeActivite}
+            offre={offre} etats={etats} moduleLabel={moduleLabel}
+            openTab={openTab} onEntiteUpdated={onEntiteUpdated} {...exerciceSelectorProps}
+          />
+        </div>
+        <TabsBar openTabs={openTabs} activeTab={activeTab} onSelectTab={setActiveTab} onCloseTab={closeTab} />
+        {exerciceModalElement}
+        {confirmModalElement}
+        <FloatingCalculator />
       </div>
-      <TabsBar openTabs={openTabs} activeTab={activeTab} onSelectTab={setActiveTab} onCloseTab={closeTab} />
-      {exerciceModalElement}
-      {confirmModalElement}
-      <FloatingCalculator />
-    </div>
+    </ReferentielProvider>
   );
 }
 

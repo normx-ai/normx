@@ -4,6 +4,7 @@ import type { CompteComptable } from '../types';
 import type { SaisieOverlayProps, TiersItem } from './SaisieJournal.types';
 import { JOURNAUX } from './SaisieJournal.types';
 import { fmt, parseInputNumber } from '../utils/formatters';
+import { useReferentiel } from '../contexts/ReferentielContext';
 
 // Mapping compte -> type de tiers pour le selecteur intelligent
 const getTypeTiersFromCompte = (numero: string): string | null => {
@@ -60,6 +61,7 @@ function SaisieOverlay({
   onRemoveLigne,
   onEquilibrer,
 }: SaisieOverlayProps): React.JSX.Element {
+  const { label: planLabel } = useReferentiel();
   const [pcDropdownIdx, setPcDropdownIdx] = useState<number | null>(null);
   const [pcSearch, setPcSearch] = useState<string>('');
 
@@ -104,7 +106,7 @@ function SaisieOverlay({
         <div className="ecriture-overlay-header">
           <div>
             <h2>{editingId ? 'Modifier l\'ecriture' : 'Nouvelle ecriture'}</h2>
-            <p>Saisissez les comptes au debit et au credit selon le plan comptable OHADA</p>
+            <p>Saisissez les comptes au debit et au credit selon le plan {planLabel}</p>
           </div>
           <button className="overlay-close-btn" onClick={onClose}><LuX /></button>
         </div>
@@ -251,7 +253,7 @@ function SaisieOverlay({
               <div className="validation-error">
                 Compte{comptesInvalides.length > 1 ? 's' : ''} invalide{comptesInvalides.length > 1 ? 's' : ''} :{' '}
                 {comptesInvalides.map(l => l.numero_compte).join(', ')}
-                {' '}— doit exister dans le plan comptable OHADA
+                {' '}— doit exister dans le plan {planLabel}
               </div>
             )}
           </div>
