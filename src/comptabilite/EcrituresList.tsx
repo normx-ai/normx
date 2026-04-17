@@ -22,12 +22,12 @@ function EcrituresList({
             <th>N°</th>
             <th>Journal</th>
             <th>Date</th>
-            <th>N° piece</th>
+            <th>N° pièce</th>
             <th>Compte</th>
             <th style={{ width: 130 }}>Tiers</th>
-            <th>Libelle</th>
-            <th style={{ textAlign: 'right' }}>Debit</th>
-            <th style={{ textAlign: 'right' }}>Credit</th>
+            <th>Libellé</th>
+            <th style={{ textAlign: 'right' }}>Débit</th>
+            <th style={{ textAlign: 'right' }}>Crédit</th>
             <th style={{ width: 90 }}>Statut</th>
             <th style={{ width: 70 }}>Actions</th>
           </tr>
@@ -38,8 +38,8 @@ function EcrituresList({
               <td colSpan={12} className="empty-cell">
                 <div className="empty-state-inline">
                   <LuPenLine size={32} />
-                  <p>Aucune ecriture</p>
-                  <span>Cliquez sur "Creer" pour saisir votre premiere ecriture</span>
+                  <p>Aucune écriture</p>
+                  <span>Cliquez sur "Créer" pour saisir votre première écriture</span>
                 </div>
               </td>
             </tr>
@@ -66,7 +66,7 @@ function EcrituresList({
                   {i === 0 && (
                     <td rowSpan={ecr.lignes.length} className="cell-center">
                       <span className={'statut-badge ' + (ecr.statut === 'validee' ? 'validee' : 'brouillard')}>
-                        {ecr.statut === 'validee' ? 'Validee' : 'Brouillard'}
+                        {ecr.statut === 'validee' ? 'Validée' : 'Brouillard'}
                       </span>
                     </td>
                   )}

@@ -31,7 +31,7 @@ function EcrituresFilters({
         <select value={filterStatut} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFilterStatut(e.target.value)}>
           <option value="">Tous</option>
           <option value="brouillard">Brouillard</option>
-          <option value="validee">Validee</option>
+          <option value="validee">Validée</option>
         </select>
       </div>
       <div className="saisie-filter-group">

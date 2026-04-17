@@ -1,5 +1,5 @@
 .compta-wrapper {
-  padding: 20px 24px;
+  padding: 28px 28px;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -12,18 +12,18 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 .compta-page-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   color: #1a1a1a;
-  margin: 0 0 2px;
+  margin: 0 0 4px;
 }
 .compta-page-subtitle {
   font-size: 13px;
   color: #888;
-  margin: 0;
+  margin: 0 0 8px;
 }
 .compta-header-actions {
   display: flex;
@@ -58,8 +58,8 @@
 .saisie-filters {
   display: flex;
   align-items: flex-end;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 16px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
 }
 .saisie-filter-group {
@@ -130,7 +130,7 @@
   white-space: nowrap;
 }
 .ecritures-main-table td {
-  padding: 8px 12px;
+  padding: 12px 14px;
   border-bottom: 1px solid #f0f0f0;
   color: var(--couleur-texte);
   font-variant-numeric: tabular-nums;
@@ -209,9 +209,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0 0;
+  padding: 16px 0 0;
   border: 1px solid var(--couleur-bordure);
-  margin-top: 8px;
+  margin-top: 24px;
 }
 .saisie-footer-count {
   font-size: 13px;
@@ -267,7 +267,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 20px 24px;
+  padding: 24px 28px;
   border: 1px solid var(--couleur-bordure);
 }
 .ecriture-overlay-header h2 {
@@ -290,7 +290,7 @@
 .ecriture-overlay-body {
   flex: 1;
   overflow-y: auto;
-  padding: 20px 24px;
+  padding: 24px 28px;
 }
 
 /* Fields card */
@@ -298,18 +298,18 @@
   background: var(--couleur-fond-filter);
   border: 1px solid var(--couleur-bordure);
   border-radius: 6px;
-  padding: 16px;
-  margin-bottom: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 .ecriture-fields-row {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 .ecriture-field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   flex: 1;
   min-width: 120px;
 }
@@ -405,7 +405,7 @@
   border-bottom: 2px solid #e5e7eb;
 }
 .overlay-ecriture-table td {
-  padding: 3px 4px;
+  padding: 6px 6px;
 }
 .overlay-ecriture-table td input {
   width: 100%;
@@ -492,7 +492,7 @@ input[type="number"] {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 20px 28px;
   border: 1px solid var(--couleur-bordure);
   background: var(--couleur-fond-filter);
 }

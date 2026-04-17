@@ -105,8 +105,8 @@ function SaisieOverlay({
       <div className="ecriture-overlay" onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
         <div className="ecriture-overlay-header">
           <div>
-            <h2>{editingId ? 'Modifier l\'ecriture' : 'Nouvelle ecriture'}</h2>
-            <p>Saisissez les comptes au debit et au credit selon le plan {planLabel}</p>
+            <h2>{editingId ? 'Modifier l\'écriture' : 'Nouvelle écriture'}</h2>
+            <p>Saisissez les comptes au débit et au crédit selon le plan {planLabel}</p>
           </div>
           <button className="overlay-close-btn" onClick={onClose}><LuX /></button>
         </div>
@@ -124,7 +124,7 @@ function SaisieOverlay({
                   {showJournalDropdown && (
                     <div className="journal-dropdown">
                       <table>
-                        <thead><tr><th>Code</th><th>Intitule</th></tr></thead>
+                        <thead><tr><th>Code</th><th>Intitulé</th></tr></thead>
                         <tbody>
                           {JOURNAUX.map(j => (
                             <tr key={j.code} className={journal === j.code ? 'active' : ''}
@@ -143,11 +143,11 @@ function SaisieOverlay({
                 <input type="date" value={dateEcriture} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateEcriture(e.target.value)} />
               </div>
               <div className="ecriture-field" style={{ flex: 2 }}>
-                <label>Libelle <span className="required">*</span></label>
-                <input type="text" value={libelle} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLibelle(e.target.value)} placeholder="Libelle de l'ecriture" />
+                <label>Libellé <span className="required">*</span></label>
+                <input type="text" value={libelle} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLibelle(e.target.value)} placeholder="Libellé de l'écriture" />
               </div>
               <div className="ecriture-field">
-                <label>N° piece</label>
+                <label>N° pièce</label>
                 <input type="text" value={numeroPiece} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNumeroPiece(e.target.value)} placeholder="Facultatif" />
               </div>
             </div>
@@ -163,9 +163,9 @@ function SaisieOverlay({
                 <tr>
                   <th style={{ width: 120 }}>Compte</th>
                   <th style={{ width: 160 }}>Tiers</th>
-                  <th>Libelle</th>
-                  <th style={{ width: 140 }}>Debit</th>
-                  <th style={{ width: 140 }}>Credit</th>
+                  <th>Libellé</th>
+                  <th style={{ width: 140 }}>Débit</th>
+                  <th style={{ width: 140 }}>Crédit</th>
                   <th style={{ width: 36 }}></th>
                 </tr>
               </thead>
@@ -208,7 +208,7 @@ function SaisieOverlay({
                             disabled={!isTiersCompte}
                             style={{ width: '100%', padding: '6px 8px', border: '1px solid #ddd', borderRadius: 4, fontSize: 12, fontFamily: 'inherit', background: isTiersCompte ? '#fff' : '#f5f5f5', color: isTiersCompte ? '#333' : '#bbb', cursor: isTiersCompte ? 'pointer' : 'default' }}
                           >
-                            <option value="">{isTiersCompte ? '— Selectionner —' : '—'}</option>
+                            <option value="">{isTiersCompte ? '— Sélectionner —' : '—'}</option>
                             {tiersFiltered.map(t => (
                               <option key={t.id} value={t.id}>{t.code_tiers} — {t.nom}</option>
                             ))}
@@ -219,7 +219,7 @@ function SaisieOverlay({
                     <td>
                       <input type="text" value={l.libelle_compte}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => onUpdateLigne(i, 'libelle_compte', e.target.value)}
-                        placeholder="Libelle du compte" />
+                        placeholder="Libellé du compte" />
                     </td>
                     <td>
                       <input type="text" value={formatMontantInput(l.debit)}
@@ -243,10 +243,10 @@ function SaisieOverlay({
           </div>
 
           <div className="overlay-validation-row">
-            <button className="compta-action-btn equilibre-btn" onClick={onEquilibrer}>Equilibrer</button>
+            <button className="compta-action-btn equilibre-btn" onClick={onEquilibrer}>Équilibrer</button>
             {dateHorsExercice && (
               <div className="validation-error">
-                La date {dateEcriture} ne correspond pas a l'exercice {exerciceAnnee}
+                La date {dateEcriture} ne correspond pas à l'exercice {exerciceAnnee}
               </div>
             )}
             {comptesInvalides.length > 0 && (
@@ -268,11 +268,11 @@ function SaisieOverlay({
             </div>
             <div className="overlay-total-card">
               <span className="overlay-total-amount">{fmt(totalDebit)}</span>
-              <span className="overlay-total-label">Total debit</span>
+              <span className="overlay-total-label">Total débit</span>
             </div>
             <div className="overlay-total-card">
               <span className="overlay-total-amount">{fmt(totalCredit)}</span>
-              <span className="overlay-total-label">Total credit</span>
+              <span className="overlay-total-label">Total crédit</span>
             </div>
           </div>
           <div className="overlay-footer-actions">

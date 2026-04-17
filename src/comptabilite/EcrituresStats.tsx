@@ -26,8 +26,8 @@ function EcrituresStats({
       {/* Header */}
       <div className="compta-page-header">
         <div>
-          <h1 className="compta-page-title">Saisie des ecritures</h1>
-          <p className="compta-page-subtitle">Saisissez les ecritures comptables selon le plan {planLabel}</p>
+          <h1 className="compta-page-title">Saisie des écritures</h1>
+          <p className="compta-page-subtitle">Saisissez les écritures comptables selon le plan {planLabel}</p>
         </div>
         <div className="compta-header-actions">
           {nbSelectedBrouillard > 0 && (
@@ -37,7 +37,7 @@ function EcrituresStats({
           )}
           {nbSelectedValidee > 0 && (
             <button className="compta-action-btn warning" onClick={onDevalider}>
-              <LuUndo /> Devalider ({nbSelectedValidee})
+              <LuUndo /> Dévalider ({nbSelectedValidee})
             </button>
           )}
           <button className="compta-action-btn" onClick={onBack}>&larr; Retour</button>
@@ -47,7 +47,7 @@ function EcrituresStats({
             </button>
           )}
           <button className="compta-action-btn primary" onClick={onOpenCreate}>
-            <LuPlus /> Creer
+            <LuPlus /> Créer
           </button>
         </div>
       </div>
@@ -55,17 +55,17 @@ function EcrituresStats({
       {/* Footer totaux */}
       <div className="saisie-footer">
         <div className="saisie-footer-count">
-          {ecritures.length} ecriture{ecritures.length > 1 ? 's' : ''}
-          {stats && <span> | {stats.nb_comptes} comptes mouvementes</span>}
+          {ecritures.length} écriture{ecritures.length > 1 ? 's' : ''}
+          {stats && <span> | {stats.nb_comptes} comptes mouvementés</span>}
         </div>
         <div className="saisie-footer-totaux">
           <div className="footer-total-card">
             <span className="footer-total-amount">{fmt(listTotalDebit)}</span>
-            <span className="footer-total-label">Total debit</span>
+            <span className="footer-total-label">Total débit</span>
           </div>
           <div className="footer-total-card">
             <span className="footer-total-amount">{fmt(listTotalCredit)}</span>
-            <span className="footer-total-label">Total credit</span>
+            <span className="footer-total-label">Total crédit</span>
           </div>
           <div className="footer-total-card">
             <span className={'footer-total-amount ' + (Math.abs(listTotalDebit - listTotalCredit) < 0.01 ? 'ok' : 'ko')}>
