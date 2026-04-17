@@ -462,7 +462,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
             </div>
           </div>
 
-          {!exerciceId && (
+          {!exerciceId && !exerciceLoading && (
             <div className="accueil-no-exercice">
               <div className="accueil-no-exercice-icon"><LuLock size={40} /></div>
               <h3>Aucun exercice comptable</h3>
