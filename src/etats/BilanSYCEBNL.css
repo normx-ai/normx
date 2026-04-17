@@ -75,11 +75,11 @@
   min-height: 297mm;
   background: var(--couleur-fond-carte);
   margin: 0 auto 20px;
-  padding: 12mm 12mm 15mm;
+  padding: 8mm 10mm 10mm;
   box-shadow: 0 2px 12px rgba(0,0,0,0.1);
   box-sizing: border-box;
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   color: #1a1a1a;
   display: flex;
   flex-direction: column;
@@ -196,10 +196,10 @@
 .bilan-table th,
 .bilan-table td {
   border: 1px solid #333;
-  padding: 4px 8px;
+  padding: 2px 5px;
   text-align: left;
   vertical-align: middle;
-  line-height: 1.5;
+  line-height: 1.25;
 }
 .bilan-table th {
   background: var(--couleur-sidebar);
