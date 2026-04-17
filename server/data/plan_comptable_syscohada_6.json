@@ -1325,28 +1325,28 @@
   {
     "numero": "223100",
     "numero_original": "2231",
-    "libelle": "pour batiments industriels et agricoles",
+    "libelle": "Terrains bâtis pour bâtiments industriels et agricoles",
     "classe": 2,
     "sens": "debiteur"
   },
   {
     "numero": "223200",
     "numero_original": "2232",
-    "libelle": "pour batiments administratifs et commerciaux",
+    "libelle": "Terrains bâtis pour bâtiments administratifs et commerciaux",
     "classe": 2,
     "sens": "debiteur"
   },
   {
     "numero": "223400",
     "numero_original": "2234",
-    "libelle": "pour batiments affectes aux autres operations professionnelles",
+    "libelle": "Terrains bâtis pour bâtiments affectés aux autres opérations professionnelles",
     "classe": 2,
     "sens": "debiteur"
   },
   {
     "numero": "223500",
     "numero_original": "2235",
-    "libelle": "pour batiments affectes aux autres operations non professionnelles",
+    "libelle": "Terrains bâtis pour bâtiments affectés aux autres opérations non professionnelles",
     "classe": 2,
     "sens": "debiteur"
   },
