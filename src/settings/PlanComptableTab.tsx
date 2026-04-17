@@ -64,6 +64,8 @@ export default function PlanComptableTab(): React.ReactElement {
   const [showDisabled, setShowDisabled] = useState(true);
   const [showAdd, setShowAdd] = useState(false);
   const [newCompte, setNewCompte] = useState({ numero: '', libelle: '', sens: 'debiteur' });
+  const [page, setPage] = useState(0);
+  const PAGE_SIZE = 100;
 
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -153,9 +155,9 @@ export default function PlanComptableTab(): React.ReactElement {
       <div style={{ display: 'flex', gap: 10, marginBottom: 14, alignItems: 'center', flexWrap: 'wrap' }}>
         <div style={{ position: 'relative', flex: 1, minWidth: 220 }}>
           <LuSearch size={14} style={{ position: 'absolute', left: 10, top: 10, color: '#9ca3af' }} />
-          <input style={{ ...inp, paddingLeft: 32 }} value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher par numéro ou libellé…" />
+          <input style={{ ...inp, paddingLeft: 32 }} value={search} onChange={e => { setSearch(e.target.value); setPage(0); }} placeholder="Rechercher par numéro ou libellé…" />
         </div>
-        <select style={inp} value={filterClasse} onChange={e => setFilterClasse(parseInt(e.target.value, 10))}>
+        <select style={inp} value={filterClasse} onChange={e => { setFilterClasse(parseInt(e.target.value, 10)); setPage(0); }}>
           {CLASSES.map(c => <option key={c.v} value={c.v}>{c.l}</option>)}
         </select>
         <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: '#374151', cursor: 'pointer' }}>
@@ -195,7 +197,7 @@ export default function PlanComptableTab(): React.ReactElement {
             </tr>
           </thead>
           <tbody>
-            {filtered.slice(0, 500).map(c => (
+            {filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map(c => (
               <tr key={c.numero} style={c.disabled ? { opacity: 0.5, background: '#f9fafb' } : {}}>
                 <td style={{ ...td, fontFamily: 'ui-monospace, monospace' }}>{c.numero}</td>
                 <td style={td}>{c.libelle}</td>
@@ -218,14 +220,20 @@ export default function PlanComptableTab(): React.ReactElement {
                 </td>
               </tr>
             ))}
-            {filtered.length > 500 && (
-              <tr><td colSpan={5} style={{ ...td, textAlign: 'center', color: '#9ca3af' }}>
-                Affichage limité à 500 lignes. Affinez votre recherche ({filtered.length} résultats au total).
-              </td></tr>
-            )}
           </tbody>
         </table>
       </div>
+      {filtered.length > PAGE_SIZE && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', fontSize: 13, color: '#6b7280' }}>
+          <span>{filtered.length} comptes · page {page + 1} / {Math.ceil(filtered.length / PAGE_SIZE)}</span>
+          <div style={{ display: 'flex', gap: 6 }}>
+            <button onClick={() => setPage(0)} disabled={page === 0} style={paginBtn}>{'<<'}</button>
+            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} style={paginBtn}>{'<'}</button>
+            <button onClick={() => setPage(p => Math.min(Math.ceil(filtered.length / PAGE_SIZE) - 1, p + 1))} disabled={(page + 1) * PAGE_SIZE >= filtered.length} style={paginBtn}>{'>'}</button>
+            <button onClick={() => setPage(Math.ceil(filtered.length / PAGE_SIZE) - 1)} disabled={(page + 1) * PAGE_SIZE >= filtered.length} style={paginBtn}>{'>>'}</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -236,6 +244,7 @@ const badge = (color: string, bg: string): React.CSSProperties => ({
 const btnPrimary: React.CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 12px', background: '#D4A843', color: '#0F2A42', border: 'none', borderRadius: 6, fontWeight: 600, fontSize: 13, cursor: 'pointer' };
 const btnGhost: React.CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 4, padding: '5px 10px', background: 'transparent', color: '#374151', border: '1px solid #e5e7eb', borderRadius: 6, fontSize: 13, cursor: 'pointer' };
 const btnDanger: React.CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 4, padding: '5px 10px', background: 'transparent', color: '#dc2626', border: '1px solid #fecaca', borderRadius: 6, fontSize: 13, cursor: 'pointer', fontWeight: 700 };
+const paginBtn: React.CSSProperties = { padding: '6px 12px', background: 'white', border: '1px solid #d1d5db', borderRadius: 4, fontSize: 13, cursor: 'pointer', color: '#374151' };
 const tbl: React.CSSProperties = { width: '100%', borderCollapse: 'collapse', fontSize: 13 };
 const th: React.CSSProperties = { textAlign: 'left', padding: '10px 12px', background: '#f8fafc', borderBottom: '1px solid #e5e7eb', fontWeight: 600, color: '#374151' };
 const td: React.CSSProperties = { padding: '8px 12px', borderBottom: '1px solid #f1f5f9' };
