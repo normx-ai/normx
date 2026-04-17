@@ -443,56 +443,56 @@
   {
     "numero": "141100",
     "numero_original": "1411",
-    "libelle": "Etat",
+    "libelle": "Subventions d'équipement — État",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "141200",
     "numero_original": "1412",
-    "libelle": "Regions",
+    "libelle": "Subventions d'équipement — Régions",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "141300",
     "numero_original": "1413",
-    "libelle": "Departements",
+    "libelle": "Subventions d'équipement — Départements",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "141400",
     "numero_original": "1414",
-    "libelle": "Communes et collectivites publiques decentralisees",
+    "libelle": "Subventions d'équipement — Communes et collectivités publiques décentralisées",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "141500",
     "numero_original": "1415",
-    "libelle": "Entites publiques ou mixtes",
+    "libelle": "Subventions d'équipement — Entités publiques ou mixtes",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "141600",
     "numero_original": "1416",
-    "libelle": "Entites et organismes prives",
+    "libelle": "Subventions d'équipement — Entités et organismes privés",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "141700",
     "numero_original": "1417",
-    "libelle": "Organismes internationaux",
+    "libelle": "Subventions d'équipement — Organismes internationaux",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "141800",
     "numero_original": "1418",
-    "libelle": "Autres",
+    "libelle": "Subventions d'équipement — Autres",
     "classe": 1,
     "sens": "crediteur"
   },
@@ -709,35 +709,35 @@
   {
     "numero": "166200",
     "numero_original": "1662",
-    "libelle": "Intérêts courus sur emprunts et dettes aupres des etablissements de credit",
+    "libelle": "Intérêts courus sur emprunts et dettes auprès des établissements de crédit",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166300",
     "numero_original": "1663",
-    "libelle": "Intérêts courus sur avances recues de l'Etat",
+    "libelle": "Intérêts courus sur avances reçues de l'État",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166400",
     "numero_original": "1664",
-    "libelle": "Intérêts courus sur avances recues et comptes courants bloques",
+    "libelle": "Intérêts courus sur avances reçues et comptes courants bloqués",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166500",
     "numero_original": "1665",
-    "libelle": "Intérêts courus sur depots et cautionnements recus",
+    "libelle": "Intérêts courus sur dépôts et cautionnements reçus",
     "classe": 1,
     "sens": "crediteur"
   },
   {
     "numero": "166700",
     "numero_original": "1667",
-    "libelle": "Intérêts courus sur avances assorties de conditions particulieres",
+    "libelle": "Intérêts courus sur avances assorties de conditions particulières",
     "classe": 1,
     "sens": "crediteur"
   },
