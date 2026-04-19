@@ -56,12 +56,25 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const activeModule: NormxModule | null = (() => {
     const mod = urlParams.module;
     if (mod && ['compta', 'etats', 'paie'].includes(mod) && isModuleEnabled(mod as NormxModule)) {
+      if (enabledModules.length > 0 && !enabledModules.includes(mod as NormxModule)) {
+        return null;
+      }
       return mod as NormxModule;
     }
     return null;
   })();
 
   const activeTab: string = urlParams.tab || 'accueil';
+
+  // Rediriger si le module de l'URL ne correspond pas aux modules de l'entite
+  useEffect(() => {
+    if (modules.length === 0) return;
+    const mod = urlParams.module;
+    if (mod && ['compta', 'etats', 'paie'].includes(mod) && !enabledModules.includes(mod as NormxModule)) {
+      const first = enabledModules[0];
+      navigate(first ? `/app/${first}/accueil` : '/app/portail', { replace: true });
+    }
+  }, [urlParams.module, enabledModules, modules.length, navigate]);
 
   const portailSection: PortailSection = location.pathname.includes('/portail/cabinet') ? 'cabinet' : 'clients';
 
