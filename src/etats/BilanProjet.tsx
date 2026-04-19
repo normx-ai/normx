@@ -177,7 +177,7 @@ function computePassifValues(lignes: BalanceLigne[]): Record<string, number> {
 }
 
 function formatMontant(val: number): string {
-  if (!val || Math.abs(val) < 0.5) return '';
+  if (!val || Math.abs(val) < 0.5) return '0';
   return Math.round(val).toLocaleString('fr-FR');
 }
 

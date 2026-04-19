@@ -50,7 +50,7 @@ export const TFT_ROWS: TFTRow[] = [
 ];
 
 export function formatMontant(val: number): string {
-  if (!val || val === 0) return '';
+  if (val === 0 || val === null || val === undefined) return '0';
   const neg = val < 0;
   const abs = Math.abs(Math.round(val));
   const formatted = abs.toLocaleString('fr-FR');

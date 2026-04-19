@@ -189,7 +189,7 @@ interface BalanceImportResponse {
 }
 
 function formatMontant(val: number): string {
-  if (!val || val === 0) return '';
+  if (!val || val === 0) return '0';
   return Math.round(val).toLocaleString('fr-FR');
 }
 

@@ -25,22 +25,24 @@ function BilanActifTable({
 }: BilanActifTableProps): React.JSX.Element {
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }} className="no-print">
-        <button
-          onClick={onToggleN1Detail}
-          style={{
-            background: 'none',
-            border: '1px solid #ccc',
-            borderRadius: 4,
-            padding: '2px 8px',
-            fontSize: 11,
-            cursor: 'pointer',
-            color: '#555',
-          }}
-        >
-          {showN1Detail ? '− Masquer détail N-1' : '+ Détail N-1'}
-        </button>
-      </div>
+      {!isExporting && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 4 }} className="no-print">
+          <button
+            onClick={onToggleN1Detail}
+            style={{
+              background: 'none',
+              border: '1px solid #ccc',
+              borderRadius: 4,
+              padding: '2px 8px',
+              fontSize: 11,
+              cursor: 'pointer',
+              color: '#555',
+            }}
+          >
+            {showN1Detail ? '− Masquer détail N-1' : '+ Détail N-1'}
+          </button>
+        </div>
+      )}
       <table className="bilan-table">
         <thead>
           <tr>

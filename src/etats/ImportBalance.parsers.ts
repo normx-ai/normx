@@ -128,7 +128,7 @@ export function parseExcel(buffer: ArrayBuffer): BalanceLigne[] {
 }
 
 export function formatMontant(val: number): string {
-  if (!val || val === 0) return '';
+  if (!val || val === 0) return '0';
   return val.toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
 

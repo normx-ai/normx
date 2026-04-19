@@ -33,12 +33,12 @@ interface BudgetTotals {
 }
 
 function formatMontant(val: number): string {
-  if (val === null || val === undefined || isNaN(val) || Math.abs(val) < 0.5) return '';
+  if (val === null || val === undefined || isNaN(val) || Math.abs(val) < 0.5) return '0';
   return Math.round(val).toLocaleString('fr-FR');
 }
 
 function formatPourcent(val: number | null): string {
-  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '';
+  if (val === null || val === undefined || isNaN(val) || !isFinite(val)) return '0';
   return (val * 100).toFixed(1) + ' %';
 }
 
