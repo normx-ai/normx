@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { clientFetch } from '../lib/api';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
-import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
+import { exportToExcel } from '../lib/excelExport';
+import type { ExcelRow } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -201,6 +203,32 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
 
   const fmt = (v: number) => { if (!v || v === 0) return ''; const neg = v < 0; return (neg ? '(' : '') + Math.abs(Math.round(v)).toLocaleString('fr-FR') + (neg ? ')' : ''); };
 
+  const exportExcel = (): void => {
+    const rows: ExcelRow[] = [];
+    const fmtNum = (v: number): number => Math.round(v);
+    for (const row of TFT_ROWS) {
+      if (row.type === 'section' || row.type === 'label') continue;
+      const ref = row.ref || '';
+      const val = fmtNum(getValue(ref));
+      const valN1 = fmtNum(getValueN1(ref));
+      rows.push({
+        ref,
+        libelle: row.libelle,
+        values: [val, valN1],
+        bold: row.type === 'subtotal' || row.type === 'result' || row.type === 'total',
+      });
+    }
+    exportToExcel({
+      filename: `TFT_SYSCOHADA_${annee}`,
+      sheetName: 'TFT',
+      title: 'TABLEAU DES FLUX DE TRÉSORERIE',
+      headers: ['Exercice N', 'Exercice N-1'],
+      rows,
+      entiteName,
+      exerciceAnnee: annee,
+    });
+  };
+
   const generatePDF = async (): Promise<jsPDF> => {
     const pdf = new jsPDF('p', 'mm', 'a4');
     if (!pageRef.current) return pdf;
@@ -290,6 +318,9 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
           </button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('TFT_SYSCOHADA_' + annee + '.pdf'); }}>
             <LuDownload /> Exporter PDF
+          </button>
+          <button className="bilan-export-btn secondary" onClick={exportExcel}>
+            <LuSheet /> Excel
           </button>
         </div>
       </div>

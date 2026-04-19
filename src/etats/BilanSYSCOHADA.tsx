@@ -1,7 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
-import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
+import { exportToExcel } from '../lib/excelExport';
+import type { ExcelRow } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -205,6 +207,57 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
     setPreviewUrl(url);
   };
 
+  const exportExcel = (): void => {
+    const rows: ExcelRow[] = [];
+    const fmt = (v: number): number => Math.round(v);
+
+    if (page === 'actif') {
+      for (const row of ACTIF_ROWS) {
+        if (!row.ref) continue;
+        const brut = fmt(getActifValue(row.ref, 'brut'));
+        const amort = fmt(getActifValue(row.ref, 'amort'));
+        const net = fmt(getActifValue(row.ref, 'net'));
+        const netN1 = fmt(getActifValueN1(row.ref, 'net'));
+        rows.push({
+          ref: row.ref,
+          libelle: row.libelle,
+          values: [brut, amort, net, netN1],
+          bold: row.type === 'subtotal' || row.type === 'total',
+        });
+      }
+      exportToExcel({
+        filename: `Bilan_Actif_SYSCOHADA_${annee}`,
+        sheetName: 'Actif',
+        title: 'BILAN ACTIF',
+        headers: ['BRUT N', 'AMORT/DÉPREC.', 'NET N', 'NET N-1'],
+        rows,
+        entiteName,
+        exerciceAnnee: annee,
+      });
+    } else {
+      for (const row of PASSIF_ROWS) {
+        if (!row.ref) continue;
+        const net = fmt(getPassifValue(row.ref, false));
+        const netN1 = fmt(getPassifValue(row.ref, true));
+        rows.push({
+          ref: row.ref,
+          libelle: row.libelle,
+          values: [net, netN1],
+          bold: row.type === 'subtotal' || row.type === 'total',
+        });
+      }
+      exportToExcel({
+        filename: `Bilan_Passif_SYSCOHADA_${annee}`,
+        sheetName: 'Passif',
+        title: 'BILAN PASSIF',
+        headers: ['NET N', 'NET N-1'],
+        rows,
+        entiteName,
+        exerciceAnnee: annee,
+      });
+    }
+  };
+
   const closePreview = (): void => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
@@ -268,7 +321,10 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
             <LuEye /> Aperçu
           </button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('Bilan_' + (page === 'passif' ? 'Passif' : 'Actif') + '_SYSCOHADA_' + annee + '.pdf'); }}>
-            <LuDownload /> Exporter PDF
+            <LuDownload /> PDF
+          </button>
+          <button className="bilan-export-btn secondary" onClick={exportExcel}>
+            <LuSheet /> Excel
           </button>
         </div>
       </div>

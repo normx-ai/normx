@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
-import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuPlus, LuTrash2, LuSheet } from 'react-icons/lu';
+import { exportToExcel } from '../lib/excelExport';
+import type { ExcelRow } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -246,6 +248,64 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     setDeductions(prev => prev.map(d => d.id === id ? { ...d, [field]: value } : d));
   };
 
+  // ===================== EXCEL =====================
+
+  const exportExcel = (): void => {
+    const rows: ExcelRow[] = [];
+    const fmt = (v: number): number => Math.round(v);
+
+    // I. Resultat comptable
+    rows.push({ libelle: 'I. RESULTAT COMPTABLE', values: [''], bold: true });
+    rows.push({ libelle: 'Produits d\'exploitation', ref: 'Cl. 7', values: [fmt(produitsExploitation)] });
+    rows.push({ libelle: 'Produits financiers', ref: 'Cl. 77', values: [fmt(produitsFinanciers)] });
+    rows.push({ libelle: 'Produits HAO', ref: 'Cl. 82,84,86,88', values: [fmt(produitsHAO)] });
+    rows.push({ libelle: 'TOTAL PRODUITS (A)', values: [fmt(totalProduits)], bold: true });
+    rows.push({ libelle: 'Charges d\'exploitation', ref: 'Cl. 6', values: [fmt(chargesExploitation)] });
+    rows.push({ libelle: 'Charges financieres', ref: 'Cl. 67', values: [fmt(chargesFinancieres)] });
+    rows.push({ libelle: 'Charges HAO', ref: 'Cl. 81,83,85,87', values: [fmt(chargesHAO)] });
+    rows.push({ libelle: 'TOTAL CHARGES (B)', values: [fmt(totalCharges)], bold: true });
+    rows.push({ libelle: 'RESULTAT COMPTABLE (A - B)', ref: 'Art. 6', values: [fmt(resultatComptable)], bold: true });
+
+    // II. Reintegrations
+    rows.push({ libelle: 'II. REINTEGRATIONS FISCALES', values: [''], bold: true });
+    for (const r of reintegrations) {
+      rows.push({ libelle: r.libelle, ref: r.article, values: [fmt(r.montant)] });
+    }
+    rows.push({ libelle: 'TOTAL REINTEGRATIONS (C)', values: [fmt(totalReintegrations)], bold: true });
+
+    // III. Deductions
+    rows.push({ libelle: 'III. DEDUCTIONS FISCALES', values: [''], bold: true });
+    for (const d of deductions) {
+      rows.push({ libelle: d.libelle, ref: d.article, values: [fmt(d.montant)] });
+    }
+    rows.push({ libelle: 'TOTAL DEDUCTIONS (D)', values: [fmt(totalDeductions)], bold: true });
+
+    // IV. Resultat fiscal
+    rows.push({ libelle: 'IV. RESULTAT FISCAL', values: [''], bold: true });
+    rows.push({ libelle: 'RESULTAT FISCAL = (A - B) + C - D', ref: regimeFiscal === 'is' ? 'Art. 6-27' : 'Art. 94', values: [fmt(resultatFiscal)], bold: true });
+
+    // V. Liquidation
+    rows.push({ libelle: 'V. LIQUIDATION DE L\'IMPOT', values: [''], bold: true });
+    rows.push({ libelle: (regimeFiscal === 'is' ? 'IS' : 'IBA') + ' brut', ref: regimeFiscal === 'is' ? 'Art. 10' : 'Art. 95', values: [fmt(impotBrut)] });
+    rows.push({ libelle: 'Minimum de perception', ref: regimeFiscal === 'is' ? 'Art. 86-C' : 'Art. 95', values: [fmt(minimumPerception)] });
+    rows.push({ libelle: (regimeFiscal === 'is' ? 'IS' : 'IBA') + ' RETENU', values: [fmt(impotRetenu)], bold: true });
+
+    // VI. Benefice net
+    rows.push({ libelle: 'VI. RESULTAT NET APRES IMPOT', values: [''], bold: true });
+    rows.push({ libelle: 'BENEFICE NET', values: [fmt(beneficeNet)], bold: true });
+
+    exportToExcel({
+      filename: `Resultat_Fiscal_${annee}`,
+      sheetName: 'Resultat Fiscal',
+      title: 'DETERMINATION DU RESULTAT FISCAL',
+      subtitle: `Regime : ${regimeFiscal === 'is' ? 'IS' : 'IBA'}`,
+      headers: ['MONTANT (FCFA)'],
+      rows,
+      entiteName,
+      exerciceAnnee: annee,
+    });
+  };
+
   // ===================== PDF =====================
 
   const generatePDF = async (): Promise<jsPDF> => {
@@ -304,6 +364,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
         <div className="bilan-toolbar-right">
           <button className="bilan-export-btn secondary" onClick={openPreview}><LuEye /> Apercu</button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('Resultat_Fiscal_' + annee + '.pdf'); }}><LuDownload /> Exporter PDF</button>
+          <button className="bilan-export-btn secondary" onClick={exportExcel}><LuSheet /> Excel</button>
         </div>
       </div>
 

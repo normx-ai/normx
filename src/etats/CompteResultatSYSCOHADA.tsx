@@ -1,7 +1,9 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
-import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
+import { exportToExcel } from '../lib/excelExport';
+import type { ExcelRow } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -305,6 +307,30 @@ function CompteResultatSYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse =
 
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
 
+  const exportExcel = (): void => {
+    const rows: ExcelRow[] = [];
+    const fmt = (v: number): number => Math.round(v);
+    for (const row of CR_ROWS) {
+      const netN = fmt(getValue(row.ref, dataN));
+      const netN1 = fmt(getValue(row.ref, dataN1));
+      rows.push({
+        ref: row.ref,
+        libelle: row.libelle,
+        values: [netN, netN1],
+        bold: row.type === 'subtotal' || row.type === 'result' || row.type === 'total',
+      });
+    }
+    exportToExcel({
+      filename: `Compte_Resultat_SYSCOHADA_${annee}`,
+      sheetName: 'Compte de Resultat',
+      title: 'COMPTE DE RÉSULTAT',
+      headers: ['N', 'N-1'],
+      rows,
+      entiteName,
+      exerciceAnnee: annee,
+    });
+  };
+
   const generatePDF = async (): Promise<jsPDF> => {
     const pdf = new jsPDF('p', 'mm', 'a4');
     if (!pageRef.current) return pdf;
@@ -394,6 +420,9 @@ function CompteResultatSYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse =
           </button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('Compte_Resultat_SYSCOHADA_' + annee + '.pdf'); }}>
             <LuDownload /> Exporter PDF
+          </button>
+          <button className="bilan-export-btn secondary" onClick={exportExcel}>
+            <LuSheet /> Excel
           </button>
         </div>
       </div>
