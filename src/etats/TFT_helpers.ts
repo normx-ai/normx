@@ -546,21 +546,24 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
   }
 
   // ===== 2. COHERENCE PROVISIONS (19) vs DOTATIONS (69) / REPRISES (79) =====
-  // Verifier que chaque provision du bilan a une dotation/reprise correspondante
-  // dans le CR. Si ce n'est pas le cas, le TFT ne peut pas boucler car la CAFG
-  // (basee sur le CR) ne neutralise pas la variation de provision.
+  // Verifier que la variation des provisions au bilan (15+19) correspond
+  // aux dotations/reprises de provisions dans le CR (69-79).
+  // 68 (amortissements) et 78 (transferts de charges) sont EXCLUS car ils
+  // ne concernent pas les provisions mais les immobilisations.
   const provPrefixes = ['15', '19'];
   const provComptes = comptesAvecVariation(lN, lN1, provPrefixes, [], 1000);
   const totalVarProv = provComptes.reduce((s, c) => s + c.montant, 0);
-  const dotNet = Math.round(sumSoldeDebiteur(lN, ['68', '69']) - sumSoldeCrediteur(lN, ['78', '79']));
-  const ecartProv = Math.round(-totalVarProv - dotNet);
+  const dotProv = Math.round(sumSoldeDebiteur(lN, ['69']));
+  const repProv = Math.round(sumSoldeCrediteur(lN, ['79']));
+  const dotNetProv = dotProv - repProv;
+  const ecartProv = Math.round(-totalVarProv - dotNetProv);
 
   if (Math.abs(ecartProv) >= 1000) {
     diag.push({
       poste: 'FA',
       type: 'alerte',
       message: 'Variation provisions (15+19) = ' + formatMontant(-totalVarProv)
-        + ' vs Dotations nettes (68+69-78-79) = ' + formatMontant(dotNet)
+        + ' vs Dotations provisions nettes (69-79) = ' + formatMontant(dotNetProv)
         + '. Ecart : ' + formatMontant(ecartProv) + '.',
       comptes: provComptes,
       montant: ecartProv
