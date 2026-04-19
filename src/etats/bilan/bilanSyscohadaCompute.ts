@@ -5,7 +5,7 @@ import type { BalanceLigne, ActifMapping, PassifMapping } from '../../types';
 import { CR_PRODUITS, CR_CHARGES, type ActifResult, type PassifResult } from './bilanSyscohadaData';
 
 export function formatMontant(val: number): string {
-  if (!val || val === 0) return '';
+  if (!val || val === 0) return '0';
   return Math.round(val).toLocaleString('fr-FR');
 }
 

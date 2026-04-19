@@ -505,9 +505,11 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
                     <div style={{ color: d.type === 'erreur' ? '#991b1b' : '#92400e', fontWeight: 600 }}>
                       [{d.poste}] {d.message}
                     </div>
-                    {d.suggestion && (
-                      <div style={{ marginTop: 4, color: '#4b5563', paddingLeft: 12, whiteSpace: 'pre-line' }}>
-                        {d.suggestion}
+                    {d.comptes && d.comptes.length > 0 && (
+                      <div style={{ marginTop: 4, paddingLeft: 12, fontSize: 12, color: '#4b5563' }}>
+                        {d.comptes.map((c, j) => (
+                          <div key={j}>{c.num} {c.lib} : {formatMontant(c.montant)}</div>
+                        ))}
                       </div>
                     )}
                   </div>
