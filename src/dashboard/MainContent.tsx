@@ -286,7 +286,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
     'bilan_smt', 'compte_resultat_smt', 'notes_annexes_smt', 'journal_tresorerie_smt', 'journaux_smt',
     'page_garde_sys', 'fiche_identification_sys', 'fiche_r2_sys', 'fiche_r3_sys', 'fiche_r4_sys',
     'notes_annexes_sys', 'note_1_sys', 'note_2_sys', 'note_3a_sys', 'note_3b_sys', 'note_3c_sys', 'note_3d_sys', 'note_3e_sys', 'note_4_sys', 'note_5_sys', 'note_6_sys', 'note_7_sys', 'note_8_sys', 'note_8a_sys', 'note_9_sys', 'note_10_sys', 'note_11_sys', 'note_12_sys', 'note_13_sys', 'note_14_sys', 'note_15a_sys', 'note_15b_sys', 'note_16a_sys', 'note_16b_sys', 'note_16c_sys', 'note_17_sys', 'note_18_sys', 'note_19_sys', 'note_20_sys', 'note_21_sys', 'note_22_sys', 'note_23_sys', 'note_24_sys', 'note_25_sys', 'note_26_sys', 'note_27a_sys', 'note_27b_sys', 'note_28_sys', 'note_29_sys', 'note_30_sys', 'note_31_sys', 'note_32_sys', 'note_33_sys', 'note_34_sys', 'note_35_sys', 'note_36_sys', 'note_37_sys',
-    'bilan_actif_sys', 'bilan_passif_sys', 'compte_resultat_sys', 'tafire', 'resultat_fiscal_sys',
+    'bilan_actif_sys', 'bilan_passif_sys', 'compte_resultat_sys', 'tft', 'resultat_fiscal_sys',
   ];
 
   // Liste des notes annexes pour affichage en cards
@@ -722,7 +722,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
       {activeTab === 'bilan_actif_sys' && <BilanSYSCOHADA page="actif" {...etatBaseProps} />}
       {activeTab === 'bilan_passif_sys' && <BilanSYSCOHADA page="passif" {...etatBaseProps} />}
       {activeTab === 'compte_resultat_sys' && <CompteResultatSYSCOHADA {...etatBaseProps} />}
-      {activeTab === 'tafire' && <TFT_SYSCOHADA {...etatBaseProps} />}
+      {activeTab === 'tft' && <TFT_SYSCOHADA {...etatBaseProps} />}
       {activeTab === 'resultat_fiscal_sys' && <ResultatFiscal {...etatBaseProps} />}
       {etats.some(e => e.id === activeTab) && !IMPLEMENTED_ETATS.includes(activeTab) && (
         <div className="placeholder-content">

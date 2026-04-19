@@ -32,7 +32,7 @@ export const ETATS_FINANCIERS_SYS: EtatFinancier[] = [
   { id: 'bilan_actif_sys', titre: 'Bilan - Actif', short: 'Actif', desc: 'Actif immobilisé, circulant et trésorerie', navIcon: LuScale },
   { id: 'bilan_passif_sys', titre: 'Bilan - Passif', short: 'Passif', desc: 'Capitaux propres, dettes et provisions', navIcon: LuScale },
   { id: 'compte_resultat_sys', titre: 'Compte de résultat', short: 'CR', desc: 'Produits et charges de l\'exercice', navIcon: LuReceipt },
-  { id: 'tafire', titre: 'TFT', short: 'TFT', desc: 'Tableau des flux de trésorerie', navIcon: LuArrowLeftRight },
+  { id: 'tft', titre: 'TFT', short: 'TFT', desc: 'Tableau des flux de trésorerie', navIcon: LuArrowLeftRight },
   { id: 'notes_annexes_sys', titre: 'Notes annexes', short: 'Notes', desc: 'Informations complémentaires', navIcon: LuFileText },
 ];
 
