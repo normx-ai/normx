@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuPlus, LuTrash2, LuSheet } from 'react-icons/lu';
-import { exportToExcel } from '../lib/excelExport';
-import type { ExcelRow } from '../lib/excelExport';
+import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
+import type { ExcelRow, ExcelExportOptions } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -123,6 +123,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
   const [sourceUsed, setSourceUsed] = useState('');
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  const [excelPreviewHtml, setExcelPreviewHtml] = useState<string | null>(null);
   const balanceSource: 'ecritures' | 'import' = offre === 'comptabilite' ? 'ecritures' : 'import';
 
   // Regime fiscal determine par le type d'activite (a l'inscription)
@@ -248,9 +249,11 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     setDeductions(prev => prev.map(d => d.id === id ? { ...d, [field]: value } : d));
   };
 
+  const duree = selectedExercice?.duree_mois || 12;
+
   // ===================== EXCEL =====================
 
-  const exportExcel = (): void => {
+  const buildExcelOptions = (): ExcelExportOptions => {
     const rows: ExcelRow[] = [];
     const fmt = (v: number): number => Math.round(v);
 
@@ -294,7 +297,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     rows.push({ libelle: 'VI. RESULTAT NET APRES IMPOT', values: [''], bold: true });
     rows.push({ libelle: 'BENEFICE NET', values: [fmt(beneficeNet)], bold: true });
 
-    void exportToExcel({
+    return {
       filename: `Resultat_Fiscal_${annee}`,
       sheetName: 'Resultat Fiscal',
       title: 'DETERMINATION DU RESULTAT FISCAL',
@@ -303,8 +306,13 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
       rows,
       entiteName,
       exerciceAnnee: annee,
-    });
+      entiteNif,
+      dureeMois: duree,
+    };
   };
+
+  const exportExcel = (): void => { void exportToExcel(buildExcelOptions()); };
+  const previewExcel = (): void => { setExcelPreviewHtml(buildExcelPreviewHtml(buildExcelOptions())); };
 
   // ===================== PDF =====================
 
@@ -364,6 +372,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
         <div className="bilan-toolbar-right">
           <button className="bilan-export-btn secondary" onClick={openPreview}><LuEye /> Apercu</button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('Resultat_Fiscal_' + annee + '.pdf'); }}><LuDownload /> Exporter PDF</button>
+          <button className="bilan-export-btn secondary" onClick={previewExcel}><LuEye /> Aperçu Excel</button>
           <button className="bilan-export-btn secondary" onClick={exportExcel}><LuSheet /> Excel</button>
         </div>
       </div>
@@ -561,6 +570,31 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
             </div>
             <div className="pdf-preview-body">
               <iframe src={previewUrl} title="Apercu Resultat Fiscal PDF" className="pdf-preview-iframe" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modale apercu Excel */}
+      {excelPreviewHtml && (
+        <div className="pdf-preview-overlay" onClick={() => setExcelPreviewHtml(null)}>
+          <div className="pdf-preview-modal" onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}>
+            <div className="pdf-preview-header">
+              <h3>Aperçu — Résultat Fiscal {annee}</h3>
+              <div className="pdf-preview-actions">
+                <button className="pdf-action-btn" onClick={() => { const w = window.open('', '_blank'); if (w) { w.document.write(`<html><head><title>Résultat Fiscal ${annee}</title></head><body>${excelPreviewHtml}</body></html>`); w.document.close(); w.print(); } }}>
+                  <LuPrinter /> Imprimer
+                </button>
+                <button className="pdf-action-btn primary" onClick={exportExcel}>
+                  <LuDownload /> Télécharger Excel
+                </button>
+                <button className="pdf-close-btn" onClick={() => setExcelPreviewHtml(null)}>
+                  <LuX />
+                </button>
+              </div>
+            </div>
+            <div className="pdf-preview-body" style={{ overflow: 'auto', padding: 16, background: '#fff' }}>
+              <div dangerouslySetInnerHTML={{ __html: excelPreviewHtml }} />
             </div>
           </div>
         </div>

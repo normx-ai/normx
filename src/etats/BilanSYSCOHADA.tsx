@@ -2,8 +2,8 @@ import React, { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
-import { exportToExcel } from '../lib/excelExport';
-import type { ExcelRow } from '../lib/excelExport';
+import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
+import type { ExcelRow, ExcelExportOptions } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -38,6 +38,7 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
   const [_notes] = useState<Record<string, string>>({});
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  const [excelPreviewHtml, setExcelPreviewHtml] = useState<string | null>(null);
   const [showN1Detail, setShowN1Detail] = useState<boolean>(false);
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
@@ -207,62 +208,38 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
     setPreviewUrl(url);
   };
 
-  const exportExcel = (): void => {
-    const rows: ExcelRow[] = [];
+  const buildExcelOptions = (): ExcelExportOptions => {
+    const excelRows: ExcelRow[] = [];
     const fmt = (v: number): number => Math.round(v);
 
     if (page === 'actif') {
       for (const row of ACTIF_ROWS) {
         const isSection = row.type === 'subsection';
         const isBold = row.type === 'subtotal' || row.type === 'total';
-        const brut = row.ref ? fmt(getActifValue(row.ref, 'brut')) : 0;
-        const amort = row.ref ? fmt(getActifValue(row.ref, 'amort')) : 0;
-        const net = row.ref ? fmt(getActifValue(row.ref, 'net')) : 0;
-        const netN1 = row.ref ? fmt(getActifValueN1(row.ref, 'net')) : 0;
-        rows.push({
+        excelRows.push({
           ref: row.ref || '',
           libelle: row.libelle,
-          values: isSection ? [] : [brut, amort, net, netN1],
-          bold: isBold,
-          subsection: isSection,
-          indent: row.type === 'indent',
+          values: isSection ? [] : [row.ref ? fmt(getActifValue(row.ref, 'brut')) : 0, row.ref ? fmt(getActifValue(row.ref, 'amort')) : 0, row.ref ? fmt(getActifValue(row.ref, 'net')) : 0, row.ref ? fmt(getActifValueN1(row.ref, 'net')) : 0],
+          bold: isBold, subsection: isSection, indent: row.type === 'indent',
         });
       }
-      void exportToExcel({
-        filename: `Bilan_Actif_SYSCOHADA_${annee}`,
-        sheetName: 'Actif',
-        title: 'BILAN ACTIF',
-        headers: ['BRUT N', 'AMORT/DÉPREC.', 'NET N', 'NET N-1'],
-        rows,
-        entiteName,
-        exerciceAnnee: annee,
-      });
-    } else {
-      for (const row of PASSIF_ROWS) {
-        const isSection = row.type === 'subsection';
-        const isBold = row.type === 'subtotal' || row.type === 'total';
-        const net = row.ref ? fmt(getPassifValue(row.ref, false)) : 0;
-        const netN1 = row.ref ? fmt(getPassifValue(row.ref, true)) : 0;
-        rows.push({
-          ref: row.ref || '',
-          libelle: row.libelle,
-          values: isSection ? [] : [net, netN1],
-          bold: isBold,
-          subsection: isSection,
-          indent: row.type === 'indent',
-        });
-      }
-      void exportToExcel({
-        filename: `Bilan_Passif_SYSCOHADA_${annee}`,
-        sheetName: 'Passif',
-        title: 'BILAN PASSIF',
-        headers: ['NET N', 'NET N-1'],
-        rows,
-        entiteName,
-        exerciceAnnee: annee,
+      return { filename: `Bilan_Actif_SYSCOHADA_${annee}`, sheetName: 'Actif', title: 'BILAN ACTIF', headers: ['BRUT N', 'AMORT/DÉPREC.', 'NET N', 'NET N-1'], rows: excelRows, entiteName, exerciceAnnee: annee, entiteNif, dureeMois: duree };
+    }
+    for (const row of PASSIF_ROWS) {
+      const isSection = row.type === 'subsection';
+      const isBold = row.type === 'subtotal' || row.type === 'total';
+      excelRows.push({
+        ref: row.ref || '',
+        libelle: row.libelle,
+        values: isSection ? [] : [row.ref ? fmt(getPassifValue(row.ref, false)) : 0, row.ref ? fmt(getPassifValue(row.ref, true)) : 0],
+        bold: isBold, subsection: isSection, indent: row.type === 'indent',
       });
     }
+    return { filename: `Bilan_Passif_SYSCOHADA_${annee}`, sheetName: 'Passif', title: 'BILAN PASSIF', headers: ['NET N', 'NET N-1'], rows: excelRows, entiteName, exerciceAnnee: annee, entiteNif, dureeMois: duree };
   };
+
+  const exportExcel = (): void => { void exportToExcel(buildExcelOptions()); };
+  const previewExcel = (): void => { setExcelPreviewHtml(buildExcelPreviewHtml(buildExcelOptions())); };
 
   const closePreview = (): void => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -328,6 +305,9 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
           </button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('Bilan_' + (page === 'passif' ? 'Passif' : 'Actif') + '_SYSCOHADA_' + annee + '.pdf'); }}>
             <LuDownload /> PDF
+          </button>
+          <button className="bilan-export-btn secondary" onClick={previewExcel}>
+            <LuEye /> Aperçu Excel
           </button>
           <button className="bilan-export-btn secondary" onClick={exportExcel}>
             <LuSheet /> Excel
@@ -434,6 +414,31 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
                 title="Aperçu Bilan PDF"
                 className="pdf-preview-iframe"
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modale apercu Excel */}
+      {excelPreviewHtml && (
+        <div className="pdf-preview-overlay" onClick={() => setExcelPreviewHtml(null)}>
+          <div className="pdf-preview-modal" onClick={e => e.stopPropagation()}>
+            <div className="pdf-preview-header">
+              <h3>Aperçu — Bilan {page === 'passif' ? 'Passif' : 'Actif'} SYSCOHADA {annee}</h3>
+              <div className="pdf-preview-actions">
+                <button className="pdf-action-btn" onClick={() => { const w = window.open('', '_blank'); if (w) { w.document.write(`<html><head><title>Bilan ${page} ${annee}</title></head><body>${excelPreviewHtml}</body></html>`); w.document.close(); w.print(); } }}>
+                  <LuPrinter /> Imprimer
+                </button>
+                <button className="pdf-action-btn primary" onClick={exportExcel}>
+                  <LuDownload /> Télécharger Excel
+                </button>
+                <button className="pdf-close-btn" onClick={() => setExcelPreviewHtml(null)}>
+                  <LuX />
+                </button>
+              </div>
+            </div>
+            <div className="pdf-preview-body" style={{ overflow: 'auto', padding: 16, background: '#fff' }}>
+              <div dangerouslySetInnerHTML={{ __html: excelPreviewHtml }} />
             </div>
           </div>
         </div>

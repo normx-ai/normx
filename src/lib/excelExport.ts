@@ -27,6 +27,8 @@ export interface ExcelExportOptions {
   rows: ExcelRow[];
   entiteName?: string;
   exerciceAnnee?: number;
+  entiteNif?: string;
+  dureeMois?: number;
 }
 
 const COLORS = {
@@ -58,6 +60,8 @@ export async function exportToExcel({
   rows,
   entiteName,
   exerciceAnnee,
+  entiteNif,
+  dureeMois,
 }: ExcelExportOptions): Promise<void> {
   const wb = new ExcelJS.Workbook();
   wb.creator = 'NORMX Finance';
@@ -77,20 +81,33 @@ export async function exportToExcel({
 
   const totalCols = 2 + headers.length;
   let rowIdx = 1;
+  const labelFont: Partial<ExcelJS.Font> = { size: 10, color: { argb: '555555' } };
+  const valueFont: Partial<ExcelJS.Font> = { bold: true, size: 10, color: { argb: COLORS.titleFont } };
 
-  // En-tete : nom entite
-  if (entiteName) {
-    const r = ws.addRow([entiteName]);
-    ws.mergeCells(rowIdx, 1, rowIdx, totalCols);
-    r.getCell(1).font = { bold: true, size: 13, color: { argb: COLORS.titleFont } };
-    r.getCell(1).alignment = { horizontal: 'center' };
-    rowIdx++;
-  }
+  // En-tete officiel : Designation + Exercice sur une ligne
+  const r1 = ws.addRow(['', 'Désignation entité :', entiteName || '', '', exerciceAnnee ? `Exercice clos le : 31/12/${exerciceAnnee}` : '']);
+  r1.getCell(2).font = labelFont;
+  r1.getCell(3).font = valueFont;
+  r1.getCell(5).font = valueFont;
+  r1.getCell(5).alignment = { horizontal: 'right' };
+  rowIdx++;
 
-  // Titre
+  // NIF + Duree
+  const r2 = ws.addRow(['', 'N° d\'identification :', entiteNif || '', '', `Durée (mois) : ${dureeMois || 12}`]);
+  r2.getCell(2).font = labelFont;
+  r2.getCell(3).font = valueFont;
+  r2.getCell(5).font = { ...labelFont, italic: true };
+  r2.getCell(5).alignment = { horizontal: 'right' };
+  rowIdx++;
+
+  // Ligne vide
+  ws.addRow([]);
+  rowIdx++;
+
+  // Titre centre
   const titleRow = ws.addRow([title]);
   ws.mergeCells(rowIdx, 1, rowIdx, totalCols);
-  titleRow.getCell(1).font = { bold: true, size: 14, color: { argb: COLORS.titleFont } };
+  titleRow.getCell(1).font = { bold: true, size: 13, color: { argb: COLORS.titleFont } };
   titleRow.getCell(1).alignment = { horizontal: 'center' };
   rowIdx++;
 
@@ -99,15 +116,6 @@ export async function exportToExcel({
     const r = ws.addRow([subtitle]);
     ws.mergeCells(rowIdx, 1, rowIdx, totalCols);
     r.getCell(1).font = { italic: true, size: 11, color: { argb: '666666' } };
-    r.getCell(1).alignment = { horizontal: 'center' };
-    rowIdx++;
-  }
-
-  // Exercice
-  if (exerciceAnnee) {
-    const r = ws.addRow([`Exercice clos le 31/12/${exerciceAnnee}`]);
-    ws.mergeCells(rowIdx, 1, rowIdx, totalCols);
-    r.getCell(1).font = { italic: true, size: 10, color: { argb: '888888' } };
     r.getCell(1).alignment = { horizontal: 'center' };
     rowIdx++;
   }
@@ -217,4 +225,73 @@ export async function exportToExcel({
   a.download = filename.endsWith('.xlsx') ? filename : filename + '.xlsx';
   a.click();
   URL.revokeObjectURL(url);
+}
+
+export function buildExcelPreviewHtml(options: ExcelExportOptions): string {
+  const { title, subtitle, headers, rows, entiteName, exerciceAnnee, entiteNif, dureeMois } = options;
+
+  const fmtVal = (v: string | number): string => {
+    if (typeof v === 'number') {
+      if (v === 0) return '-';
+      const neg = v < 0;
+      const abs = Math.abs(Math.round(v)).toLocaleString('fr-FR');
+      return neg ? `(${abs})` : abs;
+    }
+    return String(v);
+  };
+
+  const headerCols = headers.map(h => `<th style="background:#0F2A42;color:#fff;padding:6px 12px;text-align:right;font-size:11px;border:1px solid #B0B0B0;white-space:nowrap">${h}</th>`).join('');
+
+  const bodyRows = rows.map(row => {
+    if (row.section) {
+      return `<tr><td colspan="${2 + headers.length}" style="background:#D4E6F1;font-weight:700;padding:6px 8px;font-size:11px;border:1px solid #B0B0B0">${row.libelle}</td></tr>`;
+    }
+    if (row.subsection && row.values.length === 0) {
+      return `<tr><td colspan="${2 + headers.length}" style="background:#EBF5FB;font-weight:700;padding:5px 8px;font-size:11px;border:1px solid #B0B0B0">${row.libelle}</td></tr>`;
+    }
+
+    const isBold = row.bold || row.subsection;
+    const bg = row.bold && row.libelle.startsWith('TOTAL') ? '#F5E6CC'
+      : row.bold ? '#FDF2E9'
+      : row.subsection ? '#EBF5FB'
+      : '#fff';
+    const fw = isBold ? '700' : '400';
+    const indent = row.indent ? 'padding-left:24px' : '';
+
+    const valueCells = row.values.length > 0
+      ? row.values.map(v => `<td style="text-align:right;padding:4px 10px;font-weight:${fw};border:1px solid #B0B0B0;font-size:11px;white-space:nowrap">${fmtVal(v)}</td>`).join('')
+      : `<td colspan="${headers.length}" style="border:1px solid #B0B0B0"></td>`;
+
+    return `<tr style="background:${bg}">
+      <td style="text-align:center;padding:4px 6px;font-weight:${fw};border:1px solid #B0B0B0;font-size:11px;width:40px">${row.ref || ''}</td>
+      <td style="${indent};padding:4px 8px;font-weight:${fw};border:1px solid #B0B0B0;font-size:11px">${row.libelle}</td>
+      ${valueCells}
+    </tr>`;
+  }).join('\n');
+
+  return `
+    <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:1100px;margin:0 auto;padding:20px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:2px;font-size:12px">
+        <div><span style="color:#555">Désignation entité :</span> <b style="color:#0F2A42">${entiteName || ''}</b></div>
+        <div><b style="color:#0F2A42">Exercice clos le : 31/12/${exerciceAnnee || ''}</b></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:12px">
+        <div><span style="color:#555">N° d'identification :</span> <b style="color:#0F2A42">${entiteNif || ''}</b></div>
+        <div><span style="color:#555;font-style:italic">Durée (mois) : ${dureeMois || 12}</span></div>
+      </div>
+      <div style="text-align:center;font-size:15px;font-weight:700;color:#0F2A42;margin-bottom:4px">${title}</div>
+      ${subtitle ? `<div style="text-align:center;font-size:12px;color:#666;font-style:italic;margin-bottom:4px">${subtitle}</div>` : ''}
+      <table style="width:100%;border-collapse:collapse;font-size:11px">
+        <thead>
+          <tr>
+            <th style="background:#0F2A42;color:#fff;padding:6px 8px;text-align:center;font-size:11px;border:1px solid #B0B0B0;width:40px">REF</th>
+            <th style="background:#0F2A42;color:#fff;padding:6px 8px;text-align:left;font-size:11px;border:1px solid #B0B0B0">LIBELLÉ</th>
+            ${headerCols}
+          </tr>
+        </thead>
+        <tbody>
+          ${bodyRows}
+        </tbody>
+      </table>
+    </div>`;
 }

@@ -2,8 +2,8 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { clientFetch } from '../lib/api';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
-import { exportToExcel } from '../lib/excelExport';
-import type { ExcelRow } from '../lib/excelExport';
+import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
+import type { ExcelRow, ExcelExportOptions } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
@@ -38,6 +38,7 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
   const [loading, setLoading] = useState<boolean>(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  const [excelPreviewHtml, setExcelPreviewHtml] = useState<string | null>(null);
 
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -203,7 +204,7 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
 
   const fmt = (v: number) => { if (!v || v === 0) return ''; const neg = v < 0; return (neg ? '(' : '') + Math.abs(Math.round(v)).toLocaleString('fr-FR') + (neg ? ')' : ''); };
 
-  const exportExcel = (): void => {
+  const buildExcelOptions = (): ExcelExportOptions => {
     const rows: ExcelRow[] = [];
     const fmtNum = (v: number): number => Math.round(v);
     for (const row of TFT_ROWS) {
@@ -227,7 +228,7 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
         indent: row.type === 'indent',
       });
     }
-    void exportToExcel({
+    return {
       filename: `TFT_SYSCOHADA_${annee}`,
       sheetName: 'TFT',
       title: 'TABLEAU DES FLUX DE TRÉSORERIE',
@@ -235,8 +236,13 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
       rows,
       entiteName,
       exerciceAnnee: annee,
-    });
+      entiteNif,
+      dureeMois: duree,
+    };
   };
+
+  const exportExcel = (): void => { void exportToExcel(buildExcelOptions()); };
+  const previewExcel = (): void => { setExcelPreviewHtml(buildExcelPreviewHtml(buildExcelOptions())); };
 
   const generatePDF = async (): Promise<jsPDF> => {
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -327,6 +333,9 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
           </button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('TFT_SYSCOHADA_' + annee + '.pdf'); }}>
             <LuDownload /> Exporter PDF
+          </button>
+          <button className="bilan-export-btn secondary" onClick={previewExcel}>
+            <LuEye /> Aperçu Excel
           </button>
           <button className="bilan-export-btn secondary" onClick={exportExcel}>
             <LuSheet /> Excel
@@ -584,6 +593,31 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
                 title="Apercu TFT SYSCOHADA PDF"
                 className="pdf-preview-iframe"
               />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modale apercu Excel */}
+      {excelPreviewHtml && (
+        <div className="pdf-preview-overlay" onClick={() => setExcelPreviewHtml(null)}>
+          <div className="pdf-preview-modal" onClick={e => e.stopPropagation()}>
+            <div className="pdf-preview-header">
+              <h3>Aperçu — TFT SYSCOHADA {annee}</h3>
+              <div className="pdf-preview-actions">
+                <button className="pdf-action-btn" onClick={() => { const w = window.open('', '_blank'); if (w) { w.document.write(`<html><head><title>TFT ${annee}</title></head><body>${excelPreviewHtml}</body></html>`); w.document.close(); w.print(); } }}>
+                  <LuPrinter /> Imprimer
+                </button>
+                <button className="pdf-action-btn primary" onClick={exportExcel}>
+                  <LuDownload /> Télécharger Excel
+                </button>
+                <button className="pdf-close-btn" onClick={() => setExcelPreviewHtml(null)}>
+                  <LuX />
+                </button>
+              </div>
+            </div>
+            <div className="pdf-preview-body" style={{ overflow: 'auto', padding: 16, background: '#fff' }}>
+              <div dangerouslySetInnerHTML={{ __html: excelPreviewHtml }} />
             </div>
           </div>
         </div>
