@@ -294,7 +294,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     rows.push({ libelle: 'VI. RESULTAT NET APRES IMPOT', values: [''], bold: true });
     rows.push({ libelle: 'BENEFICE NET', values: [fmt(beneficeNet)], bold: true });
 
-    exportToExcel({
+    void exportToExcel({
       filename: `Resultat_Fiscal_${annee}`,
       sheetName: 'Resultat Fiscal',
       title: 'DETERMINATION DU RESULTAT FISCAL',

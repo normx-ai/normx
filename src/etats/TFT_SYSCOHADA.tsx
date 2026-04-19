@@ -207,18 +207,27 @@ function TFT_SYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse = '', entit
     const rows: ExcelRow[] = [];
     const fmtNum = (v: number): number => Math.round(v);
     for (const row of TFT_ROWS) {
-      if (row.type === 'section' || row.type === 'label') continue;
+      const isSection = row.type === 'section';
+      const isLabel = row.type === 'label';
+      const isBold = row.type === 'subtotal' || row.type === 'result' || row.type === 'total';
+      if (isSection) {
+        rows.push({ libelle: row.libelle, values: [], section: true });
+        continue;
+      }
+      if (isLabel) {
+        rows.push({ libelle: row.libelle, values: [], subsection: true });
+        continue;
+      }
       const ref = row.ref || '';
-      const val = fmtNum(getValue(ref));
-      const valN1 = fmtNum(getValueN1(ref));
       rows.push({
         ref,
         libelle: row.libelle,
-        values: [val, valN1],
-        bold: row.type === 'subtotal' || row.type === 'result' || row.type === 'total',
+        values: [fmtNum(getValue(ref)), fmtNum(getValueN1(ref))],
+        bold: isBold,
+        indent: row.type === 'indent',
       });
     }
-    exportToExcel({
+    void exportToExcel({
       filename: `TFT_SYSCOHADA_${annee}`,
       sheetName: 'TFT',
       title: 'TABLEAU DES FLUX DE TRÉSORERIE',

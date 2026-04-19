@@ -81,10 +81,6 @@ function AppContent(): React.JSX.Element {
     const slug = entite.slug || null;
     setClientSlug(slug);
     setApiClientSlug(slug);
-    // Persister le dossier actif dans l'URL via le query param ?e=<id>
-    const params = new URLSearchParams(location.search);
-    params.set('e', String(entite.id));
-    navigate(location.pathname + '?' + params.toString(), { replace: true });
   };
 
   const handleEntiteCreated = (entite: Entite): void => {

@@ -213,19 +213,22 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
 
     if (page === 'actif') {
       for (const row of ACTIF_ROWS) {
-        if (!row.ref) continue;
-        const brut = fmt(getActifValue(row.ref, 'brut'));
-        const amort = fmt(getActifValue(row.ref, 'amort'));
-        const net = fmt(getActifValue(row.ref, 'net'));
-        const netN1 = fmt(getActifValueN1(row.ref, 'net'));
+        const isSection = row.type === 'subsection';
+        const isBold = row.type === 'subtotal' || row.type === 'total';
+        const brut = row.ref ? fmt(getActifValue(row.ref, 'brut')) : 0;
+        const amort = row.ref ? fmt(getActifValue(row.ref, 'amort')) : 0;
+        const net = row.ref ? fmt(getActifValue(row.ref, 'net')) : 0;
+        const netN1 = row.ref ? fmt(getActifValueN1(row.ref, 'net')) : 0;
         rows.push({
-          ref: row.ref,
+          ref: row.ref || '',
           libelle: row.libelle,
-          values: [brut, amort, net, netN1],
-          bold: row.type === 'subtotal' || row.type === 'total',
+          values: isSection ? [] : [brut, amort, net, netN1],
+          bold: isBold,
+          subsection: isSection,
+          indent: row.type === 'indent',
         });
       }
-      exportToExcel({
+      void exportToExcel({
         filename: `Bilan_Actif_SYSCOHADA_${annee}`,
         sheetName: 'Actif',
         title: 'BILAN ACTIF',
@@ -236,17 +239,20 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
       });
     } else {
       for (const row of PASSIF_ROWS) {
-        if (!row.ref) continue;
-        const net = fmt(getPassifValue(row.ref, false));
-        const netN1 = fmt(getPassifValue(row.ref, true));
+        const isSection = row.type === 'subsection';
+        const isBold = row.type === 'subtotal' || row.type === 'total';
+        const net = row.ref ? fmt(getPassifValue(row.ref, false)) : 0;
+        const netN1 = row.ref ? fmt(getPassifValue(row.ref, true)) : 0;
         rows.push({
-          ref: row.ref,
+          ref: row.ref || '',
           libelle: row.libelle,
-          values: [net, netN1],
-          bold: row.type === 'subtotal' || row.type === 'total',
+          values: isSection ? [] : [net, netN1],
+          bold: isBold,
+          subsection: isSection,
+          indent: row.type === 'indent',
         });
       }
-      exportToExcel({
+      void exportToExcel({
         filename: `Bilan_Passif_SYSCOHADA_${annee}`,
         sheetName: 'Passif',
         title: 'BILAN PASSIF',

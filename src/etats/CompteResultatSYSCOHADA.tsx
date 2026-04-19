@@ -311,20 +311,21 @@ function CompteResultatSYSCOHADA({ entiteName, entiteSigle = '', entiteAdresse =
     const rows: ExcelRow[] = [];
     const fmt = (v: number): number => Math.round(v);
     for (const row of CR_ROWS) {
-      const netN = fmt(getValue(row.ref, dataN));
-      const netN1 = fmt(getValue(row.ref, dataN1));
+      const isBold = row.type === 'subtotal' || row.type === 'result' || row.type === 'total';
       rows.push({
         ref: row.ref,
         libelle: row.libelle,
-        values: [netN, netN1],
-        bold: row.type === 'subtotal' || row.type === 'result' || row.type === 'total',
+        values: [fmt(getValue(row.ref, dataN)), fmt(getValue(row.ref, dataN1))],
+        bold: isBold,
+        subsection: isBold,
+        indent: row.type === 'indent',
       });
     }
-    exportToExcel({
+    void exportToExcel({
       filename: `Compte_Resultat_SYSCOHADA_${annee}`,
       sheetName: 'Compte de Resultat',
       title: 'COMPTE DE RÉSULTAT',
-      headers: ['N', 'N-1'],
+      headers: ['Exercice N', 'Exercice N-1'],
       rows,
       entiteName,
       exerciceAnnee: annee,

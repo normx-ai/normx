@@ -43,9 +43,13 @@ interface DashboardProps {
 }
 
 function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, typeActivite, offre = 'comptabilite', modules = [], entiteSigle = '', entiteAdresse = '', entiteNif = '', entites = [], onSwitchEntite, onEntiteCreated, onEntiteUpdated, onEntiteDeleted, onLogout }: DashboardProps): React.ReactElement {
-  const navigate = useNavigate();
+  const rawNavigate = useNavigate();
   const location = useLocation();
   const urlParams = useParams<{ module?: string; tab?: string }>();
+
+  const navigate = useCallback((path: string, options?: { replace?: boolean }) => {
+    rawNavigate(entiteId ? `${path}?e=${entiteId}` : path, options);
+  }, [rawNavigate, entiteId]);
 
   // ---- Navigation URL-driven : l'URL est la source de verite ----
   // /app/portail          → portail cabinet, clients list
@@ -217,7 +221,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const dossierSelector = (
     <DossierSelector
       entiteName={entiteName} entiteId={entiteId} entites={clientEntites}
-      onSwitchEntite={(ent: Entite) => { onSwitchEntite(ent); navigate('/app/portail'); }}
+      onSwitchEntite={(ent: Entite) => { onSwitchEntite(ent); rawNavigate(`/app/portail?e=${ent.id}`); }}
       onNewDossier={() => openTab('nouveau_dossier')}
     />
   );
@@ -292,7 +296,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
                 entites={clientEntites} currentEntiteId={entiteId}
                 onSelectEntite={(ent: Entite) => { onSwitchEntite(ent); }}
                 onEntiteCreated={onEntiteCreated} onEntiteUpdated={onEntiteUpdated} onEntiteDeleted={onEntiteDeleted}
-                onOpenModule={(ent: Entite, mod: NormxModule) => { onSwitchEntite(ent); navigate(`/app/${mod}/accueil`); }}
+                onOpenModule={(ent: Entite, mod: NormxModule) => { onSwitchEntite(ent); rawNavigate(`/app/${mod}/accueil?e=${ent.id}`); }}
               />
             ) : (
               <CabinetPanel cabinet={cabinetEntite} clientsCount={clientEntites.length} />
