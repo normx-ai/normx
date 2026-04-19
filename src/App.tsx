@@ -38,16 +38,20 @@ function AppContent(): React.JSX.Element {
   } = useEntites(!!tenant && !onboardingRequired);
 
   // Selectionner l'entite courante quand les entites arrivent.
+  // Le query param ?e=<id> persiste le dossier actif dans l'URL pour
+  // que F5 restaure le bon dossier (et donc les bons modules).
   React.useEffect(() => {
-    if (entites.length > 0 && !currentEntite) {
-      const selected = entites[0];
-      setCurrentEntite(selected);
-      if (selected.slug) {
-        setClientSlug(selected.slug);
-        setApiClientSlug(selected.slug);
-      }
+    if (entites.length === 0 || currentEntite) return;
+    const params = new URLSearchParams(location.search);
+    const savedId = params.get('e');
+    const restored = savedId ? entites.find(ent => String(ent.id) === savedId) : null;
+    const selected = restored || entites[0];
+    setCurrentEntite(selected);
+    if (selected.slug) {
+      setClientSlug(selected.slug);
+      setApiClientSlug(selected.slug);
     }
-  }, [entites, currentEntite, setClientSlug]);
+  }, [entites, currentEntite, setClientSlug, location.search]);
 
   // Redirect /app vers la bonne page (une seule fois).
   React.useEffect(() => {
@@ -77,6 +81,10 @@ function AppContent(): React.JSX.Element {
     const slug = entite.slug || null;
     setClientSlug(slug);
     setApiClientSlug(slug);
+    // Persister le dossier actif dans l'URL via le query param ?e=<id>
+    const params = new URLSearchParams(location.search);
+    params.set('e', String(entite.id));
+    navigate(location.pathname + '?' + params.toString(), { replace: true });
   };
 
   const handleEntiteCreated = (entite: Entite): void => {
