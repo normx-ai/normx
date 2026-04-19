@@ -81,6 +81,9 @@ function AppContent(): React.JSX.Element {
     const slug = entite.slug || null;
     setClientSlug(slug);
     setApiClientSlug(slug);
+    const params = new URLSearchParams(location.search);
+    params.set('e', String(entite.id));
+    navigate(location.pathname + '?' + params.toString(), { replace: true });
   };
 
   const handleEntiteCreated = (entite: Entite): void => {
