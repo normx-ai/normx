@@ -1,6 +1,6 @@
 import { clientFetch } from '../../lib/api';
 import React, { useState, useRef, useEffect } from 'react';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 , LuEyeOff, LuInfo } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuEyeOff, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
@@ -8,91 +8,49 @@ import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
 import BalanceSourcePanel from './BalanceSourcePanel';
+import {
+  DEFAULT_COMMENTAIRE,
+  LigneFiliale,
+  RUBRIQUES_BRUT,
+  RUBRIQUES_DEPRECIATION,
+  computeRow,
+  emptyFiliale,
+  sumRows,
+} from './note4/note4Data';
+import { Note4Table } from './note4/Note4Table';
+import { Note4Filiales } from './note4/Note4Filiales';
+import { textareaStyle } from './note4/note4Styles';
 
 interface Note4Props extends EtatBaseProps {
   onGoToParametres?: () => void;
 }
-
-interface LigneFiliale {
-  denomination: string;
-  localisation: string;
-  valeurAcquisition: string;
-  pctDetenu: string;
-  capitauxPropres: string;
-  resultatDernier: string;
-}
-
-// Mapping des lignes du tableau aux préfixes de comptes SYSCOHADA
-interface RubriqueImmoFin {
-  label: string;
-  prefixes: string[];
-}
-
-const RUBRIQUES_BRUT: RubriqueImmoFin[] = [
-  { label: 'Titres de participation', prefixes: ['26'] },
-  { label: 'Prêts et créances', prefixes: ['271'] },
-  { label: 'Prêt au personnel', prefixes: ['272'] },
-  { label: 'Créances sur l\'état', prefixes: ['273'] },
-  { label: 'Titres immobilisés', prefixes: ['274'] },
-  { label: 'Dépôts et cautionnements', prefixes: ['275'] },
-  { label: 'Intérêts courus', prefixes: ['276'] },
-];
-
-const RUBRIQUES_DEPRECIATION: RubriqueImmoFin[] = [
-  { label: 'Dépréciations titres de participation', prefixes: ['296'] },
-  { label: 'Dépréciations autres immobilisations', prefixes: ['297'] },
-];
-
-const emptyFiliale = (): LigneFiliale => ({
-  denomination: '', localisation: '', valeurAcquisition: '', pctDetenu: '', capitauxPropres: '', resultatDernier: '',
-});
 
 function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
     params, previewUrl, setPreviewUrl,
     pdfBlob, setPdfBlob, editing, setEditing,
-    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+    saving, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
   const [hideEmpty, setHideEmpty] = useState(false);
-
-  // Balance N et N-1
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
-
-  // Ajustements manuels (pour corrections)
   const [adjustments, setAdjustments] = useState<Record<string, Record<string, number>>>({});
-
-  // Filiales
   const [filiales, setFiliales] = useState<LigneFiliale[]>([emptyFiliale(), emptyFiliale(), emptyFiliale(), emptyFiliale(), emptyFiliale()]);
-
-  // Commentaire
-  const DEFAULT_COMMENTAIRE = `• Justifier toute variation significative.
-• Commenter toutes les créances anciennes.
-• Pour les créances relatives à la concession, faire un descriptif de l'accord.
-• Indiquer :
-  - la nature de la créance ;
-  - la durée de la concession ;
-  - l'échéance.
-• Indiquer le nombre et la date d'acquisition des actions ou parts propres.
-• Dépréciation : indiquer les événements et les circonstances qui ont motivé la dépréciation ou la reprise.`;
   const [commentaire, setCommentaire] = useState(DEFAULT_COMMENTAIRE);
 
   const pageRef = useRef<HTMLDivElement>(null);
 
-  const setAdj = (label: string, field: string, value: number) => {
+  const setAdj = (label: string, field: string, value: number): void => {
     setAdjustments(prev => ({
       ...prev,
       [label]: { ...(prev[label] || {}), [field]: value },
     }));
   };
 
-  const getAdj = (label: string, field: string): number => {
-    return adjustments[label]?.[field] || 0;
-  };
+  const getAdj = (label: string, field: string): number => adjustments[label]?.[field] || 0;
 
-  // Initialiser les champs editables depuis les params charges
   useEffect(() => {
     if (!params || Object.keys(params).length === 0) return;
     setCommentaire(params['note4_commentaire'] || DEFAULT_COMMENTAIRE);
@@ -107,11 +65,10 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
     }
   }, [params]);
 
-  // Chargement balance N et N-1
   const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
   useEffect(() => {
     if (!entiteId || !selectedExercice) return;
-    const load = async () => {
+    const load = async (): Promise<void> => {
       try {
         let lignes: BalanceLigne[] = [];
         if (balanceSource === 'ecritures') {
@@ -126,7 +83,6 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
         setLignesN(lignes);
       } catch { setLignesN([]); }
 
-      // N-1
       try {
         const exN1 = exercices.find(e => e.annee === selectedExercice.annee - 1);
         if (exN1) {
@@ -140,7 +96,6 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
             setLignesN1(data.lignes || []);
           }
         } else {
-          // Essayer balance N-1 importée
           try {
             const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
             const data = await res.json();
@@ -152,7 +107,7 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
     load();
   }, [entiteId, selectedExercice, balanceSource, exercices]);
 
-  const handleSave = async () => {
+  const handleSave = async (): Promise<void> => {
     const data: Record<string, string> = {
       ...params,
       note4_adjustments: JSON.stringify(adjustments),
@@ -163,57 +118,17 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
   };
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
-
   const fmtDateShort = (d: Date | null): string => {
     if (!d) return '';
     return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
 
-  const fmtM = (val: number): string => {
-    if (val === 0) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
-
-  // Calcul depuis la balance
-  const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
-    let total = 0;
-    for (const l of lignes) {
-      const num = (l.numero_compte || '').trim();
-      if (!prefixes.some(p => num.startsWith(p))) continue;
-      total += (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0);
-    }
-    return total;
-  };
-
-  const computeRow = (r: RubriqueImmoFin) => {
-    const baseN = computeForPrefixes(lignesN, r.prefixes) + getAdj(r.label, 'anneeN');
-    const baseN1 = computeForPrefixes(lignesN1, r.prefixes) + getAdj(r.label, 'anneeN1');
-    const variation = baseN1 !== 0 ? ((baseN - baseN1) / Math.abs(baseN1) * 100) : 0;
-    const creances1an = getAdj(r.label, 'creances1an');
-    const creances1a2ans = getAdj(r.label, 'creances1a2ans');
-    const creancesPlus2ans = getAdj(r.label, 'creancesPlus2ans');
-    return { anneeN: baseN, anneeN1: baseN1, variation, creances1an, creances1a2ans, creancesPlus2ans };
-  };
-
-  const brutRows = RUBRIQUES_BRUT.map(r => ({ ...r, vals: computeRow(r) }));
-  const depreciationRows = RUBRIQUES_DEPRECIATION.map(r => ({ ...r, vals: computeRow(r) }));
-
-  const sumRows = (rows: { vals: ReturnType<typeof computeRow> }[]) => rows.reduce(
-    (acc, r) => ({
-      anneeN: acc.anneeN + r.vals.anneeN,
-      anneeN1: acc.anneeN1 + r.vals.anneeN1,
-      creances1an: acc.creances1an + r.vals.creances1an,
-      creances1a2ans: acc.creances1a2ans + r.vals.creances1a2ans,
-      creancesPlus2ans: acc.creancesPlus2ans + r.vals.creancesPlus2ans,
-    }),
-    { anneeN: 0, anneeN1: 0, creances1an: 0, creances1a2ans: 0, creancesPlus2ans: 0 }
-  );
+  const brutRows = RUBRIQUES_BRUT.map(r => ({ ...r, vals: computeRow(r, lignesN, lignesN1, getAdj) }));
+  const depreciationRows = RUBRIQUES_DEPRECIATION.map(r => ({ ...r, vals: computeRow(r, lignesN, lignesN1, getAdj) }));
 
   const totalBrut = sumRows(brutRows);
   const totalBrutVariation = totalBrut.anneeN1 !== 0 ? ((totalBrut.anneeN - totalBrut.anneeN1) / Math.abs(totalBrut.anneeN1) * 100) : 0;
-
   const totalDep = sumRows(depreciationRows);
-
   const totalNet = {
     anneeN: totalBrut.anneeN - totalDep.anneeN,
     anneeN1: totalBrut.anneeN1 - totalDep.anneeN1,
@@ -223,12 +138,11 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
   };
   const totalNetVariation = totalNet.anneeN1 !== 0 ? ((totalNet.anneeN - totalNet.anneeN1) / Math.abs(totalNet.anneeN1) * 100) : 0;
 
-  const updateFiliale = (idx: number, field: keyof LigneFiliale, value: string) => {
+  const updateFiliale = (idx: number, field: keyof LigneFiliale, value: string): void => {
     setFiliales(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
   };
-
-  const addFiliale = () => setFiliales(prev => [...prev, emptyFiliale()]);
-  const removeFiliale = (idx: number) => setFiliales(prev => prev.filter((_, i) => i !== idx));
+  const addFiliale = (): void => setFiliales(prev => [...prev, emptyFiliale()]);
+  const removeFiliale = (idx: number): void => setFiliales(prev => prev.filter((_, i) => i !== idx));
 
   const generatePDF = async (): Promise<jsPDF> => {
     const wasEditing = editing;
@@ -245,20 +159,18 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
     return pdf;
   };
 
-  const openPreview = async () => {
+  const openPreview = async (): Promise<void> => {
     const pdf = await generatePDF();
     const blob = pdf.output('blob');
     setPdfBlob(blob);
     setPreviewUrl(URL.createObjectURL(blob));
   };
-
-  const closePreview = () => {
+  const closePreview = (): void => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
     setPreviewUrl(null);
     setPdfBlob(null);
   };
-
-  const downloadPDF = () => {
+  const downloadPDF = (): void => {
     if (!pdfBlob) return;
     const url = URL.createObjectURL(pdfBlob);
     const a = document.createElement('a');
@@ -267,91 +179,11 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
     a.click();
     URL.revokeObjectURL(url);
   };
-
-  const printPDF = () => {
+  const printPDF = (): void => {
     if (!previewUrl) return;
     const w = window.open(previewUrl);
     if (w) { w.onload = () => w.print(); }
   };
-
-  const thStyle: React.CSSProperties = {
-    border: '0.5px solid #000', padding: '5px 8px', fontSize: 11,
-    fontWeight: 700, textAlign: 'center', verticalAlign: 'middle', background: '#f5f5f5',
-  };
-  const tdStyle: React.CSSProperties = {
-    border: '0.5px solid #000', padding: '5px 8px', fontSize: 11, verticalAlign: 'middle',
-  };
-  const tdRight: React.CSSProperties = { ...tdStyle, textAlign: 'right', fontVariantNumeric: 'tabular-nums' };
-  const tdBold: React.CSSProperties = { ...tdStyle, fontWeight: 700 };
-  const tdBoldRight: React.CSSProperties = { ...tdRight, fontWeight: 700 };
-  const inputSt: React.CSSProperties = {
-    width: '100%', padding: '5px 8px', fontSize: 12, border: '1px solid #D4A843',
-    borderRadius: 2, background: '#fffbf0', textAlign: 'right', boxSizing: 'border-box',
-  };
-  const inputLeft: React.CSSProperties = { ...inputSt, textAlign: 'left' };
-  const textareaStyle: React.CSSProperties = {
-    width: '100%', minHeight: 80, padding: '8px 10px', fontSize: 12,
-    lineHeight: '1.6', border: '1px solid #D4A843', borderRadius: 3,
-    background: '#fffbf0', fontFamily: 'inherit', boxSizing: 'border-box', resize: 'vertical',
-  };
-
-  const renderAdjInput = (label: string, field: string, baseValue: number) => {
-    if (!editing) return fmtM(baseValue);
-    const adj = getAdj(label, field);
-    return (
-      <input
-        value={adj || ''}
-        onChange={e => {
-          const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0;
-          setAdj(label, field, v);
-        }}
-        style={inputSt}
-        placeholder={fmtM(baseValue - adj)}
-        title={`Base: ${fmtM(baseValue - adj)} | Ajustement: ${adj}`}
-      />
-    );
-  };
-
-  const renderCreanceInput = (label: string, field: string) => {
-    if (!editing) return fmtM(getAdj(label, field));
-    return (
-      <input
-        value={getAdj(label, field) || ''}
-        onChange={e => {
-          const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0;
-          setAdj(label, field, v);
-        }}
-        style={inputSt}
-      />
-    );
-  };
-
-  const renderImmoRow = (r: { label: string; vals: ReturnType<typeof computeRow> }) => {
-    if (hideEmpty && r.vals.anneeN === 0 && r.vals.anneeN1 === 0) return null;
-    return (
-    <tr key={r.label}>
-      <td style={tdStyle}>{r.label}</td>
-      <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
-      <td style={tdRight}>{renderAdjInput(r.label, 'anneeN1', r.vals.anneeN1)}</td>
-      <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variation !== 0 ? r.vals.variation.toFixed(1) + ' %' : ''}</td>
-      <td style={tdRight}>{renderCreanceInput(r.label, 'creances1an')}</td>
-      <td style={tdRight}>{renderCreanceInput(r.label, 'creances1a2ans')}</td>
-      <td style={tdRight}>{renderCreanceInput(r.label, 'creancesPlus2ans')}</td>
-    </tr>
-    );
-  };
-
-  const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number; creances1an: number; creances1a2ans: number; creancesPlus2ans: number }, variation: number) => (
-    <tr>
-      <td style={tdBold}>{label}</td>
-      <td style={tdBoldRight}>{fmtM(totals.anneeN)}</td>
-      <td style={tdBoldRight}>{fmtM(totals.anneeN1)}</td>
-      <td style={{ ...tdBoldRight, background: '#fafafa' }}>{variation !== 0 ? variation.toFixed(1) + ' %' : ''}</td>
-      <td style={tdBoldRight}>{fmtM(totals.creances1an)}</td>
-      <td style={tdBoldRight}>{fmtM(totals.creances1a2ans)}</td>
-      <td style={tdBoldRight}>{fmtM(totals.creancesPlus2ans)}</td>
-    </tr>
-  );
 
   return (
     <div>
@@ -359,8 +191,11 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
         <button className="etat-back-btn" onClick={onBack}><LuArrowLeft size={18} /> Retour</button>
         <div className="etat-toolbar-title">Note 4 — Immobilisations financières</div>
         <div className="etat-toolbar-actions">
-          <select className="etat-exercice-select" value={selectedExercice?.id || ''}
-            onChange={e => { const ex = exercices.find(ex => ex.id === Number(e.target.value)); if (ex) setSelectedExercice(ex); }}>
+          <select
+            className="etat-exercice-select"
+            value={selectedExercice?.id || ''}
+            onChange={e => { const ex = exercices.find(ex => ex.id === Number(e.target.value)); if (ex) setSelectedExercice(ex); }}
+          >
             {exercices.map(ex => (<option key={ex.id} value={ex.id}>{ex.annee}</option>))}
           </select>
           {!editing ? (
@@ -373,7 +208,11 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
             </button>
           )}
           <button className="etat-action-btn" onClick={openPreview}><LuEye size={16} /> Aperçu</button>
-          <button className="etat-action-btn" onClick={() => setHideEmpty(!hideEmpty)} style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
+          <button
+            className="etat-action-btn"
+            onClick={() => setHideEmpty(!hideEmpty)}
+            style={{ background: hideEmpty ? '#1A3A5C' : '#e5e7eb', color: hideEmpty ? '#fff' : '#333', border: 'none' }}
+          ><LuEyeOff size={16} /> {hideEmpty ? 'Afficher tout' : 'Masquer vides'}</button>
         </div>
       </div>
 
@@ -393,7 +232,6 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
         </div>
       )}
 
-      {/* Bulle d'information */}
       <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
         <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
           <LuInfo size={14} /> Note d'information — Note 4
@@ -412,13 +250,15 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
         title="Soldes balance — Immobilisations financieres"
       />
 
-      <div ref={pageRef} style={{
-        width: '210mm', minHeight: '297mm', background: '#fff',
-        margin: '0 auto 20px', padding: '8mm 10mm',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
-        fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',
-      }}>
-        {/* Header officiel */}
+      <div
+        ref={pageRef}
+        style={{
+          width: '210mm', minHeight: '297mm', background: '#fff',
+          margin: '0 auto 20px', padding: '8mm 10mm',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box',
+          fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a',
+        }}
+      >
         <div className="etat-header-officiel">
           <div className="etat-header-grid">
             <div className="etat-header-row">
@@ -439,94 +279,27 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
           NOTE 4 — IMMOBILISATIONS FINANCIERES
         </h3>
 
-        {/* Tableau principal */}
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
-          <thead>
-            <tr>
-              <th style={{ ...thStyle, width: '22%' }} rowSpan={2}>Libellés</th>
-              <th style={{ ...thStyle, width: '12%' }} rowSpan={2}>Année N</th>
-              <th style={{ ...thStyle, width: '12%' }} rowSpan={2}>Année N-1</th>
-              <th style={{ ...thStyle, width: '8%' }} rowSpan={2}>Variation %</th>
-              <th style={thStyle} colSpan={3}>Échéances des créances</th>
-            </tr>
-            <tr>
-              <th style={{ ...thStyle, width: '15%', fontSize: 9 }}>À un an au plus</th>
-              <th style={{ ...thStyle, width: '15%', fontSize: 9 }}>Plus d'un an à deux ans</th>
-              <th style={{ ...thStyle, width: '16%', fontSize: 9 }}>Plus de deux ans</th>
-            </tr>
-          </thead>
-          <tbody>
-            {brutRows.map(r => renderImmoRow(r))}
-            {renderTotalRow('TOTAL BRUT', totalBrut, totalBrutVariation)}
-            {depreciationRows.map(r => renderImmoRow(r))}
-            <tr>
-              <td style={tdStyle}>&nbsp;</td>
-              <td style={tdRight}></td>
-              <td style={tdRight}></td>
-              <td style={tdRight}></td>
-              <td style={tdRight}></td>
-              <td style={tdRight}></td>
-              <td style={tdRight}></td>
-            </tr>
-            {renderTotalRow('TOTAL NET DE DEPRECIATION', totalNet, totalNetVariation)}
-          </tbody>
-        </table>
+        <Note4Table
+          brutRows={brutRows}
+          depreciationRows={depreciationRows}
+          totalBrut={totalBrut}
+          totalBrutVariation={totalBrutVariation}
+          totalNet={totalNet}
+          totalNetVariation={totalNetVariation}
+          hideEmpty={hideEmpty}
+          editing={editing}
+          getAdj={getAdj}
+          setAdj={setAdj}
+        />
 
-        {/* Liste des filiales et participations */}
-        <p style={{ fontSize: 12, fontWeight: 700, textAlign: 'center', margin: '20px 0 8px' }}>Liste des filiales et participations :</p>
-        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 16 }}>
-          <thead>
-            <tr>
-              <th style={{ ...thStyle, width: '28%' }}>Dénomination sociale</th>
-              <th style={thStyle}>Localisation (ville / pays)</th>
-              <th style={thStyle}>Valeur d'acquisition</th>
-              <th style={thStyle}>% Détenu</th>
-              <th style={thStyle}>Montant des capitaux propres filiale</th>
-              <th style={thStyle}>Résultat dernier exercice filiale</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filiales.map((f, i) => (
-              <tr key={i}>
-                <td style={tdStyle}>
-                  {editing ? (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      <input value={f.denomination} onChange={e => updateFiliale(i, 'denomination', e.target.value)} style={inputLeft} />
-                      <button onClick={() => removeFiliale(i)} style={{ background: 'none', border: 'none', color: '#dc2626', cursor: 'pointer', padding: 2, flexShrink: 0 }}>
-                        <LuTrash2 size={14} />
-                      </button>
-                    </div>
-                  ) : f.denomination}
-                </td>
-                <td style={tdStyle}>
-                  {editing ? <input value={f.localisation} onChange={e => updateFiliale(i, 'localisation', e.target.value)} style={inputLeft} /> : f.localisation}
-                </td>
-                <td style={tdRight}>
-                  {editing ? <input value={f.valeurAcquisition} onChange={e => updateFiliale(i, 'valeurAcquisition', e.target.value)} style={inputSt} /> : f.valeurAcquisition}
-                </td>
-                <td style={{ ...tdRight, textAlign: 'center' }}>
-                  {editing ? <input value={f.pctDetenu} onChange={e => updateFiliale(i, 'pctDetenu', e.target.value)} style={{ ...inputSt, textAlign: 'center' }} /> : f.pctDetenu}
-                </td>
-                <td style={tdRight}>
-                  {editing ? <input value={f.capitauxPropres} onChange={e => updateFiliale(i, 'capitauxPropres', e.target.value)} style={inputSt} /> : f.capitauxPropres}
-                </td>
-                <td style={tdRight}>
-                  {editing ? <input value={f.resultatDernier} onChange={e => updateFiliale(i, 'resultatDernier', e.target.value)} style={inputSt} /> : f.resultatDernier}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Note4Filiales
+          filiales={filiales}
+          editing={editing}
+          updateFiliale={updateFiliale}
+          addFiliale={addFiliale}
+          removeFiliale={removeFiliale}
+        />
 
-        {editing && (
-          <div style={{ marginTop: 6, marginBottom: 10 }} className="no-print">
-            <button onClick={addFiliale} style={{ background: '#D4A843', color: '#fff', border: 'none', borderRadius: 4, padding: '4px 12px', fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <LuPlus size={14} /> Ajouter une filiale
-            </button>
-          </div>
-        )}
-
-        {/* Commentaire */}
         <div style={{ border: '0.5px solid #000', padding: '10px 12px' }}>
           <p style={{ fontSize: 12, fontWeight: 700, marginBottom: 6, marginTop: 0 }}>Commentaire :</p>
           {editing ? (
