@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LuLock, LuX } from 'react-icons/lu';
 import { Exercice } from '../types';
 
-interface ExerciceManagerProps {
+export interface ExerciceSelectorProps {
   exercices: Exercice[];
   exerciceId: number | null;
   exerciceLoading: boolean;
@@ -16,7 +16,7 @@ interface ExerciceManagerProps {
 export function ExerciceSelector({
   exercices, exerciceId, exerciceLoading, currentExStatut,
   onSelectExercice, onOpenExerciceModal, onCloturerExercice, onRouvrirExercice,
-}: ExerciceManagerProps): React.ReactElement {
+}: ExerciceSelectorProps): React.ReactElement {
   return (
     <div className="exercice-selector">
       <label>Exercice :</label>
