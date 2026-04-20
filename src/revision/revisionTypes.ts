@@ -303,6 +303,75 @@ export interface DeprecLigne {
   motif: string;
 }
 
+// --- RevisionFourn types ---
+export interface ReconFournLigne {
+  id: number;
+  codeFourn: string;
+  designation: string;
+  solde3112: number;
+  soldeReconcilie: number;
+  commentaire: string;
+}
+
+export interface FarLigne {
+  id: number;
+  numCommande: string;
+  libellePrestation: string;
+  docJustificatif: string;
+  montant: number;
+}
+
+export interface FournDebiteurLigne {
+  id: number;
+  codeFourn: string;
+  designation: string;
+  solde3112: number;
+  dateDebit: string;
+  objetDebit: string;
+  commentaire: string;
+}
+
+export interface AvanceFournLigne {
+  id: number;
+  codeFourn: string;
+  designation: string;
+  avance: number;
+  objetAvance: string;
+  conclusion: string;
+}
+
+export interface DetteDeviseLigne {
+  id: number;
+  codeFourn: string;
+  nomFourn: string;
+  monnaie: string;
+  valeurInitialeFCFA: number;
+  parite3112: number;
+  valeurDevise: number;
+}
+
+export interface CircuFournLigne {
+  id: number;
+  codeFourn: string;
+  nomFourn: string;
+  solde3112: number;
+  soldeReconcilie: number;
+  commentaire: string;
+}
+
+export const TRAVAUX_FOURN: string[] = [
+  'Éditer la balance auxiliaire fournisseurs et la rapprocher avec la comptabilité générale',
+  'Éditer la balance âgée fournisseurs et analyser les encours à forte antériorité (90 et 180 jours)',
+  'Détail des factures à recevoir (support de comptabilisation, apurement post-clôture)',
+  "Détail des avoirs à recevoir (vérification de l'évaluation et justification)",
+  "Journal d'achats de la dernière période N et de la première période N+1 (cut-off)",
+  'Analyser et justifier les comptes de fournisseurs débiteurs',
+  "Analyser l'apurement post-clôture",
+  "Rapprocher les principaux fournisseurs (volumes d'achats et soldes de clôture)",
+  'Insérer la balance auxiliaire à la date de clôture',
+  'Circulariser les fournisseurs en collaboration avec les CAC',
+];
+
 // --- RevisionAutresTiers types ---
 export interface CCALigne {
   id: number;
