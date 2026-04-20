@@ -303,6 +303,58 @@ export interface DeprecLigne {
   motif: string;
 }
 
+// --- RevisionDF types ---
+export interface PretLigne {
+  id: number;
+  contratNo: string;
+  bailleur: string;
+  dateObtention: string;
+  soldeN1: number;
+  nouveauxEmprunts: number;
+  remboursement: number;
+  planAmort: number;
+}
+
+export interface InteretLigne {
+  id: number;
+  contratNo: string;
+  bailleur: string;
+  compte: string;
+  chargesComptabilisees: number;
+  releveBancaire: number;
+  planRemboursement: number;
+}
+
+export interface InteretCoururLigne {
+  id: number;
+  contratNo: string;
+  bailleur: string;
+  compte: string;
+  dateEcheance: string;
+  dateFinMois: string;
+  interetsMensuels: number;
+}
+
+export interface AutreChargeLigne {
+  id: number;
+  contratNo: string;
+  bailleur: string;
+  compte: string;
+  natureCharge: string;
+  releveBancaire: number;
+  balance: number;
+  planRemboursement: number;
+}
+
+export const TRAVAUX_DF: string[] = [
+  'Lister les prêts encore ouverts à la clôture',
+  'Préparer les contrats de prêts signés',
+  "Réconcilier avec les tableaux d'amortissement",
+  'Vérifier le calcul des dettes rattachées (intérêts courus)',
+  'Justifier le paiement des échéances',
+  "Vérifier le traitement des contrats de location remplissant les conditions d'activation (voir DL)",
+];
+
 // --- RevisionFourn types ---
 export interface ReconFournLigne {
   id: number;
