@@ -1,10 +1,19 @@
 import { clientFetch } from '../lib/api';
 import React, { useState, useEffect } from 'react';
-import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList, LuPlus, LuTrash2 } from 'react-icons/lu';
+import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
-import { ODEcriture, Suggestion, fmt, fmtInput, parseInputValue, getSD, getSC, soldeNet, soldeCreditNet, totalSoldeNet, totalSoldeCreditNet } from './revisionTypes';
+import {
+  ODEcriture, Suggestion, fmt,
+  InvStockLigne, ValoLigne, VarLigne, EncoursRouteLigne, DeprecLigne, TRAVAUX_STOCKS,
+  soldeNet, totalSoldeNet, totalSoldeCreditNet,
+} from './revisionTypes';
 import JournalOD from './JournalOD';
 import FonctionnementCompte from './FonctionnementCompte';
+import { Controle1Inventaire } from './stocks/Controle1Inventaire';
+import { Controle2Valorisation } from './stocks/Controle2Valorisation';
+import { Controle3Variations } from './stocks/Controle3Variations';
+import { Controle4Encours } from './stocks/Controle4Encours';
+import { Controle5Depreciation } from './stocks/Controle5Depreciation';
 
 interface RevisionStocksProps {
   balanceN: BalanceLigne[];
@@ -12,71 +21,6 @@ interface RevisionStocksProps {
   entiteId: number;
   exerciceId: number;
 }
-
-// Contrôle 1 : Rapprochement PV inventaire vs Balance
-interface InvStockLigne {
-  id: number;
-  designation: string;
-  compte: string;
-  coutUnitaire: number;
-  quantitePV: number;
-}
-
-// Contrôle 2 : Test de valorisation
-interface ValoLigne {
-  id: number;
-  reference: string;
-  designation: string;
-  quantite: number;
-  facturePrincipale: number;
-  transport: number;
-  douane: number;
-  autresCouts: number;
-  coutSysteme: number;
-}
-
-// Contrôle 3 : Variations bilantielles vs Compte de résultat
-interface VarLigne {
-  compte: string;
-  designation: string;
-  soldeN1: number;
-  variation603ou73: number;
-  soldeNCalc: number;
-  soldeNBalance: number;
-}
-
-// Contrôle 4 : Encours de route
-interface EncoursRouteLigne {
-  id: number;
-  dossierImport: string;
-  fournisseur: string;
-  facturePrincipale: number;
-  transport: number;
-  douane: number;
-  debours: number;
-}
-
-// Contrôle 5 : Dépréciation des stocks
-interface DeprecLigne {
-  id: number;
-  designation: string;
-  compte: string;
-  quantite: number;
-  coutUnitaire: number;
-  valeurActuelle: number;
-  motif: string;
-}
-
-const TRAVAUX_STOCKS = [
-  'Obtenir et vérifier le procès-verbal d\'inventaire physique de fin d\'exercice',
-  'Rapprocher les quantités physiques avec les soldes comptables',
-  'Vérifier la méthode de valorisation utilisée (PEPS ou CMP)',
-  'Analyser les coûts d\'acquisition (factures, transport, douane, frais accessoires)',
-  'Contrôler la cohérence des variations de stocks (603x pour achats, 73x pour production)',
-  'Examiner les stocks en cours de route et vérifier les dossiers d\'importation',
-  'Identifier les stocks à déprécier (faible rotation, baisse de prix, dommages)',
-  'Vérifier les dotations/reprises de dépréciations (D 6593 / C 39x et D 39x / C 7593)',
-];
 
 function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionStocksProps): React.ReactElement {
   const [invLignes, setInvLignes] = useState<InvStockLigne[]>([]);
@@ -95,12 +39,7 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
     const p2 = l.numero_compte.substring(0, 2);
     return p2 >= '31' && p2 <= '38';
   });
-  // Comptes 39x (dépréciations)
   const comptes39 = balanceN.filter(l => l.numero_compte.startsWith('39'));
-  // Comptes 603x (variations stocks achetés)
-  const comptes603 = balanceN.filter(l => l.numero_compte.startsWith('603'));
-  // Comptes 73x (variations stocks produits)
-  const comptes73 = balanceN.filter(l => l.numero_compte.startsWith('73'));
 
   const totalStockBalance = totalSoldeNet(comptesStock);
 
@@ -267,7 +206,6 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
         <strong>Objectif :</strong> S'assurer de l'exhaustivité, de la réalité et de la correcte évaluation des stocks, ainsi que de la cohérence des variations de stocks avec le compte de résultat (603x pour biens achetés, 73x pour biens produits) et de la correcte comptabilisation des dépréciations (D 6593 / C 39x).
       </div>
 
-
       <div className="revision-travaux">
         <button className="revision-travaux-toggle" onClick={() => setShowTravaux(!showTravaux)}>
           {showTravaux ? <LuChevronDown size={14} /> : <LuChevronRight size={14} />}
@@ -299,362 +237,56 @@ function RevisionStocks({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revis
         </div>
       )}
 
-      {/* Contrôle 1 : Rapprochement PV inventaire vs Balance */}
-      <div className="revision-control">
-        <div className="revision-control-title">
-          <span>Contrôle 1 — Rapprochement PV d'inventaire vs balance générale</span>
-          {invLignes.length > 0 && (Math.abs(ecartInvBalance) < 0.5
-            ? <span className="revision-badge ok">Conforme</span>
-            : <span className="revision-badge ko">Écart détecté</span>
-          )}
-        </div>
+      <Controle1Inventaire
+        invCalcs={invCalcs}
+        totalValeurPV={totalValeurPV}
+        totalStockBalance={totalStockBalance}
+        ecartInvBalance={ecartInvBalance}
+        addInv={addInv}
+        updateInv={updateInv}
+        removeInv={removeInv}
+      />
 
-        <div className="revision-table-wrapper">
-          <table className="revision-table">
-            <thead>
-              <tr>
-                <th>Désignation</th>
-                <th style={{ width: 90 }}>Compte</th>
-                <th className="num editable-col" style={{ width: 120 }}>Coût unitaire</th>
-                <th className="num editable-col" style={{ width: 100 }}>Qté PV</th>
-                <th className="num" style={{ width: 130 }}>Valeur PV</th>
-                <th style={{ width: 30 }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {invCalcs.map(l => (
-                <tr key={l.id}>
-                  <td className="editable-cell"><input type="text" value={l.designation} onChange={e => updateInv(l.id, 'designation', e.target.value)} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" value={l.compte} onChange={e => updateInv(l.id, 'compte', e.target.value)} style={{ maxWidth: 'none', fontFamily: 'monospace' }} placeholder="31x..." /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(l.coutUnitaire)} onChange={e => updateInv(l.id, 'coutUnitaire', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={l.quantitePV || ''} onChange={e => updateInv(l.id, 'quantitePV', parseInt(e.target.value) || 0)} style={{ maxWidth: 'none' }} /></td>
-                  <td className="num computed">{fmt(l.valeurPV)}</td>
-                  <td><button className="revision-od-delete" onClick={() => removeInv(l.id)} title="Supprimer"><LuTrash2 size={13} /></button></td>
-                </tr>
-              ))}
-              {invLignes.length === 0 && (
-                <tr><td colSpan={6} style={{ textAlign: 'center', color: '#999', padding: 16, fontStyle: 'italic' }}>Aucun article saisi. Ajoutez les lignes du PV d'inventaire.</td></tr>
-              )}
-            </tbody>
-            {invLignes.length > 0 && (
-              <tfoot>
-                <tr>
-                  <td colSpan={4}><strong>Total PV inventaire</strong></td>
-                  <td className="num"><strong>{fmt(totalValeurPV)}</strong></td>
-                  <td></td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
-        </div>
+      <Controle2Valorisation
+        valoLignes={valoLignes}
+        valoCalcs={valoCalcs}
+        addValo={addValo}
+        updateValo={updateValo}
+        removeValo={removeValo}
+      />
 
-        {invLignes.length > 0 && (
-          <div style={{ marginTop: 12, padding: '10px 14px', background: '#f8f9fa', borderRadius: 6, fontSize: '12.5px' }}>
-            <table className="revision-table revision-table-small" style={{ maxWidth: 400 }}>
-              <tbody>
-                <tr><td>Total PV inventaire</td><td className="num"><strong>{fmt(totalValeurPV)}</strong></td></tr>
-                <tr><td>Balance générale (31x-38x)</td><td className="num"><strong>{fmt(totalStockBalance)}</strong></td></tr>
-                <tr><td>Écart</td><td className={`num ${Math.abs(ecartInvBalance) > 0.5 ? 'ecart-val' : 'ok-val'}`}><strong>{fmt(ecartInvBalance)}</strong></td></tr>
-              </tbody>
-            </table>
-          </div>
-        )}
+      <Controle3Variations
+        varLignes={varLignes}
+        totalVarN1={totalVarN1}
+        totalVarVar={totalVarVar}
+        totalVarCalc={totalVarCalc}
+        totalVarBal={totalVarBal}
+        totalVarEcart={totalVarEcart}
+        setVarEdit={setVarEdit}
+        setSaved={setSaved}
+      />
 
-        <div className="revision-od-actions">
-          <button className="revision-od-add" onClick={addInv}><LuPlus size={13} /> Ajouter un article</button>
-        </div>
-      </div>
+      <Controle4Encours
+        encoursLignes={encoursLignes}
+        encoursCalcs={encoursCalcs}
+        totalEncoursRecalcule={totalEncoursRecalcule}
+        totalEncours38Balance={totalEncours38Balance}
+        ecartEncours={ecartEncours}
+        addEncours={addEncours}
+        updateEncours={updateEncours}
+        removeEncours={removeEncours}
+      />
 
-      {/* Contrôle 2 : Test de valorisation */}
-      <div className="revision-control">
-        <div className="revision-control-title">
-          <span>Contrôle 2 — Test de valorisation des stocks</span>
-        </div>
-        <div className="revision-ref">Méthodes : PEPS (Premier Entré Premier Sorti) ou CMP (Coût Moyen Pondéré)</div>
-
-        <div className="revision-table-wrapper" style={{ marginTop: 8 }}>
-          <table className="revision-table">
-            <thead>
-              <tr>
-                <th style={{ width: 80 }}>Réf.</th>
-                <th>Désignation</th>
-                <th className="num editable-col" style={{ width: 70 }}>Qté</th>
-                <th className="num editable-col" style={{ width: 110 }}>Facture princ.</th>
-                <th className="num editable-col" style={{ width: 100 }}>Transport</th>
-                <th className="num editable-col" style={{ width: 100 }}>Douane</th>
-                <th className="num editable-col" style={{ width: 100 }}>Autres coûts</th>
-                <th className="num" style={{ width: 110 }}>Coût recalculé</th>
-                <th className="num editable-col" style={{ width: 110 }}>Coût système</th>
-                <th className="num" style={{ width: 100 }}>Écart unit.</th>
-                <th style={{ width: 30 }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {valoCalcs.map(v => (
-                <tr key={v.id} className={Math.abs(v.ecart) > 0.5 ? 'ecart-row' : ''}>
-                  <td className="editable-cell"><input type="text" value={v.reference} onChange={e => updateValo(v.id, 'reference', e.target.value)} style={{ maxWidth: 'none', fontFamily: 'monospace' }} /></td>
-                  <td className="editable-cell"><input type="text" value={v.designation} onChange={e => updateValo(v.id, 'designation', e.target.value)} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={v.quantite || ''} onChange={e => updateValo(v.id, 'quantite', parseInt(e.target.value) || 0)} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(v.facturePrincipale)} onChange={e => updateValo(v.id, 'facturePrincipale', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(v.transport)} onChange={e => updateValo(v.id, 'transport', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(v.douane)} onChange={e => updateValo(v.id, 'douane', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(v.autresCouts)} onChange={e => updateValo(v.id, 'autresCouts', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="num computed">{fmt(v.coutRecalcule)}</td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(v.coutSysteme)} onChange={e => updateValo(v.id, 'coutSysteme', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className={`num ${Math.abs(v.ecart) > 0.5 ? 'ecart-val' : 'ok-val'}`}>{fmt(v.ecart)}</td>
-                  <td><button className="revision-od-delete" onClick={() => removeValo(v.id)} title="Supprimer"><LuTrash2 size={13} /></button></td>
-                </tr>
-              ))}
-              {valoLignes.length === 0 && (
-                <tr><td colSpan={11} style={{ textAlign: 'center', color: '#999', padding: 16, fontStyle: 'italic' }}>Aucun test de valorisation saisi.</td></tr>
-              )}
-            </tbody>
-            {valoLignes.length > 0 && (
-              <tfoot>
-                <tr>
-                  <td colSpan={3}><strong>Total</strong></td>
-                  <td className="num"><strong>{fmt(valoLignes.reduce((s, v) => s + v.facturePrincipale, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(valoLignes.reduce((s, v) => s + v.transport, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(valoLignes.reduce((s, v) => s + v.douane, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(valoLignes.reduce((s, v) => s + v.autresCouts, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(valoCalcs.reduce((s, v) => s + v.coutRecalcule, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(valoLignes.reduce((s, v) => s + v.coutSysteme, 0))}</strong></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
-        </div>
-        <div className="revision-od-actions">
-          <button className="revision-od-add" onClick={addValo}><LuPlus size={13} /> Ajouter un test</button>
-        </div>
-      </div>
-
-      {/* Contrôle 3 : Variations bilantielles vs Compte de résultat */}
-      <div className="revision-control">
-        <div className="revision-control-title">
-          <span>Contrôle 3 — Variations bilantielles vs compte de résultat</span>
-          {varLignes.length > 0 && (Math.abs(totalVarEcart) < 0.5
-            ? <span className="revision-badge ok">Conforme</span>
-            : <span className="revision-badge ko">Écart détecté</span>
-          )}
-        </div>
-        <div className="revision-ref">Biens achetés (31x-33x, 38x) : variation 603x — Biens produits (34x-37x) : variation 73x</div>
-
-        <div className="revision-table-wrapper" style={{ marginTop: 8 }}>
-          <table className="revision-table">
-            <thead>
-              <tr>
-                <th style={{ width: 90 }}>Compte</th>
-                <th>Désignation</th>
-                <th className="num editable-col" style={{ width: 130 }}>Solde N-1</th>
-                <th className="num editable-col" style={{ width: 130 }}>Variation (603/73)</th>
-                <th className="num" style={{ width: 130 }}>Solde N calculé</th>
-                <th className="num" style={{ width: 130 }}>Balance N</th>
-                <th className="num" style={{ width: 100 }}>Écart</th>
-              </tr>
-            </thead>
-            <tbody>
-              {varLignes.map(l => {
-                const ecart = l.soldeNBalance - l.soldeNCalc;
-                return (
-                  <tr key={l.compte} className={Math.abs(ecart) > 0.5 ? 'ecart-row' : ''}>
-                    <td className="compte">{l.compte}</td>
-                    <td>{l.designation}</td>
-                    <td className="editable-cell">
-                      <input type="text" inputMode="numeric" value={fmtInput(l.soldeN1)} onChange={e => {
-                        const val = parseInputValue(e.target.value);
-                        setVarEdit(prev => ({ ...prev, [l.compte]: { ...prev[l.compte], soldeN1: val, variation: prev[l.compte]?.variation ?? 0 } }));
-                        setSaved(false);
-                      }} style={{ maxWidth: 'none' }} />
-                    </td>
-                    <td className="editable-cell">
-                      <input type="text" inputMode="numeric" value={fmtInput(l.variation603ou73)} onChange={e => {
-                        const val = parseInputValue(e.target.value);
-                        setVarEdit(prev => ({ ...prev, [l.compte]: { soldeN1: prev[l.compte]?.soldeN1 ?? l.soldeN1, variation: val } }));
-                        setSaved(false);
-                      }} style={{ maxWidth: 'none' }} />
-                    </td>
-                    <td className="num computed">{fmt(l.soldeN1 + l.variation603ou73)}</td>
-                    <td className="num">{fmt(l.soldeNBalance)}</td>
-                    <td className={`num ${Math.abs(ecart) > 0.5 ? 'ecart-val' : 'ok-val'}`}>{fmt(ecart)}</td>
-                  </tr>
-                );
-              })}
-              {varLignes.length === 0 && (
-                <tr><td colSpan={7} style={{ textAlign: 'center', color: '#999', padding: 16, fontStyle: 'italic' }}>Aucun compte de stock (31x-38x) dans la balance.</td></tr>
-              )}
-            </tbody>
-            {varLignes.length > 0 && (
-              <tfoot>
-                <tr>
-                  <td colSpan={2}><strong>Total</strong></td>
-                  <td className="num"><strong>{fmt(totalVarN1)}</strong></td>
-                  <td className="num"><strong>{fmt(totalVarVar)}</strong></td>
-                  <td className="num"><strong>{fmt(totalVarCalc)}</strong></td>
-                  <td className="num"><strong>{fmt(totalVarBal)}</strong></td>
-                  <td className={`num ${Math.abs(totalVarEcart) > 0.5 ? 'ecart-val' : 'ok-val'}`}><strong>{fmt(totalVarEcart)}</strong></td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
-        </div>
-      </div>
-
-      {/* Contrôle 4 : Encours de route */}
-      <div className="revision-control">
-        <div className="revision-control-title">
-          <span>Contrôle 4 — Valorisation des stocks en cours de route</span>
-          {encoursLignes.length > 0 && (Math.abs(ecartEncours) < 0.5
-            ? <span className="revision-badge ok">Conforme</span>
-            : <span className="revision-badge ko">Écart détecté</span>
-          )}
-        </div>
-        <div className="revision-ref">Comptes 38x — stocks en cours de route, en consignation ou en dépôt</div>
-
-        <div className="revision-table-wrapper" style={{ marginTop: 8 }}>
-          <table className="revision-table">
-            <thead>
-              <tr>
-                <th style={{ width: 100 }}>Dossier import</th>
-                <th>Fournisseur</th>
-                <th className="num editable-col" style={{ width: 120 }}>Facture princ.</th>
-                <th className="num editable-col" style={{ width: 100 }}>Transport</th>
-                <th className="num editable-col" style={{ width: 100 }}>Douane</th>
-                <th className="num editable-col" style={{ width: 100 }}>Débours</th>
-                <th className="num" style={{ width: 120 }}>Total recalculé</th>
-                <th style={{ width: 30 }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {encoursCalcs.map(e => (
-                <tr key={e.id}>
-                  <td className="editable-cell"><input type="text" value={e.dossierImport} onChange={ev => updateEncours(e.id, 'dossierImport', ev.target.value)} style={{ maxWidth: 'none', fontFamily: 'monospace' }} /></td>
-                  <td className="editable-cell"><input type="text" value={e.fournisseur} onChange={ev => updateEncours(e.id, 'fournisseur', ev.target.value)} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(e.facturePrincipale)} onChange={ev => updateEncours(e.id, 'facturePrincipale', parseInputValue(ev.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(e.transport)} onChange={ev => updateEncours(e.id, 'transport', parseInputValue(ev.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(e.douane)} onChange={ev => updateEncours(e.id, 'douane', parseInputValue(ev.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(e.debours)} onChange={ev => updateEncours(e.id, 'debours', parseInputValue(ev.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="num computed">{fmt(e.totalRecalcule)}</td>
-                  <td><button className="revision-od-delete" onClick={() => removeEncours(e.id)} title="Supprimer"><LuTrash2 size={13} /></button></td>
-                </tr>
-              ))}
-              {encoursLignes.length === 0 && (
-                <tr><td colSpan={8} style={{ textAlign: 'center', color: '#999', padding: 16, fontStyle: 'italic' }}>Aucun dossier d'import en transit saisi.</td></tr>
-              )}
-            </tbody>
-            {encoursLignes.length > 0 && (
-              <tfoot>
-                <tr>
-                  <td colSpan={2}><strong>Total</strong></td>
-                  <td className="num"><strong>{fmt(encoursLignes.reduce((s, e) => s + e.facturePrincipale, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(encoursLignes.reduce((s, e) => s + e.transport, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(encoursLignes.reduce((s, e) => s + e.douane, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(encoursLignes.reduce((s, e) => s + e.debours, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(totalEncoursRecalcule)}</strong></td>
-                  <td></td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
-        </div>
-
-        {encoursLignes.length > 0 && (
-          <div style={{ marginTop: 12, padding: '10px 14px', background: '#f8f9fa', borderRadius: 6, fontSize: '12.5px' }}>
-            <table className="revision-table revision-table-small" style={{ maxWidth: 400 }}>
-              <tbody>
-                <tr><td>Total recalculé</td><td className="num"><strong>{fmt(totalEncoursRecalcule)}</strong></td></tr>
-                <tr><td>Balance 38x</td><td className="num"><strong>{fmt(totalEncours38Balance)}</strong></td></tr>
-                <tr><td>Écart</td><td className={`num ${Math.abs(ecartEncours) > 0.5 ? 'ecart-val' : 'ok-val'}`}><strong>{fmt(ecartEncours)}</strong></td></tr>
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        <div className="revision-od-actions">
-          <button className="revision-od-add" onClick={addEncours}><LuPlus size={13} /> Ajouter un dossier</button>
-        </div>
-      </div>
-
-      {/* Contrôle 5 : Dépréciation des stocks */}
-      <div className="revision-control">
-        <div className="revision-control-title">
-          <span>Contrôle 5 — Dépréciation des stocks</span>
-          {deprecLignes.length > 0 && (Math.abs(ecartDeprec) < 0.5
-            ? <span className="revision-badge ok">Conforme</span>
-            : <span className="revision-badge ko">Écart détecté</span>
-          )}
-        </div>
-        <div className="revision-ref">Dotation : D 6593 / C 39x — Reprise : D 39x / C 7593 (AO). HAO : D 839 / C 39x et D 39x / C 849</div>
-
-        <div className="revision-table-wrapper" style={{ marginTop: 8 }}>
-          <table className="revision-table">
-            <thead>
-              <tr>
-                <th>Désignation</th>
-                <th style={{ width: 90 }}>Compte</th>
-                <th className="num editable-col" style={{ width: 80 }}>Qté</th>
-                <th className="num editable-col" style={{ width: 110 }}>Coût unit.</th>
-                <th className="num" style={{ width: 120 }}>Valeur stock</th>
-                <th className="num editable-col" style={{ width: 120 }}>Valeur actuelle</th>
-                <th className="num" style={{ width: 120 }}>Dépréciation</th>
-                <th style={{ width: 130 }}>Motif</th>
-                <th style={{ width: 30 }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {deprecCalcs.map(d => (
-                <tr key={d.id} className={d.depreciation > 0 ? 'ecart-row' : ''}>
-                  <td className="editable-cell"><input type="text" value={d.designation} onChange={e => updateDeprec(d.id, 'designation', e.target.value)} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" value={d.compte} onChange={e => updateDeprec(d.id, 'compte', e.target.value)} style={{ maxWidth: 'none', fontFamily: 'monospace' }} placeholder="39x..." /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={d.quantite || ''} onChange={e => updateDeprec(d.id, 'quantite', parseInt(e.target.value) || 0)} style={{ maxWidth: 'none' }} /></td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(d.coutUnitaire)} onChange={e => updateDeprec(d.id, 'coutUnitaire', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="num computed">{fmt(d.valeurStock)}</td>
-                  <td className="editable-cell"><input type="text" inputMode="numeric" value={fmtInput(d.valeurActuelle)} onChange={e => updateDeprec(d.id, 'valeurActuelle', parseInputValue(e.target.value))} style={{ maxWidth: 'none' }} /></td>
-                  <td className="num ecart-val">{fmt(d.depreciation)}</td>
-                  <td className="editable-cell"><input type="text" value={d.motif} onChange={e => updateDeprec(d.id, 'motif', e.target.value)} style={{ maxWidth: 'none', fontSize: '11px' }} placeholder="Rotation, prix..." /></td>
-                  <td><button className="revision-od-delete" onClick={() => removeDeprec(d.id)} title="Supprimer"><LuTrash2 size={13} /></button></td>
-                </tr>
-              ))}
-              {deprecLignes.length === 0 && (
-                <tr><td colSpan={9} style={{ textAlign: 'center', color: '#999', padding: 16, fontStyle: 'italic' }}>Aucun stock à déprécier identifié.</td></tr>
-              )}
-            </tbody>
-            {deprecLignes.length > 0 && (
-              <tfoot>
-                <tr>
-                  <td colSpan={4}><strong>Total</strong></td>
-                  <td className="num"><strong>{fmt(deprecCalcs.reduce((s, d) => s + d.valeurStock, 0))}</strong></td>
-                  <td className="num"><strong>{fmt(deprecLignes.reduce((s, d) => s + d.valeurActuelle, 0))}</strong></td>
-                  <td className="num ecart-val"><strong>{fmt(totalDeprec)}</strong></td>
-                  <td colSpan={2}></td>
-                </tr>
-              </tfoot>
-            )}
-          </table>
-        </div>
-
-        {(deprecLignes.length > 0 || totalDeprec39Balance !== 0) && (
-          <div style={{ marginTop: 12, padding: '10px 14px', background: '#f8f9fa', borderRadius: 6, fontSize: '12.5px' }}>
-            <table className="revision-table revision-table-small" style={{ maxWidth: 420 }}>
-              <tbody>
-                <tr><td>Dépréciation calculée (Contrôle 5)</td><td className="num"><strong>{fmt(totalDeprec)}</strong></td></tr>
-                <tr><td>Solde 39x en balance</td><td className="num"><strong>{fmt(totalDeprec39Balance)}</strong></td></tr>
-                <tr><td>Écart</td><td className={`num ${Math.abs(ecartDeprec) > 0.5 ? 'ecart-val' : 'ok-val'}`}><strong>{fmt(ecartDeprec)}</strong></td></tr>
-              </tbody>
-            </table>
-            {Math.abs(ecartDeprec) < 0.5
-              ? <span className="revision-badge ok" style={{ marginLeft: 12 }}>Conforme</span>
-              : <span className="revision-badge ko" style={{ marginLeft: 12 }}>Écart</span>
-            }
-          </div>
-        )}
-
-        <div className="revision-od-actions">
-          <button className="revision-od-add" onClick={addDeprec}><LuPlus size={13} /> Ajouter un stock à déprécier</button>
-        </div>
-      </div>
+      <Controle5Depreciation
+        deprecLignes={deprecLignes}
+        deprecCalcs={deprecCalcs}
+        totalDeprec={totalDeprec}
+        totalDeprec39Balance={totalDeprec39Balance}
+        ecartDeprec={ecartDeprec}
+        addDeprec={addDeprec}
+        updateDeprec={updateDeprec}
+        removeDeprec={removeDeprec}
+      />
 
       <JournalOD
         suggestions={suggestions}

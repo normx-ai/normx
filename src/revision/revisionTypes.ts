@@ -252,3 +252,64 @@ export interface ProdRecevoirLigne {
   soldeN1: number;
   commentaire: string;
 }
+
+// --- RevisionStocks types ---
+export interface InvStockLigne {
+  id: number;
+  designation: string;
+  compte: string;
+  coutUnitaire: number;
+  quantitePV: number;
+}
+
+export interface ValoLigne {
+  id: number;
+  reference: string;
+  designation: string;
+  quantite: number;
+  facturePrincipale: number;
+  transport: number;
+  douane: number;
+  autresCouts: number;
+  coutSysteme: number;
+}
+
+export interface VarLigne {
+  compte: string;
+  designation: string;
+  soldeN1: number;
+  variation603ou73: number;
+  soldeNCalc: number;
+  soldeNBalance: number;
+}
+
+export interface EncoursRouteLigne {
+  id: number;
+  dossierImport: string;
+  fournisseur: string;
+  facturePrincipale: number;
+  transport: number;
+  douane: number;
+  debours: number;
+}
+
+export interface DeprecLigne {
+  id: number;
+  designation: string;
+  compte: string;
+  quantite: number;
+  coutUnitaire: number;
+  valeurActuelle: number;
+  motif: string;
+}
+
+export const TRAVAUX_STOCKS: string[] = [
+  "Obtenir et vérifier le procès-verbal d'inventaire physique de fin d'exercice",
+  'Rapprocher les quantités physiques avec les soldes comptables',
+  'Vérifier la méthode de valorisation utilisée (PEPS ou CMP)',
+  "Analyser les coûts d'acquisition (factures, transport, douane, frais accessoires)",
+  'Contrôler la cohérence des variations de stocks (603x pour achats, 73x pour production)',
+  "Examiner les stocks en cours de route et vérifier les dossiers d'importation",
+  'Identifier les stocks à déprécier (faible rotation, baisse de prix, dommages)',
+  'Vérifier les dotations/reprises de dépréciations (D 6593 / C 39x et D 39x / C 7593)',
+];
