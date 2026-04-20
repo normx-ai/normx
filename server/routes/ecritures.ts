@@ -4,12 +4,7 @@ import * as ecrituresService from '../services/ecritures.service';
 import { getErrorMessage, getTenantSchema } from '../utils/routeHelpers';
 import { getPagination, paginatedResponse } from '../utils/pagination';
 import planComptable from '../data/planComptable';
-
-interface PlanCompte {
-  numero: string;
-  libelle: string;
-  classe?: number | string;
-}
+import type { CompteComptable as PlanCompte } from '../types/comptes';
 
 interface EcritureLigne {
   numero_compte: string;

@@ -2,12 +2,7 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import planSycebnl from '../data/planComptable';
-
-interface CompteComptable {
-  numero: string;
-  libelle: string;
-  classe?: number | string;
-}
+import type { CompteComptable } from '../types/comptes';
 
 // Chargement SYSCOHADA (lazy, au premier appel)
 let planSyscohada: CompteComptable[] | null = null;

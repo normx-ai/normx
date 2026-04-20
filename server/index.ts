@@ -67,9 +67,15 @@ app.use(helmet({
 }));
 
 // Securite : CORS
-const allowedOrigins = process.env.ALLOWED_ORIGINS
+// Refuser explicitement les wildcards : '*' avec credentials est invalide et
+// tout fallback permissif est une erreur de configuration, pas un defaut voulu.
+const allowedOrigins = (process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
-  : ["http://localhost:3000", "http://localhost:3001"];
+  : ["http://localhost:3000", "http://localhost:3001"]
+).map((o) => o.trim()).filter(Boolean);
+if (allowedOrigins.some((o) => o === '*' || o.includes('*'))) {
+  throw new Error('ALLOWED_ORIGINS ne doit pas contenir de wildcard (*). Lister explicitement chaque origin.');
+}
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,

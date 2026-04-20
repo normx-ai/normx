@@ -2,6 +2,7 @@ import { clientFetch } from '../lib/api';
 import React, { useState, useEffect, useRef } from 'react';
 import { LuBell, LuCheck, LuCheckCheck, LuTrash2, LuX } from 'react-icons/lu';
 import { Notification } from '../types';
+import { fmtRelativeTime } from '../utils/formatters';
 import './NotificationBell.css';
 
 interface NotificationBellProps {
@@ -73,19 +74,7 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
     } catch { /* silently */ }
   };
 
-  const formatDate = (dateStr: string): string => {
-    const d = new Date(dateStr);
-    const now = new Date();
-    const diffMs = now.getTime() - d.getTime();
-    const diffMin = Math.floor(diffMs / 60000);
-    if (diffMin < 1) return "À l'instant";
-    if (diffMin < 60) return `Il y a ${diffMin} min`;
-    const diffH = Math.floor(diffMin / 60);
-    if (diffH < 24) return `Il y a ${diffH}h`;
-    const diffD = Math.floor(diffH / 24);
-    if (diffD < 7) return `Il y a ${diffD}j`;
-    return d.toLocaleDateString('fr-FR');
-  };
+  const formatDate = fmtRelativeTime;
 
   const typeColor = (type: string): string => {
     switch (type) {

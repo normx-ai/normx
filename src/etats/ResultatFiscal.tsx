@@ -8,20 +8,17 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import type { BalanceLigne, Exercice, EtatBaseProps } from '../types';
+import {
+  TAUX_IS_NORMAL,
+  TAUX_IS_ECOLES,
+  TAUX_IS_ETRANGER,
+  TAUX_MIN_IS,
+  TAUX_IBA,
+  TAUX_MIN_IBA,
+  OPTIONS_TAUX_IS,
+} from '../constants/taxation';
 
 // ===================== RESULTAT FISCAL — CGI Congo 2026 (Art. 6-92J IS / Art. 93-102 IBA) =====================
-
-// Taux IS (Art. 10 CGI 2026)
-const TAUX_IS_NORMAL = 0.28;
-const TAUX_IS_ECOLES = 0.25;
-const TAUX_IS_ETRANGER = 0.33;
-
-// Minimum de perception IS (Art. 86-C)
-const TAUX_MIN_IS = 0.01;
-
-// Taux IBA (Art. 95)
-const TAUX_IBA = 0.30;
-const TAUX_MIN_IBA = 0.015;
 
 // Prefixes comptes
 const PRODUITS_EXPL_PREFIXES = ['70', '71', '72', '73', '75', '78', '79'];
@@ -397,9 +394,9 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
           <>
             <label style={{ marginLeft: 12 }}>Taux :</label>
             <select value={tauxIS} onChange={(e) => setTauxIS(parseFloat(e.target.value))} style={{ fontSize: 11 }}>
-              <option value={0.28}>28% (normal)</option>
-              <option value={0.25}>25% (ecoles, micro-finance)</option>
-              <option value={0.33}>33% (entites etrangeres)</option>
+              {OPTIONS_TAUX_IS.map(opt => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
             </select>
           </>
         )}

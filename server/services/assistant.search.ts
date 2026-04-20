@@ -93,6 +93,10 @@ export function searchForAgent(agentId: string, query: string): KBArticle[] {
 
 // ===================== VECTOR SEARCH (QDRANT) =====================
 
+// Timeout Qdrant : au-dela, on tombe en fallback mots-cles pour ne pas bloquer
+// la reponse. Reglable via env QDRANT_TIMEOUT_MS (defaut 2s).
+const QDRANT_TIMEOUT_MS = parseInt(process.env.QDRANT_TIMEOUT_MS || '2000', 10);
+
 export async function searchVectoriel(agentId: string, query: string, maxResults = 8): Promise<KBArticle[] | null> {
   if (!qdrantReady) return null;
 
@@ -111,7 +115,11 @@ export async function searchVectoriel(agentId: string, query: string, maxResults
       })),
     };
 
-    const results = await qdrantModule.search('normx_kb', query, maxResults, filter) as QdrantSearchResult[];
+    const searchPromise = qdrantModule.search('normx_kb', query, maxResults, filter) as Promise<QdrantSearchResult[]>;
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Qdrant timeout ' + QDRANT_TIMEOUT_MS + 'ms')), QDRANT_TIMEOUT_MS),
+    );
+    const results = await Promise.race([searchPromise, timeoutPromise]);
 
     if (!results || results.length === 0) return null;
 

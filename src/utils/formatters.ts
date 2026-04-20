@@ -49,3 +49,26 @@ export const MOIS: string[] = [
   'Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin',
   'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'
 ];
+
+// "A l'instant" / "Il y a X min" / "Il y a Xh" / "Il y a Xj" / date complete au-dela d'une semaine.
+export function fmtRelativeTime(dateStr: string | Date): string {
+  const d = typeof dateStr === 'string' ? new Date(dateStr) : dateStr;
+  const diffMs = Date.now() - d.getTime();
+  const diffMin = Math.floor(diffMs / 60000);
+  if (diffMin < 1) return "A l'instant";
+  if (diffMin < 60) return `Il y a ${diffMin} min`;
+  const diffH = Math.floor(diffMin / 60);
+  if (diffH < 24) return `Il y a ${diffH}h`;
+  const diffD = Math.floor(diffH / 24);
+  if (diffD < 7) return `Il y a ${diffD}j`;
+  return d.toLocaleDateString('fr-FR');
+}
+
+// "Aujourd'hui" / "Hier" / "dd/MM" (pour listes de conversations, historiques recents).
+export function fmtDayRelative(dateStr: string | Date): string {
+  const d = typeof dateStr === 'string' ? new Date(dateStr) : dateStr;
+  const diff = Date.now() - d.getTime();
+  if (diff < 86400000) return "Aujourd'hui";
+  if (diff < 172800000) return 'Hier';
+  return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+}

@@ -3,12 +3,7 @@ import logger from '../logger';
 import * as tvaService from '../services/tva.service';
 import { getErrorMessage } from '../utils/routeHelpers';
 import planComptable from '../data/planComptable';
-
-interface PlanCompte {
-  numero: string;
-  libelle: string;
-  classe: number;
-}
+import type { CompteComptable as PlanCompte } from '../types/comptes';
 
 const router = express.Router();
 

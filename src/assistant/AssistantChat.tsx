@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
 import { LuSend, LuMessageSquare, LuPlus, LuTrash2, LuBrain } from 'react-icons/lu';
 import { TypeActivite } from '../types';
+import { fmtDayRelative } from '../utils/formatters';
 import './AssistantChat.css';
 
 // ---- Local interfaces ----
@@ -262,14 +263,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
     e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
   };
 
-  const formatDate = (dateStr: string): string => {
-    const d: Date = new Date(dateStr);
-    const now: Date = new Date();
-    const diff: number = now.getTime() - d.getTime();
-    if (diff < 86400000) return "Aujourd'hui";
-    if (diff < 172800000) return 'Hier';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
-  };
+  const formatDate = fmtDayRelative;
 
   return (
     <div className="assistant-layout">
