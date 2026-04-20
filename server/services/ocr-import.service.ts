@@ -8,11 +8,10 @@ import Anthropic from '@anthropic-ai/sdk';
 import pool from '../db';
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 import logger from '../logger';
+import { getAnthropicClient } from '../utils/anthropic.client';
 
 function getClient(): Anthropic {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY non configuree');
-  return new Anthropic({ apiKey });
+  return getAnthropicClient();
 }
 
 // ============ TYPES ============

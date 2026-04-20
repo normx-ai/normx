@@ -6,11 +6,10 @@ import logger from '../logger';
 import { AGENTS, KBArticle, ChatMessage, ContentBlock } from './assistant.agents';
 import { searchVectoriel, searchForAgent, formatContext } from './assistant.search';
 import { stripMarkdown, generateTitle, detectAgent, COMMON_RULES, CLAUDE_MODEL } from '../utils/assistant.utils';
+import { getAnthropicClient } from '../utils/anthropic.client';
 
 function getClient(): Anthropic {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY non configuree');
-  return new Anthropic({ apiKey });
+  return getAnthropicClient();
 }
 
 export interface ChatResult {

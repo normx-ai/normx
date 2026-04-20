@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
+import { useFetchEntity } from '../hooks/useFetchEntity';
 import { LuPlus, LuPenLine, LuTrash2, LuSearch, LuX, LuSave, LuUsers, LuTruck, LuHandshake, LuUser, LuDownload, LuSheet, LuFileText } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -60,8 +62,13 @@ const TYPES_TIERS: TypeTiersConfig[] = [
 ];
 
 function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: TiersPageProps): React.JSX.Element {
-  const [tiers, setTiers] = useState<TiersItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const { data: tiers = [], isLoading: loading } = useFetchEntity<TiersItem>(
+    ['tiers', entiteId],
+    '/api/tiers/' + entiteId,
+    { enabled: entiteId > 0, fallbackKeys: ['tiers'], staleTime: 5 * 60 * 1000 },
+  );
+  const reloadTiers = (): Promise<void> => queryClient.invalidateQueries({ queryKey: ['tiers', entiteId] }) as Promise<void>;
   const [filterType, setFilterType] = useState<string>(defaultType);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -120,22 +127,8 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
     setFilterType(defaultType);
   }, [defaultType]);
 
-  const loadTiers = useCallback(async (): Promise<void> => {
-    if (!entiteId) return;
-    setLoading(true);
-    try {
-      const res = await clientFetch('/api/tiers/' + entiteId);
-      if (res.ok) { const j = await res.json(); setTiers(Array.isArray(j) ? j : j.data || j.tiers || []); }
-    } catch (_err) {
-      // silently ignore
-    } finally {
-      setLoading(false);
-    }
-  }, [entiteId]);
-
-  useEffect(() => {
-    loadTiers();
-  }, [loadTiers]);
+  // Chargement et cache geres par useFetchEntity ci-dessus ; rafraichissement
+  // apres mutation via queryClient.invalidateQueries (reloadTiers).
 
   const resetForm = (): void => {
     setForm({
@@ -210,7 +203,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
         body: JSON.stringify(body),
       });
       if (res.ok) {
-        loadTiers();
+        reloadTiers();
         closeForm();
       } else {
         const err: { error?: string } = await res.json();
@@ -228,7 +221,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
     try {
       await clientFetch('/api/tiers/' + id, { method: 'DELETE' });
       if (selectedTiers?.id === id) setSelectedTiers(null);
-      loadTiers();
+      await reloadTiers();
     } catch (_err) {
       // silently ignore
     }

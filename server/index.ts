@@ -225,8 +225,18 @@ app.use((_req: Request, res: Response) => {
 // Error handler
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   logger.error(`Erreur serveur : ${err.message}\n${err.stack}`);
+  if (err.name === 'AnthropicKeyMissingError') {
+    res.status(503).json({ error: "Service IA indisponible." });
+    return;
+  }
   res.status(500).json({ error: "Erreur interne du serveur" });
 });
+
+// Avertissement cle Anthropic : les routes IA (chat, OCR) retourneront 503
+// a l'utilisation si la cle manque, mais le reste du serveur fonctionne.
+if (!process.env.ANTHROPIC_API_KEY) {
+  logger.warn('ANTHROPIC_API_KEY absent : les fonctions IA (chat assistant, OCR) retourneront 503.');
+}
 
 const PORT = parseInt(process.env.PORT || "5002");
 const server = app.listen(PORT, () => {

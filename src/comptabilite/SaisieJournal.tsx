@@ -6,6 +6,7 @@ import { MOIS } from './SaisieJournal.types';
 import { useReferentiel } from '../contexts/ReferentielContext';
 import { usePlanComptable } from '../lib/queries';
 import { clientFetch } from '../lib/api';
+import { useFetchEntity } from '../hooks/useFetchEntity';
 import { parseInputNumber } from '../utils/formatters';
 import EcrituresStats from './EcrituresStats';
 import EcrituresFilters from './EcrituresFilters';
@@ -82,18 +83,15 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
   const { data: planComptableRaw = [] } = usePlanComptable(referentiel);
   const planComptable = planComptableRaw as CompteComptable[];
 
-  const { data: tiersList = [] } = useQuery<TiersItem[]>({
-    queryKey: ['tiers', entiteId],
-    queryFn: async () => {
-      const res = await clientFetch('/api/tiers/' + entiteId);
-      if (!res.ok) throw new Error('Erreur chargement tiers');
-      const j = await res.json();
-      return Array.isArray(j) ? j : j.data || j.tiers || [];
+  const { data: tiersList = [] } = useFetchEntity<TiersItem>(
+    ['tiers', entiteId],
+    '/api/tiers/' + entiteId,
+    {
+      enabled: entiteId > 0,
+      fallbackKeys: ['tiers'],
+      staleTime: 5 * 60 * 1000,
     },
-    staleTime: 5 * 60 * 1000,
-    gcTime: 30 * 60 * 1000,
-    enabled: entiteId > 0,
-  });
+  );
 
   const { data: stats = null } = useQuery<StatsData | null>({
     queryKey: ['ecritures-stats', entiteId, exerciceId],
