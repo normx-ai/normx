@@ -303,6 +303,67 @@ export interface DeprecLigne {
   motif: string;
 }
 
+// --- RevisionAutresTiers types ---
+export interface CCALigne {
+  id: number;
+  compte: string;
+  designation: string;
+  soldeN: number;
+  soldeN1: number;
+  natureCharge: string;
+  periodeCouverte: string;
+  justifie: 'Oui' | 'Non';
+}
+
+export interface PCALigne {
+  id: number;
+  compte: string;
+  designation: string;
+  soldeN: number;
+  soldeN1: number;
+  natureProduit: string;
+  periodeCouverte: string;
+  justifie: 'Oui' | 'Non';
+}
+
+export interface AttenteLigne {
+  id: number;
+  compte: string;
+  designation: string;
+  soldeN: number;
+  natureOperation: string;
+  regularisationProposee: string;
+}
+
+export interface DiversLigne {
+  id: number;
+  compte: string;
+  designation: string;
+  soldeN: number;
+  soldeN1: number;
+  variation: number;
+  nature: string;
+  commentaire: string;
+}
+
+export interface EcartConversionLigne {
+  id: number;
+  compte: string;
+  designation: string;
+  soldeN: number;
+}
+
+export const TRAVAUX_AUTRES_TIERS: string[] = [
+  "Justifier les soldes des comptes de charges constatees d'avance (476) a la cloture",
+  'Verifier la nature et la periode couverte par chaque CCA',
+  "Justifier les soldes des comptes de produits constates d'avance (477)",
+  "Verifier que les comptes d'attente (471) sont soldes a la cloture",
+  'Analyser les debiteurs et crediteurs divers (46x, 47x) et verifier leur recouvrabilite',
+  'Verifier les ecarts de conversion actif (478) et passif (479)',
+  "S'assurer que les ecarts de conversion actif sont couverts par une provision pour risque de change",
+  'Verifier la contrepassation des CCA et PCA au 01/01/N+1',
+];
+
 export const TRAVAUX_STOCKS: string[] = [
   "Obtenir et vérifier le procès-verbal d'inventaire physique de fin d'exercice",
   'Rapprocher les quantités physiques avec les soldes comptables',
