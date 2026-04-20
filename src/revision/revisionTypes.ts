@@ -253,6 +253,80 @@ export interface ProdRecevoirLigne {
   commentaire: string;
 }
 
+// --- RevisionImmo types ---
+export interface InvLigne {
+  id: number;
+  idImmo: string;
+  designation: string;
+  nombre: number;
+  valeurFichier: number;
+  pvInventaire: number;
+}
+
+export interface RapprochLigne {
+  compte: string;
+  designation: string;
+  fichierImmo: number;
+  balanceGenerale: number;
+}
+
+export interface EncoursLigne {
+  id: number;
+  projet: string;
+  designation: string;
+  fournisseur: string;
+  numFacture: string;
+  dateFacture: string;
+  montant: number;
+}
+
+export interface SortieLigne {
+  id: number;
+  numFichier: string;
+  designation: string;
+  natureSortie: string;
+  valeurBrute: number;
+  cumulAmort: number;
+  prixCession: number;
+  docJustificatif: string;
+}
+
+export interface AmortLigne {
+  id: number;
+  numFichier: string;
+  designation: string;
+  dateMiseEnService: string;
+  natureImmo: string;
+  dureeUtilite: number;
+  baseAmortissable: number;
+}
+
+export interface ChargeImmoLigne {
+  id: number;
+  compte: string;
+  designation: string;
+  natureDepense: string;
+  montant: number;
+  frequence: string;
+  conclusion: string;
+}
+
+export const TRAVAUX_IMMO: string[] = [
+  "Inventaires de fin d'année et rapprochement avec le(s) fichier(s) des immobilisations",
+  "Dresser un procès-verbal d'inventaire",
+  'Tableau de mouvements des immobilisations incorporelles, corporelles, financières',
+  "Fichier des immobilisations, des acquisitions, des cessions, des transferts, des amortissements",
+  'Détail des immobilisations en cours',
+  'Détail des mises au rebut (préparer les procès-verbaux associés)',
+  "Dossiers des cessions d'immobilisations (factures, actes notariés, preuves de paiements)",
+  'États financiers à la clôture des filiales et participations (titres de participation)',
+  'Justifier le compte "Avances sur immobilisations" ou le solder si N/A',
+  "Vérifier le calcul des amortissements (dotations de l'exercice) et le taux appliqué",
+  "Analyser les charges pouvant être immobilisées et justifier l'immobilisation si applicable",
+  'Vérifier le calcul des amortissements différés (si applicable)',
+  'Préparer les lettres de circularisation avec les CAC pour les dépôts et cautionnements',
+];
+
 // --- RevisionProv types ---
 export interface ProvLigne {
   compte: string;
