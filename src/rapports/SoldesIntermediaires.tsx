@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { normalizeList } from '../hooks/useFetchEntity';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { LuEye, LuPrinter, LuDownload, LuX } from 'react-icons/lu';
@@ -174,25 +175,25 @@ function SoldesIntermediaires({ entiteId, exerciceId, exerciceAnnee, exercices, 
       ? `${baseUrl}/${entiteId}/${exerciceId}`
       : `${baseUrl}/${entiteId}/${exerciceId}/N`;
 
-    const fetchN = fetch(urlN).then(r => r.json()).then((result: SIGBalanceRow[] | { lignes?: SIGBalanceRow[] }) => {
-      return Array.isArray(result) ? result : (result.lignes || []);
-    }).catch(() => [] as SIGBalanceRow[]);
+    const fetchN = fetch(urlN).then(r => r.json())
+      .then(result => normalizeList<SIGBalanceRow>(result, ['lignes']))
+      .catch(() => [] as SIGBalanceRow[]);
 
     let fetchN1: Promise<SIGBalanceRow[]>;
     if (offre === 'comptabilite') {
       // Écritures : chercher un exercice N-1 distinct
       if (exN1) {
-        fetchN1 = fetch(`${baseUrl}/${entiteId}/${exN1.id}`).then(r => r.json()).then((result: SIGBalanceRow[] | { lignes?: SIGBalanceRow[] }) => {
-          return Array.isArray(result) ? result : (result.lignes || []);
-        }).catch(() => [] as SIGBalanceRow[]);
+        fetchN1 = fetch(`${baseUrl}/${entiteId}/${exN1.id}`).then(r => r.json())
+          .then(result => normalizeList<SIGBalanceRow>(result, ['lignes']))
+          .catch(() => [] as SIGBalanceRow[]);
       } else {
         fetchN1 = Promise.resolve([]);
       }
     } else {
       // Balance importée : N-1 est dans le même exercice
-      fetchN1 = clientFetch(`/api/balance/${entiteId}/${exerciceId}/N-1`).then(r => r.json()).then((result: SIGBalanceRow[] | { lignes?: SIGBalanceRow[] }) => {
-        return Array.isArray(result) ? result : (result.lignes || []);
-      }).catch(() => [] as SIGBalanceRow[]);
+      fetchN1 = clientFetch(`/api/balance/${entiteId}/${exerciceId}/N-1`).then(r => r.json())
+        .then(result => normalizeList<SIGBalanceRow>(result, ['lignes']))
+        .catch(() => [] as SIGBalanceRow[]);
     }
 
     Promise.all([fetchN, fetchN1]).then(([rowsN, rowsN1]) => {

@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { normalizeList } from '../hooks/useFetchEntity';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { LuEye, LuPrinter, LuDownload, LuX } from 'react-icons/lu';
@@ -27,8 +28,7 @@ function balanceToPostes(rows: BalanceRow[]): ComparatifRow[] {
 async function fetchBalance(entiteId: number, exId: number): Promise<BalanceRow[]> {
   const res = await clientFetch(`/api/balance/${entiteId}/${exId}/N`);
   if (!res.ok) return [];
-  const result: BalanceRow[] | { lignes?: BalanceRow[] } = await res.json();
-  return Array.isArray(result) ? result : (result.lignes || []);
+  return normalizeList<BalanceRow>(await res.json(), ['lignes']);
 }
 
 function ComparatifNN1({ entiteId, exerciceId, exerciceAnnee, exercices, offre, entiteName, entiteSigle, entiteAdresse, entiteNif, onBack }: SubReportProps): React.ReactElement {
@@ -60,9 +60,7 @@ function ComparatifNN1({ entiteId, exerciceId, exerciceAnnee, exercices, offre, 
           const resN1 = await clientFetch(`/api/balance/${entiteId}/${exerciceId}/N-1`);
           let n1: ComparatifRow[] = [];
           if (resN1.ok) {
-            const resultN1: BalanceRow[] | { lignes?: BalanceRow[] } = await resN1.json();
-            const rowsN1 = Array.isArray(resultN1) ? resultN1 : (resultN1.lignes || []);
-            n1 = balanceToPostes(rowsN1);
+            n1 = balanceToPostes(normalizeList<BalanceRow>(await resN1.json(), ['lignes']));
           }
           setData({ n, n1 });
         } catch (_e) { /* network error */ }

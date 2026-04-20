@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
 import { fmt, fmtDate } from '../utils/formatters';
+import { normalizeList } from '../hooks/useFetchEntity';
 
 interface LettrageProps {
   entiteId: number;
@@ -78,7 +79,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     try {
       const typeFilter = selectedTypes.length < ALL_TYPES.length ? `?type_tiers=${selectedTypes.join(',')}` : '';
       const res = await clientFetch(`/api/ecritures/lettrage/tiers/${entiteId}/${exerciceId}${typeFilter}`);
-      if (res.ok) { const j = await res.json(); setTiersList(Array.isArray(j) ? j : j.data || j.tiers || []); }
+      if (res.ok) setTiersList(normalizeList<TiersLettrageItem>(await res.json(), ['tiers']));
     } catch (_e) {
       // silently ignore
     }

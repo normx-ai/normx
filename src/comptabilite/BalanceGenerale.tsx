@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { clientFetch } from '../lib/api';
+import { normalizeList } from '../hooks/useFetchEntity';
 import { LuChevronLeft, LuDownload, LuX } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -108,7 +109,7 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
     setLoading(true);
     try {
       const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + exerciceId);
-      if (res.ok) { const j = await res.json(); setBalance(Array.isArray(j) ? j : j.data || j.lignes || j.balance || []); }
+      if (res.ok) setBalance(normalizeList<BalanceLigne>(await res.json(), ['lignes', 'balance']));
     } catch (_err) {
       // silently ignore
     } finally {

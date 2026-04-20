@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { normalizeList } from '../hooks/useFetchEntity';
 import { LuFileText } from 'react-icons/lu';
 import {
   DeclarationTVAProps,
@@ -87,7 +88,7 @@ function DeclarationTVA({ entiteId, exerciceId, exerciceAnnee, entiteName, entit
     setLoadingLignes(true);
     try {
       const res: Response = await clientFetch(`/api/tva/lignes/${selectedDecl.id}/${activeTab}`);
-      if (res.ok) { const j = await res.json(); setLignes(Array.isArray(j) ? j : j.data || j.lignes || []); }
+      if (res.ok) setLignes(normalizeList<TVALigne>(await res.json(), ['lignes']));
       else setLignes([]);
     } catch (_e) { setLignes([]); }
     setLoadingLignes(false);

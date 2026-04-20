@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
+import { normalizeList } from '../hooks/useFetchEntity';
 import { LuDownload, LuSheet, LuFileText, LuSearch, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -90,7 +91,7 @@ function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, enti
       if (filterDateAu) params.set('date_au', filterDateAu);
       const qs = params.toString() ? '?' + params.toString() : '';
       const res = await clientFetch('/api/ecritures/grand-livre-tiers/' + entiteId + '/' + exerciceId + qs);
-      if (res.ok) { const j = await res.json(); setData(Array.isArray(j) ? j : j.data || j.lignes || []); }
+      if (res.ok) setData(normalizeList<GLTiersRow>(await res.json(), ['lignes']));
     } catch (_err) {
       // silently ignore
     } finally {
