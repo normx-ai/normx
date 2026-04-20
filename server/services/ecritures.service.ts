@@ -50,6 +50,8 @@ interface GrandLivreTiersFilters {
   type_tiers?: string;
   date_du?: string;
   date_au?: string;
+  limit?: number;
+  offset?: number;
 }
 
 interface BalanceTiersFilters {
@@ -63,6 +65,8 @@ interface EcheancierFilters {
   date_du?: string;
   date_au?: string;
   statut?: string;
+  limit?: number;
+  offset?: number;
 }
 
 interface LettrageEcrituresFilters {
@@ -357,7 +361,8 @@ export async function getGrandLivreTiers(schema: string, exercice_id: number, fi
     idx++;
   }
 
-  query += ` ORDER BY t.nom, e.date_ecriture, e.id LIMIT 5000`;
+  query += ` ORDER BY t.nom, e.date_ecriture, e.id LIMIT $${idx} OFFSET $${idx + 1}`;
+  params.push(filters.limit ?? 1000, filters.offset ?? 0);
   const result = await pool.query(query, params);
   return result.rows;
 }
@@ -468,7 +473,11 @@ export async function getJournalCentralisateur(schema: string, exercice_id: numb
   return result.rows;
 }
 
-export async function getBalanceAgee(schema: string, exercice_id: number) {
+export async function getBalanceAgee(
+  schema: string,
+  exercice_id: number,
+  pagination: { limit: number; offset: number } = { limit: 1000, offset: 0 },
+) {
   const s = getValidatedSchemaName(schema);
   const result = await pool.query(`
     SELECT el.tiers_id, t.nom AS tiers_nom, t.code_tiers, t.type AS tiers_type,
@@ -480,8 +489,8 @@ export async function getBalanceAgee(schema: string, exercice_id: number) {
       AND el.tiers_id IS NOT NULL
       AND (el.lettrage_code IS NULL OR el.lettrage_code = '')
     ORDER BY t.nom, e.date_ecriture
-    LIMIT 5000
-  `, [exercice_id]);
+    LIMIT $2 OFFSET $3
+  `, [exercice_id, pagination.limit, pagination.offset]);
   return result.rows;
 }
 
@@ -604,7 +613,8 @@ export async function getEcheancier(schema: string, exercice_id: number, filters
   if (date_du) { query += ` AND e.date_ecriture >= $${idx}`; params.push(date_du); idx++; }
   if (date_au) { query += ` AND e.date_ecriture <= $${idx}`; params.push(date_au); idx++; }
 
-  query += ` ORDER BY e.date_ecriture, t.nom LIMIT 5000`;
+  query += ` ORDER BY e.date_ecriture, t.nom LIMIT $${idx} OFFSET $${idx + 1}`;
+  params.push(filters.limit ?? 1000, filters.offset ?? 0);
   const result = await pool.query(query, params);
   return result.rows;
 }

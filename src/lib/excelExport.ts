@@ -227,6 +227,15 @@ export async function exportToExcel({
   URL.revokeObjectURL(url);
 }
 
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export function buildExcelPreviewHtml(options: ExcelExportOptions): string {
   const { title, subtitle, headers, rows, entiteName, exerciceAnnee, entiteNif, dureeMois } = options;
 
@@ -237,17 +246,20 @@ export function buildExcelPreviewHtml(options: ExcelExportOptions): string {
       const abs = Math.abs(Math.round(v)).toLocaleString('fr-FR');
       return neg ? `(${abs})` : abs;
     }
-    return String(v);
+    return escapeHtml(v);
   };
 
-  const headerCols = headers.map(h => `<th style="background:#0F2A42;color:#fff;padding:6px 12px;text-align:right;font-size:11px;border:1px solid #B0B0B0;white-space:nowrap">${h}</th>`).join('');
+  const headerCols = headers.map(h => `<th style="background:#0F2A42;color:#fff;padding:6px 12px;text-align:right;font-size:11px;border:1px solid #B0B0B0;white-space:nowrap">${escapeHtml(h)}</th>`).join('');
 
   const bodyRows = rows.map(row => {
+    const safeLibelle = escapeHtml(row.libelle);
+    const safeRef = escapeHtml(row.ref || '');
+
     if (row.section) {
-      return `<tr><td colspan="${2 + headers.length}" style="background:#D4E6F1;font-weight:700;padding:6px 8px;font-size:11px;border:1px solid #B0B0B0">${row.libelle}</td></tr>`;
+      return `<tr><td colspan="${2 + headers.length}" style="background:#D4E6F1;font-weight:700;padding:6px 8px;font-size:11px;border:1px solid #B0B0B0">${safeLibelle}</td></tr>`;
     }
     if (row.subsection && row.values.length === 0) {
-      return `<tr><td colspan="${2 + headers.length}" style="background:#EBF5FB;font-weight:700;padding:5px 8px;font-size:11px;border:1px solid #B0B0B0">${row.libelle}</td></tr>`;
+      return `<tr><td colspan="${2 + headers.length}" style="background:#EBF5FB;font-weight:700;padding:5px 8px;font-size:11px;border:1px solid #B0B0B0">${safeLibelle}</td></tr>`;
     }
 
     const isBold = row.bold || row.subsection;
@@ -263,8 +275,8 @@ export function buildExcelPreviewHtml(options: ExcelExportOptions): string {
       : `<td colspan="${headers.length}" style="border:1px solid #B0B0B0"></td>`;
 
     return `<tr style="background:${bg}">
-      <td style="text-align:center;padding:4px 6px;font-weight:${fw};border:1px solid #B0B0B0;font-size:11px;width:40px">${row.ref || ''}</td>
-      <td style="${indent};padding:4px 8px;font-weight:${fw};border:1px solid #B0B0B0;font-size:11px">${row.libelle}</td>
+      <td style="text-align:center;padding:4px 6px;font-weight:${fw};border:1px solid #B0B0B0;font-size:11px;width:40px">${safeRef}</td>
+      <td style="${indent};padding:4px 8px;font-weight:${fw};border:1px solid #B0B0B0;font-size:11px">${safeLibelle}</td>
       ${valueCells}
     </tr>`;
   }).join('\n');
@@ -272,15 +284,15 @@ export function buildExcelPreviewHtml(options: ExcelExportOptions): string {
   return `
     <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:1100px;margin:0 auto;padding:20px">
       <div style="display:flex;justify-content:space-between;margin-bottom:2px;font-size:12px">
-        <div><span style="color:#555">Désignation entité :</span> <b style="color:#0F2A42">${entiteName || ''}</b></div>
-        <div><b style="color:#0F2A42">Exercice clos le : 31/12/${exerciceAnnee || ''}</b></div>
+        <div><span style="color:#555">Désignation entité :</span> <b style="color:#0F2A42">${escapeHtml(entiteName || '')}</b></div>
+        <div><b style="color:#0F2A42">Exercice clos le : 31/12/${escapeHtml(exerciceAnnee || '')}</b></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:12px">
-        <div><span style="color:#555">N° d'identification :</span> <b style="color:#0F2A42">${entiteNif || ''}</b></div>
-        <div><span style="color:#555;font-style:italic">Durée (mois) : ${dureeMois || 12}</span></div>
+        <div><span style="color:#555">N° d'identification :</span> <b style="color:#0F2A42">${escapeHtml(entiteNif || '')}</b></div>
+        <div><span style="color:#555;font-style:italic">Durée (mois) : ${escapeHtml(dureeMois || 12)}</span></div>
       </div>
-      <div style="text-align:center;font-size:15px;font-weight:700;color:#0F2A42;margin-bottom:4px">${title}</div>
-      ${subtitle ? `<div style="text-align:center;font-size:12px;color:#666;font-style:italic;margin-bottom:4px">${subtitle}</div>` : ''}
+      <div style="text-align:center;font-size:15px;font-weight:700;color:#0F2A42;margin-bottom:4px">${escapeHtml(title)}</div>
+      ${subtitle ? `<div style="text-align:center;font-size:12px;color:#666;font-style:italic;margin-bottom:4px">${escapeHtml(subtitle)}</div>` : ''}
       <table style="width:100%;border-collapse:collapse;font-size:11px">
         <thead>
           <tr>

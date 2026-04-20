@@ -1,4 +1,10 @@
--- ===================== NORMX AI — Schema unifie multi-tenant =====================
+-- ===================== NORMX AI — Schema herite (NON UTILISE) =====================
+-- Ce fichier est conserve pour reference historique uniquement.
+-- Le schema multi-tenant reel est defini dans :
+--   server/migrations/002-tenant-schema-template.sql (template applique a chaque tenant)
+--   server/migrations/001-create-tenants.sql (registre des tenants dans public)
+-- Les migrations 003-008 sont deja integrees au template 002.
+-- ===================================================================================
 
 -- Cabinets (cabinet comptable / entreprise autonome)
 CREATE TABLE IF NOT EXISTS cabinets (

@@ -91,8 +91,8 @@ export function usePlanComptable(referentiel: string) {
       const data = await r.json();
       return Array.isArray(data) ? data : data.data || data.comptes || [];
     },
-    staleTime: 60 * 60 * 1000,
-    gcTime: 60 * 60 * 1000,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 24 * 60 * 60 * 1000,
   });
 }
 

@@ -203,8 +203,9 @@ router.get('/grand-livre-tiers/:entite_id/:exercice_id', async (req: Request, re
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { tiers_id, type_tiers, date_du, date_au } = req.query;
+  const { limit, offset } = getPagination(req, 1000, 5000);
   try {
-    const rows = await ecrituresService.getGrandLivreTiers(schema, parseInt(req.params.exercice_id, 10), { tiers_id: tiers_id as string, type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
+    const rows = await ecrituresService.getGrandLivreTiers(schema, parseInt(req.params.exercice_id, 10), { tiers_id: tiers_id as string, type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string, limit, offset });
     res.json(rows);
   } catch (err) {
     logger.error(getErrorMessage(err as { message?: string }));
@@ -254,8 +255,9 @@ router.get('/rapports/journal-centralisateur/:entite_id/:exercice_id', async (re
 router.get('/rapports/balance-agee/:entite_id/:exercice_id', async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
+  const { limit, offset } = getPagination(req, 1000, 5000);
   try {
-    const rows = await ecrituresService.getBalanceAgee(schema, parseInt(req.params.exercice_id, 10));
+    const rows = await ecrituresService.getBalanceAgee(schema, parseInt(req.params.exercice_id, 10), { limit, offset });
     res.json(rows);
   } catch (err) { logger.error(getErrorMessage(err as { message?: string })); res.status(500).json({ error: 'Erreur serveur.' }); }
 });
@@ -301,8 +303,9 @@ router.get('/rapports/echeancier/:entite_id/:exercice_id', async (req: Request, 
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { type_tiers, date_du, date_au, statut } = req.query;
+  const { limit, offset } = getPagination(req, 1000, 5000);
   try {
-    const rows = await ecrituresService.getEcheancier(schema, parseInt(req.params.exercice_id, 10), { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string });
+    const rows = await ecrituresService.getEcheancier(schema, parseInt(req.params.exercice_id, 10), { type_tiers: type_tiers as string, date_du: date_du as string, date_au: date_au as string, limit, offset });
     const mapped = rows.map((r: EcheancierRow) => {
       const montant = Math.abs(parseFloat(r.debit) - parseFloat(r.credit));
       const paye = r.lettrage_code ? montant : 0;

@@ -31,6 +31,20 @@ export function fmtM(v: number): string {
   return Math.round(v).toLocaleString('fr-FR');
 }
 
+// Variante : retourne '0' si vide/zero plutot que chaine vide.
+// Arrondit a l'entier (pour affichages etats financiers).
+export function fmtMontant(v: number | null | undefined): string {
+  if (!v || v === 0) return '0';
+  return Math.round(v).toLocaleString('fr-FR');
+}
+
+// Variante : negatifs entre parentheses, pour TFT / comptes de resultat.
+export function fmtMontantParens(v: number | null | undefined): string {
+  if (!v || v === 0) return '0';
+  const abs = Math.abs(Math.round(v)).toLocaleString('fr-FR');
+  return v < 0 ? '(' + abs + ')' : abs;
+}
+
 export const MOIS: string[] = [
   'Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin',
   'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'

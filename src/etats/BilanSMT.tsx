@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
@@ -151,12 +151,18 @@ function BilanSMT({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif 
   const balanceFound = lignesN.length > 0;
   const sourceUsed = balanceData?.source ?? '';
 
-  const actifN = computeActif(lignesN, ACTIF_MAPPING);
-  const actifN1 = computeActif(lignesN1, ACTIF_MAPPING);
-  const passifN = computePassif(lignesN, PASSIF_MAPPING);
-  const passifN1 = computePassif(lignesN1, PASSIF_MAPPING);
-  passifN['HB'] = { net: computeResultatNet(lignesN) };
-  passifN1['HB'] = { net: computeResultatNet(lignesN1) };
+  const actifN = useMemo(() => computeActif(lignesN, ACTIF_MAPPING), [lignesN]);
+  const actifN1 = useMemo(() => computeActif(lignesN1, ACTIF_MAPPING), [lignesN1]);
+  const passifN = useMemo(() => {
+    const p = computePassif(lignesN, PASSIF_MAPPING);
+    p['HB'] = { net: computeResultatNet(lignesN) };
+    return p;
+  }, [lignesN]);
+  const passifN1 = useMemo(() => {
+    const p = computePassif(lignesN1, PASSIF_MAPPING);
+    p['HB'] = { net: computeResultatNet(lignesN1) };
+    return p;
+  }, [lignesN1]);
 
   const getVal = (ref: string, data: ValData, rows: Row[]): number => {
     if (ref.endsWith('Z')) {

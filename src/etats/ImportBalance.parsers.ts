@@ -127,10 +127,7 @@ export function parseExcel(buffer: ArrayBuffer): BalanceLigne[] {
   return rowsToBalanceLignes(data.slice(1), headers);
 }
 
-export function formatMontant(val: number): string {
-  if (!val || val === 0) return '0';
-  return val.toLocaleString('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-}
+export { fmtMontant as formatMontant } from '../utils/formatters';
 
 // ========== Interfaces ==========
 

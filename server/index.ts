@@ -37,6 +37,7 @@ import { authenticateToken } from "./middleware/auth";
 import { requireSubscription } from "./middleware/subscription.middleware";
 import { tenantMiddleware } from "./middleware/tenant.middleware";
 import { switchClientMiddleware } from "./middleware/tenant.guards";
+import { requireTenantSchema } from "./middleware/requireTenantSchema";
 import { requireModule, requireAnyModule } from "./middleware/moduleGuard";
 import { csrfProtection } from "./middleware/csrf";
 
@@ -145,8 +146,14 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// Middleware chaine : auth → subscription → tenant → switch client
-const tenantChain = [authenticateToken, requireSubscription('normx'), tenantMiddleware, switchClientMiddleware];
+// Middleware chaine : auth → subscription → tenant → switch client → garde schema
+const tenantChain = [
+  authenticateToken,
+  requireSubscription('normx'),
+  tenantMiddleware,
+  switchClientMiddleware,
+  requireTenantSchema,
+];
 
 // Routes protegees (tenant requis)
 // Le cabinet peut travailler sur ses propres donnees OU celles d'un client (via X-Client-Slug)

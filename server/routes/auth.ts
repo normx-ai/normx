@@ -5,6 +5,7 @@
 
 import express, { Request, Response } from 'express';
 import logger from '../logger';
+import { authenticateToken } from '../middleware/auth';
 
 
 const router = express.Router();
@@ -158,33 +159,18 @@ router.post('/logout', async (req: Request, res: Response) => {
   res.json({ message: 'Deconnecte.' });
 });
 
-// GET /api/auth/me - Retourne les infos utilisateur depuis le cookie
-router.get('/me', (req: Request, res: Response) => {
-  const accessToken = req.cookies?.normx_access_token;
-  if (!accessToken) {
+// GET /api/auth/me - Retourne les infos utilisateur (token cookie verifie RS256 + exp)
+router.get('/me', authenticateToken, (req: Request, res: Response) => {
+  if (!req.user) {
     return res.status(401).json({ error: 'Non authentifie.' });
   }
-
-  try {
-    const payload = JSON.parse(
-      Buffer.from(accessToken.split('.')[1], 'base64').toString()
-    );
-
-    // Verifier expiration
-    if (payload.exp && Date.now() >= payload.exp * 1000) {
-      return res.status(401).json({ error: 'Token expire.' });
-    }
-
-    res.json({
-      sub: payload.sub,
-      email: payload.email || '',
-      name: payload.name || '',
-      preferred_username: payload.preferred_username || '',
-      roles: payload.realm_access?.roles || [],
-    });
-  } catch {
-    res.status(401).json({ error: 'Token invalide.' });
-  }
+  res.json({
+    sub: req.user.sub,
+    email: req.user.email,
+    name: req.user.name,
+    preferred_username: req.user.preferred_username,
+    roles: req.user.roles,
+  });
 });
 
 export default router;

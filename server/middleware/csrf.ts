@@ -19,7 +19,12 @@ export function csrfProtection(req: Request, res: Response, next: NextFunction):
   if (!req.cookies?.[CSRF_COOKIE]) {
     const token = crypto.randomBytes(32).toString('hex');
     res.cookie(CSRF_COOKIE, token, {
-      httpOnly: false, // Le frontend doit pouvoir le lire
+      // httpOnly volontairement false : requis par le pattern double-submit
+      // (le frontend lit le cookie via document.cookie dans src/csrf-fetch.ts
+      // pour l'injecter en header X-XSRF-TOKEN).
+      // Defense reelle contre CSRF = sameSite: 'strict' ci-dessous, qui empeche
+      // tout envoi du cookie en requete cross-site.
+      httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',

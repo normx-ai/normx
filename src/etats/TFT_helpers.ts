@@ -49,13 +49,8 @@ export const TFT_ROWS: TFTRow[] = [
   { ref: 'ZI', type: 'indent', note: '', libelle: 'Controle : Tresorerie actif N - Tresorerie passif N' },
 ];
 
-export function formatMontant(val: number): string {
-  if (val === 0 || val === null || val === undefined) return '0';
-  const neg = val < 0;
-  const abs = Math.abs(Math.round(val));
-  const formatted = abs.toLocaleString('fr-FR');
-  return neg ? '(' + formatted + ')' : formatted;
-}
+import { fmtMontantParens } from '../utils/formatters';
+export const formatMontant = fmtMontantParens;
 
 export function matchesComptes(numCompte: string, prefixes: string[]): boolean {
   return prefixes.some(p => numCompte.startsWith(p));
