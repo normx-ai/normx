@@ -141,26 +141,6 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".tiers (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS "${schema_name}".declarations_tva (
-  id SERIAL PRIMARY KEY,
-  entite_id INTEGER REFERENCES "${schema_name}".entites(id),
-  exercice_id INTEGER REFERENCES "${schema_name}".exercices(id),
-  mois INTEGER,
-  statut VARCHAR(20) DEFAULT 'brouillon',
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".declaration_tva_lignes (
-  id SERIAL PRIMARY KEY,
-  declaration_id INTEGER REFERENCES "${schema_name}".declarations_tva(id) ON DELETE CASCADE,
-  onglet VARCHAR(50),
-  code_ligne VARCHAR(20),
-  libelle TEXT,
-  base DECIMAL(15,2) DEFAULT 0,
-  taux DECIMAL(5,2),
-  montant DECIMAL(15,2) DEFAULT 0
-);
-
 -- ========== REVISION ==========
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".revision_data (
@@ -334,8 +314,6 @@ CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_numero_compte ON "${schema_name}"
 CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_tiers ON "${schema_name}".ecriture_lignes(tiers_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_user_read ON "${schema_name}".notifications(utilisateur_id, lu);
 CREATE INDEX IF NOT EXISTS idx_salaries_etablissement ON "${schema_name}".salaries(etablissement_id);
-CREATE INDEX IF NOT EXISTS idx_declarations_tva_exercice ON "${schema_name}".declarations_tva(exercice_id);
-CREATE INDEX IF NOT EXISTS idx_declaration_tva_lignes_declaration ON "${schema_name}".declaration_tva_lignes(declaration_id, onglet);
 CREATE INDEX IF NOT EXISTS idx_balance_lignes_numero_compte ON "${schema_name}".balance_lignes(numero_compte);
 
 -- ========== INDEX PERFORMANCE (migration 005) ==========
@@ -373,20 +351,6 @@ INSERT INTO "${schema_name}".journaux (code, libelle, type, contrepartie_defaut)
   ('BQ', 'Banque', 'tresorerie', '521'),
   ('OD', 'Opérations diverses', 'od', NULL)
 ON CONFLICT (code) DO NOTHING;
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".tva_config (
-  id INTEGER PRIMARY KEY DEFAULT 1,
-  taux_normal NUMERIC(5,2) NOT NULL DEFAULT 18.00,
-  taux_reduit NUMERIC(5,2),
-  regime VARCHAR(20) NOT NULL DEFAULT 'normal',
-  numero_assujetti VARCHAR(50),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  CONSTRAINT tva_config_singleton CHECK (id = 1),
-  CONSTRAINT tva_config_regime_check CHECK (regime IN ('normal','simplifie','non_assujetti'))
-);
-INSERT INTO "${schema_name}".tva_config (id, taux_normal, taux_reduit, regime) VALUES
-  (1, 18.00, 5.00, 'normal')
-ON CONFLICT (id) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".comptes_custom (
   id SERIAL PRIMARY KEY,

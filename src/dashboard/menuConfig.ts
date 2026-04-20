@@ -57,7 +57,6 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
           { id: 'tiers_personnel', label: 'Personnel', icon: LuUser },
         ]
       },
-      { id: 'declarations_tva', label: 'Déclaration', icon: LuFileCheck, disabled: noExercice },
       {
         id: 'etats', label: 'États financiers', icon: LuChartBarIncreasing, hasArrow: true, disabled: noExercice,
         children: isEntreprise

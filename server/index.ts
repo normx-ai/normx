@@ -19,9 +19,7 @@ import planComptableRoutes from "./routes/planComptable";
 import ecrituresRoutes from "./routes/ecritures";
 import tiersRoutes from "./routes/tiers";
 import entitesRoutes from "./routes/entites";
-import tvaRoutes from "./routes/tva";
 import journauxRoutes from "./routes/journaux";
-import tvaConfigRoutes from "./routes/tvaConfig";
 import comptesCustomRoutes from "./routes/comptesCustom";
 import paieRoutes from "./routes/paie";
 import workflowRoutes from "./routes/workflow";
@@ -176,8 +174,6 @@ app.use("/api/ocr-import", ...tenantChain, requireModule('compta'), chatLimiter,
 app.use("/api/ecritures", ...tenantChain, dataLimiter, requireModule('compta'), ecrituresRoutes);
 app.use("/api/plan-comptable", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), planComptableRoutes);
 app.use("/api/tiers", ...tenantChain, dataLimiter, requireModule('compta'), tiersRoutes);
-app.use("/api/tva", ...tenantChain, dataLimiter, requireModule('compta'), tvaRoutes);
-app.use("/api/tva-config", ...tenantChain, dataLimiter, requireModule('compta'), tvaConfigRoutes);
 app.use("/api/journaux", ...tenantChain, dataLimiter, requireModule('compta'), journauxRoutes);
 app.use("/api/comptes-custom", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), comptesCustomRoutes);
 app.use("/api/revision", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), revisionRoutes);

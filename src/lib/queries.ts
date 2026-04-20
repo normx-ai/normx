@@ -121,29 +121,6 @@ export function useJournaux() {
   });
 }
 
-// ==================== TVA CONFIG ====================
-
-interface TvaConfig {
-  id: number;
-  taux_normal: string;
-  taux_reduit: string | null;
-  regime: string;
-  numero_assujetti: string | null;
-}
-
-export function useTvaConfig() {
-  return useQuery<TvaConfig>({
-    queryKey: ['tva-config'],
-    queryFn: async () => {
-      const r = await clientFetch('/api/tva-config');
-      if (!r.ok) throw new Error('Erreur chargement TVA');
-      return r.json();
-    },
-    staleTime: 5 * 60 * 1000,
-    gcTime: 30 * 60 * 1000,
-  });
-}
-
 // ==================== ECRITURES ====================
 
 interface EcritureAPI {

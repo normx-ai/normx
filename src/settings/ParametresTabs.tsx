@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { LuUser, LuBookOpen, LuFileText, LuReceipt } from 'react-icons/lu';
+import { LuUser, LuBookOpen, LuFileText } from 'react-icons/lu';
 import ParametresEntite from './ParametresEntite';
 import PlanComptableTab from './PlanComptableTab';
 import JournauxTab from './JournauxTab';
-import TvaTab from './TvaTab';
 
-type TabId = 'identification' | 'plan_comptable' | 'journaux' | 'tva';
+type TabId = 'identification' | 'plan_comptable' | 'journaux';
 
 interface Tab {
   id: TabId;
@@ -17,7 +16,6 @@ const TABS: Tab[] = [
   { id: 'identification', label: 'Identification', icon: LuUser },
   { id: 'plan_comptable', label: 'Plan comptable', icon: LuBookOpen },
   { id: 'journaux', label: 'Journaux', icon: LuFileText },
-  { id: 'tva', label: 'TVA', icon: LuReceipt },
 ];
 
 interface ParametresTabsProps {
@@ -58,7 +56,6 @@ export default function ParametresTabs({ entiteId, onUpdate }: ParametresTabsPro
         {active === 'identification' && <ParametresEntite entiteId={entiteId} onUpdate={onUpdate} />}
         {active === 'plan_comptable' && <PlanComptableTab />}
         {active === 'journaux' && <JournauxTab />}
-        {active === 'tva' && <TvaTab />}
       </div>
     </div>
   );
