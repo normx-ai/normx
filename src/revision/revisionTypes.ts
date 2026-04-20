@@ -253,6 +253,58 @@ export interface ProdRecevoirLigne {
   commentaire: string;
 }
 
+// --- RevisionProv types ---
+export interface ProvLigne {
+  compte: string;
+  designation: string;
+  soldeN1: number;
+  dotation: number;
+  reprise: number;
+  soldeNCalcule: number;
+  soldeNBalance: number;
+  ecart: number;
+}
+
+export interface AmortDerogLigne {
+  id: number;
+  bien: string;
+  refImmo: string;
+  valeurBrute: number;
+  amortDerog: number;
+  cede: boolean;
+  repriseDerog: number;
+}
+
+export interface ProvRCLigne {
+  compte: string;
+  designation: string;
+  soldeN1: number;
+  dotation: number;
+  reprise: number;
+  soldeNCalcule: number;
+  soldeNBalance: number;
+  ecart: number;
+}
+
+export const TRAVAUX_PROV: string[] = [
+  'Vérifier le bien-fondé et le mode de calcul de chaque provision réglementée',
+  'Contrôler la cohérence entre dotations, reprises et variations bilantielles',
+  'Analyser les provisions pour investissement, hausse des prix, amortissements dérogatoires',
+  'Vérifier la conformité avec la réglementation fiscale en vigueur',
+  "S'assurer que les provisions ne sont pas maintenues sans justification",
+  'Rapprocher les dotations/reprises avec les comptes 851/861 correspondants',
+];
+
+export const PROV_RC_TYPES: Record<string, string> = {
+  '191': 'Provisions pour litiges',
+  '192': 'Provisions pour garanties données aux clients',
+  '193': 'Provisions pour pertes sur marchés/contrats déficitaires',
+  '194': 'Provisions pour pertes de change',
+  '195': 'Provisions pour impôts',
+  '196': 'Provisions pour pensions et obligations similaires (retraite)',
+  '197': 'Provisions pour charges à répartir',
+};
+
 // --- RevisionPersonnel types ---
 export interface ChargePersonnelLigne {
   compte: string;
