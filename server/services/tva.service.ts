@@ -350,77 +350,51 @@ export async function importerEcritures(schema: string, declarationId: number) {
       [decl.id],
     );
 
-    // TVA collectee : comptes 443x
+    // TVA collectee (comptes 443x) — INSERT ... SELECT : calculs et insertion
+    // en une seule requete SQL, plus de rapatriement JS.
+    // montant_taxe = credit - debit (positif sur vente, negatif sur avoir)
+    // taux = 5 si compte 4435x, 18 sinon ; montant_net = round(|taxe| / taux * 100)
     const collectee = await client.query(`
-      SELECT el.numero_compte, el.libelle_compte,
-             e.date_ecriture, e.libelle AS libelle_ecriture, e.numero_piece,
-             el.debit, el.credit
+      INSERT INTO "${s}".declaration_tva_lignes
+        (declaration_id, onglet, groupe, reference, libelle,
+         montant_net, taux_taxe, montant_taxe, date_document, avoir)
+      SELECT $1, 'collectee', el.numero_compte,
+             COALESCE(NULLIF(e.numero_piece, ''), '') AS reference,
+             COALESCE(NULLIF(e.libelle, ''), el.libelle_compte, '') AS libelle,
+             ROUND(ABS(el.credit - el.debit) / (CASE WHEN el.numero_compte LIKE '4435%' THEN 5 ELSE 18 END)::numeric * 100)::numeric AS montant_net,
+             CASE WHEN el.numero_compte LIKE '4435%' THEN 5 ELSE 18 END AS taux_taxe,
+             ABS(el.credit - el.debit) AS montant_taxe,
+             e.date_ecriture,
+             (el.credit - el.debit) < 0 AS avoir
       FROM "${s}".ecriture_lignes el
       JOIN "${s}".ecritures e ON e.id = el.ecriture_id
-      WHERE e.exercice_id = $1 AND e.statut = 'validee'
-        AND e.date_ecriture >= $2 AND e.date_ecriture <= $3
+      WHERE e.exercice_id = $2 AND e.statut = 'validee'
+        AND e.date_ecriture >= $3 AND e.date_ecriture <= $4
         AND el.numero_compte LIKE '443%'
-      ORDER BY e.date_ecriture, e.id
-    `, [decl.exercice_id, dateDebut, dateFin]);
+        AND ABS(el.credit - el.debit) >= 0.01
+    `, [decl.id, decl.exercice_id, dateDebut, dateFin]);
 
-    // Bulk insert TVA collectee
-    {
-      const bulkValues: (string | number | boolean | null)[] = [];
-      const bulkPlaceholders: string[] = [];
-      for (const row of collectee.rows) {
-        const montantTaxe = parseFloat(row.credit) - parseFloat(row.debit);
-        if (Math.abs(montantTaxe) < 0.01) continue;
-        const taux = row.numero_compte.startsWith('4435') ? 5 : 18;
-        const montantNet = Math.round((Math.abs(montantTaxe) / taux) * 100);
-        const o = bulkValues.length;
-        bulkValues.push(decl.id, row.numero_compte, row.numero_piece || '', row.libelle_ecriture || row.libelle_compte || '', Math.abs(montantNet), taux, Math.abs(montantTaxe), row.date_ecriture, montantTaxe < 0);
-        bulkPlaceholders.push(`($${o+1}, 'collectee', $${o+2}, $${o+3}, $${o+4}, $${o+5}, $${o+6}, $${o+7}, $${o+8}, $${o+9})`);
-      }
-      if (bulkPlaceholders.length > 0) {
-        await client.query(
-          `INSERT INTO "${s}".declaration_tva_lignes
-           (declaration_id, onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir)
-           VALUES ${bulkPlaceholders.join(', ')}`,
-          bulkValues,
-        );
-      }
-    }
-
-    // TVA deductible : comptes 445x
+    // TVA deductible (comptes 445x)
+    // montant_taxe = debit - credit ; taux = 5 si 4455x, 18 sinon
     const deductible = await client.query(`
-      SELECT el.numero_compte, el.libelle_compte,
-             e.date_ecriture, e.libelle AS libelle_ecriture, e.numero_piece,
-             el.debit, el.credit
+      INSERT INTO "${s}".declaration_tva_lignes
+        (declaration_id, onglet, groupe, reference, libelle,
+         montant_net, taux_taxe, montant_taxe, date_document, avoir)
+      SELECT $1, 'deductible', el.numero_compte,
+             COALESCE(NULLIF(e.numero_piece, ''), '') AS reference,
+             COALESCE(NULLIF(e.libelle, ''), el.libelle_compte, '') AS libelle,
+             ROUND(ABS(el.debit - el.credit) / (CASE WHEN el.numero_compte LIKE '4455%' THEN 5 ELSE 18 END)::numeric * 100)::numeric AS montant_net,
+             CASE WHEN el.numero_compte LIKE '4455%' THEN 5 ELSE 18 END AS taux_taxe,
+             ABS(el.debit - el.credit) AS montant_taxe,
+             e.date_ecriture,
+             (el.debit - el.credit) < 0 AS avoir
       FROM "${s}".ecriture_lignes el
       JOIN "${s}".ecritures e ON e.id = el.ecriture_id
-      WHERE e.exercice_id = $1 AND e.statut = 'validee'
-        AND e.date_ecriture >= $2 AND e.date_ecriture <= $3
+      WHERE e.exercice_id = $2 AND e.statut = 'validee'
+        AND e.date_ecriture >= $3 AND e.date_ecriture <= $4
         AND el.numero_compte LIKE '445%'
-      ORDER BY e.date_ecriture, e.id
-    `, [decl.exercice_id, dateDebut, dateFin]);
-
-    // Bulk insert TVA deductible
-    {
-      const bulkValues: (string | number | boolean | null)[] = [];
-      const bulkPlaceholders: string[] = [];
-      for (const row of deductible.rows) {
-        const montantTaxe = parseFloat(row.debit) - parseFloat(row.credit);
-        if (Math.abs(montantTaxe) < 0.01) continue;
-        const taux = row.numero_compte.startsWith('4455') ? 5 : 18;
-        const montantNet = Math.round((Math.abs(montantTaxe) / taux) * 100);
-        const o = bulkValues.length;
-        bulkValues.push(decl.id, row.numero_compte, row.numero_piece || '', row.libelle_ecriture || row.libelle_compte || '', Math.abs(montantNet), taux, Math.abs(montantTaxe), row.date_ecriture, montantTaxe < 0);
-        bulkPlaceholders.push(`($${o+1}, 'deductible', $${o+2}, $${o+3}, $${o+4}, $${o+5}, $${o+6}, $${o+7}, $${o+8}, $${o+9})`);
-      }
-      if (bulkPlaceholders.length > 0) {
-        await client.query(
-          `INSERT INTO "${s}".declaration_tva_lignes
-           (declaration_id, onglet, groupe, reference, libelle, montant_net, taux_taxe, montant_taxe, date_document, avoir)
-           VALUES ${bulkPlaceholders.join(', ')}`,
-          bulkValues,
-        );
-      }
-    }
+        AND ABS(el.debit - el.credit) >= 0.01
+    `, [decl.id, decl.exercice_id, dateDebut, dateFin]);
 
     const totals = await recalcTotals(s, decl.id, client);
 
@@ -434,8 +408,8 @@ export async function importerEcritures(schema: string, declarationId: number) {
     await client.query('COMMIT');
 
     return {
-      nb_collectee: collectee.rows.length,
-      nb_deductible: deductible.rows.length,
+      nb_collectee: collectee.rowCount ?? 0,
+      nb_deductible: deductible.rowCount ?? 0,
       totals,
     };
   } catch (err) {
