@@ -253,6 +253,53 @@ export interface ProdRecevoirLigne {
   commentaire: string;
 }
 
+// --- RevisionPersonnel types ---
+export interface ChargePersonnelLigne {
+  compte: string;
+  designation: string;
+  soldeN: number;
+  soldeN1: number;
+  variation: number;
+  variationPct: number;
+}
+
+export interface AvanceLigne {
+  compte: string;
+  designation: string;
+  soldeN: number;
+  soldeN1: number;
+  anteriorite: string;
+  accordFormalise: string;
+  observations: string;
+}
+
+export interface DetteSocialeLigne {
+  compte: string;
+  designation: string;
+  soldeN: number;
+  soldeN1: number;
+  variation: number;
+  commentaire: string;
+}
+
+export interface ProvisionCongesData {
+  masseSalariale: number;
+  joursCongesParMois: number;
+  tauxChargesSociales: number;
+  tauxChargesFiscales: number;
+}
+
+export const TRAVAUX_PERSONNEL: string[] = [
+  'Vérifier la cohérence globale des charges de personnel par rapport à N-1 (revue analytique)',
+  'Calculer et comptabiliser la provision pour congés payés',
+  'Justifier les avances et acomptes au personnel (comptes 421x)',
+  'Rapprocher les dettes sociales (comptes 43x) avec les déclarations sociales et fiscales',
+  'Vérifier les charges sociales patronales (CNSS, ONEMO, etc.)',
+  'Contrôler les indemnités de fin de contrat et provisions associées',
+  'Vérifier la conformité des bulletins de paie avec la comptabilité',
+  'Rapprocher la masse salariale avec les déclarations fiscales (IRPP, contribution forfaitaire)',
+];
+
 // --- RevisionStocks types ---
 export interface InvStockLigne {
   id: number;
