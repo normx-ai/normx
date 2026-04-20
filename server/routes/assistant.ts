@@ -180,6 +180,40 @@ router.get('/qdrant/status', async (_req: Request, res: Response) => {
 
 // ===================== FONCTIONNEMENT DES COMPTES =====================
 
+// Cache lazy des articles "fonctionnement comptes" : on charge tous les JSON
+// une seule fois (au premier appel) puis on sert depuis la memoire.
+// Les fichiers font plusieurs Mo et etaient relus a chaque requete.
+let fonctionnementCache: FonctionnementArticle[] | null = null;
+
+function getFonctionnementArticles(): FonctionnementArticle[] {
+  if (fonctionnementCache !== null) return fonctionnementCache;
+  const localKbDir = path.join(__dirname, '..', '..', 'knowledge-base');
+  const files = fs.readdirSync(localKbDir)
+    .filter((f: string) => f.startsWith('fonctionnement_comptes_classe') && f.endsWith('.json'));
+  const all: FonctionnementArticle[] = [];
+  for (const file of files) {
+    try {
+      const data = JSON.parse(fs.readFileSync(path.join(localKbDir, file), 'utf-8'));
+      const articles: FonctionnementArticle[] = data.articles || [];
+      for (const a of articles) {
+        all.push({
+          numero: String(a.numero || ''),
+          titre: a.titre || '',
+          contenu: a.contenu || '',
+          fonctionnement: a.fonctionnement || null,
+          exclusions: a.exclusions || [],
+          controles: a.controles || [],
+          commentaires: a.commentaires || [],
+          sens: a.sens || '',
+        });
+      }
+    } catch (_ignored) { /* skip malformed files */ }
+  }
+  fonctionnementCache = all;
+  logger.info('Fonctionnement comptes charge en memoire: %d articles', all.length);
+  return fonctionnementCache;
+}
+
 router.post('/fonctionnement-comptes', async (req: Request, res: Response) => {
   try {
     const { prefixes } = req.body;
@@ -187,35 +221,13 @@ router.post('/fonctionnement-comptes', async (req: Request, res: Response) => {
       return res.json([]);
     }
 
-    const result: FonctionnementArticle[] = [];
-    const localKbDir = path.join(__dirname, '..', '..', 'knowledge-base');
-    const files = fs.readdirSync(localKbDir).filter((f: string) => f.startsWith('fonctionnement_comptes_classe') && f.endsWith('.json'));
-
-    for (const file of files) {
-      try {
-        const raw = fs.readFileSync(path.join(localKbDir, file), 'utf-8');
-        const data = JSON.parse(raw);
-        const articles: FonctionnementArticle[] = data.articles || [];
-        for (const a of articles) {
-          const num = String(a.numero || '');
-          if (prefixes.some((p: string) => num === p || num.startsWith(p) || p.startsWith(num))) {
-            result.push({
-              numero: num,
-              titre: a.titre || '',
-              contenu: a.contenu || '',
-              fonctionnement: a.fonctionnement || null,
-              exclusions: a.exclusions || [],
-              controles: a.controles || [],
-              commentaires: a.commentaires || [],
-              sens: a.sens || '',
-            });
-          }
-        }
-      } catch (_ignored) { /* skip malformed files */ }
-    }
+    const all = getFonctionnementArticles();
+    const matched = all.filter(a =>
+      prefixes.some((p: string) => a.numero === p || a.numero.startsWith(p) || p.startsWith(a.numero)),
+    );
 
     const seen = new Set<string>();
-    const unique = result.filter(r => {
+    const unique = matched.filter(r => {
       if (seen.has(r.numero)) return false;
       seen.add(r.numero);
       return true;

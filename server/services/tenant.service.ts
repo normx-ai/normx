@@ -9,6 +9,24 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { slugToSchemaName, getValidatedSchemaName } from '../utils/tenant.utils';
 
+// Cache des templates SQL (lecture I/O une seule fois au premier tenant cree)
+let templateSqlCache: string | null = null;
+let rlsSqlCache: string | null = null;
+
+function getTemplateSql(): string {
+  if (templateSqlCache === null) {
+    templateSqlCache = readFileSync(join(__dirname, '..', 'migrations', '002-tenant-schema-template.sql'), 'utf-8');
+  }
+  return templateSqlCache;
+}
+
+function getRlsSql(): string {
+  if (rlsSqlCache === null) {
+    rlsSqlCache = readFileSync(join(__dirname, '..', 'migrations', '004-enable-rls.sql'), 'utf-8');
+  }
+  return rlsSqlCache;
+}
+
 // ============ INTERFACES ============
 
 export interface TenantSettings {
@@ -86,19 +104,14 @@ export async function createTenant(input: CreateTenantInput): Promise<Tenant> {
   );
   const tenant: Tenant = insertResult.rows[0];
 
-  // 2. Lire le template SQL et provisionner le schema
+  // 2. Provisionner le schema (templates caches en memoire)
   try {
-    const templatePath = join(__dirname, '..', 'migrations', '002-tenant-schema-template.sql');
-    const templateSql = readFileSync(templatePath, 'utf-8');
-    const schemaSql = templateSql.replace(/\$\{schema_name\}/g, schemaName);
-
+    const schemaSql = getTemplateSql().replace(/\$\{schema_name\}/g, schemaName);
     await pool.query(schemaSql);
     logger.info('Schema "%s" provisionne avec succes', schemaName);
 
     // Appliquer la migration RLS (OBLIGATOIRE — pas de tenant sans RLS)
-    const rlsPath = join(__dirname, '..', 'migrations', '004-enable-rls.sql');
-    const rlsSql = readFileSync(rlsPath, 'utf-8');
-    const rlsSchemaSql = rlsSql.replace(/\$\{schema_name\}/g, schemaName);
+    const rlsSchemaSql = getRlsSql().replace(/\$\{schema_name\}/g, schemaName);
     await pool.query(rlsSchemaSql);
     logger.info('RLS active sur le schema "%s"', schemaName);
   } catch (err) {
