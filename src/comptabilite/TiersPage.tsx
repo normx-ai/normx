@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useFetchEntity } from '../hooks/useFetchEntity';
 import { LuPlus, LuSearch, LuDownload, LuSheet, LuFileText } from 'react-icons/lu';
 import type { CompteComptable } from '../types';
@@ -29,7 +30,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
   const queryClient = useQueryClient();
   const { data: tiers = [], isLoading: loading } = useFetchEntity<TiersItem>(
     ['tiers', entiteId],
-    '/api/tiers/' + entiteId,
+    api.tiers.byEntite(entiteId),
     { enabled: entiteId > 0, fallbackKeys: ['tiers'], staleTime: 5 * 60 * 1000 },
   );
   const reloadTiers = (): Promise<void> => queryClient.invalidateQueries({ queryKey: ['tiers', entiteId] }) as Promise<void>;
@@ -53,7 +54,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
       try {
         const allResults = await Promise.all(
           typeCfg.prefixes.map(prefix =>
-            clientFetch('/api/plan-comptable?search=' + encodeURIComponent(prefix)).then(r => r.json())
+            clientFetch(api.planComptable.search(prefix)).then(r => r.json())
           )
         );
         const seen = new Set<string>();
@@ -123,7 +124,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
     setSaving(true);
     try {
       const body = { ...form, entite_id: entiteId };
-      const url = editingTiers ? '/api/tiers/' + editingTiers.id : '/api/tiers';
+      const url = editingTiers ? api.tiers.byId(editingTiers.id) : api.tiers.root;
       const method = editingTiers ? 'PUT' : 'POST';
       const res = await clientFetch(url, {
         method,
@@ -147,7 +148,7 @@ function TiersPage({ entiteId, entiteName = '', defaultType = '', onBack }: Tier
   const deleteTiers = async (id: number): Promise<void> => {
     if (!window.confirm('Supprimer ce tiers ?')) return;
     try {
-      await clientFetch('/api/tiers/' + id, { method: 'DELETE' });
+      await clientFetch(api.tiers.byId(id), { method: 'DELETE' });
       if (selectedTiers?.id === id) setSelectedTiers(null);
       await reloadTiers();
     } catch (_err) {

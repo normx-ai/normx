@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { normalizeList } from '../hooks/useFetchEntity';
 import { LuDownload, LuSheet, LuFileText, LuSearch, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
@@ -85,12 +86,11 @@ function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, enti
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      if (filterType) params.set('type_tiers', filterType);
-      if (filterDateDu) params.set('date_du', filterDateDu);
-      if (filterDateAu) params.set('date_au', filterDateAu);
-      const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await clientFetch('/api/ecritures/grand-livre-tiers/' + entiteId + '/' + exerciceId + qs);
+      const res = await clientFetch(api.ecritures.grandLivreTiers(entiteId, exerciceId, {
+        type_tiers: filterType,
+        date_du: filterDateDu,
+        date_au: filterDateAu,
+      }));
       if (res.ok) setData(normalizeList<GLTiersRow>(await res.json(), ['lignes']));
     } catch (_err) {
       // silently ignore

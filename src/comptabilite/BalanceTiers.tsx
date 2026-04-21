@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { LuDownload, LuSheet, LuFileText, LuSearch, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -75,12 +76,11 @@ function BalanceTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteS
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      if (filterType) params.set('type_tiers', filterType);
-      if (filterDateDu) params.set('date_du', filterDateDu);
-      if (filterDateAu) params.set('date_au', filterDateAu);
-      const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await clientFetch('/api/ecritures/balance-tiers/' + entiteId + '/' + exerciceId + qs);
+      const res = await clientFetch(api.ecritures.balanceTiers(entiteId, exerciceId, {
+        type_tiers: filterType,
+        date_du: filterDateDu,
+        date_au: filterDateAu,
+      }));
       if (res.ok) {
         const json = await res.json();
         setData(Array.isArray(json) ? json : json.data || json.lignes || json.balance || []);

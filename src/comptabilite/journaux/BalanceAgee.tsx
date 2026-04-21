@@ -1,6 +1,7 @@
 // Ecran Balance agee : aging par tiers (non echu / 30j / 45j / 60j / >60j).
 
 import { clientFetch } from '../../lib/api';
+import { api } from '../../lib/apiEndpoints';
 import React, { useState, useCallback } from 'react';
 import { LuChevronLeft, LuFileText } from 'react-icons/lu';
 import { fmt } from '../../utils/formatters';
@@ -42,7 +43,7 @@ export function BalanceAgee({ entiteId, exerciceId, exerciceAnnee, onBack }: Pro
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const res = await clientFetch(`/api/ecritures/rapports/balance-agee/${entiteId}/${exerciceId}${typeTiers ? '?type_tiers=' + typeTiers : ''}`);
+      const res = await clientFetch(api.ecritures.rapports.balanceAgee(entiteId, exerciceId, { type_tiers: typeTiers }));
       if (res.ok) { setData(await res.json()); setGenerated(true); }
     } catch (_e) {
       // silently ignore

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { normalizeList } from '../hooks/useFetchEntity';
 import { LuChevronLeft, LuDownload, LuX } from 'react-icons/lu';
 import { jsPDF } from 'jspdf';
@@ -108,7 +109,7 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + exerciceId);
+      const res = await clientFetch(api.ecritures.balance(entiteId, exerciceId));
       if (res.ok) setBalance(normalizeList<BalanceLigne>(await res.json(), ['lignes', 'balance']));
     } catch (_err) {
       // silently ignore

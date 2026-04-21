@@ -1,6 +1,7 @@
 // Ecran Echeancier : liste des dettes / creances avec echeances, statut paye/du.
 
 import { clientFetch } from '../../lib/api';
+import { api } from '../../lib/apiEndpoints';
 import React, { useState, useCallback } from 'react';
 import { LuChevronLeft, LuFileText } from 'react-icons/lu';
 import { fmt } from '../../utils/formatters';
@@ -39,13 +40,12 @@ export function Echeancier({ entiteId, exerciceId, exerciceAnnee, onBack }: Prop
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      if (dateDu) params.append('date_du', dateDu);
-      if (dateAu) params.append('date_au', dateAu);
-      if (typeTiers) params.append('type_tiers', typeTiers);
-      if (statutFilter) params.append('statut', statutFilter);
-      const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await clientFetch(`/api/ecritures/rapports/echeancier/${entiteId}/${exerciceId}${qs}`);
+      const res = await clientFetch(api.ecritures.rapports.echeancier(entiteId, exerciceId, {
+        date_du: dateDu,
+        date_au: dateAu,
+        type_tiers: typeTiers,
+        statut: statutFilter,
+      }));
       if (res.ok) { setData(await res.json()); setGenerated(true); }
     } catch (_e) {
       // silently ignore

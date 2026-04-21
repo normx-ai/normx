@@ -6,6 +6,7 @@ import { MOIS } from './SaisieJournal.types';
 import { useReferentiel } from '../contexts/ReferentielContext';
 import { usePlanComptable } from '../lib/queries';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useFetchEntity } from '../hooks/useFetchEntity';
 import { parseInputNumber } from '../utils/formatters';
 import EcrituresStats from './EcrituresStats';
@@ -68,9 +69,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
   const { data: ecritures = [] } = useQuery<EcritureAPI[]>({
     queryKey: ['ecritures', entiteId, exerciceId, ecrituresFilters],
     queryFn: async () => {
-      const params = new URLSearchParams(ecrituresFilters);
-      const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await clientFetch('/api/ecritures/' + entiteId + '/' + exerciceId + qs);
+      const res = await clientFetch(api.ecritures.list(entiteId, exerciceId, ecrituresFilters));
       if (!res.ok) throw new Error('Erreur chargement ecritures');
       const data = await res.json();
       return Array.isArray(data) ? data : data.ecritures || [];
@@ -85,7 +84,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
 
   const { data: tiersList = [] } = useFetchEntity<TiersItem>(
     ['tiers', entiteId],
-    '/api/tiers/' + entiteId,
+    api.tiers.byEntite(entiteId),
     {
       enabled: entiteId > 0,
       fallbackKeys: ['tiers'],
@@ -96,7 +95,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
   const { data: stats = null } = useQuery<StatsData | null>({
     queryKey: ['ecritures-stats', entiteId, exerciceId],
     queryFn: async () => {
-      const res = await clientFetch('/api/ecritures/stats/' + entiteId + '/' + exerciceId);
+      const res = await clientFetch(api.ecritures.stats(entiteId, exerciceId));
       if (!res.ok) throw new Error('Erreur chargement stats');
       return res.json();
     },
@@ -251,7 +250,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
         entite_id: entiteId, exercice_id: exerciceId, date_ecriture: dateEcriture, journal, numero_piece: numeroPiece, libelle,
         lignes: lignes.filter(l => l.numero_compte && (parseFloat(String(l.debit)) || parseFloat(String(l.credit)))),
       };
-      const url = editingId ? '/api/ecritures/' + editingId : '/api/ecritures';
+      const url = editingId ? api.ecritures.byId(editingId) : api.ecritures.root;
       const method = editingId ? 'PUT' : 'POST';
       const res = await clientFetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
       if (res.ok) {
@@ -267,7 +266,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
 
   const deleteEcriture = async (id: number): Promise<void> => {
     if (!window.confirm('Supprimer cette ecriture ?')) return;
-    try { await clientFetch('/api/ecritures/' + id, { method: 'DELETE' }); invalidateEcrituresAndStats(); } catch (_err) { /* ignore */ }
+    try { await clientFetch(api.ecritures.byId(id), { method: 'DELETE' }); invalidateEcrituresAndStats(); } catch (_err) { /* ignore */ }
   };
 
   // --- Selection ---
@@ -283,7 +282,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     const brouillards = [...selectedIds].filter(id => { const ecr = ecritures.find(e => e.id === id); return ecr && ecr.statut !== 'validee'; });
     if (brouillards.length === 0) return;
     try {
-      const res = await clientFetch('/api/ecritures/valider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: brouillards }) });
+      const res = await clientFetch(api.ecritures.valider, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: brouillards }) });
       if (res.ok) { setSelectedIds(new Set()); invalidateEcrituresAndStats(); }
       else { const err: { error?: string } = await res.json(); alert(err.error || 'Erreur'); }
     } catch (_err) { alert('Erreur reseau'); }
@@ -294,7 +293,7 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
     if (validees.length === 0) return;
     if (!window.confirm('Repasser ' + validees.length + ' ecriture(s) en brouillard ?')) return;
     try {
-      const res = await clientFetch('/api/ecritures/devalider', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: validees }) });
+      const res = await clientFetch(api.ecritures.devalider, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids: validees }) });
       if (res.ok) { setSelectedIds(new Set()); invalidateEcrituresAndStats(); }
       else { const err: { error?: string } = await res.json(); alert(err.error || 'Erreur'); }
     } catch (_err) { alert('Erreur reseau'); }

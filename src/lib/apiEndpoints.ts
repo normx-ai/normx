@@ -97,8 +97,8 @@ export const api = {
     balance: (entiteId: Id, exerciceId: Id): string =>
       `/api/ecritures/balance/${entiteId}/${exerciceId}`,
     balanceBase: '/api/ecritures/balance',
-    balanceTiers: (entiteId: Id, exerciceId: Id): string =>
-      `/api/ecritures/balance-tiers/${entiteId}/${exerciceId}`,
+    balanceTiers: (entiteId: Id, exerciceId: Id, params?: QueryParams): string =>
+      withQuery(`/api/ecritures/balance-tiers/${entiteId}/${exerciceId}`, params),
     comptes: (entiteId: Id, exerciceId: Id): string =>
       `/api/ecritures/comptes/${entiteId}/${exerciceId}`,
     grandLivre: (entiteId: Id, exerciceId: Id, params?: QueryParams): string =>

@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useCallback, useEffect } from 'react';
 import { LuChevronLeft, LuDownload } from 'react-icons/lu';
 import type { CompteComptable } from '../types';
@@ -52,7 +53,7 @@ function GrandLivre({ entiteId, exerciceId, exerciceAnnee, entiteName = '', enti
 
   useEffect(() => {
     if (!entiteId || !exerciceId) return;
-    clientFetch(`/api/ecritures/comptes/${entiteId}/${exerciceId}`)
+    clientFetch(api.ecritures.comptes(entiteId, exerciceId))
       .then(r => r.ok ? r.json() : [])
       .then((list: CompteComptable[]) => setComptesOptions(list))
       .catch(() => {});
@@ -72,16 +73,15 @@ function GrandLivre({ entiteId, exerciceId, exerciceAnnee, entiteName = '', enti
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      if (compteDe) params.set('compte', compteDe);
-      if (compteA) params.set('compte_a', compteA);
-      if (journalFilter) params.set('journal', journalFilter);
-      if (dateDu) params.set('date_du', dateDu);
-      if (dateAu) params.set('date_au', dateAu);
-      if (ecrituresLettrees) params.set('lettrees', '1');
-      if (reportNouveau) params.set('report_nouveau', '1');
-      const qs = params.toString() ? '?' + params.toString() : '';
-      const url = '/api/ecritures/grand-livre/' + entiteId + '/' + exerciceId + qs;
+      const url = api.ecritures.grandLivre(entiteId, exerciceId, {
+        compte: compteDe,
+        compte_a: compteA,
+        journal: journalFilter,
+        date_du: dateDu,
+        date_au: dateAu,
+        lettrees: ecrituresLettrees ? '1' : '',
+        report_nouveau: reportNouveau ? '1' : '',
+      });
       const res = await fetch(url);
       if (res.ok) {
         setMouvements(await res.json());

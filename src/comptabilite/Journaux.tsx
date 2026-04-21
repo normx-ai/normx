@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useCallback } from 'react';
 import { LuChevronLeft, LuDownload, LuFileText } from 'react-icons/lu';
 import { fmt } from '../utils/formatters';
@@ -53,13 +54,12 @@ function Journaux({ entiteId, exerciceId, exerciceAnnee, entiteName, onBack }: J
     if (!entiteId || !exerciceId) return;
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      params.append('statut', 'validee');
-      if (dateDu) params.append('date_du', dateDu);
-      if (dateFin) params.append('date_au', dateFin);
-      if (journalFilter) params.append('journal', journalFilter);
-      const qs = '?' + params.toString();
-      const res = await clientFetch(`/api/ecritures/${entiteId}/${exerciceId}${qs}`);
+      const res = await clientFetch(api.ecritures.list(entiteId, exerciceId, {
+        statut: 'validee',
+        date_du: dateDu,
+        date_au: dateFin,
+        journal: journalFilter,
+      }));
       if (res.ok) {
         const ecritures: EcritureAPI[] = await res.json();
         const lines: JournalLine[] = [];

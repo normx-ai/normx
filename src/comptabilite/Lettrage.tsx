@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { fmt, fmtDate } from '../utils/formatters';
 import { normalizeList } from '../hooks/useFetchEntity';
 
@@ -77,8 +78,9 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     if (!entiteId || !exerciceId) return;
     setLoadingTiers(true);
     try {
-      const typeFilter = selectedTypes.length < ALL_TYPES.length ? `?type_tiers=${selectedTypes.join(',')}` : '';
-      const res = await clientFetch(`/api/ecritures/lettrage/tiers/${entiteId}/${exerciceId}${typeFilter}`);
+      const res = await clientFetch(api.ecritures.lettrage.tiers(entiteId, exerciceId, {
+        type_tiers: selectedTypes.length < ALL_TYPES.length ? selectedTypes.join(',') : '',
+      }));
       if (res.ok) setTiersList(normalizeList<TiersLettrageItem>(await res.json(), ['tiers']));
     } catch (_e) {
       // silently ignore
@@ -93,12 +95,11 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     if (!selectedTiers) return;
     setLoadingEcr(true);
     try {
-      const params = new URLSearchParams();
-      if (statut) params.append('statut', statut);
-      if (anneeDe) params.append('annee_de', String(anneeDe));
-      if (anneeA) params.append('annee_a', String(anneeA));
-      const qs = params.toString() ? '?' + params.toString() : '';
-      const res = await clientFetch(`/api/ecritures/lettrage/ecritures/${entiteId}/${exerciceId}/${selectedTiers.id}${qs}`);
+      const res = await clientFetch(api.ecritures.lettrage.ecritures(entiteId, exerciceId, selectedTiers.id, {
+        statut,
+        annee_de: anneeDe,
+        annee_a: anneeA,
+      }));
       if (res.ok) {
         setEcritures(await res.json());
         setCheckedIds(new Set());
@@ -159,7 +160,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
     if (selectedLines.length < 2) { alert('Sélectionnez au moins 2 lignes.'); return; }
     if (Math.abs(ecartSelected) > 0.01) { alert(`Écart non nul: ${fmt(ecartSelected)}. Les lignes doivent s'équilibrer.`); return; }
     try {
-      const res = await clientFetch('/api/ecritures/lettrage/lettrer', {
+      const res = await clientFetch(api.ecritures.lettrage.lettrer, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ligne_ids: [...checkedIds], entite_id: entiteId }),
@@ -177,7 +178,7 @@ function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps
   const handleDelettrer = async (code: string): Promise<void> => {
     if (!window.confirm(`Supprimer le lettrage ${code} ?`)) return;
     try {
-      const res = await clientFetch('/api/ecritures/lettrage/delettrer', {
+      const res = await clientFetch(api.ecritures.lettrage.delettrer, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lettrage_code: code, entite_id: entiteId }),
