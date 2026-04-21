@@ -13,6 +13,7 @@
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { cabinetFetch, clientFetch } from './api';
+import { api } from './apiEndpoints';
 import type { Entite, NormxModule } from '../types';
 import { filterEnabledModules } from '../config/modules';
 
@@ -37,7 +38,7 @@ export function useTenant() {
   return useQuery<TenantData | null>({
     queryKey: ['tenant', 'me'],
     queryFn: async () => {
-      const r = await cabinetFetch('/api/tenant/me');
+      const r = await cabinetFetch(api.tenant.me);
       if (r.status === 403) {
         const err = await r.json().catch(() => ({}));
         if (err.code === 'SUBSCRIPTION_REQUIRED') {
@@ -59,7 +60,7 @@ export function useEntites(enabled: boolean) {
   return useQuery<Entite[]>({
     queryKey: ['entites'],
     queryFn: async () => {
-      const r = await cabinetFetch('/api/entites');
+      const r = await cabinetFetch(api.entites.list);
       if (!r.ok) throw new Error('Erreur chargement entites');
       const raw: Entite[] = await r.json();
       return raw.map(e => ({
@@ -86,7 +87,7 @@ export function usePlanComptable(referentiel: string) {
   return useQuery<CompteComptable[]>({
     queryKey: ['plan-comptable', referentiel],
     queryFn: async () => {
-      const r = await clientFetch(`/api/plan-comptable?referentiel=${referentiel}`);
+      const r = await clientFetch(api.planComptable.byReferentiel(referentiel));
       if (!r.ok) throw new Error('Erreur chargement plan comptable');
       const data = await r.json();
       return Array.isArray(data) ? data : data.data || data.comptes || [];
@@ -112,7 +113,7 @@ export function useJournaux() {
   return useQuery<Journal[]>({
     queryKey: ['journaux'],
     queryFn: async () => {
-      const r = await clientFetch('/api/journaux');
+      const r = await clientFetch(api.journaux.list);
       if (!r.ok) throw new Error('Erreur chargement journaux');
       return r.json();
     },
@@ -140,12 +141,10 @@ interface EcritureAPI {
 }
 
 export function useEcritures(entiteId: number, exerciceId: number, filters?: Record<string, string>) {
-  const params = new URLSearchParams(filters || {});
-  const qs = params.toString() ? '?' + params.toString() : '';
   return useQuery<EcritureAPI[]>({
     queryKey: ['ecritures', entiteId, exerciceId, filters],
     queryFn: async () => {
-      const r = await clientFetch(`/api/ecritures/${entiteId}/${exerciceId}${qs}`);
+      const r = await clientFetch(api.ecritures.list(entiteId, exerciceId, filters));
       if (!r.ok) throw new Error('Erreur chargement ecritures');
       const data = await r.json();
       return Array.isArray(data) ? data : data.ecritures || [];

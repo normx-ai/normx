@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { getLoginUrl, getLogoutUrl } from '../paie/data/keycloak';
 import type { KeycloakUser } from '../paie/data/keycloak';
+import { api } from '../lib/apiEndpoints';
 
 // Format retourne par /api/auth/me et /api/auth/callback
 interface AuthApiUser {
@@ -64,7 +65,7 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
 
     refreshTimerRef.current = setTimeout(async () => {
       try {
-        const res = await fetch('/api/auth/refresh', {
+        const res = await fetch(api.auth.refresh, {
           method: 'POST',
           credentials: 'include',
         });
@@ -84,7 +85,7 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
   // Verifier la session au chargement (cookie httpOnly)
   const checkSession = useCallback(async () => {
     try {
-      const res = await fetch('/api/auth/me', { credentials: 'include' });
+      const res = await fetch(api.auth.me, { credentials: 'include' });
       if (!res.ok) {
         clearSession();
         return false;
@@ -110,7 +111,7 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
       // la bonne page une fois l'echange termine.
       window.history.replaceState({}, document.title, window.location.pathname);
 
-      fetch('/api/auth/callback', {
+      fetch(api.auth.callback, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -160,7 +161,7 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
   const logout = useCallback(() => {
     const redirectUri = window.location.origin;
     // Supprimer les cookies cote serveur
-    fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }).catch(() => {});
+    fetch(api.auth.logout, { method: 'POST', credentials: 'include' }).catch(() => {});
     clearSession();
     window.location.href = getLogoutUrl(redirectUri);
   }, [clearSession]);
