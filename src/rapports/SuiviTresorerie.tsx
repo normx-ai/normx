@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import { LuEye, LuPrinter, LuDownload, LuX, LuChartBarIncreasing, LuTable } from 'react-icons/lu';
@@ -26,12 +27,12 @@ function SuiviTresorerie({ entiteId, exerciceId, exerciceAnnee, offre, entiteNam
       setLoading(true);
       if (isMensuel) {
         try {
-          const res: Response = await clientFetch(`/api/ecritures/rapports/tresorerie/${entiteId}/${exerciceId}`);
+          const res: Response = await clientFetch(api.ecritures.rapports.tresorerie(entiteId, exerciceId));
           if (res.ok) setData(await res.json());
         } catch (_e) { /* network error */ }
       } else {
         try {
-          const res = await clientFetch(`/api/balance/${entiteId}/${exerciceId}/N`);
+          const res = await clientFetch(api.balance.byExercice(entiteId, exerciceId, 'N'));
           if (res.ok) {
             const result: BalanceRow[] | { lignes?: BalanceRow[] } = await res.json();
             const rows = Array.isArray(result) ? result : (result.lignes || []);

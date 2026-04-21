@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { normalizeList } from '../hooks/useFetchEntity';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
@@ -26,7 +27,7 @@ function balanceToPostes(rows: BalanceRow[]): ComparatifRow[] {
 }
 
 async function fetchBalance(entiteId: number, exId: number): Promise<BalanceRow[]> {
-  const res = await clientFetch(`/api/balance/${entiteId}/${exId}/N`);
+  const res = await clientFetch(api.balance.byExercice(entiteId, exId, 'N'));
   if (!res.ok) return [];
   return normalizeList<BalanceRow>(await res.json(), ['lignes']);
 }
@@ -48,8 +49,7 @@ function ComparatifNN1({ entiteId, exerciceId, exerciceAnnee, exercices, offre, 
       setLoading(true);
       if (offre === 'comptabilite') {
         try {
-          const qs: string = exN1 ? `?exercice_id_n1=${exN1}` : '';
-          const res: Response = await clientFetch(`/api/ecritures/rapports/comparatif/${entiteId}/${exerciceId}${qs}`);
+          const res: Response = await clientFetch(api.ecritures.rapports.comparatif(entiteId, exerciceId, { exercice_id_n1: exN1 }));
           if (res.ok) setData(await res.json());
         } catch (_e) { /* network error */ }
       } else {
@@ -57,7 +57,7 @@ function ComparatifNN1({ entiteId, exerciceId, exerciceAnnee, exercices, offre, 
           // Balance importée : N et N-1 dans le même exercice
           const rowsN = await fetchBalance(entiteId, exerciceId);
           const n = balanceToPostes(rowsN);
-          const resN1 = await clientFetch(`/api/balance/${entiteId}/${exerciceId}/N-1`);
+          const resN1 = await clientFetch(api.balance.byExercice(entiteId, exerciceId, 'N-1'));
           let n1: ComparatifRow[] = [];
           if (resN1.ok) {
             n1 = balanceToPostes(normalizeList<BalanceRow>(await resN1.json(), ['lignes']));

@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import {
   LuScale, LuLandmark, LuShieldCheck, LuBuilding, LuPackage,
@@ -64,7 +65,7 @@ function RevisionComptes({ entiteId, exerciceId, exerciceAnnee, entiteName }: Re
   useEffect(() => {
     if (!entiteId || !exerciceId) return;
     setLoading(true);
-    clientFetch(`/api/balance/${entiteId}/${exerciceId}/N`).then(r => r.json())
+    clientFetch(api.balance.byExercice(entiteId, exerciceId, 'N')).then(r => r.json())
       .then(dataN => {
         setBalanceN(dataN.lignes || []);
       }).catch(() => {})

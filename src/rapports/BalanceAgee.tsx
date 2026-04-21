@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import { SubReportProps, tableStyle, thStyleR, tdStyleR, fmt } from './types';
 import { ReportWrapper, Loading, Empty, TypeBadge } from './SharedComponents';
@@ -28,7 +29,7 @@ function BalanceAgee({ entiteId, exerciceId, exerciceAnnee, onBack }: SubReportP
     (async (): Promise<void> => {
       setLoading(true);
       try {
-        const res: Response = await clientFetch(`/api/ecritures/rapports/balance-agee/${entiteId}/${exerciceId}`);
+        const res: Response = await clientFetch(api.ecritures.rapports.balanceAgee(entiteId, exerciceId));
         if (res.ok) setData(await res.json());
       } catch (_e) { /* network error */ }
       setLoading(false);

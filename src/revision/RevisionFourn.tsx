@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -50,7 +51,7 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    clientFetch(`/api/revision/${entiteId}/${exerciceId}/fourn`)
+    clientFetch(api.revision.onglet(entiteId, exerciceId, 'fourn'))
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { reconLignes?: ReconFournLigne[]; farLignes?: FarLigne[]; debiteurLignes?: FournDebiteurLigne[]; avanceLignes?: AvanceFournLigne[]; deviseLignes?: DetteDeviseLigne[]; circuLignes?: CircuFournLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.reconLignes) { setReconLignes(data.reconLignes); if (data.reconLignes.length > 0) setNextIds(prev => ({ ...prev, recon: Math.max(...data.reconLignes!.map((a: ReconFournLigne) => a.id)) + 1 })); }
@@ -66,7 +67,7 @@ function RevisionFourn({ balanceN, exerciceAnnee, entiteId, exerciceId }: Revisi
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/fourn`, {
+      const res = await clientFetch(api.revision.onglet(entiteId, exerciceId, 'fourn'), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ reconLignes, farLignes, debiteurLignes, avanceLignes, deviseLignes, circuLignes, odEcritures }),

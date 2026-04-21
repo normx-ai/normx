@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import { LuSave, LuChevronDown, LuChevronRight, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -91,7 +92,7 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
 
   // --- Load / Save ---
   const loadSaved = (defaultLignes: KPLigne[]): void => {
-    clientFetch(`/api/revision/${entiteId}/${exerciceId}/kp`)
+    clientFetch(api.revision.onglet(entiteId, exerciceId, 'kp'))
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { lignes: KPLigne[]; odEcritures?: ODEcriture[] }) => {
         if (data.lignes) {
@@ -114,7 +115,7 @@ function RevisionKP({ balanceN, exerciceAnnee, entiteId, exerciceId }: RevisionK
   const handleSave = async (): Promise<void> => {
     setSaveNotif(null);
     try {
-      const resp = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/kp`, {
+      const resp = await clientFetch(api.revision.onglet(entiteId, exerciceId, 'kp'), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lignes, odEcritures }),

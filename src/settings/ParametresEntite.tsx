@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect, useCallback } from 'react';
 import { ParametresSection, ParametresField } from '../types';
 
@@ -188,7 +189,7 @@ function ParametresEntite({ entiteId, onUpdate }: ParametresEntiteProps): React.
     if (!entiteId) return;
     setLoading(true);
     try {
-      const res: Response = await clientFetch(`/api/entites/${entiteId}`);
+      const res: Response = await clientFetch(api.entites.byId(entiteId));
       if (res.ok) {
         const entite: EntiteResponse = await res.json();
         // Merge top-level fields and JSONB data
@@ -223,7 +224,7 @@ function ParametresEntite({ entiteId, onUpdate }: ParametresEntiteProps): React.
         else data[k] = v;
       });
 
-      const res: Response = await clientFetch(`/api/entites/${entiteId}`, {
+      const res: Response = await clientFetch(api.entites.byId(entiteId), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...topLevel, data }),

@@ -3,6 +3,7 @@ import { LuPlus, LuSave, LuTrash2, LuX } from 'react-icons/lu';
 import { useQueryClient } from '@tanstack/react-query';
 import { useJournaux } from '../lib/queries';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 
 interface Journal {
   id: number;
@@ -47,7 +48,7 @@ export default function JournauxTab(): React.ReactElement {
       return;
     }
     try {
-      const r = await clientFetch('/api/journaux', {
+      const r = await clientFetch(api.journaux.list, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newForm),
@@ -66,7 +67,7 @@ export default function JournauxTab(): React.ReactElement {
     if (!patch) return;
     setSaving(j.id);
     try {
-      const r = await clientFetch(`/api/journaux/${j.id}`, {
+      const r = await clientFetch(api.journaux.byId(j.id), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(patch),
@@ -88,7 +89,7 @@ export default function JournauxTab(): React.ReactElement {
     }
     if (!window.confirm(`Supprimer le journal « ${j.code} — ${j.libelle} » ?`)) return;
     try {
-      const r = await clientFetch(`/api/journaux/${j.id}`, { method: 'DELETE' });
+      const r = await clientFetch(api.journaux.byId(j.id), { method: 'DELETE' });
       if (!r.ok && r.status !== 204) {
         const d = await r.json().catch(() => ({}));
         throw new Error(d.error || 'Erreur suppression.');

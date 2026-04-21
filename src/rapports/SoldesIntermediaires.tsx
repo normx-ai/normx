@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { normalizeList } from '../hooks/useFetchEntity';
 import React, { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
@@ -169,7 +170,7 @@ function SoldesIntermediaires({ entiteId, exerciceId, exerciceAnnee, exercices, 
 
   useEffect(() => {
     setLoading(true);
-    const baseUrl = offre === 'comptabilite' ? '/api/ecritures/balance' : '/api/balance';
+    const baseUrl = offre === 'comptabilite' ? api.ecritures.balanceBase : api.balance.base;
 
     const urlN = offre === 'comptabilite'
       ? `${baseUrl}/${entiteId}/${exerciceId}`
@@ -191,7 +192,7 @@ function SoldesIntermediaires({ entiteId, exerciceId, exerciceAnnee, exercices, 
       }
     } else {
       // Balance importée : N-1 est dans le même exercice
-      fetchN1 = clientFetch(`/api/balance/${entiteId}/${exerciceId}/N-1`).then(r => r.json())
+      fetchN1 = clientFetch(api.balance.byExercice(entiteId, exerciceId, 'N-1')).then(r => r.json())
         .then(result => normalizeList<SIGBalanceRow>(result, ['lignes']))
         .catch(() => [] as SIGBalanceRow[]);
     }

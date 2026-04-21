@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { LuBookOpen, LuChevronDown, LuChevronRight, LuArrowDownLeft, LuArrowUpRight, LuBan, LuShieldCheck, LuMessageSquare } from 'react-icons/lu';
 
 // Fonctionnement d'un compte OHADA — données chargées depuis l'API Qdrant
@@ -33,7 +34,7 @@ function FonctionnementCompte({ prefixes, titre }: FonctionnementCompteProps): R
   useEffect(() => {
     // Charger les données de fonctionnement depuis l'API
     setLoading(true);
-    clientFetch('/api/assistant/fonctionnement-comptes', {
+    clientFetch(api.assistant.fonctionnementComptes, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prefixes }),

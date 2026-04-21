@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import { LuUsers, LuChevronDown, LuChevronRight, LuSave, LuClipboardList } from 'react-icons/lu';
 import { BalanceLigne } from '../types';
@@ -129,7 +130,7 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
   useEffect(() => { loadSaved(); }, [entiteId, exerciceId]);
 
   const loadSaved = (): void => {
-    clientFetch(`/api/revision/${entiteId}/${exerciceId}/personnel`)
+    clientFetch(api.revision.onglet(entiteId, exerciceId, 'personnel'))
       .then(r => { if (r.ok) return r.json(); throw new Error(); })
       .then((data: { congesData?: ProvisionCongesData; avancesEdit?: Record<string, { anteriorite: string; accordFormalise: string; observations: string }>; dettesCommentaires?: Record<string, string>; odEcritures?: ODEcriture[] }) => {
         if (data.congesData) setCongesData(data.congesData);
@@ -142,7 +143,7 @@ function RevisionPersonnel({ balanceN, exerciceAnnee, entiteId, exerciceId }: Re
 
   const handleSave = async (): Promise<void> => {
     try {
-      const res = await clientFetch(`/api/revision/${entiteId}/${exerciceId}/personnel`, {
+      const res = await clientFetch(api.revision.onglet(entiteId, exerciceId, 'personnel'), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ congesData, avancesEdit, dettesCommentaires, odEcritures }),
