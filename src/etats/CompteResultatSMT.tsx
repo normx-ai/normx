@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -90,7 +91,7 @@ function CompteResultatSMT({ entiteName, entiteSigle = '', entiteAdresse = '', e
   const pageCRRef = useRef<HTMLDivElement>(null);
 
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch(api.ecritures.balance(entId, exId));
     if (!res.ok) return [];
     const data: Array<Record<string, string>> = await res.json();
     return data.map(row => ({
@@ -106,13 +107,13 @@ function CompteResultatSMT({ entiteName, entiteSigle = '', entiteAdresse = '', e
     if (!entiteId || !selectedExercice) return { lignesN: [] as BalanceLigne[], lignesN1: [] as BalanceLigne[], source: '' };
     let lN: BalanceLigne[] = [], lN1: BalanceLigne[] = [], src = '';
     if (balanceSource === 'ecritures') { lN = await loadBalanceFromEcritures(entiteId, selectedExercice.id); src = 'Ecritures'; }
-    else { const r = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N'); const d: { lignes?: BalanceLigne[] } = await r.json(); lN = d.lignes || []; src = 'Import'; }
+    else { const r = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N')); const d: { lignes?: BalanceLigne[] } = await r.json(); lN = d.lignes || []; src = 'Import'; }
     const prev = exercices.find(e => e.annee === selectedExercice.annee - 1);
     if (prev) {
       if (balanceSource === 'ecritures') lN1 = await loadBalanceFromEcritures(entiteId, prev.id);
-      else { const r = await clientFetch('/api/balance/' + entiteId + '/' + prev.id + '/N'); const d: { lignes?: BalanceLigne[] } = await r.json(); lN1 = d.lignes || []; }
+      else { const r = await clientFetch(api.balance.byExercice(entiteId, prev.id, 'N')); const d: { lignes?: BalanceLigne[] } = await r.json(); lN1 = d.lignes || []; }
     } else if (balanceSource === 'import') {
-      const r = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1'); const d: { lignes?: BalanceLigne[] } = await r.json(); lN1 = d.lignes || [];
+      const r = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N-1')); const d: { lignes?: BalanceLigne[] } = await r.json(); lN1 = d.lignes || [];
     }
     return { lignesN: lN, lignesN1: lN1, source: src };
   }, [entiteId, selectedExercice, exercices, balanceSource]);

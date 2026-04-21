@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -24,8 +25,8 @@ function JournauxSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }: Jo
   const page1Ref = useRef<HTMLDivElement>(null);
   const page2Ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { if (!entiteId) return; clientFetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d['smt_creances_impayees']) { try { const p = JSON.parse(d['smt_creances_impayees']); if (Array.isArray(p) && p.length > 0) setCreancesImpayees(p); } catch { /* */ } } if (d['smt_dettes_a_payer']) { try { const p = JSON.parse(d['smt_dettes_a_payer']); if (Array.isArray(p) && p.length > 0) setDettesAPayer(p); } catch { /* */ } } }).catch(() => {}); }, [entiteId]);
-  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, smt_creances_impayees: JSON.stringify(creancesImpayees), smt_dettes_a_payer: JSON.stringify(dettesAPayer) }; const r = await clientFetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
+  useEffect(() => { if (!entiteId) return; clientFetch(api.entites.byId(entiteId)).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d['smt_creances_impayees']) { try { const p = JSON.parse(d['smt_creances_impayees']); if (Array.isArray(p) && p.length > 0) setCreancesImpayees(p); } catch { /* */ } } if (d['smt_dettes_a_payer']) { try { const p = JSON.parse(d['smt_dettes_a_payer']); if (Array.isArray(p) && p.length > 0) setDettesAPayer(p); } catch { /* */ } } }).catch(() => {}); }, [entiteId]);
+  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, smt_creances_impayees: JSON.stringify(creancesImpayees), smt_dettes_a_payer: JSON.stringify(dettesAPayer) }; const r = await clientFetch(api.entites.byId(entiteId), { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
 
   const duree = selectedExercice?.duree_mois || 12;
   const dateFin = selectedExercice?.date_fin ? new Date(selectedExercice.date_fin) : null;

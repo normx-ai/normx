@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -22,7 +23,7 @@ function FicheR3({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif =
 
   useEffect(() => {
     if (!entiteId) return;
-    clientFetch('/api/entites/' + entiteId)
+    clientFetch(api.entites.byId(entiteId))
       .then(r => r.json())
       .then(ent => {
         setParams({

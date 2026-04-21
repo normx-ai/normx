@@ -1,4 +1,5 @@
 import { clientFetch } from '../../lib/api';
+import { api } from '../../lib/apiEndpoints';
 import React, { useState, useRef, useEffect } from 'react';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo, LuEyeOff } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -91,11 +92,11 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
       try {
         let lignes: BalanceLigne[] = [];
         if (balanceSource === 'ecritures') {
-          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
           const data = await res.json();
           lignes = data.lignes || [];
         } else {
-          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
           const data = await res.json();
           lignes = data.lignes || [];
         }

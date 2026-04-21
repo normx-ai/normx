@@ -1,4 +1,5 @@
 import { clientFetch } from '../../lib/api';
+import { api } from '../../lib/apiEndpoints';
 import React, { useState, useRef, useEffect } from 'react';
 import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
@@ -103,10 +104,10 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
     const load = async () => {
       try {
         if (balanceSource === 'ecritures') {
-          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
           setLignesN((await res.json()).lignes || []);
         } else {
-          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
           setLignesN((await res.json()).lignes || []);
         }
       } catch { setLignesN([]); }

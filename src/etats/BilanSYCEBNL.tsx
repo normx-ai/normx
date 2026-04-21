@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -47,7 +48,7 @@ function BilanSYCEBNL({
   const pagePassifRef = useRef<HTMLDivElement>(null);
 
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch(api.ecritures.balance(entId, exId));
     if (!res.ok) return [];
     const data: BalanceApiRow[] = await res.json();
     return data.map((row: BalanceApiRow): BalanceLigne => ({
@@ -68,7 +69,7 @@ function BilanSYCEBNL({
       lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
       source = 'Ecritures comptables';
     } else {
-      const resN = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+      const resN = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
       const dataN: BalanceImportResponse = await resN.json();
       lignesNResult = dataN.lignes || [];
       source = 'Import balance';
@@ -78,12 +79,12 @@ function BilanSYCEBNL({
       if (balanceSource === 'ecritures') {
         lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
       } else {
-        const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
+        const resN1 = await clientFetch(api.balance.byExercice(entiteId, prevExercice.id, 'N'));
         const dataN1: BalanceImportResponse = await resN1.json();
         lignesN1Result = dataN1.lignes || [];
       }
     } else if (balanceSource === 'import') {
-      const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
+      const resN1 = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N-1'));
       const dataN1: BalanceImportResponse = await resN1.json();
       lignesN1Result = dataN1.lignes || [];
     }

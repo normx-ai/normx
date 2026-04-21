@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
 import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
@@ -43,7 +44,7 @@ function TFT_SYSCOHADA({
   const pageRef = useRef<HTMLDivElement>(null);
 
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch(api.ecritures.balance(entId, exId));
     if (!res.ok) return [];
     const data: BalanceLigne[] = await res.json();
     return data.map(row => ({
@@ -73,7 +74,7 @@ function TFT_SYSCOHADA({
         lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
         source = 'Ecritures comptables';
       } else {
-        const resN = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+        const resN = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
         const dataN = await resN.json();
         lignesNResult = dataN.lignes || [];
         source = 'Import balance';
@@ -88,12 +89,12 @@ function TFT_SYSCOHADA({
         if (balanceSource === 'ecritures') {
           lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
         } else {
-          const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
+          const resN1 = await clientFetch(api.balance.byExercice(entiteId, prevExercice.id, 'N'));
           const dataN1 = await resN1.json();
           lignesN1Result = dataN1.lignes || [];
         }
       } else if (balanceSource === 'import') {
-        const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
+        const resN1 = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N-1'));
         const dataN1 = await resN1.json();
         lignesN1Result = dataN1.lignes || [];
       }
@@ -108,14 +109,14 @@ function TFT_SYSCOHADA({
         if (balanceSource === 'ecritures') {
           lignesN2Result = await loadBalanceFromEcritures(entiteId, prevPrevExercice.id);
         } else {
-          const resN2 = await clientFetch('/api/balance/' + entiteId + '/' + prevPrevExercice.id + '/N');
+          const resN2 = await clientFetch(api.balance.byExercice(entiteId, prevPrevExercice.id, 'N'));
           const dataN2 = await resN2.json();
           lignesN2Result = dataN2.lignes || [];
         }
       } else if (balanceSource === 'import') {
         const prevExN1 = exercices.find(e => e.annee === selectedExercice.annee - 1);
         if (prevExN1) {
-          const resN2 = await clientFetch('/api/balance/' + entiteId + '/' + prevExN1.id + '/N-1');
+          const resN2 = await clientFetch(api.balance.byExercice(entiteId, prevExN1.id, 'N-1'));
           const dataN2 = await resN2.json();
           lignesN2Result = dataN2.lignes || [];
         }

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings, LuSave, LuPenLine, LuInfo } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -152,7 +153,7 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToPa
   // Load saved states from entité params
   useEffect(() => {
     if (!entiteId) return;
-    clientFetch('/api/entites/' + entiteId)
+    clientFetch(api.entites.byId(entiteId))
       .then(r => r.json())
       .then(ent => {
         const data = ent.data || {};
@@ -176,10 +177,10 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToPa
     const load = async () => {
       try {
         if (balanceSource === 'ecritures') {
-          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
           setLignesN((await res.json()).lignes || []);
         } else {
-          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
           setLignesN((await res.json()).lignes || []);
         }
       } catch { setLignesN([]); }
@@ -217,7 +218,7 @@ function FicheR4({ entiteName, entiteNif = '', entiteId, offre, onBack, onGoToPa
       data['r4_' + n.id] = noteStates[n.id] || 'A';
     });
     try {
-      const res = await clientFetch(`/api/entites/${entiteId}`, {
+      const res = await clientFetch(api.entites.byId(entiteId), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ data }),

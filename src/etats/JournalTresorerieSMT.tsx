@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -37,19 +38,19 @@ function JournalTresorerieSMT({ entiteName, entiteNif = '', entiteId, offre, onB
   const dataKey = `smt_jt_${annee}_${selectedMois}`;
   const reportKey = `smt_jt_report_${annee}_${selectedMois}`;
 
-  useEffect(() => { if (!entiteId) return; clientFetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d[dataKey]) { try { const p = JSON.parse(d[dataKey]); if (Array.isArray(p) && p.length > 0) setLignes(p); else setLignes(Array.from({ length: 15 }, emptyLigne)); } catch { setLignes(Array.from({ length: 15 }, emptyLigne)); } } else { setLignes(Array.from({ length: 15 }, emptyLigne)); } setReportNouveau(d[reportKey] || ''); }).catch(() => {}); }, [entiteId, dataKey, reportKey]);
+  useEffect(() => { if (!entiteId) return; clientFetch(api.entites.byId(entiteId)).then(r => r.json()).then(ent => { const d = ent.data || {}; setParams(d); if (d[dataKey]) { try { const p = JSON.parse(d[dataKey]); if (Array.isArray(p) && p.length > 0) setLignes(p); else setLignes(Array.from({ length: 15 }, emptyLigne)); } catch { setLignes(Array.from({ length: 15 }, emptyLigne)); } } else { setLignes(Array.from({ length: 15 }, emptyLigne)); } setReportNouveau(d[reportKey] || ''); }).catch(() => {}); }, [entiteId, dataKey, reportKey]);
 
   // Reload data when month/year changes
   useEffect(() => {
     if (!entiteId) return;
-    clientFetch('/api/entites/' + entiteId).then(r => r.json()).then(ent => {
+    clientFetch(api.entites.byId(entiteId)).then(r => r.json()).then(ent => {
       const d = ent.data || {}; setParams(d);
       if (d[dataKey]) { try { const p = JSON.parse(d[dataKey]); if (Array.isArray(p) && p.length > 0) setLignes(p); else setLignes(Array.from({ length: 15 }, emptyLigne)); } catch { setLignes(Array.from({ length: 15 }, emptyLigne)); } } else { setLignes(Array.from({ length: 15 }, emptyLigne)); }
       setReportNouveau(d[reportKey] || '');
     }).catch(() => {});
   }, [selectedMois, annee, entiteId, dataKey, reportKey]);
 
-  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, [dataKey]: JSON.stringify(lignes), [reportKey]: reportNouveau }; const r = await clientFetch(`/api/entites/${entiteId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
+  const handleSave = async () => { setSaving(true); try { const d: Record<string, string> = { ...params, [dataKey]: JSON.stringify(lignes), [reportKey]: reportNouveau }; const r = await clientFetch(api.entites.byId(entiteId), { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ data: d }) }); if (r.ok) { setParams(d); setEditing(false); } } catch { /* */ } setSaving(false); };
 
   const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
   const fmtM = (v: number): string => v === 0 ? '' : Math.round(v).toLocaleString('fr-FR');

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import './BilanSYCEBNL.css';
@@ -23,7 +24,7 @@ function TER_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNi
   void typeActivite;
 
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch(api.ecritures.balance(entId, exId));
     if (!res.ok) return [];
     const data: BalanceLigne[] = await res.json();
     return data.map((row: BalanceLigne) => ({
@@ -50,7 +51,7 @@ function TER_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNi
         lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
         source = 'Écritures comptables';
       } else {
-        const resN = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+        const resN = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
         const dataN: { lignes?: BalanceLigne[] } = await resN.json();
         lignesNResult = dataN.lignes || [];
         source = 'Import balance';
@@ -63,7 +64,7 @@ function TER_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNi
         if (balanceSource === 'ecritures') {
           lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
         } else {
-          const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
+          const resN1 = await clientFetch(api.balance.byExercice(entiteId, prevExercice.id, 'N'));
           const dataN1: { lignes?: BalanceLigne[] } = await resN1.json();
           lignesN1Result = dataN1.lignes || [];
         }

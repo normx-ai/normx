@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
 import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
@@ -52,7 +53,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
   const pageRef = useRef<HTMLDivElement>(null);
 
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch(api.ecritures.balance(entId, exId));
     if (!res.ok) return [];
     const data: BalanceApiRow[] = await res.json();
     return data.map((row: BalanceApiRow): BalanceLigne => ({
@@ -77,7 +78,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
         result = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
         source = 'Ecritures comptables';
       } else {
-        const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+        const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
         const data = await res.json();
         result = data.lignes || [];
         source = 'Import balance';

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
 import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
 import type { ExcelRow, ExcelExportOptions } from '../lib/excelExport';
@@ -47,7 +48,7 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
 
   // Charger balance depuis les ecritures et convertir au format balance_lignes
   const loadBalanceFromEcritures = async (entId: number, exId: number): Promise<BalanceLigne[]> => {
-    const res = await clientFetch('/api/ecritures/balance/' + entId + '/' + exId);
+    const res = await clientFetch(api.ecritures.balance(entId, exId));
     if (!res.ok) return [];
     const data: BalanceLigne[] = await res.json();
     // Convertir au meme format que balance_lignes
@@ -76,7 +77,7 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
       lignesNResult = await loadBalanceFromEcritures(entiteId, selectedExercice.id);
       source = 'Ecritures comptables';
     } else {
-      const resN = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+      const resN = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
       const dataN = await resN.json();
       lignesNResult = dataN.lignes || [];
       source = 'Import balance';
@@ -88,12 +89,12 @@ function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAd
       if (balanceSource === 'ecritures') {
         lignesN1Result = await loadBalanceFromEcritures(entiteId, prevExercice.id);
       } else {
-        const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + prevExercice.id + '/N');
+        const resN1 = await clientFetch(api.balance.byExercice(entiteId, prevExercice.id, 'N'));
         const dataN1 = await resN1.json();
         lignesN1Result = dataN1.lignes || [];
       }
     } else if (balanceSource === 'import') {
-      const resN1 = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N-1');
+      const resN1 = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N-1'));
       const dataN1 = await resN1.json();
       lignesN1Result = dataN1.lignes || [];
     }

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSettings } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -49,7 +50,7 @@ function FicheIdentification({
 
   useEffect(() => {
     if (!entiteId) return;
-    clientFetch('/api/entites/' + entiteId)
+    clientFetch(api.entites.byId(entiteId))
       .then(r => r.json())
       .then(ent => {
         setParams({
@@ -72,11 +73,11 @@ function FicheIdentification({
       try {
         let lignes: BalanceLigne[] = [];
         if (balanceSource === 'ecritures') {
-          const res = await clientFetch('/api/ecritures/balance/' + entiteId + '/' + selectedExercice.id);
+          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
           const data = await res.json();
           lignes = data.lignes || [];
         } else {
-          const res = await clientFetch('/api/balance/' + entiteId + '/' + selectedExercice.id + '/N');
+          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
           const data = await res.json();
           lignes = data.lignes || [];
         }
