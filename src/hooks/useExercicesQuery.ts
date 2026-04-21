@@ -13,6 +13,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import type { Exercice } from '../types';
 
 function pickDefaultExercice(data: Exercice[]): Exercice | null {
@@ -43,7 +44,7 @@ export function useExercicesQuery(entiteId: number): UseExercicesQueryResult {
   const { data: exercicesData, isLoading } = useQuery({
     queryKey: ['exercices', entiteId],
     queryFn: async (): Promise<Exercice[]> => {
-      const r = await clientFetch('/api/balance/exercices/' + entiteId);
+      const r = await clientFetch(api.balance.exercicesByEntite(entiteId));
       if (!r.ok) throw new Error('Erreur chargement exercices');
       return r.json();
     },

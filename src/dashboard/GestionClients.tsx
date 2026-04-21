@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState } from 'react';
 import { LuSearch, LuPlus } from 'react-icons/lu';
 import { Entite, NormxModule } from '../types';
@@ -103,10 +104,10 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
 
     try {
       if (editingId) {
-        const updated = await apiPut<Entite>(`/api/entites/${editingId}`, { ...formData, modules });
+        const updated = await apiPut<Entite>(api.entites.byId(editingId), { ...formData, modules });
         onEntiteUpdated(updated);
       } else {
-        const created = await apiPost<Entite>('/api/entites', { ...formData, modules });
+        const created = await apiPost<Entite>(api.entites.list, { ...formData, modules });
         onEntiteCreated(created);
       }
       setShowForm(false);
@@ -131,7 +132,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     try {
       const headers: Record<string, string> = {};
       if (slug) headers['X-Client-Slug'] = slug;
-      const res = await clientFetch(`/api/balance/exercices/${id}`, { credentials: 'include', headers });
+      const res = await clientFetch(api.balance.exerciceById(id), { credentials: 'include', headers });
       if (res.ok) {
         const exercices = await res.json();
         hasData = exercices.length > 0;
@@ -141,7 +142,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     const runDelete = async (): Promise<void> => {
       setConfirmState((prev) => ({ ...prev, open: false }));
       try {
-        await apiDelete(`/api/entites/${id}`);
+        await apiDelete(api.entites.byId(id));
         onEntiteDeleted(id);
       } catch { /* silently fail */ }
     };

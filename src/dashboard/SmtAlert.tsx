@@ -7,6 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { LuTriangleAlert, LuArrowUpRight } from 'react-icons/lu';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import type { TypeActivite, Offre } from '../types';
 
 interface SmtAlertState { show: boolean; ca: number; seuil: number; }
@@ -26,11 +27,11 @@ export function useSmtAlert(
       try {
         let lignes: { numero_compte: string; solde_crediteur?: number; solde_crediteur_revise?: number; solde_debiteur?: number; solde_debiteur_revise?: number }[] = [];
         if (offre === 'comptabilite') {
-          const res = await clientFetch(`/api/ecritures/balance/${entiteId}/${exerciceId}`);
+          const res = await clientFetch(api.ecritures.balance(entiteId, exerciceId));
           const data = await res.json();
           lignes = data.lignes || [];
         } else {
-          const res = await clientFetch(`/api/balance/${entiteId}/${exerciceId}/N`);
+          const res = await clientFetch(api.balance.byExercice(entiteId, exerciceId, 'N'));
           const data = await res.json();
           lignes = data.lignes || [];
         }

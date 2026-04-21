@@ -6,6 +6,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import type { Offre } from '../types';
 import {
   NOTE_ACCOUNT_MAP,
@@ -33,8 +34,8 @@ export function useNoteHasData(entiteId: number, exerciceId: number | null, offr
     if (!entiteId || !exerciceId) return;
     const balSrc = offre === 'comptabilite' ? 'ecritures' : 'import';
     const url = balSrc === 'ecritures'
-      ? '/api/ecritures/balance/' + entiteId + '/' + exerciceId
-      : '/api/balance/' + entiteId + '/' + exerciceId + '/N';
+      ? api.ecritures.balance(entiteId, exerciceId)
+      : api.balance.byExercice(entiteId, exerciceId, 'N');
     clientFetch(url)
       .then(r => r.json())
       .then(data => setBalanceLignes(data.lignes || []))
@@ -43,7 +44,7 @@ export function useNoteHasData(entiteId: number, exerciceId: number | null, offr
 
   useEffect(() => {
     if (!entiteId) return;
-    clientFetch('/api/entites/' + entiteId)
+    clientFetch(api.entites.byId(entiteId))
       .then(r => r.json())
       .then(ent => setEntiteParams(ent.data || {}))
       .catch(() => setEntiteParams({}));

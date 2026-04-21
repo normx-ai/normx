@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { Exercice } from '../types';
 
 interface ExerciceModalState {
@@ -65,7 +66,7 @@ export function useExercices(entiteId: number): UseExercicesReturn {
     if (!entiteId) return;
     setExerciceId(null);
     setExercices([]);
-    clientFetch('/api/balance/exercices/' + entiteId)
+    clientFetch(api.balance.exercicesByEntite(entiteId))
       .then((r: Response) => r.json())
       .then((data: Exercice[]) => {
         setExercices(data);
@@ -109,7 +110,7 @@ export function useExercices(entiteId: number): UseExercicesReturn {
     setExerciceLoading(true);
     setModal(prev => ({ ...prev, error: '' }));
     try {
-      const res = await clientFetch('/api/balance/exercice', {
+      const res = await clientFetch(api.balance.exercice, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ entite_id: entiteId, annee, duree_mois: duree, date_debut: modal.dateDebut, date_fin: modal.dateFin }),
@@ -137,7 +138,7 @@ export function useExercices(entiteId: number): UseExercicesReturn {
       onConfirm: async () => {
         setConfirmModal(prev => ({ ...prev, open: false }));
         try {
-          const res = await clientFetch(`/api/balance/exercice/${exId}/cloturer`, { method: 'PUT' });
+          const res = await clientFetch(api.balance.cloturerExercice(exId), { method: 'PUT' });
           if (res.ok) { const updated = await res.json(); setExercices(prev => prev.map(e => e.id === exId ? updated : e)); }
         } catch { /* silently */ }
       },
@@ -152,7 +153,7 @@ export function useExercices(entiteId: number): UseExercicesReturn {
       onConfirm: async () => {
         setConfirmModal(prev => ({ ...prev, open: false }));
         try {
-          const res = await clientFetch(`/api/balance/exercice/${exId}/rouvrir`, { method: 'PUT' });
+          const res = await clientFetch(api.balance.rouvrirExercice(exId), { method: 'PUT' });
           if (res.ok) { const updated = await res.json(); setExercices(prev => prev.map(e => e.id === exId ? updated : e)); }
         } catch { /* silently */ }
       },

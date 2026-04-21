@@ -1,4 +1,5 @@
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect, useRef } from 'react';
 import { LuBell, LuCheck, LuCheckCheck, LuTrash2, LuX } from 'react-icons/lu';
 import { Notification } from '../types';
@@ -18,8 +19,8 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
   const fetchNotifications = async (): Promise<void> => {
     try {
       const [notifRes, countRes] = await Promise.all([
-        clientFetch(`/api/notifications/${userId}`, { credentials: 'include' }),
-        clientFetch(`/api/notifications/${userId}/unread-count`, { credentials: 'include' }),
+        clientFetch(api.notifications.byUser(userId), { credentials: 'include' }),
+        clientFetch(api.notifications.unreadCount(userId), { credentials: 'include' }),
       ]);
       if (notifRes.ok) {
         const data: Notification[] = await notifRes.json();
@@ -51,7 +52,7 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
 
   const markAsRead = async (id: number): Promise<void> => {
     try {
-      await clientFetch(`/api/notifications/${id}/read`, { method: 'PUT', credentials: 'include' as RequestCredentials });
+      await clientFetch(api.notifications.read(id), { method: 'PUT', credentials: 'include' as RequestCredentials });
       setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch { /* silently */ }
@@ -59,7 +60,7 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
 
   const markAllAsRead = async (): Promise<void> => {
     try {
-      await clientFetch(`/api/notifications/read-all/${userId}`, { method: 'PUT', credentials: 'include' as RequestCredentials });
+      await clientFetch(api.notifications.readAll(userId), { method: 'PUT', credentials: 'include' as RequestCredentials });
       setNotifications(prev => prev.map(n => ({ ...n, read: true })));
       setUnreadCount(0);
     } catch { /* silently */ }
@@ -67,7 +68,7 @@ function NotificationBell({ userId }: NotificationBellProps): React.ReactElement
 
   const deleteNotification = async (id: number): Promise<void> => {
     try {
-      await clientFetch(`/api/notifications/${id}`, { method: 'DELETE', credentials: 'include' as RequestCredentials });
+      await clientFetch(api.notifications.byId(id), { method: 'DELETE', credentials: 'include' as RequestCredentials });
       const removed = notifications.find(n => n.id === id);
       setNotifications(prev => prev.filter(n => n.id !== id));
       if (removed && !removed.read) setUnreadCount(prev => Math.max(0, prev - 1));
