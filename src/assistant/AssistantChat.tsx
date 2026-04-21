@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
+import { api } from '../lib/apiEndpoints';
 import { LuSend, LuMessageSquare, LuPlus, LuTrash2, LuBrain } from 'react-icons/lu';
 import { TypeActivite } from '../types';
 import { fmtDayRelative } from '../utils/formatters';
@@ -109,7 +110,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
   const loadConversations = useCallback(async (): Promise<void> => {
     if (!userId) return;
     try {
-      const res: Response = await clientFetch('/api/assistant/conversations/' + userId);
+      const res: Response = await clientFetch(api.assistant.conversations(userId));
       if (res.ok) {
         const data: ConversationItem[] = await res.json();
         setConversations(data);
@@ -123,7 +124,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
   const loadMemory = useCallback(async (): Promise<void> => {
     if (!userId) return;
     try {
-      const res: Response = await clientFetch('/api/assistant/memory/' + userId);
+      const res: Response = await clientFetch(api.assistant.memory(userId));
       if (res.ok) {
         const data: MemoryItem[] = await res.json();
         setMemory(data);
@@ -146,7 +147,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
   const openConversation = async (convId: number): Promise<void> => {
     setActiveConvId(convId);
     try {
-      const res: Response = await clientFetch('/api/assistant/conversations/' + convId + '/messages');
+      const res: Response = await clientFetch(api.assistant.conversationMessages(convId));
       if (res.ok) {
         const data: MessageRow[] = await res.json();
         setMessages(data.map((m: MessageRow) => ({
@@ -170,7 +171,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
   const deleteConversation = async (e: React.MouseEvent<HTMLButtonElement>, convId: number): Promise<void> => {
     e.stopPropagation();
     try {
-      await clientFetch('/api/assistant/conversations/' + convId, { method: 'DELETE' });
+      await clientFetch(api.assistant.conversationById(convId), { method: 'DELETE' });
       if (activeConvId === convId) {
         setActiveConvId(null);
         setMessages([]);
@@ -184,7 +185,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
   // Delete memory item
   const deleteMemoryItem = async (id: number): Promise<void> => {
     try {
-      await clientFetch('/api/assistant/memory/' + id, { method: 'DELETE' });
+      await clientFetch(api.assistant.memoryById(id), { method: 'DELETE' });
       loadMemory();
     } catch (_err) {
       // network error
@@ -206,7 +207,7 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
     }
 
     try {
-      const res: Response = await clientFetch('/api/assistant/chat', {
+      const res: Response = await clientFetch(api.assistant.chat, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
