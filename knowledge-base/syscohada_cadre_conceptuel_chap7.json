@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA — SYSCOHADA Structure du Plan de Comptes",
+    "referentiel": "SYSCOHADA",
+    "partie": "Titre VII — Chapitre 2 : Structure du Plan de comptes",
+    "pages_source": "211-269",
+    "date_extraction": "2026-04-08",
+    "note": "La Section 3 (Liste des comptes) est volumineuse et disponible séparément dans plan_comptable_syscohada.json"
+  },
+  "sections": [
+    {
+      "numero": "1",
+      "titre": "Section 1 : Classement et codification des comptes",
+      "sous_sections": [
+        {
+          "numero": "1.1",
+          "titre": "1.1. Répartition des opérations dans les classes de comptes",
+          "texte": [
+            "Les comptes sont identifiés par un numéro auquel est rattaché un intitulé. Ces deux identifiants sont nécessaires pour enregistrer et suivre les opérations en comptabilité.",
+            "Cette codification des comptes est comprise dans le champ de la normalisation comptable impérative, à l'exception de la classe 9 qui est d'application facultative.",
+            "Le Système comptable OHADA retient une codification décimale des comptes avec neuf classes ayant les codes 1 à 9. Les huit premières classes sont réservées à la comptabilité générale tandis que la comptabilité des engagements et la comptabilité analytique de gestion (CAGE) se partagent la dernière classe.",
+            "1.1.1. Comptabilité générale : Les classes 1 à 5 se rapportent aux comptes de bilan :",
+            "Classe 1 : comptes de ressources durables (capitaux propres et dettes financières) ;",
+            "Classe 2 : comptes de l'actif immobilisé (immobilisations incorporelles, corporelles et financières) ;",
+            "Classe 3 : comptes de stocks ;",
+            "Classe 4 : comptes de tiers (créances de l'actif circulant et dettes du passif circulant) ;",
+            "Classe 5 : comptes de trésorerie (titres de placement, valeurs à encaisser, comptes bancaires et caisse).",
+            "Les composantes du résultat sont, d'une part, les classes 6 et 7 enregistrant les charges et les produits des activités ordinaires et, d'autre part, la classe 8 réservée aux comptes des autres charges et des autres produits (participations des travailleurs, subventions d'équilibre, etc.).",
+            "Classe 6 : comptes de charges des activités ordinaires (charges d'exploitation et charges financières) ;",
+            "Classe 7 : comptes de produits des activités ordinaires (produits d'exploitation et produits financiers) ;",
+            "Classe 8 : comptes des autres charges et des autres produits (participations des travailleurs, subventions d'équilibre, etc.).",
+            "1.1.2. Comptabilité des engagements et Comptabilité analytique de gestion : La classe 9 a été réservée aux opérations de la comptabilité des engagements et à la comptabilité analytique de gestion."
+          ],
+          "mots_cles": ["classes de comptes", "codification décimale", "neuf classes", "bilan", "résultat", "comptabilité générale", "comptabilité analytique", "CAGE"]
+        },
+        {
+          "numero": "1.2",
+          "titre": "1.2. Structure décimale des comptes",
+          "texte": [
+            "Cette codification procède d'une classification à structure décimale permettant : de subdiviser tout compte ; de regrouper par grandes familles les opérations de nature relativement homogènes ; d'accéder à des niveaux plus ou moins détaillés d'analyse des opérations ; de faciliter le développement des applications informatiques ; et de servir les postes et rubriques entrant dans la confection des documents de synthèse normalisés.",
+            "La codification du Système comptable OHADA est aménagée de sorte à établir des constantes et des parallélismes susceptibles d'aider à mémoriser et à comprendre les comptes."
+          ],
+          "mots_cles": ["structure décimale", "codification", "subdivision", "regroupement", "parallélismes"]
+        },
+        {
+          "numero": "1.2.1",
+          "titre": "1.2.1. Constantes",
+          "texte": [
+            "Le premier et le dernier chiffre du code d'un compte peuvent avoir une signification particulière.",
+            "Rôle du premier chiffre : Le numéro de chacune des classes 1 à 9 constitue le premier chiffre des numéros de la classe considérée.",
+            "Rôle de toute terminaison sauf le 9 dans les comptes à deux chiffres : les terminaisons autres que le 9 servent au regroupement en fonction des catégories d'opérations.",
+            "Rôle de la terminaison 9 dans les comptes à deux chiffres : Dans les comptes de bilan, la terminaison 9 dans les comptes à deux chiffres a pour rôle d'identifier les dépréciations provisionnées des classes correspondantes (exemples : 19 - Provisions pour risques et charges, 39 - Dépréciations des stocks). La terminaison 9 joue un rôle similaire dans les comptes de gestion relevant des classes 6 et 7 dans la mesure où elle se rapporte aux opérations concernant les provisions.",
+            "Rôle de toute terminaison 9 dans les comptes à trois chiffres et plus : Le chiffre 9 en troisième ou quatrième position annonce le solde inversé des opérations par rapport aux opérations couvertes par le compte de niveau immédiatement supérieur.",
+            "Parallélismes : entre charges et produits liés aux activités ordinaires (601 Achats de marchandises / 701 Ventes de marchandises), entre autres charges et autres produits (81 Valeurs comptables des cessions d'immobilisations / 82 Produits des cessions d'immobilisations ; 83 Charges hors activités ordinaires / 84 Produits hors activités ordinaires). Les comptes à deux chiffres à terminaison impaire désignent les charges et ceux à terminaison paire les produits."
+          ],
+          "mots_cles": ["constantes", "terminaison 9", "dépréciations", "provisions", "solde inversé", "parallélismes", "charges impaires", "produits pairs"]
+        }
+      ]
+    },
+    {
+      "numero": "2",
+      "titre": "Section 2 : Organisation du plan de comptes de l'entité",
+      "sous_sections": [
+        {
+          "numero": "2.1",
+          "titre": "2.1. Plan de comptes et nomenclatures",
+          "texte": [
+            "Le plan de comptes du Système comptable OHADA est l'ensemble des comptes définis et identifiés par un numéro et un intitulé.",
+            "Toute entité non financière exerçant des activités au sein de l'espace économique formé par les Etats-Parties, dit espace OHADA, doit recourir au plan de comptes normalisés dont la liste figure dans le Système comptable OHADA.",
+            "La codification de base du Système comptable OHADA est limitée, dans la mesure où les comptes divisionnaires atteignent au plus quatre chiffres.",
+            "En vertu des dispositions du présent Acte Uniforme, le plan de comptes de chaque entité doit être suffisamment détaillé pour permettre l'enregistrement des opérations. Lorsque les comptes prévus par le Système comptable OHADA ne suffisent pas à l'entité pour enregistrer distinctement toutes ses opérations, elle peut ouvrir toutes subdivisions nécessaires.",
+            "Inversement, si les comptes prévus par le Système comptable OHADA s'avéraient trop détaillés par rapport aux besoins de l'entité, elle peut les regrouper dans un compte global de même niveau, plus contracté, à condition que le regroupement ainsi opéré puisse au moins permettre l'établissement des états financiers annuels dans les conditions prescrites.",
+            "Les comptes étant en conséquence ouverts au regard de ses besoins spécifiques, toute entité peut : ajouter à la codification du Système comptable OHADA sa propre codification, plus analytique ; ou y insérer la codification nécessaire résultant des nomenclatures exigées par la Statistique nationale.",
+            "La codification et l'intitulé des comptes tels qu'établis par le Système comptable OHADA doivent être respectés."
+          ],
+          "mots_cles": ["plan de comptes", "nomenclatures", "quatre chiffres", "subdivisions", "regroupement", "codification impérative"]
+        },
+        {
+          "numero": "2.2",
+          "titre": "2.2. Systèmes comptables",
+          "texte": [
+            "Toute entité est, sauf exception liée à sa taille, soumise au Système normal de présentation des états financiers et de tenue des comptes.",
+            "Les entités dont le chiffre d'affaires à l'ouverture de l'exercice n'atteignent pas les limites fixées par l'Acte uniforme pour la mise en œuvre du Système normal, peuvent utiliser le Système minimal de trésorerie.",
+            "Les petites entités dont les recettes annuelles ne sont pas supérieures au seuil fixé par le présent Acte uniforme, sont assujetties au Système Minimal de Trésorerie (SMT, cf. article 13 de l'Acte uniforme) :",
+            "60 millions FCFA pour les entités de négoce ;",
+            "40 millions FCFA pour les entités artisanales et assimilées ;",
+            "30 millions FCFA pour les entités de services."
+          ],
+          "mots_cles": ["système normal", "système minimal de trésorerie", "SMT", "seuils", "60 millions", "40 millions", "30 millions", "FCFA"]
+        }
+      ]
+    }
+  ]
+}

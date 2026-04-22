@@ -1,0 +1,387 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA — SYSCOHADA Cadre Conceptuel",
+    "referentiel": "SYSCOHADA",
+    "partie": "Titre V — Chapitre 3 : Objectifs et principes de base des états financiers",
+    "pages_source": "69-89",
+    "date_extraction": "2026-04-08"
+  },
+  "sections": [
+    {
+      "numero": "0",
+      "titre": "Introduction",
+      "sous_sections": [
+        {
+          "numero": "0.1",
+          "titre": "La comptabilité comme système d'organisation",
+          "texte": [
+            "La comptabilité est un système d'organisation de l'information financière qui permet : de saisir, classer, enregistrer des données de base chiffrées ; de fournir, après traitement approprié, un ensemble d'informations conforme aux besoins des divers utilisateurs intéressés.",
+            "Pour garantir la qualité et la compréhension de l'information, toute comptabilité implique : le respect de principes ; une organisation répondant aux exigences de contrôle et de vérification ; la mise en œuvre de méthodes et de procédures ; l'utilisation d'une terminologie commune.",
+            "La comptabilité est aussi un instrument de description et de modélisation de l'entité ainsi qu'une pratique sociale et organisationnelle mettant en relation divers acteurs (dirigeants, préparateurs de comptes, auditeurs et utilisateurs multiples)."
+          ],
+          "mots_cles": ["comptabilité", "système d'organisation", "information financière", "principes", "terminologie", "modélisation"]
+        }
+      ]
+    },
+    {
+      "numero": "1",
+      "titre": "Section 1 : Objectif des états financiers",
+      "sous_sections": [
+        {
+          "numero": "1.1",
+          "titre": "Objectif des états financiers",
+          "texte": [
+            "L'objectif des états financiers est de fournir des informations utiles sur le patrimoine, la situation financière (bilan), la performance (compte de résultat) et les variations de la situation de trésorerie (Tableau des Flux de Trésorerie) d'une entité afin de répondre aux besoins de l'ensemble des utilisateurs de ces informations. Les états financiers permettent de garantir la transparence de l'entité à travers une information complète et de fournir une présentation fidèle de l'information utile pour les besoins de la prise de décision.",
+            "La fourniture d'information financière utile aux diverses parties prenantes est caractérisée par la pertinence et l'image fidèle. Ces caractéristiques sont liées à la fois au fond et à la forme du dispositif comptable."
+          ],
+          "mots_cles": ["objectif", "états financiers", "patrimoine", "situation financière", "performance", "trésorerie", "transparence", "pertinence", "image fidèle"]
+        }
+      ]
+    },
+    {
+      "numero": "2",
+      "titre": "Section 2 : Dispositif comptable de base",
+      "sous_sections": [
+        {
+          "numero": "2.1",
+          "titre": "Garanties pour l'utilisateur",
+          "texte": [
+            "Pour qu'un utilisateur ait une pleine confiance dans une information trouvée dans les états financiers, il lui faut toutes les garanties quant à :",
+            "son contenu conceptuel, donc sa définition, sa terminologie, sa correcte application par l'entité tant au niveau de ses éléments constitutifs, de son « périmètre », que des méthodes d'évaluation utilisées qui doivent être conformes à la norme (dispositif de fond) ;",
+            "son montant, qui doit traduire la réalité économique, dans le cadre des postulats, conventions et procédures retenues par le Système comptable OHADA (dispositif de forme)."
+          ],
+          "mots_cles": ["dispositif comptable", "contenu conceptuel", "dispositif de fond", "dispositif de forme", "garanties"]
+        },
+        {
+          "numero": "2.1.1",
+          "titre": "2.1. Dispositif de fond",
+          "texte": [
+            "Pour que l'application d'un plan comptable soit effective et homogène, surtout dans un espace aussi large que celui de l'OHADA, il importe essentiellement que les entités soient parfaitement éclairées et guidées par le référentiel comptable : dans le mode d'évaluation ; dans la terminologie ; dans les règles de fonctionnement des comptes ; dans les méthodes d'élaboration et de présentation des états financiers de synthèse.",
+            "Toutefois, un tel dispositif serait insuffisant et pourrait conduire à des distorsions, voire à des divergences dans les applications, s'il n'était précédé, voire imprégné, par une présentation approfondie, dans le plan, des éléments sous-jacents d'ordre conceptuel et méthodologique.",
+            "L'identification de la diversité des utilisateurs et de leurs besoins est fondamentale et doit être complétée par : l'affirmation et la présentation des principes comptables de base, ensemble de postulats et de conventions sur lesquels repose la représentation comptable ; l'explication de l'objectif d'image fidèle du patrimoine, de la situation financière et du résultat de l'entité ; la présentation détaillée des méthodes et règles d'évaluation."
+          ],
+          "mots_cles": ["dispositif de fond", "évaluation", "terminologie", "fonctionnement des comptes", "cadre conceptuel"]
+        },
+        {
+          "numero": "2.2",
+          "titre": "2.2. Dispositif de forme",
+          "texte": [
+            "L'Acte uniforme relatif au droit comptable et à l'information financière comporte certaines dispositions touchant la totalité des traitements de l'information de base jusqu'aux états financiers. Ces dispositions concernent : la saisie et l'enregistrement de l'information de base ; l'organisation comptable et le traitement de l'information ; l'élaboration et la présentation des états financiers ; la valeur probante de l'information comptable."
+          ],
+          "mots_cles": ["dispositif de forme", "saisie", "enregistrement", "organisation comptable", "états financiers", "valeur probante"]
+        },
+        {
+          "numero": "2.2.1",
+          "titre": "2.2.1. La saisie et l'enregistrement de l'information de base",
+          "texte": [
+            "Trois points essentiels sont à souligner :",
+            "a) le Système comptable OHADA opte pour une comptabilité de flux allant bien au-delà de la règle classique de non-compensation des créances et des dettes. Les comptes doivent distinguer les soldes à l'ouverture de l'exercice des mouvements de l'exercice. Dès lors, les « balances » (listes) de comptes doivent nécessairement comporter au moins six types d'items (soit le plus souvent six colonnes) : soldes à l'ouverture de l'exercice (débiteurs, créditeurs), mouvements de l'exercice (débits ; crédits), soldes à la clôture de l'exercice (débiteurs, créditeurs).",
+            "Au surplus, le Système comptable OHADA réglemente strictement la façon d'enregistrer les « régularisations » de fin d'exercice et leur « contre-passation » à la réouverture de l'exercice suivant, ainsi que la façon de corriger une erreur commise et découverte sur l'exercice en cours dans les écritures (par nombres négatifs exclusivement) ; il confère une signification précise aux mouvements de l'exercice, qui sont en fait des flux de l'exercice.",
+            "b) les opérations doivent être enregistrées sans retard, par l'entité (article 15 de l'Acte Uniforme relatif au droit comptable et à l'information financière), dans l'ordre chronologique de leur date de valeur comptable qui est la date d'émission de la pièce justificative de base, ou la date de réception de la pièce de base d'origine externe (article 17) ;",
+            "c) les pièces justificatives doivent être datées, classées et conservées, dans un ordre défini explicitement (article 17)."
+          ],
+          "mots_cles": ["comptabilité de flux", "balance six colonnes", "régularisations", "contre-passation", "nombres négatifs", "enregistrement chronologique", "pièces justificatives"]
+        },
+        {
+          "numero": "2.2.2",
+          "titre": "2.2.2. L'organisation comptable et le traitement de l'information",
+          "texte": [
+            "Dans le souci d'assurer la fiabilité et l'authenticité des écritures jusqu'aux états financiers, l'organisation comptable a fait l'objet de développements particuliers dans les articles 14 à 21 de l'Acte uniforme relatif au droit comptable et à l'information financière, et ce, afin d'en souligner toute l'importance.",
+            "Sont prévues et décrites les dispositions générales d'organisation de la comptabilité, quelles qu'en soient les modalités technologiques (de la comptabilité manuelle aux comptabilités informatisées), ainsi que les dispositions spécifiques aux comptabilités informatisées."
+          ],
+          "mots_cles": ["organisation comptable", "fiabilité", "authenticité", "comptabilité manuelle", "comptabilité informatisée"]
+        },
+        {
+          "numero": "2.2.3",
+          "titre": "2.2.3. L'élaboration et la présentation des états financiers",
+          "texte": [
+            "Une meilleure fiabilité des états financiers résulte :",
+            "de l'existence de deux niveaux de présentation de ces états, dans le cadre des deux « systèmes » comptables retenus par le Système comptable OHADA : Système normal, Système minimal de trésorerie ;",
+            "de la stricte application des principes comptables affirmés, notamment ceux de transparence, de non-compensation et de régularité, obligation rappelée à l'article 34 de l'Acte uniforme relatif au droit comptable et à l'information financière."
+          ],
+          "mots_cles": ["élaboration", "présentation", "système normal", "SMT", "transparence", "non-compensation", "régularité"]
+        },
+        {
+          "numero": "2.2.4",
+          "titre": "2.2.4. La valeur probante de l'information comptable",
+          "texte": [
+            "L'Acte uniforme relatif au droit comptable et à l'information financière prévoit un ensemble complet de dispositions destinées à donner à l'information comptable la force probante qui s'attache aux documents authentiques (art. 66 à 73-1) :",
+            "l'immatriculation, la numérotation et le paraphe du journal et du livre d'inventaire ;",
+            "l'identification des documents informatisés pouvant tenir lieu de journal et de livre d'inventaire ;",
+            "la mise en place de procédures permettant le contrôle externe et le contrôle interne ;",
+            "l'opinion des commissaires aux comptes sur les états financiers annuels ;",
+            "la publicité des états financiers annuels."
+          ],
+          "mots_cles": ["valeur probante", "force probante", "documents authentiques", "paraphe", "contrôle", "commissaires aux comptes", "publicité"]
+        }
+      ]
+    },
+    {
+      "numero": "3",
+      "titre": "Section 3 : Hypothèse sous-jacente à la préparation des états financiers",
+      "sous_sections": [
+        {
+          "numero": "3.1",
+          "titre": "Continuité d'exploitation",
+          "texte": [
+            "Les états financiers sont établis sur une base de continuité d'exploitation, c'est à dire en présumant que l'entité poursuivra ses activités dans un avenir prévisible, à moins que des événements ou des décisions survenus avant la date de publication des comptes rendent probable dans un avenir proche la liquidation ou la cessation d'activité.",
+            "Lorsque les états financiers ne sont pas établis sur cette base (non-continuité d'exploitation : liquidation de l'entité par exemple), les incertitudes quant à la continuité d'exploitation sont indiquées et justifiées, et la base sur laquelle ils ont été arrêtés est précisée."
+          ],
+          "mots_cles": ["continuité d'exploitation", "hypothèse de base", "liquidation", "cessation d'activité", "non-continuité"]
+        }
+      ]
+    },
+    {
+      "numero": "4",
+      "titre": "Section 4 : Principes comptables fondamentaux",
+      "sous_sections": [
+        {
+          "numero": "4.0",
+          "titre": "Introduction aux principes comptables fondamentaux",
+          "texte": [
+            "Les principes comptables fondamentaux structurent la représentation comptable de l'entité. Issus historiquement de la pratique comptable, ces principes sont intégrés dans les cadres conceptuels et les normes comptables, et tirent leur légitimité de leur reconnaissance par les acteurs du monde comptable. Ce sont les postulats et conventions comptables qui sont couramment regroupés sous le terme générique de principes comptables."
+          ],
+          "mots_cles": ["principes comptables", "postulats", "conventions", "représentation comptable"]
+        },
+        {
+          "numero": "4.1",
+          "titre": "4.1. Postulats et conventions comptables",
+          "texte": []
+        },
+        {
+          "numero": "4.1.1",
+          "titre": "4.1.1. Les postulats comptables",
+          "texte": [
+            "Les postulats permettent de définir le champ du modèle comptable. Ce sont des principes acceptés sans démonstration mais cohérents avec les objectifs fixés.",
+            "Les postulats retenus pour définir le champ du modèle comptable du Système comptable OHADA sont les suivants : Postulat de l'entité ; Postulat de la comptabilité d'engagement ; Postulat de la spécialisation des exercices ; Postulat de la permanence des méthodes ; Postulat de la prééminence de la réalité économique sur l'apparence juridique."
+          ],
+          "mots_cles": ["postulats comptables", "entité", "comptabilité d'engagement", "spécialisation des exercices", "permanence des méthodes", "prééminence réalité économique"]
+        },
+        {
+          "numero": "4.1.1.1",
+          "titre": "4.1.1.1. Postulat de l'entité",
+          "texte": [
+            "Il s'agit d'une hypothèse fondamentale portant sur la relation entre, d'une part, la personne morale ou le groupe et d'autre part son ou ses propriétaires (exploitant, associés, actionnaires, membres). En effet, l'entité est considérée comme étant une personne morale ou un groupe autonome et distinct de ses propriétaires et de ses partenaires économiques. La comptabilité financière est fondée sur la séparation entre le patrimoine de l'entité et celui de ses propriétaires. Ce sont les transactions de l'entité et non celles des propriétaires qui sont prises en compte dans les états financiers de l'entité.",
+            "Une entité s'étend à toute organisation exerçant une activité économique et qui contrôle et utilise des ressources économiques. Lorsqu'une entité (personne morale) contrôle une ou plusieurs entités, l'ensemble forme un groupe qui doit présenter des états financiers consolidés."
+          ],
+          "mots_cles": ["postulat de l'entité", "séparation des patrimoines", "personne morale", "propriétaires", "groupe", "autonomie"]
+        },
+        {
+          "numero": "4.1.1.2",
+          "titre": "4.1.1.2. Postulat de la comptabilité d'engagement ou d'exercice",
+          "texte": [
+            "Les effets des transactions et autres événements sont pris en compte dès que ces transactions ou événements se produisent et non pas au moment des encaissements ou paiements. Ils sont enregistrés dans les livres comptables et présentés dans les états financiers des exercices auxquels ils se rattachent. L'information financière ainsi établie, à l'exception de celle contenue dans le tableau des flux de trésorerie et sous réserve des dispositions spécifiques concernant le Système Minimal de Trésorerie, renseigne les utilisateurs, non seulement sur les transactions passées ayant entraîné des flux de trésorerie, mais également sur des obligations et autres événements entraînant des encaissements et des paiements futurs."
+          ],
+          "mots_cles": ["comptabilité d'engagement", "fait générateur", "encaissement", "paiement", "rattachement", "flux de trésorerie"]
+        },
+        {
+          "numero": "4.1.1.3",
+          "titre": "4.1.1.3. Postulat de la spécialisation des exercices",
+          "texte": [
+            "Ce postulat, prévu à l'article 59 de l'Acte uniforme relatif au droit comptable et à l'information financière, signifie que la vie de l'entité étant découpée en périodes appelées « exercices » à l'issue desquels sont publiés des états financiers annuels, il faut rattacher à chaque exercice tous les produits et les charges qui le concernent (nés de l'activité de cet exercice), et ceux-là seulement.",
+            "D'une manière générale, lorsque des revenus sont comptabilisés au cours d'un exercice, toutes les charges ayant concouru à la réalisation de ces revenus doivent être déterminées et rattachées à ce même exercice.",
+            "Ce raisonnement ne peut s'étendre à toutes les charges car certaines ne peuvent être rattachées à aucun produit déterminé et constituent des charges « de période » engendrant réduction d'actif ou augmentation de passif. L'exemple type est constitué par les frais d'administration générale de l'entité.",
+            "Le respect de ce postulat est assuré par le biais de comptes dits de régularisation qui permettent d'ajuster les produits et les charges dans le temps.",
+            "Enfin, une entité doit ajuster les montants comptabilisés dans ses états financiers pour tenir compte des événements postérieurs à la clôture de l'exercice mais antérieurs à la date d'arrêté des comptes si ceux-ci contribuent à confirmer des situations qui existaient à la clôture de l'exercice (par exemple : révélation de la situation compromise d'un client rendant la créance douteuse).",
+            "Par contre, les événements postérieurs à la clôture de l'exercice mais antérieurs à la date d'arrêté des comptes qui indiquent des situations apparues postérieurement à la clôture de l'exercice ne donnent pas lieu à des ajustements des états financiers (par exemple : sinistre intervenu après la date de clôture ne remettant pas en cause la continuité d'exploitation)."
+          ],
+          "mots_cles": ["spécialisation des exercices", "indépendance des exercices", "rattachement", "charges de période", "régularisation", "événements postérieurs", "ajustements"]
+        },
+        {
+          "numero": "4.1.1.4",
+          "titre": "4.1.1.4. Postulat de la permanence des méthodes",
+          "texte": [
+            "Le postulat de permanence des méthodes rappelé dans l'article 40 de l'Acte uniforme relatif au droit comptable et à l'information financière exige que les mêmes méthodes de prise en compte, de mesure et de présentation soient utilisées par l'entité d'une période à l'autre. En effet, la comparabilité et la cohérence des informations comptables au cours de périodes successives implique la permanence des méthodes d'évaluation et de présentation.",
+            "Le terme « méthode comptable » s'applique aux méthodes et règles d'évaluation et de présentation des comptes.",
+            "On peut cependant déroger à la fixité des méthodes si un changement exceptionnel est intervenu dans la situation de l'entité ou dans le contexte économique, industriel ou financier et que le changement de méthodes fournit une meilleure information financière compte tenu des évolutions intervenues.",
+            "a) Changement de méthodes comptables : Un changement de méthodes comptables résulte : soit du remplacement d'une méthode comptable par une autre lorsqu'une option implicite ou explicite existe (exemple : passage de la méthode d'évaluation des stocks CMP à la méthode FIFO) ; soit d'un changement de réglementation comptable (adoption d'un nouveau référentiel comptable tel que le Système comptable OHADA révisé).",
+            "A la différence des changements de méthodes qui sont opérés à l'initiative de l'entité, les changements de réglementation comptable s'imposent à elle.",
+            "L'adoption d'une méthode comptable pour des événements ou opérations qui diffèrent sur le fond d'événements ou d'opérations survenues précédemment, ou l'adoption d'une nouvelle méthode comptable pour des événements ou opérations qui étaient jusqu'alors sans importance significative, ne constituent pas des changements de méthodes comptables.",
+            "Traitement comptable des changements de méthodes : Tout changement de méthode comptable, dès lors qu'il induit des modifications significatives dans les états financiers de l'exercice, ou est susceptible d'en induire lors d'exercices suivants : doit faire l'objet d'une information dans les Notes annexes ; et l'effet, après impôt, de la nouvelle méthode est calculé de façon rétrospective, comme si celle-ci avait toujours été appliquée.",
+            "L'impact du changement déterminé à l'ouverture, après effet d'impôt, est imputé en « report à nouveau » dès l'ouverture de l'exercice sauf : s'il existe des dispositions transitoires dans le cas d'une nouvelle réglementation comptable ; si, en raison de l'application de règles fiscales, l'entité est amenée à comptabiliser l'impact du changement dans le compte de résultat en valeur brute (compte de charges par nature avec mention dans les Notes annexes).",
+            "b) Changements d'estimation et de modalités d'application : De nombreux éléments des états financiers ne peuvent être évalués avec précision en raison des incertitudes inhérentes à la vie des affaires et ne peuvent faire l'objet que d'une estimation. La procédure d'estimation repose sur des jugements fondés sur les dernières informations fiables fournies. Elles sont notamment relatives : aux créances douteuses ; aux durées d'amortissement ; à l'obsolescence du stock.",
+            "Les changements d'estimation et de modalités d'application n'ont qu'un effet sur l'exercice en cours et les exercices futurs. L'incidence du changement correspondant à l'exercice en cours est enregistrée dans les comptes de l'exercice.",
+            "c) Changements d'options fiscales : L'adoption par les autorités fiscales de nouvelles mesures accordant des avantages fiscaux aux entités entraîne des changements de présentation et/ou d'évaluation dans les états financiers. Les changements d'options fiscales n'ont un effet que sur l'exercice en cours et les exercices futurs. L'incidence des changements d'options fiscales correspondant à l'exercice en cours est constatée dans le résultat de l'exercice.",
+            "d) Corrections d'erreurs : Des erreurs, omissions matérielles, peuvent survenir dans les cas suivants : erreurs de calcul ; erreurs dans l'application des méthodes comptables ; négligences, mauvaises interprétation des faits ; adoption d'une méthode comptable non admise.",
+            "Erreurs commises et découvertes sur l'exercice en cours : toute correction d'erreur s'effectuera exclusivement par inscription en négatif des éléments erronés ; l'enregistrement exact sera ensuite opéré (article 20 du droit comptable).",
+            "Erreurs d'un exercice antérieur : Toute correction d'erreur découverte sur l'exercice en cours et commise sur les exercices antérieurs doit faire l'objet d'une information dans les Notes annexes. La correction d'une erreur significative commise au cours d'un exercice antérieur doit être opérée par ajustement des capitaux propres d'ouverture (diminution ou augmentation du report à nouveau). Par contre, la correction d'une erreur non significative commise au cours d'un exercice antérieur doit être effectuée directement dans les comptes de bilan ou de gestion de l'exercice en cours."
+          ],
+          "mots_cles": ["permanence des méthodes", "changement de méthodes", "rétrospectif", "report à nouveau", "changement d'estimation", "options fiscales", "corrections d'erreurs", "erreur significative", "comparabilité"]
+        },
+        {
+          "numero": "4.1.1.5",
+          "titre": "4.1.1.5. Postulat de la prééminence de la réalité économique sur l'apparence juridique",
+          "texte": [
+            "Selon ce postulat, pour que l'information représente d'une manière pertinente les transactions et autres événements qu'elle vise à représenter, il est nécessaire qu'ils soient enregistrés et présentés en accord avec leur substance et la réalité économique et non pas seulement selon leur forme juridique.",
+            "Le Système comptable OHADA opte pour une application limitée de ce postulat comptable. Les quatre applications (au lieu de cinq applications dans l'ancien référentiel comptable) qui sont faites du principe de prééminence de la réalité sur l'apparence sont les suivantes :",
+            "inscription à l'actif du bilan (comme si l'entité en était propriétaire) des biens détenus avec clause de « réserve de propriété » ;",
+            "inscription à l'actif du bilan du locataire des biens utilisés dans le cadre d'un contrat de location acquisition (côté preneur) et d'une créance de location financement (côté bailleur). Ces dispositions sont limitées aux contrats de crédit-bail, de location-vente ou tout autre contrat de location assortie d'une option d'achat dont le preneur est raisonnablement certain d'exercer ;",
+            "inscription à l'actif du bilan des effets remis à l'escompte et non encore échus ou honorés ;",
+            "inscription dans les « charges de personnel » du personnel facturé par d'autres entités.",
+            "Dans ces quatre cas, les conséquences comptables de ces solutions sont les suivantes : inscription au passif, en contrepartie des valeurs d'actif, de comptes de dettes financières spécifiques (crédit-bail et location-vente, réserve de propriété...), de dettes de trésorerie (crédits d'escompte...) ; inscription dans les charges et les produits des éléments correspondants : dotations aux amortissements, charges financières (crédit-bail, location-vente), charges de personnel (personnel intérimaire).",
+            "Contrairement aux dispositions prévues par l'ancien référentiel comptable qui prévoyait l'inclusion dans le patrimoine du concessionnaire, des biens mis à sa disposition par le concédant, ce cadre conceptuel exclut de tels biens du patrimoine du concessionnaire car, ils ne répondent pas à la définition d'un actif (ressource économique actuelle contrôlée par l'entité)."
+          ],
+          "mots_cles": ["prééminence réalité économique", "substance over form", "réserve de propriété", "crédit-bail", "location-vente", "effets à l'escompte", "personnel intérimaire", "concession"]
+        },
+        {
+          "numero": "4.1.2",
+          "titre": "4.1.2. Les conventions comptables",
+          "texte": [
+            "Les conventions comptables sont destinées à guider le préparateur des comptes dans l'évaluation et la présentation des éléments devant figurer dans les états financiers. Elles ont un caractère de généralité moins grand que les postulats comptables et peuvent varier d'un pays ou d'un espace géographique à un autre.",
+            "Les conventions comptables servant de guide pour l'élaboration des états financiers annuels du Système comptable OHADA sont les suivantes : Convention du coût historique ; Convention de prudence ; Convention de régularité et transparence ; Convention de la correspondance bilan de clôture — bilan d'ouverture ; Convention de l'importance significative."
+          ],
+          "mots_cles": ["conventions comptables", "coût historique", "prudence", "régularité", "transparence", "correspondance bilan", "importance significative"]
+        },
+        {
+          "numero": "4.1.2.1",
+          "titre": "4.1.2.1. Convention du coût historique",
+          "texte": [
+            "La convention du coût historique consiste à comptabiliser les opérations sur la base de la valeur nominale de la monnaie sans tenir compte des éventuelles variations de son pouvoir d'achat. Il repose sur la stabilité de l'unité monétaire qui doit permettre d'additionner des unités monétaires de différentes périodes, sans dénaturer l'information comptable.",
+            "Selon la convention du coût historique, les actifs sont comptabilisés pour le montant payé ou pour la valeur de la contrepartie qui a été donnée pour les acquérir. Les passifs sont comptabilisés pour le montant des produits reçus en échange de l'obligation ou, dans certaines circonstances (par exemple, les impôts sur les bénéfices), le montant que l'on s'attend à verser pour éteindre le passif (passif externe) dans le cours normal de l'activité.",
+            "Selon les articles 35 et 36 de l'Acte uniforme relatif au droit comptable et à l'information financière, la méthode d'évaluation des éléments inscrits en comptabilité est fondée sur la convention du coût historique. Ainsi donc, à leur date d'entrée dans le patrimoine de l'entité, la valeur des actifs est déterminée dans les conditions suivantes : les actifs acquis à titre onéreux sont comptabilisés à leur coût d'acquisition ; les actifs produits par l'entité sont comptabilisés à leur coût de production ; les actifs acquis à titre gratuit sont comptabilisés à leur valeur actuelle ; les actifs acquis par voie d'échange sont comptabilisés à la valeur actuelle des actifs reçus, sauf si cette valeur actuelle ne peut être estimée de façon fiable.",
+            "Le choix du coût historique se justifie par le fait que la valeur d'origine constitue une information vérifiable reposant sur une évidence.",
+            "Dérogation au principe du coût historique : Lorsque les déformations dues à l'inflation deviennent trop fortes, le Système comptable OHADA a prévu, le recours à la réévaluation qui peut être libre ou légale. Réévaluation libre : généralement sans avantages fiscaux. Réévaluation légale : organisée par une loi interne des Etats parties, et normalement sous le bénéfice d'avantages fiscaux.",
+            "Le Système comptable OHADA précise la technique de réévaluation qui porte exclusivement sur les immobilisations corporelles et financières. Le calcul des valeurs réévaluées peut se fonder : soit sur une méthode indiciaire, par utilisation d'indices officiels dans la limite des valeurs actuelles ; soit sur une méthode de coûts actuels (recherche des valeurs actuelles des éléments)."
+          ],
+          "mots_cles": ["coût historique", "valeur nominale", "coût d'acquisition", "coût de production", "valeur actuelle", "réévaluation libre", "réévaluation légale", "inflation", "immobilisations"]
+        },
+        {
+          "numero": "4.1.2.2",
+          "titre": "4.1.2.2. Convention de prudence",
+          "texte": [
+            "Cette convention est énoncée d'entrée dans les articles 3 et 6 de l'Acte uniforme relatif au droit comptable et à l'information financière : « La comptabilité doit satisfaire, dans le respect de la convention de prudence, aux obligations de régularité, de sincérité et de transparence inhérentes à la tenue, au contrôle, à la présentation et à la communication des informations qu'elle a traitées. »",
+            "La prudence est l'appréciation raisonnable des faits dans des conditions d'incertitude afin d'éviter le risque de transfert, sur l'avenir, d'incertitudes présentes susceptibles de grever le patrimoine ou le résultat de l'entité. Les actifs et les produits ne doivent pas être surévalués, et les passifs et les charges ne doivent pas être sous-évalués.",
+            "La convention de prudence est avant tout, dans le contexte socio-économique et culturel de nos entités, un moyen d'une part, de protéger et, surtout de garder la confiance des tiers et, d'autre part de prévenir toutes distributions de dividendes fictifs (distribution de plus-values potentielles) susceptibles de nuire à leur équilibre financier, leur croissance et leur capacité d'autofinancement.",
+            "Toutefois, l'application de ce principe de prudence ne doit pas conduire à la création de réserves occultes ou de provisions excessives, la sous-évaluation délibérée des actifs ou des revenus ou la surévaluation délibérée des passifs ou des charges."
+          ],
+          "mots_cles": ["prudence", "incertitude", "surévaluation", "sous-évaluation", "réserves occultes", "dividendes fictifs", "protection tiers", "autofinancement"]
+        },
+        {
+          "numero": "4.1.2.3",
+          "titre": "4.1.2.3. Convention de régularité et transparence",
+          "texte": [
+            "Dans le droit comptable OHADA, cette convention a été affirmée dans les articles 6, 8, 9, 10 et 11 de l'Acte uniforme relatif au droit comptable et à l'information financière. En fait, il imprègne tous les textes relatifs à l'information externe.",
+            "Il faut inclure dans ce concept : la conformité aux règles et procédures du Système comptable OHADA, au plan comptable et à sa terminologie, à ses présentations d'états financiers (notion de régularité) ; la présentation et la communication claire et loyale de l'information, sans intention de dissimuler la réalité derrière l'apparence (article 6 de l'Acte uniforme) ; le respect de la règle de non-compensation, dont l'inobservation entraînerait des confusions juridiques et économiques et fausserait l'image que doivent donner les états financiers annuels. Sont uniquement autorisées les compensations juridiquement fondées en vertu de la loi ou du contrat."
+          ],
+          "mots_cles": ["régularité", "transparence", "conformité", "communication loyale", "non-compensation", "sincérité"]
+        },
+        {
+          "numero": "4.1.2.4",
+          "titre": "4.1.2.4. Convention de la correspondance bilan de clôture — bilan d'ouverture",
+          "texte": [
+            "Cette convention est rappelée à l'article 34 de l'Acte uniforme relatif au droit comptable et à l'information financière : « le bilan d'ouverture d'un exercice doit correspondre au bilan de clôture de l'exercice précédent ».",
+            "Cette convention, classique mais d'application délicate, a pour principale conséquence que l'on ne peut imputer directement sur les capitaux propres (à l'ouverture de l'exercice, donc à la clôture de l'exercice précédent) : ni les incidences (gains ou pertes) des changements de méthode comptable ; ni les produits et les charges relatifs à des exercices précédents qui auraient été omis.",
+            "Ces corrections doivent transiter par le compte de résultat du nouvel exercice.",
+            "Dans le cadre du Système comptable OHADA, il a été considéré qu'il n'existait que deux cas d'imputation possible, directement sur les capitaux propres, sans « passer » par le compte de résultat : celui de l'incidence d'un changement de méthodes ayant un impact fort significatif sur les états financiers ; celui de la correction d'une erreur significative."
+          ],
+          "mots_cles": ["intangibilité du bilan", "bilan d'ouverture", "bilan de clôture", "correspondance", "capitaux propres", "changement de méthode", "erreur significative"]
+        },
+        {
+          "numero": "4.1.2.5",
+          "titre": "4.1.2.5. Convention de l'importance significative",
+          "texte": [
+            "Cette convention, bien qu'énoncée formellement à l'article 33 de l'Acte uniforme relatif au droit comptable et à l'information financière, à propos des notes aux états financiers, concerne également tous les autres états financiers.",
+            "Sont significatifs « tous les éléments susceptibles d'influencer le jugement que les destinataires des états financiers peuvent porter sur le patrimoine, la situation financière et le résultat de l'entité » (article 33 de l'Acte uniforme).",
+            "Cette définition de l'importance significative par ses conséquences sur le jugement des utilisateurs montre le caractère relatif du critère (en fonction de la taille de l'entité notamment) et la difficulté de son application.",
+            "Les conséquences de ce principe sont considérables et vont, selon le cas, dans le sens d'un allégement ou d'un alourdissement de l'information comptable :",
+            "a) dans le sens d'un allégement de l'information : « l'arrondi » possible de certaines évaluations (stocks notamment) ; la possibilité d'accélérer l'arrêté des comptes annuels par des estimations raisonnables des comptes de régularisation ; la possibilité voire l'obligation de ne pas fournir, dans les Notes annexes aux états financiers, des informations n'atteignant pas le seuil d'importance significative.",
+            "b) dans le sens d'une extension de l'information : l'obligation de fournir dans les Notes annexes toute information (de nature comptable et financière, qu'elle soit d'origine économique ou juridique) d'importance significative, même si elle n'est pas prévue explicitement dans le Système comptable OHADA.",
+            "c) Appréciation du caractère significatif d'une information : La notion de « seuil de signification » est, avant tout, le fruit d'une appréciation subjective et ne saurait être ramenée à une dimension exclusivement quantitative. A titre indicatif, on peut considérer qu'une information quantifiée sur le plan financier a un caractère significatif dès lors que l'une au moins des conditions suivantes est remplie : lorsque le poste qu'elle explique représente un certain pourcentage du total du bilan (par exemple, entre 5 et 10 % au moins) ; ou lorsque la partie de variation du poste expliquée par l'information représente entre 10 et 20 % du montant total du poste ; ou lorsque le montant considéré représente plus de 10 % du bénéfice net.",
+            "Les critères qui peuvent être retenus sont, par exemple, le résultat des activités ordinaires, le résultat net, le chiffre d'affaires, les capitaux propres."
+          ],
+          "mots_cles": ["importance significative", "seuil de signification", "allégement", "extension information", "notes annexes", "jugement utilisateurs", "5%", "10%", "20%"]
+        },
+        {
+          "numero": "4.2",
+          "titre": "4.2. Caractéristiques qualitatives d'une information financière utile",
+          "texte": [
+            "Pour les besoins de la prise de décision, les états financiers doivent garantir la transparence sur la réalité de l'entité en présentant une information complète et utile. Cette information doit répondre aux caractéristiques qualitatives classées en deux catégories : les caractéristiques essentielles ; les caractéristiques auxiliaires."
+          ],
+          "mots_cles": ["caractéristiques qualitatives", "information financière", "transparence", "prise de décision"]
+        },
+        {
+          "numero": "4.2.1",
+          "titre": "4.2.1. Les caractéristiques essentielles",
+          "texte": [
+            "Pour que l'information financière soit utile, elle doit être pertinente et représenter fidèlement ce qu'elle prétend représenter. Les caractéristiques qualitatives essentielles sont donc la pertinence et la fidélité."
+          ],
+          "mots_cles": ["pertinence", "fidélité", "caractéristiques essentielles"]
+        },
+        {
+          "numero": "4.2.1.1",
+          "titre": "4.2.1.1. Pertinence",
+          "texte": [
+            "Une information financière est pertinente lorsqu'elle permet d'influencer les prises de décision et tient compte du besoin exprimé par un utilisateur légitime. Pour cela, l'information doit avoir une valeur de prédiction, de validation, ou les deux.",
+            "Valeur prédictive : l'information financière a une valeur prédictive si elle peut être utilisée comme une donnée par les utilisateurs pour prédire les résultats futurs.",
+            "Valeur de confirmation (ou rétrodictive) : l'information financière a une valeur de confirmation si elle confirme ou modifie des évaluations précédentes.",
+            "La valeur prédictive et la valeur de confirmation de l'information financière sont interdépendantes. La pertinence s'appuie sur la convention de l'importance significative."
+          ],
+          "mots_cles": ["pertinence", "valeur prédictive", "valeur de confirmation", "prise de décision", "utilisateur légitime"]
+        },
+        {
+          "numero": "4.2.1.2",
+          "titre": "4.2.1.2. Fidélité",
+          "texte": [
+            "Selon le Système comptable OHADA, l'information financière donne une image fidèle quand elle dépeint la substance économique de la transaction, de l'événement ou des circonstances sous-jacents de façon complète, et exempte d'erreurs significatives.",
+            "Représentation complète : une représentation complète comprend les informations nécessaires à un utilisateur pour comprendre les faits qui y sont présentés, y compris toutes les évaluations nécessaires, les descriptions et explications.",
+            "Erreur significative : la fidélité ne signifie pas l'exactitude à tous les égards. L'expression « exempt d'erreurs » signifie qu'il n'y a pas d'erreurs ou d'omissions dans la représentation du phénomène.",
+            "Le concept « d'image fidèle » (une image fidèle et non de l'image fidèle) retenu dans le Système comptable OHADA est celui d'un objectif d'image fidèle dans le respect de la convention de prudence.",
+            "Finalité de la comptabilité, l'image fidèle en pratique, est présumée résulter de l'application de bonne foi des règles et des procédures du Système comptable OHADA.",
+            "Toutefois, dans le cas exceptionnel où l'application d'une règle comptable se révèle impropre à donner une image fidèle de l'entité, il doit y être dérogé. Il est alors nécessaire de mentionner dans les Notes annexes les motifs de cette dérogation."
+          ],
+          "mots_cles": ["fidélité", "image fidèle", "représentation complète", "erreur significative", "substance économique", "dérogation", "bonne foi"]
+        },
+        {
+          "numero": "4.2.2",
+          "titre": "4.2.2. Les caractéristiques auxiliaires",
+          "texte": [
+            "L'utilité de l'information financière est renforcée si elle est comparable, vérifiable, rapidement accessible aux décideurs et compréhensible."
+          ],
+          "mots_cles": ["caractéristiques auxiliaires", "comparabilité", "vérifiabilité", "rapidité", "compréhensibilité"]
+        },
+        {
+          "numero": "4.2.2.1",
+          "titre": "4.2.2.1. Comparabilité",
+          "texte": [
+            "La comparabilité est la qualité de l'information qui permet aux utilisateurs de relever les similitudes et les différences entre des éléments. La comparabilité est le but ; la cohérence et la permanence dans le choix ainsi que dans l'application des méthodes comptables permettent d'atteindre cet objectif.",
+            "Par exemple, les prises de décision des utilisateurs impliquent de choisir entre des alternatives : investir dans l'entité A plutôt que dans une autre. Dans ce cas, les informations sur l'entité A sont nettement plus utiles si elles peuvent être comparées à des informations similaires concernant d'autres entités, mais aussi portant sur d'autres périodes."
+          ],
+          "mots_cles": ["comparabilité", "cohérence", "permanence", "méthodes comptables", "similitudes", "différences"]
+        },
+        {
+          "numero": "4.2.2.2",
+          "titre": "4.2.2.2. Vérifiabilité",
+          "texte": [
+            "La vérifiabilité est la qualité de l'information financière qui donne aux utilisateurs l'assurance que l'information reflète l'image fidèle des phénomènes économiques décrits. La vérifiabilité suppose que divers observateurs bien informés et indépendants pourraient aboutir à un consensus sur la fidélité de l'information. Il peut s'avérer impossible de vérifier certaines informations prospectives : dans ce cas, il sera nécessaire d'indiquer les hypothèses sous-jacentes ainsi que les méthodes d'évaluation utilisées."
+          ],
+          "mots_cles": ["vérifiabilité", "observateurs indépendants", "consensus", "image fidèle", "informations prospectives"]
+        },
+        {
+          "numero": "4.2.2.3",
+          "titre": "4.2.2.3. Rapidité",
+          "texte": [
+            "La rapidité répond au besoin de rendre l'information financière accessible aux décideurs avant qu'elle ne perde sa capacité d'influencer leurs décisions. Rendre plus rapidement accessible une information pertinente peut accroître son influence. En règle générale, plus l'information date, moins elle est utile."
+          ],
+          "mots_cles": ["rapidité", "accessibilité", "décideurs", "influence", "information datée"]
+        },
+        {
+          "numero": "4.2.2.4",
+          "titre": "4.2.2.4. Compréhensibilité",
+          "texte": [
+            "La compréhensibilité est la qualité de l'information financière qui permet d'en comprendre la signification. Elle se trouve accrue lorsque l'information est classée, définie et présentée de façon claire et concise. La comparabilité, la simplicité et la rigueur logique peuvent également améliorer la compréhensibilité."
+          ],
+          "mots_cles": ["compréhensibilité", "clarté", "concision", "classification", "simplicité", "rigueur logique"]
+        },
+        {
+          "numero": "4.2.3",
+          "titre": "4.2.3. Contrainte à prendre en considération : équilibre avantages-coûts",
+          "texte": [
+            "L'équilibre entre les avantages et les coûts est une contrainte générale. Les informations contenues dans les états financiers doivent procurer un intérêt supérieur au coût de leur production.",
+            "L'application de la contrainte de coût amène à évaluer s'il est probable que les avantages procurés par l'information financière justifieront les coûts entraînés par sa production et son utilisation. Lors de cette évaluation, il y a lieu de se demander si une ou plusieurs caractéristiques qualitatives pourraient être sacrifiées dans une certaine mesure pour réduire les coûts."
+          ],
+          "mots_cles": ["équilibre avantages-coûts", "contrainte", "coût de production", "utilité de l'information"]
+        }
+      ]
+    }
+  ]
+}

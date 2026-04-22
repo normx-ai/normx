@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA — SYSCOHADA Opérations et Problèmes Spécifiques",
+    "referentiel": "SYSCOHADA",
+    "partie": "Titre VIII — Chapitre 1 : Frais de recherche et de développement",
+    "pages_source": "541-549",
+    "norme_reference": "IAS 38",
+    "date_extraction": "2026-04-08"
+  },
+  "sections": [
+    {
+      "numero": "1",
+      "titre": "Section 1 : Définition des activités relatives à la recherche et au développement",
+      "sous_sections": [
+        {
+          "numero": "1.0",
+          "titre": "Introduction",
+          "texte": [
+            "Les présentes dispositions traitent du cas des immobilisations incorporelles générées en interne. Elles s'inspirent de la norme comptable internationale IAS 38 et des amendements successifs à cette norme (date de publication : 31 mars 2004).",
+            "Leur objectif est de prescrire le traitement comptable des projets de recherche et développement.",
+            "Pour déterminer si une immobilisation incorporelle générée en interne est susceptible d'être inscrite à l'actif, il convient : de vérifier qu'elle répond à la définition d'un actif et notamment, que cette immobilisation est identifiable ; de distinguer la phase de recherche de la phase de développement.",
+            "Si cette distinction est impossible, l'intégralité des coûts est comptabilisée en charges."
+          ],
+          "mots_cles": ["immobilisation incorporelle", "IAS 38", "recherche", "développement", "actif", "identifiable"]
+        },
+        {
+          "numero": "1.1",
+          "titre": "1.1. Dépenses de recherche",
+          "texte": [
+            "La recherche est définie comme une investigation originale et programmée réalisée par une entité en vue d'acquérir une compréhension et des connaissances scientifiques ou techniques nouvelles.",
+            "Entrent dans la phase de recherche les activités suivantes : les activités visant à obtenir de nouvelles connaissances ; la recherche de l'application de résultats de recherche ou d'autres connaissances ainsi que leur évaluation et le choix retenu in fine ; la recherche d'autres matériaux, dispositifs, produits, procédés, systèmes ou services ; la formulation, la conception, l'évaluation et le choix final d'autres possibilités de matériaux, dispositifs, produits, procédés, systèmes ou services nouveaux ou améliorés.",
+            "Les dépenses encourues pour la recherche, ou lors de la phase de recherche d'un projet interne, ne peuvent être immobilisées mais doivent être systématiquement comptabilisées en charges de l'exercice au cours duquel elles sont encourues et ne peuvent être activées à une date ultérieure.",
+            "Toutefois, lorsqu'elles sont encourues dans le cadre d'un regroupement d'entités, les dépenses au titre de projets de recherche en cours à la date d'acquisition sont comptabilisées en immobilisation incorporelle, si ces projets répondent à la définition d'un actif et sont identifiables."
+          ],
+          "mots_cles": ["recherche", "investigation", "connaissances scientifiques", "charges de l'exercice", "non immobilisable", "regroupement d'entités"]
+        },
+        {
+          "numero": "1.2",
+          "titre": "1.2. Dépenses de développement",
+          "texte": [
+            "Le développement est l'application des résultats de la recherche ou d'autres connaissances à un plan ou un modèle en vue de la production de matériaux, dispositifs, produits, procédés, systèmes ou services nouveaux ou substantiellement améliorés, avant le commencement de leur production commerciale ou de leur utilisation.",
+            "Entrent dans la phase de développement, les activités suivantes : conception, construction et tests de pré-production ou de pré-utilisation de modèles et prototypes ; conception d'outils, de gabarits, moules et matrices impliquant une technologie nouvelle ; conception, construction et exploitation d'une unité pilote qui n'est pas à une échelle permettant une production commerciale dans des conditions économiques ; conception, construction et tests pour la solution choisie pour d'autres matériaux, dispositifs, produits, procédés, systèmes ou services nouveaux ou améliorés."
+          ],
+          "mots_cles": ["développement", "application recherche", "prototypes", "modèles", "unité pilote", "production commerciale"]
+        }
+      ]
+    },
+    {
+      "numero": "2",
+      "titre": "Section 2 : Comptabilisation des dépenses de développement",
+      "sous_sections": [
+        {
+          "numero": "2.1",
+          "titre": "2.1. Règles de comptabilisation initiale",
+          "texte": [
+            "2.1.1. Conditions d'inscription à l'actif : Les dépenses encourues au titre du développement, ou lors de la phase de développement d'un projet en interne, sont à comptabiliser en immobilisations incorporelles si l'entité peut démontrer les six critères suivants simultanément :",
+            "la faisabilité technique nécessaire à l'achèvement de l'immobilisation incorporelle en vue de sa mise en service ou de sa vente ;",
+            "son intention d'achever l'immobilisation incorporelle et de l'utiliser ou de la vendre ;",
+            "sa capacité à utiliser ou à vendre l'immobilisation incorporelle ;",
+            "la façon dont l'immobilisation incorporelle générera des avantages économiques futurs probables ;",
+            "la disponibilité de ressources techniques, financières et autres, appropriées pour achever le développement et utiliser ou vendre l'immobilisation incorporelle ; et",
+            "sa capacité à évaluer de manière fiable les dépenses attribuables à l'immobilisation incorporelle au cours de son développement.",
+            "A défaut, ces dépenses constituent des charges.",
+            "2.1.2. Comptabilisation : Les frais de développement engagés par l'entité sont enregistrés en comptes de charges par nature. Ensuite, ces frais sont portés à l'actif du bilan, dans les conditions exposées ci-dessus, au débit du compte 211 Frais de développement, pour leur montant calculé, soit par l'intermédiaire de la comptabilité analytique de gestion, soit, statistiquement, par le crédit du compte 721 Production immobilisée, immobilisations incorporelles."
+          ],
+          "ecritures_comptables": [
+            {
+              "description": "Activation des frais de développement",
+              "debit": {"compte": "211", "libelle": "Frais de développement"},
+              "credit": {"compte": "721", "libelle": "Production immobilisée, immobilisations incorporelles"}
+            }
+          ],
+          "mots_cles": ["six critères", "faisabilité technique", "intention", "avantages économiques", "compte 211", "compte 721", "activation"]
+        },
+        {
+          "numero": "2.2",
+          "titre": "2.2. Dépenses ultérieures et amortissement",
+          "texte": [
+            "2.2.1. Dépenses ultérieures : Les dépenses ultérieures concernant un projet de recherche et développement en cours acquis séparément ou lors d'un regroupement d'entreprises doivent être comptabilisées selon les mêmes principes que celles relatives aux projets de recherche et développement générés en interne, et ajoutées à la valeur comptable du projet acquis en cours, s'il s'agit de dépenses de développement qui satisfont aux critères de comptabilisation à l'actif.",
+            "2.2.2. Amortissement des frais de développement : L'amortissement des frais de développement immobilisés est étalé sur la durée d'utilisation de l'actif considéré. La date de départ de l'amortissement est la date de début de consommation des avantages économiques, c'est-à-dire le début d'utilisation ou de vente du produit, procédé ou processus.",
+            "L'amortissement de ces frais sera comptabilisé en Exploitation, au débit du compte 6812 Dotations aux amortissements des immobilisations incorporelles, par le crédit du compte d'amortissement concerné (compte 2811 Amortissements des frais de développement)."
+          ],
+          "ecritures_comptables": [
+            {
+              "description": "Amortissement des frais de développement",
+              "debit": {"compte": "6812", "libelle": "Dotations aux amortissements des immobilisations incorporelles"},
+              "credit": {"compte": "2811", "libelle": "Amortissements des frais de développement"}
+            }
+          ],
+          "mots_cles": ["dépenses ultérieures", "amortissement", "durée d'utilisation", "compte 6812", "compte 2811"]
+        }
+      ]
+    },
+    {
+      "numero": "3",
+      "titre": "Section 3 : Évaluation des dépenses de développement",
+      "sous_sections": [
+        {
+          "numero": "3.1",
+          "titre": "3.1. Période d'activation des coûts",
+          "texte": [
+            "Les frais de développement sont immobilisés à partir de la date à laquelle les six conditions pour leur activation sont remplies. Les dépenses comptabilisées en charges antérieurement à la date d'activation ne peuvent plus être activées, c'est-à-dire non seulement celles des exercices précédents, mais également celles encourues pendant l'exercice au cours duquel survient la date de début d'incorporation."
+          ],
+          "mots_cles": ["activation", "date de début", "non-rétroactivité", "six conditions"]
+        },
+        {
+          "numero": "3.2",
+          "titre": "3.2. Dépenses attribuables aux frais de développement",
+          "texte": [
+            "Le coût de développement comprend tous les coûts directement attribuables nécessaires à la création, la production et la préparation de l'immobilisation, pour qu'elle puisse être exploitée de la manière prévue par la direction.",
+            "Sont considérés comme des coûts directement attribuables : les coûts des matériaux et services utilisés ou consommés pour générer l'immobilisation incorporelle ; les coûts des avantages du personnel résultant de la création de l'immobilisation incorporelle ; les honoraires d'enregistrement d'un droit légal, tel qu'un brevet ; les tests de fonctionnement de l'actif ; l'amortissement des brevets et licences utilisés pour générer l'immobilisation incorporelle ; ou encore les coûts des emprunts, dès lors qu'ils satisfont aux critères d'activation des coûts d'emprunt.",
+            "En revanche, ne constituent pas des coûts directement attribuables : les coûts de lancement, dont publicité ; les coûts administratifs et autres frais généraux, sauf si ces dépenses sont directement attribuables à la préparation de l'actif en vue de son utilisation ; les inefficacités clairement identifiées et pertes opérationnelles initiales ; les dépenses au titre de la formation du personnel pour utiliser l'actif."
+          ],
+          "mots_cles": ["coûts attribuables", "matériaux", "personnel", "brevets", "coûts d'emprunt", "exclusions", "publicité", "formation"]
+        },
+        {
+          "numero": "3.3",
+          "titre": "Exemple",
+          "texte": [
+            "Un laboratoire pharmaceutique a engagé en N des dépenses de recherche et développement pour un montant de 330 000 000 F, se décomposant ainsi : Frais de recherche fondamentale : 30 000 000 F ; Frais de recherche appliquée au médicament P1 : 90 000 000 F ; Frais de développement du médicament P1 : 210 000 000 F (dont 100 000 000 de janvier à fin Avril et 110 000 000 du début Mai à fin décembre).",
+            "Les conditions d'activation sont réunies au début du mois de mai. Un brevet pour le médicament P1 a été déposé fin N. La totalité de ces frais a été comptabilisée en charges en N.",
+            "Les frais de développement du médicament P1 qui doivent être inscrits à l'actif s'élèvent à 110 000 000 F. A la clôture de l'exercice N, le compte 211 Frais de recherche et développement sera débité par le crédit du compte 721 Production immobilisée - Immobilisations incorporelles pour un montant de 110 000 000 F."
+          ],
+          "mots_cles": ["exemple", "laboratoire pharmaceutique", "activation", "110 millions", "brevet"]
+        }
+      ]
+    },
+    {
+      "numero": "4",
+      "titre": "Section 4 : Dépenses de recherche et développement réalisées dans le cadre de commandes de tiers",
+      "sous_sections": [
+        {
+          "numero": "4.1",
+          "titre": "R&D pour le compte de tiers",
+          "texte": [
+            "Les frais de recherche et de développement (frais de R.D.) sont les dépenses correspondant à l'effort réalisé par l'entité dans ce domaine, pour son propre compte.",
+            "En sont par conséquent, exclus, les frais entrant dans le coût de production des commandes passées par des tiers. Ces frais sont inscrits dans les charges concernées de la classe 6 et se retrouveront dans les travaux en cours à la clôture de l'exercice, si la commande n'a pas encore été facturée. Si la commande nécessite des équipements spécifiques, ceux-ci sont enregistrés dans les immobilisations et la charge d'amortissement relative à la période de production est incorporée dans le coût de la commande."
+          ],
+          "mots_cles": ["commandes de tiers", "coût de production", "travaux en cours", "équipements spécifiques", "amortissement"]
+        }
+      ]
+    },
+    {
+      "numero": "5",
+      "titre": "Section 5 : Décomptabilisation ou sortie des frais de développement",
+      "sous_sections": [
+        {
+          "numero": "5.0",
+          "titre": "Principe de décomptabilisation",
+          "texte": [
+            "Une immobilisation incorporelle doit être décomptabilisée lors de sa sortie (par exemple, par vente ou don), ou lorsque l'entité n'attend plus d'avantages économiques futurs de son utilisation ou de sa sortie.",
+            "Les profits ou les pertes, provenant de la mise hors service ou de la sortie d'une immobilisation incorporelle doivent être déterminés par différence entre les produits de sortie nets (821 Produits des cessions d'immobilisations incorporelles) et la valeur comptable de l'actif (811 Valeurs comptables des cessions d'immobilisations incorporelles)."
+          ],
+          "mots_cles": ["décomptabilisation", "sortie", "compte 821", "compte 811", "profit", "perte"]
+        },
+        {
+          "numero": "5.1",
+          "titre": "5.1. Cas d'échec du projet de recherche et développement",
+          "texte": [
+            "En cas d'échec du projet de recherche et développement ou lorsque les conditions d'activation des dépenses ne sont plus réunies, les frais de développement antérieurement immobilisés sont immédiatement sortis de l'actif. En effet, le compte 211 Frais de développement, est crédité par le débit des comptes 2811 Amortissements des frais de développement et 81 Valeurs comptables des cessions d'immobilisations pour la fraction des frais de développement non encore amortie."
+          ],
+          "ecritures_comptables": [
+            {
+              "description": "Sortie des frais de développement suite à échec du projet",
+              "debit": [
+                {"compte": "2811", "libelle": "Amortissements des frais de développement (fraction amortie)"},
+                {"compte": "811", "libelle": "Valeurs comptables des cessions d'immobilisations (fraction non amortie)"}
+              ],
+              "credit": {"compte": "211", "libelle": "Frais de développement"}
+            }
+          ],
+          "mots_cles": ["échec", "sortie de l'actif", "décomptabilisation", "compte 2811", "compte 811", "compte 211"]
+        },
+        {
+          "numero": "5.2",
+          "titre": "5.2. Dépenses de R&D concourant à la création d'un bien corporel",
+          "texte": [
+            "Lorsque les dépenses de recherche et développement concourent à la création d'un bien corporel tel qu'un prototype, par exemple, elles sont enregistrées au compte d'immobilisation ou de stock approprié et non au compte 211 Frais de développement."
+          ],
+          "mots_cles": ["bien corporel", "prototype", "immobilisation corporelle", "stock"]
+        }
+      ]
+    },
+    {
+      "numero": "6",
+      "titre": "Section 6 : Informations à fournir",
+      "sous_sections": [
+        {
+          "numero": "6.1",
+          "titre": "6.1. Informations à fournir dans le Bilan",
+          "texte": [
+            "Le modèle de bilan du Système normal comporte un poste spécifique d'immobilisations incorporelles pour indiquer le montant des frais de recherche et de développement portés à l'actif."
+          ],
+          "mots_cles": ["bilan", "poste spécifique", "immobilisations incorporelles"]
+        },
+        {
+          "numero": "6.2",
+          "titre": "6.2. Informations à fournir dans le Compte de résultat",
+          "texte": [
+            "Le compte de résultat ne donne aucune indication sur les frais de recherche et développement engagés pendant l'exercice."
+          ],
+          "mots_cles": ["compte de résultat", "aucune indication"]
+        },
+        {
+          "numero": "6.3",
+          "titre": "6.3. Informations à fournir dans les Notes annexes",
+          "texte": [
+            "Il convient de donner dans les Notes annexes les informations nécessaires, si elles sont significatives :",
+            "sur les éléments constitutifs des frais de R.D. immobilisés, leur durée d'amortissement, les mouvements éventuels avec le compte Brevets, etc. ;",
+            "sur le montant et la nature des dépenses de frais de recherche et développement comptabilisées en charges de la période, et la quote-part éventuellement transférée en immobilisations."
+          ],
+          "mots_cles": ["notes annexes", "éléments constitutifs", "durée d'amortissement", "brevets", "charges de la période"]
+        },
+        {
+          "numero": "6.4",
+          "titre": "6.4. Informations à fournir dans le Rapport de gestion",
+          "texte": [
+            "Le rapport de gestion établi par les sociétés de capitaux doit comporter obligatoirement des indications sur les activités et les prévisions de l'entité en matière de recherche et de développement."
+          ],
+          "mots_cles": ["rapport de gestion", "sociétés de capitaux", "activités R&D", "prévisions"]
+        }
+      ]
+    }
+  ]
+}

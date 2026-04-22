@@ -1,0 +1,412 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA — SYSCOHADA Cadre Conceptuel",
+    "referentiel": "SYSCOHADA",
+    "partie": "Titre V — Chapitre 4 : Définitions et structure des états financiers",
+    "pages_source": "91-105",
+    "date_extraction": "2026-04-08"
+  },
+  "sections": [
+    {
+      "numero": "1",
+      "titre": "Section 1 : Définition des principaux postes des états financiers",
+      "sous_sections": [
+        {
+          "numero": "1.1",
+          "titre": "1.1. Actif",
+          "texte": []
+        },
+        {
+          "numero": "1.1.1",
+          "titre": "1.1.1. Définition d'un actif",
+          "texte": [
+            "Un actif est un élément identifiable du patrimoine représentant une ressource économique actuelle contrôlée par l'entité du fait d'événements passés.",
+            "Une ressource économique est un droit ou toute autre source de valeur qui est capable de produire des avantages économiques.",
+            "Les avantages économiques générés par un actif sont le potentiel qu'a cet actif de contribuer, directement ou indirectement, à des flux nets de trésorerie au bénéfice de l'entité. Le potentiel de services attendus de l'utilisation d'un actif par une entité à but non lucratif est fonction de l'utilité sociale correspondant à son objet ou à sa mission.",
+            "La notion de potentiel vise aussi bien la possibilité de générer un flux de trésorerie positif (par exemple : le stock qui sera vendu), que celle de réduire les sorties de trésorerie (par exemple : le siège social propriété de l'entité lui permettant ainsi d'économiser des loyers).",
+            "Les flux de trésorerie sont ceux attendus de l'exploitation de l'actif ainsi que ceux qui découlent de la revente de celui-ci. Ainsi, un actif qui n'est plus exploité, mais qui a une valeur de revente, est à maintenir à l'actif. En revanche, une machine mise au rebut et qui ne peut plus être revendue doit être sortie de l'actif.",
+            "Le contrôle d'un actif suppose que l'entité : a le pouvoir d'obtenir les avantages économiques de la ressource contrôlée, et peut aussi restreindre l'accès à ces avantages aux autres ; a la capacité actuelle de décider de l'utilisation de l'actif ; assume l'essentiel des risques."
+          ],
+          "mots_cles": ["actif", "ressource économique", "avantages économiques", "potentiel", "contrôle", "flux de trésorerie", "identifiable"]
+        },
+        {
+          "numero": "1.1.2",
+          "titre": "1.1.2. Immobilisations incorporelles",
+          "texte": [
+            "Une immobilisation incorporelle est un actif non monétaire sans substance physique. Une immobilisation incorporelle est identifiable :",
+            "si elle est séparable des activités de l'entité, c'est-à-dire susceptible d'être séparé ou dissocié de l'entité et d'être vendue, transférée, concédée par licence, louée ou échangée soit de façon individuelle, soit dans le cadre d'un contrat avec un actif ou un passif lié ;",
+            "ou si elle résulte d'un droit légal ou contractuel même si ce droit n'est pas transférable ou séparable de l'entité ou des autres droits et obligations."
+          ],
+          "mots_cles": ["immobilisation incorporelle", "actif non monétaire", "sans substance physique", "identifiable", "séparable", "droit légal"]
+        },
+        {
+          "numero": "1.1.3",
+          "titre": "1.1.3. Immobilisations corporelles",
+          "texte": [
+            "Une immobilisation corporelle est un actif physique détenu, soit pour être utilisé dans la production ou la fourniture de biens ou de services, soit pour être loué à des tiers, soit à des fins de gestion interne et dont l'entité attend qu'il soit utilisé sur plus d'un exercice."
+          ],
+          "mots_cles": ["immobilisation corporelle", "actif physique", "production", "location", "gestion interne", "plus d'un exercice"]
+        },
+        {
+          "numero": "1.1.4",
+          "titre": "1.1.4. Stocks",
+          "texte": [
+            "Un stock est un actif détenu pour être vendu dans le cours normal de l'activité, ou en cours de production pour une telle vente, ou destiné à être consommé dans le processus de production ou de prestation de services, sous forme de matières premières ou de fournitures."
+          ],
+          "mots_cles": ["stocks", "vente", "production", "matières premières", "fournitures", "consommation"]
+        },
+        {
+          "numero": "1.1.5",
+          "titre": "1.1.5. Charges constatées d'avance",
+          "texte": [
+            "Les charges constatées d'avance sont des actifs qui correspondent à des achats de biens ou de services dont la consommation ou la prestation interviendra ultérieurement."
+          ],
+          "mots_cles": ["charges constatées d'avance", "actif", "consommation ultérieure", "prestation ultérieure"]
+        },
+        {
+          "numero": "1.1.6",
+          "titre": "1.1.6. Actif éventuel",
+          "texte": [
+            "Un actif éventuel est défini comme un actif potentiel résultant d'événements passés et dont l'existence ne sera confirmée que par la survenance (ou non) d'un ou plusieurs événements futurs incertains qui ne sont pas totalement sous le contrôle de l'entité.",
+            "Un actif éventuel ne peut pas être comptabilisé, mais il fera l'objet d'une Note en annexe lorsque l'entrée d'avantages économiques est probable et le montant significatif."
+          ],
+          "mots_cles": ["actif éventuel", "actif potentiel", "événements futurs incertains", "notes annexes", "probable"]
+        },
+        {
+          "numero": "1.2",
+          "titre": "1.2. Passif",
+          "texte": []
+        },
+        {
+          "numero": "1.2.1",
+          "titre": "1.2.1. Définition d'un passif",
+          "texte": [
+            "Le passif représente l'ensemble des ressources de l'entité. Celles-ci comprennent les capitaux propres, les dettes financières et assimilées, les dettes d'exploitation, et la trésorerie-passif.",
+            "Le passif interne est constitué par les capitaux propres de l'entité alors que le passif externe, regroupe toutes les provisions pour risques et charges et les dettes payables ou remboursables selon des échéances déterminées."
+          ],
+          "mots_cles": ["passif", "ressources", "capitaux propres", "dettes financières", "dettes d'exploitation", "passif interne", "passif externe"]
+        },
+        {
+          "numero": "1.2.2",
+          "titre": "1.2.2. Capitaux propres (passif interne)",
+          "texte": [
+            "Les capitaux propres désignent les ressources mises ou laissées par ses propriétaires à sa disposition et qu'elle gère comme si elles étaient siennes. Ils sont déterminés par la différence entre, d'une part, l'ensemble des éléments actifs de l'entité et, d'autre part, l'ensemble des éléments passifs (passif externe).",
+            "Le montant des capitaux propres s'obtient en faisant la somme algébrique : des apports (capital, primes liées au capital) ; des écarts de réévaluation ; des bénéfices mis en réserves ; du report à nouveau (positif ou négatif) ; du résultat de l'exercice (bénéfice ou perte) ; des subventions d'investissement ; des provisions réglementées et fonds assimilés."
+          ],
+          "mots_cles": ["capitaux propres", "passif interne", "apports", "capital", "réserves", "report à nouveau", "résultat", "subventions d'investissement", "provisions réglementées"]
+        },
+        {
+          "numero": "1.2.3",
+          "titre": "1.2.3. Passif externe",
+          "texte": []
+        },
+        {
+          "numero": "1.2.3.1",
+          "titre": "1.2.3.1. Définition d'un passif externe",
+          "texte": [
+            "C'est une obligation actuelle de l'entité de transférer une ressource économique à la suite d'événements passés.",
+            "Une obligation actuelle est un devoir ou une responsabilité d'agir ou de faire quelque chose d'une certaine façon. En principe, l'obligation ne naît qu'après la livraison d'un actif ou la prestation d'un service (l'obligation de l'entité suppose que la tierce personne a déjà réalisé son engagement).",
+            "L'obligation doit exister à la date de clôture de l'exercice. Le fait générateur doit se situer alors avant la clôture de l'exercice.",
+            "Cette obligation de l'entité à l'égard d'un tiers peut être d'ordre légal, réglementaire ou contractuel. Elle peut également découler des pratiques passées de l'entité, de sa politique affichée ou d'engagements publics suffisamment explicités qui ont créé une attente légitime des tiers concernés sur le fait qu'elle assumera certaines responsabilités.",
+            "L'obligation peut donc être de nature juridique ou implicite.",
+            "Le tiers peut être une personne physique ou morale, déterminable ou non.",
+            "L'estimation du passif externe correspond au montant de la sortie d'avantages économiques que l'entité doit supporter pour éteindre son obligation envers le tiers."
+          ],
+          "mots_cles": ["passif externe", "obligation actuelle", "fait générateur", "obligation juridique", "obligation implicite", "tiers", "sortie d'avantages économiques"]
+        },
+        {
+          "numero": "1.2.3.2",
+          "titre": "1.2.3.2. Dette",
+          "texte": [
+            "Une dette est un passif certain dont l'échéance et le montant sont fixés de façon précise."
+          ],
+          "mots_cles": ["dette", "passif certain", "échéance", "montant précis"]
+        },
+        {
+          "numero": "1.2.3.3",
+          "titre": "1.2.3.3. Provision",
+          "texte": [
+            "Une provision est un passif externe dont l'échéance ou le montant est incertain. Selon le Système comptable OHADA, le terme « provision » désigne les provisions pour risques et charges.",
+            "Par dérogation, les provisions réglementées sont constituées uniquement en application de dispositions juridiques et fiscales et ne correspondent ni à un risque ni à une charge future.",
+            "Par ailleurs, les dotations aux provisions pour risques et charges financières à plus d'un an sont inscrites dans un compte de dotation aux provisions tandis que celles qui sont liées à un risque à moins d'un an sont portées au débit du compte intitulé : « Charges pour provisions pour risques à court terme » et sont traitées comme des charges décaissables."
+          ],
+          "mots_cles": ["provision", "passif externe", "incertain", "risques et charges", "provisions réglementées", "provisions à court terme"]
+        },
+        {
+          "numero": "1.2.3.4",
+          "titre": "1.2.3.4. Charges à payer",
+          "texte": [
+            "Les charges à payer sont des passifs certains dont il est parfois nécessaire d'estimer le montant ou l'échéance avec une incertitude moindre que pour les provisions."
+          ],
+          "mots_cles": ["charges à payer", "passif certain", "estimation", "incertitude moindre"]
+        },
+        {
+          "numero": "1.2.3.5",
+          "titre": "1.2.3.5. Passif éventuel",
+          "texte": [
+            "Un passif éventuel est :",
+            "une obligation potentielle résultant d'événements passés et dont l'existence ne sera confirmée que par la survenance ou la non-survenance d'un ou plusieurs événements futurs incertains qui ne sont pas totalement sous le contrôle de l'entité ; ou",
+            "une obligation actuelle résultant d'événements passés mais qui n'est pas comptabilisée : soit parce qu'il n'est pas probable qu'une sortie de ressources représentatives d'avantages économiques soit nécessaire pour éteindre l'obligation ; soit parce que le montant de l'obligation ne peut être évalué avec une fiabilité suffisante."
+          ],
+          "mots_cles": ["passif éventuel", "obligation potentielle", "événements futurs incertains", "non comptabilisé", "fiabilité insuffisante"]
+        },
+        {
+          "numero": "1.3",
+          "titre": "1.3. Charges",
+          "texte": [
+            "Ce sont des emplois définitifs ou consommations de valeurs décaissés ou à décaisser par l'entité : soit en contrepartie de marchandises, approvisionnements, travaux et services consommés par l'entité, ainsi que des avantages qui leur ont été consentis ; soit en vertu d'une obligation légale que l'entité doit remplir ; soit exceptionnellement, sans contrepartie directe.",
+            "Les charges comprennent également pour la détermination du résultat de l'exercice : les dotations aux amortissements et dépréciations ; les dotations aux provisions ; la valeur comptable des éléments d'actif cédés, détruits ou disparus.",
+            "Les charges sont distinguées, selon leur nature : en charges des Activités Ordinaires (charges d'exploitation ; charges financières) ; ou en charges Hors Activités Ordinaires."
+          ],
+          "mots_cles": ["charges", "emplois définitifs", "consommations", "dotations", "amortissements", "dépréciations", "provisions", "activités ordinaires", "HAO"]
+        },
+        {
+          "numero": "1.4",
+          "titre": "1.4. Produits",
+          "texte": [
+            "Ce sont les sommes ou valeurs reçues ou à recevoir : soit en contrepartie de la fourniture par l'entité de biens, travaux, services, ainsi que des avantages qu'elle a consentis ; soit en vertu d'une obligation légale existant à la charge d'un tiers ; soit exceptionnellement sans contrepartie.",
+            "Les produits comprennent également pour la détermination du résultat de l'exercice : la production stockée au cours de l'exercice ; la production immobilisée ; les reprises sur amortissements et provisions ; le prix de cession d'éléments d'actifs cédés ; le transfert de charges.",
+            "Les produits sont distingués, selon leur nature, en produits d'exploitation, produits financiers ou produits Hors Activités Ordinaires.",
+            "Le chiffre d'affaires correspond au montant des affaires réalisées par l'entité avec les tiers dans le cadre de son activité professionnelle normale et courante."
+          ],
+          "mots_cles": ["produits", "valeurs reçues", "production stockée", "production immobilisée", "reprises", "cession", "transfert de charges", "chiffre d'affaires"]
+        },
+        {
+          "numero": "1.5",
+          "titre": "1.5. Résultat net de l'exercice",
+          "texte": [
+            "Différence entre les produits et les charges liés à l'ensemble des activités de l'entité, le résultat de l'exercice est aussi égal à la variation des capitaux propres entre le début et la fin de l'exercice sauf s'il s'agit d'opérations affectant directement le montant des capitaux propres (tels que les écarts de réévaluation, les subventions d'investissement et les provisions réglementées). Il s'agit de la variation brute diminuée des apports nouveaux et augmentée des répartitions aux ayants droit aux capitaux propres."
+          ],
+          "mots_cles": ["résultat net", "produits moins charges", "variation capitaux propres", "apports", "répartitions"]
+        }
+      ]
+    },
+    {
+      "numero": "2",
+      "titre": "Section 2 : Structure des états financiers",
+      "sous_sections": [
+        {
+          "numero": "2.0",
+          "titre": "Introduction",
+          "texte": [
+            "Un jeu d'états financiers est un ensemble complet de documents comptables et financiers permettant de donner une image fidèle du patrimoine, de la situation financière, de la performance et de la trésorerie de l'entité à la fin de l'exercice.",
+            "Le jeu d'états financiers des entités autres que celui des très petites entités comprend : un Bilan ; un Compte de résultat ; un Tableau des flux de trésorerie ; des Notes annexes.",
+            "Les états financiers sont établis et présentés, de façon à permettre leur comparaison dans le temps, exercice par exercice, et leur comparaison avec les états financiers annuels des autres entités dressés dans les mêmes conditions de régularité, de fidélité et de comparabilité."
+          ],
+          "mots_cles": ["jeu d'états financiers", "bilan", "compte de résultat", "tableau flux trésorerie", "notes annexes", "comparaison"]
+        },
+        {
+          "numero": "2.1",
+          "titre": "2.1. Le Bilan",
+          "texte": [
+            "Le Bilan décrit séparément les éléments actifs et passifs de l'entité et fait apparaître de façon distincte les capitaux propres.",
+            "Les éléments d'actif et de passif sont évalués séparément.",
+            "Aucune compensation ne peut être opérée entre les postes d'actif et de passif.",
+            "Le bilan d'ouverture d'un exercice correspond au bilan de clôture avant répartition de l'exercice précédent."
+          ],
+          "mots_cles": ["bilan", "actif", "passif", "capitaux propres", "non-compensation", "évaluation séparée"]
+        },
+        {
+          "numero": "2.1.1",
+          "titre": "2.1.1. Périmètre du Bilan",
+          "texte": [
+            "L'optique économico-gestionnaire a été privilégiée par rapport à l'optique juridico-financière traditionnelle pour des besoins des diverses parties prenantes à l'information comptable.",
+            "Les définitions des actifs et des passifs (passifs au sens de dettes actuelles ou probables) confèrent au Bilan le « périmètre » d'un « patrimoine » beaucoup plus économique que juridique. Ainsi, la définition d'un actif (représentatif de avantages économiques) permet l'inclusion de certains biens en location dans les immobilisations."
+          ],
+          "mots_cles": ["périmètre du bilan", "optique économique", "patrimoine économique", "biens en location", "avantages économiques"]
+        },
+        {
+          "numero": "2.1.2",
+          "titre": "2.1.2. Masses de l'actif et du passif",
+          "texte": [
+            "Le découpage est opéré dans une approche de gestion à la fois économique et financière. Cette démarche relève de la conception fonctionnelle du Bilan plutôt que de la conception « liquidité ».",
+            "Le Bilan se compose de trois masses à l'actif et de trois masses au passif : Il n'y a pas de correspondance biunivoque entre les masses actif et passif, sauf en ce qui concerne la trésorerie, car la somme algébrique des postes actifs et passifs de trésorerie forme la trésorerie nette de l'entité.",
+            "Par ailleurs, dans les « ressources stables » le bilan sépare nettement : les capitaux propres et ressources assimilées ; les dettes financières et ressources assimilées.",
+            "Structure du bilan :",
+            "ACTIF : Actif immobilisé (Emplois stables) comprenant immobilisations incorporelles, corporelles, financières ; Actif circulant comprenant actif circulant HAO et actif circulant d'exploitation ; Trésorerie-actif ; Ecart de conversion - Actif.",
+            "PASSIF : Capitaux propres et ressources assimilées (ressources stables) comprenant capitaux propres et dettes financières et ressources assimilées ; Passif circulant comprenant passif circulant HAO et passif circulant d'exploitation ; Trésorerie-passif ; Ecart de conversion Passif."
+          ],
+          "mots_cles": ["masses du bilan", "conception fonctionnelle", "actif immobilisé", "actif circulant", "trésorerie", "ressources stables", "passif circulant", "écart de conversion"]
+        },
+        {
+          "numero": "2.1.3",
+          "titre": "2.1.3. Le caractère fonctionnel de l'analyse",
+          "texte": [
+            "La fonctionnalité de l'analyse du bilan n'est pas limitée au « périmètre patrimonial » traditionnel du bilan puisque les biens pris en location acquisition, notamment, sont inclus dans l'actif."
+          ],
+          "mots_cles": ["analyse fonctionnelle", "biens en location acquisition", "périmètre élargi"]
+        },
+        {
+          "numero": "2.1.3.1",
+          "titre": "2.1.3.1. L'actif immobilisé",
+          "texte": [
+            "Il correspond aux emplois durables rendus nécessaires par l'objet économique et financier de l'entité. La fraction à moins d'un an des prêts ainsi que les intérêts courus restent inclus dans les immobilisations financières que constituent ses « activités ordinaires ». Dans l'actif immobilisé, est indiqué, par un renvoi, le montant hors activités ordinaires (H.A.O.)."
+          ],
+          "mots_cles": ["actif immobilisé", "emplois durables", "immobilisations financières", "HAO"]
+        },
+        {
+          "numero": "2.1.3.2",
+          "titre": "2.1.3.2. L'actif circulant",
+          "texte": [
+            "L'actif circulant représente les stocks et les créances du « circuit d'exploitation ». La partie H.A.O. de l'actif circulant est composée généralement de stocks occasionnels et de créances H.A.O. (par exemple : créances sur cessions d'immobilisations). Lorsque le montant des stocks occasionnels n'est pas significatif, il convient de l'inscrire dans les stocks et en-cours de l'activité ordinaire."
+          ],
+          "mots_cles": ["actif circulant", "stocks", "créances", "circuit d'exploitation", "HAO", "stocks occasionnels"]
+        },
+        {
+          "numero": "2.1.3.3",
+          "titre": "2.1.3.3. Les capitaux propres et ressources assimilées",
+          "texte": [
+            "Les capitaux propres et ressources assimilées incluent les subventions d'investissement et les provisions réglementées."
+          ],
+          "mots_cles": ["capitaux propres", "ressources assimilées", "subventions d'investissement", "provisions réglementées"]
+        },
+        {
+          "numero": "2.1.3.4",
+          "titre": "2.1.3.4. Les dettes financières et ressources assimilées",
+          "texte": [
+            "Les dettes financières et ressources assimilées, dettes de location acquisition notamment, sont classées comme telles dès lors qu'il s'agit d'emprunts ou de contrats assimilés. Dans cette rubrique sont inclus les comptes bloqués d'associés et les crédits bancaires renouvelables. La fraction à moins d'un an de ces dettes ainsi que les intérêts courus restent inclus dans le poste.",
+            "Sont incluses dans la rubrique, les « Provisions pour risques et charges » qui, compte tenu de leur nature et des principes comptables, sont des dettes probables. Par souci de simplification de la gestion comptable, les provisions dont l'échéance probable est à plus d'un an sont classées dans ce poste ; celles à un an ou moins sont classées dans le « passif circulant » : Provisions pour risques à court terme."
+          ],
+          "mots_cles": ["dettes financières", "location acquisition", "emprunts", "comptes bloqués", "crédits renouvelables", "provisions pour risques", "court terme", "long terme"]
+        },
+        {
+          "numero": "2.1.3.5",
+          "titre": "2.1.3.5. La trésorerie",
+          "texte": [
+            "La trésorerie constitue par elle-même une rubrique fonctionnelle, formée des deux masses : une à l'actif et une au passif. La trésorerie-actif inclut le poste « Titres de placement ». Il importe, en conséquence, que les titres qui y sont inscrits soient réellement rapidement négociables dans l'intention des dirigeants et au regard des possibilités boursières. Dans le cas contraire, ils doivent être classés en « Autres immobilisations financières ».",
+            "La trésorerie-passif comprend, outre les crédits de trésorerie (avances, concours bancaires) et les découverts, les « crédits d'escompte » correspondant au montant des effets escomptés restant en cours, c'est-à-dire avant la constatation de la bonne fin."
+          ],
+          "mots_cles": ["trésorerie", "titres de placement", "crédits de trésorerie", "concours bancaires", "découverts", "crédits d'escompte", "effets escomptés"]
+        },
+        {
+          "numero": "2.1.4",
+          "titre": "2.1.4. Fonds de roulement et besoin de financement",
+          "texte": [
+            "Les masses du bilan font ressortir directement, sans toutefois qu'ils soient spécifiés dans le bilan :",
+            "le Fonds de roulement : Capitaux stables - Actif immobilisé ;",
+            "le Besoin de financement : Actif circulant - Passif circulant ;",
+            "la Trésorerie ; celle-ci équilibre les deux éléments précédents (aux écarts de conversion près), en vertu de l'équation bien connue :",
+            "Fonds de roulement - Besoin de financement = Trésorerie"
+          ],
+          "mots_cles": ["fonds de roulement", "besoin de financement", "BFR", "trésorerie", "équation fondamentale", "capitaux stables"]
+        },
+        {
+          "numero": "2.2",
+          "titre": "2.2. Le Compte de résultat",
+          "texte": [
+            "Le compte de résultat récapitule les charges et les produits de l'exercice, sans qu'il soit tenu compte de leur date de paiement ou d'encaissement. Selon le régime juridique de l'entité, le solde des charges et des produits constitue : le bénéfice ou la perte de l'exercice ; l'excédent ou l'insuffisance de ressources.",
+            "Aucune compensation ne peut être opérée entre les postes de charges et de produits."
+          ],
+          "mots_cles": ["compte de résultat", "charges", "produits", "bénéfice", "perte", "non-compensation"]
+        },
+        {
+          "numero": "2.2.1",
+          "titre": "2.2.1. Analyse « par nature » des charges et des produits",
+          "texte": [
+            "Le Système comptable OHADA retient l'analyse par nature des charges et produits. Cette analyse peut être complétée par une analyse « par fonction », organisée si possible en système comptable dans la « comptabilité analytique de gestion »."
+          ],
+          "mots_cles": ["analyse par nature", "analyse par fonction", "comptabilité analytique de gestion"]
+        },
+        {
+          "numero": "2.2.2",
+          "titre": "2.2.2. Distinction activités ordinaires / hors activités ordinaires (HAO)",
+          "texte": [
+            "La raison majeure de cette analyse tient à la nécessité d'obtenir, dans toute la mesure du possible, des soldes de gestion et un résultat « récurrents », c'est-à-dire susceptibles, à qualité de gestion égale, d'être reconduits dans les années qui viennent, s'il n'y a pas dans l'entité de changements majeurs de structure, liés à l'investissement-financement essentiellement.",
+            "Il en résulte que : la zone H.A.O. des produits et des charges doit se définir en fonction de cette récurrence et non en termes moraux (exemples : amendes fiscales ou pénales) ou d'opportunité (exemples : charges « exceptionnelles » par leur montant...) ; les charges H.A.O. le sont non du fait de leur volume exceptionnel, mais du fait de leur nature, non liée à l'activité ordinaire ; une charge d'exploitation d'un montant exceptionnellement élevé doit rester inscrite dans le niveau « ordinaire » ; une charge ou un produit d'exploitation omis au cours d'un exercice antérieur doit être comptabilisé dans les charges ou les produits des « Activités ordinaires » de l'exercice de rectification.",
+            "Les produits et les charges H.A.O. sont liés à des changements de structure (significatifs) ou de stratégie de l'entité, ou à des changements importants dans l'environnement.",
+            "Les sorties et les prix de cession des immobilisations sont des charges et produits HAO. Par contre, les opérations relativement légères et régulières d'investissement-financement (renouvellement du « parc » de matériel sans novation profonde) ne doivent donc pas être traitées en « H.A.O. », mais être « remontées » dans les activités ordinaires.",
+            "En conclusion, la structure du compte de résultat est ainsi formée de quatre niveaux successifs : activités d'exploitation ; activités financières ; activités ordinaires (regroupant les activités d'exploitation et les activités financières) ; activités H.A.O."
+          ],
+          "mots_cles": ["HAO", "hors activités ordinaires", "récurrence", "changements de structure", "cession d'immobilisations", "exploitation", "financier", "quatre niveaux"]
+        },
+        {
+          "numero": "2.2.3",
+          "titre": "2.2.3. Mise en évidence des soldes intermédiaires de gestion",
+          "texte": [
+            "La définition, le « découpage » des charges et des produits permettent l'obtention directe, à partir des enregistrements comptables, de soldes intermédiaires de gestion fournissant aux utilisateurs des états financiers des informations de synthèse capitales pour l'étude de la structure et des performances de la firme, et directement inscrits dans le compte de résultat.",
+            "Le compte de résultat permet la lecture directe : de la Marge commerciale (MC) ; de la Valeur ajoutée (V.A.) ; de l'Excédent brut d'exploitation (E.B.E.) ; du Résultat d'exploitation (R.E.) ; du Résultat financier (R.F.) ; du Résultat des activités ordinaires (R.A.O.) ; du Résultat hors activités ordinaires (R.H.A.O.) ; du Résultat net (R.N.)."
+          ],
+          "mots_cles": ["soldes intermédiaires de gestion", "SIG", "marge commerciale", "valeur ajoutée", "EBE", "résultat d'exploitation", "résultat financier", "résultat net", "RAO", "RHAO"]
+        },
+        {
+          "numero": "2.3",
+          "titre": "2.3. Le tableau de flux de trésorerie",
+          "texte": []
+        },
+        {
+          "numero": "2.3.1",
+          "titre": "2.3.1. Objectif du tableau de flux de trésorerie",
+          "texte": [
+            "Le tableau de flux de trésorerie constitue un état de synthèse à part entière, dont la finalité est d'expliquer la variation de la trésorerie de l'entité. Il recense donc les encaissements (sources des flux de trésorerie) et les décaissements (affectations des flux de trésorerie) qui ont un impact sur la trésorerie au cours de la période considérée. Par ailleurs, il classe les flux de trésorerie selon leur origine : activités opérationnelles, activités d'investissement, activités de financement. Il permet de connaître la provenance des flux de liquidités et la manière dont ces flux ont été utilisés au cours de l'exercice."
+          ],
+          "mots_cles": ["tableau de flux de trésorerie", "variation trésorerie", "encaissements", "décaissements", "activités opérationnelles", "investissement", "financement"]
+        },
+        {
+          "numero": "2.3.2",
+          "titre": "2.3.2. Composantes des flux de trésorerie",
+          "texte": [
+            "La structure du tableau des flux de trésorerie repose sur un découpage de la vie de l'entité en trois grandes fonctions, celles-ci correspondant d'ailleurs aux principaux volets de sa politique financière. Le classement fonctionnel des flux constitue une base précieuse pour l'élaboration des prévisions financières en distinguant les trois catégories de flux suivantes : Activités opérationnelles ; Activités d'investissement ; Activités de financement.",
+            "Le tableau de flux de trésorerie fait apparaître la contribution de chaque type d'activité à la variation globale de la trésorerie de l'entité."
+          ],
+          "mots_cles": ["composantes", "trois fonctions", "opérationnelles", "investissement", "financement", "prévisions financières"]
+        },
+        {
+          "numero": "2.3.2.1",
+          "titre": "2.3.2.1. Flux de trésorerie liés aux activités opérationnelles",
+          "texte": [
+            "Les activités opérationnelles sont définies comme étant les principales activités génératrices des produits de l'entité et toutes les autres activités qui ne sont pas des activités d'investissement ou de financement.",
+            "Exemples de flux de trésorerie provenant des activités opérationnelles : les flux correspondant aux produits et aux charges d'exploitation, tels que les sommes encaissées auprès des clients et les sommes versées aux fournisseurs et au personnel ; les autres encaissements et décaissements qu'il est possible de rattacher à l'activité d'exploitation, tels que les flux de trésorerie correspondant aux produits financiers et aux charges financières et à l'impôt sur le résultat.",
+            "Les flux de trésorerie opérationnels résultent donc en général des transactions qui entrent dans la détermination du résultat net.",
+            "Une entité doit présenter les flux de trésorerie liés aux activités opérationnelles, en utilisant la méthode indirecte, suivant laquelle le résultat est ajusté pour tenir compte de l'effet : des variations durant la période dans les stocks et dans les créances et dettes opérationnelles ; des éléments sans effet direct sur la trésorerie, tels que les amortissements, les provisions, les impôts différés, les gains ou pertes de change latents, les bénéfices non distribués des entités mises en équivalence et les intérêts minoritaires ; et des autres éléments pour lesquels l'effet de la trésorerie consiste en flux de trésorerie d'investissement ou de financement."
+          ],
+          "mots_cles": ["activités opérationnelles", "méthode indirecte", "résultat ajusté", "variations stocks", "créances", "dettes", "amortissements", "provisions"]
+        },
+        {
+          "numero": "2.3.2.2",
+          "titre": "2.3.2.2. Flux de trésorerie liés aux activités d'investissement",
+          "texte": [
+            "Les activités d'investissement sont définies comme l'acquisition et la sortie d'actifs à long terme et les autres placements qui ne sont pas inclus dans les équivalents de trésorerie. Seules les dépenses qui conduisent à la comptabilisation d'un actif sont susceptibles d'être classées en activités d'investissement. Par exemple, les dépenses de recherche ne peuvent pas être traitées de la sorte.",
+            "Exemples de flux de trésorerie provenant des activités d'investissement : la cession et l'acquisition d'immobilisations corporelles, incorporelles et d'autres actifs à long terme ; la cession et l'acquisition de valeurs mobilières sauf les titres de placement d'autres entités ; prêts effectués par l'entité (les équivalents de trésorerie ne sont pas inclus dans les opérations d'investissement)."
+          ],
+          "mots_cles": ["activités d'investissement", "acquisition", "cession", "actifs à long terme", "valeurs mobilières", "prêts"]
+        },
+        {
+          "numero": "2.3.2.3",
+          "titre": "2.3.2.3. Flux de trésorerie liés aux activités de financement",
+          "texte": [
+            "Les activités de financement sont définies comme étant les activités qui résultent des changements dans l'importance et la composition du capital apporté et des emprunts de l'entité.",
+            "Exemples de flux de trésorerie issus des activités de financement : les encaissements provenant de l'émission d'actions ou parts sociales et les décaissements issus du rachat ou du remboursement d'actions ou parts sociales ; les dividendes versés aux actionnaires ou aux associés, à moins que ces dividendes ne soient classés dans les activités d'exploitation ; les encaissements provenant de l'émission d'obligations, d'emprunts (à court et à long terme), ainsi que les remboursements correspondants.",
+            "L'ordre de présentation des flux de trésorerie favorise une lecture normative du document : les flux liés aux activités d'exploitation jouent un rôle déterminant dans le financement de la croissance et dans la structure des opérations de financement."
+          ],
+          "mots_cles": ["activités de financement", "capital", "emprunts", "émission actions", "dividendes", "obligations", "remboursements"]
+        },
+        {
+          "numero": "2.3.3",
+          "titre": "2.3.3. Définition de la trésorerie et des équivalents de trésorerie",
+          "texte": [
+            "La trésorerie comprend les disponibilités et les équivalents de disponibilités ou de trésorerie, c'est-à-dire les placements à court terme très liquides, qui sont facilement convertibles en un montant connu de liquidités, dont la valeur ne risque pas de changer de façon significative.",
+            "En conséquence, un placement ne sera qualifié d'équivalent de trésorerie que s'il a une échéance rapprochée, par exemple inférieure ou égale à trois mois à partir de la date d'acquisition.",
+            "Les découverts bancaires momentanés (remboursables à vue) constituent une composante de la trésorerie et des équivalents de trésorerie.",
+            "Dans la mesure où l'on considère la trésorerie et les équivalents de trésorerie comme identiques, il ne faut pas définir les mouvements entre la trésorerie et les équivalents de trésorerie comme des encaissements et des décaissements : ces mouvements ne sont pas repris dans le tableau des flux de trésorerie."
+          ],
+          "mots_cles": ["trésorerie", "équivalents de trésorerie", "disponibilités", "placements court terme", "trois mois", "découverts bancaires", "liquidités"]
+        },
+        {
+          "numero": "2.4",
+          "titre": "2.4. Les Notes annexes",
+          "texte": [
+            "Les autres états financiers (Bilan, Compte de résultat et Tableau des flux de trésorerie) doivent être étayés par des informations explicatives et supplémentaires présentées sous forme de notes permettant une meilleure intelligibilité des états financiers. Ces notes font partie intégrante du jeu d'états financiers.",
+            "Chacun des postes du Bilan, du Compte de résultat, et du Tableau des flux de trésorerie doit en principe, faire l'objet d'une référence croisée vers l'information liée figurant dans les notes annexes.",
+            "Les notes annexes comportent des informations sur les points suivants, dès lors que ces informations présentent un caractère significatif ou sont utiles pour la compréhension des opérations figurant sur les états financiers :",
+            "une déclaration de conformité au Système comptable OHADA (les états financiers ne doivent être déclarés conformes aux SYSCOHADA que s'ils sont conformes à toutes les dispositions normatives du Système comptable OHADA) ;",
+            "les règles et les méthodes comptables adoptées pour la tenue de la comptabilité et l'établissement des états financiers (la conformité aux normes est précisée, et toute dérogation est expliquée et justifiée) ;",
+            "les compléments d'information nécessaires à une bonne compréhension du Bilan, du Compte de résultat, du Tableau des flux de trésorerie ;",
+            "les informations à caractère général ou concernant certaines opérations particulières nécessaires à l'obtention d'une image fidèle.",
+            "De façon spécifique, les entités exerçant une activité économique ayant un impact sur l'environnement (secteur de l'industrie et des mines par exemple) doivent fournir des informations environnementales et sociétales."
+          ],
+          "mots_cles": ["notes annexes", "informations explicatives", "référence croisée", "déclaration de conformité", "méthodes comptables", "dérogation", "image fidèle", "informations environnementales", "sociétales"]
+        }
+      ]
+    }
+  ]
+}

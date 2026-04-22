@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA — SYSCOHADA Cadre Conceptuel",
+    "referentiel": "SYSCOHADA",
+    "partie": "Titre V — Chapitres 1 et 2",
+    "pages_source": "57-67",
+    "date_extraction": "2026-04-08"
+  },
+  "sections": [
+    {
+      "numero": "1",
+      "titre": "Chapitre 1 : Définition et principaux utilisateurs des états financiers",
+      "sous_sections": [
+        {
+          "numero": "1.1",
+          "titre": "Section 1 : Définition et objectifs du cadre conceptuel",
+          "texte": [
+            "Un cadre conceptuel (Conceptual Framework) est un système cohérent d'objectifs et de principes fondamentaux liés entre eux qui a pour objet de donner une représentation utile de l'entité pour les différents utilisateurs de l'information financière. Il constitue la structure de référence théorique qui sert de support et de guide à l'élaboration des normes comptables.",
+            "Le cadre conceptuel a pour objectifs d'aider :",
+            "à élaborer des normes cohérentes pouvant faciliter la production de données et d'états financiers ;",
+            "à faciliter l'interprétation des normes comptables et l'appréhension d'opérations ou d'événements non explicitement prévus par la réglementation comptable ;",
+            "les auditeurs à se faire une opinion sur la conformité des états financiers avec les normes d'information financière du Système comptable OHADA."
+          ],
+          "mots_cles": ["cadre conceptuel", "conceptual framework", "objectifs", "normes comptables", "référence théorique", "élaboration normes", "auditeurs"]
+        },
+        {
+          "numero": "1.2",
+          "titre": "Section 2 : Les utilisateurs des états financiers et leurs besoins",
+          "texte": [
+            "2.1. Les utilisateurs des états financiers",
+            "Les états financiers constituent le principal moyen de communication de l'information financière aux différents utilisateurs, internes et externes à l'entité :",
+            "les dirigeants, les organes d'administration et de contrôle et les différentes structures internes de l'entité ;",
+            "les fournisseurs de capitaux (investisseurs, banques et autres prêteurs, institut d'émission et autres bailleurs de fonds) ;",
+            "l'Etat, la centrale des bilans et les autres institutions dotées de pouvoirs de planification, de réglementation et de contrôle ;",
+            "les autres partenaires de l'entité tels que les assureurs, les salariés, les fournisseurs ou les clients ;",
+            "les autres groupes d'intérêt, y compris le public de façon générale."
+          ],
+          "mots_cles": ["utilisateurs", "états financiers", "dirigeants", "investisseurs", "banques", "Etat", "salariés", "fournisseurs", "clients"]
+        },
+        {
+          "numero": "1.2.1",
+          "titre": "2.2. Les besoins de chaque type d'utilisateur d'états financiers",
+          "texte": []
+        },
+        {
+          "numero": "1.2.1.1",
+          "titre": "2.2.1. Les dirigeants, les organes d'administration et de contrôle et les différentes structures internes de l'entreprise",
+          "texte": [
+            "Les dirigeants sont responsables de la préparation et de la présentation des états financiers. Ils sont naturellement intéressés par l'information contenue dans ces états.",
+            "En effet, bien que destinés, principalement, à fournir des informations qui répondent aux utilisateurs externes, les états financiers peuvent, dans une certaine mesure, se révéler utiles aux dirigeants et ce, notamment dans le cas des petites et moyennes entités qui ne disposent, souvent, que de moyens limités pour pouvoir produire des informations répondant à leurs besoins spécifiques de gestion.",
+            "En effet, le Système comptable OHADA apporte aux entités, l'économie de l'étude et de la mise au point d'un modèle comptable et, convenablement conçu, leur fournit une approche pédagogique de la gestion, ainsi que l'analyse financière de base."
+          ],
+          "mots_cles": ["dirigeants", "organes d'administration", "préparation états financiers", "PME", "gestion", "analyse financière"]
+        },
+        {
+          "numero": "1.2.1.2",
+          "titre": "2.2.2. Les fournisseurs de capitaux",
+          "texte": [
+            "Les investisseurs qui fournissent les capitaux à risque ainsi que les prêteurs sont concernés par le risque inhérent à leurs placements et crédits, alors que les autres bailleurs de fonds tels que les organismes octroyant des subventions cherchent à savoir si l'entité a atteint les objectifs qui lui ont été assignés justifiant ainsi, les ressources et autres avantages qu'ils ont mis à sa disposition."
+          ],
+          "mots_cles": ["fournisseurs de capitaux", "investisseurs", "prêteurs", "risque", "subventions"]
+        },
+        {
+          "numero": "1.2.1.2.1",
+          "titre": "2.2.2.1. Associés et investisseurs",
+          "texte": [
+            "Les personnes qui fournissent les capitaux à risques sont concernées par le risque inhérent à leurs investissements et par la rentabilité qu'ils produisent. Elles peuvent être classées en trois catégories :",
+            "les associés des petites sociétés de capitaux dont le besoin d'informations comptables est sans doute autant « économique » que financier, et qui s'intéressent de près aux aspects « gestion » de leur société, donc à sa structure économique, à ses performances d'exploitation tout autant qu'à la formation du seul résultat net.",
+            "les actionnaires des grandes sociétés, le plus souvent cotées à une bourse de valeurs. Ces demandeurs d'états financiers sont plus sensibles aux aspects financiers qu'aux aspects économiques et « gestion » de l'entité. Ils ont besoin d'informations pour les aider à déterminer quand ils doivent acheter, conserver, vendre. Ils sont également intéressés par des informations qui leur permettent de déterminer la capacité de l'entité à payer des dividendes.",
+            "les associés des sociétés de personnes et des sociétés unipersonnelles, l'entrepreneur individuel et les associés majoritaires des sociétés de capitaux peuvent être considérés, du point de vue de leurs besoins en informations comptables et financières, comme assimilables aux « dirigeants » d'entités."
+          ],
+          "mots_cles": ["associés", "investisseurs", "actionnaires", "petites sociétés", "grandes sociétés", "bourse de valeurs", "dividendes", "rentabilité"]
+        },
+        {
+          "numero": "1.2.1.2.2",
+          "titre": "2.2.2.2. Banques et autres Prêteurs",
+          "texte": [
+            "Les banques et autres prêteurs sont intéressés par une information qui leur permet de déterminer si leurs prêts et les intérêts qui y sont liés seront payés à l'échéance. Leur attente en matière d'information comptable se situe donc principalement au niveau de la solvabilité de l'entité (immédiate et à terme) et à celui de sa pérennité à horizon au moins égal à la durée des prêts consentis."
+          ],
+          "mots_cles": ["banques", "prêteurs", "solvabilité", "pérennité", "remboursement", "intérêts"]
+        },
+        {
+          "numero": "1.2.1.2.3",
+          "titre": "2.2.2.3. Banques centrales",
+          "texte": [
+            "Les Banques Centrales des États de l'espace OHADA sont directement concernées par le contenu et la qualité des états financiers des entreprises de leur zone, entreprises qui reçoivent l'essentiel des crédits distribués par le système bancaire."
+          ],
+          "mots_cles": ["banques centrales", "OHADA", "crédits", "système bancaire", "qualité états financiers"]
+        },
+        {
+          "numero": "1.2.1.3",
+          "titre": "2.2.3. L'Etat, la centrale des bilans et les autres institutions dotées de pouvoirs de planification, de réglementation et de contrôle",
+          "texte": []
+        },
+        {
+          "numero": "1.2.1.3.1",
+          "titre": "2.2.3.1. Etat",
+          "texte": [
+            "L'État est également une importante partie prenante à l'information financière, au moins à trois titres :",
+            "du point de vue fiscal, l'État est directement intéressé par la conception et le contenu des états financiers et, en amont, par la fiabilité des enregistrements et des procédures ;",
+            "du point de vue statistique, l'État est un utilisateur direct des informations fournies par les états financiers, tant pour la statistique générale que pour la comptabilité nationale ;",
+            "du point de vue de son action économique, l'État a besoin de connaître, à travers les états financiers, la réalité économique des entités des différents secteurs, avant de définir sa politique économique et budgétaire."
+          ],
+          "mots_cles": ["Etat", "fiscal", "statistique", "comptabilité nationale", "politique économique", "budgétaire"]
+        },
+        {
+          "numero": "1.2.1.3.2",
+          "titre": "2.2.3.2. Les centrales des bilans",
+          "texte": [
+            "La Centrale des bilans est un organisme qui centralise les informations structurées issues de la liasse comptable des entités. Elle a pour rôle principal, la collecte, l'analyse et la diffusion d'informations financières et comptables agrégées par secteurs d'activité dans chaque État et, surtout, pour chacune des zones communautaires de l'espace OHADA.",
+            "L'obtention d'agrégats « méso-économiques » (ou par secteur) est en effet de la plus grande utilité pour les entreprises elles-mêmes, comme pour leurs divers partenaires.",
+            "La connaissance des caractéristiques de structure doit permettre aux entités de faire des analyses comparatives indispensables à la formulation d'opinions fondées sur la qualité de leur gestion et, partant, à des prises de décisions pertinentes."
+          ],
+          "mots_cles": ["centrale des bilans", "liasse comptable", "agrégats méso-économiques", "secteurs d'activité", "analyses comparatives"]
+        },
+        {
+          "numero": "1.2.1.3.3",
+          "titre": "2.2.3.3. Autres institutions dotées de pouvoirs de planification, de réglementation et de contrôle",
+          "texte": [
+            "Ce groupe inclut particulièrement les organes chargés de la comptabilité et des statistiques nationales, et tout autre organisme ayant un pouvoir de planification, de réglementation et de contrôle. Ils utilisent l'information financière pour réglementer les activités des entités, éclairer la politique fiscale, sociale et économique des Etats. Ils utilisent aussi l'information comme base de calcul du revenu national et des statistiques similaires et pour évaluer la contribution de l'entité à la création d'emplois, à l'exportation, au revenu national.",
+            "Ces organismes peuvent, à travers les états financiers, évaluer la portée de leur politique et éventuellement exiger la production d'informations supplémentaires spécifiques."
+          ],
+          "mots_cles": ["planification", "réglementation", "contrôle", "statistiques nationales", "revenu national", "politique fiscale"]
+        },
+        {
+          "numero": "1.2.1.4",
+          "titre": "2.2.4. Les autres partenaires de l'entité",
+          "texte": [
+            "Ce sont les salariés et leurs syndicats, les fournisseurs et autres créanciers ainsi que les clients et autres bénéficiaires des biens et services produits par l'entité.",
+            "Ils sont intéressés notamment par la capacité de l'entité à générer des flux de trésorerie lui permettant d'honorer ses engagements et par sa capacité à continuer son activité."
+          ],
+          "mots_cles": ["salariés", "syndicats", "fournisseurs", "créanciers", "clients", "flux de trésorerie", "continuité"]
+        },
+        {
+          "numero": "1.2.1.4.1",
+          "titre": "2.2.4.1. Membres du personnel",
+          "texte": [
+            "Les membres du personnel et leurs représentants sont intéressés par une information sur la stabilité et la rentabilité de l'entité qui les emploie. Ils sont également intéressés par le partage de la valeur ajoutée et des informations qui leur permettent d'estimer la capacité de l'entité à leur procurer une rémunération, des avantages en matière de retraite et des opportunités en matière d'emploi."
+          ],
+          "mots_cles": ["personnel", "stabilité", "rentabilité", "valeur ajoutée", "rémunération", "retraite", "emploi"]
+        },
+        {
+          "numero": "1.2.1.4.2",
+          "titre": "2.2.4.2. Fournisseurs et autres créanciers",
+          "texte": [
+            "Les fournisseurs et autres créanciers sont intéressés par une information qui leur permette de déterminer si les montants qui leur sont dus leur seront payés à l'échéance. Les fournisseurs et autres créanciers sont vraisemblablement intéressés par l'entité pour une période plus courte que les prêteurs, à moins qu'ils ne dépendent de la continuité de l'entité lorsque celle-ci est un client majeur. Ils peuvent aussi être intéressés par le patrimoine pour savoir si des garanties réelles peuvent être offertes."
+          ],
+          "mots_cles": ["fournisseurs", "créanciers", "paiement à l'échéance", "continuité", "garanties"]
+        },
+        {
+          "numero": "1.2.1.4.3",
+          "titre": "2.2.4.3. Clients",
+          "texte": [
+            "Les clients sont intéressés par une information sur la continuité de l'entité, en particulier lorsqu'ils ont des relations à long terme avec elle, ou bien qu'ils en dépendent."
+          ],
+          "mots_cles": ["clients", "continuité", "relations long terme", "dépendance"]
+        },
+        {
+          "numero": "1.2.1.5",
+          "titre": "2.2.5. Les autres groupes d'intérêt",
+          "texte": [
+            "Ce sont notamment les organismes professionnels et de défense d'intérêts, la presse spécialisée et les médias, les chercheurs, les divers organes et associations et le public en général.",
+            "Ces groupes veulent savoir si l'entité travaille pour l'intérêt des membres de la communauté qu'ils représentent ou dont ils défendent les intérêts. Ils sont notamment intéressés par les tendances et les évolutions récentes du développement de l'entité et des conséquences de ses activités sur le développement économique et social et sur l'environnement en général."
+          ],
+          "mots_cles": ["organismes professionnels", "presse", "médias", "chercheurs", "public", "développement économique", "environnement"]
+        },
+        {
+          "numero": "1.2.1.6",
+          "titre": "2.2.6. Les utilisateurs privilégiés",
+          "texte": [
+            "L'analyse des préoccupations des différents utilisateurs montre que plusieurs besoins sont communs ou même, en étant différents, peuvent être satisfaits par les mêmes informations.",
+            "Pour assurer la pertinence d'une information financière destinée à diverses « parties prenantes », l'information contenue dans les états financiers doit être fournie de façon « consensuelle » sans fondamentalement privilégier certains utilisateurs par rapport à d'autres. Il s'agit donc d'une information multiple (aux divers partenaires économiques) dans le cadre d'une PERTINENCE PARTAGEE."
+          ],
+          "mots_cles": ["utilisateurs privilégiés", "pertinence partagée", "information consensuelle", "parties prenantes", "besoins communs"]
+        }
+      ]
+    },
+    {
+      "numero": "2",
+      "titre": "Chapitre 2 : Structure et champ d'application du cadre conceptuel",
+      "sous_sections": [
+        {
+          "numero": "2.1",
+          "titre": "Section 1 : Structure du cadre conceptuel",
+          "texte": [
+            "Le cadre conceptuel est structuré selon la hiérarchie suivante :",
+            "au premier niveau, sont énoncés les définitions et les principaux utilisateurs des états financiers ;",
+            "au deuxième niveau, la structure et le champ d'application du cadre conceptuel ;",
+            "au troisième niveau, les objectifs et les principes de base des états financiers qui comprennent (i) l'hypothèse sous-jacente à la préparation des états financiers, (ii) les postulats et conventions comptables, (iii) les caractéristiques qualitatives de l'information contenue dans les états financiers ;",
+            "au quatrième niveau, des définitions des éléments et contenu des états financiers ;",
+            "au cinquième niveau, les règles d'évaluation, de comptabilisation et de décomptabilisation ou de sortie des éléments des états financiers ainsi que les concepts de capital et de maintien du capital."
+          ],
+          "mots_cles": ["structure", "hiérarchie", "cinq niveaux", "définitions", "principes de base", "évaluation", "comptabilisation", "capital"]
+        },
+        {
+          "numero": "2.2",
+          "titre": "Section 2 : Champ d'application du cadre conceptuel",
+          "texte": []
+        },
+        {
+          "numero": "2.2.1",
+          "titre": "2.1. Dispositions générales",
+          "texte": [
+            "Les présentes dispositions s'appliquent à toute personne physique ou morale astreinte à la mise en place d'une comptabilité destinée à l'information externe comme à son propre usage, sous réserve des dispositions qui leur sont spécifiques.",
+            "Sont astreintes à la tenue d'une comptabilité financière selon le Système comptable OHADA :",
+            "les entités soumises aux dispositions de l'Acte uniforme relatif au droit commercial général et de l'Acte uniforme relatif au droit des sociétés commerciales et du GIE ;",
+            "les entités soumises aux dispositions de l'Acte uniforme relatif au droit des sociétés coopératives ;",
+            "les entités publiques, parapubliques ou d'économie mixte ;",
+            "et, plus généralement, les entités produisant des biens et des services marchands ou non marchands, dans la mesure où elles exercent, dans un but lucratif ou non, des activités économiques à titre principal ou accessoire qui se fondent sur des actes répétitifs, à l'exception de celles soumises aux règles de la comptabilité publique."
+          ],
+          "mots_cles": ["champ d'application", "entités assujetties", "droit commercial", "sociétés commerciales", "GIE", "coopératives", "entités publiques"]
+        },
+        {
+          "numero": "2.2.2",
+          "titre": "2.2. Dispositions spécifiques",
+          "texte": []
+        },
+        {
+          "numero": "2.2.2.1",
+          "titre": "2.2.1. Cas particulier des petites entités",
+          "texte": [
+            "Les petites entités qui remplissent les conditions de chiffre d'affaires peuvent être autorisées à ne tenir qu'une comptabilité simplifiée de trésorerie dénommée \"Système minimal de trésorerie\", dont le caractère dérogatoire est stipulé à l'article 28 de l'Acte uniforme relatif au droit comptable et à l'information financière.",
+            "Dans le cadre d'une comptabilité simplifiée de trésorerie, le fait générateur de l'enregistrement comptable est l'encaissement (recette) ou le décaissement (dépense). Toutefois ces entités devront produire un tableau récapitulatif des dettes et des créances de façon extra-comptable en fin d'exercice."
+          ],
+          "mots_cles": ["petites entités", "SMT", "comptabilité de trésorerie", "encaissement", "décaissement", "dettes", "créances"]
+        },
+        {
+          "numero": "2.2.2.2",
+          "titre": "2.2.2. Cas particulier des entités à but non lucratif",
+          "texte": [
+            "Les entités à but non lucratif ne sont pas en adéquation avec le traité de l'OHADA (Organisation pour l'Harmonisation en Afrique du Droit des Affaires), car ces entités ne réalisent pas d'activités économiques qui peuvent être considérées comme « des affaires ». En conséquence, ces entités ne sont pas assujetties au SYSCOHADA."
+          ],
+          "mots_cles": ["entités à but non lucratif", "OHADA", "exclusion", "SYSCOHADA", "non assujetties"]
+        },
+        {
+          "numero": "2.2.2.3",
+          "titre": "2.2.3. Cas particulier des Entités d'Intérêt Public (EIP)",
+          "texte": []
+        },
+        {
+          "numero": "2.2.2.3.1",
+          "titre": "2.2.3.1. Notion d'entité d'intérêt public",
+          "texte": [
+            "Sont considérées d'une manière générale comme des entités d'intérêt public :",
+            "les sociétés cotées ;",
+            "les établissements de crédit ;",
+            "les compagnies d'assurance et de réassurance ;",
+            "les organismes de prévoyance sociale ;",
+            "les entités désignées par les Etats parties comme entités d'intérêt public, par exemple certaines sociétés d'Etat et concessionnaires de service public (secteurs de distribution d'eau, de l'énergie, des mines, des postes et télécommunications, du transport public, port autonome etc…)."
+          ],
+          "mots_cles": ["entité d'intérêt public", "EIP", "sociétés cotées", "établissements de crédit", "assurance", "prévoyance sociale", "service public"]
+        },
+        {
+          "numero": "2.2.2.3.2",
+          "titre": "2.2.3.2. Obligations des entités d'intérêt public",
+          "texte": [
+            "Les entités dont les titres sont inscrits à une bourse de valeurs et les entités qui sollicitent un financement dans le cadre d'un appel public à l'épargne, doivent déposer en sus des états financiers de synthèses SYSCOHADA, leurs états financiers établis selon les normes IFRS et approuvés par l'assemblée générale ordinaire, auprès du registre de commerce et du crédit mobilier et auprès des organes habilités des marchés financiers de leur région ou de l'Etat partie.",
+            "Les états financiers en normes IFRS ne peuvent servir de support de base pour la détermination du bénéfice distribuable visé par l'Acte uniforme relatif au droit des sociétés commerciales et du groupement d'intérêt économique.",
+            "Les commissaires aux comptes : soit émettent une opinion indiquant que les états financiers IFRS sont réguliers et sincères et donnent une image fidèle du résultat des opérations de l'exercice écoulé ainsi que de la situation financière et des flux de trésorerie à la fin de cet exercice ; soit expriment en la motivant, une opinion avec réserve ou défavorable ou indiquent qu'ils sont dans l'impossibilité d'exprimer une opinion.",
+            "Par contre, sont exemptés de cette obligation, les autres entités d'intérêt public qui sont assujettis à des plans comptables spécifiques à leur secteur d'activité.",
+            "Les entités désignées par les Etats parties comme entités d'intérêt public peuvent, si elles ne sont pas côtées en bourse, ou si elles ne sollicitent des financements dans le cadre d'un appel public à l'épargne, établir et présenter sur option, des états financiers selon les normes IFRS en sus de ceux établis et présentés selon le Système comptable OHADA."
+          ],
+          "mots_cles": ["obligations EIP", "IFRS", "bourse de valeurs", "appel public à l'épargne", "bénéfice distribuable", "commissaires aux comptes", "plans comptables spécifiques"]
+        },
+        {
+          "numero": "2.2.2.4",
+          "titre": "2.2.4. Cas particuliers des comptes consolidés et des comptes combinés",
+          "texte": [
+            "Sont concernés par ce cadre les comptes personnels ou individuels des entités (personnes morales ou physiques).",
+            "Lorsqu'une entité contrôle une ou plusieurs entités, elle doit établir et publier des états financiers consolidés.",
+            "Les entités, qui constituent dans une région de l'espace OHADA, un ensemble économique soumis à un même centre stratégique de décision situé hors de cette région, sans qu'existent entre elles des liens juridiques de domination, établissent et présentent des états financiers, dénommés \"états financiers combinés\", comme s'il s'agissait d'une seule entité.",
+            "L'objectif des comptes consolidés et comptes combinés est de fournir au lecteur externe une vision plus économique de l'activité, de la situation financière et du résultat d'un ensemble d'entités.",
+            "Ces comptes s'affranchissent des règles juridiques de séparation des patrimoines sur lesquelles reposent les comptes individuels pour mettre en avant une vision purement économique. Pour cela, ils reposent sur une application non limitée à certaines transactions contrairement aux comptes individuels, du principe de prééminence de la réalité économique sur la forme juridique (Substance over form). Afin de tenir compte de ces particularités, il a été prévu une troisième partie intitulée « Dispositif comptable relatif aux comptes consolidés et combinés » (en abrégé D4C) adossé au présent Plan comptable général OHADA (en abrégé PCGO)."
+          ],
+          "mots_cles": ["comptes consolidés", "comptes combinés", "comptes personnels", "substance over form", "prééminence réalité économique", "D4C", "PCGO"]
+        }
+      ]
+    }
+  ]
+}

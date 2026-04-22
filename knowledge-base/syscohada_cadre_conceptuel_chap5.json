@@ -1,0 +1,289 @@
+{
+  "meta": {
+    "document": "Journal Officiel de l'OHADA — SYSCOHADA Cadre Conceptuel",
+    "referentiel": "SYSCOHADA",
+    "partie": "Titre V — Chapitre 5 : Règles d'évaluation et de comptabilisation des éléments des états financiers",
+    "pages_source": "107-129",
+    "date_extraction": "2026-04-08"
+  },
+  "sections": [
+    {
+      "numero": "1",
+      "titre": "Section 1 : Règles d'évaluation des éléments des états financiers",
+      "sous_sections": [
+        {
+          "numero": "1.0",
+          "titre": "Introduction",
+          "texte": [
+            "L'évaluation est le procédé qui permet de déterminer les montants monétaires auxquels les éléments sont comptabilisés et inscrits au Bilan, au Compte de résultat ou au Tableau de flux de trésorerie. Cela implique la sélection de bases d'évaluation appropriées.",
+            "Le système comptable OHADA distingue : la valeur d'entrée dans le patrimoine ; la valeur actuelle à une date quelconque, qui porte le nom de valeur d'inventaire lorsque cette date est celle de la clôture de l'exercice ; la valeur nette au bilan."
+          ],
+          "mots_cles": ["évaluation", "valeur d'entrée", "valeur actuelle", "valeur d'inventaire", "valeur nette au bilan"]
+        },
+        {
+          "numero": "1.1",
+          "titre": "1.1. Valeur d'entrée",
+          "texte": [
+            "La convention du coût historique fait de la valeur d'entrée un élément intangible, à l'exception des créances et dettes en monnaies étrangères, et sauf réévaluation.",
+            "Cette valeur d'entrée est : le coût d'achat ou d'acquisition pour les biens achetés (article 36 de l'Acte uniforme) ; le coût de production, pour les biens produits par l'entité.",
+            "Ces coûts sont des coûts réels qui ne peuvent inclure d'éléments supplétifs, par exemple coût des capitaux propres. Ils ne peuvent être influencés par l'existence ou non d'une subvention."
+          ],
+          "mots_cles": ["valeur d'entrée", "coût historique", "intangible", "coût d'achat", "coût d'acquisition", "coût de production"]
+        },
+        {
+          "numero": "1.1.1",
+          "titre": "1.1.1. Coût d'achat, coût d'acquisition",
+          "texte": []
+        },
+        {
+          "numero": "1.1.1.1",
+          "titre": "1.1.1.1. Règles générales",
+          "texte": [
+            "L'article 37 de l'Acte uniforme fait spécifiquement référence aux charges directes liées à l'achat et, le cas échéant, à l'installation du bien. En effet, tous les frais accessoires encourus sont inclus dans le coût d'acquisition du bien jusqu'à son lieu d'exploitation et sa mise en état de fonctionner.",
+            "a) Coût d'acquisition d'une immobilisation : Le coût réel d'acquisition d'une immobilisation est formé : du prix d'achat définitif net de remises et de rabais commerciaux, d'escompte de règlement et de taxes récupérables ; des charges accessoires rattachables directement à l'opération d'achat ; des frais d'acquisition notamment les droits d'enregistrement, les honoraires, les commissions, les frais d'actes, après déductions des taxes récupérables ; des charges d'installation qui sont nécessaires pour mettre le bien en état d'utilisation ; de l'estimation initiale des coûts relatifs au démantèlement, à l'enlèvement de l'immobilisation et à la remise en état du site sur lequel elle est située, si cette obligation incombe à l'entité. Ces coûts comptabilisés comme un composant de l'immobilisation, font l'objet d'un plan d'amortissement propre tant pour la durée que pour le mode.",
+            "Lorsque l'effet de la valeur temps de l'argent est significatif, le montant de la provision doit être la valeur actualisée des dépenses attendues que l'on pense nécessaires pour éteindre l'obligation. Le taux d'actualisation doit être un taux avant impôts reflétant les appréciations actuelles par le marché de la valeur temps de l'argent et des risques spécifiques à ce passif.",
+            "La définition du coût d'achat exclut les charges internes telles que les salaires ou les amortissements.",
+            "b) Coût d'acquisition d'une marchandise, d'une matière première ou d'un service : Le coût réel d'acquisition d'une marchandise, d'une matière première ou d'un service est formé : du prix d'achat net de remises, rabais, ristournes, et de taxes récupérables. Les escomptes de règlement sont des produits financiers qui ne viennent pas en déduction du prix d'achat ; des frais accessoires rattachables directement à l'opération d'achat."
+          ],
+          "mots_cles": ["coût d'acquisition", "immobilisation", "prix d'achat", "frais accessoires", "démantèlement", "composant", "marchandise", "matière première"]
+        },
+        {
+          "numero": "1.1.1.2",
+          "titre": "1.1.1.2. Cas particuliers d'acquisitions",
+          "texte": [
+            "L'article 36 de l'Acte uniforme indique la règle en cas : d'apports des associés ou de l'État : il s'agit alors de la valeur d'apport définie et contrôlée dans le cadre du contrat ; d'acquisition à titre gratuit : utilisation de la « valeur actuelle » pour que le bien apparaisse dans les états financiers pour cette valeur et non pour un montant nul ; d'échange : si les deux termes de l'échange ne présentent pas la même fiabilité quant à leur évaluation, c'est la valeur actuelle du lot dont l'estimation est la plus sûre qui est retenue.",
+            "a) Acquisition par échange : L'article 36 de l'Acte uniforme ne vise que le cas d'échange de deux lots dont l'estimation de l'un au moins n'est pas pleinement fiable ; exemple : échange d'un terrain contre une servitude de passage. Mais lorsque l'estimation de chacun des lots est fiable, la valeur d'entrée doit être celle du bien acquis, donc sa valeur actuelle.",
+            "b) Paiement à terme : La valeur d'entrée des biens, déterminée selon la convention du coût historique et fondée sur le prix convenu, est indépendante : des modalités futures de règlement, en cas de paiement différé ; des variations de l'index retenu, en cas de règlements indexés. Toutefois, lorsqu'un règlement est différé au-delà de 12 mois à compter de la date de clôture de l'exercice, le montant (intérêts non comptabilisés) représentant la différence entre le total non actualisé des paiements futurs et la valeur actualisée de ces paiements doit faire l'objet d'une mention dans les Notes annexes s'il est significatif.",
+            "c) Acquisition avec subvention : L'article 36 de l'Acte uniforme dispose sans ambiguïté que la subvention obtenue, le cas échéant, reste sans influence sur la valeur d'entrée de l'élément.",
+            "d) Acquisition contre versement de rente viagère : La valeur d'entrée du bien est indépendante de la durée de vie du crédirentier : elle est donc soit le prix stipulé dans le contrat, soit, à défaut de stipulation, la valeur actuelle du bien à la date du contrat ; la contrepartie de cette valeur d'entrée est inscrite, en dettes, au crédit du compte 1681 - Rentes viagères capitalisées. Le décès prématuré du crédirentier, ou sa survie, conduiront à l'enregistrement du « gain » ou de la « perte » correspondants en produits ou en charges financiers.",
+            "e) Acquisition dans le cadre des contrats de location acquisition : Se reporter au traitement des contrats de location (Titre VIII : opérations et problèmes spécifiques, chapitre 8).",
+            "f) Acquisition de titres : En application du concept général de coût, les frais d'acquisition doivent être inclus dans la valeur d'entrée des titres (titres de participation, titres immobilisés de l'activité de portefeuille, autres titres immobilisés et les titres de placement). Toutefois, pour faciliter le suivi à l'inventaire de la valeur des titres de placement (par essence presque tous inscrits à une bourse de valeurs) qui se fait par comparaison entre la valeur d'entrée (cours d'achat) et le cours en bourse à la clôture (cours moyen du dernier mois), une mention doit être portée dans les Notes annexes concernant le cours d'achat de ces titres."
+          ],
+          "mots_cles": ["apports", "acquisition gratuite", "échange", "paiement à terme", "subvention", "rente viagère", "location acquisition", "titres", "frais d'acquisition"]
+        },
+        {
+          "numero": "1.1.2",
+          "titre": "1.1.2. Coût de production (immobilisations et stocks fabriqués par l'entité)",
+          "texte": [
+            "Il comprend (article 37 de l'Acte uniforme) : le coût d'acquisition des matières et fournitures utilisées ; les charges directes de production ; ainsi que des charges indirectes de production dans la mesure où elles peuvent être rattachées à la production.",
+            "Il s'agit d'un concept de coût complet. Le coût de production doit ainsi inclure : toutes les charges directes qu'elles soient externes (exemple : services extérieurs) ou internes (exemples : salaires, amortissements) ; les charges financières à condition qu'elles se rattachent indiscutablement au processus de production, jusqu'à la fin de ce processus (achèvement des produits). Exemple : intérêts d'emprunts finançant les stocks de matières premières ou la production d'une immobilisation (spécialement dans le cas d'un cycle long de production) ; les pertes, rebuts, déchets de caractère inévitable et normal et, pour les immobilisations fabriquées par l'entité, l'estimation initiale des coûts relatifs au démantèlement et à la remise en état du site.",
+            "Tous les frais accessoires encourus sont inclus dans le coût de production du bien jusqu'à son lieu d'exploitation et sa mise en état de fonctionner.",
+            "Conformément aux normes internationales, n'entrent pas dans le coût de production : les charges commerciales et les charges d'administration générale qui ne correspondent pas au processus de production ; le coût de stockage des produits finis (puisque les charges de stockage naissent après achèvement des produits) ; les pertes et les gaspillages de caractère accidentel ou anormal ; le coût de la « sous-activité ». L'imputation rationnelle des charges fixes exclut du coût de production la quote-part supplémentaire de charges de structure (fixes) induite par une sous-activité significative."
+          ],
+          "mots_cles": ["coût de production", "coût complet", "charges directes", "charges indirectes", "charges financières", "sous-activité", "imputation rationnelle", "démantèlement"]
+        },
+        {
+          "numero": "1.1.3",
+          "titre": "1.1.3. Incorporation des coûts d'emprunt",
+          "texte": [
+            "Les coûts d'emprunt nécessaires au financement de l'acquisition ou de la production d'un actif qualifié, immobilisation incorporelle, corporelle ou stock, font partie du coût du bien lorsqu'ils concernent la période de production de cet actif, jusqu'à la date d'acquisition ou la date de réception définitive.",
+            "Un actif qualifié est un actif qui exige une longue période de préparation avant de pouvoir être utilisé ou vendu."
+          ],
+          "mots_cles": ["coûts d'emprunt", "actif qualifié", "incorporation", "période de production", "cycle long"]
+        },
+        {
+          "numero": "1.1.4",
+          "titre": "1.1.4. Valorisation des stocks",
+          "texte": [
+            "Selon les dispositions de l'article 44 de l'Acte uniforme, les stocks et les productions en cours sont évalués unité par unité ou catégorie par catégorie. L'unité d'inventaire est la plus petite partie qui peut être inventoriée sous chaque article.",
+            "A leur sortie du magasin ou à l'inventaire : les biens matériellement identifiés et individualisés ainsi que ceux qui ne sont pas interchangeables, sont évalués article par article à leur coût d'entrée ; les biens interchangeables (fongibles), non identifiables après leur entrée en magasin sont évalués, soit en considérant que le premier bien entré est le premier bien sorti (méthode dite P.E.P.S.), soit à leur coût moyen pondéré d'acquisition ou de production (méthode dite C.M.P.).",
+            "Une entité doit utiliser la même méthode pour tous les stocks ayant une nature et un usage similaire pour l'entité. Pour des stocks de nature ou d'usage différents, des méthodes différentes peuvent être utilisées.",
+            "1.1.4.1. Le coût moyen pondéré après chaque entrée : Le coût d'entrée moyen est recalculé à l'occasion de chaque nouvelle entrée ; il est égal à la moyenne des différentes entrées pondérées par les quantités : du coût des stocks restant, à la date de l'entrée ; du coût des entrées à cette date. Il n'est pas modifié aussi longtemps qu'une nouvelle entrée n'est pas enregistrée. La méthode se prête parfaitement à une gestion continue en « inventaire permanent ».",
+            "1.1.4.2. Le coût moyen pondéré calculé sur la durée moyenne de stockage : Cette méthode est adaptée au cas des entités qui ne pratiquent pas l'inventaire permanent et veulent valoriser directement leur stock final (inventaire dit intermittent). Dans cette méthode : il n'y a pas valorisation des sorties durant l'exercice (inventaire intermittent) ; le stock final constaté en quantité est valorisé sur la base du coût moyen pondéré des entrées observées durant la dernière période de stockage."
+          ],
+          "mots_cles": ["stocks", "PEPS", "FIFO", "CMP", "coût moyen pondéré", "inventaire permanent", "inventaire intermittent", "unité d'inventaire", "fongibles"]
+        },
+        {
+          "numero": "1.2",
+          "titre": "1.2. Valeur actuelle",
+          "texte": []
+        },
+        {
+          "numero": "1.2.1",
+          "titre": "1.2.1. Règles générales",
+          "texte": [
+            "« La valeur actuelle d'un bien est une valeur d'estimation du moment qui s'apprécie en fonction du marché et de l'utilité du bien pour l'entité ».",
+            "Le concept de valeur actuelle repose principalement sur le principe de la continuité de l'exploitation (utilité du bien pour l'entité). En cas d'absence de continuité il faut passer à la simple valeur de marché ou à la valeur vénale (prix potentiel de vente, valeur dite de négociation).",
+            "La détermination de la valeur actuelle des biens est indispensable à l'inventaire, en vue de l'application de la convention de prudence (constatation des moins-values).",
+            "La référence au marché vise le prix du bien, à la date considérée, dans le cadre environnemental de l'entité. La valeur actuelle n'est pas égale à la valeur précédente, car il faut tenir compte de l'usure ou de l'obsolescence du bien considéré, par un abattement en fonction de l'âge du bien.",
+            "Exemple : Recherche de la valeur actuelle d'une machine achetée 10 000 000 il y a 3 ans ; durée de vie estimée de ce bien, 5 ans ; il peut donc être considéré comme amorti de 3/5, soit 60 %. Prix d'achat actuel de la même machine (ou équivalente) neuve : 14 000 000. Valeur actuelle à partir du marché : 100 % - 60 % => 40 % de 14 000 000, soit 5 600 000.",
+            "Toutefois cette valeur ne peut être retenue que s'il y a pour l'entité, continuité d'utilisation du bien ; si ce n'est pas le cas, il faudra retenir la valeur vénale, prix potentiel de revente du bien sur le marché.",
+            "En résumé, la valeur actuelle d'un bien est le prix qu'accepterait d'en donner, dans le lieu et l'état où se trouve ce bien, un acquéreur de l'entité (et non du bien isolé).",
+            "La valeur actuelle est une forme de la « juste valeur » définie dans la norme IFRS 13. La juste valeur selon la norme IFRS 13 est le prix qui serait reçu pour la vente d'un actif ou payé pour le transfert d'un passif dans une transaction ordonnée sur le marché principal (ou le plus avantageux) à la date d'évaluation selon les conditions courantes du marché (c'est-à-dire un prix de sortie), que ce prix soit directement observable ou estimé en utilisant une autre technique d'évaluation."
+          ],
+          "mots_cles": ["valeur actuelle", "juste valeur", "IFRS 13", "marché", "utilité", "continuité d'exploitation", "valeur vénale", "prix de sortie"]
+        },
+        {
+          "numero": "1.2.2",
+          "titre": "1.2.2. Cas particuliers",
+          "texte": [
+            "1.2.2.1. Immobilisations corporelles : Il faut surtout détecter les cas de non-continuité d'exploitation immédiate ou à terme (avant la fin de la durée d'utilisation prévue), car cette non-continuité va être, en général, source de moins-value. Il faut aussi une bonne connaissance des valeurs de marché qui peuvent fortement évoluer en fonction de la conjoncture économique et du progrès technologique.",
+            "1.2.2.2. Immobilisations incorporelles : Sont à vérifier les conditions d'immobilisation des frais de développement, des frais de prospection de ressources minérales et principalement les rentabilités attendues, en l'absence desquelles la valeur actuelle serait nulle. En matière de fonds commercial, la valeur actuelle est très sensible aux évolutions de l'environnement économique, commercial, juridique de l'entité.",
+            "1.2.2.3. Stocks : La continuité d'exploitation est capitale pour les en-cours dont la valeur actuelle peut être nulle si elle disparaît. Les stocks de produits finis sont également sensibles à cette continuité, alors que les stocks de matières premières présentent en général moins de risques.",
+            "1.2.2.4. Créances en monnaie ayant cours légal dans l'Etat partie : En vertu du nominalisme monétaire résultant du coût historique, les créances sont enregistrées à leur valeur nominale ; leur éventuelle dépréciation tient essentiellement à la défaillance probable du débiteur. Toutefois, pour les créances à long et à moyen terme, le concept de valeur actuelle peut conduire à l'enregistrement d'une provision pour actualisation dans le cas où ces créances seraient prévues sans intérêt ou à un taux très inférieur au taux moyen du marché financier.",
+            "1.2.2.5. Créances-dettes en monnaies étrangères : En raison de l'importance des opérations en devises pour les entités de l'OHADA, l'Acte uniforme relatif au droit comptable et à l'information financière a particulièrement détaillé le mécanisme d'enregistrement de ces créances et dettes (articles 51 à 58 de l'Acte uniforme). Ces articles portent sur les points suivants : distinction des opérations commerciales et des opérations financières ; constatation des gains et pertes de change dès la conclusion des opérations de couverture ; enregistrement des pertes probables en provisions pour risques et non comptabilisation en résultat des gains probables ; cas exceptionnel d'étalement, sur plusieurs exercices, de pertes de change sur emprunt en devises ; cas de limitation de la dotation pour pertes (donc de compensation partielle) à la différence entre pertes probables et gains latents lorsque l'entité peut justifier d'une « position globale de change » calculée devise par devise.",
+            "1.2.2.6. Titres : Pour les titres cotés, la valeur actuelle est le cours moyen boursier du dernier mois dans le cas des « Titres de placement » et des « Titres immobilisés » (sauf « Titres immobilisés de l'activité de portefeuille » ou T.I.A.P., l'évaluation doit tenir compte des perspectives d'évolution des sociétés concernées). Pour les titres de participation, la recherche de la valeur actuelle implique une évaluation approfondie des entités concernées, tenant compte des perspectives d'évolution générale de ces entités, mais aussi de l'utilité des participations pour l'entité (prise en considération, notamment, des complémentarités, voire des synergies d'ordre commercial, technologique ou économique)."
+          ],
+          "mots_cles": ["immobilisations corporelles", "immobilisations incorporelles", "fonds commercial", "stocks", "créances", "devises", "titres cotés", "titres de participation", "TIAP", "cours moyen boursier"]
+        },
+        {
+          "numero": "1.3",
+          "titre": "1.3. Valeur nette au bilan ou valeur nette comptable",
+          "texte": [
+            "Cette valeur est la plus faible des deux valeurs suivantes : valeur d'entrée et valeur actuelle, en raison de l'utilisation de la convention de prudence :",
+            "si la plus faible est la valeur d'entrée, celle-ci est retenue comme valeur nette comptable ;",
+            "si la plus faible est la valeur actuelle, c'est elle qui est retenue comme valeur nette, mais avec maintien de la valeur d'entrée en « montants bruts » et inscription pour la différence, d'amortissements et dépréciations.",
+            "Il faut toutefois noter deux différences importantes introduites par le Système comptable OHADA :",
+            "une dépréciation est à ajouter aux amortissements (d'une immobilisation amortissable) lorsqu'il existe un indice de perte de valeur ;",
+            "les dépréciations constatées sur les comptes d'actif circulant (stocks, créances) et de trésorerie sont enregistrées comme des charges externes (décaissables) afin de ne pas laisser en « dotations », donc dans la capacité d'autofinancement, ces charges qui sont, dans leur majorité, décaissées à court terme. Dès lors, les comptes qui enregistrent, à leur crédit, ces dépréciations ne constituent pas des « provisions ». Dans le Système comptable OHADA, ils ont été intitulés comptes de dépréciations."
+          ],
+          "mots_cles": ["valeur nette comptable", "valeur nette au bilan", "convention de prudence", "amortissements", "dépréciations", "charges externes", "capacité d'autofinancement"]
+        },
+        {
+          "numero": "1.4",
+          "titre": "1.4. Amortissements",
+          "texte": [
+            "L'amortissement est défini, comme la répartition systématique sur la durée d'utilité du bien de la différence entre le coût d'entrée et la valeur résiduelle prévisionnelle (article 45 de l'Acte uniforme).",
+            "Le choix du mode de répartition (linéaire, dégressif, unités d'œuvre ou de production ...) relève de la politique et de la gestion de l'entité, dans le respect des conventions comptables retenues, de la prudence tout particulièrement.",
+            "Le plus souvent, compte tenu de l'incertitude de l'avenir, les entités seront sans doute amenées à prévoir une durée d'utilité du bien égale à sa durée de vie, donc une valeur résiduelle nulle. Cette pratique doit être cependant considérée comme une simplification d'une approche plus économique qui implique, dans le cadre d'une continuité d'exploitation, la recherche et parfois le choix d'une durée d'utilisation différente."
+          ],
+          "mots_cles": ["amortissement", "répartition systématique", "durée d'utilité", "valeur résiduelle", "linéaire", "dégressif", "unités d'œuvre"]
+        },
+        {
+          "numero": "1.5",
+          "titre": "1.5. Dépréciation des immobilisations",
+          "texte": [
+            "La dépréciation permet de constater la perte de valeur de l'actif.",
+            "A la clôture de chaque exercice, une entité doit apprécier s'il existe un quelconque indice qu'un actif a subi une perte de valeur. S'il existe un tel indice, l'entité doit estimer la valeur actuelle de l'actif concerné et la comparer avec la valeur nette comptable. L'actif doit être déprécié lorsque la valeur nette comptable est supérieure à la valeur actuelle."
+          ],
+          "mots_cles": ["dépréciation", "perte de valeur", "indice", "valeur actuelle", "valeur nette comptable"]
+        },
+        {
+          "numero": "1.6",
+          "titre": "1.6. Provisions et dépréciations",
+          "texte": [
+            "À côté des dotations aux dépréciations (retenues dans le cas de l'actif immobilisé) et aux provisions pour risques et charges (au passif externe à long terme), le Système comptable OHADA propose une conception nouvelle du risque, en excluant de la capacité d'autofinancement :",
+            "les charges pour dépréciation des actifs circulants et de la trésorerie ;",
+            "les charges pour provisions pour risques à court terme.",
+            "Ces charges sont considérées comme correspondant à des décaissements probables à brève échéance.",
+            "Symétriquement, les reprises doivent être traitées comme des encaissements probables.",
+            "Les charges pour dépréciations (nettes des reprises) sont ainsi traitées, dans le compte de résultat, comme des charges externes."
+          ],
+          "mots_cles": ["provisions", "dépréciations", "capacité d'autofinancement", "charges externes", "risques à court terme", "décaissements probables"]
+        }
+      ]
+    },
+    {
+      "numero": "2",
+      "titre": "Section 2 : Règles de comptabilisation et de décomptabilisation des éléments des états financiers",
+      "sous_sections": [
+        {
+          "numero": "2.1",
+          "titre": "2.1. Règles de comptabilisation",
+          "texte": []
+        },
+        {
+          "numero": "2.1.1",
+          "titre": "2.1.1. Règles générales",
+          "texte": [
+            "Un élément d'actif, de passif, de produit, de charge est comptabilisé dès lors que : il est probable que tout avantage économique qui lui est lié ira à l'entité ou en proviendra ; l'élément a un coût ou une valeur qui peut être évalué de façon fiable."
+          ],
+          "mots_cles": ["comptabilisation", "probabilité", "avantage économique", "évaluation fiable"]
+        },
+        {
+          "numero": "2.1.2",
+          "titre": "2.1.2. Règles spécifiques",
+          "texte": [
+            "2.1.2.1. Prise en compte d'un actif : Un actif est pris en compte dans le bilan lorsqu'il est probable que des avantages économiques bénéficieront à l'entité et que l'actif a un coût ou une valeur qui peut être mesuré(e) d'une façon fiable. Par dérogation, l'écart de conversion-actif est reconnu comme un actif.",
+            "2.1.2.2. Prise en compte du passif : Un passif est pris en compte dans le bilan lorsqu'il est probable qu'un transfert de ressources économiques résultera du règlement de l'obligation à la charge de l'entité et que le montant de ce règlement peut être mesuré d'une façon fiable. Par dérogation, l'écart de conversion-passif et les provisions réglementées sont reconnus comme des passifs.",
+            "2.1.2.3. Prise en compte des produits :",
+            "A) Règles générales : Les produits sont généralement pris en compte lorsqu'une augmentation des avantages économiques, liée à une augmentation d'actif ou à une diminution de passif, s'est produite et qu'elle peut être mesurée de façon fiable.",
+            "B) Cas particulier de la comptabilisation du chiffre d'affaires : Selon la norme comptable internationale IFRS 15 « Produits des contrats avec les clients », la comptabilisation des produits résultant de contrats avec les clients doit traduire le transfert à un client du contrôle d'un bien ou d'un service pour le montant auquel le vendeur s'attend à avoir droit.",
+            "a) Le rattachement des ventes de biens : C'est la livraison, c'est-à-dire la délivrance du bien ayant fait l'objet du contrat, qui marque le transfert à un client du contrôle d'un bien. C'est donc la livraison qui sera prise en considération pour le rattachement des produits correspondants à l'exercice.",
+            "Le cas des ventes sous conditions : Il existe trois catégories principales de ventes sous conditions : vente sous condition suspensive (la comptabilisation de la vente est suspendue jusqu'à la date à laquelle la condition se trouve réalisée) ; vente sous condition résolutoire (la vente n'est pas suspendue par la condition et le produit est pris en compte immédiatement, mais elle est annulée rétroactivement en cas de réalisation de la condition résolutoire) ; vente avec clause de réserve de propriété (elles sont rattachées, en vertu du principe de la prééminence économique sur l'apparence juridique, à l'exercice de livraison du bien et non à celui du transfert de propriété).",
+            "b) Le rattachement des prestations de services : C'est en principe à la date d'achèvement de la prestation que le produit correspondant est rattaché à l'exercice. Toutefois, certaines prestations se caractérisent par des obligations de faire en continu ou par des obligations discontinues mais à échéances successives.",
+            "Le cas des prestations continues : Le produit est considéré comme définitivement acquis à l'entité au fur et à mesure de l'exécution des prestations de services. Exemples : perception de loyers ou d'intérêts, contrats de maintenance, d'entretien et de garantie.",
+            "Le cas des prestations discontinues à échéances successives : La prise en compte du produit intervient au fur et à mesure des échéances successives d'exécution de la prestation.",
+            "Les contrats « composites » : Une vente composée de différents éléments (vente de biens et de prestations services, vente de plusieurs prestations de services, certaines s'étalant dans le temps). Pour déterminer l'exercice de rattachement du chiffre d'affaires, il convient préalablement d'isoler les différentes composantes indépendantes des contrats.",
+            "Le cas des contrats de biens immobiliers : Les règles de comptabilisation du chiffre d'affaires provenant des contrats de biens immobiliers dépendent de la nature des contrats : contrat pluri-exercices (chiffre d'affaires en fonction du degré d'avancement) ; contrat de fourniture de services (méthode du pourcentage d'avancement) ; contrat de vente de biens (selon que le contrôle peut être transféré progressivement ou non).",
+            "2.1.2.4. Prise en compte des charges : Les charges sont prises en compte lorsqu'une diminution des avantages économiques, liée à la diminution d'un actif ou à l'augmentation d'un passif, s'est produite et qu'elle peut être mesurée de façon fiable."
+          ],
+          "mots_cles": ["prise en compte", "actif", "passif", "produits", "charges", "chiffre d'affaires", "IFRS 15", "livraison", "ventes sous conditions", "condition suspensive", "condition résolutoire", "réserve de propriété", "prestations de services", "contrats composites", "biens immobiliers", "avancement"]
+        },
+        {
+          "numero": "2.2",
+          "titre": "2.2. Règles générales de décomptabilisation ou de sortie",
+          "texte": [
+            "Une entité doit décomptabiliser un actif ou un passif lorsqu'il ne remplit plus les critères de comptabilisation.",
+            "L'entité doit décomptabiliser un actif en cas de mise au rebut, de cession, de destruction, de vol ou de disparition ou lorsque les droits contractuels sur les flux de trésorerie de l'actif arrivent à expiration ou encore lorsque l'entité transfère cet actif.",
+            "L'entité doit décomptabiliser un passif externe (ou une partie du passif externe) lorsque ce passif est éteint, lorsque l'obligation précisée au contrat est exécutée, qu'elle est annulée ou qu'elle expire."
+          ],
+          "mots_cles": ["décomptabilisation", "sortie", "mise au rebut", "cession", "destruction", "extinction du passif", "expiration"]
+        }
+      ]
+    },
+    {
+      "numero": "3",
+      "titre": "Section 3 : Capital financier et capital opérationnel",
+      "sous_sections": [
+        {
+          "numero": "3.0",
+          "titre": "Introduction",
+          "texte": [
+            "Le capital de l'entité se définit selon les deux concepts majeurs ci-après : le capital financier ; le capital physique.",
+            "Le choix du concept approprié de capital dépend de plusieurs facteurs dont : l'importance du niveau de l'inflation et des variations spécifiques des prix ; les caractéristiques de l'entité et de son environnement technologique et autre ; les besoins des utilisateurs des états financiers et leur souci de maintenir un type de capital ou un autre."
+          ],
+          "mots_cles": ["capital financier", "capital physique", "inflation", "choix du concept"]
+        },
+        {
+          "numero": "3.1",
+          "titre": "3.1. Capital financier",
+          "texte": [
+            "Dans cette conception, le « capital » financier de l'entité est représentatif des sommes investies par les associés (ou l'exploitant), lesquelles correspondent à un certain « pouvoir d'achat investi ».",
+            "Ce capital financier est égal à « l'actif net » ou montant des capitaux propres de l'entité, capitaux propres que le Système comptable OHADA met tout particulièrement en évidence au passif du bilan.",
+            "Compte tenu des variations possibles du pouvoir d'achat de la monnaie de référence, cette conception financière du capital distingue le capital « nominal » et le capital « réel » mesuré en monnaie constante, c'est-à-dire en termes de pouvoir d'achat. Cette distinction est essentielle pour le calcul du « résultat » qui ne peut apparaître qu'à partir d'une définition claire du « maintien du capital »."
+          ],
+          "mots_cles": ["capital financier", "actif net", "capitaux propres", "pouvoir d'achat", "capital nominal", "capital réel", "monnaie constante"]
+        },
+        {
+          "numero": "3.2",
+          "titre": "3.2. Capital physique ou « opérationnel »",
+          "texte": [
+            "Dans cette approche, le « capital » se définit comme une « capacité de production » de l'entité.",
+            "Exemple : pour une raffinerie de pétrole, 5 millions de tonnes par an de pétrole brut.",
+            "Cette définition économique et non financière du capital lie donc ce dernier à un certain volume de production potentielle ; la définition du maintien du capital s'en trouve modifiée par rapport à celle du capital financier."
+          ],
+          "mots_cles": ["capital physique", "capital opérationnel", "capacité de production", "volume de production"]
+        },
+        {
+          "numero": "3.3",
+          "titre": "3.3. Maintien du capital et résultat",
+          "texte": [
+            "3.3.1. Résultat d'une période ou d'un exercice : Dans une conception comme dans l'autre, le résultat ne peut être mesuré qu'à partir d'une comparaison entre le capital final, constaté à la clôture de l'exercice, et le capital initial qu'il s'agit de « maintenir ». Résultat = Capital final - Capital initial. Si la différence est positive, il y a enrichissement de l'entité, donc profit ; si la différence est négative, il y a appauvrissement, donc perte.",
+            "Les conditions de validité du calcul sont : « neutraliser » dans le « capital final » tous les apports nouveaux de capital et tous les retraits effectués durant la période ; s'assurer du « maintien du capital initial ».",
+            "3.3.2. Maintien du capital financier : Pour qu'il y ait maintien du capital financier, il est indispensable que la comparaison « Capital final - Capital initial » soit effectuée avec la même unité de mesure. Or cette unité de mesure du capital financier peut être constituée : soit par les unités monétaires nominales, en l'occurrence les francs « courants » par exemple ; soit par les unités monétaires « constantes », réajustées en fonction de leur pouvoir d'achat.",
+            "3.3.3. Maintien du capital physique : La comparaison « Capital final - Capital initial » se fait en termes de capacité de production. Un profit n'est obtenu, dans cette conception, que si la capacité opérationnelle finale excède celle du début de période.",
+            "Cette conception du maintien du capital opérationnel est difficile à mettre en œuvre dans l'entité, car elle suppose des définitions toujours délicates des « capacités de production ». La majorité des modèles comptables retiennent le concept de maintien du capital financier. Le Système comptable OHADA, pour ces différentes raisons, fait de même."
+          ],
+          "mots_cles": ["maintien du capital", "résultat", "capital final", "capital initial", "enrichissement", "profit", "perte", "francs courants", "francs constants", "capacité de production"]
+        },
+        {
+          "numero": "3.4",
+          "titre": "3.4. Le maintien du capital financier dans le Système comptable OHADA",
+          "texte": [
+            "Il a été précisé que le maintien du capital financier peut être déterminé sur la base des unités monétaires nominales, ou sur celle des unités monétaires constantes ; ce dernier cas permettant de tenir compte de l'évolution du pouvoir d'achat de la monnaie (inflation).",
+            "3.4.1. Le choix du modèle comptable : Pour le normalisateur, le choix d'un modèle ou d'un autre dépend des caractéristiques de l'environnement économique, de la nature de l'élément à évaluer, de la nature des décideurs et des décisions et finalement des coûts et avantages de chaque modèle. Si le choix est basé sur la seule caractéristique de l'environnement relative aux variations dans les prix : lorsque les prix généraux et les prix spécifiques sont relativement stables, le modèle du capital financier déterminé sur la base des unités monétaires nominales (francs courants) sera approprié ; lorsque l'environnement est caractérisé par des variations générales dans le prix (inflation), il y a lieu de recommander le modèle du capital financier déterminé sur la base des unités monétaires constantes (francs constants).",
+            "3.4.2. Maintien du capital et francs courants : En termes de francs courants (ou nominaux) le résultat apparaît comme la différence : Capital (nominal) final - Capital (nominal) initial (après « neutralisation » des augmentations / diminutions d'apports durant la période). Dans cette conception, sont donc a priori incluses dans le « profit » : les augmentations du capital nominal résultant des transactions et opérations effectuées dans l'exercice (bénéfices sur ventes de biens et de services) ; celles résultant de la simple détention d'actifs divers (immobilisations, stocks, titres...), dont la valeur actuelle, en francs courants, s'est accrue durant l'exercice, alors que ces actifs n'ont donné lieu à aucune transaction. Exemples : « plus-values » observées sur un stock demeuré dans l'entité, sur une immobilisation, etc.",
+            "La prise en compte du principe de prudence fait ressortir le danger de l'inclusion, dans le résultat, de ces « gains de détention ». Aussi, la plupart des pays qui retiennent le concept de maintien du capital en unités monétaires courantes excluent-ils du résultat ces gains de détention, par application du principe de prudence.",
+            "Le Système comptable OHADA applique le concept de maintien du capital en francs courants, avec exclusion des gains de détention, comme l'indiquent les articles 35 à 55 de l'Acte Uniforme. Cette exclusion n'est cependant pas totale car, à l'exception des devises détenues et des instruments financiers, il faut ajouter l'atténuation de l'exclusion qui résulte de certaines compensations partielles autorisées en matière de titres et en matière de créances/dettes libellées en monnaies étrangères sous certaines conditions.",
+            "3.4.3. Maintien du capital et monnaie en vigueur au cours constant dans l'Etat partie : L'Acte uniforme relatif au droit comptable et à l'information financière ne pouvait pas ne pas prévoir des possibilités de « réévaluation » des éléments du bilan, pour tenir compte de la tendance générale et inéluctable à long terme d'une certaine dérive des prix et de la perte du pouvoir d'achat du franc.",
+            "L'Acte uniforme en ses articles 35 et 62 à 65 accorde donc une place à la conception du maintien du capital en francs constants (à pouvoir d'achat constant).",
+            "Dans cette conception, le capital est « maintenu » en termes de pouvoir d'achat constant et le profit représente seulement la part d'accroissement des valeurs des actifs qui excède l'accroissement du niveau général des prix.",
+            "L'accroissement des capitaux propres correspondant à celui du niveau général des prix est à considérer comme un ajustement de maintien du capital. Il fait partie, à ce titre, des capitaux propres (« Écarts de réévaluation », poste de capitaux propres situé entre capital et réserves)."
+          ],
+          "mots_cles": ["maintien du capital", "SYSCOHADA", "francs courants", "francs constants", "gains de détention", "prudence", "réévaluation", "pouvoir d'achat", "écarts de réévaluation", "inflation"]
+        }
+      ]
+    }
+  ]
+}
