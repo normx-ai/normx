@@ -1,6 +1,36 @@
 /**
- * Service Permissions - NormX
- * Gestion des permissions par module pour chaque utilisateur dans un schema tenant.
+ * Service Permissions — NormX
+ *
+ * Source de verite du modele RBAC. Gere les permissions par (utilisateur, module)
+ * dans chaque schema tenant via la table `permissions_modules`.
+ *
+ * Trois dimensions :
+ *   Modules (6) : compta, paie, etats, revision, assistant, admin
+ *   Actions (4) : lire, creer, modifier, supprimer
+ *   Roles   (5) : admin, comptable, gestionnaire_paie, reviseur, lecture_seule
+ *
+ * Matrice roles → permissions (appliquee a la creation d'un utilisateur via
+ * `initPermissionsFromRole`, cf. `buildRolePermissions` plus bas) :
+ *
+ *   admin             → toutes permissions sur tous les modules
+ *   comptable         → tout sur compta/etats, lecture sur paie/revision
+ *   gestionnaire_paie → tout sur paie, lecture sur compta
+ *   reviseur          → tout sur revision, lecture sur compta/etats
+ *   lecture_seule     → lecture sur tous les modules
+ *   (role inconnu)    → lecture sur tous les modules (fallback defensif)
+ *
+ * Une fois initialisees, les permissions sont modifiables individuellement via
+ * `setPermission` (ex: l'admin peut accorder `creer` sur paie a un comptable).
+ *
+ * Points d'application :
+ *   - middleware `requirePermission(module, action)` : verifie la cellule
+ *     (module, action) pour l'utilisateur courant avant d'atteindre la route.
+ *   - middleware `requireModule(module)` : orthogonal, verifie que le *tenant*
+ *     a souscrit au module (pas de lien avec l'utilisateur).
+ *
+ * Les deux middlewares se composent : typiquement
+ *   app.use('/api/paie', ...tenantChain, requireModule('paie'),
+ *           requirePermission('paie', 'lire'), paieRoutes);
  */
 
 import pool from '../db';
