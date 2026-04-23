@@ -18,9 +18,6 @@ export function sanitizeSchemaName(slug: string): string {
   if (!normalized) {
     throw new Error('Format de schema invalide: ' + slug);
   }
-  if (!/^[a-z]/.test(normalized)) {
-    throw new Error('Un schema doit commencer par une lettre: ' + slug);
-  }
   if (normalized.length > 63) {
     throw new Error('Nom de schema trop long (>63): ' + slug);
   }

@@ -115,7 +115,9 @@ router.post('/', async (req: Request, res: Response) => {
       });
     }
 
-    const clientSlug = `${req.tenant.slug}_client_${Date.now()}`;
+    // Slug client court et stable (ne depend pas du slug du cabinet, qui peut
+    // etre long ou demarrer par un chiffre). Le parent reste trace via parent_id.
+    const clientSlug = `c_${req.tenant.id}_${Date.now()}`;
     const client = await tenantService.createTenant({
       slug: clientSlug,
       nom: nom.trim(),

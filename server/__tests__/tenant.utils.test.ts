@@ -40,8 +40,8 @@ describe('tenant.utils', () => {
       expect(() => sanitizeSchemaName('')).toThrow();
     });
 
-    test('rejects string starting with number after normalization', () => {
-      expect(() => sanitizeSchemaName('123abc')).toThrow();
+    test('accepts string starting with number (prefix tenant_ handles letter-start)', () => {
+      expect(sanitizeSchemaName('123abc')).toBe('123abc');
     });
 
     test('rejects string over 63 chars', () => {
@@ -115,6 +115,12 @@ describe('tenant.utils', () => {
       const result = slugToSchemaName(shortSlug);
       expect(result).toBe('tenant_' + shortSlug);
       expect(result.length).toBeLessThanOrEqual(63);
+    });
+
+    test('accepts slug starting with digit (UUID-based Keycloak sub)', () => {
+      expect(slugToSchemaName('5cd7f98a_0593_4855_8c13_8c629f08ff45')).toBe(
+        'tenant_5cd7f98a_0593_4855_8c13_8c629f08ff45',
+      );
     });
   });
 });
