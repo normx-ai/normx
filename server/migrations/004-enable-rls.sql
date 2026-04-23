@@ -66,17 +66,7 @@ ALTER TABLE "${schema_name}".tiers FORCE ROW LEVEL SECURITY;
 CREATE POLICY tenant_isolation_tiers ON "${schema_name}".tiers
   USING (true) WITH CHECK (true);
 
--- Declarations TVA
-ALTER TABLE "${schema_name}".declarations_tva ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".declarations_tva FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_declarations_tva ON "${schema_name}".declarations_tva
-  USING (true) WITH CHECK (true);
-
--- Declaration TVA lignes
-ALTER TABLE "${schema_name}".declaration_tva_lignes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".declaration_tva_lignes FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_declaration_tva_lignes ON "${schema_name}".declaration_tva_lignes
-  USING (true) WITH CHECK (true);
+-- Module TVA retire par migration 009 (non portable OHADA, traite dans l'app tax dediee)
 
 -- Revision data
 ALTER TABLE "${schema_name}".revision_data ENABLE ROW LEVEL SECURITY;
