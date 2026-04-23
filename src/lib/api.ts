@@ -54,3 +54,53 @@ export async function clientFetch(path: string, init?: RequestInit): Promise<Res
     headers,
   });
 }
+
+// ==================== JSON helpers + erreurs ====================
+
+export class ApiError extends Error {
+  status: number;
+  code?: string;
+  constructor(message: string, status: number, code?: string) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+    this.code = code;
+  }
+}
+
+type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+type JsonBody = Record<string, JsonValue>;
+
+async function parseJsonOrError<T>(res: Response): Promise<T> {
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({} as { error?: string; code?: string }));
+    throw new ApiError(data.error || `Erreur ${res.status}`, res.status, data.code);
+  }
+  return res.json();
+}
+
+function withJsonHeaders(init: RequestInit | undefined, method: string, body: JsonBody): RequestInit {
+  const headers = new Headers(init?.headers);
+  headers.set('Content-Type', 'application/json');
+  return { ...init, method, headers, body: JSON.stringify(body) };
+}
+
+/**
+ * POST/PUT/DELETE JSON au niveau cabinet (sans X-Client-Slug).
+ * Parse la reponse JSON, leve ApiError avec code si !ok.
+ */
+export async function cabinetPost<T>(url: string, body: JsonBody): Promise<T> {
+  return parseJsonOrError<T>(await cabinetFetch(url, withJsonHeaders(undefined, 'POST', body)));
+}
+
+export async function cabinetPut<T>(url: string, body: JsonBody): Promise<T> {
+  return parseJsonOrError<T>(await cabinetFetch(url, withJsonHeaders(undefined, 'PUT', body)));
+}
+
+export async function cabinetDelete(url: string): Promise<void> {
+  const res = await cabinetFetch(url, { method: 'DELETE' });
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({} as { error?: string; code?: string }));
+    throw new ApiError(data.error || `Erreur ${res.status}`, res.status, data.code);
+  }
+}

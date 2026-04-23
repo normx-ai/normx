@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LuX } from 'react-icons/lu';
-import { apiPost } from '../../api';
+import { cabinetPost } from '../../lib/api';
 import { api } from '../../lib/apiEndpoints';
 
 interface CabinetExerciceModalProps {
@@ -34,7 +34,7 @@ function CabinetExerciceModal({ open, onClose, onCreated }: CabinetExerciceModal
     setLoading(true);
     setError('');
     try {
-      await apiPost(api.tenant.exercice, { annee, date_debut: dateDebut, date_fin: dateFin });
+      await cabinetPost(api.tenant.exercice, { annee, date_debut: dateDebut, date_fin: dateFin });
       await onCreated();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors de la creation de l\'exercice.');

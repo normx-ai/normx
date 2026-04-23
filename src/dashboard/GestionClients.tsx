@@ -1,9 +1,8 @@
-import { clientFetch } from '../lib/api';
+import { clientFetch, cabinetPost, cabinetPut, cabinetDelete, ApiError } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import React, { useState } from 'react';
 import { LuSearch, LuPlus } from 'react-icons/lu';
 import { Entite, NormxModule } from '../types';
-import { apiPost, apiPut, apiDelete, ApiError } from '../api';
 import { ENABLED_MODULES } from '../config/modules';
 import ConfirmModal from '../components/ConfirmModal';
 import ClientsTable from './clients/ClientsTable';
@@ -104,10 +103,10 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
 
     try {
       if (editingId) {
-        const updated = await apiPut<Entite>(api.entites.byId(editingId), { ...formData, modules });
+        const updated = await cabinetPut<Entite>(api.entites.byId(editingId), { ...formData, modules });
         onEntiteUpdated(updated);
       } else {
-        const created = await apiPost<Entite>(api.entites.list, { ...formData, modules });
+        const created = await cabinetPost<Entite>(api.entites.list, { ...formData, modules });
         onEntiteCreated(created);
       }
       setShowForm(false);
@@ -142,7 +141,7 @@ function GestionClients({ entites, currentEntiteId, onSelectEntite, onEntiteCrea
     const runDelete = async (): Promise<void> => {
       setConfirmState((prev) => ({ ...prev, open: false }));
       try {
-        await apiDelete(api.entites.byId(id));
+        await cabinetDelete(api.entites.byId(id));
         onEntiteDeleted(id);
       } catch { /* silently fail */ }
     };
