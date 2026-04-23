@@ -1,6 +1,16 @@
 /**
- * Helper API — utilise les cookies httpOnly (plus de localStorage)
- * Les cookies sont envoyes automatiquement via credentials: 'include'
+ * Helper API — utilise les cookies httpOnly (plus de localStorage).
+ * Les cookies sont envoyes automatiquement via credentials: 'include'.
+ *
+ * Ces helpers (apiPost/apiPut/apiDelete) sont utilises uniquement par les
+ * ecrans de gestion au niveau CABINET (GestionClients, creation d'exercice
+ * cabinet). Ils DOIVENT donc desactiver l'injection automatique du slug
+ * client actif faite par csrf-fetch.ts — sinon le backend reoriente la
+ * requete vers le schema client au lieu du schema cabinet.
+ *
+ * Pose d'un header X-Client-Slug vide qui signale au fetch interceptor
+ * "ne surtout pas injecter de slug ici" (meme convention que cabinetFetch
+ * dans lib/api.ts).
  */
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
@@ -12,7 +22,10 @@ function getCsrfToken(): string {
 }
 
 function authHeaders(): Record<string, string> {
-  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'X-Client-Slug': '',
+  };
   const csrf = getCsrfToken();
   if (csrf) headers['X-XSRF-TOKEN'] = csrf;
   return headers;
