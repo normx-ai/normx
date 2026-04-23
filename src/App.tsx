@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { KeycloakProvider, useKeycloak } from './auth/KeycloakProvider';
 import { ClientProvider, useClient } from './contexts/ClientContext';
 import { setApiClientSlug } from './lib/api';
-import { useTenant, useEntites } from './lib/queries';
+import { useTenant, useEntites, useInvalidateEntites } from './lib/queries';
 import Dashboard from './dashboard/Dashboard';
 import Onboarding from './components/Onboarding';
 import Toast from './components/Toast';
@@ -86,13 +86,18 @@ function AppContent(): React.JSX.Element {
     navigate(location.pathname + '?' + params.toString(), { replace: true });
   };
 
+  const invalidateEntites = useInvalidateEntites();
+
   const handleEntiteCreated = (entite: Entite): void => {
+    invalidateEntites();
     if (!currentEntite) setCurrentEntite(entite);
   };
   const handleEntiteUpdated = (entite: Entite): void => {
+    invalidateEntites();
     if (currentEntite?.id === entite.id) setCurrentEntite(entite);
   };
   const handleEntiteDeleted = (id: number): void => {
+    invalidateEntites();
     if (currentEntite?.id === id) setCurrentEntite(entites.find(e => e.id !== id) || null);
   };
 
