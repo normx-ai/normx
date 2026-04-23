@@ -87,6 +87,28 @@ export async function getCabinetClients(cabinetId: number): Promise<Tenant[]> {
   return result.rows;
 }
 
+// ============ SLUG HELPERS ============
+
+/**
+ * Slug pour un client cree via l'UI (bouton "Ajouter un client").
+ * Forme : c_<cabinetId>_<timestamp>_<4hex>. Court (~25 chars), commence par
+ * une lettre, quasi-unique meme en cas d'appel simultane grace au suffixe
+ * aleatoire (collision Date.now() seule possible a la meme ms sur le meme
+ * cabinet). Le lien parent reste trace via parent_id.
+ */
+export function generateClientSlug(cabinetId: number): string {
+  const rand = Math.random().toString(36).slice(2, 6);
+  return `c_${cabinetId}_${Date.now()}_${rand}`;
+}
+
+/**
+ * Slug pour le self-client auto-cree a l'onboarding cabinet. Stable (un seul
+ * par cabinet, verifie par getCabinetClients avant appel) et idempotent.
+ */
+export function generateSelfClientSlug(cabinetId: number): string {
+  return `c_${cabinetId}_self`;
+}
+
 // ============ CREATION ============
 
 export async function createTenant(input: CreateTenantInput): Promise<Tenant> {

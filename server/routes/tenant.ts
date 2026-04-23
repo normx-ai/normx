@@ -72,7 +72,7 @@ router.post('/setup', async (req: Request, res: Response) => {
     if (type === 'cabinet' && tenant) {
       const existingClients = await tenantService.getCabinetClients(tenant.id);
       if (existingClients.length === 0) {
-        const clientSlug = `${slug}_client_self`;
+        const clientSlug = tenantService.generateSelfClientSlug(tenant.id);
         const selfClient = await tenantService.createTenant({
           slug: clientSlug,
           nom,
