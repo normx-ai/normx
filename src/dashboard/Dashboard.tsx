@@ -283,7 +283,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   if (!activeModule) {
     return (
       <div className="dashboard">
-        <Topbar {...topbarProps} moduleLabel="AI" dossierSelector={dossierSelector} />
+        <Topbar {...topbarProps} moduleLabel="Cabinet" dossierSelector={dossierSelector} />
         <div className="portail-body portail-body-with-sidebar">
           <PortailSidebar
             active={portailSection}
