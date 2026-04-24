@@ -55,6 +55,15 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* Charte NORMX : angles droits partout. Override tout border-radius
+   (inline, CSS modules, inline styles, librairies tierces) — y compris
+   les 50 % utilises pour les avatars et les pills. */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
