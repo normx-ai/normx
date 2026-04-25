@@ -60,7 +60,8 @@
 
 .liasse-content .etat-toolbar,
 .liasse-content .bilan-toolbar,
-.liasse-content .etat-exercice-select {
+.liasse-content .etat-exercice-select,
+.liasse-content .bilan-exercice-select {
   display: none !important;
 }
 
