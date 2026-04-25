@@ -43,7 +43,6 @@ interface UseExercicesQueryResult {
 
 export function useExercicesQuery(entiteId: number): UseExercicesQueryResult {
   const queryClient = useQueryClient();
-  const selectedKey = ['selected-exercice', entiteId];
 
   const { data: exercicesData, isLoading } = useQuery({
     queryKey: ['exercices', entiteId],
@@ -60,7 +59,7 @@ export function useExercicesQuery(entiteId: number): UseExercicesQueryResult {
   const exercices: Exercice[] = exercicesData ?? [];
 
   const { data: selectedExercice = null } = useQuery<Exercice | null>({
-    queryKey: selectedKey,
+    queryKey: ['selected-exercice', entiteId],
     queryFn: () => null,
     enabled: false,
     staleTime: Infinity,
@@ -68,15 +67,15 @@ export function useExercicesQuery(entiteId: number): UseExercicesQueryResult {
   });
 
   const setSelectedExercice = useCallback((e: Exercice | null) => {
-    queryClient.setQueryData<Exercice | null>(selectedKey, e);
-  }, [queryClient, entiteId]); // eslint-disable-line react-hooks/exhaustive-deps
+    queryClient.setQueryData<Exercice | null>(['selected-exercice', entiteId], e);
+  }, [queryClient, entiteId]);
 
   useEffect(() => {
     if (!selectedExercice && exercices.length > 0) {
       const def = pickDefaultExercice(exercices);
-      if (def) queryClient.setQueryData<Exercice | null>(selectedKey, def);
+      if (def) queryClient.setQueryData<Exercice | null>(['selected-exercice', entiteId], def);
     }
-  }, [exercices, selectedExercice, queryClient]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [exercices, selectedExercice, queryClient, entiteId]);
 
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const dateFin = selectedExercice?.date_fin || '';
