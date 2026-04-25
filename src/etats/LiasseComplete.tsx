@@ -39,6 +39,15 @@ const NOTE_COMPONENTS: Record<string, React.LazyExoticComponent<React.ComponentT
 const PDF_WIDTH_MM = 210;
 const PDF_HEIGHT_MM = 297;
 
+// Hors du composant : evite que React remonte tout l'arbre au moindre re-render
+// de LiasseComplete (sinon chaque toggle d'etat retire/remet 47 notes => 429)
+const LiasseSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
+  <>
+    <div className="liasse-section-title no-print">{title}</div>
+    <div className="liasse-page">{children}</div>
+  </>
+);
+
 export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element {
   const { entiteId, onBack } = props;
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
@@ -111,13 +120,6 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
     if (w) { w.onload = () => w.print(); }
   }, [previewUrl]);
 
-  const Section: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <>
-      <div className="liasse-section-title no-print">{title}</div>
-      <div className="liasse-page">{children}</div>
-    </>
-  );
-
   return (
     <div className="liasse-wrapper">
       <div className="liasse-toolbar no-print">
@@ -174,47 +176,47 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
       {selectedExercice && (
         <div className="liasse-content" ref={containerRef}>
           <Suspense fallback={<div className="liasse-empty">Chargement de la liasse...</div>}>
-            <Section title="Page de garde">
+            <LiasseSection title="Page de garde">
               <PageDeGarde {...props} />
-            </Section>
-            <Section title="Fiche d'identification (R1)">
+            </LiasseSection>
+            <LiasseSection title="Fiche d'identification (R1)">
               <FicheIdentification {...props} page="R1" onGoToParametres={noopGoToParams} />
-            </Section>
-            <Section title="Fiche R2 — Informations juridiques">
+            </LiasseSection>
+            <LiasseSection title="Fiche R2 — Informations juridiques">
               <FicheIdentification {...props} page="R2" onGoToParametres={noopGoToParams} />
-            </Section>
-            <Section title="Fiche R3 — Dirigeants">
+            </LiasseSection>
+            <LiasseSection title="Fiche R3 — Dirigeants">
               <FicheR3 {...props} onGoToParametres={noopGoToParams} />
-            </Section>
-            <Section title="Fiche R4 — Notes annexes (applicabilite)">
+            </LiasseSection>
+            <LiasseSection title="Fiche R4 — Notes annexes (applicabilite)">
               <FicheR4 {...props} onGoToParametres={noopGoToParams} />
-            </Section>
-            <Section title="Bilan — Actif">
+            </LiasseSection>
+            <LiasseSection title="Bilan — Actif">
               <BilanSYSCOHADA {...props} page="actif" />
-            </Section>
-            <Section title="Bilan — Passif">
+            </LiasseSection>
+            <LiasseSection title="Bilan — Passif">
               <BilanSYSCOHADA {...props} page="passif" />
-            </Section>
-            <Section title="Compte de resultat">
+            </LiasseSection>
+            <LiasseSection title="Compte de resultat">
               <CompteResultatSYSCOHADA {...props} />
-            </Section>
-            <Section title="Tableau des flux de tresorerie">
+            </LiasseSection>
+            <LiasseSection title="Tableau des flux de tresorerie">
               <TFT_SYSCOHADA {...props} />
-            </Section>
+            </LiasseSection>
 
             {allNotes.map(meta => {
               const Cmp = NOTE_COMPONENTS[meta.id];
               if (!Cmp) return null;
               return (
-                <Section key={meta.id} title={`${meta.titre} — ${meta.desc}`}>
+                <LiasseSection key={meta.id} title={`${meta.titre} — ${meta.desc}`}>
                   <Cmp {...props} onGoToParametres={noopGoToParams} />
-                </Section>
+                </LiasseSection>
               );
             })}
 
-            <Section title="Note 37 bis — Determination du resultat fiscal">
+            <LiasseSection title="Note 37 bis — Determination du resultat fiscal">
               <ResultatFiscal {...props} />
-            </Section>
+            </LiasseSection>
           </Suspense>
         </div>
       )}
