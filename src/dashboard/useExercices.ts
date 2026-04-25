@@ -95,9 +95,12 @@ export function useExercices(entiteId: number): UseExercicesReturn {
   useEffect(() => {
     if (cachedSelected || exercices.length === 0) return;
     const clotures = exercices.filter(e => e.statut === 'cloture').sort((a, b) => b.annee - a.annee);
+    const avecData = exercices.filter(e => e.has_data).sort((a, b) => b.annee - a.annee);
     let pick: Exercice;
     if (clotures.length > 0) {
       pick = clotures[0];
+    } else if (avecData.length > 0) {
+      pick = avecData[0];
     } else {
       const now = new Date();
       const year = now.getFullYear();

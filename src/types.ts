@@ -13,6 +13,7 @@ export interface Exercice {
   date_fin?: string;
   duree_mois?: number;
   statut?: string;
+  has_data?: boolean;
 }
 
 export interface BalanceLigne {

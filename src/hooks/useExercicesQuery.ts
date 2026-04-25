@@ -21,10 +21,13 @@ import type { Exercice } from '../types';
 
 function pickDefaultExercice(data: Exercice[]): Exercice | null {
   if (data.length === 0) return null;
-  // Priorite : le dernier exercice cloture (annee la plus recente)
+  // 1. Priorite au dernier exercice cloture
   const clotures = data.filter(e => e.statut === 'cloture').sort((a, b) => b.annee - a.annee);
   if (clotures.length > 0) return clotures[0];
-  // Sinon fallback heuristique calendrier (jan-fev prefere N-1, sinon N)
+  // 2. Sinon dernier exercice avec donnees (balance ou ecritures)
+  const avecData = data.filter(e => e.has_data).sort((a, b) => b.annee - a.annee);
+  if (avecData.length > 0) return avecData[0];
+  // 3. Sinon fallback heuristique calendrier (jan-fev prefere N-1, sinon N)
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();

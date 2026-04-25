@@ -75,8 +75,13 @@ export async function createExercice(
 
 export async function listExercices(schema: string) {
   const s = getValidatedSchemaName(schema);
+  // has_data : true si l'exercice a au moins une balance importee OU une ecriture
   const result = await pool.query(
-    `SELECT * FROM "${s}".exercices ORDER BY annee DESC`,
+    `SELECT e.*,
+      (EXISTS(SELECT 1 FROM "${s}".balances b WHERE b.exercice_id = e.id)
+       OR EXISTS(SELECT 1 FROM "${s}".ecritures ec WHERE ec.exercice_id = e.id)) AS has_data
+     FROM "${s}".exercices e
+     ORDER BY e.annee DESC`,
   );
   return result.rows;
 }
