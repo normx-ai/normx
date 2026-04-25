@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import { Exercice } from '../types';
@@ -44,8 +45,8 @@ export interface UseExercicesReturn {
 }
 
 export function useExercices(entiteId: number): UseExercicesReturn {
-  const [exerciceId, setExerciceId] = useState<number | null>(null);
-  const [exercices, setExercices] = useState<Exercice[]>([]);
+  const queryClient = useQueryClient();
+  const [exerciceId, setExerciceIdLocal] = useState<number | null>(null);
   const [exerciceLoading, setExerciceLoading] = useState<boolean>(false);
 
   // Exercice modal state
@@ -61,29 +62,62 @@ export function useExercices(entiteId: number): UseExercicesReturn {
     open: false, title: '', message: '', variant: 'danger', onConfirm: () => {},
   });
 
-  // Fetch exercices on entite change
+  // Liste exercices via React Query (meme cache que useExercicesQuery)
+  const { data: exercicesData = [] } = useQuery({
+    queryKey: ['exercices', entiteId],
+    queryFn: async (): Promise<Exercice[]> => {
+      const r = await clientFetch(api.balance.exercicesByEntite(entiteId));
+      if (!r.ok) throw new Error('Erreur chargement exercices');
+      return r.json();
+    },
+    staleTime: 2 * 60 * 1000,
+    gcTime: 30 * 60 * 1000,
+    enabled: entiteId > 0,
+  });
+  const exercices: Exercice[] = exercicesData;
+
+  // Selection partagee via React Query : meme cle que useExercicesQuery
+  const { data: cachedSelected = null } = useQuery<Exercice | null>({
+    queryKey: ['selected-exercice', entiteId],
+    queryFn: () => null,
+    enabled: false,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+
+  // Reset local quand on change d'entite
   useEffect(() => {
-    if (!entiteId) return;
-    setExerciceId(null);
-    setExercices([]);
-    clientFetch(api.balance.exercicesByEntite(entiteId))
-      .then((r: Response) => r.json())
-      .then((data: Exercice[]) => {
-        setExercices(data);
-        if (data.length > 0) {
-          const now = new Date();
-          const year = now.getFullYear();
-          const month = now.getMonth();
-          const preferYear = month <= 2 ? year - 1 : year;
-          const pick = data.find(e => e.annee === preferYear)
-            || data.find(e => e.annee === year)
-            || data.find(e => e.annee === year - 1)
-            || data[0];
-          setExerciceId(pick.id);
-        }
-      })
-      .catch(() => {});
+    setExerciceIdLocal(null);
   }, [entiteId]);
+
+  // Auto-pick par defaut si rien n'est selectionne
+  useEffect(() => {
+    if (cachedSelected || exercices.length === 0) return;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const preferYear = month <= 2 ? year - 1 : year;
+    const pick = exercices.find(e => e.annee === preferYear)
+      || exercices.find(e => e.annee === year)
+      || exercices.find(e => e.annee === year - 1)
+      || exercices[0];
+    queryClient.setQueryData<Exercice | null>(['selected-exercice', entiteId], pick);
+  }, [cachedSelected, exercices, queryClient, entiteId]);
+
+  // Sync cache -> exerciceId local
+  useEffect(() => {
+    setExerciceIdLocal(cachedSelected?.id ?? null);
+  }, [cachedSelected]);
+
+  // setExerciceId : ecrit dans le cache (les autres hooks suivent)
+  const setExerciceId = useCallback((id: number | null) => {
+    if (id === null) {
+      queryClient.setQueryData<Exercice | null>(['selected-exercice', entiteId], null);
+      return;
+    }
+    const ex = exercices.find(e => e.id === id);
+    if (ex) queryClient.setQueryData<Exercice | null>(['selected-exercice', entiteId], ex);
+  }, [exercices, queryClient, entiteId]);
 
   const calcDureeMois = (debut: string, fin: string): number => {
     const d1 = new Date(debut);
@@ -117,8 +151,8 @@ export function useExercices(entiteId: number): UseExercicesReturn {
       });
       const data = await res.json();
       if (res.ok) {
-        setExercices(prev => [data, ...prev]);
-        setExerciceId(data.id);
+        queryClient.setQueryData<Exercice[]>(['exercices', entiteId], prev => [data, ...(prev ?? [])]);
+        queryClient.setQueryData<Exercice | null>(['selected-exercice', entiteId], data);
         setModal(prev => ({ ...prev, show: false }));
       } else {
         setModal(prev => ({ ...prev, error: data.error || 'Erreur lors de la création.' }));
@@ -139,7 +173,10 @@ export function useExercices(entiteId: number): UseExercicesReturn {
         setConfirmModal(prev => ({ ...prev, open: false }));
         try {
           const res = await clientFetch(api.balance.cloturerExercice(exId), { method: 'PUT' });
-          if (res.ok) { const updated = await res.json(); setExercices(prev => prev.map(e => e.id === exId ? updated : e)); }
+          if (res.ok) {
+            const updated = await res.json();
+            queryClient.setQueryData<Exercice[]>(['exercices', entiteId], prev => (prev ?? []).map(e => e.id === exId ? updated : e));
+          }
         } catch { /* silently */ }
       },
     });
@@ -154,7 +191,10 @@ export function useExercices(entiteId: number): UseExercicesReturn {
         setConfirmModal(prev => ({ ...prev, open: false }));
         try {
           const res = await clientFetch(api.balance.rouvrirExercice(exId), { method: 'PUT' });
-          if (res.ok) { const updated = await res.json(); setExercices(prev => prev.map(e => e.id === exId ? updated : e)); }
+          if (res.ok) {
+            const updated = await res.json();
+            queryClient.setQueryData<Exercice[]>(['exercices', entiteId], prev => (prev ?? []).map(e => e.id === exId ? updated : e));
+          }
         } catch { /* silently */ }
       },
     });
