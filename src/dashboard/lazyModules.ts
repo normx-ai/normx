@@ -29,6 +29,7 @@ export const FicheIdentification = lazy(() => import('../etats/FicheIdentificati
 export const FicheR3 = lazy(() => import('../etats/FicheR3'));
 export const FicheR4 = lazy(() => import('../etats/FicheR4'));
 export const ResultatFiscal = lazy(() => import('../etats/ResultatFiscal'));
+export const LiasseComplete = lazy(() => import('../etats/LiasseComplete'));
 
 // Notes annexes
 export const Note1 = lazy(() => import('../etats/notes/Note1'));

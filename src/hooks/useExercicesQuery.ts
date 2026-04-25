@@ -8,10 +8,13 @@
  * - Auto-selectionne l'exercice le plus pertinent (annee courante ou N-1)
  * - Cache React Query : 2 min staleTime, partage entre tous les composants
  *   qui utilisent la meme entiteId
+ * - L'exercice selectionne est aussi stocke dans le cache React Query
+ *   ('selected-exercice', entiteId) pour que toutes les notes/etats d'une
+ *   meme entite partagent la meme selection (utile pour la liasse complete).
  */
 
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useCallback } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import type { Exercice } from '../types';
@@ -39,7 +42,8 @@ interface UseExercicesQueryResult {
 }
 
 export function useExercicesQuery(entiteId: number): UseExercicesQueryResult {
-  const [selectedExercice, setSelectedExercice] = useState<Exercice | null>(null);
+  const queryClient = useQueryClient();
+  const selectedKey = ['selected-exercice', entiteId];
 
   const { data: exercicesData, isLoading } = useQuery({
     queryKey: ['exercices', entiteId],
@@ -55,11 +59,24 @@ export function useExercicesQuery(entiteId: number): UseExercicesQueryResult {
 
   const exercices: Exercice[] = exercicesData ?? [];
 
+  const { data: selectedExercice = null } = useQuery<Exercice | null>({
+    queryKey: selectedKey,
+    queryFn: () => null,
+    enabled: false,
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+
+  const setSelectedExercice = useCallback((e: Exercice | null) => {
+    queryClient.setQueryData<Exercice | null>(selectedKey, e);
+  }, [queryClient, entiteId]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     if (!selectedExercice && exercices.length > 0) {
-      setSelectedExercice(pickDefaultExercice(exercices));
+      const def = pickDefaultExercice(exercices);
+      if (def) queryClient.setQueryData<Exercice | null>(selectedKey, def);
     }
-  }, [exercices, selectedExercice]);
+  }, [exercices, selectedExercice, queryClient]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const dateFin = selectedExercice?.date_fin || '';

@@ -1,0 +1,154 @@
+.liasse-wrapper {
+  padding: 0;
+  background: #f5f5f5;
+}
+
+.liasse-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.liasse-toolbar-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0F2A42;
+}
+
+.liasse-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #1f2937;
+}
+
+.liasse-toolbar-btn--primary {
+  background: #D4A843;
+  color: #ffffff;
+  border-color: #D4A843;
+}
+
+.liasse-exercice-select {
+  padding: 7px 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  font-size: 13px;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.liasse-exercice-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.liasse-content .etat-toolbar,
+.liasse-content .bilan-toolbar,
+.liasse-content .etat-exercice-select {
+  display: none !important;
+}
+
+.liasse-toolbar-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.liasse-content {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.liasse-section-title {
+  width: 210mm;
+  margin: 0 auto;
+  padding: 8px 12px;
+  background: #0F2A42;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.liasse-page {
+  break-inside: avoid;
+}
+
+.liasse-empty {
+  width: 210mm;
+  padding: 40px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 13px;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+@media print {
+  body {
+    background: #ffffff;
+  }
+
+  .dashboard-sidebar,
+  .dashboard-header,
+  .liasse-toolbar,
+  .etat-toolbar,
+  .no-print {
+    display: none !important;
+  }
+
+  .dashboard-main,
+  .liasse-wrapper,
+  .liasse-content {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    gap: 0 !important;
+    display: block !important;
+  }
+
+  .liasse-section-title {
+    page-break-before: always;
+    width: auto;
+    margin: 0;
+  }
+
+  .liasse-section-title:first-of-type {
+    page-break-before: auto;
+  }
+
+  .liasse-page {
+    page-break-after: always;
+    break-after: page;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+
+  .liasse-page:last-child {
+    page-break-after: auto;
+  }
+}
+
+@page {
+  size: A4 portrait;
+  margin: 0;
+}

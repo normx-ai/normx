@@ -2,6 +2,7 @@ import {
   LuScale, LuReceipt, LuArrowLeftRight, LuFileText,
   LuTable, LuClipboardList, LuWallet, LuBookOpen,
   LuCoins, LuFileSpreadsheet, LuUsers, LuFileCheck,
+  LuPrinter,
 } from 'react-icons/lu';
 import { TypeActivite, EtatFinancier } from '../types';
 import { ModuleInfo } from './types';
@@ -37,6 +38,7 @@ export const ETATS_FINANCIERS_SYS: EtatFinancier[] = [
 ];
 
 export const LIASSE_FISCALE_SYS: EtatFinancier[] = [
+  { id: 'liasse_complete_sys', titre: 'Liasse complète', short: 'Liasse', desc: 'Toute la liasse en une seule vue, prête à imprimer', navIcon: LuPrinter },
   { id: 'page_garde_sys', titre: 'Page de garde', short: 'Garde', desc: 'Page de garde officielle des états financiers', navIcon: LuFileCheck },
   { id: 'fiche_identification_sys', titre: 'Fiche R1', short: 'R1', desc: 'Fiche d\'identification et renseignements divers', navIcon: LuFileText },
   { id: 'fiche_r2_sys', titre: 'Fiche R2', short: 'R2', desc: 'Informations juridiques et activité de l\'entité', navIcon: LuFileText },
