@@ -42,17 +42,38 @@ export async function cabinetFetch(path: string, init?: RequestInit): Promise<Re
 /**
  * Appel API avec contexte client (niveau dossier).
  * Injecte explicitement le slug du client actif.
+ *
+ * Les GET concurrents sur la meme URL sont dedupliques : tous les
+ * appelants partagent la meme Promise tant qu'elle n'est pas resolue.
+ * Indispensable pour la liasse complete ou ~50 notes demandent en
+ * parallele les memes endpoints /api/balance — sinon on declenche le
+ * rate limiter (429).
  */
+const inflightGets = new Map<string, Promise<Response>>();
+
 export async function clientFetch(path: string, init?: RequestInit): Promise<Response> {
   const headers = new Headers(init?.headers);
   if (currentClientSlug) {
     headers.set('X-Client-Slug', currentClientSlug);
   }
-  return fetch(path, {
+  const method = (init?.method || 'GET').toUpperCase();
+  const dedupeKey = method === 'GET' ? `${currentClientSlug ?? ''}|${path}` : null;
+
+  if (dedupeKey) {
+    const existing = inflightGets.get(dedupeKey);
+    if (existing) return existing.then(r => r.clone());
+  }
+
+  const promise = fetch(path, {
     ...init,
     credentials: 'include',
     headers,
+  }).finally(() => {
+    if (dedupeKey) inflightGets.delete(dedupeKey);
   });
+
+  if (dedupeKey) inflightGets.set(dedupeKey, promise);
+  return promise.then(r => r.clone());
 }
 
 // ==================== JSON helpers + erreurs ====================

@@ -4,7 +4,6 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import type { EtatBaseProps } from '../types';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
-import { useNoteHasData } from '../dashboard/useNoteHasData';
 import { NOTES_ANNEXES } from '../dashboard/notesConfig';
 import PDFPreviewModal from './notes/PDFPreviewModal';
 import {
@@ -41,11 +40,11 @@ const PDF_WIDTH_MM = 210;
 const PDF_HEIGHT_MM = 297;
 
 export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element {
-  const { entiteId, offre = 'comptabilite', onBack } = props;
+  const { entiteId, onBack } = props;
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
-  const { noteHasData } = useNoteHasData(entiteId, selectedExercice?.id ?? null, offre);
 
-  const filteredNotes = NOTES_ANNEXES.filter(n => noteHasData(n.id));
+  // Liasse officielle : toutes les notes annexes, meme vides
+  const allNotes = NOTES_ANNEXES;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -203,7 +202,7 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
               <TFT_SYSCOHADA {...props} />
             </Section>
 
-            {filteredNotes.map(meta => {
+            {allNotes.map(meta => {
               const Cmp = NOTE_COMPONENTS[meta.id];
               if (!Cmp) return null;
               return (
