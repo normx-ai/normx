@@ -2,6 +2,7 @@ import React, { Suspense, useRef, useState, useCallback } from 'react';
 import { LuArrowLeft, LuEye } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useQueryClient } from '@tanstack/react-query';
 import type { EtatBaseProps } from '../types';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { NOTES_ANNEXES } from '../dashboard/notesConfig';
@@ -63,11 +64,28 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState<{ current: number; total: number } | null>(null);
+  const [waitingData, setWaitingData] = useState(false);
+  const queryClient = useQueryClient();
 
   const noopGoToParams = (): void => { /* edition desactivee dans la liasse */ };
 
   const generateLiassePDF = useCallback(async (): Promise<void> => {
     if (!containerRef.current || isGenerating) return;
+
+    // Attendre que les requetes React Query (exercices, entite-params) soient
+    // terminees, puis laisser une marge pour les fetches directs des notes
+    // (balance N/N-1 via clientFetch) qui ne sont pas trackes par React Query.
+    setWaitingData(true);
+    const start = Date.now();
+    const TIMEOUT_MS = 30_000;
+    while (Date.now() - start < TIMEOUT_MS) {
+      if (queryClient.isFetching() === 0) break;
+      await new Promise(r => setTimeout(r, 200));
+    }
+    // Marge pour laisser les notes a clientFetch direct rendre leurs donnees
+    await new Promise(r => setTimeout(r, 1500));
+    setWaitingData(false);
+
     setIsGenerating(true);
 
     try {
@@ -123,7 +141,7 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
       setIsGenerating(false);
       setProgress(null);
     }
-  }, [isGenerating]);
+  }, [isGenerating, queryClient]);
 
   const closePreview = useCallback((): void => {
     if (previewUrl) URL.revokeObjectURL(previewUrl);
@@ -173,10 +191,12 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
         <button
           className="liasse-toolbar-btn liasse-toolbar-btn--primary"
           onClick={generateLiassePDF}
-          disabled={!selectedExercice || isGenerating}
+          disabled={!selectedExercice || isGenerating || waitingData}
         >
           <LuEye size={16} />
-          {isGenerating && progress
+          {waitingData
+            ? 'Chargement des donnees...'
+            : isGenerating && progress
             ? `Generation ${progress.current}/${progress.total}...`
             : 'Apercu'}
         </button>
