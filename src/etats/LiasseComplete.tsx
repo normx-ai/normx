@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import type { EtatBaseProps } from '../types';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { NOTES_ANNEXES } from '../dashboard/notesConfig';
+import { createLogger } from '../utils/logger';
 import PDFPreviewModal from './notes/PDFPreviewModal';
 import {
   PageDeGarde, FicheIdentification, FicheR3, FicheR4,
@@ -38,6 +39,8 @@ const NOTE_COMPONENTS: Record<string, React.LazyExoticComponent<React.ComponentT
 
 const PDF_WIDTH_MM = 210;
 const PDF_HEIGHT_MM = 297;
+
+const log = createLogger('Liasse');
 
 // Hors du composant : evite que React remonte tout l'arbre au moindre re-render
 // de LiasseComplete (sinon chaque toggle d'etat retire/remet 47 notes => 429)
@@ -77,17 +80,41 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
       const pdf = new jsPDF('p', 'mm', 'a4');
       setProgress({ current: 0, total: pageEls.length });
 
+      let pagesAdded = 0;
+      const errors: string[] = [];
       for (let i = 0; i < pageEls.length; i++) {
         const el = pageEls[i];
-        const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
-        const imgData = canvas.toDataURL('image/png');
-        const imgHeight = (canvas.height * PDF_WIDTH_MM) / canvas.width;
-
-        if (i > 0) pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, 0, PDF_WIDTH_MM, Math.min(imgHeight, PDF_HEIGHT_MM));
-
+        // Sauter les pages vides ou non rendues (evite "Unable to find element in cloned iframe")
+        const rect = el.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0 || !el.isConnected) {
+          setProgress({ current: i + 1, total: pageEls.length });
+          continue;
+        }
+        try {
+          const canvas = await html2canvas(el, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            removeContainer: true,
+          });
+          const imgData = canvas.toDataURL('image/png');
+          const imgHeight = (canvas.height * PDF_WIDTH_MM) / canvas.width;
+          if (pagesAdded > 0) pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, 0, PDF_WIDTH_MM, Math.min(imgHeight, PDF_HEIGHT_MM));
+          pagesAdded++;
+        } catch (err) {
+          errors.push(`Page ${i + 1} : ${(err as Error).message}`);
+        }
         setProgress({ current: i + 1, total: pageEls.length });
       }
+
+      if (pagesAdded === 0) {
+        if (errors.length > 0) log.error('Aucune page generee', errors);
+        setIsGenerating(false);
+        return;
+      }
+      if (errors.length > 0) log.warn('Pages ignorees', errors);
 
       const blob = pdf.output('blob');
       setPdfBlob(blob);
