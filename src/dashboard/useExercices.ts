@@ -90,17 +90,24 @@ export function useExercices(entiteId: number): UseExercicesReturn {
     setExerciceIdLocal(null);
   }, [entiteId]);
 
-  // Auto-pick par defaut si rien n'est selectionne
+  // Auto-pick par defaut si rien n'est selectionne :
+  // priorite au dernier exercice cloture, sinon heuristique calendrier
   useEffect(() => {
     if (cachedSelected || exercices.length === 0) return;
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
-    const preferYear = month <= 2 ? year - 1 : year;
-    const pick = exercices.find(e => e.annee === preferYear)
-      || exercices.find(e => e.annee === year)
-      || exercices.find(e => e.annee === year - 1)
-      || exercices[0];
+    const clotures = exercices.filter(e => e.statut === 'cloture').sort((a, b) => b.annee - a.annee);
+    let pick: Exercice;
+    if (clotures.length > 0) {
+      pick = clotures[0];
+    } else {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth();
+      const preferYear = month <= 2 ? year - 1 : year;
+      pick = exercices.find(e => e.annee === preferYear)
+        || exercices.find(e => e.annee === year)
+        || exercices.find(e => e.annee === year - 1)
+        || exercices[0];
+    }
     queryClient.setQueryData<Exercice | null>(['selected-exercice', entiteId], pick);
   }, [cachedSelected, exercices, queryClient, entiteId]);
 
