@@ -64,11 +64,10 @@ function ClientsTable({ entites, currentEntiteId, onSelectEntite, onOpenModule, 
                       <button
                         key={mod}
                         className="gc-module-tag"
-                        style={{ color: info.color }}
                         onClick={() => onOpenModule(ent, mod as NormxModule)}
                         title={`Ouvrir ${info.label}`}
                       >
-                        <ModIcon size={12} /> {info.label}
+                        <ModIcon size={14} /> {info.label}
                       </button>
                     );
                   })}
