@@ -191,15 +191,18 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
   // Graphique annuel par classe (pour balance importée ou complément)
   const classesList = classes.filter(c => ['6', '7', '8'].includes(c.classe));
   const barMaxClasse: number = Math.max(...classes.map(c => Math.max(parseFloat(c.debit), parseFloat(c.credit))), 1);
+  const totalDebitClasses: number = classes.reduce((s, c) => s + parseFloat(c.debit), 0);
+  const totalCreditClasses: number = classes.reduce((s, c) => s + parseFloat(c.credit), 0);
+  const pct = (val: number, total: number): string => total > 0 ? ((val / total) * 100).toFixed(1) + '%' : '0%';
 
   return (
     <ReportWrapper title="Tableau de bord financier" subtitle={`Exercice ${exerciceAnnee}`} onBack={onBack}>
       {/* KPI Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 28 }}>
-        <KpiCard label="Total Produits" value={fmt(totalProduits)} color="#059669" />
-        <KpiCard label="Total Charges" value={fmt(totalCharges)} color="#dc2626" />
-        <KpiCard label="Résultat net" value={fmt(resultat)} color={resultat >= 0 ? '#059669' : '#dc2626'} />
-        <KpiCard label="Trésorerie" value={fmt(tresoSolde)} color={tresoSolde >= 0 ? '#D4A843' : '#dc2626'} />
+        <KpiCard label="Total Produits" value={fmt(totalProduits)} color="#0F2A42" />
+        <KpiCard label="Total Charges" value={fmt(totalCharges)} color="#D4A843" />
+        <KpiCard label="Résultat net" value={fmt(resultat)} color={resultat >= 0 ? '#0F2A42' : '#D4A843'} />
+        <KpiCard label="Trésorerie" value={fmt(tresoSolde)} color={tresoSolde >= 0 ? '#D4A843' : '#0F2A42'} />
       </div>
 
       {/* Bouton Aperçu / Imprimer */}
@@ -225,11 +228,13 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
               const m: TableauBordMensuelRow | undefined = mensuel.find((x: TableauBordMensuelRow) => x.mois === i + 1);
               const produits: number = m ? parseFloat(m.produits) : 0;
               const charges: number = m ? parseFloat(m.charges) : 0;
+              const pP = pct(produits, totalProduits);
+              const pC = pct(charges, totalCharges);
               return (
                 <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                   <div style={{ display: 'flex', gap: 2, alignItems: 'flex-end', height: 170 }}>
-                    <div style={{ width: 14, background: '#0F2A42', borderRadius: '3px 3px 0 0', height: `${(produits / barMaxMensuel) * 170}px` }}></div>
-                    <div style={{ width: 14, background: '#D4A843', borderRadius: '3px 3px 0 0', height: `${(charges / barMaxMensuel) * 170}px` }}></div>
+                    <div title={`Produits : ${fmt(produits)} (${pP})`} style={{ width: 14, background: '#0F2A42', borderRadius: '3px 3px 0 0', height: `${(produits / barMaxMensuel) * 170}px` }}></div>
+                    <div title={`Charges : ${fmt(charges)} (${pC})`} style={{ width: 14, background: '#D4A843', borderRadius: '3px 3px 0 0', height: `${(charges / barMaxMensuel) * 170}px` }}></div>
                   </div>
                   <div style={{ fontSize: 11, color: '#888' }}>{MOIS_LABELS[i]}</div>
                 </div>
@@ -245,21 +250,29 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
 
       {/* Graphique annuel par classe — histogramme vertical */}
       <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 12 }}>Répartition annuelle par classe</h3>
-      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end', height: 220, marginBottom: 12, padding: '0 10px' }}>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end', height: 240, marginBottom: 12, padding: '0 10px' }}>
         {classes.map((c: TableauBordClasseRow) => {
           const d = parseFloat(c.debit);
           const cr = parseFloat(c.credit);
+          const pD = pct(d, totalDebitClasses);
+          const pC = pct(cr, totalCreditClasses);
           return (
             <div key={c.classe} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 40 }}>
               <div style={{ display: 'flex', gap: 3, alignItems: 'flex-end', height: 180 }}>
-                <div
-                  style={{ width: 18, background: '#0F2A42', borderRadius: '3px 3px 0 0', height: `${(d / barMaxClasse) * 180}px`, minHeight: d > 0 ? 2 : 0 }}
-                  title={`Débit: ${fmt(d)}`}
-                ></div>
-                <div
-                  style={{ width: 18, background: '#D4A843', borderRadius: '3px 3px 0 0', height: `${(cr / barMaxClasse) * 180}px`, minHeight: cr > 0 ? 2 : 0 }}
-                  title={`Crédit: ${fmt(cr)}`}
-                ></div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
+                  <span style={{ fontSize: 10, color: '#0F2A42', fontWeight: 700, marginBottom: 2 }}>{pD}</span>
+                  <div
+                    style={{ width: 18, background: '#0F2A42', borderRadius: '3px 3px 0 0', height: `${(d / barMaxClasse) * 160}px`, minHeight: d > 0 ? 2 : 0 }}
+                    title={`Débit : ${fmt(d)} (${pD})`}
+                  ></div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end' }}>
+                  <span style={{ fontSize: 10, color: '#D4A843', fontWeight: 700, marginBottom: 2 }}>{pC}</span>
+                  <div
+                    style={{ width: 18, background: '#D4A843', borderRadius: '3px 3px 0 0', height: `${(cr / barMaxClasse) * 160}px`, minHeight: cr > 0 ? 2 : 0 }}
+                    title={`Crédit : ${fmt(cr)} (${pC})`}
+                  ></div>
+                </div>
               </div>
               <div style={{ fontSize: 12, fontWeight: 600, color: '#1a1a1a' }}>{c.classe}</div>
               <div style={{ fontSize: 10, color: '#888', textAlign: 'center', maxWidth: 80, lineHeight: 1.2 }}>
