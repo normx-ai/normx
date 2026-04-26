@@ -71,4 +71,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--couleur-fond);
   color: var(--couleur-texte);
+  /* Pas de selection bleue sur les elements de chrome UI (boutons, nav,
+     sidebar, topbar, etc.). Le contenu reste selectionnable. */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Selection autorisee sur le contenu informatif : champs de saisie, tableaux,
+   textes de notes, paragraphes, articles, code. */
+input, textarea, select,
+table, td, th, tbody, thead,
+.allow-select,
+.allow-select *,
+[contenteditable="true"],
+p, article, pre, code {
+  user-select: text;
+  -webkit-user-select: text;
 }

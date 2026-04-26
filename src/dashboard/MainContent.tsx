@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';
 import { ExerciceSelector } from './ExerciceManager';
 import { NOTES_ANNEXES, IMPLEMENTED_ETATS } from './notesConfig';
-import { useNoteHasData } from './useNoteHasData';
 import { useSmtAlert } from './SmtAlert';
 import { AccueilSection } from './AccueilSection';
 import { ComptabiliteSection, isComptabiliteTab } from './ComptabiliteSection';
@@ -58,8 +57,9 @@ function MainContent(props: MainContentProps): React.ReactElement {
 
   const currentExAnnee: number = exercices.find(e => e.id === exerciceId)?.annee ?? new Date().getFullYear();
 
-  const { noteHasData } = useNoteHasData(entiteId, exerciceId, offre);
-  const filteredNotes = NOTES_ANNEXES.filter(n => noteHasData(n.id));
+  // Affiche toutes les notes annexes officielles SYSCOHADA, meme vides.
+  // L'utilisateur saisit/complete chaque note a son rythme.
+  const filteredNotes = NOTES_ANNEXES;
 
   const smtAlert = useSmtAlert(typeActivite, entiteId, exerciceId, offre);
 
