@@ -53,17 +53,22 @@ function AppContent(): React.JSX.Element {
     }
   }, [entites, currentEntite, setClientSlug, location.search]);
 
-  // Redirect /app vers la bonne page (une seule fois).
+  // Redirection initiale apres login (une seule fois).
+  // - Cabinet : toujours sur le portail (liste des clients), independamment
+  //   de l'URL preservee par Keycloak. Sinon le cabinet retombe direct dans
+  //   la compta de son client_self quand il revient sur l'app.
+  // - Entreprise/client : redirige vers le 1er module seulement si on est
+  //   sur /app, pour respecter une URL profonde (bookmark, lien partage).
   React.useEffect(() => {
     if (initialRedirectDone.current || tenantLoading || entitesLoading || !tenant) return;
-    if (location.pathname === '/app' || location.pathname === '/app/') {
-      initialRedirectDone.current = true;
-      if (tenant.type === 'cabinet') {
+    initialRedirectDone.current = true;
+    if (tenant.type === 'cabinet') {
+      if (!location.pathname.startsWith('/app/portail')) {
         navigate('/app/portail', { replace: true });
-      } else {
-        const firstMod = ENABLED_MODULES.find(m => isModuleEnabled(m));
-        navigate(`/app/${firstMod || 'compta'}/accueil`, { replace: true });
       }
+    } else if (location.pathname === '/app' || location.pathname === '/app/') {
+      const firstMod = ENABLED_MODULES.find(m => isModuleEnabled(m));
+      navigate(`/app/${firstMod || 'compta'}/accueil`, { replace: true });
     }
   }, [tenantLoading, entitesLoading, tenant, location.pathname, navigate]);
 
@@ -106,7 +111,7 @@ function AppContent(): React.JSX.Element {
   if (authLoading || (isAuthenticated && (tenantLoading || entitesLoading))) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 120, height: 120 }} />
+        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 200, height: 200 }} />
       </div>
     );
   }
@@ -115,7 +120,7 @@ function AppContent(): React.JSX.Element {
     login();
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 120, height: 120 }} />
+        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 200, height: 200 }} />
         <p style={{ color: '#6b7280', marginTop: 16 }}>Redirection vers la connexion...</p>
       </div>
     );
@@ -125,7 +130,7 @@ function AppContent(): React.JSX.Element {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center', maxWidth: 440, padding: 32 }}>
-          <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 72, height: 72, margin: '0 auto 16px', display: 'block' }} />
+          <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 140, height: 140, margin: '0 auto 16px', display: 'block' }} />
           <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0F2A42', marginBottom: 12 }}>Abonnement requis</h2>
           <p style={{ color: '#6b7280', fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>
             Votre compte n'a pas acces a NORMX Finance. Contactez-nous pour activer votre abonnement.
