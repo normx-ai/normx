@@ -1,10 +1,9 @@
-import { clientFetch } from '../../lib/api';
-import { api } from '../../lib/apiEndpoints';
 import React, { useState, useRef, useEffect } from 'react';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
@@ -66,7 +65,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
 
   const [lignes, setLignes] = useState<LigneProvision[]>(LIGNES_INIT.map(l => ({ ...l, ...emptyVals })));
   const [commentaire, setCommentaire] = useState(DEFAULT_COMMENTAIRE);
-  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
+  const { lignesN } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
   const [hideEmpty, setHideEmpty] = useState(false);
 
   // Charger donnees depuis params
@@ -79,26 +78,6 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   }, [params]);
 
   // Charger la balance N pour calcul auto de ouverture / cloture
-  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
-  useEffect(() => {
-    if (!entiteId || !selectedExercice) return;
-    const load = async () => {
-      try {
-        let bl: BalanceLigne[] = [];
-        if (balanceSource === 'ecritures') {
-          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
-          const data = await res.json();
-          bl = data.lignes || [];
-        } else {
-          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
-          const data = await res.json();
-          bl = data.lignes || [];
-        }
-        setLignesN(bl);
-      } catch { setLignesN([]); }
-    };
-    load();
-  }, [entiteId, selectedExercice, balanceSource]);
 
   // Auto-calcul depuis la balance pour une ligne
   // - ouverture = si_credit (solde initial credit = ouverture)

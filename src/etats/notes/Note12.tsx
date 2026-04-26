@@ -1,5 +1,3 @@
-import { clientFetch } from '../../lib/api';
-import { api } from '../../lib/apiEndpoints';
 import React, { useState, useRef, useEffect } from 'react';
 import { LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
@@ -7,6 +5,7 @@ import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import BalanceSourcePanel from './BalanceSourcePanel';
 import { useNoteData } from './useNoteData';
+import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
@@ -52,8 +51,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
   const [transfertsFinancieres, setTransfertsFinancieres] = useState<LigneTransfert[]>([emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert()]);
   const [commentaireTransferts, setCommentaireTransferts] = useState('• Faire un commentaire');
 
-  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
-  const [lignesN1, setLignesN1] = useState<BalanceLigne[]>([]);
+  const { lignesN, lignesN1 } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
 
   // Charger donnees Note-specifiques depuis params
   useEffect(() => {
@@ -66,38 +64,6 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
     setCommentaireTransferts(params['note12_commentaire_transferts'] || '• Faire un commentaire');
   }, [params]);
 
-  // Chargement balance N et N-1
-  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
-  useEffect(() => {
-    if (!entiteId || !selectedExercice) return;
-    const load = async () => {
-      try {
-        if (balanceSource === 'ecritures') {
-          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
-          setLignesN((await res.json()).lignes || []);
-        } else {
-          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
-          setLignesN((await res.json()).lignes || []);
-        }
-      } catch { setLignesN([]); }
-      try {
-        const exN1 = exercices.find(e => e.annee === selectedExercice.annee - 1);
-        if (exN1) {
-          if (balanceSource === 'ecritures') {
-            const res = await clientFetch(api.ecritures.balance(entiteId, exN1.id));
-            setLignesN1((await res.json()).lignes || []);
-          } else {
-            const res = await clientFetch(api.balance.byExercice(entiteId, exN1.id, 'N'));
-            setLignesN1((await res.json()).lignes || []);
-          }
-        } else {
-          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N-1'));
-          setLignesN1((await res.json()).lignes || []);
-        }
-      } catch { setLignesN1([]); }
-    };
-    load();
-  }, [entiteId, selectedExercice, balanceSource, exercices]);
 
   // Soldes depuis la balance
   const computeSolde = (lignes: BalanceLigne[], prefix: string, type: 'debiteur' | 'crediteur') => {

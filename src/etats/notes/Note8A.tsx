@@ -1,5 +1,3 @@
-import { clientFetch } from '../../lib/api';
-import { api } from '../../lib/apiEndpoints';
 import React, { useState, useRef, useEffect } from 'react';
 import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
@@ -7,6 +5,7 @@ import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import BalanceSourcePanel from './BalanceSourcePanel';
 import { useNoteData } from './useNoteData';
+import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
@@ -54,7 +53,7 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
   const pageRef = useRef<HTMLDivElement>(null);
   const pdf = usePDFPreview({ pageRef, fileName: `Note8A_${annee}.pdf`, editing, setEditing, orientation: 'l' });
 
-  const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
+  const { lignesN } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
 
   const [montantGlobalFrais, setMontantGlobalFrais] = useState('');
   const [montantGlobalCharges, setMontantGlobalCharges] = useState('');
@@ -98,22 +97,6 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
   }, [selectedExercice]);
 
   // Chargement balance N pour soldes 475
-  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
-  useEffect(() => {
-    if (!entiteId || !selectedExercice) return;
-    const load = async () => {
-      try {
-        if (balanceSource === 'ecritures') {
-          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
-          setLignesN((await res.json()).lignes || []);
-        } else {
-          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
-          setLignesN((await res.json()).lignes || []);
-        }
-      } catch { setLignesN([]); }
-    };
-    load();
-  }, [entiteId, selectedExercice, balanceSource]);
 
   // Soldes 4751 (débiteur) et 4752 (créditeur) depuis la balance
   const solde4751 = lignesN.reduce((total, l) => {

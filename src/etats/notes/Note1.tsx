@@ -1,5 +1,3 @@
-import { clientFetch } from '../../lib/api';
-import { api } from '../../lib/apiEndpoints';
 import React, { useState, useRef, useEffect } from 'react';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuInfo  } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -8,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
 
 interface Note1Props extends EtatBaseProps {
@@ -22,7 +21,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
-  const [lignesBalance, setLignesBalance] = useState<BalanceLigne[]>([]);
+  const { lignesN: lignesBalance } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
 
   // Editable fields
   const [hypotheques, setHypotheques] = useState('');
@@ -46,26 +45,6 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
     setMontantBrutCB(params['note1_montant_cb'] || '');
   }, [params]);
 
-  const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
-  useEffect(() => {
-    if (!entiteId || !selectedExercice) return;
-    const load = async () => {
-      try {
-        let lignes: BalanceLigne[] = [];
-        if (balanceSource === 'ecritures') {
-          const res = await clientFetch(api.ecritures.balance(entiteId, selectedExercice.id));
-          const data = await res.json();
-          lignes = data.lignes || [];
-        } else {
-          const res = await clientFetch(api.balance.byExercice(entiteId, selectedExercice.id, 'N'));
-          const data = await res.json();
-          lignes = data.lignes || [];
-        }
-        setLignesBalance(lignes);
-      } catch { setLignesBalance([]); }
-    };
-    load();
-  }, [entiteId, selectedExercice, balanceSource]);
 
   const handleSave = async () => {
     const data: Record<string, string> = {

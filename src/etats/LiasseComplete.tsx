@@ -72,18 +72,17 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
   const generateLiassePDF = useCallback(async (): Promise<void> => {
     if (!containerRef.current || isGenerating) return;
 
-    // Attendre que les requetes React Query (exercices, entite-params) soient
-    // terminees, puis laisser une marge pour les fetches directs des notes
-    // (balance N/N-1 via clientFetch) qui ne sont pas trackes par React Query.
+    // Toutes les notes utilisent React Query pour leurs balances : on attend
+    // simplement que isFetching tombe a 0 puis un microtick pour laisser le
+    // DOM se mettre a jour apres les setStates.
     setWaitingData(true);
     const start = Date.now();
     const TIMEOUT_MS = 30_000;
     while (Date.now() - start < TIMEOUT_MS) {
       if (queryClient.isFetching() === 0) break;
-      await new Promise(r => setTimeout(r, 200));
+      await new Promise(r => setTimeout(r, 100));
     }
-    // Marge pour laisser les notes a clientFetch direct rendre leurs donnees
-    await new Promise(r => setTimeout(r, 1500));
+    await new Promise(r => setTimeout(r, 100));
     setWaitingData(false);
 
     setIsGenerating(true);
