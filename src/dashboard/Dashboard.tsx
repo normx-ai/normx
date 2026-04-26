@@ -283,7 +283,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   if (!activeModule) {
     return (
       <div className="dashboard">
-        <Topbar {...topbarProps} moduleLabel="Cabinet" dossierSelector={dossierSelector} />
+        <Topbar {...topbarProps} moduleLabel="" dossierSelector={dossierSelector} />
         <div className="portail-body portail-body-with-sidebar">
           <PortailSidebar
             active={portailSection}
@@ -313,7 +313,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   if (activeModule === 'paie') {
     return (
       <div className="dashboard">
-        <Topbar {...topbarProps} moduleLabel="Paie" dossierSelector={dossierSelector} />
+        <Topbar {...topbarProps} moduleLabel="" dossierSelector={dossierSelector} />
         <div style={{ flex: 1, overflow: 'auto' }}>
           <Suspense fallback={<div style={{ padding: 40, textAlign: 'center' }}>Chargement...</div>}>
             <Paie entiteId={entiteId} />

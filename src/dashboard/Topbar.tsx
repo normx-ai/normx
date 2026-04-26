@@ -61,7 +61,7 @@ function Topbar({
       <div className="topbar-left">
         <div className="topbar-logo">
           <img src="/NF-white-ok.png" alt="NORMX Finance" className="topbar-logo-img" />
-          <span className="topbar-logo-accent">{moduleLabel}</span>
+          {moduleLabel && <span className="topbar-logo-accent">{moduleLabel}</span>}
           <div className="module-switcher-wrapper" ref={moduleSwitcherRef}>
             <button className="module-switcher-btn" onClick={() => setModuleSwitcherOpen(!moduleSwitcherOpen)}>
               <LuChevronDown size={14} />
