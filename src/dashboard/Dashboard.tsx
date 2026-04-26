@@ -273,7 +273,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     return (
       <div className="dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center' }}>
-          <img src="/logo-carre.png" alt="NORMX Finance" style={{ width: 80, height: 80, borderRadius: 16, display: 'block' }} />
+          <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 240, height: 240, display: 'block' }} />
         </div>
       </div>
     );
