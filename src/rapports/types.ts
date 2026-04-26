@@ -57,14 +57,14 @@ export const MOIS_LABELS: string[] = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun',
 export const MOIS_FULL: string[] = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
 
 export const CLASSE_LABELS: Record<string, string> = {
-  '1': 'Comptes de ressources durables',
-  '2': 'Comptes d\'actif immobilisé',
-  '3': 'Comptes de stocks',
-  '4': 'Comptes de tiers',
-  '5': 'Comptes de trésorerie',
-  '6': 'Comptes de charges',
-  '7': 'Comptes de produits',
-  '8': 'Comptes des autres charges/produits',
+  '1': 'Ressources durables',
+  '2': 'Actif immobilisé',
+  '3': 'Stocks',
+  '4': 'Tiers',
+  '5': 'Trésorerie',
+  '6': 'Charges',
+  '7': 'Produits',
+  '8': 'Autres charges/produits',
 };
 
 export const POSTE_LABELS: Record<string, string> = {

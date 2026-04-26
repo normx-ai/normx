@@ -228,8 +228,8 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
               return (
                 <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                   <div style={{ display: 'flex', gap: 2, alignItems: 'flex-end', height: 170 }}>
-                    <div style={{ width: 14, background: '#059669', borderRadius: '3px 3px 0 0', height: `${(produits / barMaxMensuel) * 170}px` }}></div>
-                    <div style={{ width: 14, background: '#dc2626', borderRadius: '3px 3px 0 0', height: `${(charges / barMaxMensuel) * 170}px` }}></div>
+                    <div style={{ width: 14, background: '#0F2A42', borderRadius: '3px 3px 0 0', height: `${(produits / barMaxMensuel) * 170}px` }}></div>
+                    <div style={{ width: 14, background: '#D4A843', borderRadius: '3px 3px 0 0', height: `${(charges / barMaxMensuel) * 170}px` }}></div>
                   </div>
                   <div style={{ fontSize: 11, color: '#888' }}>{MOIS_LABELS[i]}</div>
                 </div>
@@ -237,44 +237,41 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
             })}
           </div>
           <div style={{ display: 'flex', gap: 16, marginBottom: 28, fontSize: 13 }}>
-            <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#059669', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Produits</span>
-            <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#dc2626', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Charges</span>
+            <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#0F2A42', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Produits</span>
+            <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#D4A843', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Charges</span>
           </div>
         </>
       )}
 
-      {/* Graphique annuel par classe (toujours affiché) */}
+      {/* Graphique annuel par classe — histogramme vertical */}
       <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 12 }}>Répartition annuelle par classe</h3>
-      <div style={{ marginBottom: 24 }}>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end', height: 220, marginBottom: 12, padding: '0 10px' }}>
         {classes.map((c: TableauBordClasseRow) => {
           const d = parseFloat(c.debit);
           const cr = parseFloat(c.credit);
-          const solde = d - cr;
           return (
-            <div key={c.classe} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-              <div style={{ width: 200, fontSize: 13, fontWeight: 500, textAlign: 'right', flexShrink: 0 }}>
-                {c.classe} — {CLASSE_LABELS[c.classe] || 'Classe ' + c.classe}
+            <div key={c.classe} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 40 }}>
+              <div style={{ display: 'flex', gap: 3, alignItems: 'flex-end', height: 180 }}>
+                <div
+                  style={{ width: 18, background: '#0F2A42', borderRadius: '3px 3px 0 0', height: `${(d / barMaxClasse) * 180}px`, minHeight: d > 0 ? 2 : 0 }}
+                  title={`Débit: ${fmt(d)}`}
+                ></div>
+                <div
+                  style={{ width: 18, background: '#D4A843', borderRadius: '3px 3px 0 0', height: `${(cr / barMaxClasse) * 180}px`, minHeight: cr > 0 ? 2 : 0 }}
+                  title={`Crédit: ${fmt(cr)}`}
+                ></div>
               </div>
-              <div style={{ flex: 1, display: 'flex', gap: 2, height: 24 }}>
-                <div style={{
-                  width: `${(d / barMaxClasse) * 100}%`,
-                  background: '#3b82f6', borderRadius: '4px 0 0 4px', minWidth: d > 0 ? 2 : 0,
-                }} title={`Débit: ${fmt(d)}`}></div>
-                <div style={{
-                  width: `${(cr / barMaxClasse) * 100}%`,
-                  background: '#f97316', borderRadius: '0 4px 4px 0', minWidth: cr > 0 ? 2 : 0,
-                }} title={`Crédit: ${fmt(cr)}`}></div>
-              </div>
-              <div style={{ width: 110, fontSize: 13, fontWeight: 600, textAlign: 'right', color: solde >= 0 ? '#059669' : '#dc2626' }}>
-                {fmt(solde)}
+              <div style={{ fontSize: 12, fontWeight: 600, color: '#1a1a1a' }}>{c.classe}</div>
+              <div style={{ fontSize: 10, color: '#888', textAlign: 'center', maxWidth: 80, lineHeight: 1.2 }}>
+                {CLASSE_LABELS[c.classe] || 'Classe ' + c.classe}
               </div>
             </div>
           );
         })}
       </div>
       <div style={{ display: 'flex', gap: 16, marginBottom: 28, fontSize: 13 }}>
-        <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#3b82f6', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Débit</span>
-        <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#f97316', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Crédit</span>
+        <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#0F2A42', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Débit</span>
+        <span><span style={{ display: 'inline-block', width: 12, height: 12, background: '#D4A843', borderRadius: 2, marginRight: 4, verticalAlign: 'middle' }}></span> Crédit</span>
       </div>
 
       {/* Tableau détaillé par classe */}
