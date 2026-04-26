@@ -110,8 +110,8 @@ function AppContent(): React.JSX.Element {
 
   if (authLoading || (isAuthenticated && (tenantLoading || entitesLoading))) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 200, height: 200 }} />
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0F2A42' }}>
+        <img src="/NF-white.png" alt="NORMX Finance" style={{ width: 400, height: 'auto' }} />
       </div>
     );
   }
@@ -119,9 +119,9 @@ function AppContent(): React.JSX.Element {
   if (!isAuthenticated) {
     login();
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 200, height: 200 }} />
-        <p style={{ color: '#6b7280', marginTop: 16 }}>Redirection vers la connexion...</p>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0F2A42' }}>
+        <img src="/NF-white.png" alt="NORMX Finance" style={{ width: 400, height: 'auto' }} />
+        <p style={{ color: '#cbd5e1', marginTop: 24 }}>Redirection vers la connexion...</p>
       </div>
     );
   }

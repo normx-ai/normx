@@ -271,9 +271,9 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   // persister brievement le temps que React propage les props.
   if (modules.length === 0 && !isCabinet) {
     return (
-      <div className="dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
+      <div className="dashboard" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#0F2A42' }}>
         <div style={{ textAlign: 'center' }}>
-          <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 200, height: 200, display: 'block' }} />
+          <img src="/NF-white.png" alt="NORMX Finance" style={{ width: 400, height: 'auto', display: 'block' }} />
         </div>
       </div>
     );
