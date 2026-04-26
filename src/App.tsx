@@ -106,7 +106,7 @@ function AppContent(): React.JSX.Element {
   if (authLoading || (isAuthenticated && (tenantLoading || entitesLoading))) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 240, height: 240 }} />
+        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 120, height: 120 }} />
       </div>
     );
   }
@@ -115,7 +115,7 @@ function AppContent(): React.JSX.Element {
     login();
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
-        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 240, height: 240 }} />
+        <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 120, height: 120 }} />
         <p style={{ color: '#6b7280', marginTop: 16 }}>Redirection vers la connexion...</p>
       </div>
     );
@@ -125,7 +125,7 @@ function AppContent(): React.JSX.Element {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: '#faf8f5' }}>
         <div style={{ textAlign: 'center', maxWidth: 440, padding: 32 }}>
-          <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 180, height: 180, margin: '0 auto 16px', display: 'block' }} />
+          <img src="/logo-principal.png" alt="NORMX Finance" style={{ width: 72, height: 72, margin: '0 auto 16px', display: 'block' }} />
           <h2 style={{ fontSize: 22, fontWeight: 700, color: '#0F2A42', marginBottom: 12 }}>Abonnement requis</h2>
           <p style={{ color: '#6b7280', fontSize: 15, lineHeight: 1.6, marginBottom: 24 }}>
             Votre compte n'a pas acces a NORMX Finance. Contactez-nous pour activer votre abonnement.
