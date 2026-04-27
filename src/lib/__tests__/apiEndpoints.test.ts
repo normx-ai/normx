@@ -154,15 +154,6 @@ describe('api.ecritures', () => {
   });
 });
 
-describe('api.revision', () => {
-  it('construit les URLs pour chaque onglet', () => {
-    expect(api.revision.onglet(1, 2, 'clients')).toBe('/api/revision/1/2/clients');
-    expect(api.revision.onglet(1, 2, 'all-od')).toBe('/api/revision/1/2/all-od');
-    expect(api.revision.onglet(1, 2, 'autres-tiers')).toBe('/api/revision/1/2/autres-tiers');
-    expect(api.revision.onglet(1, 2, 'treso')).toBe('/api/revision/1/2/treso');
-  });
-});
-
 describe('api.notifications', () => {
   it('construit les URLs', () => {
     expect(api.notifications.byUser(7)).toBe('/api/notifications/7');

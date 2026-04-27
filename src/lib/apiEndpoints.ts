@@ -131,11 +131,6 @@ export const api = {
     },
   },
 
-  revision: {
-    onglet: (entiteId: Id, exerciceId: Id, onglet: RevisionOnglet): string =>
-      `/api/revision/${entiteId}/${exerciceId}/${onglet}`,
-  },
-
   notifications: {
     byUser: (userId: Id): string => `/api/notifications/${userId}`,
     unreadCount: (userId: Id): string => `/api/notifications/${userId}/unread-count`,
@@ -160,17 +155,3 @@ export const api = {
   },
 } as const;
 
-export type RevisionOnglet =
-  | 'all-od'
-  | 'autres-tiers'
-  | 'clients'
-  | 'df'
-  | 'etat'
-  | 'fourn'
-  | 'immo'
-  | 'kp'
-  | 'personnel'
-  | 'prov'
-  | 'stocks'
-  | 'subv'
-  | 'treso';

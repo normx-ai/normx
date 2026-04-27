@@ -9,7 +9,7 @@ import { NotesNavigation, NoteRenderer, NotesGrid } from './NotesSection';
 import { EtatsSection } from './EtatsSection';
 import { RapportsSection, isRapportsSubTab } from './RapportsSection';
 import {
-  ImportBalance, RevisionComptes, BalanceRevisee,
+  ImportBalance,
   TiersPage, AssistantChat, AideVideos, ParametresTabs,
 } from './lazyModules';
 
@@ -123,26 +123,6 @@ function MainContent(props: MainContentProps): React.ReactElement {
           <ExerciceSelector {...exerciceSelectorProps} />
           {!exerciceId && <div className="empty-state-msg">Créez un exercice pour accéder à l'import de balance.</div>}
           {exerciceId && <ImportBalance entiteId={entiteId} userId={userId} exerciceId={exerciceId} exerciceAnnee={currentExAnnee} />}
-        </div>
-      )}
-
-      {activeTab === 'revision_comptes' && (
-        <div>
-          <ExerciceSelector {...exerciceSelectorProps} />
-          {!exerciceId && <div className="empty-state-msg">Créez un exercice pour accéder à la révision.</div>}
-          {exerciceId && (
-            <RevisionComptes entiteId={entiteId} exerciceId={exerciceId} exerciceAnnee={currentExAnnee} entiteName={entiteName} />
-          )}
-        </div>
-      )}
-
-      {activeTab === 'balance_revisee' && (
-        <div>
-          <ExerciceSelector {...exerciceSelectorProps} />
-          {!exerciceId && <div className="empty-state-msg">Créez un exercice pour voir la balance révisée.</div>}
-          {exerciceId && (
-            <BalanceRevisee entiteId={entiteId} exerciceId={exerciceId} exerciceAnnee={currentExAnnee} />
-          )}
         </div>
       )}
 

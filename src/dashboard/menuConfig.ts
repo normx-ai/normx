@@ -1,8 +1,8 @@
 import {
   LuHouse, LuChartBarIncreasing, LuSettings, LuBot,
   LuPenLine, LuBookOpen, LuCalculator, LuUpload,
-  LuSearchCheck, LuWrench, LuUsers, LuTruck, LuHandshake,
-  LuFileCheck, LuBriefcase, LuCircleHelp, LuListOrdered,
+  LuWrench, LuUsers, LuTruck, LuHandshake,
+  LuBriefcase, LuCircleHelp, LuListOrdered,
   LuLayoutDashboard, LuChartPie, LuUser, LuFileSpreadsheet,
   LuClipboardList, LuWallet, LuBookMarked, LuArrowLeftRight,
   LuScale, LuReceipt, LuFileText,
@@ -80,8 +80,6 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
         id: 'donnees', label: 'Données', icon: LuFileSpreadsheet, hasArrow: true, disabled: noExercice,
         children: [
           { id: 'import_balance', label: 'Import balance', icon: LuUpload },
-          { id: 'revision_comptes', label: 'Révision comptes', icon: LuSearchCheck },
-          { id: 'balance_revisee', label: 'BG Révisée', icon: LuFileCheck },
         ]
       },
       {

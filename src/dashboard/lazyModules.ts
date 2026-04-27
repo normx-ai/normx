@@ -1,6 +1,6 @@
 /**
  * Declaration centralisee des modules charges paresseusement par MainContent.
- * Regroupe par famille (etats, notes, compta, revision, rapports, outils) pour
+ * Regroupe par famille (etats, notes, compta, rapports, outils) pour
  * alleger le fichier principal du dashboard.
  */
 
@@ -91,10 +91,6 @@ export const Lettrage = lazy(() => import('../comptabilite/Lettrage'));
 export const Journaux = lazy(() => import('../comptabilite/Journaux'));
 export const Echeancier = lazy(() => import('../comptabilite/Journaux').then(m => ({ default: m.Echeancier })));
 export const BalanceAgee = lazy(() => import('../comptabilite/Journaux').then(m => ({ default: m.BalanceAgee })));
-
-// Revision
-export const RevisionComptes = lazy(() => import('../revision/RevisionComptes'));
-export const BalanceRevisee = lazy(() => import('../revision/BalanceRevisee'));
 
 // Rapports
 export const Rapports = lazy(() => import('../rapports/Rapports'));
