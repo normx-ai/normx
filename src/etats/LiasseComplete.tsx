@@ -121,13 +121,22 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
         }
         try {
           const canvas = await html2canvas(el, {
-            scale: 2,
+            // scale 1.5 (vs 2 avant) reduit la taille des images de ~44%
+            // sans perte visible sur du texte/tableau. Combine avec JPEG
+            // quality 0.85 ci-dessous, on tient ~50 pages dans le doc
+            // sans hitter la limite max-string-length de V8 lors du
+            // pdf.output('blob') (cf bug "Invalid string length").
+            scale: 1.5,
             useCORS: true,
             backgroundColor: '#ffffff',
             logging: false,
             removeContainer: true,
           });
-          const imgData = canvas.toDataURL('image/png');
+          // JPEG quality 0.85 : compression ~10x meilleure que PNG sur
+          // des pages texte/tableau, qualite visuelle identique. PNG
+          // etait la source du RangeError "Invalid string length" sur
+          // une liasse complete (47+ pages).
+          const imgData = canvas.toDataURL('image/jpeg', 0.85);
           // Detecte l'orientation depuis le ratio reel du canvas :
           // landscape si plus large que haut (cas Note 17, Note 21, etc.).
           const isLandscape = canvas.width > canvas.height;
@@ -143,7 +152,7 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
             pdf.deletePage(1);
             pdf.addPage('a4', 'l');
           }
-          pdf.addImage(imgData, 'PNG', 0, 0, pageW, Math.min(imgHeight, pageH));
+          pdf.addImage(imgData, 'JPEG', 0, 0, pageW, Math.min(imgHeight, pageH));
           pagesAdded++;
         } catch (err) {
           errors.push(`Page ${i + 1} : ${(err as Error).message}`);
