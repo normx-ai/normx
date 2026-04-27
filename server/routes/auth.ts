@@ -160,16 +160,21 @@ router.post('/logout', async (req: Request, res: Response) => {
 });
 
 // GET /api/auth/me - Retourne les infos utilisateur (token cookie verifie RS256 + exp)
+// expires_in est expose pour que le client puisse programmer un refresh
+// proactif base sur la vraie duree de vie du JWT (pas une estimation).
 router.get('/me', authenticateToken, (req: Request, res: Response) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Non authentifie.' });
   }
+  const nowSeconds = Math.floor(Date.now() / 1000);
+  const expiresIn = Math.max(0, req.user.exp - nowSeconds);
   res.json({
     sub: req.user.sub,
     email: req.user.email,
     name: req.user.name,
     preferred_username: req.user.preferred_username,
     roles: req.user.roles,
+    expires_in: expiresIn,
   });
 });
 

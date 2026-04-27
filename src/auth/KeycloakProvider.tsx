@@ -12,6 +12,11 @@ interface AuthApiUser {
   roles?: string[];
 }
 
+// /api/auth/me ajoute expires_in (TTL restant du JWT) pour le refresh proactif.
+interface AuthMeResponse extends AuthApiUser {
+  expires_in: number;
+}
+
 function apiUserToKeycloakUser(u: AuthApiUser): KeycloakUser {
   return {
     sub: u.sub,
@@ -82,20 +87,21 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
     }, refreshIn);
   }, [clearSession]);
 
-  // Verifier la session au chargement (cookie httpOnly)
-  const checkSession = useCallback(async () => {
+  // Verifier la session au chargement (cookie httpOnly).
+  // Retourne expires_in (TTL reel du JWT) pour programmer le refresh proactif.
+  const checkSession = useCallback(async (): Promise<number | null> => {
     try {
       const res = await fetch(api.auth.me, { credentials: 'include' });
       if (!res.ok) {
         clearSession();
-        return false;
+        return null;
       }
-      const data = await res.json() as AuthApiUser;
+      const data = await res.json() as AuthMeResponse;
       setUser(apiUserToKeycloakUser(data));
-      return true;
+      return data.expires_in;
     } catch {
       clearSession();
-      return false;
+      return null;
     }
   }, [clearSession]);
 
@@ -132,10 +138,11 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
     }
 
     // Pas de code dans l'URL — verifier la session existante via cookie
-    checkSession().then((ok) => {
-      if (ok) {
-        // Session valide, programmer le refresh (on estime 5 min par defaut)
-        scheduleRefresh(300);
+    // Le serveur renvoie expires_in (TTL reel du JWT) : on programme le
+    // refresh proactif sur cette valeur, plus aucune estimation en dur.
+    checkSession().then((expiresIn) => {
+      if (expiresIn !== null) {
+        scheduleRefresh(expiresIn);
       }
       setIsLoading(false);
     });
@@ -149,6 +156,19 @@ export function KeycloakProvider({ children }: KeycloakProviderProps): React.Rea
       }
     };
   }, []);
+
+  // L'intercepteur fetch (csrf-fetch.ts) dispatche 'auth:expired' quand un
+  // refresh silencieux echoue : on redirige vers Keycloak login pour relancer
+  // un flow OIDC propre, sans laisser l'utilisateur dans un etat 401.
+  useEffect(() => {
+    const handler = () => {
+      clearSession();
+      const redirectUri = `${window.location.origin}${window.location.pathname}`;
+      window.location.href = getLoginUrl(redirectUri);
+    };
+    window.addEventListener('auth:expired', handler);
+    return () => window.removeEventListener('auth:expired', handler);
+  }, [clearSession]);
 
   const login = useCallback(() => {
     // Le module est maintenant encode dans le pathname (ex: /app/compta/saisie),

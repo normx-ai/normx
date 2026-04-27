@@ -11,6 +11,7 @@ export interface UserToken {
   tenantSlug: string;
   tenantId: string;
   subscriptions: string[];
+  exp: number; // Unix timestamp d'expiration du JWT (claim "exp")
 }
 
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
@@ -120,6 +121,7 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
       tenantSlug: extractTenantSlug(decoded),
       tenantId: extractTenantId(decoded),
       subscriptions,
+      exp: decoded.exp,
     };
     next();
   } catch {
