@@ -11,7 +11,7 @@ import PDFPreviewModal from './notes/PDFPreviewModal';
 import {
   PageDeGarde, FicheIdentification, FicheR3, FicheR4,
   BilanSYSCOHADA, CompteResultatSYSCOHADA, TFT_SYSCOHADA, ResultatFiscal,
-  Note1, Note2, Note3A, Note3B, Note3C, Note3D, Note3E,
+  Note1, Note2, Note3A, Note3B, Note3C, Note3D, Note3E, Note3F,
   Note4, Note5, Note6, Note7, Note8, Note8A, Note9,
   Note10, Note11, Note12, Note13, Note14,
   Note15A, Note15B, Note16A, Note16B, Note16C,
@@ -24,7 +24,7 @@ import './LiasseComplete.css';
 
 const NOTE_COMPONENTS: Record<string, React.LazyExoticComponent<React.ComponentType<EtatBaseProps & { onGoToParametres?: () => void }>>> = {
   note_1_sys: Note1, note_2_sys: Note2,
-  note_3a_sys: Note3A, note_3b_sys: Note3B, note_3c_sys: Note3C, note_3d_sys: Note3D, note_3e_sys: Note3E,
+  note_3a_sys: Note3A, note_3b_sys: Note3B, note_3c_sys: Note3C, note_3d_sys: Note3D, note_3e_sys: Note3E, note_3f_sys: Note3F,
   note_4_sys: Note4, note_5_sys: Note5, note_6_sys: Note6, note_7_sys: Note7,
   note_8_sys: Note8, note_8a_sys: Note8A, note_9_sys: Note9,
   note_10_sys: Note10, note_11_sys: Note11, note_12_sys: Note12, note_13_sys: Note13, note_14_sys: Note14,

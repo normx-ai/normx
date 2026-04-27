@@ -39,6 +39,7 @@ export const Note3B = lazy(() => import('../etats/notes/Note3B'));
 export const Note3C = lazy(() => import('../etats/notes/Note3C'));
 export const Note3D = lazy(() => import('../etats/notes/Note3D'));
 export const Note3E = lazy(() => import('../etats/notes/Note3E'));
+export const Note3F = lazy(() => import('../etats/notes/Note3F'));
 export const Note4 = lazy(() => import('../etats/notes/Note4'));
 export const Note5 = lazy(() => import('../etats/notes/Note5'));
 export const Note6 = lazy(() => import('../etats/notes/Note6'));
