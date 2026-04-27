@@ -15,13 +15,13 @@ router.get('/', async (req: Request, res: Response) => {
 
   if (req.tenant.type === 'cabinet') {
     const s = req.tenant.settings;
-    // Le cabinet lui-meme en premier (sa propre compta/paie)
+    // Le cabinet lui-meme en premier (sa propre compta/etats)
     const cabinetEntite = {
       id: req.tenant.id,
       nom: req.tenant.nom,
       type_activite: 'cabinet' as const,
       offre: s?.offre || 'comptabilite',
-      modules: s?.modules || ['compta', 'paie'],
+      modules: s?.modules || ['compta', 'etats'],
       sigle: s?.sigle || '',
       adresse: s?.adresse || '',
       nif: s?.nif || '',
@@ -148,7 +148,7 @@ router.post('/', async (req: Request, res: Response) => {
       nom: updated!.nom,
       type_activite: 'entreprise',
       offre: modules?.includes('compta') ? 'comptabilite' : 'etats',
-      modules: modules || ['compta', 'etats', 'paie'],
+      modules: modules || ['compta', 'etats'],
       sigle: sigle || '',
       adresse: adresse || '',
       nif: nif || '',
@@ -193,7 +193,7 @@ router.put('/:id', async (req: Request, res: Response) => {
       nom: updated.nom,
       type_activite: 'entreprise',
       offre: modules?.includes('compta') ? 'comptabilite' : 'etats',
-      modules: modules || ['compta', 'etats', 'paie'],
+      modules: modules || ['compta', 'etats'],
       sigle: (updated.settings?.sigle as string) || '',
       adresse: (updated.settings?.adresse as string) || '',
       nif: (updated.settings?.nif as string) || '',

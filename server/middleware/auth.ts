@@ -55,7 +55,7 @@ interface KeycloakPayload {
   exp: number;
 }
 
-const APP_ROLES = ['admin', 'comptable', 'gestionnaire_paie', 'reviseur', 'gestionnaire', 'lecture_seule', 'employe'];
+const APP_ROLES = ['admin', 'comptable', 'lecture_seule'];
 
 function extractRoles(payload: KeycloakPayload): string[] {
   if (payload.role && APP_ROLES.includes(payload.role)) {

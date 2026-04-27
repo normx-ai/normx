@@ -1,6 +1,6 @@
 /**
  * Middleware Module Guard - NormX
- * Verifie que le tenant a souscrit au module demande (compta, etats, paie)
+ * Verifie que le tenant a souscrit au module demande (compta, etats)
  * avant d'autoriser l'acces aux routes correspondantes.
  */
 
@@ -9,7 +9,7 @@ import { createLogger } from '../logger';
 
 const log = createLogger('moduleGuard');
 
-type NormxModule = 'compta' | 'etats' | 'paie';
+type NormxModule = 'compta' | 'etats';
 
 /**
  * Middleware factory : verifie que le tenant a le module requis.
@@ -17,7 +17,6 @@ type NormxModule = 'compta' | 'etats' | 'paie';
  *
  * Usage dans index.ts :
  *   app.use("/api/ecritures", ...tenantChain, requireModule('compta'), ecrituresRoutes);
- *   app.use("/api/paie", ...tenantChain, requireModule('paie'), paieRoutes);
  */
 export function requireModule(module: NormxModule) {
   return (req: Request, res: Response, next: NextFunction): void => {

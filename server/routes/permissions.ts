@@ -10,7 +10,7 @@ import logger from '../logger';
 
 const router = express.Router();
 
-const VALID_MODULES: ModuleNormx[] = ['compta', 'paie', 'etats', 'revision', 'assistant', 'admin'];
+const VALID_MODULES: ModuleNormx[] = ['compta', 'etats', 'assistant', 'admin'];
 
 function isValidModule(value: string): value is ModuleNormx {
   return VALID_MODULES.includes(value as ModuleNormx);

@@ -81,7 +81,7 @@ router.post('/setup', async (req: Request, res: Response) => {
           plan: tenant.plan,
         });
         await tenantService.updateTenant(selfClient.id, {
-          settings: { modules: modules || ['compta', 'etats', 'paie'] },
+          settings: { modules: modules || ['compta', 'etats'] },
         });
       }
     }
