@@ -86,30 +86,6 @@ ALTER TABLE "${schema_name}".etablissements FORCE ROW LEVEL SECURITY;
 CREATE POLICY tenant_isolation_etablissements ON "${schema_name}".etablissements
   USING (true) WITH CHECK (true);
 
--- Salaries
-ALTER TABLE "${schema_name}".salaries ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".salaries FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_salaries ON "${schema_name}".salaries
-  USING (true) WITH CHECK (true);
-
--- Rubriques
-ALTER TABLE "${schema_name}".rubriques ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".rubriques FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_rubriques ON "${schema_name}".rubriques
-  USING (true) WITH CHECK (true);
-
--- Bulletins paie
-ALTER TABLE "${schema_name}".bulletins_paie ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".bulletins_paie FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_bulletins_paie ON "${schema_name}".bulletins_paie
-  USING (true) WITH CHECK (true);
-
--- Periodes cloture
-ALTER TABLE "${schema_name}".periodes_cloture ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".periodes_cloture FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_periodes_cloture ON "${schema_name}".periodes_cloture
-  USING (true) WITH CHECK (true);
-
 -- Notifications
 ALTER TABLE "${schema_name}".notifications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "${schema_name}".notifications FORCE ROW LEVEL SECURITY;

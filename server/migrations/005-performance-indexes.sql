@@ -23,8 +23,5 @@ CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_ecriture_compte ON ecriture_ligne
 -- Index composite balance_lignes pour lookup par balance + compte
 CREATE INDEX IF NOT EXISTS idx_balance_lignes_balance_compte ON balance_lignes(balance_id, numero_compte);
 
--- Index pour bulletins_paie lookup par periode (composite)
-CREATE INDEX IF NOT EXISTS idx_bulletins_paie_periode ON bulletins_paie(mois, annee, salarie_id);
-
 -- Index pour lettrage (recherche ecritures non lettrees)
 CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_lettrage ON ecriture_lignes(tiers_id, lettrage_code);

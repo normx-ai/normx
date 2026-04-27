@@ -21,9 +21,6 @@ CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_tiers ON ecriture_lignes(tiers_id
 -- Index sur notifications
 CREATE INDEX IF NOT EXISTS idx_notifications_user_read ON notifications(utilisateur_id, lu);
 
--- Index sur salaries
-CREATE INDEX IF NOT EXISTS idx_salaries_etablissement ON salaries(etablissement_id);
-
 -- Index sur declarations TVA
 CREATE INDEX IF NOT EXISTS idx_declarations_tva_exercice ON declarations_tva(exercice_id);
 CREATE INDEX IF NOT EXISTS idx_declaration_tva_lignes_declaration ON declaration_tva_lignes(declaration_id, onglet);
