@@ -88,12 +88,24 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
     setIsGenerating(true);
 
     try {
-      const pageEls = Array.from(containerRef.current.querySelectorAll<HTMLElement>('.liasse-page > div > div[style*="210mm"]'));
+      // Les pages A4 utilisent deux conventions de style historiques :
+      //   - inline `style={{ width: '210mm', ... }}` (notes annexes Note1-Note37,
+      //     certaines en paysage avec `width: '297mm'`)
+      //   - className `a4-page` defini en CSS (Bilan/CR/TFT SYSCOHADA, fiches
+      //     R1-R4, SYCEBNL, projets, etc., toujours en portrait)
+      // Le selecteur capture les deux sinon les etats financiers SYSCOHADA
+      // sont silencieusement absents du PDF (cf bug "liasse sans etats").
+      const pageEls = Array.from(containerRef.current.querySelectorAll<HTMLElement>(
+        '.liasse-page > div > div[style*="210mm"], .liasse-page > div > div.a4-page',
+      ));
       if (pageEls.length === 0) {
         setIsGenerating(false);
         return;
       }
 
+      // Le PDF demarre en portrait, mais chaque page suivante est ajoutee
+      // dans la bonne orientation via pdf.addPage(format, orientation) selon
+      // le ratio reel du canvas (width > height ⇒ landscape).
       const pdf = new jsPDF('p', 'mm', 'a4');
       setProgress({ current: 0, total: pageEls.length });
 
@@ -116,9 +128,22 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
             removeContainer: true,
           });
           const imgData = canvas.toDataURL('image/png');
-          const imgHeight = (canvas.height * PDF_WIDTH_MM) / canvas.width;
-          if (pagesAdded > 0) pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, 0, PDF_WIDTH_MM, Math.min(imgHeight, PDF_HEIGHT_MM));
+          // Detecte l'orientation depuis le ratio reel du canvas :
+          // landscape si plus large que haut (cas Note 17, Note 21, etc.).
+          const isLandscape = canvas.width > canvas.height;
+          const pageW = isLandscape ? PDF_HEIGHT_MM : PDF_WIDTH_MM;
+          const pageH = isLandscape ? PDF_WIDTH_MM : PDF_HEIGHT_MM;
+          const imgHeight = (canvas.height * pageW) / canvas.width;
+          if (pagesAdded > 0) {
+            pdf.addPage('a4', isLandscape ? 'l' : 'p');
+          } else if (isLandscape) {
+            // 1ere page paysage : recreer le doc dans la bonne orientation
+            // jsPDF ne permet pas de changer l'orientation de la page par
+            // defaut apres construction, sinon laisser tel quel.
+            pdf.deletePage(1);
+            pdf.addPage('a4', 'l');
+          }
+          pdf.addImage(imgData, 'PNG', 0, 0, pageW, Math.min(imgHeight, pageH));
           pagesAdded++;
         } catch (err) {
           errors.push(`Page ${i + 1} : ${(err as Error).message}`);
