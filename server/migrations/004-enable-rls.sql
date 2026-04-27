@@ -67,24 +67,7 @@ CREATE POLICY tenant_isolation_tiers ON "${schema_name}".tiers
   USING (true) WITH CHECK (true);
 
 -- Module TVA retire par migration 009 (non portable OHADA, traite dans l'app tax dediee)
-
--- Revision data
-ALTER TABLE "${schema_name}".revision_data ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".revision_data FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_revision_data ON "${schema_name}".revision_data
-  USING (true) WITH CHECK (true);
-
--- Paie config
-ALTER TABLE "${schema_name}".paie_config ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".paie_config FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_paie_config ON "${schema_name}".paie_config
-  USING (true) WITH CHECK (true);
-
--- Etablissements
-ALTER TABLE "${schema_name}".etablissements ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "${schema_name}".etablissements FORCE ROW LEVEL SECURITY;
-CREATE POLICY tenant_isolation_etablissements ON "${schema_name}".etablissements
-  USING (true) WITH CHECK (true);
+-- Module Revision audit + Paie retires (paie reviendra via paie-cemac sur paie.normx-ai.com)
 
 -- Notifications
 ALTER TABLE "${schema_name}".notifications ENABLE ROW LEVEL SECURITY;

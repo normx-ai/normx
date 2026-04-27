@@ -121,12 +121,6 @@ export async function importBalance(schema: string, input: ImportBalanceInput) {
     );
     if (oldBalance.rows.length > 0) {
       await client.query(`DELETE FROM "${s}".balances WHERE id = $1`, [oldBalance.rows[0].id]);
-      if (type_balance === 'N') {
-        await client.query(
-          `DELETE FROM "${s}".revision_data WHERE exercice_id = $1`,
-          [exercice_id],
-        );
-      }
     }
 
     // Creer la balance
@@ -186,12 +180,6 @@ export async function deleteBalance(schema: string, balanceId: number) {
     }
 
     const deleted = result.rows[0];
-    if (deleted.type_balance === 'N') {
-      await client.query(
-        `DELETE FROM "${s}".revision_data WHERE exercice_id = $1`,
-        [deleted.exercice_id],
-      );
-    }
     await client.query('COMMIT');
     return deleted;
   } catch (err) {

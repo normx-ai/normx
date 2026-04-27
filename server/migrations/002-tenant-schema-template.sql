@@ -141,42 +141,6 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".tiers (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- ========== REVISION ==========
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".revision_data (
-  id SERIAL PRIMARY KEY,
-  entite_id INTEGER REFERENCES "${schema_name}".entites(id),
-  exercice_id INTEGER REFERENCES "${schema_name}".exercices(id),
-  section VARCHAR(50),
-  data JSONB DEFAULT '{}',
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE (exercice_id, section)
-);
-
--- ========== PAIE ==========
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".paie_config (
-  id SERIAL PRIMARY KEY,
-  entite_id INTEGER,
-  devise VARCHAR(5) DEFAULT 'XAF',
-  mois INTEGER,
-  annee INTEGER,
-  step VARCHAR(20),
-  mode VARCHAR(20),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(entite_id)
-);
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".etablissements (
-  id SERIAL PRIMARY KEY,
-  entite_id INTEGER,
-  raison_sociale VARCHAR(200) NOT NULL,
-  nui VARCHAR(50),
-  data JSONB DEFAULT '{}',
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
 -- ========== NOTIFICATIONS ==========
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".notifications (
