@@ -29,13 +29,6 @@ const ALL_MODULES: ModuleOption[] = [
     color: '#059669',
     features: ['Bilan', 'Compte de résultat', 'TFT & Notes', 'Résultat fiscal'],
   },
-  {
-    id: 'paie',
-    label: 'Paie',
-    desc: 'Gestion de la paie Congo',
-    color: '#d97706',
-    features: ['Bulletins de paie', 'DAS I, II, III', 'États sociaux', 'État fiscal'],
-  },
 ];
 
 // Filtre en temps reel : seuls les modules actives sont montres

@@ -6,7 +6,7 @@
 import { useMemo } from 'react';
 import { useKeycloak } from '../auth/KeycloakProvider';
 
-type ModuleNormx = 'compta' | 'paie' | 'etats' | 'assistant' | 'admin';
+type ModuleNormx = 'compta' | 'etats' | 'assistant' | 'admin';
 
 interface ModulePermissions {
   module: ModuleNormx;
@@ -25,7 +25,7 @@ interface UsePermissionsResult {
   isLoading: boolean;
 }
 
-const ALL_MODULES: ModuleNormx[] = ['compta', 'paie', 'etats', 'assistant', 'admin'];
+const ALL_MODULES: ModuleNormx[] = ['compta', 'etats', 'assistant', 'admin'];
 
 interface PermFlags {
   peut_lire: boolean;
@@ -94,13 +94,6 @@ function getRoleModulePerms(role: string): RoleModuleEntry[] {
       return [
         { module: 'compta', perms: allTrue() },
         { module: 'etats', perms: allTrue() },
-        { module: 'paie', perms: readOnly() },
-      ];
-
-    case 'gestionnaire_paie':
-      return [
-        { module: 'paie', perms: allTrue() },
-        { module: 'compta', perms: readOnly() },
       ];
 
     case 'lecture_seule':

@@ -21,9 +21,6 @@ import tiersRoutes from "./routes/tiers";
 import entitesRoutes from "./routes/entites";
 import journauxRoutes from "./routes/journaux";
 import comptesCustomRoutes from "./routes/comptesCustom";
-import paieRoutes from "./routes/paie";
-import workflowRoutes from "./routes/workflow";
-import rubriquesRoutes from "./routes/rubriques";
 import notificationsRoutes from "./routes/notifications";
 import permissionsRoutes from "./routes/permissions";
 import ocrImportRoutes from "./routes/ocr-import";
@@ -175,11 +172,6 @@ app.use("/api/plan-comptable", ...tenantChain, dataLimiter, requireAnyModule('co
 app.use("/api/tiers", ...tenantChain, dataLimiter, requireModule('compta'), tiersRoutes);
 app.use("/api/journaux", ...tenantChain, dataLimiter, requireModule('compta'), journauxRoutes);
 app.use("/api/comptes-custom", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), comptesCustomRoutes);
-
-// Module PAIE
-app.use("/api/paie", ...tenantChain, dataLimiter, requireModule('paie'), paieRoutes);
-app.use("/api/paie/workflow", ...tenantChain, dataLimiter, requireModule('paie'), workflowRoutes);
-app.use("/api/paie/rubriques", ...tenantChain, dataLimiter, requireModule('paie'), rubriquesRoutes);
 
 /**
  * @swagger

@@ -177,55 +177,6 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".etablissements (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS "${schema_name}".salaries (
-  id SERIAL PRIMARY KEY,
-  entite_id INTEGER,
-  etablissement_id INTEGER REFERENCES "${schema_name}".etablissements(id),
-  data JSONB DEFAULT '{}',
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".rubriques (
-  id SERIAL PRIMARY KEY,
-  entite_id INTEGER,
-  code VARCHAR(50) NOT NULL,
-  libelle VARCHAR(200) NOT NULL,
-  type VARCHAR(20) NOT NULL CHECK (type IN ('gain', 'retenue', 'cotisation', 'indemnite', 'avantage')),
-  mode VARCHAR(20) NOT NULL CHECK (mode IN ('pourcentage', 'fixe', 'horaire', 'variable')),
-  taux DECIMAL(10,4),
-  montant DECIMAL(15,2),
-  plafond DECIMAL(15,2),
-  base VARCHAR(50),
-  imposable BOOLEAN DEFAULT true,
-  actif BOOLEAN DEFAULT true,
-  ordre INTEGER DEFAULT 0,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".bulletins_paie (
-  id SERIAL PRIMARY KEY,
-  salarie_id INTEGER REFERENCES "${schema_name}".salaries(id),
-  mois INTEGER NOT NULL,
-  annee INTEGER NOT NULL,
-  statut VARCHAR(20) DEFAULT 'brouillon' CHECK (statut IN ('brouillon', 'valide', 'verrouille')),
-  data JSONB DEFAULT '{}',
-  date_validation TIMESTAMP,
-  date_verrouillage TIMESTAMP,
-  valide_par UUID,
-  created_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE (salarie_id, mois, annee)
-);
-
-CREATE TABLE IF NOT EXISTS "${schema_name}".periodes_cloture (
-  id SERIAL PRIMARY KEY,
-  mois INTEGER NOT NULL,
-  annee INTEGER NOT NULL,
-  cloturee BOOLEAN DEFAULT false,
-  date_cloture TIMESTAMP,
-  UNIQUE(mois, annee)
-);
-
 -- ========== NOTIFICATIONS ==========
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".notifications (
@@ -265,9 +216,6 @@ CREATE INDEX IF NOT EXISTS idx_rapprochements_exercice ON "${schema_name}".rappr
 CREATE INDEX IF NOT EXISTS idx_ecritures_entite ON "${schema_name}".ecritures(entite_id);
 CREATE INDEX IF NOT EXISTS idx_ecritures_exercice ON "${schema_name}".ecritures(exercice_id);
 CREATE INDEX IF NOT EXISTS idx_tiers_entite ON "${schema_name}".tiers(entite_id);
-CREATE INDEX IF NOT EXISTS idx_salaries_entite ON "${schema_name}".salaries(entite_id);
-CREATE INDEX IF NOT EXISTS idx_bulletins_salarie ON "${schema_name}".bulletins_paie(salarie_id);
-CREATE INDEX IF NOT EXISTS idx_bulletins_periode ON "${schema_name}".bulletins_paie(mois, annee);
 CREATE INDEX IF NOT EXISTS idx_audit_module ON "${schema_name}".audit_log(module);
 CREATE INDEX IF NOT EXISTS idx_audit_date ON "${schema_name}".audit_log(created_at);
 
@@ -313,7 +261,6 @@ CREATE INDEX IF NOT EXISTS idx_ecritures_date ON "${schema_name}".ecritures(date
 CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_numero_compte ON "${schema_name}".ecriture_lignes(numero_compte, ecriture_id);
 CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_tiers ON "${schema_name}".ecriture_lignes(tiers_id);
 CREATE INDEX IF NOT EXISTS idx_notifications_user_read ON "${schema_name}".notifications(utilisateur_id, lu);
-CREATE INDEX IF NOT EXISTS idx_salaries_etablissement ON "${schema_name}".salaries(etablissement_id);
 CREATE INDEX IF NOT EXISTS idx_balance_lignes_numero_compte ON "${schema_name}".balance_lignes(numero_compte);
 
 -- ========== INDEX PERFORMANCE (migration 005) ==========
@@ -325,7 +272,6 @@ CREATE INDEX IF NOT EXISTS idx_ecritures_exercice_statut ON "${schema_name}".ecr
 CREATE INDEX IF NOT EXISTS idx_ecritures_validees ON "${schema_name}".ecritures(exercice_id, date_ecriture) WHERE statut = 'validee';
 CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_ecriture_compte ON "${schema_name}".ecriture_lignes(ecriture_id, numero_compte);
 CREATE INDEX IF NOT EXISTS idx_balance_lignes_balance_compte ON "${schema_name}".balance_lignes(balance_id, numero_compte);
-CREATE INDEX IF NOT EXISTS idx_bulletins_paie_periode ON "${schema_name}".bulletins_paie(mois, annee, salarie_id);
 CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_lettrage ON "${schema_name}".ecriture_lignes(tiers_id, lettrage_code);
 
 -- ========== PARAMETRAGE COMPTA (migration 008 intégrée au template) ==========

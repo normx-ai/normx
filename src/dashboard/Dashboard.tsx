@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { LuHouse, LuFileText } from 'react-icons/lu';
 import { ReferentielProvider } from '../contexts/ReferentielContext';
-const Paie = lazy(() => import('../paie/Paie'));
 import GestionClients from './GestionClients';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Entite } from '../types';
 import { ENABLED_MODULES, isModuleEnabled } from '../config/modules';
@@ -54,12 +53,12 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   // ---- Navigation URL-driven : l'URL est la source de verite ----
   // /app/portail          → portail cabinet, clients list
   // /app/portail/cabinet  → portail cabinet, panel "Mon cabinet"
-  // /app/:module/:tab     → module (compta|etats|paie) + tab (accueil|journal|balance|...)
+  // /app/:module/:tab     → module (compta|etats) + tab (accueil|journal|balance|...)
   const enabledModules: NormxModule[] = modules.filter((m) => isModuleEnabled(m));
 
   const activeModule: NormxModule | null = (() => {
     const mod = urlParams.module;
-    if (mod && ['compta', 'etats', 'paie'].includes(mod) && isModuleEnabled(mod as NormxModule)) {
+    if (mod && ['compta', 'etats'].includes(mod) && isModuleEnabled(mod as NormxModule)) {
       if (enabledModules.length > 0 && !enabledModules.includes(mod as NormxModule)) {
         return null;
       }
@@ -74,7 +73,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   useEffect(() => {
     if (modules.length === 0) return;
     const mod = urlParams.module;
-    if (mod && ['compta', 'etats', 'paie'].includes(mod) && !enabledModules.includes(mod as NormxModule)) {
+    if (mod && ['compta', 'etats'].includes(mod) && !enabledModules.includes(mod as NormxModule)) {
       const first = enabledModules[0];
       navigate(first ? `/app/${first}/accueil` : '/app/portail', { replace: true });
     }
@@ -304,21 +303,6 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
           </div>
         </div>
         {exerciceModalElement}
-        {confirmModalElement}
-      </div>
-    );
-  }
-
-  // ==================== PAIE ====================
-  if (activeModule === 'paie') {
-    return (
-      <div className="dashboard">
-        <Topbar {...topbarProps} moduleLabel="" dossierSelector={dossierSelector} />
-        <div style={{ flex: 1, overflow: 'auto' }}>
-          <Suspense fallback={<div style={{ padding: 40, textAlign: 'center' }}>Chargement...</div>}>
-            <Paie entiteId={entiteId} />
-          </Suspense>
-        </div>
         {confirmModalElement}
       </div>
     );

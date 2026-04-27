@@ -1,5 +1,5 @@
 import React from 'react';
-import { LuX, LuBookOpen, LuFileSpreadsheet, LuCoins } from 'react-icons/lu';
+import { LuX, LuBookOpen, LuFileSpreadsheet } from 'react-icons/lu';
 import { TypeActivite, Offre, NormxModule } from '../../types';
 import { isModuleEnabled } from '../../config/modules';
 
@@ -18,7 +18,6 @@ export interface NewClientForm {
 export const MODULE_LABELS: Record<string, { label: string; icon: React.ComponentType<{ size?: number }>; color: string }> = {
   compta: { label: 'Comptabilité', icon: LuBookOpen, color: '#1A3A5C' },
   etats: { label: 'États', icon: LuFileSpreadsheet, color: '#1A3A5C' },
-  paie: { label: 'Paie', icon: LuCoins, color: '#16a34a' },
 };
 
 interface ClientFormModalProps {

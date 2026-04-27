@@ -9,8 +9,7 @@ import { ModuleInfo } from './types';
 
 export const MODULE_LIST: ModuleInfo[] = [
   { id: 'compta', label: 'Comptabilité', icon: LuBookOpen, desc: 'Saisie, consultation, états financiers' },
-  { id: 'etats', label: 'États financiers', icon: LuFileSpreadsheet, desc: 'Import balance, révision comptable, états financiers' },
-  { id: 'paie', label: 'Paie', icon: LuCoins, desc: 'Bulletins, salariés, déclarations' },
+  { id: 'etats', label: 'États financiers', icon: LuFileSpreadsheet, desc: 'Import balance et états financiers' },
 ];
 
 export const ETATS_ASSOCIATION: EtatFinancier[] = [

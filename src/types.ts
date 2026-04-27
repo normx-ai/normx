@@ -1,7 +1,7 @@
 // ===================== TYPES PARTAGES — NORMX =====================
 
 export type TypeActivite = 'entreprise' | 'cabinet' | 'association' | 'ordre_professionnel' | 'projet_developpement' | 'smt';
-export type NormxModule = 'compta' | 'etats' | 'paie';
+export type NormxModule = 'compta' | 'etats';
 export type Offre = 'comptabilite' | 'etats';
 export type ToastType = 'success' | 'error' | 'info';
 
@@ -249,7 +249,7 @@ export interface LettrageLigne {
 }
 
 // Navigation sidebar
-export type SidebarSection = 'accueil' | 'comptabilite' | 'etats' | 'paie' | 'rapports' | 'assistant' | 'parametres';
+export type SidebarSection = 'accueil' | 'comptabilite' | 'etats' | 'rapports' | 'assistant' | 'parametres';
 
 // Props communes pour les composants d'etats financiers
 export interface EtatBaseProps {

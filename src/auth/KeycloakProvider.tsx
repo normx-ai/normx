@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { getLoginUrl, getLogoutUrl } from '../paie/data/keycloak';
-import type { KeycloakUser } from '../paie/data/keycloak';
+import { getLoginUrl, getLogoutUrl } from './keycloak';
+import type { KeycloakUser } from './keycloak';
 import { api } from '../lib/apiEndpoints';
 
 // Format retourne par /api/auth/me et /api/auth/callback

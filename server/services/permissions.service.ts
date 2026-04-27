@@ -5,22 +5,20 @@
  * dans chaque schema tenant via la table `permissions_modules`.
  *
  * Trois dimensions :
- *   Modules (6) : compta, paie, etats, revision, assistant, admin
+ *   Modules (4) : compta, etats, assistant, admin
  *   Actions (4) : lire, creer, modifier, supprimer
- *   Roles   (5) : admin, comptable, gestionnaire_paie, reviseur, lecture_seule
+ *   Roles   (3) : admin, comptable, lecture_seule
  *
  * Matrice roles → permissions (appliquee a la creation d'un utilisateur via
  * `initPermissionsFromRole`, cf. `buildRolePermissions` plus bas) :
  *
  *   admin             → toutes permissions sur tous les modules
- *   comptable         → tout sur compta/etats, lecture sur paie/revision
- *   gestionnaire_paie → tout sur paie, lecture sur compta
- *   reviseur          → tout sur revision, lecture sur compta/etats
+ *   comptable         → tout sur compta/etats
  *   lecture_seule     → lecture sur tous les modules
  *   (role inconnu)    → lecture sur tous les modules (fallback defensif)
  *
  * Une fois initialisees, les permissions sont modifiables individuellement via
- * `setPermission` (ex: l'admin peut accorder `creer` sur paie a un comptable).
+ * `setPermission`.
  *
  * Points d'application :
  *   - middleware `requirePermission(module, action)` : verifie la cellule
@@ -29,8 +27,8 @@
  *     a souscrit au module (pas de lien avec l'utilisateur).
  *
  * Les deux middlewares se composent : typiquement
- *   app.use('/api/paie', ...tenantChain, requireModule('paie'),
- *           requirePermission('paie', 'lire'), paieRoutes);
+ *   app.use('/api/compta', ...tenantChain, requireModule('compta'),
+ *           requirePermission('compta', 'lire'), comptaRoutes);
  */
 
 import pool from '../db';
@@ -49,10 +47,10 @@ export interface Permission {
   peut_supprimer: boolean;
 }
 
-export type ModuleNormx = 'compta' | 'paie' | 'etats' | 'revision' | 'assistant' | 'admin';
+export type ModuleNormx = 'compta' | 'etats' | 'assistant' | 'admin';
 export type ActionPermission = 'lire' | 'creer' | 'modifier' | 'supprimer';
 
-const ALL_MODULES: ModuleNormx[] = ['compta', 'paie', 'etats', 'revision', 'assistant', 'admin'];
+const ALL_MODULES: ModuleNormx[] = ['compta', 'etats', 'assistant', 'admin'];
 
 const ACTION_COLUMN_MAP: Record<ActionPermission, string> = {
   lire: 'peut_lire',
@@ -225,28 +223,6 @@ function buildRolePermissions(role: string): ModulePermissionEntry[] {
       return [
         { module: 'compta', perms: allTrue() },
         { module: 'etats', perms: allTrue() },
-        { module: 'paie', perms: readOnly() },
-        { module: 'revision', perms: readOnly() },
-        { module: 'assistant', perms: none() },
-        { module: 'admin', perms: none() },
-      ];
-
-    case 'gestionnaire_paie':
-      return [
-        { module: 'paie', perms: allTrue() },
-        { module: 'compta', perms: readOnly() },
-        { module: 'etats', perms: none() },
-        { module: 'revision', perms: none() },
-        { module: 'assistant', perms: none() },
-        { module: 'admin', perms: none() },
-      ];
-
-    case 'reviseur':
-      return [
-        { module: 'revision', perms: allTrue() },
-        { module: 'compta', perms: readOnly() },
-        { module: 'etats', perms: readOnly() },
-        { module: 'paie', perms: none() },
         { module: 'assistant', perms: none() },
         { module: 'admin', perms: none() },
       ];
