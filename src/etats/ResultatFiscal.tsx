@@ -20,8 +20,13 @@ import {
 import {
   BalanceApiRow,
   DEDUCTIONS_TYPES,
+  LigneARD,
+  LigneDeficit,
   LigneReintegration,
   REINTEGRATIONS_TYPES,
+  buildDefaultDeductions,
+  buildDefaultDeficits,
+  buildDefaultReintegrations,
   computeResultatFiscal,
   formatMontant,
 } from './resultat/resultatFiscalData';
@@ -49,6 +54,8 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
 
   const [reintegrations, setReintegrations] = useState<LigneReintegration[]>([]);
   const [deductions, setDeductions] = useState<LigneReintegration[]>([]);
+  const [deficits, setDeficits] = useState<LigneDeficit[]>([]);
+  const [ard, setArd] = useState<LigneARD>({ solde_debut: 0, ard_exercice: 0, ard_utilises: 0 });
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<Date | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -98,11 +105,13 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
 
   useEffect(() => { loadBalance(); }, [loadBalance]);
 
-  // Charger les lignes Réintégrations / Déductions persistées pour l'exercice
+  // Charger les lignes persistées pour l'exercice (4 types : reint, ded, déficit, ARD)
   useEffect(() => {
     if (!selectedExercice) {
       setReintegrations([]);
       setDeductions([]);
+      setDeficits([]);
+      setArd({ solde_debut: 0, ard_exercice: 0, ard_utilises: 0 });
       setSavedAt(null);
       return;
     }
@@ -111,19 +120,67 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
       try {
         const res = await clientFetch(api.resultatFiscal.lignes(selectedExercice.id));
         if (!res.ok || cancelled) return;
-        const data: { lignes: { id: number; type: 'reintegration' | 'deduction'; libelle: string; montant: number; article: string }[] } = await res.json();
+        type LigneApi = {
+          id: number;
+          type: 'reintegration' | 'deduction' | 'deficit_reportable' | 'ard';
+          libelle: string;
+          montant: number;
+          article: string;
+          metadata?: Record<string, unknown>;
+        };
+        const data: { lignes: LigneApi[] } = await res.json();
         const reints: LigneReintegration[] = [];
         const deds: LigneReintegration[] = [];
+        const defs: LigneDeficit[] = [];
+        const ardLoaded: LigneARD = { solde_debut: 0, ard_exercice: 0, ard_utilises: 0 };
         let maxId = 0;
         for (const l of data.lignes) {
-          const ligne: LigneReintegration = { id: l.id, libelle: l.libelle, montant: Number(l.montant) || 0, article: l.article };
           if (l.id > maxId) maxId = l.id;
-          if (l.type === 'reintegration') reints.push(ligne); else deds.push(ligne);
+          if (l.type === 'reintegration' || l.type === 'deduction') {
+            const ligne: LigneReintegration = { id: l.id, libelle: l.libelle, montant: Number(l.montant) || 0, article: l.article };
+            if (l.type === 'reintegration') reints.push(ligne); else deds.push(ligne);
+          } else if (l.type === 'deficit_reportable') {
+            const meta = l.metadata || {};
+            defs.push({
+              id: l.id,
+              annee_origine: Number(meta['annee_origine']) || (selectedExercice.annee - 1),
+              montant_reportable: Number(meta['montant_reportable']) || 0,
+              montant_impute: Number(l.montant) || 0,
+            });
+          } else if (l.type === 'ard') {
+            const sousType = (l.metadata || {})['sous_type'] as string | undefined;
+            if (sousType === 'solde_debut') ardLoaded.solde_debut = Number(l.montant) || 0;
+            else if (sousType === 'exercice') ardLoaded.ard_exercice = Number(l.montant) || 0;
+            else if (sousType === 'utilises') ardLoaded.ard_utilises = Number(l.montant) || 0;
+          }
         }
         if (cancelled) return;
         nextId = Math.max(nextId, maxId + 1);
-        setReintegrations(reints);
-        setDeductions(deds);
+        // Si rien de persisté pour cet exercice → initialiser avec les défauts du formulaire IS-2
+        if (reints.length === 0) {
+          const built = buildDefaultReintegrations(nextId);
+          nextId += built.length;
+          setReintegrations(built);
+        } else {
+          setReintegrations(reints);
+        }
+        if (deds.length === 0) {
+          const built = buildDefaultDeductions(nextId);
+          nextId += built.length;
+          setDeductions(built);
+        } else {
+          setDeductions(deds);
+        }
+        if (defs.length === 0) {
+          const built = buildDefaultDeficits(nextId, selectedExercice.annee);
+          nextId += built.length;
+          setDeficits(built);
+        } else {
+          // Tri par ancienneté décroissante (N-3 d'abord)
+          defs.sort((a, b) => a.annee_origine - b.annee_origine);
+          setDeficits(defs);
+        }
+        setArd(ardLoaded);
         setSavedAt(null);
       } catch {
         // silently ignore
@@ -141,6 +198,16 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
         lignes: [
           ...reintegrations.map(r => ({ type: 'reintegration' as const, libelle: r.libelle, montant: r.montant, article: r.article })),
           ...deductions.map(d => ({ type: 'deduction' as const, libelle: d.libelle, montant: d.montant, article: d.article })),
+          ...deficits.map(d => ({
+            type: 'deficit_reportable' as const,
+            libelle: 'Déficit ' + d.annee_origine,
+            montant: d.montant_impute,
+            article: 'Art. 15-bis',
+            metadata: { annee_origine: d.annee_origine, montant_reportable: d.montant_reportable },
+          })),
+          { type: 'ard' as const, libelle: 'ARD solde début', montant: ard.solde_debut, article: '', metadata: { sous_type: 'solde_debut' } },
+          { type: 'ard' as const, libelle: 'ARD exercice', montant: ard.ard_exercice, article: '', metadata: { sous_type: 'exercice' } },
+          { type: 'ard' as const, libelle: 'ARD utilisés', montant: ard.ard_utilises, article: '', metadata: { sous_type: 'utilises' } },
         ],
       };
       const res = await clientFetch(api.resultatFiscal.lignes(selectedExercice.id), {
@@ -152,18 +219,46 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
         const err = await res.json().catch(() => ({}));
         throw new Error(err.error || 'Erreur sauvegarde');
       }
-      const data: { lignes: { id: number; type: 'reintegration' | 'deduction'; libelle: string; montant: number; article: string }[] } = await res.json();
+      type LigneApi = {
+        id: number;
+        type: 'reintegration' | 'deduction' | 'deficit_reportable' | 'ard';
+        libelle: string;
+        montant: number;
+        article: string;
+        metadata?: Record<string, unknown>;
+      };
+      const data: { lignes: LigneApi[] } = await res.json();
       const reints: LigneReintegration[] = [];
       const deds: LigneReintegration[] = [];
+      const defs: LigneDeficit[] = [];
+      const ardSaved: LigneARD = { solde_debut: 0, ard_exercice: 0, ard_utilises: 0 };
       let maxId = 0;
       for (const l of data.lignes) {
-        const ligne: LigneReintegration = { id: l.id, libelle: l.libelle, montant: Number(l.montant) || 0, article: l.article };
         if (l.id > maxId) maxId = l.id;
-        if (l.type === 'reintegration') reints.push(ligne); else deds.push(ligne);
+        if (l.type === 'reintegration' || l.type === 'deduction') {
+          const ligne: LigneReintegration = { id: l.id, libelle: l.libelle, montant: Number(l.montant) || 0, article: l.article };
+          if (l.type === 'reintegration') reints.push(ligne); else deds.push(ligne);
+        } else if (l.type === 'deficit_reportable') {
+          const meta = l.metadata || {};
+          defs.push({
+            id: l.id,
+            annee_origine: Number(meta['annee_origine']) || (selectedExercice.annee - 1),
+            montant_reportable: Number(meta['montant_reportable']) || 0,
+            montant_impute: Number(l.montant) || 0,
+          });
+        } else if (l.type === 'ard') {
+          const sousType = (l.metadata || {})['sous_type'] as string | undefined;
+          if (sousType === 'solde_debut') ardSaved.solde_debut = Number(l.montant) || 0;
+          else if (sousType === 'exercice') ardSaved.ard_exercice = Number(l.montant) || 0;
+          else if (sousType === 'utilises') ardSaved.ard_utilises = Number(l.montant) || 0;
+        }
       }
       nextId = Math.max(nextId, maxId + 1);
+      defs.sort((a, b) => a.annee_origine - b.annee_origine);
       setReintegrations(reints);
       setDeductions(deds);
+      setDeficits(defs);
+      setArd(ardSaved);
       setSavedAt(new Date());
     } catch (err) {
       setSaveError(err instanceof Error ? err.message : 'Erreur sauvegarde');
@@ -172,7 +267,14 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     }
   };
 
-  const calc = computeResultatFiscal(lignesN, reintegrations, deductions, regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA);
+  const updateDeficit = (id: number, field: 'annee_origine' | 'montant_reportable' | 'montant_impute', value: number): void => {
+    setDeficits(prev => prev.map(d => d.id === id ? { ...d, [field]: value } : d));
+  };
+  const updateArd = (field: 'solde_debut' | 'ard_exercice' | 'ard_utilises', value: number): void => {
+    setArd(prev => ({ ...prev, [field]: value }));
+  };
+
+  const calc = computeResultatFiscal(lignesN, reintegrations, deductions, deficits, ard, regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA);
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const duree = selectedExercice?.duree_mois || 12;
 
@@ -222,15 +324,28 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     }
     rows.push({ libelle: 'TOTAL DEDUCTIONS (D)', values: [fmt(calc.totalDeductions)], bold: true });
 
-    rows.push({ libelle: 'IV. RESULTAT FISCAL', values: [''], bold: true });
-    rows.push({ libelle: 'RESULTAT FISCAL = (A - B) + C - D', ref: regimeFiscal === 'is' ? 'Art. 6-27' : 'Art. 94', values: [fmt(calc.resultatFiscal)], bold: true });
+    rows.push({ libelle: 'IV. RESULTAT NET FISCAL DE L\'EXERCICE', values: [fmt(calc.resultatFiscal)], bold: true });
 
-    rows.push({ libelle: 'V. LIQUIDATION DE L\'IMPOT', values: [''], bold: true });
+    rows.push({ libelle: 'V. REPORTS DEFICITAIRES', values: [''], bold: true });
+    for (const d of deficits) {
+      rows.push({ libelle: 'Déficit ' + d.annee_origine + ' (reportable: ' + fmt(d.montant_reportable).toLocaleString() + ')', ref: 'Art. 15-bis', values: [fmt(d.montant_impute)] });
+    }
+    rows.push({ libelle: 'TOTAL DEFICITS IMPUTES', values: [fmt(calc.totalDeficitsImputes)], bold: true });
+
+    rows.push({ libelle: 'VI. RESULTAT NET FISCAL DEFINITIF', values: [fmt(calc.resultatFiscalDefinitif)], bold: true });
+
+    rows.push({ libelle: 'VII. AMORTISSEMENTS REPUTES DIFFERES (ARD)', values: [''], bold: true });
+    rows.push({ libelle: 'Solde des ARD en début d\'exercice', values: [fmt(ard.solde_debut)] });
+    rows.push({ libelle: 'ARD de l\'exercice', values: [fmt(ard.ard_exercice)] });
+    rows.push({ libelle: 'ARD utilisés dans l\'exercice', values: [fmt(ard.ard_utilises)] });
+    rows.push({ libelle: 'Solde des ARD en fin d\'exercice', values: [fmt(calc.ardSoldeFin)], bold: true });
+
+    rows.push({ libelle: 'VIII. LIQUIDATION DE L\'IMPOT', values: [''], bold: true });
     rows.push({ libelle: (regimeFiscal === 'is' ? 'IS' : 'IBA') + ' brut', ref: regimeFiscal === 'is' ? 'Art. 10' : 'Art. 95', values: [fmt(calc.impotBrut)] });
     rows.push({ libelle: 'Minimum de perception', ref: regimeFiscal === 'is' ? 'Art. 86-C' : 'Art. 95', values: [fmt(calc.minimumPerception)] });
     rows.push({ libelle: (regimeFiscal === 'is' ? 'IS' : 'IBA') + ' RETENU', values: [fmt(calc.impotRetenu)], bold: true });
 
-    rows.push({ libelle: 'VI. RESULTAT NET APRES IMPOT', values: [''], bold: true });
+    rows.push({ libelle: 'IX. RESULTAT NET APRES IMPOT', values: [''], bold: true });
     rows.push({ libelle: 'BENEFICE NET', values: [fmt(calc.beneficeNet)], bold: true });
 
     return {
@@ -354,32 +469,91 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
       {loading && <div style={{ padding: 20, color: '#888' }}>Chargement...</div>}
 
       {balanceFound && !loading && (
-        <div style={{ display: 'flex', gap: 16, marginBottom: 16, flexWrap: 'wrap' }}>
-          <LignesEditor
-            title="Reintegrations (+)"
-            color="#dc2626"
-            types={REINTEGRATIONS_TYPES}
-            lignes={reintegrations}
-            total={calc.totalReintegrations}
-            addLigne={addReintegration}
-            updateLigne={updateReintegration}
-            removeLigne={removeReintegration}
-            emptyMsg="Aucune reintegration saisie"
-            addPlaceholder="+ Ajouter une reintegration..."
-          />
-          <LignesEditor
-            title="Deductions (-)"
-            color="#16a34a"
-            types={DEDUCTIONS_TYPES}
-            lignes={deductions}
-            total={calc.totalDeductions}
-            addLigne={addDeduction}
-            updateLigne={updateDeduction}
-            removeLigne={removeDeduction}
-            emptyMsg="Aucune deduction saisie"
-            addPlaceholder="+ Ajouter une deduction..."
-          />
-        </div>
+        <>
+          <div style={{ display: 'flex', gap: 16, marginBottom: 16, flexWrap: 'wrap' }}>
+            <LignesEditor
+              title="II. Réintégrations (+)"
+              color="#dc2626"
+              types={REINTEGRATIONS_TYPES}
+              lignes={reintegrations}
+              total={calc.totalReintegrations}
+              addLigne={addReintegration}
+              updateLigne={updateReintegration}
+              removeLigne={removeReintegration}
+              emptyMsg="Aucune réintégration saisie"
+              addPlaceholder="+ Ajouter une réintégration libre..."
+            />
+            <LignesEditor
+              title="III. Déductions (-)"
+              color="#16a34a"
+              types={DEDUCTIONS_TYPES}
+              lignes={deductions}
+              total={calc.totalDeductions}
+              addLigne={addDeduction}
+              updateLigne={updateDeduction}
+              removeLigne={removeDeduction}
+              emptyMsg="Aucune déduction saisie"
+              addPlaceholder="+ Ajouter une déduction libre..."
+            />
+          </div>
+
+          <div style={{ display: 'flex', gap: 16, marginBottom: 16, flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: 480, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, padding: 12 }}>
+              <h3 style={{ margin: '0 0 8px', fontSize: 13, color: '#7c3aed' }}>V. Reports déficitaires</h3>
+              <table style={{ width: '100%', fontSize: 11, borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ background: '#f3f4f6' }}>
+                    <th style={{ padding: '4px 6px', textAlign: 'left' }}>Année origine</th>
+                    <th style={{ padding: '4px 6px', textAlign: 'right' }}>Reportable</th>
+                    <th style={{ padding: '4px 6px', textAlign: 'right' }}>Imputé sur exercice</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {deficits.map(d => (
+                    <tr key={d.id}>
+                      <td style={{ padding: '3px 6px' }}>
+                        <input type="number" value={d.annee_origine} onChange={e => updateDeficit(d.id, 'annee_origine', parseInt(e.target.value) || 0)}
+                          style={{ width: 70, fontSize: 11, padding: '2px 4px', border: '1px solid #ddd', borderRadius: 3 }} />
+                      </td>
+                      <td style={{ padding: '3px 6px', textAlign: 'right' }}>
+                        <input type="number" value={d.montant_reportable || ''} onChange={e => updateDeficit(d.id, 'montant_reportable', parseFloat(e.target.value) || 0)}
+                          style={{ width: 110, textAlign: 'right', fontSize: 11, padding: '2px 4px', border: '1px solid #ddd', borderRadius: 3 }} />
+                      </td>
+                      <td style={{ padding: '3px 6px', textAlign: 'right' }}>
+                        <input type="number" value={d.montant_impute || ''} onChange={e => updateDeficit(d.id, 'montant_impute', parseFloat(e.target.value) || 0)}
+                          style={{ width: 110, textAlign: 'right', fontSize: 11, padding: '2px 4px', border: '1px solid #ddd', borderRadius: 3 }} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div style={{ textAlign: 'right', fontWeight: 700, fontSize: 12, marginTop: 4, color: '#7c3aed' }}>
+                Total imputé : {formatMontant(calc.totalDeficitsImputes)} FCFA
+              </div>
+            </div>
+
+            <div style={{ flex: 1, minWidth: 380, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, padding: 12 }}>
+              <h3 style={{ margin: '0 0 8px', fontSize: 13, color: '#0891b2' }}>VII. Amortissements réputés différés (ARD)</h3>
+              <table style={{ width: '100%', fontSize: 11, borderCollapse: 'collapse' }}>
+                <tbody>
+                  <tr><td style={{ padding: '3px 6px' }}>Solde ARD en début d&apos;exercice</td><td style={{ padding: '3px 6px', textAlign: 'right' }}>
+                    <input type="number" value={ard.solde_debut || ''} onChange={e => updateArd('solde_debut', parseFloat(e.target.value) || 0)}
+                      style={{ width: 130, textAlign: 'right', fontSize: 11, padding: '2px 4px', border: '1px solid #ddd', borderRadius: 3 }} /></td></tr>
+                  <tr><td style={{ padding: '3px 6px' }}>ARD de l&apos;exercice</td><td style={{ padding: '3px 6px', textAlign: 'right' }}>
+                    <input type="number" value={ard.ard_exercice || ''} onChange={e => updateArd('ard_exercice', parseFloat(e.target.value) || 0)}
+                      style={{ width: 130, textAlign: 'right', fontSize: 11, padding: '2px 4px', border: '1px solid #ddd', borderRadius: 3 }} /></td></tr>
+                  <tr><td style={{ padding: '3px 6px' }}>ARD utilisés dans l&apos;exercice</td><td style={{ padding: '3px 6px', textAlign: 'right' }}>
+                    <input type="number" value={ard.ard_utilises || ''} onChange={e => updateArd('ard_utilises', parseFloat(e.target.value) || 0)}
+                      style={{ width: 130, textAlign: 'right', fontSize: 11, padding: '2px 4px', border: '1px solid #ddd', borderRadius: 3 }} /></td></tr>
+                  <tr style={{ borderTop: '1px solid #ccc', fontWeight: 700, color: '#0891b2' }}>
+                    <td style={{ padding: '3px 6px' }}>Solde ARD en fin d&apos;exercice</td>
+                    <td style={{ padding: '3px 6px', textAlign: 'right' }}>{formatMontant(calc.ardSoldeFin)} FCFA</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
 
       <div className="a4-page" ref={pageRef}>
@@ -411,6 +585,8 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
           calc={calc}
           reintegrations={reintegrations}
           deductions={deductions}
+          deficits={deficits}
+          ard={ard}
           regimeFiscal={regimeFiscal}
         />
 
