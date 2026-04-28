@@ -46,7 +46,7 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
             <td style={montantStyle}>{formatMontant(r.montant)}</td>
           </tr>
         ))}
-        <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TOTAL DES RÉINTÉGRATIONS (C)</td><td style={montantStyle}></td><td style={{ ...totalStyle, color: '#dc2626' }}>{formatMontant(c.totalReintegrations)}</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TOTAL DES RÉINTÉGRATIONS (II)</td><td style={montantStyle}></td><td style={{ ...totalStyle, color: '#dc2626' }}>{formatMontant(c.totalReintegrations)}</td></tr>
 
         {/* III. DEDUCTIONS */}
         <tr><td colSpan={3} style={sectionStyle}>III. DÉDUCTIONS DE CHARGES OU PRODUITS FISCALEMENT DÉDUCTIBLES</td></tr>
@@ -60,11 +60,11 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
             <td style={montantStyle}>{formatMontant(d.montant)}</td>
           </tr>
         ))}
-        <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TOTAL DES DÉDUCTIONS (D)</td><td style={montantStyle}></td><td style={{ ...totalStyle, color: '#16a34a' }}>{formatMontant(c.totalDeductions)}</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TOTAL DES DÉDUCTIONS (III)</td><td style={montantStyle}></td><td style={{ ...totalStyle, color: '#16a34a' }}>{formatMontant(c.totalDeductions)}</td></tr>
 
         {/* IV. RESULTAT FISCAL */}
         <tr><td colSpan={3} style={sectionStyle}>IV. RÉSULTAT NET FISCAL DE L&apos;EXERCICE</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>RÉSULTAT FISCAL = (A − B) + C − D</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 6-27' : 'Art. 94'}</td><td style={{ ...totalStyle, fontSize: '11px' }}>{formatMontant(c.resultatFiscal)}</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>RÉSULTAT FISCAL = I + II − III</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 6-27' : 'Art. 94'}</td><td style={{ ...totalStyle, fontSize: '11px' }}>{formatMontant(c.resultatFiscal)}</td></tr>
 
         {/* V. REPORTS DEFICITAIRES */}
         <tr><td colSpan={3} style={sectionStyle}>V. REPORTS DÉFICITAIRES</td></tr>

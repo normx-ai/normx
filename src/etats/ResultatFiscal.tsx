@@ -307,13 +307,13 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     for (const r of reintegrations) {
       rows.push({ libelle: r.libelle, ref: r.article, values: [fmt(r.montant)] });
     }
-    rows.push({ libelle: 'TOTAL REINTEGRATIONS (C)', values: [fmt(calc.totalReintegrations)], bold: true });
+    rows.push({ libelle: 'TOTAL REINTEGRATIONS (II)', values: [fmt(calc.totalReintegrations)], bold: true });
 
     rows.push({ libelle: 'III. DEDUCTIONS FISCALES', values: [''], bold: true });
     for (const d of deductions) {
       rows.push({ libelle: d.libelle, ref: d.article, values: [fmt(d.montant)] });
     }
-    rows.push({ libelle: 'TOTAL DEDUCTIONS (D)', values: [fmt(calc.totalDeductions)], bold: true });
+    rows.push({ libelle: 'TOTAL DEDUCTIONS (III)', values: [fmt(calc.totalDeductions)], bold: true });
 
     rows.push({ libelle: 'IV. RESULTAT NET FISCAL DE L\'EXERCICE', values: [fmt(calc.resultatFiscal)], bold: true });
 
