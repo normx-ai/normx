@@ -153,5 +153,9 @@ export const api = {
   ocrImport: {
     extract: '/api/ocr-import/extract',
   },
+
+  resultatFiscal: {
+    lignes: (exerciceId: Id): string => `/api/resultat-fiscal/${exerciceId}/lignes`,
+  },
 } as const;
 

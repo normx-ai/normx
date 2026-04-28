@@ -21,6 +21,7 @@ import tiersRoutes from "./routes/tiers";
 import entitesRoutes from "./routes/entites";
 import journauxRoutes from "./routes/journaux";
 import comptesCustomRoutes from "./routes/comptesCustom";
+import resultatFiscalRoutes from "./routes/resultatFiscal";
 import notificationsRoutes from "./routes/notifications";
 import permissionsRoutes from "./routes/permissions";
 import ocrImportRoutes from "./routes/ocr-import";
@@ -172,6 +173,7 @@ app.use("/api/plan-comptable", ...tenantChain, dataLimiter, requireAnyModule('co
 app.use("/api/tiers", ...tenantChain, dataLimiter, requireModule('compta'), tiersRoutes);
 app.use("/api/journaux", ...tenantChain, dataLimiter, requireModule('compta'), journauxRoutes);
 app.use("/api/comptes-custom", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), comptesCustomRoutes);
+app.use("/api/resultat-fiscal", ...tenantChain, dataLimiter, requireAnyModule('compta', 'etats'), resultatFiscalRoutes);
 
 /**
  * @swagger

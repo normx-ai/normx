@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
-import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet } from 'react-icons/lu';
+import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet, LuSave } from 'react-icons/lu';
 import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
 import type { ExcelRow, ExcelExportOptions } from '../lib/excelExport';
 import jsPDF from 'jspdf';
@@ -49,6 +49,9 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
 
   const [reintegrations, setReintegrations] = useState<LigneReintegration[]>([]);
   const [deductions, setDeductions] = useState<LigneReintegration[]>([]);
+  const [saving, setSaving] = useState(false);
+  const [savedAt, setSavedAt] = useState<Date | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const pageRef = useRef<HTMLDivElement>(null);
 
@@ -94,6 +97,80 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
   }, [entiteId, selectedExercice, balanceSource]);
 
   useEffect(() => { loadBalance(); }, [loadBalance]);
+
+  // Charger les lignes Réintégrations / Déductions persistées pour l'exercice
+  useEffect(() => {
+    if (!selectedExercice) {
+      setReintegrations([]);
+      setDeductions([]);
+      setSavedAt(null);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await clientFetch(api.resultatFiscal.lignes(selectedExercice.id));
+        if (!res.ok || cancelled) return;
+        const data: { lignes: { id: number; type: 'reintegration' | 'deduction'; libelle: string; montant: number; article: string }[] } = await res.json();
+        const reints: LigneReintegration[] = [];
+        const deds: LigneReintegration[] = [];
+        let maxId = 0;
+        for (const l of data.lignes) {
+          const ligne: LigneReintegration = { id: l.id, libelle: l.libelle, montant: Number(l.montant) || 0, article: l.article };
+          if (l.id > maxId) maxId = l.id;
+          if (l.type === 'reintegration') reints.push(ligne); else deds.push(ligne);
+        }
+        if (cancelled) return;
+        nextId = Math.max(nextId, maxId + 1);
+        setReintegrations(reints);
+        setDeductions(deds);
+        setSavedAt(null);
+      } catch {
+        // silently ignore
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [selectedExercice]);
+
+  const saveLignes = async (): Promise<void> => {
+    if (!selectedExercice) return;
+    setSaving(true);
+    setSaveError(null);
+    try {
+      const payload = {
+        lignes: [
+          ...reintegrations.map(r => ({ type: 'reintegration' as const, libelle: r.libelle, montant: r.montant, article: r.article })),
+          ...deductions.map(d => ({ type: 'deduction' as const, libelle: d.libelle, montant: d.montant, article: d.article })),
+        ],
+      };
+      const res = await clientFetch(api.resultatFiscal.lignes(selectedExercice.id), {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Erreur sauvegarde');
+      }
+      const data: { lignes: { id: number; type: 'reintegration' | 'deduction'; libelle: string; montant: number; article: string }[] } = await res.json();
+      const reints: LigneReintegration[] = [];
+      const deds: LigneReintegration[] = [];
+      let maxId = 0;
+      for (const l of data.lignes) {
+        const ligne: LigneReintegration = { id: l.id, libelle: l.libelle, montant: Number(l.montant) || 0, article: l.article };
+        if (l.id > maxId) maxId = l.id;
+        if (l.type === 'reintegration') reints.push(ligne); else deds.push(ligne);
+      }
+      nextId = Math.max(nextId, maxId + 1);
+      setReintegrations(reints);
+      setDeductions(deds);
+      setSavedAt(new Date());
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : 'Erreur sauvegarde');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const calc = computeResultatFiscal(lignesN, reintegrations, deductions, regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA);
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
@@ -219,6 +296,17 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
           <h2>Resultat Fiscal — CGI Congo 2026</h2>
         </div>
         <div className="bilan-toolbar-right">
+          <button className="bilan-export-btn" onClick={() => { void saveLignes(); }} disabled={saving || !selectedExercice}>
+            <LuSave /> {saving ? 'Enregistrement…' : 'Enregistrer'}
+          </button>
+          {savedAt && !saveError && (
+            <span style={{ fontSize: 11, color: '#16a34a', alignSelf: 'center' }}>
+              ✓ Enregistré à {savedAt.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+            </span>
+          )}
+          {saveError && (
+            <span style={{ fontSize: 11, color: '#dc2626', alignSelf: 'center' }}>{saveError}</span>
+          )}
           <button className="bilan-export-btn secondary" onClick={openPreview}><LuEye /> Apercu</button>
           <button className="bilan-export-btn" onClick={async () => { const pdf = await generatePDF(); pdf.save('Resultat_Fiscal_' + annee + '.pdf'); }}><LuDownload /> Exporter PDF</button>
           <button className="bilan-export-btn secondary" onClick={previewExcel}><LuEye /> Aperçu Excel</button>
