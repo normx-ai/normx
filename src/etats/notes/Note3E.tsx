@@ -20,10 +20,14 @@ interface LigneReeval {
   provSpeciale: string;
 }
 
+// Aligné sur le plan SYSCOHADA révisé 2017 et la Note 3A :
+//   234 = Aménagements/installations techniques (PAS bâtiment)
+//   237 = Bâtiments mis en concession (= bâtiment)
+//   224 = Travaux de mise en valeur des terrains (PAS terrain imm. placement)
 const DEFAULT_POSTES: { label: string; prefixes: string[]; note3aLabels: string[]; isEcart: boolean }[] = [
-  { label: 'Terrains', prefixes: ['22'], note3aLabels: ['Terrains hors immeuble de placement', 'Terrains - immeuble de placement'], isEcart: true },
-  { label: 'Bâtiments', prefixes: ['231', '232', '233', '234'], note3aLabels: ['Bâtiments hors immeuble de placement', 'Bâtiments - immeuble de placement'], isEcart: false },
-  { label: 'Agencements, aménagements, installations', prefixes: ['235', '236', '237', '238', '239'], note3aLabels: ['Aménagements, agencements et installations', 'Agencements, aménagements matériel et autres'], isEcart: false },
+  { label: 'Terrains', prefixes: ['22'], note3aLabels: ['Terrains', 'Travaux de mise en valeur des terrains'], isEcart: true },
+  { label: 'Bâtiments', prefixes: ['231', '232', '233', '237', '2391'], note3aLabels: ['Bâtiments'], isEcart: false },
+  { label: 'Agencements, aménagements, installations', prefixes: ['234', '235', '238', '2392', '2393'], note3aLabels: ['Aménagements, agencements et installations', 'Agencements, aménagements matériel et autres'], isEcart: false },
   { label: 'Matériel, mobilier, actifs biologiques', prefixes: ['241', '242', '243', '244', '246'], note3aLabels: ['Matériel, mobilier et actifs biologiques'], isEcart: false },
   { label: 'Matériel de transport', prefixes: ['245'], note3aLabels: ['Matériel de transport'], isEcart: false },
 ];
