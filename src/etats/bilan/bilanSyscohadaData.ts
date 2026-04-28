@@ -15,11 +15,16 @@ export const ACTIF_MAPPING: Record<string, ActifMapping> = {
   AG: { brut: ['215', '216'], amort: ['2815', '2816', '2915', '2916'] },
   AH: { brut: ['217', '218', '2198'], brutExclude: ['2181'], amort: ['2817', '2818', '2917', '2918', '2919'] },
   AJ: { brut: ['22'], amort: ['282', '292'] },
-  // Bâtiments : 231-233 hors immeuble de placement + 234 immeuble de placement + 2391 bâtiments en cours
-  AK: { brut: ['231', '232', '233', '234', '2391'], amort: ['2831', '2832', '2833', '2834', '2931', '2932', '2933', '2934'] },
-  // Aménagements, agencements et installations : 235 aménagements bureaux, 236 aménagements terrains imm. placement,
-  // 237 installations techniques, 238 autres installations, 2392/2393 aménagements en cours
-  AL: { brut: ['235', '236', '237', '238', '2392', '2393'], amort: ['2835', '2836', '2837', '2838', '2935', '2936', '2937', '2938', '2939'] },
+  // SYSCOHADA révisé 2017 :
+  //   231-233 = Bâtiments industriels/agricoles/admin/commerciaux + ouvrages infrastructure
+  //   237     = Bâtiments mis en concession
+  //   2391    = Bâtiments en cours (convention de subdivision du 239)
+  AK: { brut: ['231', '232', '233', '237', '2391'], amort: ['2831', '2832', '2833', '2837', '2931', '2932', '2933', '2937', '2939'] },
+  //   234     = Aménagements, agencements et installations techniques
+  //   235     = Aménagements de bureaux
+  //   238     = Autres installations et agencements
+  //   2392/3  = Aménagements en cours
+  AL: { brut: ['234', '235', '238', '2392', '2393'], amort: ['2834', '2835', '2838', '2934', '2935', '2938', '2939'] },
   AM: { brut: ['24'], brutExclude: ['245', '2495'], amort: ['284', '294', '2949'], amortExclude: ['2845', '2945'] },
   AN: { brut: ['245', '2495'], amort: ['2845', '2945', '2949'] },
   AP: { brut: ['251', '252'], amort: ['2951', '2952'] },
