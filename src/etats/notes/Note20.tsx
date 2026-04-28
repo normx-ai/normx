@@ -22,14 +22,13 @@ interface Rubrique {
   group: 'escompte' | 'credits';
 }
 
+// Mapping aligné sur SYSCOHADA : 561 = Crédits de trésorerie (pas "Banques locales").
+// 562, 563, 567-569 ne sont pas définis dans le plan — supprimés.
 const RUBRIQUES: Rubrique[] = [
   { label: 'Escomptes de crédit de campagne', prefixes: ['564'], group: 'escompte' },
   { label: 'Escomptes de crédit ordinaires', prefixes: ['565'], group: 'escompte' },
-  { label: 'Banques locales', prefixes: ['561'], group: 'credits' },
-  { label: 'Banques autres états région', prefixes: ['562'], group: 'credits' },
-  { label: 'Autres Banques', prefixes: ['563'], group: 'credits' },
-  { label: 'Banques intérêts courus', prefixes: ['566'], group: 'credits' },
-  { label: 'Crédit de trésorerie', prefixes: ['567', '568', '569'], group: 'credits' },
+  { label: 'Crédits de trésorerie', prefixes: ['561'], group: 'credits' },
+  { label: 'Crédits de trésorerie, intérêts courus', prefixes: ['566'], group: 'credits' },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• Indiquer le nom de l'organisme les conditions de crédit, le taux d'intérêt, la durée du crédit.`;

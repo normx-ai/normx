@@ -15,20 +15,28 @@ import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteS
 interface Note30Props extends EtatBaseProps { onGoToParametres?: () => void; }
 interface Rubrique { label: string; prefixes: string[]; group: 'charges' | 'produits'; debit?: boolean; }
 
+// Mapping aligné sur le plan SYSCOHADA révisé 2017 (server/data/plan_comptable_syscohada.json)
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Charges HAO constatées (1) à détailler', prefixes: ['831'], group: 'charges', debit: true },
-  { label: 'Pertes sur créances HAO', prefixes: ['832'], group: 'charges', debit: true },
-  { label: 'Dons et libéralités accordés', prefixes: ['833'], group: 'charges', debit: true },
-  { label: 'Abandons de créances consentis', prefixes: ['834'], group: 'charges', debit: true },
-  { label: 'Charges provisionnées HAO', prefixes: ['835'], group: 'charges', debit: true },
+  // Charges HAO — comptes 83x
+  { label: 'Charges HAO constatées', prefixes: ['831'], group: 'charges', debit: true },
+  { label: 'Charges liées aux opérations de restructuration', prefixes: ['833'], group: 'charges', debit: true },
+  { label: 'Pertes sur créances HAO', prefixes: ['834'], group: 'charges', debit: true },
+  { label: 'Dons et libéralités accordés', prefixes: ['835'], group: 'charges', debit: true },
+  { label: 'Abandons de créances consentis', prefixes: ['836'], group: 'charges', debit: true },
+  { label: 'Charges liées aux opérations de liquidation', prefixes: ['837'], group: 'charges', debit: true },
+  { label: 'Charges provisionnées HAO', prefixes: ['839'], group: 'charges', debit: true },
   { label: 'Dotations hors activités ordinaires', prefixes: ['85'], group: 'charges', debit: true },
   { label: 'Participation des travailleurs', prefixes: ['87'], group: 'charges', debit: true },
   { label: 'Subventions d\'équilibre', prefixes: ['88'], group: 'charges', debit: true },
-  { label: 'Produits HAO constatés (1) à détailler', prefixes: ['841'], group: 'produits' },
-  { label: 'Dons et libéralités obtenus', prefixes: ['842'], group: 'produits' },
-  { label: 'Abandons de créances obtenus', prefixes: ['843'], group: 'produits' },
+  // Produits HAO — comptes 84x
+  { label: 'Produits HAO constatés', prefixes: ['841'], group: 'produits' },
+  { label: 'Produits liés aux opérations de restructuration', prefixes: ['843'], group: 'produits' },
+  { label: 'Indemnités et subventions HAO', prefixes: ['844'], group: 'produits' },
+  { label: 'Dons et libéralités obtenus', prefixes: ['845'], group: 'produits' },
+  { label: 'Abandons de créances obtenus', prefixes: ['846'], group: 'produits' },
+  { label: 'Produits liés aux opérations de liquidation', prefixes: ['847'], group: 'produits' },
   { label: 'Transferts de charges HAO', prefixes: ['848'], group: 'produits' },
-  { label: 'Reprises des charges pour dépréciations et provisions à court terme HAO', prefixes: ['86'], group: 'produits' },
+  { label: 'Reprises de charges, provisions et dépréciations HAO', prefixes: ['86'], group: 'produits' },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;

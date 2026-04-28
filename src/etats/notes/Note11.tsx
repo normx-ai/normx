@@ -28,11 +28,10 @@ const RUBRIQUES_BRUT: RubriqueDispo[] = [
   { label: 'Autres Banques', prefixes: ['523', '524'] },
   { label: 'Banques, intérêts courus', prefixes: ['526'] },
   { label: 'Chèques postaux', prefixes: ['531'] },
-  { label: 'Établissements financiers', prefixes: ['532', '533', '535', '538'] },
+  { label: 'Trésor, SGI et autres organismes financiers', prefixes: ['532', '533', '535', '538'] },
   { label: 'Établissements financiers, intérêts courus', prefixes: ['536'] },
-  { label: 'Instruments de trésorerie', prefixes: ['534', '537'] },
+  { label: 'Instruments de trésorerie', prefixes: ['54'] },
   { label: 'Caisse', prefixes: ['57'] },
-  { label: 'Caisse électronique mobile', prefixes: ['54'] },
   { label: 'Régies d\'avances, accréditifs et virements internes', prefixes: ['58'] },
 ];
 

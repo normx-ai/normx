@@ -19,6 +19,6 @@ export const TAUX_MIN_IBA = 0.015;
 export const OPTIONS_TAUX_IS: Array<{ value: number; label: string }> = [
   { value: TAUX_IS_NORMAL, label: '28% (normal)' },
   { value: TAUX_IS_ECOLES, label: '25% (ecoles, micro-finance)' },
-  { value: TAUX_IS_PETROLE, label: '30% (petrole, mines, telecoms)' },
+  { value: TAUX_IS_PETROLE, label: '30% (taux spécifique 2025)' },
   { value: TAUX_IS_ETRANGER, label: '33% (entites etrangeres)' },
 ];

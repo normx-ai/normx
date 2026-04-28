@@ -21,12 +21,14 @@ interface Rubrique {
   prefixes: string[];
 }
 
+// Codes alignés sur SYSCOHADA : 1671 = Avances bloquées (pas Titres participatifs)
 const RUBRIQUES: Rubrique[] = [
-  { label: 'Titres participatifs', prefixes: ['1671'] },
+  { label: 'Avances bloquées pour augmentation du capital', prefixes: ['1671'] },
   { label: 'Avances conditionnées', prefixes: ['1672', '1673', '1674'] },
+  { label: 'Titres participatifs', prefixes: ['1675'] },
   { label: 'Titres subordonnés à durée indéterminée (T.S.D.I.)', prefixes: ['1676'] },
-  { label: 'Obligations remboursables en actions (O.R.A.)', prefixes: ['1675'] },
-  { label: 'Autres', prefixes: ['1677', '1678'] },
+  { label: 'Obligations remboursables en actions (O.R.A.)', prefixes: ['1677'] },
+  { label: 'Autres', prefixes: ['1678'] },
 ];
 
 const DEFAULT_COMMENTAIRE = `• Justifier l'inscription de ces dettes dans une rubrique spécifique du passif du bilan « Autres fonds propres » (faible probabilité de remboursement, absence d'échéancier...)\n• Justifier le caractère significatif du montant total de cette rubrique.\n• Commenter toute variation significative.`;
