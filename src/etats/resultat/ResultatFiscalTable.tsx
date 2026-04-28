@@ -30,9 +30,9 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
         </tr>
       </thead>
       <tbody>
-        {/* I. RESULTAT NET COMPTABLE — formulaire IS-2 : une seule ligne (compte 85) */}
-        <tr><td colSpan={3} style={sectionStyle}>I. RÉSULTAT NET COMPTABLE DE L&apos;EXERCICE</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>Résultat net comptable</td><td style={montantStyle}>compte 85</td><td style={{ ...totalStyle, fontSize: '11px', color: c.resultatComptable >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatComptable)}</td></tr>
+        {/* I. RESULTAT COMPTABLE — formulaire IS-2 : une seule ligne (compte 85) */}
+        <tr><td colSpan={3} style={sectionStyle}>I. RÉSULTAT COMPTABLE DE L&apos;EXERCICE</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>Résultat comptable</td><td style={montantStyle}>compte 85</td><td style={{ ...totalStyle, fontSize: '11px', color: c.resultatComptable >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatComptable)}</td></tr>
 
         {/* II. REINTEGRATIONS */}
         <tr><td colSpan={3} style={sectionStyle}>II. RÉINTÉGRATIONS DES CHARGES NON DÉDUCTIBLES</td></tr>

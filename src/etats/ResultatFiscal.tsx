@@ -301,7 +301,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     const rows: ExcelRow[] = [];
     const fmt = (v: number): number => Math.round(v);
 
-    rows.push({ libelle: 'I. RESULTAT NET COMPTABLE DE L\'EXERCICE', ref: 'compte 85', values: [fmt(calc.resultatComptable)], bold: true });
+    rows.push({ libelle: 'I. RESULTAT COMPTABLE DE L\'EXERCICE', ref: 'compte 85', values: [fmt(calc.resultatComptable)], bold: true });
 
     rows.push({ libelle: 'II. REINTEGRATIONS FISCALES', values: [''], bold: true });
     for (const r of reintegrations) {
