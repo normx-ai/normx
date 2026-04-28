@@ -75,8 +75,8 @@ export const CR_ROWS: CRRow[] = [
   { ref: 'XB', type: 'subtotal', signe: '', libelle: "CHIFFRE D'AFFAIRES (A+B+C+D)", formula: 'XB' },
 
   { ref: 'TE', type: 'indent', note: '6', signe: '-/+', libelle: 'Production stockee (ou destockage)' },
-  { ref: 'TF', type: 'indent', note: '21', signe: '', libelle: 'Production immobilisee' },
-  { ref: 'TG', type: 'indent', note: '21', signe: '', libelle: "Subventions d'exploitation" },
+  { ref: 'TF', type: 'indent', note: '21', signe: '+', libelle: 'Production immobilisee' },
+  { ref: 'TG', type: 'indent', note: '21', signe: '+', libelle: "Subventions d'exploitation" },
   { ref: 'TH', type: 'indent', note: '21', signe: '+', libelle: 'Autres produits' },
   { ref: 'TI', type: 'indent', note: '12', signe: '+', libelle: "Transferts de charges d'exploitation" },
   { ref: 'RC', type: 'indent', note: '22', signe: '-', libelle: 'Achats de matieres premieres et fournitures liees' },
