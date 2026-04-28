@@ -30,17 +30,9 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
         </tr>
       </thead>
       <tbody>
-        {/* I. RESULTAT NET COMPTABLE */}
+        {/* I. RESULTAT NET COMPTABLE — formulaire IS-2 : une seule ligne (compte 85) */}
         <tr><td colSpan={3} style={sectionStyle}>I. RÉSULTAT NET COMPTABLE DE L&apos;EXERCICE</td></tr>
-        <tr><td style={labelStyle}>Produits d&apos;exploitation</td><td style={montantStyle}>Cl. 7</td><td style={montantStyle}>{formatMontant(c.produitsExploitation)}</td></tr>
-        <tr><td style={labelStyle}>Produits financiers</td><td style={montantStyle}>Cl. 77</td><td style={montantStyle}>{formatMontant(c.produitsFinanciers)}</td></tr>
-        <tr><td style={labelStyle}>Produits HAO</td><td style={montantStyle}>Cl. 82,84,86,88</td><td style={montantStyle}>{formatMontant(c.produitsHAO)}</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TOTAL PRODUITS (A)</td><td style={montantStyle}></td><td style={totalStyle}>{formatMontant(c.totalProduits)}</td></tr>
-        <tr><td style={labelStyle}>Charges d&apos;exploitation</td><td style={montantStyle}>Cl. 6</td><td style={montantStyle}>{formatMontant(c.chargesExploitation)}</td></tr>
-        <tr><td style={labelStyle}>Charges financières</td><td style={montantStyle}>Cl. 67</td><td style={montantStyle}>{formatMontant(c.chargesFinancieres)}</td></tr>
-        <tr><td style={labelStyle}>Charges HAO</td><td style={montantStyle}>Cl. 81,83,85,87</td><td style={montantStyle}>{formatMontant(c.chargesHAO)}</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TOTAL CHARGES (B)</td><td style={montantStyle}></td><td style={totalStyle}>{formatMontant(c.totalCharges)}</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>RÉSULTAT COMPTABLE (compte 85)</td><td style={montantStyle}>Art. 6</td><td style={{ ...totalStyle, fontSize: '10px', color: c.resultatComptable >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatComptable)}</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>Résultat net comptable</td><td style={montantStyle}>compte 85</td><td style={{ ...totalStyle, fontSize: '11px', color: c.resultatComptable >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatComptable)}</td></tr>
 
         {/* II. REINTEGRATIONS */}
         <tr><td colSpan={3} style={sectionStyle}>II. RÉINTÉGRATIONS DES CHARGES NON DÉDUCTIBLES</td></tr>

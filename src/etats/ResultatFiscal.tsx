@@ -301,16 +301,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     const rows: ExcelRow[] = [];
     const fmt = (v: number): number => Math.round(v);
 
-    rows.push({ libelle: 'I. RESULTAT COMPTABLE', values: [''], bold: true });
-    rows.push({ libelle: 'Produits d\'exploitation', ref: 'Cl. 7', values: [fmt(calc.produitsExploitation)] });
-    rows.push({ libelle: 'Produits financiers', ref: 'Cl. 77', values: [fmt(calc.produitsFinanciers)] });
-    rows.push({ libelle: 'Produits HAO', ref: 'Cl. 82,84,86,88', values: [fmt(calc.produitsHAO)] });
-    rows.push({ libelle: 'TOTAL PRODUITS (A)', values: [fmt(calc.totalProduits)], bold: true });
-    rows.push({ libelle: 'Charges d\'exploitation', ref: 'Cl. 6', values: [fmt(calc.chargesExploitation)] });
-    rows.push({ libelle: 'Charges financieres', ref: 'Cl. 67', values: [fmt(calc.chargesFinancieres)] });
-    rows.push({ libelle: 'Charges HAO', ref: 'Cl. 81,83,85,87', values: [fmt(calc.chargesHAO)] });
-    rows.push({ libelle: 'TOTAL CHARGES (B)', values: [fmt(calc.totalCharges)], bold: true });
-    rows.push({ libelle: 'RESULTAT COMPTABLE (A - B)', ref: 'Art. 6', values: [fmt(calc.resultatComptable)], bold: true });
+    rows.push({ libelle: 'I. RESULTAT NET COMPTABLE DE L\'EXERCICE', ref: 'compte 85', values: [fmt(calc.resultatComptable)], bold: true });
 
     rows.push({ libelle: 'II. REINTEGRATIONS FISCALES', values: [''], bold: true });
     for (const r of reintegrations) {
