@@ -32,9 +32,12 @@ const RUBRIQUES: Rubrique[] = [
   { label: 'Associés, dividendes à payer', prefixes: ['465'], group: 'associes' },
   { label: 'Groupe, comptes courants', prefixes: ['466'], group: 'associes' },
   { label: 'Apporteurs restant dû sur capital appelé', prefixes: ['467'], group: 'associes' },
-  // Créditeurs divers (47)
-  { label: 'Créditeurs divers', prefixes: ['4712', '4713', '4715', '4716'], group: 'crediteurs' },
-  { label: 'Dettes sur titres de placement', prefixes: ['4726'], group: 'crediteurs' },
+  // Comptes 47 : symétriques avec Note 8 — Note 19 capture les soldes créditeurs
+  // (Note 8 capture les débiteurs sur les mêmes préfixes).
+  { label: 'Autres créditeurs divers', prefixes: ['471'], group: 'crediteurs' },
+  { label: 'Dettes sur titres de placement', prefixes: ['472'], group: 'crediteurs' },
+  { label: 'Intermédiaires — opérations pour compte de tiers', prefixes: ['473'], group: 'crediteurs' },
+  { label: 'Compte de répartition périodique des charges et produits', prefixes: ['474'], group: 'crediteurs' },
   { label: 'Compte transitoire ajustement spécial (passif)', prefixes: ['4752'], group: 'crediteurs' },
   { label: 'Produits constatés d\'avance', prefixes: ['477'], group: 'crediteurs' },
   // Provisions pour risques à court terme (499)
