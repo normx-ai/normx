@@ -77,7 +77,7 @@ function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29P
     if (!d) return '';
     return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
-  const fmtM = (v: number): string => { if (v === 0) return ''; return Math.round(v).toLocaleString('fr-FR'); };
+  const fmtM = (v: number): string => Math.round(v).toLocaleString('fr-FR');
 
   const compDebit = (lignes: BalanceLigne[], pfx: string[]) => {
     let t = 0;
@@ -127,7 +127,7 @@ function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29P
         <td style={tdStyle}>{r.label}</td>
         <td style={tdRight}>{renderAdj(r.label, 'anneeN', r.vals.anneeN)}</td>
         <td style={tdRight}>{renderAdj(r.label, 'anneeN1', r.vals.anneeN1)}</td>
-        <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variation !== 0 ? r.vals.variation.toFixed(1) + ' %' : ''}</td>
+        <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.anneeN1 === 0 ? '-' : r.vals.variation.toFixed(1) + ' %'}</td>
       </tr>
     );
   };
@@ -137,7 +137,7 @@ function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29P
       <td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td>
       <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN)}</td>
       <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN1)}</td>
-      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{calcVar(t) !== 0 ? calcVar(t).toFixed(1) + ' %' : ''}</td>
+      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{t.anneeN1 === 0 ? '-' : calcVar(t).toFixed(1) + ' %'}</td>
     </tr>
   );
 
