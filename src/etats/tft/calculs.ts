@@ -128,12 +128,14 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   data.FD = -FD_raw;
 
   // FE — Variation du passif circulant (TFT — exclusions DP)
-  // Guide officiel : 404, 481, 482, 467, 4752, 472.
-  // Le 4726 est redondant avec 472 (couvert par le prefixe).
-  // Le 465 est conserve pour eviter le double comptage avec FN
-  // (FN capte mvt debit 465 = paiement dividendes ; FE capterait
-  // alors variation SC 465 = doublon partiel).
-  const feExcl = ['404', '465', '467', '472', '481', '482', '4752'];
+  // Exclusions pour ne capter que les vraies dettes d'exploitation :
+  // - 404, 481, 482  : dettes liees aux immobilisations (-> flux invest)
+  // - 461            : apporteurs, operations sur capital (-> flux capitaux propres)
+  // - 465            : dividendes a payer (-> FN, eviter double comptage)
+  // - 467            : apporteurs capital appele (-> defensif, FK si SC rare)
+  // - 472            : compte transitoire titres placement (couvre 4726)
+  // - 4752           : compte transitoire SYSCOHADA passif
+  const feExcl = ['404', '461', '465', '467', '472', '481', '482', '4752'];
   data.FE = (bilanDP(lN) - bilanDP(lN1))
     - rawSC(lN, feExcl) + rawSC(lN1, feExcl)
     + rawSC(lN, ['4793']) - rawSC(lN1, ['4793'])
