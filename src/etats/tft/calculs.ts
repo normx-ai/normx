@@ -205,19 +205,25 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   const var4581 = rawSD(lN, ['4581']) - rawSD(lN1, ['4581']);
   data.FK = varClasse10 + var467 + var4581;
 
-  // FL — Subventions d'investissement (TFT4 b)
-  // Formule officielle SYSCOHADA :
-  // FL = variation du compte 14 (a l'exclusion de la quote part viree au resultat)
-  //    + variation des comptes 4582 et 4494
-  //    + avances recues sur subvention (compte non specifie dans le guide, omis)
+  // FL — Subventions d'investissement (TFT 4.2.3.4 b)
+  // Formule officielle (signes corriges via tests sur 4 cas) :
+  //   FL = variation SC compte 14
+  //      + SC compte 799 (Reprises de subventions d'investissement,
+  //        cumul de l'exercice -> annule le mvt debit 14 non monetaire)
+  //      - variation SD compte 4494 (Etat, subv. invest. a recevoir)
+  //      - variation SD compte 4582 (Organismes int., subv. a recevoir)
   //
-  // "Quote part viree au resultat" = mvt debit 14 vers 865 (non monetaire).
-  // L'exclure = annuler ce mvt debit en ajoutant le mvt credit 865 cumule
-  // de l'exercice (= rawSC 865, les comptes de classe 8 demarrant a 0).
-  const var14_excl = (rawSC(lN, ['14']) - rawSC(lN1, ['14'])) + rawSC(lN, ['865']);
+  // Note : 799 est le compte officiel des reprises de subventions
+  // d'investissement (et non 865 qui n'existe pas dans le plan).
+  //
+  // Le signe MOINS sur var SD 4494/4582 est correct :
+  //   - Si la creance augmente -> moins de cash recu -> FL diminue.
+  //   - Si la creance diminue (encaissement) -> FL augmente.
+  const var14 = rawSC(lN, ['14']) - rawSC(lN1, ['14']);
+  const reprise799 = rawSC(lN, ['799']);
   const var4494 = rawSD(lN, ['4494']) - rawSD(lN1, ['4494']);
   const var4582 = rawSD(lN, ['4582']) - rawSD(lN1, ['4582']);
-  data.FL = var14_excl + var4494 + var4582;
+  data.FL = var14 + reprise799 - var4494 - var4582;
 
   // FM — Prelevement sur le capital (TFT 4.2.3.4 c) + extension bouclage
   // Formule officielle SYSCOHADA :
@@ -316,12 +322,13 @@ export function computeAllFluxB(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Rec
   const fkMvtC = sumMvtCredit(lN, ['103', '104', '11', '12', '139', '4619', '465']);
   data.FK = fkVarCapital - fkSD - fkMvtD + fkMvtC;
 
-  // FL Praticien : isolement cash subvention
-  // FL = Var SC(14) + SC(799) - SD(4494, 4582)
+  // FL Praticien (corrige) : utilisation de la VARIATION 4494/4582
+  // (au lieu de SD seul) pour capter les encaissements des annees ulterieures.
+  // FL = Var SC(14) + SC(799) - Var SD(4494, 4582)
   const flVar14 = rawSC(lN, ['14']) - rawSC(lN1, ['14']);
   const flSC799 = rawSC(lN, ['799']);
-  const flSD = rawSD(lN, ['4494', '4582']);
-  data.FL = flVar14 + flSC799 - flSD;
+  const flVarSD = (rawSD(lN, ['4494', '4582']) - rawSD(lN1, ['4494', '4582']));
+  data.FL = flVar14 + flSC799 - flVarSD;
 
   // FM Praticien : sortie cash sur capital
   // FM = MvtD(4619) + MvtD(103, 104)
