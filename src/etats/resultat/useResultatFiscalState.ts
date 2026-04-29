@@ -76,6 +76,8 @@ export interface UseResultatFiscalStateResult {
   setModeImpot: (m: ModeImpot) => void;
   acomptesIS: AcomptesIS;
   setAcompteAt: (idx: 0 | 1 | 2 | 3, value: number) => void;
+  tss: number;
+  setTss: (n: number) => void;
 
   saveLignes: () => Promise<void>;
   saving: boolean;
@@ -132,6 +134,7 @@ export function useResultatFiscalState({
       return next;
     });
   }, []);
+  const [tss, setTss] = useState(0);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<Date | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -171,11 +174,13 @@ export function useResultatFiscalState({
       setArd({ solde_debut: 0, ard_exercice: 0, ard_utilises: 0 });
       setModeImpot('minimum_perception');
       setAcomptesIS([0, 0, 0, 0]);
+      setTss(0);
       setSavedAt(null);
       return;
     }
     setModeImpot(modeImpotParDefaut(selectedExercice.annee));
     setAcomptesIS([0, 0, 0, 0]);
+    setTss(0);
     let cancelled = false;
     (async () => {
       try {
@@ -219,6 +224,9 @@ export function useResultatFiscalState({
                 // Retro-compat : ancienne ligne sans trimestre — on l'attribue a T1
                 acomptesLoaded[0] = Number(l.montant) || 0;
               }
+            }
+            else if (sousType === 'tss') {
+              setTss(Number(l.montant) || 0);
             }
           }
         }
@@ -283,6 +291,7 @@ export function useResultatFiscalState({
             article: '',
             metadata: { sous_type: 'acompte_is', trimestre: i + 1 },
           })),
+          { type: 'ard' as const, libelle: 'Taxe sur les Sociétés (TSS)', montant: tss, article: '', metadata: { sous_type: 'tss' } },
         ],
       };
       const res = await clientFetch(api.resultatFiscal.lignes(selectedExercice.id), {
@@ -332,6 +341,9 @@ export function useResultatFiscalState({
               acomptesSaved[0] = Number(l.montant) || 0;
             }
           }
+          else if (sousType === 'tss') {
+            setTss(Number(l.montant) || 0);
+          }
         }
       }
       nextId = Math.max(nextId, maxId + 1);
@@ -347,7 +359,7 @@ export function useResultatFiscalState({
     } finally {
       setSaving(false);
     }
-  }, [selectedExercice, reintegrations, deductions, deficits, ard, modeImpot, acomptesIS]);
+  }, [selectedExercice, reintegrations, deductions, deficits, ard, modeImpot, acomptesIS, tss]);
 
   const updateDeficit = useCallback((id: number, field: 'annee_origine' | 'montant_reportable' | 'montant_impute', value: number): void => {
     setDeficits(prev => prev.map(d => d.id === id ? { ...d, [field]: value } : d));
@@ -378,7 +390,7 @@ export function useResultatFiscalState({
   const calc = computeResultatFiscal(
     lignesN, reintegrations, deductions, deficits, ard,
     regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA,
-    modeImpot, acomptesIS,
+    modeImpot, acomptesIS, tss,
   );
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const duree = selectedExercice?.duree_mois || 12;
@@ -391,7 +403,7 @@ export function useResultatFiscalState({
     deductions, setDeductions, addDeduction, removeDeduction, updateDeduction,
     deficits, updateDeficit,
     ard, updateArd,
-    modeImpot, setModeImpot, acomptesIS, setAcompteAt,
+    modeImpot, setModeImpot, acomptesIS, setAcompteAt, tss, setTss,
     saveLignes, saving, savedAt, saveError,
     calc,
   };

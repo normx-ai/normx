@@ -28,6 +28,7 @@ function LiquidationImpot({ entiteName, entiteSigle = '', entiteAdresse = '', en
     balanceFound, loading, sourceUsed, balanceSource,
     regimeFiscal, setRegimeFiscal, tauxIS, setTauxIS,
     modeImpot, setModeImpot, acomptesIS, setAcompteAt,
+    tss, setTss,
     saveLignes, saving, savedAt, saveError, calc,
   } = state;
 
@@ -241,7 +242,21 @@ function LiquidationImpot({ entiteName, entiteSigle = '', entiteAdresse = '', en
                   </tr>
                 ))}
                 <tr><td style={{ ...labelStyle, fontWeight: 700 }}>Total acomptes versés (T1 + T2 + T3 + T4)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '10px' }}>({formatMontant(c.acompteIS)})</td></tr>
-                <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} NET À PAYER = Brut − Total acomptes</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', background: '#fef3c7', color: c.impotNetAPayer >= 0 ? '#0f172a' : '#16a34a' }}>{formatMontant(c.impotNetAPayer)}</td></tr>
+                <tr>
+                  <td style={labelStyle}>Taxe sur les Sociétés (TSS)</td>
+                  <td style={montantStyle}></td>
+                  <td style={montantStyle}>
+                    <input
+                      type="number"
+                      value={tss || ''}
+                      onChange={(e) => setTss(parseFloat(e.target.value) || 0)}
+                      style={{ width: 130, textAlign: 'right', fontSize: 11, padding: '2px 4px', border: '1px solid #ddd', borderRadius: 3 }}
+                      placeholder="0"
+                    />
+                  </td>
+                </tr>
+                <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TSS déduite</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '10px' }}>({formatMontant(c.tss)})</td></tr>
+                <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} NET À PAYER = Brut − Total acomptes − TSS</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', background: '#fef3c7', color: c.impotNetAPayer >= 0 ? '#0f172a' : '#16a34a' }}>{formatMontant(c.impotNetAPayer)}</td></tr>
               </>
             )}
 

@@ -168,8 +168,9 @@ export interface ResultatFiscalCalc {
   minimumApplique: boolean;        // false si mode acompte_is
   acomptesIS: [number, number, number, number]; // T1, T2, T3, T4 ; tous 0 si mode minimum_perception
   acompteIS: number;               // somme des acomptesIS
+  tss: number;                     // Taxe sur les Sociétés (déduite en mode acompte_is uniquement)
   impotRetenu: number;             // mode minimum: max(brut, min) ; mode acompte: brut
-  impotNetAPayer: number;          // impotRetenu − acompteIS (mode acompte) sinon = impotRetenu
+  impotNetAPayer: number;          // impotRetenu − acompteIS − tss (mode acompte) sinon = impotRetenu
   beneficeNet: number;
   taux: number;
   tauxMin: number;
@@ -203,6 +204,7 @@ export function computeResultatFiscal(
   tauxMinIBA: number,
   modeImpot: ModeImpot = 'minimum_perception',
   acomptesIS: AcomptesIS = [0, 0, 0, 0],
+  tss: number = 0,
 ): ResultatFiscalCalc {
   const produitsExploitation = sumSoldeCrediteur(lignesN, PRODUITS_EXPL_PREFIXES);
   const produitsFinanciers = sumSoldeCrediteur(lignesN, PRODUITS_FIN_PREFIXES);
@@ -239,17 +241,19 @@ export function computeResultatFiscal(
   let minimumApplique = false;
   let acomptesValues: AcomptesIS = [0, 0, 0, 0];
   let acompteIsTotal = 0;
+  let tssValue = 0;
   let impotRetenu: number;
   let impotNetAPayer: number;
 
   if (modeImpot === 'minimum_perception') {
-    // CGI 2026 : impôt retenu = max(brut, minimum). Pas d'acompte ici.
+    // CGI 2026 : impôt retenu = max(brut, minimum). Pas d'acompte ni TSS.
     minimumPerception = Math.round(totalProduits * tauxMin);
     minimumApplique = minimumPerception > impotBrut;
     impotRetenu = Math.max(impotBrut, minimumPerception);
     impotNetAPayer = impotRetenu;
   } else {
-    // CGI ≤ 2025 : pas de minimum, on déduit les acomptes verses (T1+T2+T3+T4).
+    // CGI ≤ 2025 : pas de minimum. On déduit les acomptes verses (T1+T2+T3+T4)
+    // et la TSS (Taxe sur les Sociétés).
     acomptesValues = [
       Math.max(0, acomptesIS[0] || 0),
       Math.max(0, acomptesIS[1] || 0),
@@ -257,8 +261,9 @@ export function computeResultatFiscal(
       Math.max(0, acomptesIS[3] || 0),
     ];
     acompteIsTotal = totalAcomptes(acomptesValues);
+    tssValue = Math.max(0, tss);
     impotRetenu = impotBrut;
-    impotNetAPayer = impotRetenu - acompteIsTotal;
+    impotNetAPayer = impotRetenu - acompteIsTotal - tssValue;
   }
 
   const beneficeNet = resultatComptable - impotRetenu;
@@ -272,6 +277,7 @@ export function computeResultatFiscal(
     minimumPerception, minimumApplique,
     acomptesIS: acomptesValues,
     acompteIS: acompteIsTotal,
+    tss: tssValue,
     impotRetenu, impotNetAPayer, beneficeNet,
     taux, tauxMin,
   };

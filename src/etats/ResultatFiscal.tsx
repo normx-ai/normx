@@ -61,6 +61,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
   const [ard, setArd] = useState<LigneARD>({ solde_debut: 0, ard_exercice: 0, ard_utilises: 0 });
   const [modeImpot, setModeImpot] = useState<ModeImpot>('minimum_perception');
   const [acomptesIS, setAcomptesIS] = useState<AcomptesIS>([0, 0, 0, 0]);
+  const [tss, setTss] = useState(0);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<Date | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -119,12 +120,14 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
       setArd({ solde_debut: 0, ard_exercice: 0, ard_utilises: 0 });
       setModeImpot('minimum_perception');
       setAcomptesIS([0, 0, 0, 0]);
+      setTss(0);
       setSavedAt(null);
       return;
     }
     // Mode par défaut selon l'année de l'exercice (≥ 2026 → minimum, sinon acompte)
     setModeImpot(modeImpotParDefaut(selectedExercice.annee));
     setAcomptesIS([0, 0, 0, 0]);
+    setTss(0);
     let cancelled = false;
     (async () => {
       try {
@@ -175,6 +178,9 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
               } else {
                 acomptesLoaded[0] = Number(l.montant) || 0;
               }
+            }
+            else if (sousType === 'tss') {
+              setTss(Number(l.montant) || 0);
             }
           }
         }
@@ -241,6 +247,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
             article: '',
             metadata: { sous_type: 'acompte_is', trimestre: i + 1 },
           })),
+          { type: 'ard' as const, libelle: 'Taxe sur les Sociétés (TSS)', montant: tss, article: '', metadata: { sous_type: 'tss' } },
         ],
       };
       const res = await clientFetch(api.resultatFiscal.lignes(selectedExercice.id), {
@@ -298,6 +305,9 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
               acomptesSaved[0] = Number(l.montant) || 0;
             }
           }
+          else if (sousType === 'tss') {
+            setTss(Number(l.montant) || 0);
+          }
         }
       }
       nextId = Math.max(nextId, maxId + 1);
@@ -322,7 +332,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     setArd(prev => ({ ...prev, [field]: value }));
   };
 
-  const calc = computeResultatFiscal(lignesN, reintegrations, deductions, deficits, ard, regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA, modeImpot, acomptesIS);
+  const calc = computeResultatFiscal(lignesN, reintegrations, deductions, deficits, ard, regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA, modeImpot, acomptesIS, tss);
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const duree = selectedExercice?.duree_mois || 12;
 
