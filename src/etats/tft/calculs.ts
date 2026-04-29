@@ -174,9 +174,19 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
     - rawSC(lN1, ['101', '102', '103', '104', '105', '1051']);
   data.FK = varCapital - rawSD(lN, ['109', '461', '467', '4581']);
 
-  // FL — Subventions d'investissement recues
-  data.FL = rawSC(lN, ['14']) - rawSC(lN1, ['14'])
-    - (rawSD(lN, ['4494', '4582']) - rawSD(lN1, ['4494', '4582']));
+  // FL — Subventions d'investissement (TFT4 b)
+  // Formule officielle SYSCOHADA :
+  // FL = variation du compte 14 (a l'exclusion de la quote part viree au resultat)
+  //    + variation des comptes 4582 et 4494
+  //    + avances recues sur subvention (compte non specifie dans le guide, omis)
+  //
+  // "Quote part viree au resultat" = mvt debit 14 vers 865 (non monetaire).
+  // L'exclure = annuler ce mvt debit en ajoutant le mvt credit 865 cumule
+  // de l'exercice (= rawSC 865, les comptes de classe 8 demarrant a 0).
+  const var14_excl = (rawSC(lN, ['14']) - rawSC(lN1, ['14'])) + rawSC(lN, ['865']);
+  const var4494 = rawSD(lN, ['4494']) - rawSD(lN1, ['4494']);
+  const var4582 = rawSD(lN, ['4582']) - rawSD(lN1, ['4582']);
+  data.FL = var14_excl + var4494 + var4582;
 
   // FM — Prelevement sur le capital
   // Formule officielle SYSCOHADA TFT4 :
