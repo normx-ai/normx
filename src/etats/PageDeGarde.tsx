@@ -1,35 +1,64 @@
-import React, { useState, useRef } from 'react';
-import { clientFetch } from '../lib/api';
-import { useExercicesQuery } from '../hooks/useExercicesQuery';
-import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter } from 'react-icons/lu';
+import React, { useState, useRef, useEffect } from 'react';
+import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuPencil, LuSave } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import './PageDeGarde.css';
-import type { Exercice, EtatBaseProps } from '../types';
+import type { EtatBaseProps } from '../types';
+import { useNoteData } from './notes/useNoteData';
 
 interface PageDeGardeProps extends EtatBaseProps {}
 
+const PARAM_KEYS = {
+  republique: 'pdg_republique',
+  ministere: 'pdg_ministere',
+  direction: 'pdg_direction',
+  centreDepot: 'pdg_centre_depot',
+  nbPages: 'pdg_nb_pages',
+  nbExemplaires: 'pdg_nb_exemplaires',
+  dateDepot: 'pdg_date_depot',
+  nomAgent: 'pdg_nom_agent',
+} as const;
+
 function PageDeGarde({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, onBack }: PageDeGardeProps): React.JSX.Element {
-  const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
+  const {
+    exercices, selectedExercice, setSelectedExercice,
+    params, editing, setEditing, saving, saved, saveParams, annee,
+  } = useNoteData({ entiteId });
+  void typeActivite;
+
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
+  const [draft, setDraft] = useState<Record<string, string>>({});
 
   const pageRef = useRef<HTMLDivElement>(null);
 
-  const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
-  const duree = selectedExercice?.duree_mois || 12;
+  useEffect(() => {
+    setDraft({
+      [PARAM_KEYS.republique]: params[PARAM_KEYS.republique] || '',
+      [PARAM_KEYS.ministere]: params[PARAM_KEYS.ministere] || '',
+      [PARAM_KEYS.direction]: params[PARAM_KEYS.direction] || '',
+      [PARAM_KEYS.centreDepot]: params[PARAM_KEYS.centreDepot] || '',
+      [PARAM_KEYS.nbPages]: params[PARAM_KEYS.nbPages] || '',
+      [PARAM_KEYS.nbExemplaires]: params[PARAM_KEYS.nbExemplaires] || '',
+      [PARAM_KEYS.dateDepot]: params[PARAM_KEYS.dateDepot] || '',
+      [PARAM_KEYS.nomAgent]: params[PARAM_KEYS.nomAgent] || '',
+    });
+  }, [params]);
 
-  const systeme = typeActivite === 'entreprise' ? 'SYSTEME NORMAL' : 'SYSTEME NORMAL';
+  const setField = (key: string, value: string) => setDraft(prev => ({ ...prev, [key]: value }));
+  const getField = (key: string): string => (editing ? draft[key] || '' : params[key] || '');
+
+  const handleSave = (): void => {
+    void saveParams({ ...params, ...draft });
+  };
+
+  const systeme = 'SYSTEME NORMAL';
 
   const generatePDF = async (): Promise<jsPDF> => {
     const pdf = new jsPDF('p', 'mm', 'a4');
     if (!pageRef.current) return pdf;
-    const canvas = await html2canvas(pageRef.current, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-    });
+    const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
     const imgData = canvas.toDataURL('image/png');
     const pdfWidth = 210;
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
@@ -67,6 +96,23 @@ function PageDeGarde({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
     if (win) win.print();
   };
 
+  const inputStyle: React.CSSProperties = {
+    border: 'none', borderBottom: '1px solid #555', padding: '2px 6px',
+    fontSize: 'inherit', fontFamily: 'inherit', flex: 1, background: 'transparent',
+  };
+  const renderField = (key: string, fallback: string = ''): React.ReactNode => {
+    if (!editing) return <span className="pdg-underline-value">{params[key] || fallback}</span>;
+    return (
+      <input
+        value={draft[key] ?? ''}
+        onChange={e => setField(key, e.target.value)}
+        style={inputStyle}
+      />
+    );
+  };
+
+  const dateDepotDefault = `30 avril ${annee + 1}`;
+
   return (
     <div className="bilan-wrapper">
       <div className="bilan-toolbar">
@@ -75,6 +121,18 @@ function PageDeGarde({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
           <h2>Page de garde</h2>
         </div>
         <div className="bilan-toolbar-right">
+          {!editing ? (
+            <button className="bilan-export-btn" onClick={() => setEditing(true)}>
+              <LuPencil /> Modifier
+            </button>
+          ) : (
+            <button className="bilan-export-btn" onClick={handleSave} disabled={saving}>
+              <LuSave /> {saving ? 'Enregistrement…' : 'Enregistrer'}
+            </button>
+          )}
+          {saved && (
+            <span style={{ fontSize: 11, color: '#16a34a', alignSelf: 'center' }}>✓ Enregistré</span>
+          )}
           <button className="bilan-export-btn secondary" onClick={openPreview}>
             <LuEye /> Apercu
           </button>
@@ -107,22 +165,22 @@ function PageDeGarde({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
         <div className="pdg-top-block">
           <div className="pdg-field-row">
             <span className="pdg-label-bold">REPUBLIQUE :</span>
-            <span className="pdg-underline-value"></span>
+            {renderField(PARAM_KEYS.republique)}
           </div>
           <div className="pdg-field-row">
             <span className="pdg-label-bold">MINISTERE :</span>
-            <span className="pdg-underline-value"></span>
+            {renderField(PARAM_KEYS.ministere)}
           </div>
           <div className="pdg-field-row">
             <span className="pdg-label-bold">DIRECTION :</span>
-            <span className="pdg-underline-value"></span>
+            {renderField(PARAM_KEYS.direction)}
           </div>
         </div>
 
         {/* Centre de dépôt */}
         <div className="pdg-field-row" style={{ marginTop: 16 }}>
           <span className="pdg-label-bold pdg-underline">CENTRE DE DEPOT DE :</span>
-          <span className="pdg-underline-value"></span>
+          {renderField(PARAM_KEYS.centreDepot)}
         </div>
 
         {/* Titre principal */}
@@ -203,11 +261,11 @@ function PageDeGarde({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
               <div className="pdg-pages-section">
                 <div className="pdg-pages-row">
                   <span>Nombre de pages déposées par exemplaire :</span>
-                  <span className="pdg-pages-input"></span>
+                  <span className="pdg-pages-input">{getField(PARAM_KEYS.nbPages)}</span>
                 </div>
                 <div className="pdg-pages-row">
                   <span>Nombre d'exemplaires déposés :</span>
-                  <span className="pdg-pages-input"></span>
+                  <span className="pdg-pages-input">{getField(PARAM_KEYS.nbExemplaires)}</span>
                 </div>
               </div>
             </div>
@@ -221,12 +279,14 @@ function PageDeGarde({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
                 <span className="pdg-dgi-label">Date de dépôt</span>
               </div>
               <div className="pdg-dgi-field">
-                <span className="pdg-dgi-value">30 avril {annee + 1}</span>
+                <span className="pdg-dgi-value">{getField(PARAM_KEYS.dateDepot) || dateDepotDefault}</span>
               </div>
               <div className="pdg-dgi-field" style={{ marginTop: 12 }}>
                 <span className="pdg-dgi-label">Nom de l'agent de la DGI ayant réceptionné le dépôt</span>
               </div>
-              <div className="pdg-dgi-spacer"></div>
+              <div className="pdg-dgi-field">
+                <span className="pdg-dgi-value">{getField(PARAM_KEYS.nomAgent)}</span>
+              </div>
               <div className="pdg-dgi-field" style={{ marginTop: 'auto' }}>
                 <span className="pdg-dgi-label">Signature de l'agent et cachet du service</span>
               </div>
@@ -234,6 +294,31 @@ function PageDeGarde({ entiteName, entiteSigle = '', entiteAdresse = '', entiteN
             </div>
           </div>
         </div>
+
+        {/* Editeur en-bas en mode edition pour les champs DGI / Documents */}
+        {editing && (
+          <div style={{ marginTop: 18, padding: 12, border: '1px dashed #aaa', borderRadius: 6, background: '#fafafa', fontSize: 12 }}>
+            <div style={{ fontWeight: 700, marginBottom: 8 }}>Champs depot / DGI (saisie complementaire) :</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              <label>
+                Nombre de pages par exemplaire :
+                <input value={draft[PARAM_KEYS.nbPages] ?? ''} onChange={e => setField(PARAM_KEYS.nbPages, e.target.value)} style={{ marginLeft: 6, padding: '2px 6px', width: 100 }} />
+              </label>
+              <label>
+                Nombre d&apos;exemplaires :
+                <input value={draft[PARAM_KEYS.nbExemplaires] ?? ''} onChange={e => setField(PARAM_KEYS.nbExemplaires, e.target.value)} style={{ marginLeft: 6, padding: '2px 6px', width: 100 }} />
+              </label>
+              <label>
+                Date de depot :
+                <input value={draft[PARAM_KEYS.dateDepot] ?? ''} onChange={e => setField(PARAM_KEYS.dateDepot, e.target.value)} placeholder={dateDepotDefault} style={{ marginLeft: 6, padding: '2px 6px', width: 200 }} />
+              </label>
+              <label>
+                Nom de l&apos;agent DGI :
+                <input value={draft[PARAM_KEYS.nomAgent] ?? ''} onChange={e => setField(PARAM_KEYS.nomAgent, e.target.value)} style={{ marginLeft: 6, padding: '2px 6px', width: 200 }} />
+              </label>
+            </div>
+          </div>
+        )}
 
       </div>
 
