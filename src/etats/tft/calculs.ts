@@ -113,8 +113,13 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
     - rawSC(lN, ['4791']) + rawSC(lN1, ['4791']);
   data.FD = -FD_raw;
 
-  // FE — Variation du passif circulant
-  const feExcl = ['404', '465', '467', '472', '4726', '481', '482', '4752'];
+  // FE — Variation du passif circulant (TFT — exclusions DP)
+  // Guide officiel : 404, 481, 482, 467, 4752, 472.
+  // Le 4726 est redondant avec 472 (couvert par le prefixe).
+  // Le 465 est conserve pour eviter le double comptage avec FN
+  // (FN capte mvt debit 465 = paiement dividendes ; FE capterait
+  // alors variation SC 465 = doublon partiel).
+  const feExcl = ['404', '465', '467', '472', '481', '482', '4752'];
   data.FE = (bilanDP(lN) - bilanDP(lN1))
     - rawSC(lN, feExcl) + rawSC(lN1, feExcl)
     + rawSC(lN, ['4793']) - rawSC(lN1, ['4793'])
@@ -237,12 +242,16 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // Le compte 17 (dettes de location acquisition) ne fait pas l'objet d'un
   // encaissement (FO/FP), mais son mvt debit (= remboursement) est un
   // decaissement de dette financiere (FQ).
+  //
+  // Le compte 185 (Comptes permanents non bloques succursales) est exclu
+  // car il est en passif circulant (DM du bilan SYSCOHADA implemente),
+  // donc deja capte par FE via bilanDP. Eviter double comptage.
   data.FO = sumMvtCredit(lN, ['16'], ['166']);
-  data.FP = sumMvtCredit(lN, ['18'], ['183']);
+  data.FP = sumMvtCredit(lN, ['18'], ['183', '185']);
   data.FQ = -(
     sumMvtDebit(lN, ['16'], ['166'])
     + sumMvtDebit(lN, ['17'], ['176'])
-    + sumMvtDebit(lN, ['18'], ['183'])
+    + sumMvtDebit(lN, ['18'], ['183', '185'])
   );
 
   data.ZE = data.FO + data.FP + data.FQ;
