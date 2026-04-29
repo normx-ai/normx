@@ -282,3 +282,56 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
 
   return data;
 }
+
+// Alias semantique : la fonction principale est la version "Guide officiel".
+export const computeAllFluxA = computeAllFlux;
+
+// =============================================================================
+// VERSION B — PRATICIEN COMPTABLE
+// =============================================================================
+// Formules detaillees fournies par un praticien pour isoler strictement le
+// cash, en neutralisant les operations non monetaires (incorporation reserves,
+// conversion comptes courants, affectation resultat, etc.).
+//
+// Postes differents de la version A :
+//   FK (apport nouveau) : isolement cash apport
+//   FL (subventions)    : isolement cash subvention recue
+//   FM (prelevement)    : MvtD 4619 + MvtD 103/104 (sortie cash associes)
+//
+// Postes identiques : FA, FB-FE, FF-FJ, FN, FO-FQ.
+// Z* recalcules en consequence.
+export function computeAllFluxB(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Record<string, number> {
+  // Reutilise la version A pour tous les postes, puis surcharge FK/FL/FM
+  const data = { ...computeAllFlux(lN, lN1Raw) };
+  const lN1 = lN1Raw.length > 0 ? lN1Raw : lignesFromSI(lN);
+
+  // FK Praticien : isolement cash apport
+  // FK = Var SC(101, 102, 1051)
+  //    - SD(109, 4613, 467, 4581)
+  //    - MvtD(11, 12, 130, 131)
+  //    + MvtC(103, 104, 11, 12, 139, 4619, 465)
+  const fkVarCapital = rawSC(lN, ['101', '102', '1051']) - rawSC(lN1, ['101', '102', '1051']);
+  const fkSD = rawSD(lN, ['109', '4613', '467', '4581']);
+  const fkMvtD = sumMvtDebit(lN, ['11', '12', '130', '131']);
+  const fkMvtC = sumMvtCredit(lN, ['103', '104', '11', '12', '139', '4619', '465']);
+  data.FK = fkVarCapital - fkSD - fkMvtD + fkMvtC;
+
+  // FL Praticien : isolement cash subvention
+  // FL = Var SC(14) + SC(799) - SD(4494, 4582)
+  const flVar14 = rawSC(lN, ['14']) - rawSC(lN1, ['14']);
+  const flSC799 = rawSC(lN, ['799']);
+  const flSD = rawSD(lN, ['4494', '4582']);
+  data.FL = flVar14 + flSC799 - flSD;
+
+  // FM Praticien : sortie cash sur capital
+  // FM = MvtD(4619) + MvtD(103, 104)
+  data.FM = sumMvtDebit(lN, ['4619']) + sumMvtDebit(lN, ['103', '104']);
+
+  // Recalculer les Z* en aval
+  data.ZD = data.FK + data.FL + data.FM + data.FN;
+  data.ZF = data.ZD + data.ZE;
+  data.ZG = data.ZB + data.ZC + data.ZF;
+  data.ZH = data.ZG + data.ZA;
+
+  return data;
+}

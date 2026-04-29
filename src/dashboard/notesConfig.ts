@@ -136,6 +136,7 @@ export const IMPLEMENTED_ETATS = [
   'note_27a_sys', 'note_27b_sys', 'note_28_sys', 'note_29_sys', 'note_30_sys',
   'note_31_sys', 'note_32_sys', 'note_33_sys', 'note_34_sys', 'note_35_sys',
   'note_36_sys', 'note_37_sys',
-  'bilan_actif_sys', 'bilan_passif_sys', 'compte_resultat_sys', 'tft', 'resultat_fiscal_sys',
+  'bilan_actif_sys', 'bilan_passif_sys', 'compte_resultat_sys', 'tft',
+  'tft_comparaison_sys', 'resultat_fiscal_sys',
   'liquidation_impot_sys', 'liasse_complete_sys',
 ];

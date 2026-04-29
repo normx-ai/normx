@@ -13,6 +13,7 @@ import {
   BilanSMT, CompteResultatSMT, NotesAnnexesSMT, JournalTresorerieSMT, JournauxSMT,
   PageDeGarde, FicheIdentification, FicheR3, FicheR4,
   BilanSYSCOHADA, CompteResultatSYSCOHADA, TFT_SYSCOHADA, ResultatFiscal, LiquidationImpot,
+  TFT_Comparaison,
   LiasseComplete,
 } from './lazyModules';
 
@@ -60,6 +61,7 @@ export function EtatsSection({ activeTab, etatBaseProps, openTab }: EtatsSection
     case 'bilan_passif_sys': return <BilanSYSCOHADA page="passif" {...etatBaseProps} />;
     case 'compte_resultat_sys': return <CompteResultatSYSCOHADA {...etatBaseProps} />;
     case 'tft': return <TFT_SYSCOHADA {...etatBaseProps} />;
+    case 'tft_comparaison_sys': return <TFT_Comparaison {...etatBaseProps} />;
     case 'resultat_fiscal_sys': return <ResultatFiscal {...etatBaseProps} />;
     case 'liquidation_impot_sys': return <LiquidationImpot {...etatBaseProps} />;
     case 'liasse_complete_sys': return <LiasseComplete {...etatBaseProps} />;
