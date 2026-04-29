@@ -80,10 +80,14 @@ export function bilanBH(l: BalanceLigne[]): number { return actifNet(l, ['409'],
 // BI : Clients net (excl 419 = avances recues, debitOnly pour comptes 41)
 export function bilanBI(l: BalanceLigne[]): number { return actifNet(l, ['41'], ['491'], ['419'], [], ['41']); }
 
-// BJ : Autres creances net (excl 478 = ecart conversion actif, debitOnly pour 42-47)
+// BJ : Autres creances net (excl 478 = ecart conversion actif, debitOnly pour 185 et 42-47)
+// Le 185 (Comptes courants associes/societes apparentees) est partage : un solde
+// crediteur du 185 est une dette qui va en DM (passif), pas en BJ (creances).
+// Symetrique avec bilanSyscohadaData.ts BJ (commit 1338b69).
 export function bilanBJ(l: BalanceLigne[]): number {
   return actifNet(l, ['185', '42', '43', '44', '45', '46', '47'],
-    ['492', '493', '494', '495', '496', '497'], ['478'], [], ['42', '43', '44', '45', '46', '47']);
+    ['492', '493', '494', '495', '496', '497'], ['478'], [],
+    ['185', '42', '43', '44', '45', '46', '47']);
 }
 
 // Tresorerie actif nette : BQ + BR + BS
