@@ -368,11 +368,19 @@ function TFT_SYSCOHADA({
           }
           return (
             <span style={{ color: '#92400e', background: '#fef3c7', borderColor: '#f59e0b', padding: '4px 8px', borderRadius: 4, border: '1px solid #f59e0b', fontWeight: 600 }}>
-              Écart de bouclage : {formatMontant(ecart)} FCFA (TFT: {formatMontant(tresoTFT)} / Bilan: {formatMontant(tresoBilan)}) — ecart explicite (variations non comptabilisees, arrondis ou conversions)
+              Écart de bouclage : {formatMontant(ecart)} FCFA (TFT: {formatMontant(tresoTFT)} / Bilan: {formatMontant(tresoBilan)})
+              {' — '}
+              <a href="#tft-diagnostic" style={{ color: '#1e3a5f', textDecoration: 'underline' }}>Voir l'analyse détaillée ↓</a>
             </span>
           );
         })()}
       </div>
+
+      {balanceFound && (diagN.length > 0 || diagN1.length > 0) && (
+        <div id="tft-diagnostic">
+          <DiagnosticPanel diagN={diagN} diagN1={diagN1} annee={annee} />
+        </div>
+      )}
 
       {renderFooter()}
 
@@ -385,10 +393,6 @@ function TFT_SYSCOHADA({
           getValueN1={getValueN1}
           fmt={fmt}
         />
-      )}
-
-      {balanceFound && (diagN.length > 0 || diagN1.length > 0) && (
-        <DiagnosticPanel diagN={diagN} diagN1={diagN1} annee={annee} />
       )}
 
       {previewUrl && (

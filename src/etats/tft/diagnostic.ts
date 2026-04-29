@@ -224,6 +224,59 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     }
   }
 
+  // ===== 5bis. RECONCILIATION DE L'ECART : top comptes par variation absolue =====
+  if (ecart !== 0) {
+    function trouverPoste(num: string): string | null {
+      for (const p of posteDecompositions) {
+        if (matchesComptes(num, p.prefixes) && !matchesComptes(num, p.excludes || [])) return p.ref;
+      }
+      return null;
+    }
+
+    type CompteVar = { num: string; lib: string; montant: number; poste: string | null };
+    const allComptes: CompteVar[] = [];
+    const seen = new Set<string>();
+
+    for (const l of lN) {
+      const num = (l.numero_compte || '').trim();
+      if (!num || !/^[1-5]/.test(num)) continue;
+      seen.add(num);
+      const netN = getSD(l) - getSC(l);
+      const prev = lN1.find(p => (p.numero_compte || '').trim() === num);
+      const netN1 = prev ? getSD(prev) - getSC(prev) : 0;
+      const v = Math.round(netN - netN1);
+      if (Math.abs(v) >= 1000) {
+        allComptes.push({ num, lib: l.libelle_compte || '', montant: v, poste: trouverPoste(num) });
+      }
+    }
+    for (const l of lN1) {
+      const num = (l.numero_compte || '').trim();
+      if (!num || !/^[1-5]/.test(num) || seen.has(num)) continue;
+      const netN1 = getSD(l) - getSC(l);
+      const v = Math.round(-netN1);
+      if (Math.abs(v) >= 1000) {
+        allComptes.push({ num, lib: l.libelle_compte || '', montant: v, poste: trouverPoste(num) });
+      }
+    }
+    allComptes.sort((a, b) => Math.abs(b.montant) - Math.abs(a.montant));
+
+    const nonCaptes = allComptes.filter(c => c.poste === null);
+    const top = allComptes.slice(0, 15);
+
+    diag.push({
+      poste: 'Reconciliation',
+      type: nonCaptes.length > 0 ? 'erreur' : 'alerte',
+      message: 'Top 15 comptes du bilan par variation absolue (annote du poste TFT capteur). '
+        + nonCaptes.length + ' compte(s) avec variation non captes par aucun poste F.',
+      comptes: top.map(c => ({
+        num: c.num,
+        lib: (c.poste === null ? '[NON CAPTE] ' : '[' + c.poste + '] ') + c.lib,
+        montant: c.montant,
+      })),
+      montant: ecart,
+    });
+  }
+
   // ===== 6. RESUME =====
   const nbAlertes = diag.filter(d => d.type === 'alerte').length;
   const nbErreurs = diag.filter(d => d.type === 'erreur').length;
