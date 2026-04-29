@@ -219,12 +219,29 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   const var4582 = rawSD(lN, ['4582']) - rawSD(lN1, ['4582']);
   data.FL = var14_excl + var4494 + var4582;
 
-  // FM — Prelevement sur le capital
-  // Formule officielle SYSCOHADA TFT4 :
-  // FM = variation des comptes de la classe 10 capital
-  //      a l'exclusion des comptes 106 (ecarts de reevaluation)
-  //      et 109 (apporteurs capital souscrit non appele)
-  data.FM = rawSC(lN, ['10'], ['106', '109']) - rawSC(lN1, ['10'], ['106', '109']);
+  // FM — Prelevement sur le capital (TFT 4.2.3.4 c) + extension bouclage
+  // Formule officielle SYSCOHADA :
+  //   FM = variation des comptes de la classe 10 capital
+  //        a l'exclusion des comptes 106 (ecarts de reevaluation)
+  //        et 109 (apporteurs capital souscrit non appele)
+  //
+  // Extension pour equilibrer le TFT en cas de correction d'erreur
+  // ou autre variation passee par les capitaux propres residuels :
+  //   + variation NET (SC - SD) des comptes 11 (Reserves),
+  //     12 (Report a nouveau, dont 129 RAN debiteur)
+  //     et 13 (Resultat de l'exercice).
+  //
+  // Le NET est necessaire pour gerer correctement les comptes a solde
+  // debiteur (129, 139). L'affectation interne du resultat (transfert
+  // 13 vers 11/12) s'auto-annule dans la somme 11+12+13.
+  //
+  // Risque connu : double comptage avec FN si dividendes declares ET
+  // payes dans le meme exercice (peu frequent en pratique).
+  const fmClasse10 = rawSC(lN, ['10'], ['106', '109']) - rawSC(lN1, ['10'], ['106', '109']);
+  const cpResPfx = ['11', '12', '13'];
+  const fmExt_N = rawSC(lN, cpResPfx) - rawSD(lN, cpResPfx);
+  const fmExt_N1 = rawSC(lN1, cpResPfx) - rawSD(lN1, cpResPfx);
+  data.FM = fmClasse10 + (fmExt_N - fmExt_N1);
 
   // FN — Dividendes verses
   data.FN = -sumMvtDebit(lN, ['465']);
