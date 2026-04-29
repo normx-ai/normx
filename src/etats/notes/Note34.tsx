@@ -1,112 +1,253 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps } from '../../types';
+import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
+import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
 import { LuInfo } from 'react-icons/lu';
+import { computeAllCR, getValue as crGetValue, type CRBalanceResult } from '../cr/crSyscohadaData';
+import {
+  computeActifFromBalance, computePassifFromBalance,
+} from '../bilan/bilanSyscohadaCompute';
+import {
+  ACTIF_MAPPING, PASSIF_MAPPING,
+  type ActifResult, type PassifResult,
+} from '../bilan/bilanSyscohadaData';
+import { computeAllFlux } from '../tft/calculs';
+import { rawSD, rawSC } from '../tft/soldes';
 
 interface Note34Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
-const SECTIONS: { label: string; bold?: boolean; indent?: boolean; prefix?: string }[] = [
-  { label: 'ANALYSE DE L\'ACTIVITE', bold: true },
+interface Ctx {
+  lignes: BalanceLigne[];
+  cr: Record<string, CRBalanceResult>;
+  actif: Record<string, ActifResult>;
+  passif: Record<string, PassifResult>;
+  flux: Record<string, number> | null;
+}
+
+type Compute = (c: Ctx) => number | null;
+
+interface Section {
+  label: string;
+  bold?: boolean;
+  indent?: boolean;
+  prefix?: string;
+  compute?: Compute;
+  isPercent?: boolean;
+  manualKey?: string;
+}
+
+const sumActifNet = (a: Record<string, ActifResult>, refs: string[]): number =>
+  refs.reduce((s, r) => s + (a[r]?.net ?? 0), 0);
+const sumPassifNet = (p: Record<string, PassifResult>, refs: string[]): number =>
+  refs.reduce((s, r) => s + (p[r]?.net ?? 0), 0);
+
+const ACTIF_IMMO_REFS = ['AE', 'AF', 'AG', 'AH', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AP', 'AR', 'AS'];
+const AC_EXP_REFS = ['BB', 'BH', 'BI', 'BJ'];
+const PC_EXP_REFS = ['DI', 'DJ', 'DK', 'DM', 'DN'];
+const TRESO_ACTIF_REFS = ['BQ', 'BR', 'BS'];
+const TRESO_PASSIF_REFS = ['DQ', 'DR'];
+
+const cp = (c: Ctx): number => c.passif['CP']?.net ?? 0;
+const dettesFin = (c: Ctx): number => (c.passif['DA']?.net ?? 0) + (c.passif['DB']?.net ?? 0);
+const ressourcesStables = (c: Ctx): number => cp(c) + dettesFin(c);
+const actifImmo = (c: Ctx): number => c.actif['AZ']?.net ?? sumActifNet(c.actif, ACTIF_IMMO_REFS);
+const fr = (c: Ctx): number => ressourcesStables(c) - actifImmo(c);
+const bfrExp = (c: Ctx): number => sumActifNet(c.actif, AC_EXP_REFS) - sumPassifNet(c.passif, PC_EXP_REFS);
+const bfrHao = (c: Ctx): number => (c.actif['BA']?.net ?? 0) - (c.passif['DH']?.net ?? 0);
+const tresoNette = (c: Ctx): number => fr(c) - (bfrExp(c) + bfrHao(c));
+const tresoControl = (c: Ctx): number => sumActifNet(c.actif, TRESO_ACTIF_REFS) - sumPassifNet(c.passif, TRESO_PASSIF_REFS);
+const endBrut = (c: Ctx): number => dettesFin(c) + sumPassifNet(c.passif, TRESO_PASSIF_REFS);
+
+const cafe = (c: Ctx): number =>
+  crGetValue('XD', c.cr) + rawSD(c.lignes, ['654']) - rawSC(c.lignes, ['754']);
+
+const cafg = (c: Ctx): number => {
+  const TK = c.cr['TK']?.net ?? 0;
+  const gainsCh = rawSC(c.lignes, ['776']);
+  const TM = c.cr['TM']?.net ?? 0;
+  const haoP = (c.cr['TN']?.net ?? 0) + (c.cr['TO']?.net ?? 0);
+  const trChHAO = rawSC(c.lignes, ['848']);
+  const RM = c.cr['RM']?.net ?? 0;
+  const pertesCh = rawSD(c.lignes, ['676']);
+  const RQ = c.cr['RQ']?.net ?? 0;
+  const RS = c.cr['RS']?.net ?? 0;
+  return cafe(c) + TK + gainsCh + TM + haoP + trChHAO - RM - pertesCh - RQ - RS;
+};
+
+const SECTIONS: Section[] = [
+  { label: "ANALYSE DE L'ACTIVITE", bold: true },
   { label: 'SOLDES INTERMEDIAIRES DE GESTION', bold: true },
-  { label: 'Chiffre d\'affaires' },
-  { label: 'Marge commerciale' },
-  { label: 'Valeur ajoutée' },
-  { label: 'Excédent brut d\'exploitation (EBE)' },
-  { label: 'Résultat d\'exploitation' },
-  { label: 'Résultat financier' },
-  { label: 'Résultat des activités ordinaires' },
-  { label: 'Résultat hors activités ordinaires' },
-  { label: 'Résultat net' },
-  { label: 'DETERMINATION DE LA CAPACITE D\'AUTOFINANCEMENT', bold: true },
-  { label: 'Excédent brut d\'exploitation (EBE)' },
-  { label: 'Valeurs comptables des cessions courantes d\'immobilisation (compte 654)', prefix: '+' },
-  { label: 'Produits des cessions courantes d\'immobilisation (compte 754)', prefix: '-' },
-  { label: 'CAPACITE D\'AUTOFINANCEMENT D\'EXPLOITATION', bold: true, prefix: '=' },
-  { label: 'Revenus financiers', prefix: '+' },
-  { label: 'Gains de change', prefix: '+' },
-  { label: 'Transferts de charges financières', prefix: '+' },
-  { label: 'Produits HAO', prefix: '+' },
-  { label: 'Transferts de charges HAO', prefix: '+' },
-  { label: 'Frais financiers', prefix: '-' },
-  { label: 'Pertes de change', prefix: '-' },
-  { label: 'Participation', prefix: '-' },
-  { label: 'Impôts sur les résultats', prefix: '-' },
-  { label: 'CAPACITE D\'AUTOFINANCEMENT GLOBALE (C.A.F.G.)', bold: true, prefix: '=' },
-  { label: 'Distributions de dividendes opérées durant l\'exercice', prefix: '-' },
+  { label: "Chiffre d'affaires", compute: (c) => crGetValue('XB', c.cr) },
+  { label: 'Marge commerciale', compute: (c) => crGetValue('XA', c.cr) },
+  { label: 'Valeur ajoutée', compute: (c) => crGetValue('XC', c.cr) },
+  { label: "Excédent brut d'exploitation (EBE)", compute: (c) => crGetValue('XD', c.cr) },
+  { label: "Résultat d'exploitation", compute: (c) => crGetValue('XE', c.cr) },
+  { label: 'Résultat financier', compute: (c) => crGetValue('XF', c.cr) },
+  { label: 'Résultat des activités ordinaires', compute: (c) => crGetValue('XG', c.cr) },
+  { label: 'Résultat hors activités ordinaires', compute: (c) => crGetValue('XH', c.cr) },
+  { label: 'Résultat net', compute: (c) => crGetValue('XI', c.cr) },
+
+  { label: "DETERMINATION DE LA CAPACITE D'AUTOFINANCEMENT", bold: true },
+  { label: "Excédent brut d'exploitation (EBE)", compute: (c) => crGetValue('XD', c.cr) },
+  { label: "Valeurs comptables des cessions courantes d'immobilisation (compte 654)", prefix: '+', compute: (c) => rawSD(c.lignes, ['654']) },
+  { label: "Produits des cessions courantes d'immobilisation (compte 754)", prefix: '-', compute: (c) => rawSC(c.lignes, ['754']) },
+  { label: "CAPACITE D'AUTOFINANCEMENT D'EXPLOITATION", bold: true, prefix: '=', compute: cafe },
+  { label: 'Revenus financiers', prefix: '+', compute: (c) => c.cr['TK']?.net ?? 0 },
+  { label: 'Gains de change', prefix: '+', compute: (c) => rawSC(c.lignes, ['776']) },
+  { label: 'Transferts de charges financières', prefix: '+', compute: (c) => c.cr['TM']?.net ?? 0 },
+  { label: 'Produits HAO', prefix: '+', compute: (c) => (c.cr['TN']?.net ?? 0) + (c.cr['TO']?.net ?? 0) },
+  { label: 'Transferts de charges HAO', prefix: '+', compute: (c) => rawSC(c.lignes, ['848']) },
+  { label: 'Frais financiers', prefix: '-', compute: (c) => c.cr['RM']?.net ?? 0 },
+  { label: 'Pertes de change', prefix: '-', compute: (c) => rawSD(c.lignes, ['676']) },
+  { label: 'Participation', prefix: '-', compute: (c) => c.cr['RQ']?.net ?? 0 },
+  { label: 'Impôts sur les résultats', prefix: '-', compute: (c) => c.cr['RS']?.net ?? 0 },
+  { label: "CAPACITE D'AUTOFINANCEMENT GLOBALE (C.A.F.G.)", bold: true, prefix: '=', compute: cafg },
+  { label: "Distributions de dividendes opérées durant l'exercice", prefix: '-', manualKey: 'dividendes' },
   { label: 'AUTOFINANCEMENT', bold: true, prefix: '=' },
+
   { label: 'ANALYSE DE LA RENTABILITE', bold: true },
-  { label: 'Rentabilité économique = Résultat d\'exploitation (a) / Capitaux propres + dettes financières' },
-  { label: 'Rentabilité financière = Résultat net / Capitaux propres' },
+  { label: "Rentabilité économique = Résultat d'exploitation (a) / Capitaux propres + dettes financières", isPercent: true, compute: (c) => {
+    const denom = cp(c) + dettesFin(c);
+    return denom === 0 ? 0 : (crGetValue('XE', c.cr) / denom) * 100;
+  } },
+  { label: 'Rentabilité financière = Résultat net / Capitaux propres', isPercent: true, compute: (c) => {
+    const d = cp(c);
+    return d === 0 ? 0 : (crGetValue('XI', c.cr) / d) * 100;
+  } },
+
   { label: 'ANALYSE DE LA STRUCTURE FINANCIERE', bold: true },
-  { label: 'Capitaux propres et ressources assimilées' },
-  { label: 'Dettes financières* et autres ressources assimilées (b)', prefix: '+' },
-  { label: 'RESSOURCES STABLES', bold: true, prefix: '=' },
-  { label: 'Actif immobilisé (b)', prefix: '-' },
-  { label: 'FONDS DE ROULEMENT (1)', bold: true, prefix: '=' },
-  { label: 'Actif circulant d\'exploitation (b)', indent: true },
-  { label: 'Passif circulant d\'exploitation (b)', indent: true, prefix: '-' },
-  { label: 'BESOIN DE FINANCEMENT D\'EXPLOITATION (2)', bold: true, prefix: '=' },
-  { label: 'Actif circulant HAO (b)', indent: true },
-  { label: 'Passif circulant HAO (b)', indent: true, prefix: '-' },
-  { label: 'BESOIN DE FINANCEMENT HAO (3)', bold: true, prefix: '=' },
-  { label: 'BESOIN DE FINANCEMENT GLOBAL (4) = (2) + (3)', bold: true },
-  { label: 'TRESORERIE NETTE (5) = (1) - (4)', bold: true },
-  { label: 'Contrôle : trésorerie nette = (trésorerie - actif) - (trésorerie - passif)' },
+  { label: 'Capitaux propres et ressources assimilées', compute: cp },
+  { label: 'Dettes financières* et autres ressources assimilées (b)', prefix: '+', compute: dettesFin },
+  { label: 'RESSOURCES STABLES', bold: true, prefix: '=', compute: ressourcesStables },
+  { label: 'Actif immobilisé (b)', prefix: '-', compute: actifImmo },
+  { label: 'FONDS DE ROULEMENT (1)', bold: true, prefix: '=', compute: fr },
+  { label: "Actif circulant d'exploitation (b)", indent: true, compute: (c) => sumActifNet(c.actif, AC_EXP_REFS) },
+  { label: "Passif circulant d'exploitation (b)", indent: true, prefix: '-', compute: (c) => sumPassifNet(c.passif, PC_EXP_REFS) },
+  { label: "BESOIN DE FINANCEMENT D'EXPLOITATION (2)", bold: true, prefix: '=', compute: bfrExp },
+  { label: 'Actif circulant HAO (b)', indent: true, compute: (c) => c.actif['BA']?.net ?? 0 },
+  { label: 'Passif circulant HAO (b)', indent: true, prefix: '-', compute: (c) => c.passif['DH']?.net ?? 0 },
+  { label: 'BESOIN DE FINANCEMENT HAO (3)', bold: true, prefix: '=', compute: bfrHao },
+  { label: 'BESOIN DE FINANCEMENT GLOBAL (4) = (2) + (3)', bold: true, compute: (c) => bfrExp(c) + bfrHao(c) },
+  { label: 'TRESORERIE NETTE (5) = (1) - (4)', bold: true, compute: tresoNette },
+  { label: 'Contrôle : trésorerie nette = (trésorerie - actif) - (trésorerie - passif)', compute: tresoControl },
+
   { label: 'ANALYSE DE LA VARIATION DE LA TRESORERIE', bold: true },
-  { label: 'Flux de trésorerie des activités opérationnelles' },
-  { label: 'Flux de trésorerie des activités d\'investissement', prefix: '-' },
-  { label: 'Flux de trésorerie des activités de financement', prefix: '+' },
-  { label: 'VARIATION DE LA TRESORERIE NETTE DE LA PERIODE', bold: true, prefix: '=' },
-  { label: 'ANALYSE DE LA VARIATION DE L\'ENDETTEMENT FINANCIER NET', bold: true },
-  { label: 'Endettement financier brut (Dettes financières* + Trésorerie - passif)' },
-  { label: 'Trésorerie - actif', prefix: '-' },
-  { label: 'ENDETTEMENT FINANCIER NET', bold: true, prefix: '=' },
+  { label: "Flux de trésorerie des activités opérationnelles", compute: (c) => c.flux ? (c.flux['ZB'] ?? 0) : null },
+  { label: "Flux de trésorerie des activités d'investissement", prefix: '-', compute: (c) => c.flux ? (c.flux['ZC'] ?? 0) : null },
+  { label: 'Flux de trésorerie des activités de financement', prefix: '+', compute: (c) => c.flux ? (c.flux['ZF'] ?? 0) : null },
+  { label: 'VARIATION DE LA TRESORERIE NETTE DE LA PERIODE', bold: true, prefix: '=', compute: (c) => c.flux ? (c.flux['ZG'] ?? 0) : null },
+
+  { label: "ANALYSE DE LA VARIATION DE L'ENDETTEMENT FINANCIER NET", bold: true },
+  { label: 'Endettement financier brut (Dettes financières* + Trésorerie - passif)', compute: endBrut },
+  { label: 'Trésorerie - actif', prefix: '-', compute: (c) => sumActifNet(c.actif, TRESO_ACTIF_REFS) },
+  { label: 'ENDETTEMENT FINANCIER NET', bold: true, prefix: '=', compute: (c) => endBrut(c) - sumActifNet(c.actif, TRESO_ACTIF_REFS) },
 ];
 
-function Note34({ entiteName, entiteNif = '', entiteId, onBack }: Note34Props): React.JSX.Element {
+function buildCtx(lignes: BalanceLigne[], flux: Record<string, number> | null): Ctx {
+  return {
+    lignes,
+    cr: computeAllCR(lignes),
+    actif: computeActifFromBalance(lignes, ACTIF_MAPPING),
+    passif: computePassifFromBalance(lignes, PASSIF_MAPPING),
+    flux,
+  };
+}
+
+function Note34({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note34Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, setParams: _setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
+  void _setParams;
 
   const pageRef = useRef<HTMLDivElement>(null);
   const pdf = usePDFPreview({ pageRef, fileName: `Note34_${annee}.pdf`, editing, setEditing });
+  const { lignesN, lignesN1 } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
 
-  const [data, setData] = useState<Record<string, string>>({});
+  // Overrides manuels (par ligne et colonne) : si saisi, l'emporte sur le calcul
+  const [overrides, setOverrides] = useState<Record<string, string>>({});
+  const getOv = (row: number, col: number): string => overrides[`r${row}_c${col}`] || '';
+  const setOv = (row: number, col: number, value: string) =>
+    setOverrides(prev => ({ ...prev, [`r${row}_c${col}`]: value }));
 
-  const getVal = (row: number, col: number): string => data[`r${row}_c${col}`] || '';
-  const setVal = (row: number, col: number, value: string) => setData(prev => ({ ...prev, [`r${row}_c${col}`]: value }));
+  // Saisies libres (lignes manualKey, ex. dividendes) — partagees entre N et N-1
+  const [manual, setManual] = useState<Record<string, string>>({});
+  const getMan = (key: string): string => manual[key] || '';
+  const setMan = (key: string, value: string) => setManual(prev => ({ ...prev, [key]: value }));
 
-  // Charger data depuis params
   useEffect(() => {
-    if (!params['note34_data']) return;
-    try { setData(JSON.parse(params['note34_data'])); } catch { /* */ }
+    if (params['note34_overrides']) {
+      try { setOverrides(JSON.parse(params['note34_overrides'])); } catch { /* */ }
+    }
+    if (params['note34_manual']) {
+      try { setManual(JSON.parse(params['note34_manual'])); } catch { /* */ }
+    }
   }, [params]);
 
   const handleSave = () => saveParams({
     ...params,
-    note34_data: JSON.stringify(data),
+    note34_overrides: JSON.stringify(overrides),
+    note34_manual: JSON.stringify(manual),
   });
+
+  const ctxN = useMemo(() => buildCtx(lignesN, computeAllFlux(lignesN, lignesN1)), [lignesN, lignesN1]);
+  const ctxN1 = useMemo(() => buildCtx(lignesN1, null), [lignesN1]);
 
   const fmtDateShort = (d: string): string => {
     if (!d) return '';
     return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
-  const parseNVal = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
+  const parseNVal = (v: string): number => {
+    const n = parseFloat(v.replace(/\s/g, '').replace(',', '.'));
+    return isNaN(n) ? 0 : n;
+  };
   const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
+  const fmtPct = (v: number): string => v.toFixed(1).replace('.', ',') + ' %';
+
+  // Resoudre la valeur d'une ligne pour une colonne (override > calc > vide)
+  const resolveValue = (i: number, col: number): number | null => {
+    const s = SECTIONS[i];
+    const ov = getOv(i, col);
+    if (ov.trim()) return parseNVal(ov);
+    if (s.manualKey) {
+      const m = getMan(s.manualKey);
+      return m.trim() ? parseNVal(m) : 0;
+    }
+    if (!s.compute) return null;
+    const ctx = col === 0 ? ctxN : ctxN1;
+    if (col === 0) {
+      // AUTOFINANCEMENT depend du dividendes (manual key)
+      if (s.label === 'AUTOFINANCEMENT') {
+        const div = parseNVal(getMan('dividendes'));
+        return cafg(ctx) - div;
+      }
+    } else if (s.label === 'AUTOFINANCEMENT') {
+      // pas d'AUTOFIN en N-1 sauf si override saisi
+      return null;
+    }
+    return s.compute(ctx);
+  };
 
   const computeVariation = (row: number): string => {
-    const vN = parseNVal(getVal(row, 0));
-    const vN1 = parseNVal(getVal(row, 1));
-    if (vN1 === 0) return '';
+    const s = SECTIONS[row];
+    if (s.isPercent) return '';
+    const vN = resolveValue(row, 0);
+    const vN1 = resolveValue(row, 1);
+    if (vN === null || vN1 === null || vN1 === 0) return '';
     const pct = ((vN - vN1) / Math.abs(vN1)) * 100;
     return pct.toFixed(1).replace('.', ',');
+  };
+
+  const formatCell = (s: Section, v: number | null): string => {
+    if (v === null) return '';
+    if (s.isPercent) return fmtPct(v);
+    return fmtM(v);
   };
 
   const th: React.CSSProperties = { ...thStyle, padding: '6px 10px', fontSize: 9 };
@@ -117,6 +258,39 @@ function Note34({ entiteName, entiteNif = '', entiteId, onBack }: Note34Props): 
   const inp: React.CSSProperties = { ...inputSt, padding: '3px 6px', fontSize: 9 };
 
   const COLS = ['Année N', 'Année N-1', 'Variation en %'];
+
+  const renderCell = (i: number, col: number, isBold: boolean): React.ReactNode => {
+    const s = SECTIONS[i];
+    const v = resolveValue(i, col);
+    const display = formatCell(s, v);
+    const cellStyle = isBold ? tdBR : tdR;
+    if (editing) {
+      const ov = getOv(i, col);
+      // pour les lignes manualKey, la saisie est partagee N seulement (col 0) via setMan
+      if (s.manualKey && col === 0) {
+        return (
+          <td style={cellStyle}>
+            <input
+              value={getMan(s.manualKey)}
+              onChange={e => setMan(s.manualKey!, e.target.value)}
+              style={inp}
+            />
+          </td>
+        );
+      }
+      return (
+        <td style={cellStyle}>
+          <input
+            value={ov}
+            placeholder={display}
+            onChange={e => setOv(i, col, e.target.value)}
+            style={inp}
+          />
+        </td>
+      );
+    }
+    return <td style={cellStyle}>{display}</td>;
+  };
 
   return (
     <div>
@@ -131,18 +305,15 @@ function Note34({ entiteName, entiteNif = '', entiteId, onBack }: Note34Props): 
         <PDFPreviewModal previewUrl={pdf.previewUrl} title="Apercu — Note 34" onClose={pdf.closePreview} onDownload={pdf.downloadPDF} onPrint={pdf.printPDF} />
       )}
 
-
-      {/* Bulle d'information */}
       <div style={{ margin: '12px 20px', padding: '12px 16px', background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 8, fontSize: 12, color: '#1e40af', lineHeight: 1.6 }}>
         <div style={{ fontWeight: 700, marginBottom: 6, display: 'flex', alignItems: 'center', gap: 6 }}>
           <LuInfo size={14} /> Note d'information — Note 34
         </div>
         <ul style={{ margin: 0, paddingLeft: 18 }}>
-          <li><strong>Rentabilite :</strong> Marge brute, resultat d'exploitation, resultat net / chiffre d'affaires.</li>
-          <li><strong>Structure :</strong> Capitaux propres / total bilan, endettement net / capitaux propres.</li>
-          <li><strong>Liquidite :</strong> Fonds de roulement, besoin en fonds de roulement, tresorerie nette.</li>
-          <li><strong>Rotation :</strong> Delai moyen clients, fournisseurs, stocks en jours.</li>
-          <li>Indicateurs comparables sur 2-3 exercices pour analyse de tendance.</li>
+          <li>Les valeurs sont calculées automatiquement à partir de la balance N / N-1 (Bilan, Compte de résultat, TFT).</li>
+          <li>En mode édition, vous pouvez saisir une valeur pour surcharger le calcul automatique d'une ligne.</li>
+          <li>Les distributions de dividendes restent à saisir manuellement (décision d'AG).</li>
+          <li>Les flux de trésorerie N-1 ne sont pas calculables (besoin de la balance N-2) — saisie possible en édition.</li>
         </ul>
       </div>
 
@@ -164,20 +335,23 @@ function Note34({ entiteName, entiteNif = '', entiteId, onBack }: Note34Props): 
           <tbody>
             {SECTIONS.map((s, i) => {
               const labelText = (s.prefix ? s.prefix + ' ' : '') + (s.indent ? '  ' : '') + s.label;
+              const variation = computeVariation(i);
               return (
                 <tr key={i}>
                   <td style={s.bold ? tdB : { ...td, paddingLeft: s.indent ? 20 : s.prefix ? 14 : 8 }}>{labelText}</td>
-                  {s.bold ? (
+                  {!s.compute && !s.manualKey ? (
                     <>
-                      <td style={tdBR}>{getVal(i, 0) ? (editing ? <input value={getVal(i, 0)} onChange={e => setVal(i, 0, e.target.value)} style={inp} /> : fmtM(parseNVal(getVal(i, 0)))) : ''}</td>
-                      <td style={tdBR}>{getVal(i, 1) ? (editing ? <input value={getVal(i, 1)} onChange={e => setVal(i, 1, e.target.value)} style={inp} /> : fmtM(parseNVal(getVal(i, 1)))) : ''}</td>
-                      <td style={{ ...tdBR, textAlign: 'center' }}>{computeVariation(i)}{computeVariation(i) ? ' %' : ''}</td>
+                      <td style={s.bold ? tdBR : tdR}></td>
+                      <td style={s.bold ? tdBR : tdR}></td>
+                      <td style={{ ...(s.bold ? tdBR : tdR), textAlign: 'center' }}></td>
                     </>
                   ) : (
                     <>
-                      <td style={tdR}>{editing ? <input value={getVal(i, 0)} onChange={e => setVal(i, 0, e.target.value)} style={inp} /> : (getVal(i, 0) ? fmtM(parseNVal(getVal(i, 0))) : '')}</td>
-                      <td style={tdR}>{editing ? <input value={getVal(i, 1)} onChange={e => setVal(i, 1, e.target.value)} style={inp} /> : (getVal(i, 1) ? fmtM(parseNVal(getVal(i, 1))) : '')}</td>
-                      <td style={{ ...tdR, textAlign: 'center' }}>{computeVariation(i)}{computeVariation(i) ? ' %' : ''}</td>
+                      {renderCell(i, 0, !!s.bold)}
+                      {renderCell(i, 1, !!s.bold)}
+                      <td style={{ ...(s.bold ? tdBR : tdR), textAlign: 'center' }}>
+                        {variation}{variation ? ' %' : ''}
+                      </td>
                     </>
                   )}
                 </tr>
