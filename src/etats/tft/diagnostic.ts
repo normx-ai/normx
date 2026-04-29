@@ -94,10 +94,12 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     { ref: 'FF', label: 'Immob incorporelles', prefixes: ['21','281','291'], excludes: [] },
     { ref: 'FG', label: 'Immob corporelles', prefixes: ['22','23','24','282','283','284','292','293','294'], excludes: [] },
     { ref: 'FH', label: 'Immob financieres', prefixes: ['26','27'], excludes: ['2714','2766'] },
-    { ref: 'FK', label: 'Capital', prefixes: ['101','102','103','104','105','109'], excludes: [] },
-    { ref: 'FL', label: 'Subventions invest', prefixes: ['14'], excludes: [] },
+    // FK praticien capte aussi 11/12/13 (via MvtD/MvtC) + 4613/4619 (via SD/MvtC)
+    { ref: 'FK', label: 'Capital + Reserves/RAN/Resultat', prefixes: ['10','11','12','13','4613','4619','4581','467'], excludes: ['106'] },
+    { ref: 'FL', label: 'Subventions invest', prefixes: ['14','799','4494','4582'], excludes: [] },
+    { ref: 'FM', label: 'Prelevement capital', prefixes: ['4619','103','104'], excludes: [] },
     { ref: 'FN', label: 'Dividendes', prefixes: ['465'], excludes: [] },
-    { ref: 'FO/FP/FQ', label: 'Dettes financieres', prefixes: ['16','17','181','182','183'], excludes: [] },
+    { ref: 'FO/FP/FQ', label: 'Dettes financieres', prefixes: ['16','17','18'], excludes: [] },
   ];
 
   for (const p of posteDecompositions) {
