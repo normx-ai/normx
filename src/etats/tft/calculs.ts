@@ -202,8 +202,14 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
     + sumMvtCredit(lN, ['414', '485'], ['4856']);
 
   // FJ — Encaissements cessions immob financieres
+  // Inclut le mvt credit 2714 (= remboursement creance location-financement)
+  // selon TFT 4.2.3.3 a : "la part de l'encaissement relative au
+  // remboursement de la creance de location est consideree comme un
+  // remboursement d'immobilisation financiere".
+  // Exclut 2766 (interets courus sur 27) car deja capte par la correction
+  // CAFG (var SD 276).
   data.FJ = rawSC(lN, ['826'])
-    + sumMvtCredit(lN, ['27'], ['2714', '2766'])
+    + sumMvtCredit(lN, ['27'], ['2766'])
     - sumMvtDebit(lN, ['4856']) + sumMvtCredit(lN, ['4856']);
 
   data.ZC = data.FF + data.FG + data.FH + data.FI + data.FJ;
