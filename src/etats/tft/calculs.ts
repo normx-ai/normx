@@ -214,18 +214,19 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
 
   data.ZC = data.FF + data.FG + data.FH + data.FI + data.FJ;
 
-  // FK — Augmentation de capital par apport nouveau (TFT4 a)
-  // Formule officielle SYSCOHADA :
-  // FK = variation des comptes de la classe 10 capital
-  //      a l'exclusion des comptes 106 (ecarts de reevaluation)
-  //      et 109 (apporteurs capital souscrit non appele)
-  //    + variation du compte 467 Apporteurs restant du sur capital appele
-  //    + variation du compte 4581 Organismes internationaux, fonds de dotation a recevoir
-  const fkExcl = ['106', '109'];
-  const varClasse10 = rawSC(lN, ['10'], fkExcl) - rawSC(lN1, ['10'], fkExcl);
-  const var467 = rawSD(lN, ['467']) - rawSD(lN1, ['467']);
-  const var4581 = rawSD(lN, ['4581']) - rawSD(lN1, ['4581']);
-  data.FK = varClasse10 + var467 + var4581;
+  // FK — Augmentation de capital par apport nouveau (formule praticien cash reel)
+  // Isole le cash effectivement recu en eliminant toutes les augmentations
+  // de capital sans flux (incorporation de reserves, conversion CC, etc.)
+  //
+  // FK = + var SC(101, 102, 1051)               [augmentation brute capital]
+  //      - SD(109, 4613, 467, 4581)(N)          [capital souscrit non libere]
+  //      - MvtD(11, 12, 130, 131)(N)            [incorporation reserves au capital, non-cash]
+  //      + MvtC(103, 104, 11, 12, 139, 4619, 465)(N)  [reintegration credits non-cash]
+  const fkVarSC = rawSC(lN, ['101', '102', '1051']) - rawSC(lN1, ['101', '102', '1051']);
+  const fkNonLibere = rawSD(lN, ['109', '4613', '467', '4581']);
+  const fkMvtD = sumMvtDebit(lN, ['11', '12', '130', '131']);
+  const fkMvtC = sumMvtCredit(lN, ['103', '104', '11', '12', '139', '4619', '465']);
+  data.FK = fkVarSC - fkNonLibere - fkMvtD + fkMvtC;
 
   // FL — Subventions d'investissement (TFT 4.2.3.4 b)
   // Formule officielle (signes corriges via tests sur 4 cas) :
@@ -247,29 +248,16 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   const var4582 = rawSD(lN, ['4582']) - rawSD(lN1, ['4582']);
   data.FL = var14 + reprise799 - var4494 - var4582;
 
-  // FM — Prelevement sur le capital (TFT 4.2.3.4 c) + extension bouclage
-  // Formule officielle SYSCOHADA :
-  //   FM = variation des comptes de la classe 10 capital
-  //        a l'exclusion des comptes 106 (ecarts de reevaluation)
-  //        et 109 (apporteurs capital souscrit non appele)
+  // FM — Prelevement sur le capital (formule praticien cash reel)
+  // Capte la sortie de cash au profit des associes lors d'une reduction
+  // de capital ou d'un remboursement d'apport.
   //
-  // Extension pour equilibrer le TFT en cas de correction d'erreur
-  // ou autre variation passee par les capitaux propres residuels :
-  //   + variation NET (SC - SD) des comptes 11 (Reserves),
-  //     12 (Report a nouveau, dont 129 RAN debiteur)
-  //     et 13 (Resultat de l'exercice).
+  // FM = MvtD 4619 (paiement reduction capital aux associes)
+  //    + MvtD 103, 104 (reduction capital par apport en nature / fusion)
   //
-  // Le NET est necessaire pour gerer correctement les comptes a solde
-  // debiteur (129, 139). L'affectation interne du resultat (transfert
-  // 13 vers 11/12) s'auto-annule dans la somme 11+12+13.
-  //
-  // Risque connu : double comptage avec FN si dividendes declares ET
-  // payes dans le meme exercice (peu frequent en pratique).
-  const fmClasse10 = rawSC(lN, ['10'], ['106', '109']) - rawSC(lN1, ['10'], ['106', '109']);
-  const cpResPfx = ['11', '12', '13'];
-  const fmExt_N = rawSC(lN, cpResPfx) - rawSD(lN, cpResPfx);
-  const fmExt_N1 = rawSC(lN1, cpResPfx) - rawSD(lN1, cpResPfx);
-  data.FM = fmClasse10 + (fmExt_N - fmExt_N1);
+  // Note : les variations 11/12/13 (incorporations / corrections d'erreur)
+  // sont captees par FK via MvtD/MvtC sur ces memes comptes.
+  data.FM = sumMvtDebit(lN, ['4619']) + sumMvtDebit(lN, ['103', '104']);
 
   // FN — Dividendes verses
   data.FN = -sumMvtDebit(lN, ['465']);
