@@ -120,45 +120,47 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
     + rawSC(lN, ['4793']) - rawSC(lN1, ['4793'])
     - rawSD(lN, ['4783']) + rawSD(lN1, ['4783']);
 
-  // FF — Decaissements acquisitions immob incorporelles (TFT 4.2.3.3 b)
-  // Formule officielle SYSCOHADA :
-  //   decaissement = investissement reconstitue (a)
-  //                - variation dette fournisseurs d'investissement
-  //                + variation avances et acomptes verses
-  // Sous-comptes incorporelles (plan comptable_syscohada.json) :
-  //   404 -> 4041 (dettes en compte) + 4046 (effets a payer)
-  //   481 -> 4811 (immo incorporelles)
-  //   482 -> 4821 (immo incorporelles, effets a payer)
-  //   25  -> 251 (avances et acomptes verses incorporelles)
+  // FF — Decaissements acquisitions immob incorporelles (TFT 4.2.3.3 a + b)
+  // Formule officielle SYSCOHADA (a) — investissement reconstitue :
+  //   investIncorp = variation immo incorporelles nettes (poste AD)
+  //                + dotations amort/depreciations (281, 291)
+  //                + VNC cessions (compte 811)
+  // PAS de deduction reevaluation (selon le guide, la reevaluation 106+154
+  //   ne concerne que les immo corporelles et financieres) ;
+  // PAS de deduction demantelement 1984 (allouee entierement a FG).
+  //
+  // (b) decaissement = investIncorp
+  //                  - variation dette fournisseurs d'investissement
+  //                  + variation avances et acomptes verses
+  // Sous-comptes incorporelles : 4041, 4046, 4811, 4821 (fournisseurs) ; 251 (avances).
   const adNet_N = actifNet(lN, ['21', '4751'], ['281', '291']);
   const adNet_N1 = actifNet(lN1, ['21', '4751'], ['281', '291']);
   const dotAmortIncorp = sumMvtCredit(lN, ['281', '291']);
   const vncCessIncorp = rawSD(lN, ['811']);
-  const reevalIncorp = sumMvtCredit(lN, ['1061']);
-  const provDemantelIncorp = sumMvtCredit(lN, ['1984']);
-  const investIncorp = (adNet_N - adNet_N1) + dotAmortIncorp + vncCessIncorp
-    - reevalIncorp - provDemantelIncorp;
+  const investIncorp = (adNet_N - adNet_N1) + dotAmortIncorp + vncCessIncorp;
   const ffFourPfx = ['4041', '4046', '4811', '4821'];
   const varFourIncorp = rawSC(lN, ffFourPfx) - rawSC(lN1, ffFourPfx);
   const varAvancesIncorp = rawSD(lN, ['251']) - rawSD(lN1, ['251']);
   data.FF = -(investIncorp - varFourIncorp + varAvancesIncorp);
 
-  // FG — Decaissements acquisitions immob corporelles (TFT 4.2.3.3 b)
-  // Sous-comptes corporelles :
-  //   404 -> 4042 (dettes en compte) + 4047 (effets a payer)
-  //   481 -> 4812 (immo corporelles) + 4816 (reserve propriete)
-  //          + 4817 (retenues garantie) + 4818 (factures non parvenues)
-  //   482 -> 4822 (immo corporelles, effets a payer)
-  //   25  -> 252 (avances et acomptes verses corporelles)
-  // Note : 4816/4817/4818 (sous-comptes 481 sans rattachement type explicite)
-  // sont rattaches a FG par convention (cas le plus frequent en pratique).
+  // FG — Decaissements acquisitions immob corporelles (TFT 4.2.3.3 a + b)
+  // Formule officielle SYSCOHADA (a) — investissement reconstitue :
+  //   investCorp = variation immo corporelles nettes (poste AI)
+  //              + dotations amort/depreciations (282, 283, 284, 292, 293, 294)
+  //              + VNC cessions (compte 812)
+  //              - reevaluation 106 + 154 (allouee entierement a FG par convention)
+  //              - provisions demantelement 1984 (idem)
+  //              - location-acquisition (compte 17 sauf 176 interets courus)
+  //              - creances long terme (mvt debit 2714)
+  // (b) sous-comptes corporelles :
+  //   404 -> 4042 + 4047 ; 481 -> 4812, 4816, 4817, 4818 ; 482 -> 4822 ; 25 -> 252.
   const aiNet_N = actifNet(lN, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
   const aiNet_N1 = actifNet(lN1, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
   const dotAmortCorp = sumMvtCredit(lN, ['282', '283', '284', '292', '293', '294']);
   const vncCessCorp = rawSD(lN, ['812']);
   const reevalCorp = sumMvtCredit(lN, ['106', '154']);
-  const provDemantelCorp = sumMvtCredit(lN, ['19842']);
-  const locationAcquisCorp = sumMvtCredit(lN, ['17']);
+  const provDemantelCorp = sumMvtCredit(lN, ['1984']);
+  const locationAcquisCorp = sumMvtCredit(lN, ['17'], ['176']);
   const creancesLT = sumMvtDebit(lN, ['2714']);
   const investCorp = (aiNet_N - aiNet_N1) + dotAmortCorp + vncCessCorp
     - reevalCorp - provDemantelCorp - locationAcquisCorp - creancesLT;
