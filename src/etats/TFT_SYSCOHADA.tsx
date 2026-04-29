@@ -357,14 +357,18 @@ function TFT_SYSCOHADA({
           if (!balanceFound) return null;
           const tresoTFT = getValue('ZH');
           const tresoBilan = getValue('ZI');
-          const ecart = Math.abs(tresoTFT - tresoBilan);
-          const ok = ecart < 1;
+          const ecart = tresoTFT - tresoBilan;
+          const ok = Math.abs(ecart) < 1;
+          if (ok) {
+            return (
+              <span className="equilibre-ok">
+                Contrôle vérifié : trésorerie TFT = trésorerie bilan ({formatMontant(tresoTFT)} FCFA)
+              </span>
+            );
+          }
           return (
-            <span className={ok ? 'equilibre-ok' : 'equilibre-ko'}>
-              {ok
-                ? 'Contrôle vérifié : trésorerie TFT = trésorerie bilan (' + formatMontant(tresoTFT) + ' FCFA)'
-                : 'Écart de contrôle : ' + formatMontant(ecart) + ' FCFA (TFT: ' + formatMontant(tresoTFT) + ' / Bilan: ' + formatMontant(tresoBilan) + ')'
-              }
+            <span style={{ color: '#92400e', background: '#fef3c7', borderColor: '#f59e0b', padding: '4px 8px', borderRadius: 4, border: '1px solid #f59e0b', fontWeight: 600 }}>
+              Écart de bouclage : {formatMontant(ecart)} FCFA (TFT: {formatMontant(tresoTFT)} / Bilan: {formatMontant(tresoBilan)}) — ecart explicite (variations non comptabilisees, arrondis ou conversions)
             </span>
           );
         })()}
