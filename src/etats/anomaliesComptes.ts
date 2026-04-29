@@ -37,7 +37,7 @@ export function buildPlanComptableSensMap(plan: PlanCompteEntry[]): PlanComptabl
 }
 
 export interface AnomalieCompte {
-  type: 'solde_inverse' | 'solde_residuel' | 'desequilibre';
+  type: 'solde_inverse' | 'solde_residuel' | 'desequilibre' | 'compte_hors_plan';
   severity: 'error' | 'warning';
   message: string;
 }
@@ -98,11 +98,34 @@ export function getLibelleSoldeAttendu(sa: SoldeAttendu): string {
   return 'Solde variable';
 }
 
+// Verifie qu'un compte a au moins un prefixe a 3 chiffres reconnu dans le
+// plan SYSCOHADA officiel. Un compte sans prefixe 3 chiffres connu signale
+// un compte non standard (ex : 782700 dont le parent 782 n'existe pas dans
+// le plan officiel — seuls 781 et 787 existent en classe 78).
+export function isCompteStandard(numero: string, plan?: PlanComptableSensMap): boolean {
+  if (!plan || plan.size === 0) return true;
+  const c = (numero || '').replace(/\s/g, '');
+  if (!c || c.length < 3) return true;
+  for (let len = 3; len <= c.length; len++) {
+    if (plan.has(c.substring(0, len))) return true;
+  }
+  return false;
+}
+
 export function detectAnomalies(ligne: BalanceLigne, plan?: PlanComptableSensMap): AnomalieCompte[] {
   const anomalies: AnomalieCompte[] = [];
   const sd = parseFloat(String(ligne.solde_debiteur)) || 0;
   const sc = parseFloat(String(ligne.solde_crediteur)) || 0;
   const soldeAttendu = getSoldeAttendu(ligne.numero_compte, plan);
+
+  // Compte hors plan SYSCOHADA officiel
+  if (!isCompteStandard(ligne.numero_compte, plan)) {
+    anomalies.push({
+      type: 'compte_hors_plan',
+      severity: 'warning',
+      message: "Compte hors plan SYSCOHADA — aucun sous-compte 3 chiffres officiel ne correspond. Verifiez le numero ou reclassez vers un compte standard.",
+    });
+  }
 
   // Solde inversé
   if (soldeAttendu === 'debiteur' && sc > 0.5 && sd < 0.5) {
