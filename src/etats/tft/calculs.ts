@@ -179,7 +179,11 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
     - (rawSD(lN, ['4494', '4582']) - rawSD(lN1, ['4494', '4582']));
 
   // FM — Prelevement sur le capital
-  data.FM = 0;
+  // Formule officielle SYSCOHADA TFT4 :
+  // FM = variation des comptes de la classe 10 capital
+  //      a l'exclusion des comptes 106 (ecarts de reevaluation)
+  //      et 109 (apporteurs capital souscrit non appele)
+  data.FM = rawSC(lN, ['10'], ['106', '109']) - rawSC(lN1, ['10'], ['106', '109']);
 
   // FN — Dividendes verses
   data.FN = -sumMvtDebit(lN, ['465']);
