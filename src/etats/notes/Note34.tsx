@@ -18,7 +18,7 @@ import {
   type ActifResult, type PassifResult,
 } from '../bilan/bilanSyscohadaData';
 import { computeAllFlux } from '../tft/calculs';
-import { rawSD, rawSC } from '../tft/soldes';
+import { rawSD, rawSC, sumSoldeCrediteur } from '../tft/soldes';
 
 interface Note34Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -68,16 +68,16 @@ const cafe = (c: Ctx): number =>
   crGetValue('XD', c.cr) + rawSD(c.lignes, ['654']) - rawSC(c.lignes, ['754']);
 
 const cafg = (c: Ctx): number => {
-  const TK = c.cr['TK']?.net ?? 0;
-  const gainsCh = rawSC(c.lignes, ['776']);
-  const TM = c.cr['TM']?.net ?? 0;
-  const haoP = (c.cr['TN']?.net ?? 0) + (c.cr['TO']?.net ?? 0);
-  const trChHAO = rawSC(c.lignes, ['848']);
-  const RM = c.cr['RM']?.net ?? 0;
-  const pertesCh = rawSD(c.lignes, ['676']);
-  const RQ = c.cr['RQ']?.net ?? 0;
-  const RS = c.cr['RS']?.net ?? 0;
-  return cafe(c) + TK + gainsCh + TM + haoP + trChHAO - RM - pertesCh - RQ - RS;
+  // Conforme au guide cafg.png : revenus financiers (77) inclut deja gains de
+  // change (776) ; frais financiers (67) inclut deja pertes de change (676).
+  // Produits HAO = poste TO (84+88), transferts charges HAO (848) deja dedans.
+  const TK = c.cr['TK']?.net ?? 0;          // 77
+  const TM = c.cr['TM']?.net ?? 0;          // 787
+  const haoP = sumSoldeCrediteur(c.lignes, ['84', '88']); // poste TO sans 86
+  const RM = c.cr['RM']?.net ?? 0;          // 67
+  const RQ = c.cr['RQ']?.net ?? 0;          // 87
+  const RS = c.cr['RS']?.net ?? 0;          // 89
+  return cafe(c) + TK + TM + haoP - RM - RQ - RS;
 };
 
 const SECTIONS: Section[] = [
@@ -98,12 +98,15 @@ const SECTIONS: Section[] = [
   { label: "Valeurs comptables des cessions courantes d'immobilisation (compte 654)", prefix: '+', compute: (c) => rawSD(c.lignes, ['654']) },
   { label: "Produits des cessions courantes d'immobilisation (compte 754)", prefix: '-', compute: (c) => rawSC(c.lignes, ['754']) },
   { label: "CAPACITE D'AUTOFINANCEMENT D'EXPLOITATION", bold: true, prefix: '=', compute: cafe },
-  { label: 'Revenus financiers', prefix: '+', compute: (c) => c.cr['TK']?.net ?? 0 },
+  // Revenus financiers (77) hors 776 ; gains de change (776) affiches separement.
+  { label: 'Revenus financiers', prefix: '+', compute: (c) => (c.cr['TK']?.net ?? 0) - rawSC(c.lignes, ['776']) },
   { label: 'Gains de change', prefix: '+', compute: (c) => rawSC(c.lignes, ['776']) },
   { label: 'Transferts de charges financières', prefix: '+', compute: (c) => c.cr['TM']?.net ?? 0 },
-  { label: 'Produits HAO', prefix: '+', compute: (c) => (c.cr['TN']?.net ?? 0) + (c.cr['TO']?.net ?? 0) },
+  // Produits HAO = poste TO du SIG (84+88, sans 86 reprises non monetaires).
+  { label: 'Produits HAO', prefix: '+', compute: (c) => sumSoldeCrediteur(c.lignes, ['84', '88']) - rawSC(c.lignes, ['848']) },
   { label: 'Transferts de charges HAO', prefix: '+', compute: (c) => rawSC(c.lignes, ['848']) },
-  { label: 'Frais financiers', prefix: '-', compute: (c) => c.cr['RM']?.net ?? 0 },
+  // Frais financiers (67) hors 676 ; pertes de change (676) affichees separement.
+  { label: 'Frais financiers', prefix: '-', compute: (c) => (c.cr['RM']?.net ?? 0) - rawSD(c.lignes, ['676']) },
   { label: 'Pertes de change', prefix: '-', compute: (c) => rawSD(c.lignes, ['676']) },
   { label: 'Participation', prefix: '-', compute: (c) => c.cr['RQ']?.net ?? 0 },
   { label: 'Impôts sur les résultats', prefix: '-', compute: (c) => c.cr['RS']?.net ?? 0 },
