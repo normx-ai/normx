@@ -208,14 +208,24 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
 
   data.ZD = data.FK + data.FL + data.FM + data.FN;
 
-  // FO — Emprunts (MvtC 161,162,1661,1662 + SD 4784)
-  data.FO = sumMvtCredit(lN, ['161', '162', '1661', '1662']) + rawSD(lN, ['4784']);
-
-  // FP — Autres dettes financieres
-  data.FP = sumMvtCredit(lN, ['163', '164', '165', '166', '167', '168', '181', '182', '183'], ['1661', '1662']);
-
-  // FQ — Remboursements emprunts et dettes financieres
-  data.FQ = -(sumMvtDebit(lN, ['16', '17', '181', '182', '183']) - rawSC(lN, ['4794']));
+  // FO/FP/FQ — Flux de financement provenant des capitaux etrangers (TFT 4.2.3.5)
+  // Formule officielle SYSCOHADA :
+  //   FO = mvt credit du compte 16 (sauf interets courus 166)
+  //   FP = mvt credit du compte 18 (sauf interets courus 183)
+  //   FQ = - (mvt debit du compte 16 sauf 166
+  //         + mvt debit du compte 17 sauf 176
+  //         + mvt debit du compte 18 sauf 183)
+  //
+  // Le compte 17 (dettes de location acquisition) ne fait pas l'objet d'un
+  // encaissement (FO/FP), mais son mvt debit (= remboursement) est un
+  // decaissement de dette financiere (FQ).
+  data.FO = sumMvtCredit(lN, ['16'], ['166']);
+  data.FP = sumMvtCredit(lN, ['18'], ['183']);
+  data.FQ = -(
+    sumMvtDebit(lN, ['16'], ['166'])
+    + sumMvtDebit(lN, ['17'], ['176'])
+    + sumMvtDebit(lN, ['18'], ['183'])
+  );
 
   data.ZE = data.FO + data.FP + data.FQ;
   data.ZF = data.ZD + data.ZE;
