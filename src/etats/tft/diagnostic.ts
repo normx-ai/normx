@@ -224,7 +224,7 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
     }
   }
 
-  // ===== 5bis. RECONCILIATION DE L'ECART : top comptes par variation absolue =====
+  // ===== 5bis. RECONCILIATION DE L'ECART : comptes orphelins uniquement =====
   if (ecart !== 0) {
     function trouverPoste(num: string): string | null {
       for (const p of posteDecompositions) {
@@ -233,48 +233,61 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
       return null;
     }
 
-    type CompteVar = { num: string; lib: string; montant: number; poste: string | null };
-    const allComptes: CompteVar[] = [];
+    type CompteVar = { num: string; lib: string; montant: number };
+    const orphelins: CompteVar[] = [];
     const seen = new Set<string>();
 
     for (const l of lN) {
       const num = (l.numero_compte || '').trim();
       if (!num || !/^[1-5]/.test(num)) continue;
       seen.add(num);
+      if (trouverPoste(num) !== null) continue;
       const netN = getSD(l) - getSC(l);
       const prev = lN1.find(p => (p.numero_compte || '').trim() === num);
       const netN1 = prev ? getSD(prev) - getSC(prev) : 0;
       const v = Math.round(netN - netN1);
       if (Math.abs(v) >= 1000) {
-        allComptes.push({ num, lib: l.libelle_compte || '', montant: v, poste: trouverPoste(num) });
+        orphelins.push({ num, lib: l.libelle_compte || '', montant: v });
       }
     }
     for (const l of lN1) {
       const num = (l.numero_compte || '').trim();
       if (!num || !/^[1-5]/.test(num) || seen.has(num)) continue;
+      if (trouverPoste(num) !== null) continue;
       const netN1 = getSD(l) - getSC(l);
       const v = Math.round(-netN1);
       if (Math.abs(v) >= 1000) {
-        allComptes.push({ num, lib: l.libelle_compte || '', montant: v, poste: trouverPoste(num) });
+        orphelins.push({ num, lib: l.libelle_compte || '', montant: v });
       }
     }
-    allComptes.sort((a, b) => Math.abs(b.montant) - Math.abs(a.montant));
+    orphelins.sort((a, b) => Math.abs(b.montant) - Math.abs(a.montant));
 
-    const nonCaptes = allComptes.filter(c => c.poste === null);
-    const top = allComptes.slice(0, 15);
+    const sommeOrphelins = orphelins.reduce((s, c) => s + c.montant, 0);
+    const couvertureExacte = Math.abs(sommeOrphelins - ecart) < 1;
 
-    diag.push({
-      poste: 'Reconciliation',
-      type: nonCaptes.length > 0 ? 'erreur' : 'alerte',
-      message: 'Top 15 comptes du bilan par variation absolue (annote du poste TFT capteur). '
-        + nonCaptes.length + ' compte(s) avec variation non captes par aucun poste F.',
-      comptes: top.map(c => ({
-        num: c.num,
-        lib: (c.poste === null ? '[NON CAPTE] ' : '[' + c.poste + '] ') + c.lib,
-        montant: c.montant,
-      })),
-      montant: ecart,
-    });
+    if (orphelins.length === 0) {
+      diag.push({
+        poste: 'Reconciliation',
+        type: 'alerte',
+        message: 'Ecart de bouclage de ' + formatMontant(ecart) + ' FCFA, mais aucun compte orphelin '
+          + 'identifie. Cause probable : anomalie de sens (cf. alertes ci-dessus) ou erreur d\'arrondi cumulee. '
+          + 'Verifier la coherence des balances N et N-1 ou la saisie d\'ecritures non equilibrees.',
+        montant: ecart,
+      });
+    } else {
+      const explication = couvertureExacte
+        ? 'La somme des variations orphelines (' + formatMontant(sommeOrphelins) + ') correspond exactement a l\'ecart de bouclage (' + formatMontant(ecart) + '). Ce sont les comptes responsables.'
+        : 'La somme des variations orphelines est ' + formatMontant(sommeOrphelins) + ' alors que l\'ecart de bouclage est ' + formatMontant(ecart) + '. Difference ' + formatMontant(ecart - sommeOrphelins) + ' FCFA = autres causes (anomalies de sens, voir alertes ci-dessus).';
+      diag.push({
+        poste: 'Reconciliation',
+        type: 'erreur',
+        message: orphelins.length + ' compte(s) du bilan ont une variation NON captee par le TFT (= flux non rattachables). '
+          + explication
+          + ' Action : reclasser ces comptes vers un compte standard SYSCOHADA, ou verifier la saisie.',
+        comptes: orphelins.map(c => ({ num: c.num, lib: c.lib, montant: c.montant })),
+        montant: ecart,
+      });
+    }
   }
 
   // ===== 6. RESUME =====
