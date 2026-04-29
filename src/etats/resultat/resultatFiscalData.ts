@@ -163,12 +163,24 @@ export interface ResultatFiscalCalc {
   resultatFiscalDefinitif: number; // VI
   ardSoldeFin: number;             // VII = solde_debut + ard_exercice - ard_utilises
   impotBrut: number;
-  minimumPerception: number;
-  minimumApplique: boolean;
-  impotRetenu: number;
+  modeImpot: ModeImpot;
+  minimumPerception: number;       // 0 si mode acompte_is
+  minimumApplique: boolean;        // false si mode acompte_is
+  acompteIS: number;               // 0 si mode minimum_perception
+  impotRetenu: number;             // mode minimum: max(brut, min) ; mode acompte: brut
+  impotNetAPayer: number;          // impotRetenu − acompteIS (mode acompte) sinon = impotRetenu
   beneficeNet: number;
   taux: number;
   tauxMin: number;
+}
+
+export type ModeImpot = 'minimum_perception' | 'acompte_is';
+
+// Le minimum de perception (Art. 86-C / Art. 95) a été introduit par le
+// CGI 2026 : il ne s'applique qu'aux exercices ≥ 2026. Pour 2025 et avant,
+// on bascule sur le système d'acompte IS (acomptes versés saisis manuellement).
+export function modeImpotParDefaut(annee: number): ModeImpot {
+  return annee >= 2026 ? 'minimum_perception' : 'acompte_is';
 }
 
 export function computeResultatFiscal(
@@ -182,6 +194,8 @@ export function computeResultatFiscal(
   tauxIBA: number,
   tauxMinIS: number,
   tauxMinIBA: number,
+  modeImpot: ModeImpot = 'minimum_perception',
+  acompteIS: number = 0,
 ): ResultatFiscalCalc {
   const produitsExploitation = sumSoldeCrediteur(lignesN, PRODUITS_EXPL_PREFIXES);
   const produitsFinanciers = sumSoldeCrediteur(lignesN, PRODUITS_FIN_PREFIXES);
@@ -212,11 +226,26 @@ export function computeResultatFiscal(
 
   const taux = regimeFiscal === 'is' ? tauxIS : tauxIBA;
   const impotBrut = Math.round(resultatFiscalDefinitif * taux);
-
   const tauxMin = regimeFiscal === 'is' ? tauxMinIS : tauxMinIBA;
-  const minimumPerception = Math.round(totalProduits * tauxMin);
-  const minimumApplique = minimumPerception > impotBrut;
-  const impotRetenu = Math.max(impotBrut, minimumPerception);
+
+  let minimumPerception = 0;
+  let minimumApplique = false;
+  let acompteIsValue = 0;
+  let impotRetenu: number;
+  let impotNetAPayer: number;
+
+  if (modeImpot === 'minimum_perception') {
+    // CGI 2026 : impôt retenu = max(brut, minimum). Pas d'acompte ici.
+    minimumPerception = Math.round(totalProduits * tauxMin);
+    minimumApplique = minimumPerception > impotBrut;
+    impotRetenu = Math.max(impotBrut, minimumPerception);
+    impotNetAPayer = impotRetenu;
+  } else {
+    // CGI ≤ 2025 : pas de minimum, on déduit les acomptes versés.
+    acompteIsValue = Math.max(0, acompteIS);
+    impotRetenu = impotBrut;
+    impotNetAPayer = impotRetenu - acompteIsValue;
+  }
 
   const beneficeNet = resultatComptable - impotRetenu;
 
@@ -225,7 +254,10 @@ export function computeResultatFiscal(
     chargesExploitation, chargesFinancieres, chargesHAO, totalCharges,
     resultatComptable, totalReintegrations, totalDeductions,
     resultatFiscal, totalDeficitsImputes, resultatFiscalDefinitif, ardSoldeFin,
-    impotBrut, minimumPerception, minimumApplique, impotRetenu, beneficeNet,
+    impotBrut, modeImpot,
+    minimumPerception, minimumApplique,
+    acompteIS: acompteIsValue,
+    impotRetenu, impotNetAPayer, beneficeNet,
     taux, tauxMin,
   };
 }

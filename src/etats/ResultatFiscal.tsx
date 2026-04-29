@@ -23,12 +23,14 @@ import {
   LigneARD,
   LigneDeficit,
   LigneReintegration,
+  ModeImpot,
   REINTEGRATIONS_TYPES,
   buildDefaultDeductions,
   buildDefaultDeficits,
   buildDefaultReintegrations,
   computeResultatFiscal,
   formatMontant,
+  modeImpotParDefaut,
 } from './resultat/resultatFiscalData';
 import { LignesEditor } from './resultat/LignesEditor';
 import { ResultatFiscalTable } from './resultat/ResultatFiscalTable';
@@ -56,6 +58,8 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
   const [deductions, setDeductions] = useState<LigneReintegration[]>([]);
   const [deficits, setDeficits] = useState<LigneDeficit[]>([]);
   const [ard, setArd] = useState<LigneARD>({ solde_debut: 0, ard_exercice: 0, ard_utilises: 0 });
+  const [modeImpot, setModeImpot] = useState<ModeImpot>('minimum_perception');
+  const [acompteIS, setAcompteIS] = useState(0);
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<Date | null>(null);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -112,9 +116,14 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
       setDeductions([]);
       setDeficits([]);
       setArd({ solde_debut: 0, ard_exercice: 0, ard_utilises: 0 });
+      setModeImpot('minimum_perception');
+      setAcompteIS(0);
       setSavedAt(null);
       return;
     }
+    // Mode par défaut selon l'année de l'exercice (≥ 2026 → minimum, sinon acompte)
+    setModeImpot(modeImpotParDefaut(selectedExercice.annee));
+    setAcompteIS(0);
     let cancelled = false;
     (async () => {
       try {
@@ -152,6 +161,11 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
             if (sousType === 'solde_debut') ardLoaded.solde_debut = Number(l.montant) || 0;
             else if (sousType === 'exercice') ardLoaded.ard_exercice = Number(l.montant) || 0;
             else if (sousType === 'utilises') ardLoaded.ard_utilises = Number(l.montant) || 0;
+            else if (sousType === 'mode_impot') {
+              const mode = (l.metadata || {})['mode'] as string | undefined;
+              if (mode === 'minimum_perception' || mode === 'acompte_is') setModeImpot(mode);
+            }
+            else if (sousType === 'acompte_is') setAcompteIS(Number(l.montant) || 0);
           }
         }
         if (cancelled) return;
@@ -208,6 +222,8 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
           { type: 'ard' as const, libelle: 'ARD solde début', montant: ard.solde_debut, article: '', metadata: { sous_type: 'solde_debut' } },
           { type: 'ard' as const, libelle: 'ARD exercice', montant: ard.ard_exercice, article: '', metadata: { sous_type: 'exercice' } },
           { type: 'ard' as const, libelle: 'ARD utilisés', montant: ard.ard_utilises, article: '', metadata: { sous_type: 'utilises' } },
+          { type: 'ard' as const, libelle: 'Mode impôt', montant: 0, article: '', metadata: { sous_type: 'mode_impot', mode: modeImpot } },
+          { type: 'ard' as const, libelle: 'Acompte IS', montant: acompteIS, article: '', metadata: { sous_type: 'acompte_is' } },
         ],
       };
       const res = await clientFetch(api.resultatFiscal.lignes(selectedExercice.id), {
@@ -251,6 +267,11 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
           if (sousType === 'solde_debut') ardSaved.solde_debut = Number(l.montant) || 0;
           else if (sousType === 'exercice') ardSaved.ard_exercice = Number(l.montant) || 0;
           else if (sousType === 'utilises') ardSaved.ard_utilises = Number(l.montant) || 0;
+          else if (sousType === 'mode_impot') {
+            const mode = (l.metadata || {})['mode'] as string | undefined;
+            if (mode === 'minimum_perception' || mode === 'acompte_is') setModeImpot(mode);
+          }
+          else if (sousType === 'acompte_is') setAcompteIS(Number(l.montant) || 0);
         }
       }
       nextId = Math.max(nextId, maxId + 1);
@@ -274,7 +295,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     setArd(prev => ({ ...prev, [field]: value }));
   };
 
-  const calc = computeResultatFiscal(lignesN, reintegrations, deductions, deficits, ard, regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA);
+  const calc = computeResultatFiscal(lignesN, reintegrations, deductions, deficits, ard, regimeFiscal, tauxIS, TAUX_IBA, TAUX_MIN_IS, TAUX_MIN_IBA, modeImpot, acompteIS);
   const annee = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
   const duree = selectedExercice?.duree_mois || 12;
 
@@ -444,6 +465,20 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
                 <option key={opt.value} value={opt.value}>{opt.label}</option>
               ))}
             </select>
+          </>
+        )}
+
+        <label style={{ marginLeft: 12 }}>Mode :</label>
+        <select value={modeImpot} onChange={(e) => setModeImpot(e.target.value as ModeImpot)} style={{ fontSize: 11, padding: '1px 4px' }}>
+          <option value="minimum_perception">Minimum de perception (CGI 2026)</option>
+          <option value="acompte_is">Acompte IS (CGI ≤ 2025)</option>
+        </select>
+        {modeImpot === 'acompte_is' && (
+          <>
+            <label style={{ marginLeft: 8 }}>Acomptes versés :</label>
+            <input type="number" value={acompteIS || ''} onChange={(e) => setAcompteIS(parseFloat(e.target.value) || 0)}
+              style={{ fontSize: 11, width: 110, padding: '1px 4px', textAlign: 'right' }}
+              placeholder="0" />
           </>
         )}
 

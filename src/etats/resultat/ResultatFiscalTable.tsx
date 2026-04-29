@@ -91,9 +91,18 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
         {/* VIII. LIQUIDATION IS/IBA */}
         <tr><td colSpan={3} style={sectionStyle}>VIII. LIQUIDATION DE L&apos;IMPÔT — {regimeFiscal === 'is' ? 'IS' : 'IBA'}</td></tr>
         <tr><td style={labelStyle}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} brut = Résultat fiscal définitif × {(c.taux * 100).toFixed(0)}%</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 10' : 'Art. 95'}</td><td style={montantStyle}>{formatMontant(c.impotBrut)}</td></tr>
-        <tr><td style={labelStyle}>Minimum de perception = Total produits × {(c.tauxMin * 100).toFixed(1)}%</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 86-C' : 'Art. 95'}</td><td style={montantStyle}>{formatMontant(c.minimumPerception)}</td></tr>
-        <tr><td style={{ ...labelStyle, fontStyle: 'italic', color: c.minimumApplique ? '#f59e0b' : '#6b7280' }}>{c.minimumApplique ? 'Minimum de perception appliqué (supérieur à l\'impôt calculé)' : 'Impôt calculé retenu (supérieur au minimum)'}</td><td></td><td></td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} RETENU (max des deux)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', background: '#fef3c7' }}>{formatMontant(c.impotRetenu)}</td></tr>
+        {c.modeImpot === 'minimum_perception' ? (
+          <>
+            <tr><td style={labelStyle}>Minimum de perception = Total produits × {(c.tauxMin * 100).toFixed(1)}%</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 86-C' : 'Art. 95'}</td><td style={montantStyle}>{formatMontant(c.minimumPerception)}</td></tr>
+            <tr><td style={{ ...labelStyle, fontStyle: 'italic', color: c.minimumApplique ? '#f59e0b' : '#6b7280' }}>{c.minimumApplique ? 'Minimum de perception appliqué (supérieur à l\'impôt calculé)' : 'Impôt calculé retenu (supérieur au minimum)'}</td><td></td><td></td></tr>
+            <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} RETENU (max des deux)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', background: '#fef3c7' }}>{formatMontant(c.impotRetenu)}</td></tr>
+          </>
+        ) : (
+          <>
+            <tr><td style={labelStyle}>Acomptes IS versés (déductibles)</td><td style={montantStyle}></td><td style={montantStyle}>({formatMontant(c.acompteIS)})</td></tr>
+            <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} NET À PAYER = Brut − Acomptes</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', background: '#fef3c7', color: c.impotNetAPayer >= 0 ? '#0f172a' : '#16a34a' }}>{formatMontant(c.impotNetAPayer)}</td></tr>
+          </>
+        )}
 
         {/* IX. RESULTAT NET APRES IMPOT */}
         <tr><td colSpan={3} style={sectionStyle}>IX. RÉSULTAT NET APRÈS IMPÔT</td></tr>
