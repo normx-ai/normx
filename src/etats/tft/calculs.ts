@@ -70,12 +70,18 @@ export function computeCAFG(lignes: BalanceLigne[]): number {
   const vnc654 = rawSD(lignes, ['654']);
   const prod754 = rawSC(lignes, ['754']);
 
-  // Resultat financier encaissable uniquement : 77 + 787 - 67.
-  // Exclu : 697 (dotations provisions fin) et 797 (reprises provisions fin).
+  // Resultat financier encaissable (XF corrige) : 77 + 787 - 67.
+  // Exclu : 697 (dotations provisions fin = TL) et 797 (reprises = RN)
+  // car non monetaires.
   const resultatFinancier = computeSIGPoste(lignes, ['77', '787'], ['67']);
 
-  const produitsHAO = sumSoldeCrediteur(lignes, ['84', '86', '88']);
-  const chargesHAO = sumSoldeDebiteur(lignes, ['83', '85']);
+  // Produits HAO encaissables = TO sauf 86 (Reprises d'amort/prov/deprec
+  // HAO = non monetaire, annulation comptable).
+  const produitsHAO = sumSoldeCrediteur(lignes, ['84', '88']);
+
+  // Charges HAO decaissables = RP sauf 85 (Dotations HAO = non monetaire).
+  const chargesHAO = sumSoldeDebiteur(lignes, ['83']);
+
   const participation = sumSoldeDebiteur(lignes, ['87']);
   const impotResultat = sumSoldeDebiteur(lignes, ['89']);
 
