@@ -44,6 +44,7 @@ export const LIASSE_FISCALE_SYS: EtatFinancier[] = [
   { id: 'fiche_r3_sys', titre: 'Fiche R3', short: 'R3', desc: 'Dirigeants et Membres du Conseil d\'Administration', navIcon: LuUsers },
   { id: 'fiche_r4_sys', titre: 'Fiche R4', short: 'R4', desc: 'Notes annexes — Applicabilité', navIcon: LuClipboardList },
   { id: 'resultat_fiscal_sys', titre: 'Résultat fiscal', short: 'Rés. fiscal', desc: 'Détermination du résultat fiscal', navIcon: LuCoins },
+  { id: 'liquidation_impot_sys', titre: 'Liquidation IS/IBA', short: 'Liquidation', desc: 'Liquidation de l\'impôt et résultat net après impôt', navIcon: LuCoins },
 ];
 
 export const ETATS_ENTREPRISE: EtatFinancier[] = [...ETATS_FINANCIERS_SYS, ...LIASSE_FISCALE_SYS];

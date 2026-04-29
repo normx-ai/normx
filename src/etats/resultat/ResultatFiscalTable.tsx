@@ -1,5 +1,6 @@
 // Table imprimable du Résultat Fiscal — Formulaire IS-2 (DGI Congo).
-// Sections I → VII conformes au formulaire officiel + VIII liquidation IS / IX résultat net.
+// Sections I → VII conformes au formulaire officiel.
+// La liquidation de l'impot et le resultat net apres impot sont dans une page dediee.
 
 import React from 'react';
 import { formatMontant, LigneARD, LigneDeficit, LigneReintegration, ResultatFiscalCalc } from './resultatFiscalData';
@@ -88,25 +89,6 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
         <tr><td style={labelStyle}>ARD utilisés dans l&apos;exercice</td><td style={montantStyle}></td><td style={montantStyle}>{formatMontant(ard.ard_utilises)}</td></tr>
         <tr><td style={{ ...labelStyle, fontWeight: 700 }}>Solde des ARD en fin d&apos;exercice</td><td style={montantStyle}></td><td style={{ ...totalStyle, color: '#0891b2' }}>{formatMontant(c.ardSoldeFin)}</td></tr>
 
-        {/* VIII. LIQUIDATION IS/IBA */}
-        <tr><td colSpan={3} style={sectionStyle}>VIII. LIQUIDATION DE L&apos;IMPÔT — {regimeFiscal === 'is' ? 'IS' : 'IBA'}</td></tr>
-        <tr><td style={labelStyle}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} brut = Résultat fiscal définitif × {(c.taux * 100).toFixed(0)}%</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 10' : 'Art. 95'}</td><td style={montantStyle}>{formatMontant(c.impotBrut)}</td></tr>
-        {c.modeImpot === 'minimum_perception' ? (
-          <>
-            <tr><td style={labelStyle}>Minimum de perception = Total produits × {(c.tauxMin * 100).toFixed(1)}%</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 86-C' : 'Art. 95'}</td><td style={montantStyle}>{formatMontant(c.minimumPerception)}</td></tr>
-            <tr><td style={{ ...labelStyle, fontStyle: 'italic', color: c.minimumApplique ? '#f59e0b' : '#6b7280' }}>{c.minimumApplique ? 'Minimum de perception appliqué (supérieur à l\'impôt calculé)' : 'Impôt calculé retenu (supérieur au minimum)'}</td><td></td><td></td></tr>
-            <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} RETENU (max des deux)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', background: '#fef3c7' }}>{formatMontant(c.impotRetenu)}</td></tr>
-          </>
-        ) : (
-          <>
-            <tr><td style={labelStyle}>Acomptes IS versés (déductibles)</td><td style={montantStyle}></td><td style={montantStyle}>({formatMontant(c.acompteIS)})</td></tr>
-            <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>{regimeFiscal === 'is' ? 'IS' : 'IBA'} NET À PAYER = Brut − Acomptes</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', background: '#fef3c7', color: c.impotNetAPayer >= 0 ? '#0f172a' : '#16a34a' }}>{formatMontant(c.impotNetAPayer)}</td></tr>
-          </>
-        )}
-
-        {/* IX. RESULTAT NET APRES IMPOT */}
-        <tr><td colSpan={3} style={sectionStyle}>IX. RÉSULTAT NET APRÈS IMPÔT</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '11px' }}>BÉNÉFICE NET = Résultat comptable − Impôt retenu</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', color: c.beneficeNet >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.beneficeNet)}</td></tr>
       </tbody>
     </table>
   );
