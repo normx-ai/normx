@@ -78,7 +78,7 @@ function Note30({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note30P
     if (!d) return '';
     return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
   };
-  const fmtM = (v: number): string => { if (v === 0) return ''; return Math.round(v).toLocaleString('fr-FR'); };
+  const fmtM = (v: number): string => Math.round(v).toLocaleString('fr-FR');
   const compDebit = (lignes: BalanceLigne[], pfx: string[]) => { let t = 0; for (const l of lignes) { const n = (l.numero_compte || '').trim(); if (!pfx.some(p => n.startsWith(p))) continue; t += (parseFloat(String(l.solde_debiteur)) || 0) - (parseFloat(String(l.solde_crediteur)) || 0); } return t; };
   const compCredit = (lignes: BalanceLigne[], pfx: string[]) => { let t = 0; for (const l of lignes) { const n = (l.numero_compte || '').trim(); if (!pfx.some(p => n.startsWith(p))) continue; t += (parseFloat(String(l.solde_crediteur)) || 0) - (parseFloat(String(l.solde_debiteur)) || 0); } return t; };
   const computeRow = (r: Rubrique) => { const calc = r.debit ? compDebit : compCredit; const n = calc(lignesN, r.prefixes) + getAdj(r.label, 'anneeN'); const n1 = calc(lignesN1, r.prefixes) + getAdj(r.label, 'anneeN1'); return { anneeN: n, anneeN1: n1, variation: n1 !== 0 ? ((n - n1) / Math.abs(n1) * 100) : 0 }; };
@@ -94,10 +94,10 @@ function Note30({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note30P
   const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => {
     if (hideEmpty && r.vals.anneeN === 0 && r.vals.anneeN1 === 0) return null;
     return (
-    <tr key={r.label}><td style={tdStyle}>{r.label}</td><td style={tdRight}>{renderAdj(r.label, 'anneeN', r.vals.anneeN)}</td><td style={tdRight}>{renderAdj(r.label, 'anneeN1', r.vals.anneeN1)}</td><td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variation !== 0 ? r.vals.variation.toFixed(1) + ' %' : ''}</td></tr>
+    <tr key={r.label}><td style={tdStyle}>{r.label}</td><td style={tdRight}>{renderAdj(r.label, 'anneeN', r.vals.anneeN)}</td><td style={tdRight}>{renderAdj(r.label, 'anneeN1', r.vals.anneeN1)}</td><td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.anneeN1 === 0 ? '-' : r.vals.variation.toFixed(1) + ' %'}</td></tr>
   ); };
   const renderTotalRow = (label: string, t: { anneeN: number; anneeN1: number }) => (
-    <tr key={label}><td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN)}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN1)}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{calcVar(t) !== 0 ? calcVar(t).toFixed(1) + ' %' : ''}</td></tr>
+    <tr key={label}><td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN)}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN1)}</td><td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{t.anneeN1 === 0 ? '-' : calcVar(t).toFixed(1) + ' %'}</td></tr>
   );
 
   return (
