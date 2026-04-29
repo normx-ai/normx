@@ -252,12 +252,10 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // Capte la sortie de cash au profit des associes lors d'une reduction
   // de capital ou d'un remboursement d'apport.
   //
-  // FM = MvtD 4619 (paiement reduction capital aux associes)
-  //    + MvtD 103, 104 (reduction capital par apport en nature / fusion)
-  //
-  // Note : les variations 11/12/13 (incorporations / corrections d'erreur)
-  // sont captees par FK via MvtD/MvtC sur ces memes comptes.
-  data.FM = sumMvtDebit(lN, ['4619']) + sumMvtDebit(lN, ['103', '104']);
+  // Montant du prelevement = MvtD 4619 + MvtD 103/104 (positif).
+  // Stocke avec signe negatif pour la coherence avec FN (-MvtD 465) :
+  // tous les outflows sont negatifs, ZD = somme directe FK + FL + FM + FN.
+  data.FM = -(sumMvtDebit(lN, ['4619']) + sumMvtDebit(lN, ['103', '104']));
 
   // FN — Dividendes verses
   data.FN = -sumMvtDebit(lN, ['465']);
