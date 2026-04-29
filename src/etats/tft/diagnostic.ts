@@ -9,13 +9,59 @@ import {
   sumSoldeDebiteur, sumSoldeCrediteur,
 } from './soldes';
 import { computeAllFlux } from './calculs';
+import { isCompteStandard, type PlanComptableSensMap } from '../anomaliesComptes';
+
+export interface DiagnosticCompte {
+  num: string;
+  lib: string;
+  montant: number;
+  suggestion?: string;
+}
 
 export interface DiagnosticItem {
   poste: string;
   type: 'erreur' | 'alerte' | 'info';
   message: string;
-  comptes?: { num: string; lib: string; montant: number }[];
+  comptes?: DiagnosticCompte[];
   montant?: number;
+}
+
+// Suggestion de reclassement basee sur prefixe + sens du solde et plan officiel.
+function suggererReclassement(
+  num: string,
+  lib: string,
+  montant: number,
+  horsPlan: boolean,
+): string | undefined {
+  if (horsPlan) {
+    return 'Compte hors plan SYSCOHADA — verifier le numero ou reclasser vers un sous-compte standard a 3+ chiffres.';
+  }
+  const n = num.trim();
+  // Sens inverse 41x crediteur => clients crediteurs (avances) => 419
+  if (/^41/.test(n) && montant < 0) {
+    return 'Solde crediteur sur compte client — reclasser en 419 (clients crediteurs / avances recues).';
+  }
+  // Sens inverse 40x debiteur => fournisseurs debiteurs (avances versees) => 409
+  if (/^40/.test(n) && montant > 0 && !/^409/.test(n) && !/^404/.test(n)) {
+    return 'Solde debiteur sur compte fournisseur — reclasser en 409 (avances versees aux fournisseurs).';
+  }
+  // 47x non capte => comptes transitoires/regularisation, souvent oublies
+  if (/^47/.test(n)) {
+    return 'Compte transitoire — verifier que la subdivision (478, 479, 4781, 4791, 4793) est correcte.';
+  }
+  // 13x => resultat, devrait etre reaffecte (RAN/reserves) ou capte par CAFG
+  if (/^13/.test(n)) {
+    return "Resultat de l'exercice — verifier l'affectation N-1 (RAN ou reserves).";
+  }
+  // 12x => RAN, devrait etre capte par FK
+  if (/^12/.test(n)) {
+    return 'Report a nouveau — variation due a affectation du resultat ou correction d\'erreur sur exercices anterieurs.';
+  }
+  // 1xx classe 1 sauf cas couverts
+  if (/^1/.test(n)) {
+    return 'Capitaux propres / dettes financieres — verifier le rattachement au poste FK/FL/FM/FN/FO/FP/FQ.';
+  }
+  return 'Compte non rattachable au TFT — verifier la classification ou reclasser vers compte standard SYSCOHADA.';
 }
 
 // Liste les comptes de la BG qui matchent un prefixe avec leur variation (N vs N-1).
@@ -46,12 +92,16 @@ function comptesAvecVariation(
   return result.sort((a, b) => Math.abs(b.montant) - Math.abs(a.montant));
 }
 
-export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): DiagnosticItem[] {
+export function diagnosticTFT(
+  lN: BalanceLigne[],
+  lN1: BalanceLigne[],
+  planSensMap?: PlanComptableSensMap,
+): DiagnosticItem[] {
   const diag: DiagnosticItem[] = [];
   const flux = computeAllFlux(lN, lN1);
   const ecart = Math.round(flux.ZH - flux.ZI);
 
-  // ===== 1. EQUILIBRE GLOBAL =====
+  // ===== 1. EQUILIBRE GLOBAL + DECOMPOSITION TRESORERIE =====
   if (ecart === 0) {
     diag.push({ poste: 'TFT', type: 'info', message: 'TFT equilibre (ZH = ZI).', montant: 0 });
   } else {
@@ -62,6 +112,33 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
       montant: ecart,
     });
   }
+
+  // Decomposition trésorerie : ZA + ZG = ZH attendu, et ZG = ZB + ZC + ZF
+  const ZA = Math.round(flux.ZA);
+  const ZB = Math.round(flux.ZB);
+  const ZC = Math.round(flux.ZC);
+  const ZF = Math.round(flux.ZF);
+  const ZG = Math.round(flux.ZG);
+  const ZH = Math.round(flux.ZH);
+  const ZI = Math.round(flux.ZI);
+  const variationTreso = ZH - ZA;
+  const flux3 = [
+    { ref: 'ZB', label: 'Operationnel', val: ZB },
+    { ref: 'ZC', label: 'Investissement', val: ZC },
+    { ref: 'ZF', label: 'Financement', val: ZF },
+  ].sort((a, b) => Math.abs(b.val) - Math.abs(a.val));
+  const dominant = flux3[0];
+
+  diag.push({
+    poste: 'Tresorerie',
+    type: 'info',
+    message: 'ZA (ouverture) = ' + formatMontant(ZA) + ' ; ZH (cloture) = ' + formatMontant(ZH)
+      + ' ; ZI (treso BG) = ' + formatMontant(ZI)
+      + '. Variation = ' + formatMontant(variationTreso)
+      + ' = ZB ' + formatMontant(ZB) + ' + ZC ' + formatMontant(ZC) + ' + ZF ' + formatMontant(ZF)
+      + ' (ZG calcule = ' + formatMontant(ZG) + '). Flux dominant : ' + dominant.ref + ' (' + dominant.label + ').',
+    montant: variationTreso,
+  });
 
   // ===== 2. COHERENCE PROVISIONS (19) vs DOTATIONS (69) / REPRISES (79) =====
   const provPrefixes = ['15', '19'];
@@ -235,7 +312,7 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
       return null;
     }
 
-    type CompteVar = { num: string; lib: string; montant: number };
+    type CompteVar = { num: string; lib: string; montant: number; horsPlan: boolean };
     const orphelins: CompteVar[] = [];
     const seen = new Set<string>();
 
@@ -249,7 +326,7 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
       const netN1 = prev ? getSD(prev) - getSC(prev) : 0;
       const v = Math.round(netN - netN1);
       if (Math.abs(v) >= 1000) {
-        orphelins.push({ num, lib: l.libelle_compte || '', montant: v });
+        orphelins.push({ num, lib: l.libelle_compte || '', montant: v, horsPlan: !isCompteStandard(num, planSensMap) });
       }
     }
     for (const l of lN1) {
@@ -259,10 +336,28 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
       const netN1 = getSD(l) - getSC(l);
       const v = Math.round(-netN1);
       if (Math.abs(v) >= 1000) {
-        orphelins.push({ num, lib: l.libelle_compte || '', montant: v });
+        orphelins.push({ num, lib: l.libelle_compte || '', montant: v, horsPlan: !isCompteStandard(num, planSensMap) });
       }
     }
     orphelins.sort((a, b) => Math.abs(b.montant) - Math.abs(a.montant));
+
+    // Section dediee aux comptes hors plan SYSCOHADA (sous-ensemble des orphelins)
+    const horsPlan = orphelins.filter(c => c.horsPlan);
+    if (horsPlan.length > 0) {
+      const totalHorsPlan = horsPlan.reduce((s, c) => s + c.montant, 0);
+      diag.push({
+        poste: 'Plan',
+        type: 'erreur',
+        message: horsPlan.length + ' compte(s) hors plan SYSCOHADA officiel detecte(s), variation totale '
+          + formatMontant(totalHorsPlan) + '. Ces comptes ne peuvent etre rattaches a aucun poste TFT. '
+          + 'Action : corriger le numero ou reclasser vers un sous-compte standard.',
+        comptes: horsPlan.map(c => ({
+          num: c.num, lib: c.lib, montant: c.montant,
+          suggestion: suggererReclassement(c.num, c.lib, c.montant, true),
+        })),
+        montant: totalHorsPlan,
+      });
+    }
 
     const sommeOrphelins = orphelins.reduce((s, c) => s + c.montant, 0);
     const couvertureExacte = Math.abs(sommeOrphelins - ecart) < 1;
@@ -286,7 +381,10 @@ export function diagnosticTFT(lN: BalanceLigne[], lN1: BalanceLigne[]): Diagnost
         message: orphelins.length + ' compte(s) du bilan ont une variation NON captee par le TFT (= flux non rattachables). '
           + explication
           + ' Action : reclasser ces comptes vers un compte standard SYSCOHADA, ou verifier la saisie.',
-        comptes: orphelins.map(c => ({ num: c.num, lib: c.lib, montant: c.montant })),
+        comptes: orphelins.map(c => ({
+          num: c.num, lib: c.lib, montant: c.montant,
+          suggestion: suggererReclassement(c.num, c.lib, c.montant, c.horsPlan),
+        })),
         montant: ecart,
       });
     }

@@ -18,6 +18,9 @@ import type { DiagnosticItem } from './TFT_helpers';
 import { TFT_SYSCOHADA_Table } from './tft/TableMain';
 import { FeuilleDeTravail } from './tft/FeuilleDeTravail';
 import { DiagnosticPanel } from './tft/DiagnosticPanel';
+import { usePlanComptable } from '../lib/queries';
+import { buildPlanComptableSensMap, type PlanCompteEntry } from './anomaliesComptes';
+import { useReferentiel } from '../contexts/ReferentielContext';
 
 interface TFT_SYSCOHADAProps extends EtatBaseProps {
   offre?: Offre;
@@ -141,16 +144,23 @@ function TFT_SYSCOHADA({
   const duree = selectedExercice?.duree_mois || 12;
   const [showDebug, setShowDebug] = useState(false);
 
+  const { referentiel } = useReferentiel();
+  const { data: planComptableRaw = [] } = usePlanComptable(referentiel);
+  const planSensMap = useMemo(
+    () => buildPlanComptableSensMap(planComptableRaw as PlanCompteEntry[]),
+    [planComptableRaw],
+  );
+
   const diagN = useMemo<DiagnosticItem[]>(() => {
     if (lignesN.length === 0) return [];
-    return diagnosticTFT(lignesN, lignesN1);
-  }, [lignesN, lignesN1]);
+    return diagnosticTFT(lignesN, lignesN1, planSensMap);
+  }, [lignesN, lignesN1, planSensMap]);
   const diagN1 = useMemo<DiagnosticItem[]>(() => {
     if (lignesN1.length === 0) return [];
-    const result = diagnosticTFT(lignesN1, lignesN2);
+    const result = diagnosticTFT(lignesN1, lignesN2, planSensMap);
     log.info('Diagnostic N-1', { nbItems: result.length });
     return result;
-  }, [lignesN1, lignesN2]);
+  }, [lignesN1, lignesN2, planSensMap]);
 
   const getValue = (ref: string): number => fluxN[ref] || 0;
   const getValueN1 = (ref: string): number => fluxN1[ref] || 0;

@@ -54,7 +54,14 @@ export function DiagnosticPanel({ diagN, diagN1, annee }: Props): React.JSX.Elem
                 {d.comptes && d.comptes.length > 0 && (
                   <div style={{ marginTop: 4, paddingLeft: 12, fontSize: 12, color: '#4b5563' }}>
                     {d.comptes.map((c, j) => (
-                      <div key={j}>{c.num} {c.lib} : {formatMontant(c.montant)}</div>
+                      <div key={j} style={{ marginBottom: c.suggestion ? 4 : 0 }}>
+                        <div>{c.num} {c.lib} : {formatMontant(c.montant)}</div>
+                        {c.suggestion && (
+                          <div style={{ paddingLeft: 12, fontStyle: 'italic', color: '#6b7280', fontSize: 11 }}>
+                            → {c.suggestion}
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 )}
