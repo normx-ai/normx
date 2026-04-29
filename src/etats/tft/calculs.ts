@@ -146,9 +146,12 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // FG — Decaissements acquisitions immob corporelles (TFT 4.2.3.3 b)
   // Sous-comptes corporelles :
   //   404 -> 4042 (dettes en compte) + 4047 (effets a payer)
-  //   481 -> 4812 (immo corporelles)
+  //   481 -> 4812 (immo corporelles) + 4816 (reserve propriete)
+  //          + 4817 (retenues garantie) + 4818 (factures non parvenues)
   //   482 -> 4822 (immo corporelles, effets a payer)
   //   25  -> 252 (avances et acomptes verses corporelles)
+  // Note : 4816/4817/4818 (sous-comptes 481 sans rattachement type explicite)
+  // sont rattaches a FG par convention (cas le plus frequent en pratique).
   const aiNet_N = actifNet(lN, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
   const aiNet_N1 = actifNet(lN1, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
   const dotAmortCorp = sumMvtCredit(lN, ['282', '283', '284', '292', '293', '294']);
@@ -159,7 +162,7 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   const creancesLT = sumMvtDebit(lN, ['2714']);
   const investCorp = (aiNet_N - aiNet_N1) + dotAmortCorp + vncCessCorp
     - reevalCorp - provDemantelCorp - locationAcquisCorp - creancesLT;
-  const fgFourPfx = ['4042', '4047', '4812', '4822'];
+  const fgFourPfx = ['4042', '4047', '4812', '4822', '4816', '4817', '4818'];
   const varFourCorp = rawSC(lN, fgFourPfx) - rawSC(lN1, fgFourPfx);
   const varAvancesCorp = rawSD(lN, ['252']) - rawSD(lN1, ['252']);
   data.FG = -(investCorp - varFourCorp + varAvancesCorp);
