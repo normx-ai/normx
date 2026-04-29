@@ -18,7 +18,7 @@ import {
   type ActifResult, type PassifResult,
 } from '../bilan/bilanSyscohadaData';
 import { computeAllFlux } from '../tft/calculs';
-import { rawSD, rawSC, sumSoldeCrediteur } from '../tft/soldes';
+import { rawSD, rawSC } from '../tft/soldes';
 
 interface Note34Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -68,16 +68,18 @@ const cafe = (c: Ctx): number =>
   crGetValue('XD', c.cr) + rawSD(c.lignes, ['654']) - rawSC(c.lignes, ['754']);
 
 const cafg = (c: Ctx): number => {
-  // Conforme au guide cafg.png : revenus financiers (77) inclut deja gains de
-  // change (776) ; frais financiers (67) inclut deja pertes de change (676).
-  // Produits HAO = poste TO (84+88), transferts charges HAO (848) deja dedans.
+  // Formule officielle SYSCOHADA (cafg2.png) :
+  // CAFG = EBE + 654 - 754 + (Resultat fin) + TO - RP - RQ - RS
+  // Resultat fin retenu dans calculs.ts: TK + TM - RM (encaissable).
+  // TO = 84+86+88 ; RP = 83+85 ; RQ = 87 ; RS = 89.
   const TK = c.cr['TK']?.net ?? 0;          // 77
   const TM = c.cr['TM']?.net ?? 0;          // 787
-  const haoP = sumSoldeCrediteur(c.lignes, ['84', '88']); // poste TO sans 86
+  const TO = c.cr['TO']?.net ?? 0;          // 84+86+88
   const RM = c.cr['RM']?.net ?? 0;          // 67
+  const RP = c.cr['RP']?.net ?? 0;          // 83+85
   const RQ = c.cr['RQ']?.net ?? 0;          // 87
   const RS = c.cr['RS']?.net ?? 0;          // 89
-  return cafe(c) + TK + TM + haoP - RM - RQ - RS;
+  return cafe(c) + TK + TM + TO - RM - RP - RQ - RS;
 };
 
 const SECTIONS: Section[] = [
@@ -102,12 +104,13 @@ const SECTIONS: Section[] = [
   { label: 'Revenus financiers', prefix: '+', compute: (c) => (c.cr['TK']?.net ?? 0) - rawSC(c.lignes, ['776']) },
   { label: 'Gains de change', prefix: '+', compute: (c) => rawSC(c.lignes, ['776']) },
   { label: 'Transferts de charges financières', prefix: '+', compute: (c) => c.cr['TM']?.net ?? 0 },
-  // Produits HAO = poste TO du SIG (84+88, sans 86 reprises non monetaires).
-  { label: 'Produits HAO', prefix: '+', compute: (c) => sumSoldeCrediteur(c.lignes, ['84', '88']) - rawSC(c.lignes, ['848']) },
+  // Produits HAO = poste TO du SIG (84+86+88) hors transferts charges HAO (848).
+  { label: 'Produits HAO', prefix: '+', compute: (c) => (c.cr['TO']?.net ?? 0) - rawSC(c.lignes, ['848']) },
   { label: 'Transferts de charges HAO', prefix: '+', compute: (c) => rawSC(c.lignes, ['848']) },
   // Frais financiers (67) hors 676 ; pertes de change (676) affichees separement.
   { label: 'Frais financiers', prefix: '-', compute: (c) => (c.cr['RM']?.net ?? 0) - rawSD(c.lignes, ['676']) },
   { label: 'Pertes de change', prefix: '-', compute: (c) => rawSD(c.lignes, ['676']) },
+  { label: 'Charges HAO', prefix: '-', compute: (c) => c.cr['RP']?.net ?? 0 },
   { label: 'Participation', prefix: '-', compute: (c) => c.cr['RQ']?.net ?? 0 },
   { label: 'Impôts sur les résultats', prefix: '-', compute: (c) => c.cr['RS']?.net ?? 0 },
   { label: "CAPACITE D'AUTOFINANCEMENT GLOBALE (C.A.F.G.)", bold: true, prefix: '=', compute: cafg },

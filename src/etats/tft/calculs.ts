@@ -74,11 +74,8 @@ export function computeCAFG(lignes: BalanceLigne[]): number {
   // Exclu : 697 (dotations provisions fin) et 797 (reprises provisions fin).
   const resultatFinancier = computeSIGPoste(lignes, ['77', '787'], ['67']);
 
-  // Produits HAO encaissables = poste TO du SIG (84 + 88, sans 86 reprises non monetaires)
-  // Charges HAO decaissables = poste RP du SIG (83 seul, sans 85 dotations non monetaires)
-  // Conforme au guide cafg.png : la CAFG exclut les reprises et dotations HAO.
-  const produitsHAO = sumSoldeCrediteur(lignes, ['84', '88']);
-  const chargesHAO = sumSoldeDebiteur(lignes, ['83']);
+  const produitsHAO = sumSoldeCrediteur(lignes, ['84', '86', '88']);
+  const chargesHAO = sumSoldeDebiteur(lignes, ['83', '85']);
   const participation = sumSoldeDebiteur(lignes, ['87']);
   const impotResultat = sumSoldeDebiteur(lignes, ['89']);
 
