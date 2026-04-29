@@ -169,10 +169,18 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
 
   data.ZC = data.FF + data.FG + data.FH + data.FI + data.FJ;
 
-  // FK — Augmentation de capital par apport nouveau
-  const varCapital = rawSC(lN, ['101', '102', '103', '104', '105', '1051'])
-    - rawSC(lN1, ['101', '102', '103', '104', '105', '1051']);
-  data.FK = varCapital - rawSD(lN, ['109', '461', '467', '4581']);
+  // FK — Augmentation de capital par apport nouveau (TFT4 a)
+  // Formule officielle SYSCOHADA :
+  // FK = variation des comptes de la classe 10 capital
+  //      a l'exclusion des comptes 106 (ecarts de reevaluation)
+  //      et 109 (apporteurs capital souscrit non appele)
+  //    + variation du compte 467 Apporteurs restant du sur capital appele
+  //    + variation du compte 4581 Organismes internationaux, fonds de dotation a recevoir
+  const fkExcl = ['106', '109'];
+  const varClasse10 = rawSC(lN, ['10'], fkExcl) - rawSC(lN1, ['10'], fkExcl);
+  const var467 = rawSD(lN, ['467']) - rawSD(lN1, ['467']);
+  const var4581 = rawSD(lN, ['4581']) - rawSD(lN1, ['4581']);
+  data.FK = varClasse10 + var467 + var4581;
 
   // FL — Subventions d'investissement (TFT4 b)
   // Formule officielle SYSCOHADA :
