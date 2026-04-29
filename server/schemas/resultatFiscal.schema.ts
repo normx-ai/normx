@@ -5,7 +5,7 @@ export const ligneResultatFiscalBody = z.object({
   libelle: z.string().max(500).default(''),
   montant: z.number().finite().default(0),
   article: z.string().max(50).default(''),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const replaceLignesBody = z.object({
