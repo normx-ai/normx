@@ -100,8 +100,16 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   // ZA — Tresorerie nette au 1er janvier
   data.ZA = bilanTresoActif(lN1) - rawSC(lN1, ['4726']) - bilanTresoPassif(lN1);
 
-  // FA — CAFG
-  data.FA = computeCAFG(lN);
+  // FA — CAFG corrigee pour le cash reel
+  // CAFG basique inclut 671 (RM) entier qui contient des interets courus
+  // non encore payes (166, 176, 183). Et 771 (TK) inclut 276 a recevoir.
+  // Pour avoir le cash reel decaisse/encaisse, on annule la part non
+  // monetaire des interets courus en ajoutant leur variation SC (passif)
+  // et en soustrayant leur variation SD (creances).
+  const cafgBase = computeCAFG(lN);
+  const varICPayer = rawSC(lN, ['166', '176', '183']) - rawSC(lN1, ['166', '176', '183']);
+  const varICRecevoir = rawSD(lN, ['276']) - rawSD(lN1, ['276']);
+  data.FA = cafgBase + varICPayer - varICRecevoir;
 
   // FB — Variation actif circulant HAO
   data.FB = -(actifNet(lN, ['488'], ['4988']) - actifNet(lN1, ['488'], ['4988']));
