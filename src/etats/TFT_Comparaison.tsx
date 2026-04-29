@@ -91,7 +91,7 @@ function TFT_Comparaison({ entiteName, entiteId, offre = 'comptabilite', onBack 
       <div className="bilan-toolbar">
         <div className="bilan-toolbar-left">
           <button className="bilan-back-btn" onClick={onBack}><LuArrowLeft /> Retour</button>
-          <h2>TFT — Comparaison Guide officiel vs Praticien</h2>
+          <h2>TFT — Comparaison Praticien (actuel) vs Guide simple</h2>
         </div>
       </div>
 
@@ -132,7 +132,7 @@ function TFT_Comparaison({ entiteName, entiteId, offre = 'comptabilite', onBack 
               border: `2px solid ${meilleur === 'A' ? '#16a34a' : '#f59e0b'}`,
             }}>
               <div style={{ fontWeight: 700, fontSize: 13 }}>
-                Version A — Guide officiel {meilleur === 'A' && '✓ meilleur bouclage'}
+                Version A — Praticien cash réel (actuel) {meilleur === 'A' && '✓ meilleur bouclage'}
               </div>
               <div style={{ marginTop: 6, fontSize: 12 }}>
                 Écart de bouclage : <strong style={{ fontFamily: 'monospace' }}>{formatMontant(ecartA)}</strong> FCFA
@@ -147,7 +147,7 @@ function TFT_Comparaison({ entiteName, entiteId, offre = 'comptabilite', onBack 
               border: `2px solid ${meilleur === 'B' ? '#16a34a' : '#f59e0b'}`,
             }}>
               <div style={{ fontWeight: 700, fontSize: 13 }}>
-                Version B — Praticien {meilleur === 'B' && '✓ meilleur bouclage'}
+                Version B — Guide simple (sans corrections) {meilleur === 'B' && '✓ meilleur bouclage'}
               </div>
               <div style={{ marginTop: 6, fontSize: 12 }}>
                 Écart de bouclage : <strong style={{ fontFamily: 'monospace' }}>{formatMontant(ecartB)}</strong> FCFA
@@ -207,10 +207,11 @@ function TFT_Comparaison({ entiteName, entiteId, offre = 'comptabilite', onBack 
           <div style={{ marginTop: 16, padding: 12, background: '#f3f4f6', borderRadius: 6, fontSize: 12, lineHeight: 1.5 }}>
             <strong>Légende</strong>
             <ul style={{ margin: '6px 0 0 18px', padding: 0 }}>
-              <li><strong>Version A (Guide officiel)</strong> : suit la lettre du guide d'application SYSCOHADA. Capte la totalité des variations classe 10/14/16/18 (avec extension classe 11/12/13 sur FM pour bouclage).</li>
-              <li><strong>Version B (Praticien)</strong> : isole strictement le cash en neutralisant les opérations non monétaires (incorporation réserves, conversion comptes courants, affectation résultat).</li>
-              <li>Postes identiques entre A et B : FA, FB, FC, FD, FE, FF, FG, FH, FI, FJ, FN, FO, FP, FQ, ZA, ZB, ZC, ZE, ZI.</li>
-              <li>Postes différents : FK, FL, FM, et donc ZD, ZF, ZG, ZH.</li>
+              <li><strong>Version A (Praticien cash réel)</strong> : version actuellement utilisée. Isole strictement le cash en corrigeant les opérations non monétaires (intérêts courus, incorporation réserves, conversion comptes courants, affectation résultat). C'est la version du TFT principal.</li>
+              <li><strong>Version B (Guide simple)</strong> : reproduit le guide SYSCOHADA dans sa lecture la plus simple, sans corrections cash réel. Sert de point de référence pour mesurer l'apport des corrections.</li>
+              <li>Postes différents : <strong>FA</strong> (correction intérêts courus 166/176/183/276 dans A), <strong>FK</strong> (cash apport vs variation classe 10), <strong>FL</strong> (avec compte 799 dans A), <strong>FM</strong> (cash sortie vs variation classe 10).</li>
+              <li>Postes identiques : FB, FC, FD, FE, FF, FG, FH, FI, FJ, FN, FO, FP, FQ, ZA, ZC, ZE, ZI.</li>
+              <li>L'écart de bouclage le plus faible indique la version qui colle le mieux à la trésorerie réelle.</li>
             </ul>
           </div>
         </>

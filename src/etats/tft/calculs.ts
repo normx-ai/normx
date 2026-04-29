@@ -297,52 +297,51 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   return data;
 }
 
-// Alias semantique : la fonction principale est la version "Guide officiel".
+// Alias semantique : la fonction principale est la version "Praticien cash reel".
 export const computeAllFluxA = computeAllFlux;
 
 // =============================================================================
-// VERSION B — PRATICIEN COMPTABLE
+// VERSION B — GUIDE OFFICIEL SIMPLE (lecture litterale)
 // =============================================================================
-// Formules detaillees fournies par un praticien pour isoler strictement le
-// cash, en neutralisant les operations non monetaires (incorporation reserves,
-// conversion comptes courants, affectation resultat, etc.).
+// Reproduit les formules du guide SYSCOHADA dans leur lecture la plus simple,
+// SANS les corrections cash reel (interets courus, neutralisation operations
+// non monetaires sur capital).
+//
+// Sert de point de comparaison pour mesurer l'apport des corrections
+// praticien (= version A actuelle).
 //
 // Postes differents de la version A :
-//   FK (apport nouveau) : isolement cash apport
-//   FL (subventions)    : isolement cash subvention recue
-//   FM (prelevement)    : MvtD 4619 + MvtD 103/104 (sortie cash associes)
+//   FA (CAFG)           : sans correction interets courus (pas de var 166/176/183/276)
+//   FK (apport nouveau) : variation classe 10 sauf 106/109 + variations 467/4581
+//   FL (subventions)    : variation 14 - variation SD 4494/4582 (sans SC 799)
+//   FM (prelevement)    : variation classe 10 sauf 106/109 (= duplique FK guide)
 //
-// Postes identiques : FA, FB-FE, FF-FJ, FN, FO-FQ.
+// Postes identiques : FB-FE, FF-FJ, FN, FO-FQ.
 // Z* recalcules en consequence.
 export function computeAllFluxB(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Record<string, number> {
-  // Reutilise la version A pour tous les postes, puis surcharge FK/FL/FM
   const data = { ...computeAllFlux(lN, lN1Raw) };
   const lN1 = lN1Raw.length > 0 ? lN1Raw : lignesFromSI(lN);
 
-  // FK Praticien : isolement cash apport
-  // FK = Var SC(101, 102, 1051)
-  //    - SD(109, 4613, 467, 4581)
-  //    - MvtD(11, 12, 130, 131)
-  //    + MvtC(103, 104, 11, 12, 139, 4619, 465)
-  const fkVarCapital = rawSC(lN, ['101', '102', '1051']) - rawSC(lN1, ['101', '102', '1051']);
-  const fkSD = rawSD(lN, ['109', '4613', '467', '4581']);
-  const fkMvtD = sumMvtDebit(lN, ['11', '12', '130', '131']);
-  const fkMvtC = sumMvtCredit(lN, ['103', '104', '11', '12', '139', '4619', '465']);
-  data.FK = fkVarCapital - fkSD - fkMvtD + fkMvtC;
+  // FA Guide simple : CAFG basique sans correction interets courus
+  data.FA = computeCAFG(lN);
 
-  // FL Praticien (corrige) : utilisation de la VARIATION 4494/4582
-  // (au lieu de SD seul) pour capter les encaissements des annees ulterieures.
-  // FL = Var SC(14) + SC(799) - Var SD(4494, 4582)
-  const flVar14 = rawSC(lN, ['14']) - rawSC(lN1, ['14']);
-  const flSC799 = rawSC(lN, ['799']);
-  const flVarSD = (rawSD(lN, ['4494', '4582']) - rawSD(lN1, ['4494', '4582']));
-  data.FL = flVar14 + flSC799 - flVarSD;
+  // FK Guide simple : variation classe 10 sauf 106/109 + variation SD 467/4581
+  const fkExclSimple = ['106', '109'];
+  const fkVarClasse10 = rawSC(lN, ['10'], fkExclSimple) - rawSC(lN1, ['10'], fkExclSimple);
+  const fkVar467 = rawSD(lN, ['467']) - rawSD(lN1, ['467']);
+  const fkVar4581 = rawSD(lN, ['4581']) - rawSD(lN1, ['4581']);
+  data.FK = fkVarClasse10 + fkVar467 + fkVar4581;
 
-  // FM Praticien : sortie cash sur capital
-  // FM = MvtD(4619) + MvtD(103, 104)
-  data.FM = sumMvtDebit(lN, ['4619']) + sumMvtDebit(lN, ['103', '104']);
+  // FL Guide simple : variation 14 - variation SD 4494/4582 (sans 799)
+  const flVar14B = rawSC(lN, ['14']) - rawSC(lN1, ['14']);
+  const flVarSDB = rawSD(lN, ['4494', '4582']) - rawSD(lN1, ['4494', '4582']);
+  data.FL = flVar14B - flVarSDB;
+
+  // FM Guide simple : variation classe 10 sauf 106/109 (= idem FK guide)
+  data.FM = rawSC(lN, ['10'], fkExclSimple) - rawSC(lN1, ['10'], fkExclSimple);
 
   // Recalculer les Z* en aval
+  data.ZB = data.FA + data.FB + data.FC + data.FD + data.FE;
   data.ZD = data.FK + data.FL + data.FM + data.FN;
   data.ZF = data.ZD + data.ZE;
   data.ZG = data.ZB + data.ZC + data.ZF;
