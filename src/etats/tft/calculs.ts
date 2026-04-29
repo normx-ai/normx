@@ -120,7 +120,16 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
     + rawSC(lN, ['4793']) - rawSC(lN1, ['4793'])
     - rawSD(lN, ['4783']) + rawSD(lN1, ['4783']);
 
-  // FF — Decaissements acquisitions immob incorporelles
+  // FF — Decaissements acquisitions immob incorporelles (TFT 4.2.3.3 b)
+  // Formule officielle SYSCOHADA :
+  //   decaissement = investissement reconstitue (a)
+  //                - variation dette fournisseurs d'investissement
+  //                + variation avances et acomptes verses
+  // Sous-comptes incorporelles (plan comptable_syscohada.json) :
+  //   404 -> 4041 (dettes en compte) + 4046 (effets a payer)
+  //   481 -> 4811 (immo incorporelles)
+  //   482 -> 4821 (immo incorporelles, effets a payer)
+  //   25  -> 251 (avances et acomptes verses incorporelles)
   const adNet_N = actifNet(lN, ['21', '4751'], ['281', '291']);
   const adNet_N1 = actifNet(lN1, ['21', '4751'], ['281', '291']);
   const dotAmortIncorp = sumMvtCredit(lN, ['281', '291']);
@@ -129,12 +138,17 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   const provDemantelIncorp = sumMvtCredit(lN, ['1984']);
   const investIncorp = (adNet_N - adNet_N1) + dotAmortIncorp + vncCessIncorp
     - reevalIncorp - provDemantelIncorp;
-  const ffFourPfx = ['4041', '4046', '4811'];
+  const ffFourPfx = ['4041', '4046', '4811', '4821'];
   const varFourIncorp = rawSC(lN, ffFourPfx) - rawSC(lN1, ffFourPfx);
   const varAvancesIncorp = rawSD(lN, ['251']) - rawSD(lN1, ['251']);
   data.FF = -(investIncorp - varFourIncorp + varAvancesIncorp);
 
-  // FG — Decaissements acquisitions immob corporelles
+  // FG — Decaissements acquisitions immob corporelles (TFT 4.2.3.3 b)
+  // Sous-comptes corporelles :
+  //   404 -> 4042 (dettes en compte) + 4047 (effets a payer)
+  //   481 -> 4812 (immo corporelles)
+  //   482 -> 4822 (immo corporelles, effets a payer)
+  //   25  -> 252 (avances et acomptes verses corporelles)
   const aiNet_N = actifNet(lN, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
   const aiNet_N1 = actifNet(lN1, ['22', '23', '24'], ['282', '283', '284', '292', '293', '294']);
   const dotAmortCorp = sumMvtCredit(lN, ['282', '283', '284', '292', '293', '294']);
@@ -145,9 +159,8 @@ export function computeAllFlux(lN: BalanceLigne[], lN1Raw: BalanceLigne[]): Reco
   const creancesLT = sumMvtDebit(lN, ['2714']);
   const investCorp = (aiNet_N - aiNet_N1) + dotAmortCorp + vncCessCorp
     - reevalCorp - provDemantelCorp - locationAcquisCorp - creancesLT;
-  const fgFourPfx = ['4042', '4047', '481', '482'];
-  const fgFourExcl = ['4811', '4813'];
-  const varFourCorp = rawSC(lN, fgFourPfx, fgFourExcl) - rawSC(lN1, fgFourPfx, fgFourExcl);
+  const fgFourPfx = ['4042', '4047', '4812', '4822'];
+  const varFourCorp = rawSC(lN, fgFourPfx) - rawSC(lN1, fgFourPfx);
   const varAvancesCorp = rawSD(lN, ['252']) - rawSD(lN1, ['252']);
   data.FG = -(investCorp - varFourCorp + varAvancesCorp);
 
