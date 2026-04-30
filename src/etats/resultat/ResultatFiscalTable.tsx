@@ -78,16 +78,16 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
         ))}
         <tr><td style={{ ...labelStyle, fontWeight: 700 }}>TOTAL DÉFICITS IMPUTÉS</td><td style={montantStyle}></td><td style={{ ...totalStyle, color: '#7c3aed' }}>{formatMontant(c.totalDeficitsImputes)}</td></tr>
 
-        {/* VI. RESULTAT FISCAL DEFINITIF */}
-        <tr><td colSpan={3} style={sectionStyle}>VI. RÉSULTAT NET FISCAL DÉFINITIF</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>RÉSULTAT FISCAL DÉFINITIF = IV − V (plancher 0)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', color: c.resultatFiscalDefinitif >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatFiscalDefinitif)}</td></tr>
-
-        {/* VII. ARD */}
-        <tr><td colSpan={3} style={sectionStyle}>VII. AMORTISSEMENTS RÉPUTÉS DIFFÉRÉS (ARD)</td></tr>
+        {/* VI. ARD — imputés AVANT le résultat fiscal définitif */}
+        <tr><td colSpan={3} style={sectionStyle}>VI. AMORTISSEMENTS RÉPUTÉS DIFFÉRÉS (ARD) IMPUTÉS</td></tr>
         <tr><td style={labelStyle}>Solde des ARD en début d&apos;exercice</td><td style={montantStyle}></td><td style={montantStyle}>{formatMontant(ard.solde_debut)}</td></tr>
         <tr><td style={labelStyle}>ARD de l&apos;exercice</td><td style={montantStyle}></td><td style={montantStyle}>{formatMontant(ard.ard_exercice)}</td></tr>
-        <tr><td style={labelStyle}>ARD utilisés dans l&apos;exercice</td><td style={montantStyle}></td><td style={montantStyle}>{formatMontant(ard.ard_utilises)}</td></tr>
+        <tr><td style={labelStyle}>ARD utilisés dans l&apos;exercice (imputés)</td><td style={montantStyle}></td><td style={montantStyle}>{formatMontant(ard.ard_utilises)}</td></tr>
         <tr><td style={{ ...labelStyle, fontWeight: 700 }}>Solde des ARD en fin d&apos;exercice</td><td style={montantStyle}></td><td style={{ ...totalStyle, color: '#0891b2' }}>{formatMontant(c.ardSoldeFin)}</td></tr>
+
+        {/* VII. RESULTAT FISCAL DEFINITIF */}
+        <tr><td colSpan={3} style={sectionStyle}>VII. RÉSULTAT NET FISCAL DÉFINITIF</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>RÉSULTAT FISCAL DÉFINITIF = IV − V − ARD utilisés (plancher 0)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', color: c.resultatFiscalDefinitif >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatFiscalDefinitif)}</td></tr>
 
       </tbody>
     </table>

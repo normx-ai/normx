@@ -227,11 +227,18 @@ export function computeResultatFiscal(
   // V. Imputations des reports déficitaires (saisis manuellement)
   const totalDeficitsImputes = deficits.reduce((s, d) => s + (d.montant_impute || 0), 0);
 
-  // VI. Résultat fiscal définitif (plancher 0 pour l'IS)
-  const resultatFiscalDefinitif = Math.max(0, resultatFiscal - totalDeficitsImputes);
+  // VI. Imputations des ARD utilisés sur l'exercice (priorité après déficits)
+  const ardUtilises = ard.ard_utilises || 0;
 
-  // VII. ARD : solde fin
-  const ardSoldeFin = (ard.solde_debut || 0) + (ard.ard_exercice || 0) - (ard.ard_utilises || 0);
+  // VII. Résultat fiscal définitif (plancher 0 pour l'IS)
+  //     = IV − déficits imputés − ARD utilisés
+  const resultatFiscalDefinitif = Math.max(
+    0,
+    resultatFiscal - totalDeficitsImputes - ardUtilises,
+  );
+
+  // VIII. Suivi ARD : solde fin = début + nouveaux − utilisés
+  const ardSoldeFin = (ard.solde_debut || 0) + (ard.ard_exercice || 0) - ardUtilises;
 
   const taux = regimeFiscal === 'is' ? tauxIS : tauxIBA;
   const impotBrut = Math.round(resultatFiscalDefinitif * taux);

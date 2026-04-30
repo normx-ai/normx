@@ -381,13 +381,13 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     }
     rows.push({ libelle: 'TOTAL DEFICITS IMPUTES', values: [fmt(calc.totalDeficitsImputes)], bold: true });
 
-    rows.push({ libelle: 'VI. RESULTAT NET FISCAL DEFINITIF', values: [fmt(calc.resultatFiscalDefinitif)], bold: true });
-
-    rows.push({ libelle: 'VII. AMORTISSEMENTS REPUTES DIFFERES (ARD)', values: [''], bold: true });
+    rows.push({ libelle: 'VI. AMORTISSEMENTS REPUTES DIFFERES (ARD) IMPUTES', values: [''], bold: true });
     rows.push({ libelle: 'Solde des ARD en début d\'exercice', values: [fmt(ard.solde_debut)] });
     rows.push({ libelle: 'ARD de l\'exercice', values: [fmt(ard.ard_exercice)] });
-    rows.push({ libelle: 'ARD utilisés dans l\'exercice', values: [fmt(ard.ard_utilises)] });
+    rows.push({ libelle: 'ARD utilisés dans l\'exercice (imputés)', values: [fmt(ard.ard_utilises)] });
     rows.push({ libelle: 'Solde des ARD en fin d\'exercice', values: [fmt(calc.ardSoldeFin)], bold: true });
+
+    rows.push({ libelle: 'VII. RESULTAT NET FISCAL DEFINITIF (IV − V − ARD utilisés)', values: [fmt(calc.resultatFiscalDefinitif)], bold: true });
 
     return {
       filename: `Resultat_Fiscal_${annee}`,
@@ -574,7 +574,7 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
             </div>
 
             <div style={{ flex: 1, minWidth: 380, background: '#fff', border: '1px solid #e5e7eb', borderRadius: 8, padding: 12 }}>
-              <h3 style={{ margin: '0 0 8px', fontSize: 13, color: '#0891b2' }}>VII. Amortissements réputés différés (ARD)</h3>
+              <h3 style={{ margin: '0 0 8px', fontSize: 13, color: '#0891b2' }}>VI. Amortissements réputés différés (ARD)</h3>
               <table style={{ width: '100%', fontSize: 11, borderCollapse: 'collapse' }}>
                 <tbody>
                   <tr><td style={{ padding: '3px 6px' }}>Solde ARD en début d&apos;exercice</td><td style={{ padding: '3px 6px', textAlign: 'right' }}>
