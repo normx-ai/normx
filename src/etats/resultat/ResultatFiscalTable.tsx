@@ -14,26 +14,26 @@ interface Props {
   regimeFiscal: 'is' | 'iba';
 }
 
-const sectionStyle: React.CSSProperties = { background: '#1e3a5f', color: '#fff', fontWeight: 700, padding: '6px 8px', fontSize: '10px' };
-const labelStyle: React.CSSProperties = { padding: '4px 8px', fontSize: '9px', borderBottom: '1px solid #ddd' };
-const montantStyle: React.CSSProperties = { textAlign: 'right' as const, padding: '4px 8px', fontSize: '9px', borderBottom: '1px solid #ddd', fontFamily: 'monospace' };
+const sectionStyle: React.CSSProperties = { background: '#1e3a5f', color: '#fff', fontWeight: 700, padding: '3px 8px', fontSize: '9px' };
+const labelStyle: React.CSSProperties = { padding: '1px 8px', fontSize: '8.5px', borderBottom: '1px solid #ddd', lineHeight: 1.25 };
+const montantStyle: React.CSSProperties = { textAlign: 'right' as const, padding: '1px 8px', fontSize: '8.5px', borderBottom: '1px solid #ddd', fontFamily: 'monospace', lineHeight: 1.25 };
 const totalStyle: React.CSSProperties = { ...montantStyle, fontWeight: 700, background: '#f0f4f8', borderTop: '2px solid #1e3a5f' };
 
 export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits, ard, regimeFiscal }: Props): React.JSX.Element {
   const c = calc;
   return (
-    <table className="bilan-table" style={{ fontSize: '9px' }}>
+    <table className="bilan-table" style={{ fontSize: '8.5px' }}>
       <thead>
         <tr>
-          <th style={{ width: '55%' }}>LIBELLE</th>
-          <th style={{ width: '15%', textAlign: 'right' }}>REF. CGI</th>
-          <th style={{ width: '30%', textAlign: 'right' }}>MONTANT (FCFA)</th>
+          <th style={{ width: '55%', padding: '4px 8px', fontSize: '9px' }}>LIBELLE</th>
+          <th style={{ width: '15%', textAlign: 'right', padding: '4px 8px', fontSize: '9px' }}>REF. CGI</th>
+          <th style={{ width: '30%', textAlign: 'right', padding: '4px 8px', fontSize: '9px' }}>MONTANT (FCFA)</th>
         </tr>
       </thead>
       <tbody>
         {/* I. RESULTAT COMPTABLE — formulaire IS-2 : une seule ligne (compte 85) */}
         <tr><td colSpan={3} style={sectionStyle}>I. RÉSULTAT COMPTABLE DE L&apos;EXERCICE</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>Résultat comptable</td><td style={montantStyle}>compte 85</td><td style={{ ...totalStyle, fontSize: '11px', color: c.resultatComptable >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatComptable)}</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '9px' }}>Résultat comptable</td><td style={montantStyle}>compte 85</td><td style={{ ...totalStyle, fontSize: '10px', color: c.resultatComptable >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatComptable)}</td></tr>
 
         {/* II. REINTEGRATIONS */}
         <tr><td colSpan={3} style={sectionStyle}>II. RÉINTÉGRATIONS DES CHARGES NON DÉDUCTIBLES</td></tr>
@@ -65,7 +65,7 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
 
         {/* IV. RESULTAT FISCAL */}
         <tr><td colSpan={3} style={sectionStyle}>IV. RÉSULTAT NET FISCAL DE L&apos;EXERCICE</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>RÉSULTAT FISCAL = I + II − III</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 6-27' : 'Art. 94'}</td><td style={{ ...totalStyle, fontSize: '11px' }}>{formatMontant(c.resultatFiscal)}</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '9px' }}>RÉSULTAT FISCAL = I + II − III</td><td style={montantStyle}>{regimeFiscal === 'is' ? 'Art. 6-27' : 'Art. 94'}</td><td style={{ ...totalStyle, fontSize: '10px' }}>{formatMontant(c.resultatFiscal)}</td></tr>
 
         {/* V. REPORTS DEFICITAIRES */}
         <tr><td colSpan={3} style={sectionStyle}>V. REPORTS DÉFICITAIRES</td></tr>
@@ -87,7 +87,7 @@ export function ResultatFiscalTable({ calc, reintegrations, deductions, deficits
 
         {/* VII. RESULTAT FISCAL DEFINITIF */}
         <tr><td colSpan={3} style={sectionStyle}>VII. RÉSULTAT NET FISCAL DÉFINITIF</td></tr>
-        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '10px' }}>RÉSULTAT FISCAL DÉFINITIF = IV − V − ARD utilisés (plancher 0)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '11px', color: c.resultatFiscalDefinitif >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatFiscalDefinitif)}</td></tr>
+        <tr><td style={{ ...labelStyle, fontWeight: 700, fontSize: '9px' }}>RÉSULTAT FISCAL DÉFINITIF = IV − V − ARD utilisés (plancher 0)</td><td style={montantStyle}></td><td style={{ ...totalStyle, fontSize: '10px', color: c.resultatFiscalDefinitif >= 0 ? '#16a34a' : '#dc2626' }}>{formatMontant(c.resultatFiscalDefinitif)}</td></tr>
 
       </tbody>
     </table>
