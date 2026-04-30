@@ -13,7 +13,7 @@ import {
   Note7, Note8, Note8A, Note9, Note10, Note11, Note12, Note13, Note14,
   Note15A, Note15B, Note16A, Note16B, Note16C, Note17, Note18, Note19, Note20,
   Note21, Note22, Note23, Note24, Note25, Note26, Note27A, Note27B, Note28, Note29,
-  Note30, Note31, Note32, Note33, Note34, Note35, Note36, Note37,
+  Note30, Note31, Note32, Note33, Note34, Note35, Note36,
 } from './lazyModules';
 
 interface EtatBaseProps {
@@ -40,7 +40,7 @@ const NOTE_COMPONENTS: Record<string, React.LazyExoticComponent<React.ComponentT
   note_25_sys: Note25, note_26_sys: Note26, note_27a_sys: Note27A, note_27b_sys: Note27B,
   note_28_sys: Note28, note_29_sys: Note29, note_30_sys: Note30, note_31_sys: Note31,
   note_32_sys: Note32, note_33_sys: Note33, note_34_sys: Note34, note_35_sys: Note35,
-  note_36_sys: Note36, note_37_sys: Note37,
+  note_36_sys: Note36,
 };
 
 interface NotesNavigationProps {

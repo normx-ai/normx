@@ -18,7 +18,7 @@ import {
   Note17, Note18, Note19, Note20, Note21,
   Note22, Note23, Note24, Note25, Note26,
   Note27A, Note27B, Note28, Note29, Note30,
-  Note31, Note32, Note33, Note34, Note35, Note36, Note37,
+  Note31, Note32, Note33, Note34, Note35, Note36,
 } from '../dashboard/lazyModules';
 import './LiasseComplete.css';
 
@@ -35,7 +35,7 @@ const NOTE_COMPONENTS: Record<string, React.LazyExoticComponent<React.ComponentT
   note_25_sys: Note25, note_26_sys: Note26, note_27a_sys: Note27A, note_27b_sys: Note27B,
   note_28_sys: Note28, note_29_sys: Note29, note_30_sys: Note30, note_31_sys: Note31,
   note_32_sys: Note32, note_33_sys: Note33, note_34_sys: Note34, note_35_sys: Note35,
-  note_36_sys: Note36, note_37_sys: Note37,
+  note_36_sys: Note36,
 };
 
 const PDF_WIDTH_MM = 210;
@@ -89,7 +89,7 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
 
     try {
       // Les pages A4 utilisent deux conventions de style historiques :
-      //   - inline `style={{ width: '210mm', ... }}` (notes annexes Note1-Note37,
+      //   - inline `style={{ width: '210mm', ... }}` (notes annexes Note1-Note36,
       //     certaines en paysage avec `width: '297mm'`)
       //   - className `a4-page` defini en CSS (Bilan/CR/TFT SYSCOHADA, fiches
       //     R1-R4, SYCEBNL, projets, etc., toujours en portrait)
@@ -294,7 +294,7 @@ export default function LiasseComplete(props: EtatBaseProps): React.JSX.Element 
               );
             })}
 
-            <LiasseSection title="Note 37 bis — Determination du resultat fiscal">
+            <LiasseSection title="Note 37 — Determination du resultat fiscal">
               <ResultatFiscal {...props} />
             </LiasseSection>
           </Suspense>

@@ -60,7 +60,6 @@ export const NOTES_ANNEXES: NoteAnnexe[] = [
   { id: 'note_34_sys', titre: 'Note 34', desc: 'Fiche de synthèse des principaux indicateurs financiers' },
   { id: 'note_35_sys', titre: 'Note 35', desc: 'Informations sociales, environnementales et sociétales' },
   { id: 'note_36_sys', titre: 'Note 36', desc: 'Table des codes' },
-  { id: 'note_37_sys', titre: 'Note 37', desc: 'Détermination impôts sur le résultat' },
 ];
 
 export const NOTE_ACCOUNT_MAP: Record<string, string[]> = {
@@ -110,7 +109,6 @@ export const NOTE_ACCOUNT_MAP: Record<string, string[]> = {
   note_34_sys: [],
   note_35_sys: [],
   note_36_sys: [],
-  note_37_sys: ['89'],
 };
 
 export const ALWAYS_VISIBLE_NOTES = ['note_2_sys', 'note_34_sys', 'note_36_sys'];
@@ -135,7 +133,7 @@ export const IMPLEMENTED_ETATS = [
   'note_22_sys', 'note_23_sys', 'note_24_sys', 'note_25_sys', 'note_26_sys',
   'note_27a_sys', 'note_27b_sys', 'note_28_sys', 'note_29_sys', 'note_30_sys',
   'note_31_sys', 'note_32_sys', 'note_33_sys', 'note_34_sys', 'note_35_sys',
-  'note_36_sys', 'note_37_sys',
+  'note_36_sys',
   'bilan_actif_sys', 'bilan_passif_sys', 'compte_resultat_sys', 'tft',
   'tft_comparaison_sys', 'resultat_fiscal_sys',
   'liquidation_impot_sys', 'liasse_complete_sys',

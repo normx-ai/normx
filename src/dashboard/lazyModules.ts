@@ -80,7 +80,6 @@ export const Note33 = lazy(() => import('../etats/notes/Note33'));
 export const Note34 = lazy(() => import('../etats/notes/Note34'));
 export const Note35 = lazy(() => import('../etats/notes/Note35'));
 export const Note36 = lazy(() => import('../etats/notes/Note36'));
-export const Note37 = lazy(() => import('../etats/notes/Note37'));
 
 // Comptabilite
 export const SaisieJournal = lazy(() => import('../comptabilite/SaisieJournal'));
