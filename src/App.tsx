@@ -53,24 +53,61 @@ function AppContent(): React.JSX.Element {
     }
   }, [entites, currentEntite, setClientSlug, location.search]);
 
-  // Redirection initiale apres login (une seule fois).
-  // - Cabinet : toujours sur le portail (liste des clients), independamment
-  //   de l'URL preservee par Keycloak. Sinon le cabinet retombe direct dans
-  //   la compta de son client_self quand il revient sur l'app.
-  // - Entreprise/client : redirige vers le 1er module seulement si on est
-  //   sur /app, pour respecter une URL profonde (bookmark, lien partage).
+  // Routing centralise : seule source de verite pour les redirections post-auth.
+  // Deux responsabilites :
+  // 1. Redirection initiale post-login (une seule fois apres chargement
+  //    tenant + entites) :
+  //    - Cabinet : toujours sur le portail (liste des clients), independamment
+  //      de l'URL preservee par Keycloak. Sinon le cabinet retombe direct dans
+  //      la compta de son client_self quand il revient sur l'app.
+  //    - Entreprise/client : si on est sur /app, /app/ ou /auth/callback,
+  //      rediriger vers le 1er module actif. Sinon respecter le deep-link.
+  // 2. Validation continue : quand currentEntite change (changement de
+  //    dossier), si le module dans l'URL n'est pas active pour le nouveau
+  //    dossier, rediriger vers son 1er module. Cette logique etait avant
+  //    dans Dashboard.tsx, deplacee ici pour eviter une race condition au
+  //    premier mount entre les deux effets concurrents.
   React.useEffect(() => {
-    if (initialRedirectDone.current || tenantLoading || entitesLoading || !tenant) return;
-    initialRedirectDone.current = true;
-    if (tenant.type === 'cabinet') {
-      if (!location.pathname.startsWith('/app/portail')) {
+    if (tenantLoading || entitesLoading || !tenant) return;
+    if (entites.length > 0 && !currentEntite) return;
+
+    const path = location.pathname;
+    const onPortail = path.startsWith('/app/portail');
+    const onApp = path === '/app' || path === '/app/';
+    const onCallback = path === '/auth/callback';
+
+    // 1. Redirection initiale (une seule fois)
+    if (!initialRedirectDone.current) {
+      initialRedirectDone.current = true;
+      if (tenant.type === 'cabinet' && !onPortail) {
         navigate('/app/portail', { replace: true });
+        return;
       }
-    } else if (location.pathname === '/app' || location.pathname === '/app/') {
-      const firstMod = ENABLED_MODULES.find(m => isModuleEnabled(m));
-      navigate(`/app/${firstMod || 'compta'}/accueil`, { replace: true });
+      if (tenant.type !== 'cabinet' && (onApp || onCallback)) {
+        const enabledMods = (currentEntite?.modules || []).filter(isModuleEnabled);
+        const first = enabledMods[0] || ENABLED_MODULES.find(isModuleEnabled) || 'compta';
+        const suffix = currentEntite ? `?e=${currentEntite.id}` : '';
+        navigate(`/app/${first}/accueil${suffix}`, { replace: true });
+        return;
+      }
     }
-  }, [tenantLoading, entitesLoading, tenant, location.pathname, navigate]);
+
+    // 2. Validation continue : module dans URL doit etre actif pour currentEntite
+    if (currentEntite) {
+      const match = path.match(/^\/app\/([^/]+)/);
+      const urlMod = match?.[1];
+      if (urlMod && ENABLED_MODULES.includes(urlMod as NormxModule)) {
+        const enabledMods = (currentEntite.modules || []).filter(isModuleEnabled);
+        if (!enabledMods.includes(urlMod as NormxModule)) {
+          const fallback = enabledMods[0];
+          const target = fallback
+            ? `/app/${fallback}/accueil?e=${currentEntite.id}`
+            : '/app/portail';
+          navigate(target, { replace: true });
+        }
+      }
+    }
+  }, [tenantLoading, entitesLoading, tenant, currentEntite, entites.length, location.pathname, navigate]);
 
   // ==================== HANDLERS ====================
 
