@@ -30,7 +30,6 @@ export const FicheR3 = lazy(() => import('../etats/FicheR3'));
 export const FicheR4 = lazy(() => import('../etats/FicheR4'));
 export const ResultatFiscal = lazy(() => import('../etats/ResultatFiscal'));
 export const LiquidationImpot = lazy(() => import('../etats/LiquidationImpot'));
-export const TFT_Comparaison = lazy(() => import('../etats/TFT_Comparaison'));
 export const LiasseComplete = lazy(() => import('../etats/LiasseComplete'));
 
 // Notes annexes
