@@ -35,45 +35,45 @@ export const PLAN_NOTES_SYSCOHADA: NoteCompteEntry[] = [
   // ==========================================
   // Note 22 — Achats
   // ==========================================
-  // Achats de marchandises (60)
+  // Achats de marchandises (601) — incluant frais sur achats (6015) et RRR (6019)
   { numero: '6011', label: 'Achats dans la région', note: 'note_22_sys', group: 'marchandises' },
   { numero: '6012', label: 'Achats hors région', note: 'note_22_sys', group: 'marchandises' },
   { numero: '6013', label: 'Achats groupe', note: 'note_22_sys', group: 'marchandises' },
   { numero: '6014', label: 'Achats groupe', note: 'note_22_sys', group: 'marchandises' },
+  { numero: '6015', label: 'Frais sur achats', note: 'note_22_sys', group: 'marchandises' },
+  { numero: '6019', label: 'Rabais, remises et ristournes obtenus', note: 'note_22_sys', group: 'marchandises' },
   { numero: '', label: 'TOTAL : ACHATS DE MARCHANDISES', note: 'note_22_sys', group: 'marchandises', isTotal: true, bold: true },
-  // Achats matières premières (602)
+  // Achats matières premières (602) — incluant frais (6025) et RRR (6029)
   { numero: '6021', label: 'Achats dans la région', note: 'note_22_sys', group: 'matieres' },
   { numero: '6022', label: 'Achats hors région', note: 'note_22_sys', group: 'matieres' },
   { numero: '6023', label: 'Achats groupe', note: 'note_22_sys', group: 'matieres' },
   { numero: '6024', label: 'Achats groupe', note: 'note_22_sys', group: 'matieres' },
+  { numero: '6025', label: 'Frais sur achats', note: 'note_22_sys', group: 'matieres' },
+  { numero: '6029', label: 'Rabais, remises et ristournes obtenus', note: 'note_22_sys', group: 'matieres' },
   { numero: '', label: 'TOTAL : ACHATS MATIERES PREMIERES ET FOURNITURES LIEES', note: 'note_22_sys', group: 'matieres', isTotal: true, bold: true },
-  // Autres achats détaillés (604, 605, 608)
+  // Autres achats détaillés (604, 605, 608) — chaque bloc inclut ses frais (xx5) et RRR (xx9)
   { numero: '6041', label: 'Matières consommables', note: 'note_22_sys', group: 'autres' },
   { numero: '6042', label: 'Matières combustibles', note: 'note_22_sys', group: 'autres' },
   { numero: '6043', label: "Produits d'entretien", note: 'note_22_sys', group: 'autres' },
   { numero: '6044', label: "Fournitures d'atelier, d'usine et de magasin", note: 'note_22_sys', group: 'autres' },
   { numero: '6046', label: "Fournitures d'atelier, d'usine et de magasin", note: 'note_22_sys', group: 'autres' },
+  { numero: '6047', label: 'Fourniture de bureau', note: 'note_22_sys', group: 'autres' },
+  { numero: '6045', label: 'Frais sur achats (604)', note: 'note_22_sys', group: 'autres' },
+  { numero: '6049', label: 'Rabais, remises et ristournes obtenus (604)', note: 'note_22_sys', group: 'autres' },
   { numero: '6051', label: 'Eau', note: 'note_22_sys', group: 'autres' },
   { numero: '6052', label: 'Electricité', note: 'note_22_sys', group: 'autres' },
   { numero: '6053', label: 'Autres énergies', note: 'note_22_sys', group: 'autres' },
   { numero: '6054', label: "Fournitures d'entretien", note: 'note_22_sys', group: 'autres' },
-  { numero: '6047', label: 'Fourniture de bureau', note: 'note_22_sys', group: 'autres' },
   { numero: '6055', label: 'Fourniture de bureau', note: 'note_22_sys', group: 'autres' },
   { numero: '6056', label: 'Petit matériel et outillages', note: 'note_22_sys', group: 'autres' },
   { numero: '6057', label: 'Achats études, prestations de services, de travaux matériels et équipements', note: 'note_22_sys', group: 'autres' },
   { numero: '6058', label: 'Achats études, prestations de services, de travaux matériels et équipements', note: 'note_22_sys', group: 'autres' },
+  { numero: '6059', label: 'Rabais, remises et ristournes obtenus (605)', note: 'note_22_sys', group: 'autres' },
   { numero: '6081', label: "Achats d'emballages", note: 'note_22_sys', group: 'autres' },
   { numero: '6082', label: "Achats d'emballages", note: 'note_22_sys', group: 'autres' },
   { numero: '6083', label: "Achats d'emballages", note: 'note_22_sys', group: 'autres' },
-  { numero: '6015', label: 'Frais sur achats', note: 'note_22_sys', group: 'autres' },
-  { numero: '6025', label: 'Frais sur achats', note: 'note_22_sys', group: 'autres' },
-  { numero: '6045', label: 'Frais sur achats', note: 'note_22_sys', group: 'autres' },
-  { numero: '6085', label: 'Frais sur achats', note: 'note_22_sys', group: 'autres' },
-  { numero: '6019', label: 'Rabais, remises et ristournes obtenus', note: 'note_22_sys', group: 'autres' },
-  { numero: '6029', label: 'Rabais, remises et ristournes obtenus', note: 'note_22_sys', group: 'autres' },
-  { numero: '6049', label: 'Rabais, remises et ristournes obtenus', note: 'note_22_sys', group: 'autres' },
-  { numero: '6059', label: 'Rabais, remises et ristournes obtenus', note: 'note_22_sys', group: 'autres' },
-  { numero: '6089', label: 'Rabais, remises et ristournes obtenus', note: 'note_22_sys', group: 'autres' },
+  { numero: '6085', label: 'Frais sur achats (608)', note: 'note_22_sys', group: 'autres' },
+  { numero: '6089', label: 'Rabais, remises et ristournes obtenus (608)', note: 'note_22_sys', group: 'autres' },
   { numero: '', label: 'TOTAL : AUTRES ACHATS', note: 'note_22_sys', group: 'autres', isTotal: true, bold: true },
 
   // ==========================================
