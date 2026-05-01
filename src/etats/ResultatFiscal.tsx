@@ -599,28 +599,24 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
 
       <div className="a4-page" ref={pageRef}>
         <div className="etat-header-officiel">
-          <div className="etat-header-titre">DETERMINATION DU RESULTAT FISCAL</div>
           <div className="etat-header-grid">
             <div className="etat-header-row">
-              <span className="etat-header-label">Denomination :</span>
+              <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
-              <span className="etat-header-label">Sigle :</span>
-              <span className="etat-header-value">{entiteSigle || ''}</span>
-            </div>
-            <div className="etat-header-row">
-              <span className="etat-header-label">Adresse :</span>
-              <span className="etat-header-value">{entiteAdresse || ''}</span>
-            </div>
-            <div className="etat-header-row">
-              <span className="etat-header-label">NUI :</span>
-              <span className="etat-header-value">{entiteNif || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value">31/12/{annee}</span>
-              <span className="etat-header-label">Regime :</span>
-              <span className="etat-header-value">{regimeFiscal === 'is' ? 'IS' : 'IBA'}</span>
+              <span className="etat-header-value-right">31/12/{annee}</span>
+            </div>
+            <div className="etat-header-row">
+              <span className="etat-header-label">Numero d'identification :</span>
+              <span className="etat-header-value">{entiteNif || ''}</span>
+              <span className="etat-header-label">Duree (en mois) :</span>
+              <span className="etat-header-value-right">{duree}</span>
             </div>
           </div>
         </div>
+        <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '20px 0 16px', textDecoration: 'underline' }}>
+          DETERMINATION DU RESULTAT FISCAL — Regime {regimeFiscal === 'is' ? 'IS' : 'IBA'}
+        </h3>
 
         <ResultatFiscalTable
           calc={calc}
