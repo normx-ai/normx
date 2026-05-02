@@ -34,6 +34,11 @@ export interface FactureExtraite {
   total_ht: number;
   total_tva: number;
   total_ttc: number;
+  // Retenue a la Source (RAS) appliquee par le client. Diminue le net a payer
+  // au fournisseur, va au credit du compte 4424 (Etat, retenues a reverser).
+  retenue_source: number;
+  taux_retenue_source: number;
+  net_a_payer: number;
   devise: string;
   notes: string;
 }
@@ -80,6 +85,10 @@ Regles :
 - Determine le type : facture_achat (on recoit une facture), facture_vente (on emet), avoir, recu, autre
 - Pour chaque ligne de la facture, extrais la description, le montant HT, le taux TVA, le montant TVA, le montant TTC
 - Si la TVA n'est pas detaillee par ligne, applique le taux global a chaque ligne
+- IMPORTANT : detecte la Retenue a la Source (RAS / Retenue / Withholding tax / IRPP) si presente.
+  En zone CEMAC/Congo elle apparait souvent sous "Retenue", "RAS", "BIC RAS", "Retenue 5%/10%/15%".
+  Elle est deduite du net a payer. Renseigne 'retenue_source' (montant), 'taux_retenue_source' (taux %),
+  et 'net_a_payer' (montant effectivement du au fournisseur apres retenue). Si pas de RAS, mets 0.
 
 Retourne UNIQUEMENT le JSON suivant (pas de texte avant/apres) :
 {
@@ -94,6 +103,9 @@ Retourne UNIQUEMENT le JSON suivant (pas de texte avant/apres) :
   "total_ht": 0,
   "total_tva": 0,
   "total_ttc": 0,
+  "retenue_source": 0,
+  "taux_retenue_source": 0,
+  "net_a_payer": 0,
   "devise": "XAF",
   "notes": "observations eventuelles",
   "confidence": "high" | "medium" | "low"
@@ -173,6 +185,9 @@ export async function extractFromDocument(
       total_ht: parsed.total_ht || 0,
       total_tva: parsed.total_tva || 0,
       total_ttc: parsed.total_ttc || 0,
+      retenue_source: parsed.retenue_source || 0,
+      taux_retenue_source: parsed.taux_retenue_source || 0,
+      net_a_payer: parsed.net_a_payer || 0,
       devise: parsed.devise || 'XAF',
       notes: parsed.notes || '',
     },
@@ -269,23 +284,46 @@ export async function mapToSYSCOHADA(
         tiers_id: null,
       });
     }
-    // Fournisseur (credit)
+    // Retenue a la source (credit) — diminue le net a payer au fournisseur
+    const ras = extracted.retenue_source || 0;
+    if (ras > 0) {
+      lignes.push({
+        numero_compte: '442400',
+        libelle_compte: 'Etat, retenues a la source a reverser',
+        debit: 0,
+        credit: ras,
+        tiers_id: null,
+      });
+    }
+    // Fournisseur (credit) — TTC moins RAS retenue
+    const netFournisseur = extracted.total_ttc - ras;
     lignes.push({
       numero_compte: tiersCompte,
       libelle_compte: 'Fournisseur ' + (tiersNom || ''),
       debit: 0,
-      credit: extracted.total_ttc,
+      credit: netFournisseur,
       tiers_id: tiersId,
     });
   } else if (isVente) {
-    // Client (debit)
+    const ras = extracted.retenue_source || 0;
+    // Client (debit) — TTC moins RAS prelevee par le client (creance reduite)
     lignes.push({
       numero_compte: tiersCompte,
       libelle_compte: 'Client ' + (tiersNom || ''),
-      debit: extracted.total_ttc,
+      debit: extracted.total_ttc - ras,
       credit: 0,
       tiers_id: tiersId,
     });
+    // Retenue a la source subie (debit) — creance sur l'Etat (a recuperer en credit IS)
+    if (ras > 0) {
+      lignes.push({
+        numero_compte: '447300',
+        libelle_compte: 'Etat, retenues a la source subies',
+        debit: ras,
+        credit: 0,
+        tiers_id: null,
+      });
+    }
     // Lignes de vente (credit)
     for (const l of extracted.lignes) {
       const compte = classifySaleAccount(l.description);
