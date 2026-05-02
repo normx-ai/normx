@@ -13,6 +13,45 @@ au 31/12/2025). Ne pas utiliser DAISY DEL (reste en mode Etats).
 
 ---
 
+## 0. Matrice de couverture code (audit pré-test)
+
+Audit du code au 2026-05-02 — pour savoir ce qui est testable
+**maintenant** vs ce qui doit être implémenté avant test.
+
+| Section | Sujet | Code présent | À implémenter |
+|---|---|---|---|
+| 1.1 / 1.2 | Création dossier + paramétrage | ✅ Complet | — |
+| 1.3 | Exercices (création/clôture/réouverture) | ✅ `balance.service.ts: cloturerExercice / rouvrirExercice` | — |
+| 2.1-2.7 | Saisie écritures (5 journaux + multi-lignes + validation) | ✅ `SaisieJournal.tsx` + `routes/ecritures.ts` (`POST/PUT/DELETE/valider/devalider`) | — |
+| 3.1 | Grand livre | ✅ `GrandLivre.tsx` + `/api/ecritures/grand-livre/...` | — |
+| 3.2 | Balance générale | ✅ `BalanceGenerale.tsx` + détection anomalies sens | — |
+| 3.3 | Journal centralisé | ✅ `rapports/JournalCentralisateur.tsx` + endpoint dédié | — |
+| 3.4 | Extrait compte | ✅ via Grand livre filtré par compte | — |
+| **4** | **Déclaration TVA UI** | ❌ **Table `declarations_tva` existe en BDD mais aucun écran trouvé** | UI déclaration mensuelle/trimestrielle, calcul agrégats, écriture clôture TVA |
+| 5.1 | Tiers (Membres/Fournisseurs/Bailleurs/Personnel) | ✅ `TiersPage.tsx` | — |
+| 5.2 | Lettrage (lettrer/délettrer + balance âgée + échéancier) | ✅ `Lettrage.tsx` + 4 endpoints `/api/ecritures/lettrage/*` + `BalanceAgee.tsx` + `Echeancier.tsx` | — |
+| **6** | **Rapprochement bancaire** | ❌ **Aucun composant trouvé** (Note11.tsx réf. la note SYSCOHADA, pas le module) | Import OFX/CSV/Excel, pointage manuel + auto par montant/libellé, écart, tableau de rapprochement |
+| 7.1 | Clôture mensuelle (verrouillage saisie) | ⚠️ Partiel : `exercices.statut = ouvert/cloture` au niveau exercice, mais **pas de verrou par mois** ni garde côté écritures | Statut mensuel + middleware bloquant les saisies sur mois clos |
+| 7.2 | Écritures de clôture d'exercice | ⚠️ Partiel : Liquidation IS existe (page dédiée), mais **pas d'assistant écritures inventaire** (variations stocks, dotations amort/prov, charges/produits constatés d'avance, charges à payer/produits à recevoir) | Wizard écritures de clôture |
+| 7.3 | Verrouillage définitif post-clôture | ⚠️ Partiel : `cloturerExercice` change statut, mais **pas de garde** côté `POST/PUT/DELETE` ecritures pour bloquer modifs sur exercice clos | Middleware `requireExerciceOuvert` |
+| 8 | États financiers (Bilan/CR/TFT/Notes 1-36/Liasse) | ✅ Complet | — |
+| 9.1 | Performance (volume) | ⚠️ À tester en charge | Bench réel sur 10k écritures |
+| 9.2 | Isolation multi-tenant (RLS) | ✅ Schémas tenant + RLS Postgres | — |
+| 9.3 | Audit trail | ✅ `audit.ts` middleware + table `audit_log` par schéma | — |
+| 9.3 | **Export FEC** (Fichier Écritures Comptables) | ❌ **Aucun endpoint trouvé** (les refs "FEC" dans le code = "EFFECTIFS" Note 27B, pas le format fiscal) | Export CSV/TXT format DGI/AUDCIF |
+
+### Synthèse
+
+- **Testable maintenant (90%)** : sections 1, 2, 3, 5, 8, 9.2, 9.3-audit
+- **Bloqué jusqu'à implémentation** : section 4 (TVA UI), section 6 (rapprochement bancaire), section 9.3-FEC
+- **Testable mais avec contraintes** : section 7 (clôture partielle, pas de wizard écritures inventaire)
+
+Recommandation : tester sections 1→3, 5, 8, 9.2 en priorité. Documenter
+section 4/6 comme « V1.1 » au prochain sprint. Section 7 testable sur le
+flux de clôture exercice complet (sans assistance), à enrichir ensuite.
+
+---
+
 ## 1. Création dossier et paramétrage
 
 ### 1.1 Création du dossier
