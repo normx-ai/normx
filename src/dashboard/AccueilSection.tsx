@@ -18,10 +18,8 @@ interface AccueilSectionProps {
   activeModule: NormxModule;
   moduleLabel: string;
   etats: EtatFinancier[];
-  entiteName: string;
   entiteId: number;
   exerciceId: number | null;
-  exerciceAnnee: number;
   exerciceLoading: boolean;
   exerciceSelectorProps: ExerciceSelectorProps;
   smtAlert: SmtAlertState | null;
@@ -55,7 +53,7 @@ function getBannerText(activeModule: NormxModule, typeActivite: TypeActivite): s
 
 export function AccueilSection({
   userName, typeActivite, activeModule, moduleLabel, etats,
-  entiteName, entiteId, exerciceId, exerciceAnnee, exerciceLoading, exerciceSelectorProps,
+  entiteId, exerciceId, exerciceLoading, exerciceSelectorProps,
   smtAlert, onOpenExerciceModal, openTab,
 }: AccueilSectionProps): React.ReactElement {
   // Compta + exercice ouvert : afficher le tableau de bord interactif
@@ -68,11 +66,8 @@ export function AccueilSection({
         </div>
         {smtAlert && <SmtAlertBanner alert={smtAlert} onOpenParametres={() => openTab('parametres')} />}
         <ComptaDashboard
-          entiteName={entiteName}
           entiteId={entiteId}
           exerciceId={exerciceId}
-          exerciceAnnee={exerciceAnnee}
-          userName={userName}
           openTab={openTab}
         />
       </div>

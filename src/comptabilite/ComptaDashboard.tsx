@@ -23,11 +23,8 @@ import { api } from '../lib/apiEndpoints';
 import './ComptaDashboard.css';
 
 interface Props {
-  entiteName: string;
   entiteId: number;
   exerciceId: number | null;
-  exerciceAnnee: number;
-  userName: string;
   openTab: (id: string) => void;
 }
 
@@ -70,7 +67,7 @@ function fmtMontant(v: number, opts?: { decimals?: number; abbreviate?: boolean 
   return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }).format(v);
 }
 
-function ComptaDashboard({ entiteName, entiteId, exerciceId, exerciceAnnee, userName, openTab }: Props): React.ReactElement {
+function ComptaDashboard({ entiteId, exerciceId, openTab }: Props): React.ReactElement {
   const enabled = !!entiteId && !!exerciceId;
 
   const { data: tableauBord, isLoading: tbLoading } = useQuery<TableauBordData>({
@@ -246,16 +243,6 @@ function ComptaDashboard({ entiteName, entiteId, exerciceId, exerciceAnnee, user
 
   return (
     <div className="cd-root">
-      <div className="cd-header">
-        <div className="cd-welcome">
-          <h1>Bienvenue, <span>{userName.split(' ')[0]}</span></h1>
-          <div className="cd-meta">
-            <span>{entiteName} · SYSCOHADA</span>
-            <span className="cd-pill">Exercice {exerciceAnnee}</span>
-          </div>
-        </div>
-      </div>
-
       {/* KPIs */}
       <div className="cd-kpis">
         <KpiCard

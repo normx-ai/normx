@@ -85,10 +85,8 @@ function MainContent(props: MainContentProps): React.ReactElement {
           activeModule={activeModule}
           moduleLabel={moduleLabel}
           etats={etats}
-          entiteName={entiteName}
           entiteId={entiteId}
           exerciceId={exerciceId}
-          exerciceAnnee={currentExAnnee}
           exerciceLoading={exerciceLoading}
           exerciceSelectorProps={exerciceSelectorProps}
           smtAlert={smtAlert}
