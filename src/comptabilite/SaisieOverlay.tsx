@@ -51,6 +51,8 @@ function SaisieOverlay({
   planComptable,
   tiersList,
   exerciceAnnee,
+  exerciceDateDebut,
+  exerciceDateFin,
   saving,
   onSave,
   onClose,
@@ -140,7 +142,7 @@ function SaisieOverlay({
               </div>
               <div className="ecriture-field">
                 <label>Date <span className="required">*</span></label>
-                <input type="date" value={dateEcriture} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateEcriture(e.target.value)} />
+                <input type="date" value={dateEcriture} min={exerciceDateDebut} max={exerciceDateFin} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDateEcriture(e.target.value)} />
               </div>
               <div className="ecriture-field" style={{ flex: 2 }}>
                 <label>Libellé <span className="required">*</span></label>

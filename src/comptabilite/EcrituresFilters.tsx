@@ -16,6 +16,8 @@ function EcrituresFilters({
   setFilterDateAu,
   searchTerm,
   setSearchTerm,
+  exerciceDateDebut,
+  exerciceDateFin,
 }: EcrituresFiltersProps): React.JSX.Element {
   return (
     <div className="saisie-filters">
@@ -43,11 +45,13 @@ function EcrituresFilters({
       </div>
       <div className="saisie-filter-group">
         <label>Du</label>
-        <input type="date" value={filterDateDu} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFilterDateDu(e.target.value); setFilterMois(''); }} />
+        <input type="date" value={filterDateDu} min={exerciceDateDebut} max={exerciceDateFin}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFilterDateDu(e.target.value); setFilterMois(''); }} />
       </div>
       <div className="saisie-filter-group">
         <label>Au</label>
-        <input type="date" value={filterDateAu} onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFilterDateAu(e.target.value); setFilterMois(''); }} />
+        <input type="date" value={filterDateAu} min={exerciceDateDebut} max={exerciceDateFin}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setFilterDateAu(e.target.value); setFilterMois(''); }} />
       </div>
       <div className="saisie-filter-search">
         <LuSearch />

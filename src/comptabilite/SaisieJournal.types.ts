@@ -4,6 +4,8 @@ export interface SaisieJournalProps {
   entiteId: number;
   exerciceId: number;
   exerciceAnnee: number;
+  exerciceDateDebut?: string;
+  exerciceDateFin?: string;
   onBack: () => void;
 }
 
@@ -91,6 +93,8 @@ export interface EcrituresFiltersProps {
   setFilterDateAu: (v: string) => void;
   searchTerm: string;
   setSearchTerm: (v: string) => void;
+  exerciceDateDebut?: string;
+  exerciceDateFin?: string;
 }
 
 export interface EcrituresListProps {
@@ -118,6 +122,8 @@ export interface SaisieOverlayProps {
   planComptable: CompteComptable[];
   tiersList: TiersItem[];
   exerciceAnnee: number;
+  exerciceDateDebut?: string;
+  exerciceDateFin?: string;
   saving: boolean;
   onSave: () => void;
   onClose: () => void;

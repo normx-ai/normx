@@ -16,7 +16,7 @@ import SaisieOverlay from './SaisieOverlay';
 import ImportDocumentModal from './ImportDocumentModal';
 import './Comptabilite.css';
 
-function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJournalProps): React.JSX.Element {
+function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, exerciceDateDebut, exerciceDateFin, onBack }: SaisieJournalProps): React.JSX.Element {
   const { referentiel } = useReferentiel();
   const queryClient = useQueryClient();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
@@ -37,14 +37,19 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
   const [showJournalDropdown, setShowJournalDropdown] = useState<boolean>(false);
   const getDefaultDate = (): string => {
     const now = new Date();
-    const annee = exerciceAnnee || now.getFullYear();
-    if (now.getFullYear() === annee) {
-      const y = now.getFullYear();
-      const m = String(now.getMonth() + 1).padStart(2, '0');
-      const d = String(now.getDate()).padStart(2, '0');
-      return `${y}-${m}-${d}`;
+    const todayIso = now.toISOString().slice(0, 10);
+    // Si today est dans la plage de l'exercice, on prefere today.
+    if (exerciceDateDebut && exerciceDateFin
+        && todayIso >= exerciceDateDebut && todayIso <= exerciceDateFin) {
+      return todayIso;
     }
-    return annee + '-01-01';
+    // Sinon, dernier jour de l'exercice (cas saisie d'exercice clos ou anterieur)
+    if (exerciceDateFin) return exerciceDateFin;
+    if (exerciceDateDebut) return exerciceDateDebut;
+    // Fallback : ancien comportement
+    const annee = exerciceAnnee || now.getFullYear();
+    if (now.getFullYear() === annee) return todayIso;
+    return annee + '-12-31';
   };
   const [dateEcriture, setDateEcriture] = useState<string>(getDefaultDate());
   const [numeroPiece, setNumeroPiece] = useState<string>('');
@@ -311,7 +316,8 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
       <EcrituresFilters filterJournal={filterJournal} setFilterJournal={setFilterJournal}
         filterStatut={filterStatut} setFilterStatut={setFilterStatut} filterMois={filterMois} setFilterMois={setFilterMois}
         filterDateDu={filterDateDu} setFilterDateDu={setFilterDateDu} filterDateAu={filterDateAu} setFilterDateAu={setFilterDateAu}
-        searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        searchTerm={searchTerm} setSearchTerm={setSearchTerm}
+        exerciceDateDebut={exerciceDateDebut} exerciceDateFin={exerciceDateFin} />
 
       <EcrituresList ecritures={ecritures} selectedIds={selectedIds} onToggleSelect={toggleSelect}
         onToggleSelectAll={toggleSelectAll} onEdit={openEdit} onDelete={deleteEcriture} />
@@ -326,7 +332,8 @@ function SaisieJournal({ entiteId, exerciceId, exerciceAnnee, onBack }: SaisieJo
           showJournalDropdown={showJournalDropdown} setShowJournalDropdown={setShowJournalDropdown}
           dateEcriture={dateEcriture} setDateEcriture={setDateEcriture} numeroPiece={numeroPiece} setNumeroPiece={setNumeroPiece}
           libelle={libelle} setLibelle={setLibelle} lignes={lignes} planComptable={planComptable} tiersList={tiersList}
-          exerciceAnnee={exerciceAnnee} saving={saving} onSave={saveEcriture} onClose={closeOverlay}
+          exerciceAnnee={exerciceAnnee} exerciceDateDebut={exerciceDateDebut} exerciceDateFin={exerciceDateFin}
+          saving={saving} onSave={saveEcriture} onClose={closeOverlay}
           onUpdateLigne={updateLigne} onSelectCompte={selectCompte} onCompteBlur={handleCompteBlur}
           onAddLigne={addLigne} onRemoveLigne={removeLigne} onEquilibrer={equilibrer} />
       )}

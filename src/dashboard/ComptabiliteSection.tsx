@@ -21,6 +21,8 @@ interface ComptabiliteSectionProps {
   entiteNif: string;
   exerciceId: number | null;
   currentExAnnee: number;
+  currentExDateDebut?: string;
+  currentExDateFin?: string;
   exerciceSelectorProps: ExerciceSelectorProps;
   openTab: (id: string) => void;
 }
@@ -36,7 +38,8 @@ export function isComptabiliteTab(tab: string): boolean {
 
 export function ComptabiliteSection({
   activeTab, entiteId, entiteName, entiteSigle, entiteAdresse, entiteNif,
-  exerciceId, currentExAnnee, exerciceSelectorProps, openTab,
+  exerciceId, currentExAnnee, currentExDateDebut, currentExDateFin,
+  exerciceSelectorProps, openTab,
 }: ComptabiliteSectionProps): React.ReactElement {
   const onBack = () => openTab('accueil');
   return (
@@ -44,7 +47,8 @@ export function ComptabiliteSection({
       <ExerciceSelector {...exerciceSelectorProps} />
       {!exerciceId && <div className="empty-state-msg">Créez un exercice pour commencer la saisie.</div>}
       {exerciceId && activeTab === 'journal' && (
-        <SaisieJournal entiteId={entiteId} exerciceId={exerciceId} exerciceAnnee={currentExAnnee} onBack={onBack} />
+        <SaisieJournal entiteId={entiteId} exerciceId={exerciceId} exerciceAnnee={currentExAnnee}
+          exerciceDateDebut={currentExDateDebut} exerciceDateFin={currentExDateFin} onBack={onBack} />
       )}
       {exerciceId && activeTab === 'grand_livre' && (
         <GrandLivre entiteId={entiteId} exerciceId={exerciceId} exerciceAnnee={currentExAnnee} entiteName={entiteName} entiteSigle={entiteSigle} entiteAdresse={entiteAdresse} entiteNif={entiteNif} onBack={onBack} />

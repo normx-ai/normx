@@ -55,7 +55,10 @@ function MainContent(props: MainContentProps): React.ReactElement {
     onSelectExercice, onOpenExerciceModal, onCloturerExercice, onRouvrirExercice,
   };
 
-  const currentExAnnee: number = exercices.find(e => e.id === exerciceId)?.annee ?? new Date().getFullYear();
+  const currentEx = exercices.find(e => e.id === exerciceId);
+  const currentExAnnee: number = currentEx?.annee ?? new Date().getFullYear();
+  const currentExDateDebut: string | undefined = currentEx?.date_debut;
+  const currentExDateFin: string | undefined = currentEx?.date_fin;
 
   // Affiche toutes les notes annexes officielles SYSCOHADA, meme vides.
   // L'utilisateur saisit/complete chaque note a son rythme.
@@ -114,6 +117,8 @@ function MainContent(props: MainContentProps): React.ReactElement {
           entiteNif={entiteNif}
           exerciceId={exerciceId}
           currentExAnnee={currentExAnnee}
+          currentExDateDebut={currentExDateDebut}
+          currentExDateFin={currentExDateFin}
           exerciceSelectorProps={exerciceSelectorProps}
           openTab={openTab}
         />
