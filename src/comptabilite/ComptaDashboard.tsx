@@ -87,9 +87,14 @@ function ComptaDashboard({ entiteName, entiteId, exerciceId, exerciceAnnee, user
   const { data: clientsTiers = [] } = useQuery<BalanceTiersRow[]>({
     queryKey: ['compta-dashboard-clients', entiteId, exerciceId],
     queryFn: async () => {
-      const r = await clientFetch(api.ecritures.balanceTiers(entiteId, exerciceId as number, { type: 'client' }));
+      const r = await clientFetch(api.ecritures.balanceTiers(entiteId, exerciceId as number, { type_tiers: 'client' }));
       if (!r.ok) throw new Error('Erreur tiers clients');
-      return r.json();
+      const json = await r.json();
+      // L'endpoint retourne { data: [...], pagination: {...} } via paginatedResponse
+      if (Array.isArray(json)) return json;
+      if (Array.isArray(json.data)) return json.data;
+      if (Array.isArray(json.rows)) return json.rows;
+      return [];
     },
     enabled,
     staleTime: 60_000,
@@ -98,10 +103,13 @@ function ComptaDashboard({ entiteName, entiteId, exerciceId, exerciceAnnee, user
   const { data: ecrituresRecentes = [] } = useQuery<EcritureRow[]>({
     queryKey: ['compta-dashboard-ecritures', entiteId, exerciceId],
     queryFn: async () => {
-      const r = await clientFetch(api.ecritures.list(entiteId, exerciceId as number, { limit: 5, order: 'desc' }));
+      const r = await clientFetch(api.ecritures.list(entiteId, exerciceId as number, { limit: 5 }));
       if (!r.ok) throw new Error('Erreur ecritures');
-      const data = await r.json();
-      return Array.isArray(data) ? data : (data.rows || []);
+      const json = await r.json();
+      if (Array.isArray(json)) return json;
+      if (Array.isArray(json.data)) return json.data;
+      if (Array.isArray(json.rows)) return json.rows;
+      return [];
     },
     enabled,
     staleTime: 30_000,
@@ -316,7 +324,7 @@ function ComptaDashboard({ entiteName, entiteId, exerciceId, exerciceAnnee, user
             </div>
           </div>
           <div className="cd-chart">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={200} minHeight={120}>
               <AreaChart data={evolution}>
                 <defs>
                   <linearGradient id="caGrad" x1="0" y1="0" x2="0" y2="1">
@@ -366,7 +374,7 @@ function ComptaDashboard({ entiteName, entiteId, exerciceId, exerciceAnnee, user
             </div>
           </div>
           <div className="cd-chart-sm">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={200} minHeight={120}>
               <BarChart data={evolution}>
                 <CartesianGrid stroke="#f1f3f6" vertical={false} />
                 <XAxis dataKey="mois" tick={{ fontSize: 10, fill: '#6b7785' }} axisLine={false} tickLine={false} />
@@ -536,11 +544,11 @@ function KpiCard({ featured, label, value, icon, trend, trendUp, spark, color }:
           {positive ? 'Positif' : 'Négatif'}
         </div>
       )}
-      {spark && spark.length > 0 && (
+      {spark && spark.length > 0 && spark.some(s => s.y !== 0) && (
         <div className="cd-spark">
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={60} minHeight={30}>
             <LineChart data={spark}>
-              <Line type="monotone" dataKey="y" stroke={color} strokeWidth={1.8} dot={false} />
+              <Line type="monotone" dataKey="y" stroke={color} strokeWidth={1.8} dot={false} isAnimationActive={false} />
             </LineChart>
           </ResponsiveContainer>
         </div>
