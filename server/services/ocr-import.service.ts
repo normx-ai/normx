@@ -136,8 +136,30 @@ export async function extractFromDocument(
     throw new Error('Pas de reponse texte de Claude Vision');
   }
 
-  const jsonStr = textBlock.text.trim();
-  const parsed = JSON.parse(jsonStr) as FactureExtraite & { confidence?: string };
+  // Claude peut wrap le JSON dans des balises markdown ou ajouter du texte
+  // autour malgre le prompt strict. On extrait le bloc JSON tolerant :
+  // 1. Fence markdown ```json ... ``` ou ``` ... ```
+  // 2. Sinon premier { jusqu'au } correspondant.
+  const raw = textBlock.text.trim();
+  let jsonStr = raw;
+  const fenceMatch = raw.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  if (fenceMatch) {
+    jsonStr = fenceMatch[1].trim();
+  } else {
+    const start = raw.indexOf('{');
+    const end = raw.lastIndexOf('}');
+    if (start >= 0 && end > start) {
+      jsonStr = raw.slice(start, end + 1);
+    }
+  }
+
+  let parsed: FactureExtraite & { confidence?: string };
+  try {
+    parsed = JSON.parse(jsonStr) as FactureExtraite & { confidence?: string };
+  } catch (parseErr) {
+    logger.warn('OCR Import : JSON parse echec. Reponse brute Claude: %s', raw.slice(0, 500));
+    throw new Error('JSON invalide de Claude Vision : ' + (parseErr instanceof Error ? parseErr.message : String(parseErr)));
+  }
   const confidence = (parsed.confidence as 'high' | 'medium' | 'low') || 'medium';
 
   return {

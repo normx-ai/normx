@@ -52,8 +52,16 @@ router.post('/extract', upload.single('file'), async (req: Request, res: Respons
     const message = err instanceof Error ? err.message : String(err);
     logger.error('OCR Import erreur: %s', message);
 
-    if (message.includes('JSON')) {
-      return res.status(422).json({ error: 'Impossible d\'extraire les donnees du document. Essayez avec une meilleure image.' });
+    // Erreurs cote modele (JSON invalide, reponse texte manquante, image
+    // illisible) -> 422 avec message actionnable cote utilisateur.
+    if (
+      message.includes('JSON') ||
+      message.includes('Pas de reponse') ||
+      message.includes('Vision')
+    ) {
+      return res.status(422).json({
+        error: 'Impossible d\'extraire les donnees du document. Verifiez que la photo est nette, bien cadree et en bonne lumiere, puis reessayez.',
+      });
     }
     res.status(500).json({ error: 'Erreur lors de l\'analyse du document.' });
   }
