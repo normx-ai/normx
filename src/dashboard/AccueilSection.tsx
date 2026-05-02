@@ -5,9 +5,10 @@
 
 import React from 'react';
 import { LuHandHelping, LuLock } from 'react-icons/lu';
-import { TypeActivite, NormxModule, EtatFinancier, Exercice } from '../types';
+import { TypeActivite, NormxModule, EtatFinancier } from '../types';
 import { ExerciceSelector, ExerciceSelectorProps } from './ExerciceManager';
 import { SmtAlertBanner } from './SmtAlert';
+import ComptaDashboard from '../comptabilite/ComptaDashboard';
 
 interface SmtAlertState { show: boolean; ca: number; seuil: number; }
 
@@ -17,7 +18,10 @@ interface AccueilSectionProps {
   activeModule: NormxModule;
   moduleLabel: string;
   etats: EtatFinancier[];
+  entiteName: string;
+  entiteId: number;
   exerciceId: number | null;
+  exerciceAnnee: number;
   exerciceLoading: boolean;
   exerciceSelectorProps: ExerciceSelectorProps;
   smtAlert: SmtAlertState | null;
@@ -51,9 +55,30 @@ function getBannerText(activeModule: NormxModule, typeActivite: TypeActivite): s
 
 export function AccueilSection({
   userName, typeActivite, activeModule, moduleLabel, etats,
-  exerciceId, exerciceLoading, exerciceSelectorProps,
+  entiteName, entiteId, exerciceId, exerciceAnnee, exerciceLoading, exerciceSelectorProps,
   smtAlert, onOpenExerciceModal, openTab,
 }: AccueilSectionProps): React.ReactElement {
+  // Compta + exercice ouvert : afficher le tableau de bord interactif
+  if (exerciceId && activeModule === 'compta') {
+    return (
+      <div>
+        <div className="main-header">
+          <h1>Bienvenue, {userName ? userName.split(' ')[0] : 'Utilisateur'} <LuHandHelping /></h1>
+          <ExerciceSelector {...exerciceSelectorProps} />
+        </div>
+        {smtAlert && <SmtAlertBanner alert={smtAlert} onOpenParametres={() => openTab('parametres')} />}
+        <ComptaDashboard
+          entiteName={entiteName}
+          entiteId={entiteId}
+          exerciceId={exerciceId}
+          exerciceAnnee={exerciceAnnee}
+          userName={userName}
+          openTab={openTab}
+        />
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="main-header">
