@@ -12,6 +12,11 @@ export interface UserToken {
   tenantId: string;
   subscriptions: string[];
   exp: number; // Unix timestamp d'expiration du JWT (claim "exp")
+  // Attributs custom Keycloak User Profile (saisis a l'inscription)
+  // -> permettent au frontend de skipper les etapes redondantes du wizard.
+  phoneNumber?: string;
+  tenantType?: 'enterprise' | 'cabinet';
+  preferredModules?: string[]; // parse depuis CSV "compta,etats"
 }
 
 const KEYCLOAK_URL = process.env.KEYCLOAK_URL || 'http://localhost:8080';
@@ -51,8 +56,23 @@ interface KeycloakPayload {
   tenantId?: string;
   role?: string;
   subscribed_products?: string;
+  // Attributs custom User Profile injectes via Protocol Mappers Keycloak
+  phoneNumber?: string;
+  tenantType?: string;
+  preferredModules?: string;
   iat: number;
   exp: number;
+}
+
+function parseTenantType(raw?: string): 'enterprise' | 'cabinet' | undefined {
+  if (raw === 'enterprise' || raw === 'cabinet') return raw;
+  return undefined;
+}
+
+function parsePreferredModules(raw?: string): string[] | undefined {
+  if (!raw) return undefined;
+  const arr = raw.split(',').map(s => s.trim()).filter(Boolean);
+  return arr.length > 0 ? arr : undefined;
 }
 
 const APP_ROLES = ['admin', 'comptable', 'lecture_seule'];
@@ -122,6 +142,9 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
       tenantId: extractTenantId(decoded),
       subscriptions,
       exp: decoded.exp,
+      phoneNumber: decoded.phoneNumber,
+      tenantType: parseTenantType(decoded.tenantType),
+      preferredModules: parsePreferredModules(decoded.preferredModules),
     };
     next();
   } catch {
@@ -167,6 +190,10 @@ export async function optionalAuth(req: Request, _res: Response, next: NextFunct
       tenantSlug: extractTenantSlug(decoded),
       tenantId: extractTenantId(decoded),
       subscriptions,
+      exp: decoded.exp,
+      phoneNumber: decoded.phoneNumber,
+      tenantType: parseTenantType(decoded.tenantType),
+      preferredModules: parsePreferredModules(decoded.preferredModules),
     };
   } catch {
     // Token invalide - continue sans user

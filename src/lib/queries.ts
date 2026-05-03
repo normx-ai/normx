@@ -19,6 +19,13 @@ import { filterEnabledModules } from '../config/modules';
 
 // ==================== TENANT ====================
 
+export interface OnboardingPrefill {
+  nom?: string;
+  tenantType?: 'enterprise' | 'cabinet';
+  modules?: string[];
+  phoneNumber?: string;
+}
+
 interface TenantData {
   tenant: {
     id: number;
@@ -30,8 +37,9 @@ interface TenantData {
     actif: boolean;
     settings: Record<string, unknown> | null;
     created_at: string;
-  };
+  } | null;
   onboardingRequired?: boolean;
+  prefill?: OnboardingPrefill;
 }
 
 export function useTenant() {

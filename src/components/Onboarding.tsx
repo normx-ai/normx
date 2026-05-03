@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import type { NormxModule, Entite } from '../types';
+import type { OnboardingPrefill } from '../lib/queries';
 import { ENABLED_MODULES, isModuleEnabled } from '../config/modules';
 import OnboardingLayout from './onboarding/OnboardingLayout';
 import OnboardingStepEntite, { type TenantType } from './onboarding/OnboardingStepEntite';
@@ -12,6 +13,7 @@ interface OnboardingProps {
   userName: string;
   onComplete: (entite: Entite) => void;
   defaultModule?: string | null;
+  prefill?: OnboardingPrefill;
 }
 
 const ALL_MODULES: ModuleOption[] = [
@@ -34,19 +36,28 @@ const ALL_MODULES: ModuleOption[] = [
 // Filtre en temps reel : seuls les modules actives sont montres
 const MODULES: ModuleOption[] = ALL_MODULES.filter((m) => isModuleEnabled(m.id));
 
-export default function Onboarding({ userName, onComplete, defaultModule }: OnboardingProps): React.JSX.Element {
+export default function Onboarding({ userName, onComplete, defaultModule, prefill }: OnboardingProps): React.JSX.Element {
   const singleModuleMode = MODULES.length === 1;
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
-  const initialModules: NormxModule[] = singleModuleMode
-    ? MODULES.map((m) => m.id)
-    : defaultModule && MODULES.some((m) => m.id === defaultModule)
-      ? [defaultModule as NormxModule]
-      : [];
+  // Pre-remplissage depuis le JWT Keycloak (attributs custom saisis a l'inscription).
+  // Si prefill.tenantType + prefill.modules sont la, le wizard saute les etapes
+  // 1 et 2 et auto-soumet la creation du tenant des le montage.
+  const prefilledModules: NormxModule[] = prefill?.modules
+    ? (prefill.modules.filter((m): m is NormxModule => MODULES.some(opt => opt.id === m)))
+    : [];
+
+  const initialModules: NormxModule[] = prefilledModules.length > 0
+    ? prefilledModules
+    : singleModuleMode
+      ? MODULES.map((m) => m.id)
+      : defaultModule && MODULES.some((m) => m.id === defaultModule)
+        ? [defaultModule as NormxModule]
+        : [];
 
   const [selectedModules, setSelectedModules] = useState<NormxModule[]>(initialModules);
-  const [entiteNom, setEntiteNom] = useState('');
-  const [tenantType, setTenantType] = useState<TenantType>('enterprise');
+  const [entiteNom, setEntiteNom] = useState(prefill?.nom || '');
+  const [tenantType, setTenantType] = useState<TenantType>(prefill?.tenantType || 'enterprise');
 
   const currentYear = new Date().getFullYear();
   const [exerciceAnnee, setExerciceAnnee] = useState<number>(currentYear);
@@ -80,6 +91,9 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
     else setSelectedModules(MODULES.map((m) => m.id));
   };
 
+  // Ref pour eviter double-trigger de l'auto-submit (useEffect declare plus bas).
+  const autoSubmitDone = useRef(false);
+
   const handleCreateTenant = async (): Promise<void> => {
     if (!entiteNom.trim()) return;
     setSaving(true);
@@ -108,6 +122,19 @@ export default function Onboarding({ userName, onComplete, defaultModule }: Onbo
       setSaving(false);
     }
   };
+
+  // Auto-skip etapes 1 et 2 si tout est pre-rempli depuis le JWT.
+  // L'utilisateur a deja saisi nom/type/modules a l'inscription Keycloak,
+  // pas besoin de les redemander -> on cree le tenant et on saute a
+  // l'etape 3 (creation exercice). Garde ref pour eviter double-trigger.
+  useEffect(() => {
+    if (autoSubmitDone.current) return;
+    const fullyPrefilled = !!(prefill?.nom?.trim() && prefill?.tenantType && prefill?.modules?.length);
+    if (fullyPrefilled && step === 1 && !saving && !createdTenantId) {
+      autoSubmitDone.current = true;
+      handleCreateTenant();
+    }
+  }, [prefill, step, saving, createdTenantId]);
 
   const handleCreateExercice = async (): Promise<void> => {
     if (!exerciceAnnee || !exerciceDebut || !exerciceFin) {

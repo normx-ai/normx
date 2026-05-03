@@ -17,7 +17,16 @@ router.get('/me', async (req: Request, res: Response) => {
   const tenant = await tenantService.getTenantBySlug(slug);
 
   if (!tenant) {
-    return res.json({ tenant: null, onboardingRequired: true });
+    // Pre-remplissage du wizard depuis les attributs Keycloak saisis a l'inscription.
+    // Si tous les attributs requis sont presents, le wizard peut auto-soumettre
+    // l'etape "entite" et passer direct a la creation d'exercice.
+    const prefill = {
+      nom: req.user.name || '',
+      tenantType: req.user.tenantType,
+      modules: req.user.preferredModules,
+      phoneNumber: req.user.phoneNumber,
+    };
+    return res.json({ tenant: null, onboardingRequired: true, prefill });
   }
 
   // Charger les clients si c'est un cabinet
