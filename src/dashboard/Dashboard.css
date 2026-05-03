@@ -264,6 +264,7 @@
 }
 
 .compta-nav-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -284,8 +285,17 @@
 }
 .compta-nav-item.active {
   background-color: #FDF8EE;
-  color: #D4A843;
+  color: var(--couleur-primaire);
   font-weight: 600;
+}
+.compta-nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background: var(--couleur-primaire);
 }
 .compta-nav-item.disabled {
   opacity: 0.4; cursor: not-allowed; pointer-events: auto;
@@ -355,6 +365,7 @@
 }
 
 .sidebar-2-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -376,8 +387,17 @@
 }
 .sidebar-2-item.active {
   background-color: #FAF0D8;
-  color: #C09935;
+  color: var(--couleur-primaire-hover);
   font-weight: 600;
+}
+.sidebar-2-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background: var(--couleur-primaire);
 }
 .sidebar-2-icon {
   display: flex;
