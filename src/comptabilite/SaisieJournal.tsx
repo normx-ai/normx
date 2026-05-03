@@ -20,7 +20,7 @@ function SaisieJournal({
 
   const filters = useEcrituresFilters(exerciceAnnee);
 
-  const { ecritures, planComptable, tiersList, stats, invalidate } =
+  const { ecritures, planComptable, tiersList, invalidate } =
     useEcrituresData(entiteId, exerciceId, filters.ecrituresFilters);
 
   const form = useEcritureForm({ exerciceAnnee, exerciceDateDebut, exerciceDateFin, planComptable });
@@ -43,7 +43,7 @@ function SaisieJournal({
         onOpenImport={() => setShowImportModal(true)}
       />
 
-      <EcrituresStatsBar ecritures={ecritures} stats={stats} />
+      <EcrituresStatsBar ecritures={ecritures} />
 
       <EcrituresFilters
         filterJournal={filters.filterJournal} setFilterJournal={filters.setFilterJournal}
@@ -67,6 +67,8 @@ function SaisieJournal({
         onOpenCreate={form.openCreate}
         onOpenImport={() => setShowImportModal(true)}
         onShortcut={form.openShortcut}
+        hasActiveFilters={filters.hasActiveFilters}
+        onClearFilters={filters.resetAllFilters}
       />
 
       <aside className="saisie-help-banner">

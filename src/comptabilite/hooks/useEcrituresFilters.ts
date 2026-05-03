@@ -17,6 +17,8 @@ export interface UseEcrituresFiltersResult {
   activeTab: StatutTab;
   setActiveTab: (t: StatutTab) => void;
   ecrituresFilters: Record<string, string>;
+  hasActiveFilters: boolean;
+  resetAllFilters: () => void;
 }
 
 export function useEcrituresFilters(exerciceAnnee: number): UseEcrituresFiltersResult {
@@ -60,6 +62,20 @@ export function useEcrituresFilters(exerciceAnnee: number): UseEcrituresFiltersR
     return f;
   }, [filterJournal, filterStatut, filterDateDu, filterDateAu, searchTerm]);
 
+  const hasActiveFilters = !!(
+    filterJournal || filterStatut || filterMois || filterDateDu || filterDateAu || searchTerm || activeTab !== 'all'
+  );
+
+  const resetAllFilters = (): void => {
+    setFilterJournal('');
+    setFilterStatut('');
+    setFilterMois('');
+    setFilterDateDu('');
+    setFilterDateAu('');
+    setSearchTerm('');
+    setActiveTabState('all');
+  };
+
   return {
     filterJournal, setFilterJournal,
     filterStatut, setFilterStatut,
@@ -69,5 +85,7 @@ export function useEcrituresFilters(exerciceAnnee: number): UseEcrituresFiltersR
     searchTerm, setSearchTerm,
     activeTab, setActiveTab,
     ecrituresFilters,
+    hasActiveFilters,
+    resetAllFilters,
   };
 }

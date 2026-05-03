@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { CompteComptable } from '../../types';
-import type { EcritureAPI, StatsData, TiersItem } from '../SaisieJournal.types';
+import type { EcritureAPI, TiersItem } from '../SaisieJournal.types';
 import { useReferentiel } from '../../contexts/ReferentielContext';
 import { usePlanComptable } from '../../lib/queries';
 import { clientFetch } from '../../lib/api';
@@ -11,7 +11,6 @@ export interface UseEcrituresDataResult {
   ecritures: EcritureAPI[];
   planComptable: CompteComptable[];
   tiersList: TiersItem[];
-  stats: StatsData | null;
   invalidate: () => void;
 }
 
@@ -49,22 +48,9 @@ export function useEcrituresData(
     },
   );
 
-  const { data: stats = null } = useQuery<StatsData | null>({
-    queryKey: ['ecritures-stats', entiteId, exerciceId],
-    queryFn: async () => {
-      const res = await clientFetch(api.ecritures.stats(entiteId, exerciceId));
-      if (!res.ok) throw new Error('Erreur chargement stats');
-      return res.json();
-    },
-    staleTime: 30 * 1000,
-    gcTime: 5 * 60 * 1000,
-    enabled: entiteId > 0 && exerciceId > 0,
-  });
-
   const invalidate = (): void => {
     queryClient.invalidateQueries({ queryKey: ['ecritures', entiteId, exerciceId] });
-    queryClient.invalidateQueries({ queryKey: ['ecritures-stats', entiteId, exerciceId] });
   };
 
-  return { ecritures, planComptable, tiersList, stats, invalidate };
+  return { ecritures, planComptable, tiersList, invalidate };
 }

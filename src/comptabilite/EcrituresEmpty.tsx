@@ -1,10 +1,12 @@
 import React from 'react';
-import { LuFileText, LuPlus, LuFileUp, LuReceipt, LuShoppingCart, LuLandmark } from 'react-icons/lu';
+import { LuFileText, LuPlus, LuFileUp, LuReceipt, LuShoppingCart, LuLandmark, LuFilterX } from 'react-icons/lu';
 
 export interface EcrituresEmptyProps {
   onOpenCreate: () => void;
   onOpenImport?: () => void;
   onShortcut: (journal: string) => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
 }
 
 interface ShortcutDef {
@@ -14,7 +16,26 @@ interface ShortcutDef {
   icon: React.ReactNode;
 }
 
-function EcrituresEmpty({ onOpenCreate, onOpenImport, onShortcut }: EcrituresEmptyProps): React.JSX.Element {
+function EcrituresEmpty({ onOpenCreate, onOpenImport, onShortcut, hasActiveFilters, onClearFilters }: EcrituresEmptyProps): React.JSX.Element {
+  if (hasActiveFilters) {
+    return (
+      <div className="saisie-empty-rich">
+        <div className="saisie-empty-illu">
+          <LuFilterX size={36} />
+        </div>
+        <h2 className="saisie-empty-title">Aucune écriture pour ces filtres</h2>
+        <p className="saisie-empty-desc">
+          Aucun résultat ne correspond aux filtres actifs (journal, statut, période ou recherche). Effacez-les pour voir toutes les écritures de l'exercice.
+        </p>
+        <div className="saisie-empty-actions">
+          <button type="button" className="compta-action-btn primary" onClick={onClearFilters}>
+            <LuFilterX /> Effacer les filtres
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const shortcuts: ShortcutDef[] = [
     { journal: 'VTE', title: 'Facture de vente', desc: 'Saisie au journal VTE avec TVA', icon: <LuReceipt size={18} /> },
     { journal: 'ACH', title: "Facture d'achat", desc: 'Saisie au journal ACH', icon: <LuShoppingCart size={18} /> },

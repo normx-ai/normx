@@ -37,10 +37,6 @@ export interface EcritureLigneAPI {
   tiers_nom?: string;
 }
 
-export interface StatsData {
-  nb_comptes: number;
-}
-
 export interface TiersItem {
   id: number;
   code_tiers: string;
@@ -102,6 +98,8 @@ export interface EcrituresListProps {
   onOpenCreate: () => void;
   onOpenImport?: () => void;
   onShortcut: (journal: string) => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
 }
 
 export interface SaisieOverlayProps {

@@ -22,6 +22,8 @@ function EcrituresList({
   onOpenCreate,
   onOpenImport,
   onShortcut,
+  hasActiveFilters,
+  onClearFilters,
 }: EcrituresListProps): React.JSX.Element {
   const isEmpty = ecritures.length === 0;
 
@@ -69,6 +71,8 @@ function EcrituresList({
                   onOpenCreate={onOpenCreate}
                   onOpenImport={onOpenImport}
                   onShortcut={onShortcut}
+                  hasActiveFilters={hasActiveFilters}
+                  onClearFilters={onClearFilters}
                 />
               </td>
             </tr>

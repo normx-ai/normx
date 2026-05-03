@@ -1,14 +1,13 @@
 import React from 'react';
 import { LuFileText } from 'react-icons/lu';
-import type { EcritureAPI, StatsData } from './SaisieJournal.types';
+import type { EcritureAPI } from './SaisieJournal.types';
 import { fmt } from '../utils/formatters';
 
 export interface EcrituresStatsBarProps {
   ecritures: EcritureAPI[];
-  stats: StatsData | null;
 }
 
-function EcrituresStatsBar({ ecritures, stats }: EcrituresStatsBarProps): React.JSX.Element {
+function EcrituresStatsBar({ ecritures }: EcrituresStatsBarProps): React.JSX.Element {
   const totalDebit = (ecritures || []).reduce((s, e) =>
     s + (e.lignes || []).reduce((s2, l) => s2 + (parseFloat(String(l.debit)) || 0), 0), 0);
   const totalCredit = (ecritures || []).reduce((s, e) =>
@@ -17,7 +16,14 @@ function EcrituresStatsBar({ ecritures, stats }: EcrituresStatsBarProps): React.
   const equilibre = ecart < 0.01;
 
   const nbCount = ecritures.length;
-  const nbComptes = stats?.nb_comptes ?? 0;
+  // Comptes uniques mouvementes dans les ecritures filtrees (cohesion avec la liste).
+  const comptes = new Set<string>();
+  for (const e of ecritures) {
+    for (const l of e.lignes || []) {
+      if (l.numero_compte) comptes.add(l.numero_compte);
+    }
+  }
+  const nbComptes = comptes.size;
 
   return (
     <div className="saisie-stats-bar">
@@ -30,7 +36,7 @@ function EcrituresStatsBar({ ecritures, stats }: EcrituresStatsBarProps): React.
             {nbCount} écriture{nbCount > 1 ? 's' : ''} saisie{nbCount > 1 ? 's' : ''}
           </div>
           <div className="saisie-stats-info-secondary">
-            {stats ? `${nbComptes} compte${nbComptes > 1 ? 's' : ''} mouvementé${nbComptes > 1 ? 's' : ''}` : '—'}
+            {nbComptes} compte{nbComptes > 1 ? 's' : ''} mouvementé{nbComptes > 1 ? 's' : ''}
           </div>
         </div>
       </div>
