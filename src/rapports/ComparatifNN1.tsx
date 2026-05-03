@@ -81,7 +81,6 @@ function ComparatifNN1({ entiteId, exerciceId, exerciceAnnee, exercices, offre, 
 
     // Colonnes : Poste | Libellé | Solde N | Solde N-1 | Variation | %
     const cols = [20, 60, 155, 195, 235, 265];
-    const colR = [155, 195, 235, 265]; // right-aligned cols end X
 
     // En-tête tableau
     pdf.setFillColor(26, 58, 92);

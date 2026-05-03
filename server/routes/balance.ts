@@ -3,7 +3,13 @@ import logger from '../logger';
 import * as balanceService from '../services/balance.service';
 import { getErrorMessage } from '../utils/routeHelpers';
 import { validateBody } from '../middleware/validate';
-import { createExerciceBody, importBalanceBody } from '../schemas/balance.schema';
+import {
+  createExerciceBody,
+  importBalanceBody,
+  updateBalanceLigneBody,
+  updateRevisionBody,
+  updateBalanceStatutBody,
+} from '../schemas/balance.schema';
 
 const router = express.Router();
 
@@ -217,7 +223,7 @@ router.delete('/:balance_id', async (req: Request, res: Response) => {
 });
 
 // Modifier une ligne de balance
-router.put('/ligne/:ligne_id', async (req: Request, res: Response) => {
+router.put('/ligne/:ligne_id', validateBody(updateBalanceLigneBody), async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { numero_compte, libelle_compte, si_debit, si_credit, debit, credit, solde_debiteur, solde_crediteur } = req.body;
@@ -247,7 +253,7 @@ router.get('/:entite_id/:exercice_id/:type_balance', async (req: Request, res: R
 });
 
 // Revision : mettre a jour une ligne
-router.put('/revision/:ligne_id', async (req: Request, res: Response) => {
+router.put('/revision/:ligne_id', validateBody(updateRevisionBody), async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { debit_revise, credit_revise, solde_debiteur_revise, solde_crediteur_revise, note_revision } = req.body;
@@ -268,13 +274,10 @@ router.put('/revision/:ligne_id', async (req: Request, res: Response) => {
 });
 
 // Valider/changer statut balance
-router.put('/statut/:balance_id', async (req: Request, res: Response) => {
+router.put('/statut/:balance_id', validateBody(updateBalanceStatutBody), async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { statut, revision_notes, user_id } = req.body;
-  if (!['brut', 'revise', 'valide'].includes(statut)) {
-    return res.status(400).json({ error: 'Statut invalide.' });
-  }
   try {
     const result = await balanceService.updateBalanceStatut(schema, parseInt(req.params.balance_id, 10), statut, user_id, revision_notes);
     if (!result) return res.status(404).json({ error: 'Balance non trouvee.' });

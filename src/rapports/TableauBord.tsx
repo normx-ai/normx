@@ -189,7 +189,6 @@ function TableauBord({ entiteId, exerciceId, exerciceAnnee, offre, onBack, entit
   const barMaxMensuel: number = hasMensuel ? Math.max(...mensuel.map((m: TableauBordMensuelRow) => Math.max(parseFloat(m.produits), parseFloat(m.charges))), 1) : 1;
 
   // Graphique annuel par classe (pour balance importée ou complément)
-  const classesList = classes.filter(c => ['6', '7', '8'].includes(c.classe));
   const barMaxClasse: number = Math.max(...classes.map(c => Math.max(parseFloat(c.debit), parseFloat(c.credit))), 1);
   const totalDebitClasses: number = classes.reduce((s, c) => s + parseFloat(c.debit), 0);
   const totalCreditClasses: number = classes.reduce((s, c) => s + parseFloat(c.credit), 0);

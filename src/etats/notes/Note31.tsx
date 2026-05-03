@@ -11,6 +11,7 @@ import { thStyle, tdStyle, tdRight, tdBold, inputSt } from './noteStyles';
 import { LuInfo } from 'react-icons/lu';
 import { computeAllCR, getValue as crGetValue, type CRBalanceResult } from '../cr/crSyscohadaData';
 import { rawSC, sumSoldeDebiteur } from '../tft/soldes';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note31Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -98,15 +99,10 @@ function Note31({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note31P
   const ctxN = useMemo(() => buildCtx(lignesN), [lignesN]);
   const ctxN1 = useMemo(() => buildCtx(lignesN1), [lignesN1]);
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
   const parseNVal = (v: string): number => {
     const n = parseFloat(v.replace(/\s/g, '').replace(',', '.'));
     return isNaN(n) ? 0 : n;
   };
-  const fmtM = (v: number): string => Math.round(v).toLocaleString('fr-FR');
 
   const computedValue = (i: number, col: number): number | null => {
     const s = SECTIONS[i];
@@ -118,9 +114,9 @@ function Note31({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note31P
 
   const displayValue = (i: number, col: number): string => {
     const ov = getVal(i, col);
-    if (ov.trim()) return fmtM(parseNVal(ov));
+    if (ov.trim()) return fmtMontant(parseNVal(ov));
     const calc = computedValue(i, col);
-    return calc === null ? '' : fmtM(calc);
+    return calc === null ? '' : fmtMontant(calc);
   };
 
   const inp: React.CSSProperties = { ...inputSt, fontSize: 11 };
@@ -151,7 +147,7 @@ function Note31({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note31P
       </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 11, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 31 — REPARTITION DU RESULTAT ET AUTRES ELEMENTS CARACTERISTIQUES DES CINQ DERNIERS EXERCICES
         </h3>
@@ -174,7 +170,7 @@ function Note31({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note31P
                   if (editing) {
                     const placeholder = (() => {
                       const calc = computedValue(i, ci);
-                      return calc === null ? '' : fmtM(calc);
+                      return calc === null ? '' : fmtMontant(calc);
                     })();
                     return (
                       <td key={ci} style={tdRight}>

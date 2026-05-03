@@ -4,7 +4,6 @@
  */
 
 import pool from '../db';
-import logger from '../logger';
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 
 // ============ INTERFACES ============

@@ -321,3 +321,32 @@
 @media (max-width: 900px) {
   .chat-history-panel { width: 200px; }
 }
+
+/* Toggle visibilite (privee/partagee) sur creation de conversation */
+.chat-visibility-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+.visibility-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 8px;
+  font-size: 12px;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--couleur-texte);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.visibility-btn:hover { background: #FAF0D8; border-color: #D4A843; }
+.visibility-btn.active {
+  background: #D4A843;
+  border-color: #C09935;
+  color: #fff;
+}

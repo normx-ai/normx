@@ -8,6 +8,7 @@ import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note1Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -62,15 +63,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
-  const fmtMontant = (val: number): string => {
-    if (!val || val === 0) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
 
   // Calculer les dettes financières depuis la balance — détail par sous-compte
   // 16x complet (intérêts courus 166 inclus car rattachés à l'emprunt)
@@ -257,7 +250,7 @@ function Note1({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note1Pro
             <div style={{ fontSize: 12 }}><strong>Numéro d'identification :</strong> {entiteNif}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 12 }}><strong>Exercice clos le</strong> {dateFin ? fmtDateShort(dateFin) : ''}</div>
+            <div style={{ fontSize: 12 }}><strong>Exercice clos le</strong> {dateFin ? fmtDate(dateFin) : ''}</div>
             <div style={{ fontSize: 12 }}><strong>Durée (en mois)</strong> {duree}</div>
           </div>
         </div>

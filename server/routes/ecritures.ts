@@ -1,79 +1,40 @@
 import express, { Request, Response } from 'express';
 import logger from '../logger';
 import * as ecrituresService from '../services/ecritures.service';
+import { assertEcritureLinesValid } from '../services/ecritures/validation';
 import { getErrorMessage, getTenantSchema } from '../utils/routeHelpers';
 import { getPagination, paginatedResponse } from '../utils/pagination';
-import planComptable from '../data/planComptable';
-import type { CompteComptable as PlanCompte } from '../types/comptes';
-
-interface EcritureLigne {
-  numero_compte: string;
-  debit: string;
-  credit: string;
-  libelle?: string;
-  tiers_id?: number;
-}
+import { asyncHandler } from '../middleware/asyncHandler';
+import { validateBody } from '../middleware/validate';
+import {
+  createEcritureBody,
+  updateEcritureBody,
+  validerEcrituresBody,
+  devaliderEcrituresBody,
+  lettrerBody,
+  delettrerBody,
+} from '../schemas/ecritures.schema';
 
 interface EcheancierRow {
   debit: string;
   credit: string;
   lettrage_code: string | null;
 }
-const pcNums = new Set(planComptable.map((c: PlanCompte) => c.numero));
-
-// Verifier un compte padde : "101100" -> cherche "1011", "101", "10" etc.
-const isCompteValide = (numero: string): boolean => {
-  if (pcNums.has(numero)) return true;
-  let trimmed = numero.replace(/0+$/, '');
-  while (trimmed.length >= 2) {
-    if (pcNums.has(trimmed)) return true;
-    trimmed = trimmed.slice(0, -1);
-  }
-  return false;
-};
 
 const router = express.Router();
 
-/** Valide les lignes d'ecriture : equilibre debit/credit + comptes valides */
-function validateEcritureLines(lignes: EcritureLigne[]): { valid: boolean; error?: string } {
-  const totalDebit = lignes.reduce((s: number, l: EcritureLigne) => s + (parseFloat(l.debit) || 0), 0);
-  const totalCredit = lignes.reduce((s: number, l: EcritureLigne) => s + (parseFloat(l.credit) || 0), 0);
-  if (Math.abs(totalDebit - totalCredit) > 0.01) {
-    return { valid: false, error: `Ecriture desequilibree. Debit: ${totalDebit}, Credit: ${totalCredit}` };
-  }
-  const comptesInvalides = lignes
-    .filter((l: EcritureLigne) => l.numero_compte && (parseFloat(l.debit) || parseFloat(l.credit)))
-    .filter((l: EcritureLigne) => !isCompteValide(l.numero_compte))
-    .map((l: EcritureLigne) => l.numero_compte);
-  if (comptesInvalides.length > 0) {
-    return { valid: false, error: 'Comptes invalides (absents du plan comptable SYCEBNL) : ' + comptesInvalides.join(', ') };
-  }
-  return { valid: true };
-}
-
 // Creer une ecriture avec ses lignes
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', validateBody(createEcritureBody), asyncHandler(async (req: Request, res: Response) => {
   const { exercice_id, date_ecriture, journal, numero_piece, libelle, lignes } = req.body;
   const schema = getTenantSchema(req, res);
   if (!schema) return;
 
-  if (!exercice_id || !date_ecriture || !libelle || !lignes || lignes.length < 2) {
-    return res.status(400).json({ error: 'Donnees incompletes. Minimum 2 lignes.' });
-  }
+  // Zod garantit la structure ; assert porte la regle metier (equilibre + comptes)
+  assertEcritureLinesValid(lignes);
 
-  const validation = validateEcritureLines(lignes);
-  if (!validation.valid) {
-    return res.status(400).json({ error: validation.error });
-  }
-
-  try {
-    const ecriture = await ecrituresService.createEcriture(schema, { exercice_id, date_ecriture, journal, numero_piece, libelle, lignes });
-    res.status(201).json({ message: 'Ecriture enregistree.', ecriture });
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const ecriture = await ecrituresService.createEcriture(schema, { exercice_id, date_ecriture, journal, numero_piece, libelle, lignes });
+  res.status(201).json({ message: 'Ecriture enregistree.', ecriture });
+}));
 
 // Lister ecritures d'un exercice
 router.get('/:entite_id/:exercice_id', async (req: Request, res: Response) => {
@@ -91,13 +52,10 @@ router.get('/:entite_id/:exercice_id', async (req: Request, res: Response) => {
 });
 
 // Valider une ou plusieurs ecritures
-router.post('/valider', async (req: Request, res: Response) => {
+router.post('/valider', validateBody(validerEcrituresBody), async (req: Request, res: Response) => {
   const { ids, user_id } = req.body;
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  if (!ids || !Array.isArray(ids) || ids.length === 0) {
-    return res.status(400).json({ error: 'Aucune ecriture selectionnee.' });
-  }
   try {
     const result = await ecrituresService.validerEcritures(schema, ids, user_id || null);
     res.json({ message: result.rowCount + ' ecriture(s) validee(s).', validated: result.rows.map((r: { id: number }) => r.id) });
@@ -108,13 +66,10 @@ router.post('/valider', async (req: Request, res: Response) => {
 });
 
 // Devalider une ecriture
-router.post('/devalider', async (req: Request, res: Response) => {
+router.post('/devalider', validateBody(devaliderEcrituresBody), async (req: Request, res: Response) => {
   const { ids } = req.body;
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  if (!ids || !Array.isArray(ids) || ids.length === 0) {
-    return res.status(400).json({ error: 'Aucune ecriture selectionnee.' });
-  }
   try {
     const result = await ecrituresService.devaliderEcritures(schema, ids);
     res.json({ message: result.rowCount + ' ecriture(s) repassee(s) en brouillard.', devalidated: result.rows.map((r: { id: number }) => r.id) });
@@ -125,30 +80,18 @@ router.post('/devalider', async (req: Request, res: Response) => {
 });
 
 // Modifier une ecriture (brouillard uniquement)
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', validateBody(updateEcritureBody), asyncHandler(async (req: Request, res: Response) => {
   const { date_ecriture, journal, numero_piece, libelle, lignes } = req.body;
   const schema = getTenantSchema(req, res);
   if (!schema) return;
 
-  if (!date_ecriture || !libelle || !lignes || lignes.length < 2) {
-    return res.status(400).json({ error: 'Donnees incompletes.' });
-  }
+  assertEcritureLinesValid(lignes);
 
-  const validation = validateEcritureLines(lignes);
-  if (!validation.valid) {
-    return res.status(400).json({ error: validation.error });
-  }
-
-  try {
-    const result = await ecrituresService.updateEcriture(schema, parseInt(req.params.id, 10), { date_ecriture, journal, numero_piece, libelle, lignes });
-    if (result.notFound) return res.status(404).json({ error: 'Ecriture non trouvee.' });
-    if (result.forbidden) return res.status(403).json({ error: 'Impossible de modifier une ecriture validee. Contrepassez-la.' });
-    res.json({ message: 'Ecriture modifiee.' });
-  } catch (err) {
-    logger.error(getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: 'Erreur serveur.' });
-  }
-});
+  const result = await ecrituresService.updateEcriture(schema, parseInt(req.params.id, 10), { date_ecriture, journal, numero_piece, libelle, lignes });
+  if (result.notFound) return res.status(404).json({ error: 'Ecriture non trouvee.' });
+  if (result.forbidden) return res.status(403).json({ error: 'Impossible de modifier une ecriture validee. Contrepassez-la.' });
+  res.json({ message: 'Ecriture modifiee.' });
+}));
 
 // Supprimer une ecriture (brouillard uniquement)
 router.delete('/:id', async (req: Request, res: Response) => {
@@ -340,13 +283,10 @@ router.get('/lettrage/ecritures/:entite_id/:exercice_id/:tiers_id', async (req: 
   }
 });
 
-router.post('/lettrage/lettrer', async (req: Request, res: Response) => {
+router.post('/lettrage/lettrer', validateBody(lettrerBody), async (req: Request, res: Response) => {
   const { ligne_ids } = req.body;
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  if (!ligne_ids || ligne_ids.length < 2) {
-    return res.status(400).json({ error: 'Au moins 2 lignes requises.' });
-  }
   try {
     const result = await ecrituresService.lettrer(schema, ligne_ids);
     if (result.error) return res.status(400).json({ error: result.error });
@@ -357,13 +297,10 @@ router.post('/lettrage/lettrer', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/lettrage/delettrer', async (req: Request, res: Response) => {
+router.post('/lettrage/delettrer', validateBody(delettrerBody), async (req: Request, res: Response) => {
   const { lettrage_code } = req.body;
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  if (!lettrage_code) {
-    return res.status(400).json({ error: 'Code lettrage requis.' });
-  }
   try {
     const result = await ecrituresService.delettrer(schema, lettrage_code);
     res.json(result);

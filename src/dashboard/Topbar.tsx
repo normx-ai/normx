@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-  LuChevronDown, LuUser, LuSettings, LuLock, LuLogOut, LuBriefcase,
+  LuChevronDown, LuUser, LuSettings, LuLock, LuLogOut,
 } from 'react-icons/lu';
-import { NormxModule, Entite, TypeActivite } from '../types';
+import { NormxModule, TypeActivite } from '../types';
 import { ModuleInfo } from './types';
 import NotificationBell from '../components/NotificationBell';
 import ModuleSwitcherDropdown from './ModuleSwitcherDropdown';

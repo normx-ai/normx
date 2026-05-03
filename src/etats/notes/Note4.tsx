@@ -4,7 +4,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
@@ -20,6 +20,7 @@ import {
 import { Note4Table } from './note4/Note4Table';
 import { Note4Filiales } from './note4/Note4Filiales';
 import { textareaStyle } from './note4/note4Styles';
+import { fmtDate } from '../../utils/formatters';
 
 interface Note4Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -76,10 +77,6 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
   };
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const brutRows = RUBRIQUES_BRUT.map(r => ({ ...r, vals: computeRow(r, lignesN, lignesN1, getAdj) }));
   const depreciationRows = RUBRIQUES_DEPRECIATION.map(r => ({ ...r, vals: computeRow(r, lignesN, lignesN1, getAdj) }));
@@ -223,7 +220,7 @@ function Note4({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note4Pro
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

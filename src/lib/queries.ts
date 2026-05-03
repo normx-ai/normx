@@ -11,21 +11,13 @@
  * qui l'utilisait a ete demonte.
  */
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { cabinetFetch, clientFetch } from './api';
 import { api } from './apiEndpoints';
-import type { Entite, NormxModule } from '../types';
+import type { Entite, NormxModule, CompteComptable } from '../types';
 import { filterEnabledModules } from '../config/modules';
 
 // ==================== TENANT ====================
-
-export interface OnboardingPrefill {
-  // Le nom de l'entite n'est PAS pre-rempli (le 'name' Keycloak = nom
-  // de la personne, pas de la societe). L'utilisateur doit le saisir.
-  tenantType?: 'enterprise' | 'cabinet';
-  modules?: string[];
-  phoneNumber?: string;
-}
 
 interface TenantData {
   tenant: {
@@ -40,7 +32,6 @@ interface TenantData {
     created_at: string;
   } | null;
   onboardingRequired?: boolean;
-  prefill?: OnboardingPrefill;
 }
 
 export function useTenant() {
@@ -84,13 +75,6 @@ export function useEntites(enabled: boolean) {
 }
 
 // ==================== PLAN COMPTABLE ====================
-
-interface CompteComptable {
-  numero: string;
-  libelle: string;
-  classe?: number | string;
-  sens?: string;
-}
 
 export function usePlanComptable(referentiel: string) {
   return useQuery<CompteComptable[]>({

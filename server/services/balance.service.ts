@@ -4,9 +4,6 @@
  */
 
 import pool from '../db';
-import { createLogger } from '../logger';
-
-const log = createLogger('balance');
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 
 // ============ INTERFACES ============

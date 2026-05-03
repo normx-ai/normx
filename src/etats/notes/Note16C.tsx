@@ -9,6 +9,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, inputSt } from './noteStyles';
+import { fmtDate } from '../../utils/formatters';
 
 interface Note16CProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -24,10 +25,10 @@ const emptyLigne = (): LigneEventuel => ({ libelle: '', anneeN: '', anneeN1: '' 
 
 const DEFAULT_COMMENTAIRE = `• Decrire les principales caracteristiques des actifs / passifs eventuels, l'horizon de temps auquel les encaissements / decaissements sont attendus et les eventuels remboursements a percevoir.`;
 
-function Note16C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16CProps): React.JSX.Element {
+function Note16C({ entiteName, entiteNif = '', entiteId, onBack }: Note16CProps): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -52,10 +53,6 @@ function Note16C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
     note16c_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const updateLigne = (setter: React.Dispatch<React.SetStateAction<LigneEventuel[]>>, idx: number, field: keyof LigneEventuel, value: string) => {
     setter(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
@@ -129,7 +126,7 @@ function Note16C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
               <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numero d'identification :</span>

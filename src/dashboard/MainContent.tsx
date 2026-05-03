@@ -152,7 +152,7 @@ function MainContent(props: MainContentProps): React.ReactElement {
         </div>
       )}
 
-      {activeTab === 'assistant' && <AssistantChat userName={userName} userId={userId} typeActivite={typeActivite} />}
+      {activeTab === 'assistant' && <AssistantChat userName={userName} typeActivite={typeActivite} />}
 
       {(activeTab === 'rapports' || isRapportsSubTab(activeTab)) && (
         <RapportsSection

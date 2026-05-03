@@ -4,6 +4,8 @@ import * as balanceService from '../services/balance.service';
 import pool from '../db';
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 import logger from '../logger';
+import { validateBody } from '../middleware/validate';
+import { setupBody, createExerciceBody } from '../schemas/tenant.schema';
 
 const router = express.Router();
 
@@ -17,17 +19,7 @@ router.get('/me', async (req: Request, res: Response) => {
   const tenant = await tenantService.getTenantBySlug(slug);
 
   if (!tenant) {
-    // Pre-remplissage du wizard depuis les attributs Keycloak saisis a
-    // l'inscription. /!\ On ne pre-remplit PAS le nom de l'entite avec
-    // req.user.name : le name Keycloak est le nom de la PERSONNE
-    // (prenom+nom utilisateur), pas le nom de la SOCIETE/CABINET.
-    // Le user doit saisir explicitement le nom de son entite.
-    const prefill = {
-      tenantType: req.user.tenantType,
-      modules: req.user.preferredModules,
-      phoneNumber: req.user.phoneNumber,
-    };
-    return res.json({ tenant: null, onboardingRequired: true, prefill });
+    return res.json({ tenant: null, onboardingRequired: true });
   }
 
   // Charger les clients si c'est un cabinet
@@ -40,20 +32,12 @@ router.get('/me', async (req: Request, res: Response) => {
 });
 
 // POST /api/tenant/setup — Onboarding : configurer le tenant
-router.post('/setup', async (req: Request, res: Response) => {
+router.post('/setup', validateBody(setupBody), async (req: Request, res: Response) => {
   if (!req.user?.sub) {
     return res.status(401).json({ error: 'Non authentifié.' });
   }
 
-  const { nom, type, modules } = req.body as {
-    nom: string;
-    type: 'enterprise' | 'cabinet';
-    modules: string[];
-  };
-
-  if (!nom || !type) {
-    return res.status(400).json({ error: 'Nom et type requis.' });
-  }
+  const { nom, type, modules } = req.body;
 
   const slug = req.user.sub.replace(/-/g, '_');
 
@@ -107,7 +91,7 @@ router.post('/setup', async (req: Request, res: Response) => {
 
 // POST /api/tenant/exercice — Cabinet : creer un exercice au niveau cabinet
 // Cet exercice sera automatiquement copie vers les nouveaux clients
-router.post('/exercice', async (req: Request, res: Response) => {
+router.post('/exercice', validateBody(createExerciceBody), async (req: Request, res: Response) => {
   if (!req.user?.sub) {
     return res.status(401).json({ error: 'Non authentifié.' });
   }
@@ -118,16 +102,7 @@ router.post('/exercice', async (req: Request, res: Response) => {
     return res.status(403).json({ error: 'Tenant non trouvé.' });
   }
 
-  const { annee, duree_mois, date_debut, date_fin } = req.body as {
-    annee: number;
-    duree_mois?: number;
-    date_debut?: string;
-    date_fin?: string;
-  };
-
-  if (!annee) {
-    return res.status(400).json({ error: 'Année requise.' });
-  }
+  const { annee, duree_mois, date_debut, date_fin } = req.body;
 
   try {
     const result = await balanceService.createExercice(

@@ -9,6 +9,7 @@ import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, inputSt } from './noteStyles';
 import { LuInfo } from 'react-icons/lu';
+import { fmtDate } from '../../utils/formatters';
 
 interface Note16BProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -57,10 +58,10 @@ const DEFAULT_COMM_SENS = '• Indiquer l\'impact des variations obtenues sur le
 const DEFAULT_COMM_AP_NET = '• Indiquer le montant comptabilise au passif (si actif) ou a l\'actif (si deficit) a la cloture de l\'exercice.';
 const DEFAULT_COMM_ACTIFS = '• Expliquer comment les taux de rendement attendus par categorie d\'actifs et global ont ete determines.\n• Indiquer le montant des rendements reels des actifs affectes aux plans en N et N-1.';
 
-function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16BProps): React.JSX.Element {
+function Note16B({ entiteName, entiteNif = '', entiteId, onBack }: Note16BProps): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -97,10 +98,6 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
     note16b_comm_actifs: commentaireActifs,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const renderInput = (key: string) => {
     if (!editing) return getVal(key);
@@ -146,7 +143,7 @@ function Note16B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note16
               <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numero d'identification :</span>

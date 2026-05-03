@@ -12,6 +12,7 @@ import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
 import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note25Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -22,7 +23,7 @@ const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• D
 function Note25({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note25Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -52,11 +53,6 @@ function Note25({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note25P
     note25_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const fmtM = (val: number): string => val === 0 ? '0' : Math.round(val).toLocaleString('fr-FR');
 
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
@@ -80,9 +76,9 @@ function Note25({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note25P
   const totalVar = total.anneeN1 !== 0 ? ((total.anneeN - total.anneeN1) / Math.abs(total.anneeN1) * 100) : 0;
 
   const renderAdjInput = (label: string, field: string, baseValue: number) => {
-    if (!editing) return fmtM(baseValue);
+    if (!editing) return fmtMontant(baseValue);
     const adj = getAdj(label, field);
-    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
+    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtMontant(baseValue - adj)} />;
   };
 
   return (
@@ -123,7 +119,7 @@ function Note25({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note25P
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '8mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a' }}>
         <div className="etat-header-officiel">
           <div className="etat-header-grid">
-            <div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div>
+            <div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div>
             <div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div>
           </div>
         </div>
@@ -144,8 +140,8 @@ function Note25({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note25P
             ))}
             <tr>
               <td style={{ ...tdBold, background: '#f0f0f0' }}>TOTAL</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(total.anneeN)}</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(total.anneeN1)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(total.anneeN)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(total.anneeN1)}</td>
               <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{totalVar !== 0 ? totalVar.toFixed(1) + ' %' : ''}</td>
             </tr>
           </tbody>

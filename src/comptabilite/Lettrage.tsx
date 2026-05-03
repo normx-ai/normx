@@ -49,7 +49,7 @@ const ALL_TYPES: string[] = Object.keys(TYPE_LABELS);
 const thStyle: React.CSSProperties = { padding: '10px 8px', fontSize: 14, fontWeight: 600, color: '#555', textAlign: 'center', whiteSpace: 'nowrap' };
 const tdStyle: React.CSSProperties = { padding: '9px 8px', textAlign: 'center', fontSize: 14 };
 
-function Lettrage({ entiteId, exerciceId, exerciceAnnee, onBack }: LettrageProps): React.JSX.Element {
+function Lettrage({ entiteId, exerciceId, exerciceAnnee }: LettrageProps): React.JSX.Element {
   // Left panel
   const [tiersList, setTiersList] = useState<TiersLettrageItem[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([...ALL_TYPES]);

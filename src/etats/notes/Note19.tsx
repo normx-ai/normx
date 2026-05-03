@@ -11,6 +11,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note19Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -49,7 +50,7 @@ const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• I
 function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -81,11 +82,6 @@ function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19P
     note19_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const fmtM = (val: number): string => val === 0 ? '0' : Math.round(val).toLocaleString('fr-FR');
 
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
@@ -115,13 +111,13 @@ function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19P
   const sumGroup = (rows: { vals: { anneeN: number; anneeN1: number } }[]) => rows.reduce((a, r) => ({ anneeN: a.anneeN + r.vals.anneeN, anneeN1: a.anneeN1 + r.vals.anneeN1 }), { anneeN: 0, anneeN1: 0 });
 
   const renderAdjInput = (label: string, field: string, baseValue: number) => {
-    if (!editing) return fmtM(baseValue);
+    if (!editing) return fmtMontant(baseValue);
     const adj = getAdj(label, field);
-    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
+    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtMontant(baseValue - adj)} />;
   };
 
   const renderCreanceInput = (label: string, field: string) => {
-    if (!editing) return fmtM(getAdj(label, field));
+    if (!editing) return fmtMontant(getAdj(label, field));
     return <input value={getAdj(label, field) || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} />;
   };
 
@@ -132,7 +128,7 @@ function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19P
         <td style={tdStyle}>{r.label}</td>
         <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
         <td style={tdRight}>{renderAdjInput(r.label, 'anneeN1', r.vals.anneeN1)}</td>
-        <td style={{ ...tdRight, background: '#fafafa' }}>{fmtM(r.vals.variationAbs)}</td>
+        <td style={{ ...tdRight, background: '#fafafa' }}>{fmtMontant(r.vals.variationAbs)}</td>
         <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variationPct !== 0 ? r.vals.variationPct.toFixed(1) + ' %' : ''}</td>
         <td style={tdRight}>{renderCreanceInput(r.label, 'dettes1an')}</td>
         <td style={tdRight}>{renderCreanceInput(r.label, 'dettes1a2ans')}</td>
@@ -147,9 +143,9 @@ function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19P
     return (
       <tr key={label}>
         <td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td>
-        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totals.anneeN)}</td>
-        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totals.anneeN1)}</td>
-        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(variationAbs)}</td>
+        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totals.anneeN)}</td>
+        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totals.anneeN1)}</td>
+        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(variationAbs)}</td>
         <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{variationPct !== 0 ? variationPct.toFixed(1) + ' %' : ''}</td>
         <td style={{ ...tdBold, background: '#f0f0f0' }}></td>
         <td style={{ ...tdBold, background: '#f0f0f0' }}></td>
@@ -203,7 +199,7 @@ function Note19({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note19P
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

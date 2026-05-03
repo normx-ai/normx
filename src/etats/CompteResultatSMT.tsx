@@ -5,7 +5,7 @@ import { api } from '../lib/apiEndpoints';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { BalanceLigne, Exercice, EtatBaseProps } from '../types';
+import { BalanceLigne, EtatBaseProps } from '../types';
 import { fmtM } from '../utils/formatters';
 import './BilanSYCEBNL.css';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
@@ -82,7 +82,7 @@ function sumByPrefix(lignes: BalanceLigne[], prefixes: string[], mode: 'debit' |
 
 // ===================== COMPOSANT =====================
 
-function CompteResultatSMT({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
+function CompteResultatSMT({ entiteName, entiteNif = '', entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

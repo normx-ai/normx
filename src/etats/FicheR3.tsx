@@ -7,13 +7,13 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import './FicheIdentification.css';
-import type { Exercice, EtatBaseProps } from '../types';
+import type { EtatBaseProps } from '../types';
 
 interface FicheR3Props extends EtatBaseProps {
   onGoToParametres?: () => void;
 }
 
-function FicheR3({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', entiteId, onBack, onGoToParametres }: FicheR3Props): React.JSX.Element {
+function FicheR3({ entiteName, entiteNif = '', entiteId, onBack, onGoToParametres }: FicheR3Props): React.JSX.Element {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);

@@ -1,7 +1,8 @@
 import React from 'react';
 import { LuFilter } from 'react-icons/lu';
 import type { EcrituresFiltersProps } from './SaisieJournal.types';
-import { JOURNAUX, MOIS } from './SaisieJournal.types';
+import { JOURNAUX } from './SaisieJournal.types';
+import { MOIS } from '../utils/formatters';
 
 function EcrituresFilters({
   filterJournal,

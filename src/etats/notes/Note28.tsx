@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import { usePDFPreview } from './usePDFPreview';
@@ -11,6 +11,7 @@ import EditableComment from './EditableComment';
 import BalanceSourcePanel from './BalanceSourcePanel';
 import { thStyle as thBase, tdStyle as tdBase } from './noteStyles';
 import { LuInfo, LuEyeOff } from 'react-icons/lu';
+import { fmtMontant, fmtDate, parseInputNumber } from '../../utils/formatters';
 
 interface Note28Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -57,7 +58,7 @@ const DEFAULT_COMMENTAIRE = `• Indiquer les événements et circonstances qui 
 function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -106,13 +107,6 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
     note28_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-
-  const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   const updateLigne = (idx: number, field: keyof LigneProvision, value: string) => {
     setLignes(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
@@ -130,7 +124,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   // Sur 'aug_exploitation' et 'dim_exploitation', la base est le credit/debit
   // de la balance. Sur les autres (financieres, hao), pas de base auto.
   const getFieldValue = (l: LigneProvision, field: keyof LigneProvision): number => {
-    const adj = parseN(l[field] as string);
+    const adj = parseInputNumber(l[field] as string);
     if (field === 'aug_exploitation') return computeAuto(l.prefixes).aug_base + adj;
     if (field === 'dim_exploitation') return computeAuto(l.prefixes).dim_base + adj;
     return adj;
@@ -169,7 +163,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
   const renderMouvCell = (idx: number, field: keyof LigneProvision) => {
     const l = lignes[idx];
     const displayVal = getFieldValue(l, field);
-    if (!editing) return fmtM(displayVal);
+    if (!editing) return fmtMontant(displayVal);
     const auto = computeAuto(l.prefixes);
     let base = 0;
     if (field === 'aug_exploitation') base = auto.aug_base;
@@ -226,7 +220,7 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
       />
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 8mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 10, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 28 — PROVISIONS ET DEPRECIATIONS INSCRITES AU BILAN
         </h3>
@@ -256,9 +250,9 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
                 return (
                   <tr key={i}>
                     <td style={tdB}>{l.num ? l.num + ' ' : ''}{l.label}</td>
-                    <td style={tdBR}>{fmtM(tot.ouverture)}</td>
-                    {MOUV_FIELDS.map(f => <td key={f} style={tdBR}>{fmtM(tot[f])}</td>)}
-                    <td style={tdBR}>{fmtM(tot.cloture)}</td>
+                    <td style={tdBR}>{fmtMontant(tot.ouverture)}</td>
+                    {MOUV_FIELDS.map(f => <td key={f} style={tdBR}>{fmtMontant(tot[f])}</td>)}
+                    <td style={tdBR}>{fmtMontant(tot.cloture)}</td>
                   </tr>
                 );
               }
@@ -270,9 +264,9 @@ function Note28({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note28P
               return (
                 <tr key={i}>
                   <td style={td}>{l.num ? l.num + ' ' : ''}{l.label}</td>
-                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(ouv)}</td>
+                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtMontant(ouv)}</td>
                   {MOUV_FIELDS.map(f => <td key={f} style={tdR}>{renderMouvCell(i, f)}</td>)}
-                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtM(clo)}</td>
+                  <td style={{ ...tdR, background: '#fafafa' }}>{fmtMontant(clo)}</td>
                 </tr>
               );
             })}

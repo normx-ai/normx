@@ -4,14 +4,14 @@
  */
 
 import path from 'path';
+import type { CompteComptable } from '../types/comptes';
 
-export interface CompteComptable {
-  numero: string;
-  libelle: string;
-  classe?: string;
-  [key: string]: string | undefined;
-}
+// Re-export pour les anciens callers qui importent le type d'ici
+export type { CompteComptable };
 
-const data: CompteComptable[] = require(path.join(__dirname, 'plan_comptable_sycebnl.json'));
+// Le JSON a quelques champs additionnels (commentaire, sens) gerés par le type
+// CompteComptable de server/types/comptes.ts.
+type PlanCompteRaw = CompteComptable & Record<string, unknown>;
+const data: PlanCompteRaw[] = require(path.join(__dirname, 'plan_comptable_sycebnl.json'));
 
 export default data;

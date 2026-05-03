@@ -3,15 +3,14 @@ import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import { normalizeList } from '../hooks/useFetchEntity';
 import { LuChevronLeft, LuDownload, LuX } from 'react-icons/lu';
-import { jsPDF } from 'jspdf';
-import autoTable from 'jspdf-autotable';
-import * as XLSX from 'xlsx';
 import type { BalanceLigne } from '../types';
-import { detectAnomalies, getSoldeAttendu, getLibelleSoldeAttendu, buildPlanComptableSensMap } from '../etats/anomaliesComptes';
+import { detectAnomalies, getSoldeAttendu, buildPlanComptableSensMap } from '../etats/anomaliesComptes';
 import type { AnomalieCompte, PlanCompteEntry } from '../etats/anomaliesComptes';
 import { fmt, MOIS } from '../utils/formatters';
 import { useReferentiel } from '../contexts/ReferentielContext';
 import { usePlanComptable } from '../lib/queries';
+import { buildBalancePdf } from './balanceGeneralePdf';
+import { soldeNet } from '../lib/soldeHelpers';
 
 /* -- Shared inline components -- */
 
@@ -130,92 +129,19 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
     solde_crediteur: acc.solde_crediteur + (parseFloat(String(l.solde_crediteur)) || 0),
   }), { debit: 0, credit: 0, solde_debiteur: 0, solde_crediteur: 0 });
 
-  /* -- Exports -- */
+  /* -- Exports (PDF builder dans balanceGeneralePdf.ts) -- */
 
-  const exportCSV = (): void => {
-    const header = 'Compte;Libellé;Débit;Crédit;Solde débiteur;Solde créditeur\n';
-    const rows = balance.map(l =>
-      [l.numero_compte, '"' + (l.libelle_compte || '') + '"', l.debit, l.credit, l.solde_debiteur, l.solde_crediteur].join(';')
-    ).join('\n');
-    const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'balance_generale.csv';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const fmtPdf = (val: string | number): string => {
-    const n = parseFloat(String(val));
-    if (!n) return '';
-    return n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  };
-
-  const buildPDF = (): jsPDF => {
-    const doc = new jsPDF('landscape', 'mm', 'a4');
-    const pageW = doc.internal.pageSize.getWidth();
-
-    doc.setFontSize(14);
-    doc.setFont(undefined as never, 'bold');
-    doc.text('BALANCE GÉNÉRALE', pageW / 2, 14, { align: 'center' });
-
-    doc.setFontSize(9);
-    doc.setFont(undefined as never, 'normal');
-    let y = 22;
-    doc.text('Dénomination : ' + (entiteName || '\u2014'), 14, y);
-    doc.text('Sigle : ' + (entiteSigle || '\u2014'), pageW / 2, y);
-    y += 5;
-    doc.text('Adresse : ' + (entiteAdresse || '\u2014'), 14, y);
-    doc.text('NUI : ' + (entiteNif || '\u2014'), pageW / 2, y);
-    y += 5;
-    doc.text('Exercice : ' + (exerciceAnnee || '\u2014'), 14, y);
-    y += 8;
-
-    const head = [['Compte', 'Libellé', 'Mvt Débit', 'Mvt Crédit', 'Solde débiteur', 'Solde créditeur']];
-    const body: (string | { content: string; colSpan?: number; styles: { fontStyle: 'bold' | 'italic' | 'normal' } })[][] = balance.map(l => [
-      l.numero_compte,
-      l.libelle_compte || '',
-      fmtPdf(l.debit),
-      fmtPdf(l.credit),
-      fmtPdf(l.solde_debiteur),
-      fmtPdf(l.solde_crediteur),
-    ]);
-    body.push([
-      { content: 'TOTAUX', colSpan: 2, styles: { fontStyle: 'bold' } } as never,
-      { content: fmtPdf(totaux.debit), styles: { fontStyle: 'bold' } } as never,
-      { content: fmtPdf(totaux.credit), styles: { fontStyle: 'bold' } } as never,
-      { content: fmtPdf(totaux.solde_debiteur), styles: { fontStyle: 'bold' } } as never,
-      { content: fmtPdf(totaux.solde_crediteur), styles: { fontStyle: 'bold' } } as never,
-    ]);
-
-    autoTable(doc, {
-      startY: y,
-      head,
-      body,
-      styles: { fontSize: 9, cellPadding: 3 },
-      headStyles: { fillColor: [8, 8, 13], textColor: 255, fontStyle: 'bold' },
-      columnStyles: {
-        0: { cellWidth: 30 },
-        2: { halign: 'right' },
-        3: { halign: 'right' },
-        4: { halign: 'right' },
-        5: { halign: 'right' },
-      },
-    });
-
-    return doc;
-  };
+  const buildPDF = useCallback(() => buildBalancePdf(balance, totaux, {
+    entiteName, entiteSigle, entiteAdresse, entiteNif, exerciceAnnee,
+  }), [balance, totaux, entiteName, entiteSigle, entiteAdresse, entiteNif, exerciceAnnee]);
 
   const exportPDF = (): void => {
     buildPDF().save('balance_generale.pdf');
   };
 
   const previewPDF = (): void => {
-    const doc = buildPDF();
-    const blob = doc.output('blob');
-    const url = URL.createObjectURL(blob);
-    setPdfPreviewUrl(url);
+    const blob = buildPDF().output('blob');
+    setPdfPreviewUrl(URL.createObjectURL(blob));
   };
 
   const closePreview = (): void => {
@@ -223,37 +149,7 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
     setPdfPreviewUrl(null);
   };
 
-  const exportExcel = (): void => {
-    const data: Record<string, string | number>[] = balance.map(l => ({
-      'Compte': l.numero_compte,
-      'Libellé': l.libelle_compte || '',
-      'Mouvements Débit': parseFloat(String(l.debit)) || 0,
-      'Mouvements Crédit': parseFloat(String(l.credit)) || 0,
-      'Solde débiteur': parseFloat(String(l.solde_debiteur)) || 0,
-      'Solde créditeur': parseFloat(String(l.solde_crediteur)) || 0,
-    }));
-    data.push({
-      'Compte': '',
-      'Libellé': 'TOTAUX',
-      'Mouvements Débit': totaux.debit,
-      'Mouvements Crédit': totaux.credit,
-      'Solde débiteur': totaux.solde_debiteur,
-      'Solde créditeur': totaux.solde_crediteur,
-    });
-    const ws = XLSX.utils.json_to_sheet(data);
-    ws['!cols'] = [{ wch: 12 }, { wch: 40 }, { wch: 18 }, { wch: 18 }, { wch: 18 }, { wch: 18 }];
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Balance');
-    XLSX.writeFile(wb, 'balance_generale.xlsx');
-  };
-
   /* -- Solde calculé pour la table UI (4 colonnes) -- */
-  const computeSolde = (l: BalanceLigne): number => {
-    const d = parseFloat(String(l.debit)) || 0;
-    const c = parseFloat(String(l.credit)) || 0;
-    return d - c;
-  };
-
   const totalSolde = totaux.debit - totaux.credit;
 
   /* -- Render -- */
@@ -352,7 +248,7 @@ function BalanceGenerale({ entiteId, exerciceId, entiteName = '', entiteSigle = 
               </thead>
               <tbody>
                 {balance.map(l => {
-                  const solde = computeSolde(l);
+                  const solde = soldeNet(l);
                   const anomalies: AnomalieCompte[] = detectAnomalies(l, planSensMap);
                   const hasError = anomalies.some(a => a.severity === 'error');
                   const hasWarning = anomalies.some(a => a.severity === 'warning');

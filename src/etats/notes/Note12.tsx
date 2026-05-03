@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { LuPlus, LuTrash2, LuInfo } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import BalanceSourcePanel from './BalanceSourcePanel';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
@@ -11,6 +11,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate, parseInputNumber } from '../../utils/formatters';
 
 interface Note12Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -37,7 +38,7 @@ const emptyTransfert = (): LigneTransfert => ({ libelle: '', anneeN: '', anneeN1
 function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -51,7 +52,8 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
   const [transfertsFinancieres, setTransfertsFinancieres] = useState<LigneTransfert[]>([emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert(), emptyTransfert()]);
   const [commentaireTransferts, setCommentaireTransferts] = useState('• Faire un commentaire');
 
-  const { lignesN, lignesN1 } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
+  // _lignesN1 : charge mais affichage N-1 non encore implemente (TODO comparatif N/N-1)
+  const { lignesN, lignesN1: _lignesN1 } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
 
   // Charger donnees Note-specifiques depuis params
   useEffect(() => {
@@ -65,32 +67,6 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
   }, [params]);
 
 
-  // Soldes depuis la balance
-  const computeSolde = (lignes: BalanceLigne[], prefix: string, type: 'debiteur' | 'crediteur') => {
-    let total = 0;
-    for (const l of lignes) {
-      const num = (l.numero_compte || '').trim();
-      if (!num.startsWith(prefix)) continue;
-      total += parseFloat(String(type === 'debiteur' ? l.solde_debiteur : l.solde_crediteur)) || 0;
-    }
-    return total;
-  };
-
-  // 478 = Ecarts de conversion actif (solde debiteur)
-  const solde478N = computeSolde(lignesN, '478', 'debiteur');
-  const solde478N1 = computeSolde(lignesN1, '478', 'debiteur');
-  // 479 = Ecarts de conversion passif (solde crediteur)
-  const solde479N = computeSolde(lignesN, '479', 'crediteur');
-  const solde479N1 = computeSolde(lignesN1, '479', 'crediteur');
-  // 781 = Transferts de charges d'exploitation
-  const solde781N = computeSolde(lignesN, '781', 'crediteur');
-  const solde781N1 = computeSolde(lignesN1, '781', 'crediteur');
-  // 787 = Transferts de charges financieres
-  const solde787N = computeSolde(lignesN, '787', 'crediteur');
-  const solde787N1 = computeSolde(lignesN1, '787', 'crediteur');
-
-  const fmtSolde = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
-
   const handleSave = () => saveParams({
     ...params,
     note12_ecarts_actif: JSON.stringify(ecartsActif),
@@ -101,13 +77,6 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
     note12_commentaire_transferts: commentaireTransferts,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-
-  const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   const inputLeft: React.CSSProperties = { ...inputSt, textAlign: 'left' };
 
@@ -129,9 +98,9 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
         <td style={{ ...tdStyle, fontWeight: 600, fontStyle: 'italic' }} colSpan={6}>{sectionLabel}</td>
       </tr>
       {lignes.map((l, i) => {
-        const montant = parseN(l.montantDevises);
-        const coursAcq = parseN(l.coursAcquisition);
-        const cours31 = parseN(l.cours3112);
+        const montant = parseInputNumber(l.montantDevises);
+        const coursAcq = parseInputNumber(l.coursAcquisition);
+        const cours31 = parseInputNumber(l.cours3112);
         const variationCalc = montant !== 0 && coursAcq !== 0 && cours31 !== 0 ? montant * (cours31 - coursAcq) : 0;
         return (
           <tr key={i}>
@@ -147,7 +116,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
             <td style={tdRight}>{renderInput(l.montantDevises, v => updateEcart(setter, i, 'montantDevises', v))}</td>
             <td style={tdRight}>{renderInput(l.coursAcquisition, v => updateEcart(setter, i, 'coursAcquisition', v))}</td>
             <td style={tdRight}>{renderInput(l.cours3112, v => updateEcart(setter, i, 'cours3112', v))}</td>
-            <td style={{ ...tdRight, background: '#fafafa' }}>{variationCalc !== 0 ? fmtM(Math.abs(variationCalc)) : ''}</td>
+            <td style={{ ...tdRight, background: '#fafafa' }}>{variationCalc !== 0 ? fmtMontant(Math.abs(variationCalc)) : ''}</td>
           </tr>
         );
       })}
@@ -179,7 +148,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
           <td style={tdRight}>{renderInput(l.anneeN, v => updateTransfert(setter, i, 'anneeN', v))}</td>
           <td style={tdRight}>{renderInput(l.anneeN1, v => updateTransfert(setter, i, 'anneeN1', v))}</td>
           <td style={{ ...tdRight, background: '#fafafa' }}>
-            {(() => { const n = parseN(l.anneeN); const n1 = parseN(l.anneeN1); return n1 !== 0 ? ((n - n1) / Math.abs(n1) * 100).toFixed(1) + ' %' : ''; })()}
+            {(() => { const n = parseInputNumber(l.anneeN); const n1 = parseInputNumber(l.anneeN1); return n1 !== 0 ? ((n - n1) / Math.abs(n1) * 100).toFixed(1) + ' %' : ''; })()}
           </td>
         </tr>
       ))}
@@ -242,7 +211,7 @@ function Note12({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note12P
               <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numero d'identification :</span>

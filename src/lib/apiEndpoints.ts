@@ -142,11 +142,11 @@ export const api = {
   assistant: {
     chat: '/api/assistant/chat',
     fonctionnementComptes: '/api/assistant/fonctionnement-comptes',
-    conversations: (userId: Id): string => `/api/assistant/conversations/${userId}`,
+    conversations: '/api/assistant/conversations',
     conversationById: (convId: Id): string => `/api/assistant/conversations/${convId}`,
     conversationMessages: (convId: Id): string =>
       `/api/assistant/conversations/${convId}/messages`,
-    memory: (userId: Id): string => `/api/assistant/memory/${userId}`,
+    memory: '/api/assistant/memory',
     memoryById: (id: Id): string => `/api/assistant/memory/${id}`,
   },
 

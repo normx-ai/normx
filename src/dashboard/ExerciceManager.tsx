@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { LuLock, LuX } from 'react-icons/lu';
 import { Exercice } from '../types';
 

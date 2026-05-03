@@ -9,6 +9,7 @@ import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle as thBase, tdStyle as tdBase } from './noteStyles';
 import { LuInfo } from 'react-icons/lu';
+import { fmtDate } from '../../utils/formatters';
 
 interface Note27BProps extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -57,7 +58,7 @@ const DEFAULT_COMMENTAIRE = `• Faire un commentaire si nécessaire en cas de m
 function Note27B({ entiteName, entiteNif = '', entiteId, onBack }: Note27BProps): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -89,10 +90,6 @@ function Note27B({ entiteName, entiteNif = '', entiteId, onBack }: Note27BProps)
     note27b_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const updateLigne = (setter: React.Dispatch<React.SetStateAction<LigneEffectif[]>>, idx: number, field: keyof LigneEffectif, value: string) => {
     setter(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
@@ -160,7 +157,7 @@ function Note27B({ entiteName, entiteNif = '', entiteId, onBack }: Note27BProps)
       </div>
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 6mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 10, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 27B — EFFECTIFS, MASSE SALARIALE ET PERSONNEL EXTERIEUR
         </h3>

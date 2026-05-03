@@ -11,6 +11,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note21Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -61,7 +62,7 @@ const DEFAULT_COMMENTAIRE = `• Justifier toute variation significative.\n• D
 function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -93,11 +94,6 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
     note21_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const fmtM = (val: number): string => val === 0 ? '0' : Math.round(val).toLocaleString('fr-FR');
 
   // Produits = solde créditeur
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
@@ -143,9 +139,9 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
 
   const renderAdjInput = (label: string, group: string, field: string, baseValue: number) => {
     const key = label + '_' + group;
-    if (!editing) return fmtM(baseValue);
+    if (!editing) return fmtMontant(baseValue);
     const adj = getAdj(key, field);
-    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(key, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
+    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(key, field, v); }} style={inputSt} placeholder={fmtMontant(baseValue - adj)} />;
   };
 
   const renderDetailRow = (r: Rubrique) => {
@@ -166,8 +162,8 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
     return (
       <tr key={label}>
         <td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td>
-        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totals.anneeN)}</td>
-        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totals.anneeN1)}</td>
+        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totals.anneeN)}</td>
+        <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totals.anneeN1)}</td>
         <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{variation !== 0 ? variation.toFixed(1) + ' %' : ''}</td>
       </tr>
     );
@@ -220,7 +216,7 @@ function Note21({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note21P
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

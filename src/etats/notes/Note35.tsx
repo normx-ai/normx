@@ -7,6 +7,7 @@ import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import { LuInfo } from 'react-icons/lu';
+import { fmtDate } from '../../utils/formatters';
 
 interface Note35Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -111,7 +112,7 @@ const SECTIONS: Section[] = [
 function Note35({ entiteName, entiteNif = '', entiteId, onBack }: Note35Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -133,10 +134,6 @@ function Note35({ entiteName, entiteNif = '', entiteId, onBack }: Note35Props): 
     note35_data: JSON.stringify(data),
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const cellStyle: React.CSSProperties = { border: '0.5px solid #000', padding: '5px 8px', fontSize: 9, verticalAlign: 'top' };
   const headerStyle: React.CSSProperties = { ...cellStyle, fontWeight: 700, background: '#e8e8e8', textAlign: 'center', fontSize: 10 };
@@ -171,7 +168,7 @@ function Note35({ entiteName, entiteNif = '', entiteId, onBack }: Note35Props): 
       </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 8mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 9, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 35 — LISTE DES INFORMATIONS SOCIALES, ENVIRONNEMENTALES ET SOCIETALES A FOURNIR
         </h3>

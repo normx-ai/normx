@@ -4,10 +4,11 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note3CProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -53,7 +54,7 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
     exercices, selectedExercice, setSelectedExercice,
     params, previewUrl, setPreviewUrl,
     pdfBlob, setPdfBlob, editing, setEditing,
-    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+    saving, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
   const { lignesN } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
@@ -95,15 +96,7 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
-  const fmtM = (val: number): string => {
-    if (val === 0) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
 
   // Valeurs depuis la balance pour comptes 28x (amortissements)
   const computeForPrefixes = (prefixes: string[]) => {
@@ -273,7 +266,7 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>
@@ -330,10 +323,10 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
                 return (
                   <tr key={i}>
                     <td style={{ ...tdStyle, fontWeight: 700 }}>{r.label}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.a)}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.b)}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.c)}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.d)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.a)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.b)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.c)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.d)}</td>
                   </tr>
                 );
               }
@@ -344,10 +337,10 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
                 return (
                   <tr key={i} style={{ borderTop: '2px solid #000' }}>
                     <td style={{ ...tdStyle, fontWeight: 700 }}>{r.label}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.a)}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.b)}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.c)}</td>
-                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(vals.d)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.a)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.b)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.c)}</td>
+                    <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(vals.d)}</td>
                   </tr>
                 );
               }
@@ -358,17 +351,17 @@ function Note3C({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3CP
               return (
                 <tr key={i}>
                   <td style={tdStyle}>{r.label}</td>
-                  <td style={tdRight}>{fmtM(vals.a)}</td>
-                  <td style={tdRight}>{fmtM(vals.b)}</td>
+                  <td style={tdRight}>{fmtMontant(vals.a)}</td>
+                  <td style={tdRight}>{fmtMontant(vals.b)}</td>
                   <td style={tdRight}>
                     {editing ? (
                       <input value={vals.c || ''} onChange={e => {
                         const newVal = parseFloat(e.target.value) || 0;
                         setAdj(r.label, 'c_adj', newVal - vals.baseC);
                       }} placeholder="0" style={inputSt} />
-                    ) : fmtM(vals.c)}
+                    ) : fmtMontant(vals.c)}
                   </td>
-                  <td style={tdRight}>{fmtM(vals.d)}</td>
+                  <td style={tdRight}>{fmtMontant(vals.d)}</td>
                 </tr>
               );
             })}

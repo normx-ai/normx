@@ -42,7 +42,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "server": "tsx server/index.js"
+    "server": "tsx server/index.js",
+    "migrate:tenants": "tsx server/scripts/applyTenantMigrations.ts"
   },
   "proxy": "http://localhost:5002",
   "browserslist": {

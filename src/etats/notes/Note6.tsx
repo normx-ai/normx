@@ -11,6 +11,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note6Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -41,7 +42,7 @@ const DEFAULT_COMMENTAIRE = `• Indiquer la date de prise d'inventaire et décr
 function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -73,11 +74,6 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
     note6_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const fmtM = (val: number): string => val === 0 ? '0' : Math.round(val).toLocaleString('fr-FR');
 
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[], crediteur = false) => {
     let total = 0;
@@ -105,9 +101,9 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
   const totalNetVar = totalNet.anneeN1 !== 0 ? ((totalNet.anneeN - totalNet.anneeN1) / Math.abs(totalNet.anneeN1) * 100) : 0;
 
   const renderAdjInput = (label: string, field: string, baseValue: number) => {
-    if (!editing) return fmtM(baseValue);
+    if (!editing) return fmtMontant(baseValue);
     const adj = getAdj(label, field);
-    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
+    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtMontant(baseValue - adj)} />;
   };
 
   const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => {
@@ -118,7 +114,7 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
         <td style={tdStyle}>{r.label}</td>
         <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
         <td style={tdRight}>{renderAdjInput(r.label, 'anneeN1', r.vals.anneeN1)}</td>
-        <td style={{ ...tdRight, color: varStock < 0 ? '#dc2626' : '#333' }}>{varStock !== 0 ? fmtM(varStock) : ''}</td>
+        <td style={{ ...tdRight, color: varStock < 0 ? '#dc2626' : '#333' }}>{varStock !== 0 ? fmtMontant(varStock) : ''}</td>
         <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variation !== 0 ? r.vals.variation.toFixed(1) + ' %' : ''}</td>
       </tr>
     );
@@ -129,9 +125,9 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
     return (
       <tr>
         <td style={tdBold}>{label}</td>
-        <td style={tdBoldRight}>{fmtM(totals.anneeN)}</td>
-        <td style={tdBoldRight}>{fmtM(totals.anneeN1)}</td>
-        <td style={{ ...tdBoldRight, color: varStock < 0 ? '#dc2626' : '#333' }}>{varStock !== 0 ? fmtM(varStock) : ''}</td>
+        <td style={tdBoldRight}>{fmtMontant(totals.anneeN)}</td>
+        <td style={tdBoldRight}>{fmtMontant(totals.anneeN1)}</td>
+        <td style={{ ...tdBoldRight, color: varStock < 0 ? '#dc2626' : '#333' }}>{varStock !== 0 ? fmtMontant(varStock) : ''}</td>
         <td style={{ ...tdBoldRight, background: '#fafafa' }}>{variation !== 0 ? variation.toFixed(1) + ' %' : ''}</td>
       </tr>
     );
@@ -172,7 +168,7 @@ function Note6({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note6Pro
               <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numero d'identification :</span>

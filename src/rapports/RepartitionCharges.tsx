@@ -2,8 +2,8 @@ import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import React, { useState, useEffect } from 'react';
 import { LuChartBarIncreasing, LuChartPie, LuPrinter, LuDownload, LuX, LuEye } from 'react-icons/lu';
-import jsPDF from 'jspdf';
 import { SubReportProps, POSTE_LABELS, tableStyle, thStyleR, tdStyleR, fmt } from './types';
+import { buildRepartitionChargesPdf } from './repartitionChargesPdf';
 import { ReportWrapper, Loading, Empty } from './SharedComponents';
 
 interface RepartitionRow { poste: string; numero_compte: string; libelle_compte: string; total_debit: string; total_credit: string; }
@@ -43,11 +43,6 @@ function PieChart({ data, total }: { data: [string, PosteData][]; total: number 
     const endAngle = cumAngle;
 
     const largeArc = angle > Math.PI ? 1 : 0;
-    const x1 = cx + r * Math.cos(startAngle);
-    const y1 = cy + r * Math.sin(startAngle);
-    const x2 = cx + r * Math.cos(endAngle);
-    const y2 = cy + r * Math.sin(endAngle);
-
     const isHovered = hover === poste;
     const rr = isHovered ? r + 6 : r;
     const xx1 = cx + rr * Math.cos(startAngle);
@@ -164,154 +159,12 @@ function RepartitionCharges({ entiteId, exerciceId, exerciceAnnee, offre, entite
   const maxPoste: number = Math.max(...posteList.map(([, p]) => Math.abs(p.total)), 1);
 
   const generatePDF = () => {
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-    const w = pdf.internal.pageSize.getWidth();
-    let y = 15;
-
-    // En-tête entité
-    pdf.setFontSize(14);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(entiteName || '', w / 2, y, { align: 'center' });
-    y += 5;
-    if (entiteSigle) { pdf.setFontSize(10); pdf.setFont('helvetica', 'normal'); pdf.text(entiteSigle, w / 2, y, { align: 'center' }); y += 4; }
-    if (entiteAdresse) { pdf.setFontSize(9); pdf.text(entiteAdresse, w / 2, y, { align: 'center' }); y += 4; }
-    if (entiteNif) { pdf.setFontSize(9); pdf.text(`NIF : ${entiteNif}`, w / 2, y, { align: 'center' }); y += 6; }
-
-    // Titre
-    pdf.setDrawColor(26, 58, 92);
-    pdf.setLineWidth(0.5);
-    pdf.line(15, y, w - 15, y);
-    y += 7;
-    pdf.setFontSize(13);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text('RÉPARTITION DES CHARGES', w / 2, y, { align: 'center' });
-    y += 5;
-    pdf.setFontSize(10);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(`Classe 6 — Exercice ${exerciceAnnee}`, w / 2, y, { align: 'center' });
-    y += 10;
-
-    // Graphique cercle
-    const pieR = 28;
-    const pieCx = w / 2 - 40;
-    const pieCy = y + pieR + 2;
-    let cumAngle = -Math.PI / 2;
-    const pieColors: [number, number, number][] = [
-      [212, 168, 67], [26, 58, 92], [5, 150, 105], [220, 38, 38],
-      [124, 58, 237], [217, 119, 6], [8, 145, 178], [190, 24, 93],
-      [79, 70, 229], [101, 163, 13],
-    ];
-
-    posteList.forEach(([, p], i) => {
-      const pct = grandTotal > 0 ? p.total / grandTotal : 0;
-      if (pct <= 0) return;
-      const angle = pct * 2 * Math.PI;
-      const startAngle = cumAngle;
-      cumAngle += angle;
-      const endAngle = cumAngle;
-
-      const steps = Math.max(Math.ceil(angle / 0.05), 2);
-      const color = pieColors[i % pieColors.length];
-      pdf.setFillColor(color[0], color[1], color[2]);
-
-      // Dessiner le secteur comme un polygone rempli
-      const points: number[][] = [[pieCx, pieCy]];
-      for (let s = 0; s <= steps; s++) {
-        const a = startAngle + (angle * s) / steps;
-        points.push([pieCx + pieR * Math.cos(a), pieCy + pieR * Math.sin(a)]);
-      }
-      points.push([pieCx, pieCy]);
-
-      // jsPDF triangle fan
-      for (let s = 1; s < points.length - 1; s++) {
-        pdf.triangle(
-          points[0][0], points[0][1],
-          points[s][0], points[s][1],
-          points[s + 1][0], points[s + 1][1],
-          'F'
-        );
-      }
+    const pdf = buildRepartitionChargesPdf(posteList, grandTotal, {
+      entiteName, entiteSigle, entiteAdresse, entiteNif, exerciceAnnee,
     });
-
-    // Légende à droite du cercle
-    let ly = y + 4;
-    const lx = w / 2 + 5;
-    pdf.setFontSize(7);
-    posteList.forEach(([poste, p], i) => {
-      const pct = grandTotal > 0 ? p.total / grandTotal : 0;
-      if (pct <= 0) return;
-      const color = pieColors[i % pieColors.length];
-      pdf.setFillColor(color[0], color[1], color[2]);
-      pdf.rect(lx, ly - 2, 3, 3, 'F');
-      pdf.setTextColor(0, 0, 0);
-      pdf.setFont('helvetica', 'normal');
-      pdf.text(`${POSTE_LABELS[poste] || poste} — ${(pct * 100).toFixed(1)}%`, lx + 5, ly);
-      ly += 5;
-    });
-
-    y = Math.max(pieCy + pieR + 8, ly + 4);
-
-    // En-tête tableau
-    const cols = [15, 30, 110, 155, 180];
-    const colW = [15, 80, 45, 25, 15];
-    pdf.setFillColor(26, 58, 92);
-    pdf.rect(15, y, w - 30, 7, 'F');
-    pdf.setTextColor(255, 255, 255);
-    pdf.setFontSize(9);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text('Compte', 17, y + 5);
-    pdf.text('Libellé', 35, y + 5);
-    pdf.text('Montant', w - 42, y + 5, { align: 'right' });
-    pdf.text('%', w - 17, y + 5, { align: 'right' });
-    y += 9;
-
-    pdf.setTextColor(0, 0, 0);
-    pdf.setFontSize(8);
-
-    posteList.forEach(([poste, p]) => {
-      if (y > 270) { pdf.addPage(); y = 15; }
-      // Ligne poste (fond gris)
-      pdf.setFillColor(232, 237, 245);
-      pdf.rect(15, y - 3, w - 30, 6, 'F');
-      pdf.setFont('helvetica', 'bold');
-      pdf.text(poste, 17, y);
-      pdf.text(POSTE_LABELS[poste] || 'Poste ' + poste, 35, y);
-      pdf.text(fmt(p.total), w - 42, y, { align: 'right' });
-      pdf.text(grandTotal ? (p.total / grandTotal * 100).toFixed(1) + '%' : '-', w - 17, y, { align: 'right' });
-      y += 6;
-
-      pdf.setFont('helvetica', 'normal');
-      p.comptes.forEach(c => {
-        if (y > 275) { pdf.addPage(); y = 15; }
-        pdf.text(c.compte, 22, y);
-        pdf.text((c.libelle || c.compte).substring(0, 50), 35, y);
-        pdf.text(fmt(c.montant), w - 42, y, { align: 'right' });
-        pdf.text(grandTotal ? (c.montant / grandTotal * 100).toFixed(1) + '%' : '-', w - 17, y, { align: 'right' });
-        y += 5;
-      });
-      y += 1;
-    });
-
-    // Total
-    if (y > 270) { pdf.addPage(); y = 15; }
-    pdf.setFillColor(26, 58, 92);
-    pdf.rect(15, y - 3, w - 30, 7, 'F');
-    pdf.setTextColor(255, 255, 255);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text('TOTAL CHARGES', 17, y + 1);
-    pdf.text(fmt(grandTotal), w - 42, y + 1, { align: 'right' });
-    pdf.text('100%', w - 17, y + 1, { align: 'right' });
-
-    // Pied de page
-    pdf.setTextColor(150, 150, 150);
-    pdf.setFontSize(7);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text(`NORMX Finance — Imprimé le ${new Date().toLocaleDateString('fr-FR')}`, w / 2, 290, { align: 'center' });
-
     const blob = pdf.output('blob');
-    const url = URL.createObjectURL(blob);
     setPdfBlob(blob);
-    setPreviewUrl(url);
+    setPreviewUrl(URL.createObjectURL(blob));
   };
 
   const closePreview = () => {

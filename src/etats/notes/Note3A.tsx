@@ -4,10 +4,11 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note3AProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -54,7 +55,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
     exercices, selectedExercice, setSelectedExercice,
     params, previewUrl, setPreviewUrl,
     pdfBlob, setPdfBlob, editing, setEditing,
-    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+    saving, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
   const { lignesN } = useBalanceLignes({ entiteId, selectedExercice, exercices, offre });
@@ -105,15 +106,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
-  const fmtM = (val: number): string => {
-    if (val === 0) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
 
   // Valeurs de base depuis la balance
   const computeForPrefixes = (prefixes: string[]) => {
@@ -304,7 +297,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>
@@ -355,7 +348,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
               // Cellule éditable : affiche la valeur complète (balance + ajustement)
               // Quand l'utilisateur modifie, on stocke la différence avec la base balance
               const editableCell = (adjField: string, displayVal: number, baseBalance: number) => {
-                if (!editing || !isDetail) return fmtM(displayVal);
+                if (!editing || !isDetail) return fmtMontant(displayVal);
                 return (
                   <input value={displayVal || ''} onChange={e => {
                     const newVal = parseFloat(e.target.value) || 0;
@@ -372,7 +365,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
                 <tr key={i}>
                   <td style={{ ...tdStyle, fontWeight: fw, ...bgStyle }}>{r.label}</td>
                   {/* A = Montant ouverture — NON EDITABLE */}
-                  <td style={{ ...tdRight, fontWeight: fw, ...bgStyle }}>{fmtM(r.vals.a)}</td>
+                  <td style={{ ...tdRight, fontWeight: fw, ...bgStyle }}>{fmtMontant(r.vals.a)}</td>
                   {/* Acquisitions — éditable, pré-rempli avec valeur balance */}
                   <td style={{ ...tdRight, fontWeight: fw, ...bgStyle }}>{editableCell('acq_adj', r.vals.acq, base.acq)}</td>
                   {/* Virements augmentation — éditable (pas de base balance) */}
@@ -384,7 +377,7 @@ function Note3A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3AP
                   {/* Virements diminution — éditable (pas de base balance) */}
                   <td style={{ ...tdRight, fontWeight: fw, ...bgStyle }}>{editableCell('vir_dim', r.vals.vir_dim, 0)}</td>
                   {/* D = Montant clôture — NON EDITABLE (calculé) */}
-                  <td style={{ ...tdRight, fontWeight: fw, ...bgStyle }}>{fmtM(r.vals.d)}</td>
+                  <td style={{ ...tdRight, fontWeight: fw, ...bgStyle }}>{fmtMontant(r.vals.d)}</td>
                 </tr>
               );
             })}

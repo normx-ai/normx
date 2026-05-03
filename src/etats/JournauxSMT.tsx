@@ -5,7 +5,7 @@ import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuSave, LuPenLine, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import type { Exercice, EtatBaseProps } from '../types';
+import type { EtatBaseProps } from '../types';
 import './BilanSYCEBNL.css';
 import './FicheIdentification.css';
 
@@ -14,7 +14,7 @@ interface JournauxSMTProps extends EtatBaseProps {}
 interface LigneJournal { date: string; num_facture: string; nom: string; montant: string; date_paiement: string; }
 const emptyLigne = (): LigneJournal => ({ date: '', num_facture: '', nom: '', montant: '', date_paiement: '' });
 
-function JournauxSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }: JournauxSMTProps): React.JSX.Element {
+function JournauxSMT({ entiteName, entiteNif = '', entiteId, onBack }: JournauxSMTProps): React.JSX.Element {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null); const [pdfBlob, setPdfBlob] = useState<Blob | null>(null);
   const [params, setParams] = useState<Record<string, string>>({}); const [editing, setEditing] = useState(false); const [saving, setSaving] = useState(false);
@@ -65,7 +65,7 @@ function JournauxSMT({ entiteName, entiteNif = '', entiteId, offre, onBack }: Jo
   const renderInput = (value: string, onChange: (v: string) => void, style = inp) => editing ? <input value={value} onChange={e => onChange(e.target.value)} style={style} /> : value;
 
   const renderJournal = (
-    titre: string,
+    _titre: string,
     nomColonne: string,
     lignes: LigneJournal[],
     setLignes: React.Dispatch<React.SetStateAction<LigneJournal[]>>,

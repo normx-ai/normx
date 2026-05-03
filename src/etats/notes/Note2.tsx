@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
+import { fmtDate } from '../../utils/formatters';
 
 interface Note2Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -65,10 +66,6 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const generatePDF = async (): Promise<jsPDF> => {
     const wasEditing = editing;
@@ -177,7 +174,7 @@ function Note2({ entiteName, entiteNif = '', entiteId, onBack }: Note2Props): Re
             <div style={{ fontSize: 12 }}><strong>Numéro d'identification :</strong> {entiteNif}</div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: 12 }}><strong>Exercice clos le</strong> {dateFin ? fmtDateShort(dateFin) : ''}</div>
+            <div style={{ fontSize: 12 }}><strong>Exercice clos le</strong> {dateFin ? fmtDate(dateFin) : ''}</div>
             <div style={{ fontSize: 12 }}><strong>Durée (en mois)</strong> {duree}</div>
           </div>
         </div>

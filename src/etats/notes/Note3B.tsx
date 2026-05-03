@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note3BProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -44,7 +45,7 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
     exercices, selectedExercice, setSelectedExercice,
     params, previewUrl, setPreviewUrl,
     pdfBlob, setPdfBlob, editing, setEditing,
-    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+    saving, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
   const [commentaire, setCommentaire] = useState('');
@@ -82,15 +83,7 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
-  const fmtM = (val: number): string => {
-    if (val === 0) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
 
   // Lignes de détail (pas sous-totaux, pas séparateurs, pas total)
   const detailRows = ROWS.filter(r => !r.isSousTotal && !r.isTotal && !r.isSeparator);
@@ -171,7 +164,7 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
 
   const renderValueCell = (label: string, col: ColKey, isDetail: boolean) => {
     if (!isDetail) return null; // sous-totaux calculés séparément
-    if (col === 'd') return <td style={tdRight}>{fmtM(calcD(label))}</td>;
+    if (col === 'd') return <td style={tdRight}>{fmtMontant(calcD(label))}</td>;
     if (col === 'nature') {
       return (
         <td style={{ ...tdStyle, textAlign: 'center' }}>
@@ -188,15 +181,15 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
 
   const renderSousTotalCell = (rows: RowData[], col: ColKey) => {
     if (col === 'nature') return <td style={tdStyle}></td>;
-    if (col === 'd') return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(calcDSum(rows))}</td>;
-    return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(sumRows(rows, col))}</td>;
+    if (col === 'd') return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(calcDSum(rows))}</td>;
+    return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(sumRows(rows, col))}</td>;
   };
 
   const renderTotalCell = (col: ColKey) => {
     const allDetail = [...incorpRows, ...corpRows];
     if (col === 'nature') return <td style={tdStyle}></td>;
-    if (col === 'd') return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(calcDSum(allDetail))}</td>;
-    return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(sumRows(allDetail, col))}</td>;
+    if (col === 'd') return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(calcDSum(allDetail))}</td>;
+    return <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(sumRows(allDetail, col))}</td>;
   };
 
   const numCols: ColKey[] = ['nature', 'a', 'acq', 'vir_aug', 'reeval', 'cess', 'vir_dim', 'd'];
@@ -266,7 +259,7 @@ function Note3B({ entiteName, entiteNif = '', entiteId, onBack }: Note3BProps): 
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

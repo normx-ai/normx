@@ -5,7 +5,7 @@ import {
   LuBriefcase, LuCircleHelp, LuListOrdered,
   LuLayoutDashboard, LuChartPie, LuUser, LuFileSpreadsheet,
   LuClipboardList, LuWallet, LuBookMarked, LuArrowLeftRight,
-  LuScale, LuReceipt, LuFileText,
+  LuScale, LuReceipt,
 } from 'react-icons/lu';
 import { TypeActivite, NormxModule, EtatFinancier } from '../types';
 import { MenuItem } from './types';

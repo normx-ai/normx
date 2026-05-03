@@ -7,7 +7,7 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
 import './FicheIdentification.css';
-import type { Exercice, EtatBaseProps, BalanceLigne } from '../types';
+import type { EtatBaseProps, BalanceLigne } from '../types';
 
 interface FicheR4Props extends EtatBaseProps {
   onGoToParametres?: () => void;

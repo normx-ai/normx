@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { LuPlus, LuTrash2 } from 'react-icons/lu';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import BalanceSourcePanel from './BalanceSourcePanel';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
@@ -10,6 +10,7 @@ import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate, parseInputNumber } from '../../utils/formatters';
 
 interface Note8AProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -47,7 +48,7 @@ const defaultExerciceBlock = (annee: string): ExerciceBlock => ({
 function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AProps): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -114,7 +115,6 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
   // Montant global affiché = valeur manuelle si saisie, sinon solde balance 475
   const montantFraisDisplay = montantGlobalFrais || (solde4751 ? String(Math.round(solde4751)) : '');
   const montantChargesDisplay = montantGlobalCharges || (solde4752 ? String(Math.round(solde4752)) : '');
-  const montantPrimesDisplay = montantGlobalPrimes;
 
   const handleSave = () => saveParams({
     ...params,
@@ -128,10 +128,6 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
     note8a_total_exercices: JSON.stringify(totalExercices),
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const updateBlockLigne = (bIdx: number, lIdx: number, field: keyof LigneExercice, value: string) => {
     setExerciceBlocks(prev => prev.map((b, bi) => bi === bIdx ? { ...b, lignes: b.lignes.map((l, li) => li === lIdx ? { ...l, [field]: value } : l) } : b));
@@ -139,10 +135,6 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
 
   const addBlockLigne = (bIdx: number) => {
     setExerciceBlocks(prev => prev.map((b, bi) => bi === bIdx ? { ...b, lignes: [...b.lignes, emptyLigne()] } : b));
-  };
-
-  const removeBlockLigne = (bIdx: number, lIdx: number) => {
-    setExerciceBlocks(prev => prev.map((b, bi) => bi === bIdx ? { ...b, lignes: b.lignes.filter((_, li) => li !== lIdx) } : b));
   };
 
   const addBlock = () => {
@@ -158,11 +150,9 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
   };
 
   // Calcul TOTAL GENERAL
-  const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const totalGeneralFrais = totalExercices.reduce((s, t) => s + parseN(t.frais), 0);
-  const totalGeneralCharges = totalExercices.reduce((s, t) => s + parseN(t.charges), 0);
-  const totalGeneralPrimes = totalExercices.reduce((s, t) => s + parseN(t.primes), 0);
-  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
+  const totalGeneralFrais = totalExercices.reduce((s, t) => s + parseInputNumber(t.frais), 0);
+  const totalGeneralCharges = totalExercices.reduce((s, t) => s + parseInputNumber(t.charges), 0);
+  const totalGeneralPrimes = totalExercices.reduce((s, t) => s + parseInputNumber(t.primes), 0);
 
   const renderInput = (value: string, onChange: (v: string) => void, style = inputSt) => {
     if (!editing) return value;
@@ -203,7 +193,7 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
               <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numero d'identification :</span>
@@ -302,9 +292,9 @@ function Note8A({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note8AP
             {/* Total général */}
             <tr>
               <td style={{ ...tdBold, background: '#f0f0f0' }}>TOTAL GENERAL</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }} colSpan={2}>{fmtM(totalGeneralFrais)}</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }} colSpan={2}>{fmtM(totalGeneralCharges)}</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }} colSpan={2}>{fmtM(totalGeneralPrimes)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }} colSpan={2}>{fmtMontant(totalGeneralFrais)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }} colSpan={2}>{fmtMontant(totalGeneralCharges)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }} colSpan={2}>{fmtMontant(totalGeneralPrimes)}</td>
             </tr>
           </tbody>
         </table>

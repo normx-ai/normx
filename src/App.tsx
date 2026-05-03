@@ -189,7 +189,6 @@ function AppContent(): React.JSX.Element {
       <Onboarding
         userName={user?.name || ''}
         defaultModule={null}
-        prefill={tenantData?.prefill}
         onComplete={() => {
           window.location.reload();
         }}

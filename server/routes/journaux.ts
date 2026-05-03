@@ -3,6 +3,8 @@ import { asyncHandler } from '../middleware/asyncHandler';
 import pool from '../db';
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 import logger from '../logger';
+import { validateBody } from '../middleware/validate';
+import { createJournalBody, updateJournalBody } from '../schemas/journaux.schema';
 
 const router = express.Router();
 
@@ -33,17 +35,9 @@ router.get('/', asyncHandler(async (req: Request, res: Response) => {
 }));
 
 // POST /api/journaux — créer un journal
-router.post('/', asyncHandler(async (req: Request, res: Response) => {
+router.post('/', validateBody(createJournalBody), asyncHandler(async (req: Request, res: Response) => {
   if (!req.tenantSchema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  const { code, libelle, type, contrepartie_defaut } = req.body as {
-    code?: string; libelle?: string; type?: string; contrepartie_defaut?: string | null;
-  };
-  if (!code?.trim() || !libelle?.trim()) {
-    return res.status(400).json({ error: 'Code et libellé sont obligatoires.' });
-  }
-  if (!type || !['achat','vente','tresorerie','od'].includes(type)) {
-    return res.status(400).json({ error: 'Type invalide (achat|vente|tresorerie|od).' });
-  }
+  const { code, libelle, type, contrepartie_defaut } = req.body;
   const schema = getValidatedSchemaName(req.tenantSchema);
   try {
     const r = await pool.query(
@@ -63,28 +57,20 @@ router.post('/', asyncHandler(async (req: Request, res: Response) => {
 }));
 
 // PUT /api/journaux/:id — modifier un journal
-router.put('/:id', asyncHandler(async (req: Request, res: Response) => {
+router.put('/:id', validateBody(updateJournalBody), asyncHandler(async (req: Request, res: Response) => {
   if (!req.tenantSchema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const id = parseInt(req.params.id, 10);
-  const { libelle, type, contrepartie_defaut, actif } = req.body as {
-    libelle?: string; type?: string; contrepartie_defaut?: string | null; actif?: boolean;
-  };
+  const { libelle, type, contrepartie_defaut, actif } = req.body;
   const schema = getValidatedSchemaName(req.tenantSchema);
   const updates: string[] = [];
   const values: (string | number | boolean | null)[] = [];
   let idx = 1;
   if (libelle !== undefined) { updates.push(`libelle = $${idx++}`); values.push(libelle); }
-  if (type !== undefined) {
-    if (!['achat','vente','tresorerie','od'].includes(type)) {
-      return res.status(400).json({ error: 'Type invalide.' });
-    }
-    updates.push(`type = $${idx++}`); values.push(type);
-  }
+  if (type !== undefined) { updates.push(`type = $${idx++}`); values.push(type); }
   if (contrepartie_defaut !== undefined) {
     updates.push(`contrepartie_defaut = $${idx++}`); values.push(contrepartie_defaut || null);
   }
   if (actif !== undefined) { updates.push(`actif = $${idx++}`); values.push(actif); }
-  if (updates.length === 0) return res.status(400).json({ error: 'Aucun champ à mettre à jour.' });
   updates.push(`updated_at = NOW()`);
   values.push(id);
   const r = await pool.query(

@@ -4,6 +4,8 @@ import pool from '../db';
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 import * as tenantService from '../services/tenant.service';
 import type { TenantSettings } from '../services/tenant.service';
+import { validateBody } from '../middleware/validate';
+import { createEntiteBody, updateEntiteBody } from '../schemas/entites.schema';
 
 const router = express.Router();
 
@@ -91,15 +93,12 @@ router.get('/:id', async (req: Request, res: Response) => {
 });
 
 // POST /api/entites — Créer un dossier client (cabinet uniquement)
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', validateBody(createEntiteBody), async (req: Request, res: Response) => {
   if (!req.tenant) {
     return res.status(400).json({ error: 'Tenant non résolu.' });
   }
 
   const { nom, modules, sigle, adresse, nif, telephone, email } = req.body;
-  if (!nom?.trim()) {
-    return res.status(400).json({ error: 'Le nom est obligatoire.' });
-  }
 
   try {
     // Verifier que le cabinet a au moins un exercice
@@ -165,7 +164,7 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 // PUT /api/entites/:id — Modifier une entité
-router.put('/:id', async (req: Request, res: Response) => {
+router.put('/:id', validateBody(updateEntiteBody), async (req: Request, res: Response) => {
   const id = parseInt(req.params.id, 10);
   if (!req.tenant) return res.status(400).json({ error: 'Tenant non résolu.' });
   const allowed = req.tenant.id === id || (req.accessibleTenants && req.accessibleTenants.includes(id));

@@ -168,10 +168,11 @@ describe('api.assistant', () => {
   it('construit les URLs', () => {
     expect(api.assistant.chat).toBe('/api/assistant/chat');
     expect(api.assistant.fonctionnementComptes).toBe('/api/assistant/fonctionnement-comptes');
-    expect(api.assistant.conversations(7)).toBe('/api/assistant/conversations/7');
+    // Plus de :userId dans l'URL — le serveur deduit du JWT (cf migration 012)
+    expect(api.assistant.conversations).toBe('/api/assistant/conversations');
     expect(api.assistant.conversationById(100)).toBe('/api/assistant/conversations/100');
     expect(api.assistant.conversationMessages(100)).toBe('/api/assistant/conversations/100/messages');
-    expect(api.assistant.memory(7)).toBe('/api/assistant/memory/7');
+    expect(api.assistant.memory).toBe('/api/assistant/memory');
     expect(api.assistant.memoryById(55)).toBe('/api/assistant/memory/55');
   });
 });

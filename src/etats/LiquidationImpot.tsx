@@ -21,7 +21,7 @@ const labelStyle: React.CSSProperties = { padding: '4px 8px', fontSize: '9px', b
 const montantStyle: React.CSSProperties = { textAlign: 'right' as const, padding: '4px 8px', fontSize: '9px', borderBottom: '1px solid #ddd', fontFamily: 'monospace' };
 const totalStyle: React.CSSProperties = { ...montantStyle, fontWeight: 700, background: '#f0f4f8', borderTop: '2px solid #1e3a5f' };
 
-function LiquidationImpot({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
+function LiquidationImpot({ entiteName, entiteNif = '', entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
   const state = useResultatFiscalState({ entiteId, offre });
   const {
     exercices, selectedExercice, setSelectedExercice, annee,

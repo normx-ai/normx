@@ -290,12 +290,6 @@ function getComptes(lignes: BalanceLigne[], prefix: string): BalanceLigne[] {
   return lignes.filter(l => l.numero_compte.startsWith(prefix));
 }
 
-function totalMouvement(lignes: BalanceLigne[], prefix: string, sens: 'debit' | 'credit'): number {
-  return lignes
-    .filter(l => l.numero_compte.startsWith(prefix))
-    .reduce((s, l) => s + (parseFloat(String(sens === 'debit' ? l.debit : l.credit)) || 0), 0);
-}
-
 function totalSolde(lignes: BalanceLigne[], prefix: string, sens: 'debiteur' | 'crediteur'): number {
   return lignes
     .filter(l => l.numero_compte.startsWith(prefix))

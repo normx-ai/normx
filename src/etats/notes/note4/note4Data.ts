@@ -1,6 +1,6 @@
 // Types, donnees et calculs purs de la Note 4 (Immobilisations financieres).
 
-import type { BalanceLigne } from '../../../types';
+import type { BalanceLigne } from 'types';
 
 export interface LigneFiliale {
   denomination: string;

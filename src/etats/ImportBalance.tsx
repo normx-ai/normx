@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import { LuFileSpreadsheet } from 'react-icons/lu';
@@ -34,7 +33,7 @@ interface ExerciceRecord {
   annee: number;
 }
 
-function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exerciceAnnee }: ImportBalanceProps): React.JSX.Element {
+function ImportBalance({ entiteId, exerciceId: parentExerciceId, exerciceAnnee }: ImportBalanceProps): React.JSX.Element {
   const [annee, setAnnee] = useState<number>(exerciceAnnee ?? new Date().getFullYear());
   const [exercice, setExercice] = useState<ExerciceRecord | null>(null);
   const [tab, setTab] = useState<'N' | 'N-1'>('N');
@@ -42,7 +41,8 @@ function ImportBalance({ entiteId, userId, exerciceId: parentExerciceId, exercic
   const [lignesN, setLignesN] = useState<BalanceLigneWithMeta[]>([]);
   const [balanceN1, setBalanceN1] = useState<BalanceRecord | null>(null);
   const [lignesN1, setLignesN1] = useState<BalanceLigneWithMeta[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  // _loading : spinner UI a brancher (setLoading deja appele partout)
+  const [, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [editingBalance, setEditingBalance] = useState(false);

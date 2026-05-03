@@ -5,7 +5,7 @@ import { api } from '../lib/apiEndpoints';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { BalanceLigne, Exercice, EtatBaseProps, ActifMapping, PassifMapping } from '../types';
+import { BalanceLigne, EtatBaseProps, ActifMapping, PassifMapping } from '../types';
 import { fmtM } from '../utils/formatters';
 import './BilanSYCEBNL.css';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
@@ -107,7 +107,7 @@ const PASSIF_ROWS: Row[] = [
   { ref: 'HZ', libelle: 'Total passif', bold: true },
 ];
 
-function BilanSMT({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
+function BilanSMT({ entiteName, entiteNif = '', entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const balanceSource = offre === 'comptabilite' ? 'ecritures' : 'import';
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

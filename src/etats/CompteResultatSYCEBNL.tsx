@@ -4,10 +4,9 @@ import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter } from 'react-icons/lu';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { htmlToPdf } from '../lib/htmlToPdf';
 import './BilanSYCEBNL.css';
-import type { BalanceLigne, Exercice, EtatBaseProps, CRRow } from '../types';
+import type { BalanceLigne, EtatBaseProps, CRRow } from '../types';
 
 // ===================== S2230 TABLEAU DE CORRESPONDANCE -- COMPTE DE RESULTAT SYCEBNL =====================
 
@@ -157,7 +156,7 @@ function computeChargesFromBalance(lignes: BalanceLigne[], mapping: Record<strin
   return result;
 }
 
-function CompteResultatSYCEBNL({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
+function CompteResultatSYCEBNL({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const balanceSource: 'ecritures' | 'import' = offre === 'comptabilite' ? 'ecritures' : 'import';
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -235,21 +234,9 @@ function CompteResultatSYCEBNL({ entiteName, entiteSigle = '', entiteAdresse = '
 
   const annee: number = selectedExercice ? selectedExercice.annee : new Date().getFullYear();
 
-  const generatePDF = async (): Promise<jsPDF> => {
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    if (!pageRef.current) return pdf;
-
-    const canvas = await html2canvas(pageRef.current, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-    });
-    const imgData = canvas.toDataURL('image/png');
-    const pdfWidth = 210;
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-    return pdf;
+  const generatePDF = async () => {
+    if (!pageRef.current) throw new Error('Page non rendue');
+    return htmlToPdf(pageRef.current);
   };
 
   const openPreview = async (): Promise<void> => {

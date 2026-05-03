@@ -8,6 +8,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import { thStyle, tdStyle, tdCenter } from './noteStyles';
 import { LuInfo } from 'react-icons/lu';
+import { fmtDate } from '../../utils/formatters';
 
 interface Note36Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -46,7 +47,7 @@ const REGIMES_FISCAUX = [
 function Note36({ entiteName, entiteNif = '', entiteId, onBack }: Note36Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -74,19 +75,11 @@ function Note36({ entiteName, entiteNif = '', entiteId, onBack }: Note36Props): 
     note36_regime_fiscal: regimeFiscal,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const th: React.CSSProperties = { ...thStyle, fontSize: 10, padding: '8px 10px' };
   const td: React.CSSProperties = { ...tdStyle, fontSize: 10, padding: '7px 10px' };
   const tdC: React.CSSProperties = { ...tdCenter, width: 30, fontWeight: 600, fontSize: 10, padding: '7px 10px' };
   const radio: React.CSSProperties = { width: 14, height: 14, accentColor: '#D4A843', cursor: 'pointer' };
-
-  const selectedFJ = FORMES_JURIDIQUES.find(f => f.label === formeJuridique);
-  const selectedPS = PAYS_SIEGE.find(p => p.label === paysSiege);
-  const selectedRF = REGIMES_FISCAUX.find(r => r.label === regimeFiscal);
 
   return (
     <div>
@@ -115,7 +108,7 @@ function Note36({ entiteName, entiteNif = '', entiteId, onBack }: Note36Props): 
       </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 10, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 36 — TABLE DES CODES
         </h3>

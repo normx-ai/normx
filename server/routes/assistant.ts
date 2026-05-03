@@ -1,86 +1,108 @@
-import express, { Request, Response } from 'express';
+import express, { type Request, type Response } from 'express';
 import fs from 'fs';
 import path from 'path';
-import pool from '../db';
 import logger from '../logger';
-import { getErrorMessage } from '../utils/routeHelpers';
+import { asyncHandler } from '../middleware/asyncHandler';
+import { requirePermission } from '../middleware/permissions.middleware';
+import { validateBody, validateParams, validateQuery } from '../middleware/validate';
 import { getValidatedSchemaName } from '../utils/tenant.utils';
+import { resolveLocalUserId } from '../utils/userResolver';
 import { AGENTS, KB, KBArticle, FonctionnementArticle } from '../services/assistant.agents';
-import { searchArticles, searchForAgent, searchVectoriel, formatContext, isQdrantReady, qdrantModule, QdrantCollectionInfo } from '../services/assistant.search';
+import { searchArticles, isQdrantReady, qdrantModule, QdrantCollectionInfo } from '../services/assistant.search';
 import { handleChat } from '../services/assistant.chat';
+import * as assistantService from '../services/assistant.service';
+import {
+  createConversationBody,
+  chatBody,
+  fonctionnementComptesBody,
+  conversationIdParam,
+  memoryIdParam,
+  articlesQuery,
+} from '../schemas/assistant.schema';
 
 const router = express.Router();
 
+// Les erreurs metier (HttpError) sont propagees par asyncHandler au middleware
+// central de server/index.ts qui mappe status/code/details automatiquement.
+
 // ===================== CONVERSATIONS =====================
 
-router.get('/conversations/:userId', async (req: Request, res: Response) => {
-  try {
-    const s = getValidatedSchemaName(req.tenantSchema!);
-    const { userId } = req.params;
-    const result = await pool.query(
-      `SELECT id, titre, created_at, updated_at FROM "${s}".conversations WHERE user_id = $1 ORDER BY updated_at DESC`,
-      [userId]
-    );
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+router.get(
+  '/conversations',
+  requirePermission('assistant', 'lire'),
+  asyncHandler(async (req: Request, res: Response) => {
+    const schema = getValidatedSchemaName(req.tenantSchema!);
+    const userId = await resolveLocalUserId(schema, req.user!.sub);
+    const conversations = await assistantService.listConversations(schema, userId);
+    res.json(conversations);
+  }),
+);
 
-router.post('/conversations', async (req: Request, res: Response) => {
-  try {
-    const s = getValidatedSchemaName(req.tenantSchema!);
-    const { userId, titre } = req.body;
-    const result = await pool.query(
-      `INSERT INTO "${s}".conversations (user_id, titre) VALUES ($1, $2) RETURNING *`,
-      [userId, titre || 'Nouvelle conversation']
-    );
-    res.json(result.rows[0]);
-  } catch (err) {
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+router.post(
+  '/conversations',
+  requirePermission('assistant', 'creer'),
+  validateBody(createConversationBody),
+  asyncHandler(async (req: Request, res: Response) => {
+    const schema = getValidatedSchemaName(req.tenantSchema!);
+    const userId = await resolveLocalUserId(schema, req.user!.sub);
+    const conv = await assistantService.createConversation(schema, userId, {
+      titre: req.body.titre,
+      visibility: req.body.visibility,
+      entiteId: req.body.entiteId,
+    });
+    res.status(201).json(conv);
+  }),
+);
 
-router.get('/conversations/:convId/messages', async (req: Request, res: Response) => {
-  try {
-    const s = getValidatedSchemaName(req.tenantSchema!);
-    const { convId } = req.params;
-    const result = await pool.query(
-      `SELECT id, role, content, articles_refs, created_at FROM "${s}".conversation_messages WHERE conversation_id = $1 ORDER BY created_at ASC`,
-      [convId]
+router.get(
+  '/conversations/:convId/messages',
+  requirePermission('assistant', 'lire'),
+  validateParams(conversationIdParam),
+  asyncHandler(async (req: Request, res: Response) => {
+    const schema = getValidatedSchemaName(req.tenantSchema!);
+    const userId = await resolveLocalUserId(schema, req.user!.sub);
+    const messages = await assistantService.listMessages(
+      schema,
+      Number(req.params.convId),
+      userId,
     );
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+    res.json(messages);
+  }),
+);
 
-router.delete('/conversations/:convId', async (req: Request, res: Response) => {
-  try {
-    const s = getValidatedSchemaName(req.tenantSchema!);
-    await pool.query(`DELETE FROM "${s}".conversations WHERE id = $1`, [req.params.convId]);
+router.delete(
+  '/conversations/:convId',
+  requirePermission('assistant', 'supprimer'),
+  validateParams(conversationIdParam),
+  asyncHandler(async (req: Request, res: Response) => {
+    const schema = getValidatedSchemaName(req.tenantSchema!);
+    const userId = await resolveLocalUserId(schema, req.user!.sub);
+    await assistantService.deleteConversation(schema, Number(req.params.convId), userId);
     res.json({ ok: true });
-  } catch (err) {
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+  }),
+);
 
 // ===================== CHAT =====================
 
-router.post('/chat', async (req: Request, res: Response) => {
-  try {
-    const { message, conversationId, userId, typeActivite } = req.body;
-    if (!message || !message.trim()) {
-      return res.status(400).json({ error: 'Message requis' });
-    }
-    const s = getValidatedSchemaName(req.tenantSchema!);
-    const result = await handleChat(message, conversationId, userId, typeActivite, s);
+router.post(
+  '/chat',
+  requirePermission('assistant', 'creer'),
+  validateBody(chatBody),
+  asyncHandler(async (req: Request, res: Response) => {
+    const schema = getValidatedSchemaName(req.tenantSchema!);
+    const userId = await resolveLocalUserId(schema, req.user!.sub);
+    const result = await handleChat({
+      message: req.body.message,
+      conversationId: req.body.conversationId ?? null,
+      localUserId: userId,
+      typeActivite: req.body.typeActivite,
+      schema,
+      visibility: req.body.visibility,
+      entiteId: req.body.entiteId ?? null,
+    });
     res.json(result);
-  } catch (err) {
-    logger.error('Erreur assistant : ' + getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+  }),
+);
 
 // ===================== AGENTS INFO =====================
 
@@ -96,99 +118,137 @@ router.get('/agents', (_req: Request, res: Response) => {
 
 // ===================== MEMORY =====================
 
-router.get('/memory/:userId', async (req: Request, res: Response) => {
-  try {
-    const s = getValidatedSchemaName(req.tenantSchema!);
-    const result = await pool.query(
-      `SELECT id, cle, valeur, updated_at FROM "${s}".assistant_memory WHERE user_id = $1 ORDER BY updated_at DESC`,
-      [req.params.userId]
-    );
-    res.json(result.rows);
-  } catch (err) {
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+router.get(
+  '/memory',
+  requirePermission('assistant', 'lire'),
+  asyncHandler(async (req: Request, res: Response) => {
+    const schema = getValidatedSchemaName(req.tenantSchema!);
+    const userId = await resolveLocalUserId(schema, req.user!.sub);
+    const memory = await assistantService.listMemory(schema, userId);
+    res.json(memory);
+  }),
+);
 
-router.delete('/memory/:id', async (req: Request, res: Response) => {
-  try {
-    const s = getValidatedSchemaName(req.tenantSchema!);
-    await pool.query(`DELETE FROM "${s}".assistant_memory WHERE id = $1`, [req.params.id]);
+router.delete(
+  '/memory/:id',
+  requirePermission('assistant', 'supprimer'),
+  validateParams(memoryIdParam),
+  asyncHandler(async (req: Request, res: Response) => {
+    const schema = getValidatedSchemaName(req.tenantSchema!);
+    const userId = await resolveLocalUserId(schema, req.user!.sub);
+    await assistantService.deleteMemory(schema, Number(req.params.id), userId);
     res.json({ ok: true });
-  } catch (err) {
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+  }),
+);
 
 // ===================== ARTICLES SEARCH =====================
 
-router.get('/articles', async (req: Request, res: Response) => {
-  const { q } = req.query;
-  if (!q) return res.json([]);
+router.get(
+  '/articles',
+  requirePermission('assistant', 'lire'),
+  validateQuery(articlesQuery),
+  asyncHandler(async (req: Request, res: Response) => {
+    const q = req.query.q as string | undefined;
+    if (!q) {
+      res.json([]);
+      return;
+    }
 
-  if (isQdrantReady()) {
-    try {
-      const results = await qdrantModule.search('normx_kb', q as string, 10) as Array<{ payload: { numero?: string; titre?: string; texte?: string; mots_cles?: string[]; source?: string }; score: number }>;
-      if (results && results.length > 0) {
-        return res.json(results.map(r => ({
-          numero: r.payload.numero || '',
-          titre: r.payload.titre || '',
-          texte: (r.payload.texte || '').substring(0, 300) + '...',
-          mots_cles: r.payload.mots_cles || [],
-          score: r.score,
-          source: r.payload.source,
-        })));
+    if (isQdrantReady()) {
+      try {
+        const results = (await qdrantModule.search('normx_kb', q, 10)) as Array<{
+          payload: {
+            numero?: string;
+            titre?: string;
+            texte?: string;
+            mots_cles?: string[];
+            source?: string;
+          };
+          score: number;
+        }>;
+        if (results && results.length > 0) {
+          res.json(
+            results.map((r) => ({
+              numero: r.payload.numero || '',
+              titre: r.payload.titre || '',
+              texte: (r.payload.texte || '').substring(0, 300) + '...',
+              mots_cles: r.payload.mots_cles || [],
+              score: r.score,
+              source: r.payload.source,
+            })),
+          );
+          return;
+        }
+      } catch (err) {
+        logger.warn(
+          'Qdrant search fallback to keyword: ' +
+            (err instanceof Error ? err.message : String(err)),
+        );
       }
-    } catch (_ignored) { /* fallback to keyword search */ }
-  }
+    }
 
-  const allArticles = [...KB.sycebnl, ...KB.syscohada];
-  const results = searchArticles(allArticles, q as string, 10);
-  res.json(results.map((a: KBArticle) => ({
-    numero: a.numero,
-    titre: a.titre,
-    texte: Array.isArray(a.texte) ? a.texte.join(' ').substring(0, 300) + '...' : (a.texte || '').substring(0, 300) + '...',
-    mots_cles: a.mots_cles || [],
-  })));
-});
+    const allArticles = [...KB.sycebnl, ...KB.syscohada];
+    const results = searchArticles(allArticles, q, 10);
+    res.json(
+      results.map((a: KBArticle) => ({
+        numero: a.numero,
+        titre: a.titre,
+        texte: Array.isArray(a.texte)
+          ? a.texte.join(' ').substring(0, 300) + '...'
+          : (a.texte || '').substring(0, 300) + '...',
+        mots_cles: a.mots_cles || [],
+      })),
+    );
+  }),
+);
 
 // ===================== QDRANT STATUS =====================
 
-router.get('/qdrant/status', async (_req: Request, res: Response) => {
-  try {
+router.get(
+  '/qdrant/status',
+  asyncHandler(async (_req: Request, res: Response) => {
     const health = await qdrantModule.healthCheck();
     let collectionInfo: QdrantCollectionInfo | null = null;
     if (health.ok) {
       try {
         const info = await qdrantModule.qdrant.getCollection('normx_kb');
-        collectionInfo = { points_count: info.points_count, indexed_vectors_count: info.indexed_vectors_count, status: info.status };
-      } catch (_ignored) { /* collection may not exist */ }
+        collectionInfo = {
+          points_count: info.points_count,
+          indexed_vectors_count: info.indexed_vectors_count,
+          status: info.status,
+        };
+      } catch (err) {
+        logger.warn(
+          'Qdrant collection info indisponible: ' +
+            (err instanceof Error ? err.message : String(err)),
+        );
+      }
     }
     res.json({
       qdrant_available: health.ok,
       search_mode: isQdrantReady() ? 'vectoriel' : 'mots-cles',
-      collection: collectionInfo ? {
-        name: 'normx_kb',
-        points_count: collectionInfo.points_count,
-        indexed_vectors_count: collectionInfo.indexed_vectors_count,
-        status: collectionInfo.status,
-      } : null,
+      collection: collectionInfo
+        ? {
+            name: 'normx_kb',
+            points_count: collectionInfo.points_count,
+            indexed_vectors_count: collectionInfo.indexed_vectors_count,
+            status: collectionInfo.status,
+          }
+        : null,
     });
-  } catch (err) {
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+  }),
+);
 
 // ===================== FONCTIONNEMENT DES COMPTES =====================
 
-// Cache lazy des articles "fonctionnement comptes" : on charge tous les JSON
-// une seule fois (au premier appel) puis on sert depuis la memoire.
-// Les fichiers font plusieurs Mo et etaient relus a chaque requete.
+// Cache lazy : les fichiers font plusieurs Mo et etaient relus a chaque requete.
 let fonctionnementCache: FonctionnementArticle[] | null = null;
 
 function getFonctionnementArticles(): FonctionnementArticle[] {
   if (fonctionnementCache !== null) return fonctionnementCache;
   const localKbDir = path.join(__dirname, '..', '..', 'knowledge-base');
-  const files = fs.readdirSync(localKbDir)
+  const files = fs
+    .readdirSync(localKbDir)
     .filter((f: string) => f.startsWith('fonctionnement_comptes_classe') && f.endsWith('.json'));
   const all: FonctionnementArticle[] = [];
   for (const file of files) {
@@ -207,37 +267,43 @@ function getFonctionnementArticles(): FonctionnementArticle[] {
           sens: a.sens || '',
         });
       }
-    } catch (_ignored) { /* skip malformed files */ }
+    } catch (err) {
+      logger.warn(
+        'Fichier KB malforme ignore (' + file + '): ' +
+          (err instanceof Error ? err.message : String(err)),
+      );
+    }
   }
   fonctionnementCache = all;
   logger.info('Fonctionnement comptes charge en memoire: %d articles', all.length);
   return fonctionnementCache;
 }
 
-router.post('/fonctionnement-comptes', async (req: Request, res: Response) => {
-  try {
-    const { prefixes } = req.body;
-    if (!prefixes || !Array.isArray(prefixes) || prefixes.length === 0) {
-      return res.json([]);
-    }
+router.post(
+  '/fonctionnement-comptes',
+  requirePermission('assistant', 'lire'),
+  validateBody(fonctionnementComptesBody),
+  asyncHandler(async (req: Request, res: Response) => {
+    const prefixes = req.body.prefixes as string[];
 
     const all = getFonctionnementArticles();
-    const matched = all.filter(a =>
-      prefixes.some((p: string) => a.numero === p || a.numero.startsWith(p) || p.startsWith(a.numero)),
+    const matched = all.filter((a) =>
+      prefixes.some(
+        (p: string) => a.numero === p || a.numero.startsWith(p) || p.startsWith(a.numero),
+      ),
     );
 
     const seen = new Set<string>();
-    const unique = matched.filter(r => {
-      if (seen.has(r.numero)) return false;
-      seen.add(r.numero);
-      return true;
-    }).sort((a, b) => a.numero.localeCompare(b.numero));
+    const unique = matched
+      .filter((r) => {
+        if (seen.has(r.numero)) return false;
+        seen.add(r.numero);
+        return true;
+      })
+      .sort((a, b) => a.numero.localeCompare(b.numero));
 
     res.json(unique);
-  } catch (err) {
-    logger.error('Erreur fonctionnement-comptes: ' + getErrorMessage(err as { message?: string }));
-    res.status(500).json({ error: getErrorMessage(err as { message?: string }) });
-  }
-});
+  }),
+);
 
 export default router;

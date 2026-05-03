@@ -87,6 +87,31 @@ export async function getCabinetClients(cabinetId: number): Promise<Tenant[]> {
   return result.rows;
 }
 
+export async function getTenantBySchema(schemaName: string): Promise<Tenant | null> {
+  const validSchema = getValidatedSchemaName(schemaName);
+  const result = await pool.query(
+    'SELECT * FROM public.tenants WHERE schema_name = $1',
+    [validSchema],
+  );
+  return result.rows[0] || null;
+}
+
+/**
+ * Lit un flag booleen depuis tenants.settings JSONB.
+ * Defaut : false. Strict : seul `true` literal active le flag.
+ */
+export async function getTenantSettingFlag(
+  schemaName: string,
+  key: string,
+): Promise<boolean> {
+  const validSchema = getValidatedSchemaName(schemaName);
+  const result = await pool.query(
+    `SELECT settings->>$2 AS value FROM public.tenants WHERE schema_name = $1`,
+    [validSchema, key],
+  );
+  return result.rows[0]?.value === 'true';
+}
+
 // ============ SLUG HELPERS ============
 
 /**
@@ -149,25 +174,44 @@ export async function createTenant(input: CreateTenantInput): Promise<Tenant> {
 
 // ============ MISE A JOUR ============
 
+// Whitelist explicite des colonnes updatables et de leur builder SQL.
+// Ajouter une colonne ici (jamais inline dans updateTenant) pour qu'elle
+// soit prise en compte. Verrou contre l'injection SQL via nom de colonne
+// si du code futur tentait d'iterer Object.keys(data) sans filtrage.
+type TenantUpdateValue = string | number | boolean | null;
+type TenantUpdateBuilder = (placeholder: string, value: unknown) => {
+  fragment: string;
+  value: TenantUpdateValue;
+};
+
+const TENANT_UPDATE_COLUMNS: Record<string, TenantUpdateBuilder> = {
+  nom: (p, v) => ({ fragment: `nom = ${p}`, value: String(v) }),
+  type: (p, v) => ({ fragment: `type = ${p}`, value: String(v) }),
+  settings: (p, v) => ({
+    fragment: `settings = settings || ${p}::jsonb`,
+    value: JSON.stringify(v),
+  }),
+};
+
 export async function updateTenant(
   id: number,
   data: { nom?: string; type?: string; settings?: TenantSettings }
 ): Promise<void> {
   const updates: string[] = [];
-  const values: (string | number | boolean | null)[] = [];
+  const values: TenantUpdateValue[] = [];
   let idx = 1;
 
-  if (data.nom) {
-    updates.push(`nom = $${idx++}`);
-    values.push(data.nom);
-  }
-  if (data.type) {
-    updates.push(`type = $${idx++}`);
-    values.push(data.type);
-  }
-  if (data.settings) {
-    updates.push(`settings = settings || $${idx++}::jsonb`);
-    values.push(JSON.stringify(data.settings));
+  for (const [key, raw] of Object.entries(data)) {
+    if (raw === undefined || raw === null) continue;
+    const builder = TENANT_UPDATE_COLUMNS[key];
+    if (!builder) {
+      // Safety net : un dev ajouterait `data.foo` sans declarer la colonne ici.
+      logger.warn('updateTenant: champ ignore (non whitelist) %s', key);
+      continue;
+    }
+    const { fragment, value } = builder(`$${idx++}`, raw);
+    updates.push(fragment);
+    values.push(value);
   }
 
   if (updates.length === 0) return;
@@ -177,7 +221,7 @@ export async function updateTenant(
 
   await pool.query(
     `UPDATE public.tenants SET ${updates.join(', ')} WHERE id = $${idx}`,
-    values
+    values,
   );
 }
 

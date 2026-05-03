@@ -55,27 +55,27 @@ flux de clôture exercice complet (sans assistance), à enrichir ensuite.
 ## 1. Création dossier et paramétrage
 
 ### 1.1 Création du dossier
-- ✅ Formulaire de création client expose bien le module « Comptabilité »
-- ✅ Création du tenant aboutit sans erreur côté frontend et backend
-- ✅ Le schéma Postgres `tenant_<slug>` est bien provisionné
-- ✅ Les tables compta (ecritures, journaux, plans_compte, etc.) existent
-- ✅ Le dossier apparaît dans la liste des clients du cabinet
-- ✅ Formulaire : un seul module coché par défaut (compta) pour respecter
+- ☐ Formulaire de création client expose bien le module « Comptabilité »
+- ☐ Création du tenant aboutit sans erreur côté frontend et backend
+- ☐ Le schéma Postgres `tenant_<slug>` est bien provisionné
+- ☐ Les tables compta (ecritures, journaux, plans_compte, etc.) existent
+- ☐ Le dossier apparaît dans la liste des clients du cabinet
+- ☐ Formulaire : un seul module coché par défaut (compta) pour respecter
       l'exclusion mutuelle compta/etats. Corrigé dans `GestionClients.tsx`
       avec une fonction `defaultModule()` qui priorise compta si activé.
 
 ### 1.2 Paramétrage initial
-- ✅ Le plan comptable SYSCOHADA est chargé par défaut (1409 comptes) —
+- ☐ Le plan comptable SYSCOHADA est chargé par défaut (1409 comptes) —
       visible via Paramètres → Plan comptable, endpoint
       `/api/comptes-custom/plan-fusionne`
-- ✅ Possibilité d'ajouter / désactiver des comptes du plan —
+- ☐ Possibilité d'ajouter / désactiver des comptes du plan —
       bouton "Ajouter un compte" et icônes toggle actif/désactivé
       (table `comptes_custom` avec type `custom` ou `disabled`)
-- ✅ Liste des journaux par défaut : Achats (AC), Ventes (VT),
+- ☐ Liste des journaux par défaut : Achats (AC), Ventes (VT),
       Caisse (CA), Banque (BQ), OD — seed auto à la création du tenant
-- ✅ Possibilité d'ajouter un journal personnalisé —
+- ☐ Possibilité d'ajouter un journal personnalisé —
       Paramètres → Journaux → "Ajouter un journal"
-- ✅ Paramètres TVA (taux par défaut, type de régime) modifiables —
+- ☐ Paramètres TVA (taux par défaut, type de régime) modifiables —
       Paramètres → TVA, défaut Congo 18% / 5% / régime normal
 
 ### 1.3 Exercice comptable

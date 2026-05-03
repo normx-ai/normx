@@ -4,9 +4,8 @@ import { api } from '../lib/apiEndpoints';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuTriangleAlert, LuEye, LuX, LuPrinter, LuSheet, LuSave } from 'react-icons/lu';
 import { exportToExcel, buildExcelPreviewHtml } from '../lib/excelExport';
-import type { ExcelRow, ExcelExportOptions } from '../lib/excelExport';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { buildResultatFiscalExcelOptions } from './resultatFiscal/excelExport';
+import { htmlToPdf } from '../lib/htmlToPdf';
 import './BilanSYCEBNL.css';
 import type { BalanceLigne, EtatBaseProps } from '../types';
 import {
@@ -40,7 +39,7 @@ void TAUX_IS_ETRANGER;
 
 let nextId = 1;
 
-function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
+function ResultatFiscal({ entiteName, entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.JSX.Element {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [lignesN, setLignesN] = useState<BalanceLigne[]>([]);
   const [balanceFound, setBalanceFound] = useState(false);
@@ -355,66 +354,16 @@ function ResultatFiscal({ entiteName, entiteSigle = '', entiteAdresse = '', enti
     setDeductions(prev => prev.map(d => d.id === id ? { ...d, [field]: value } : d));
   };
 
-  const buildExcelOptions = (): ExcelExportOptions => {
-    const rows: ExcelRow[] = [];
-    const fmt = (v: number): number => Math.round(v);
-
-    rows.push({ libelle: 'I. RESULTAT COMPTABLE DE L\'EXERCICE', ref: 'compte 85', values: [fmt(calc.resultatComptable)], bold: true });
-
-    rows.push({ libelle: 'II. REINTEGRATIONS FISCALES', values: [''], bold: true });
-    for (const r of reintegrations) {
-      rows.push({ libelle: r.libelle, ref: r.article, values: [fmt(r.montant)] });
-    }
-    rows.push({ libelle: 'TOTAL REINTEGRATIONS (II)', values: [fmt(calc.totalReintegrations)], bold: true });
-
-    rows.push({ libelle: 'III. DEDUCTIONS FISCALES', values: [''], bold: true });
-    for (const d of deductions) {
-      rows.push({ libelle: d.libelle, ref: d.article, values: [fmt(d.montant)] });
-    }
-    rows.push({ libelle: 'TOTAL DEDUCTIONS (III)', values: [fmt(calc.totalDeductions)], bold: true });
-
-    rows.push({ libelle: 'IV. RESULTAT NET FISCAL DE L\'EXERCICE', values: [fmt(calc.resultatFiscal)], bold: true });
-
-    rows.push({ libelle: 'V. REPORTS DEFICITAIRES', values: [''], bold: true });
-    for (const d of deficits) {
-      rows.push({ libelle: 'Déficit ' + d.annee_origine + ' (reportable: ' + fmt(d.montant_reportable).toLocaleString() + ')', ref: 'Art. 15-bis', values: [fmt(d.montant_impute)] });
-    }
-    rows.push({ libelle: 'TOTAL DEFICITS IMPUTES', values: [fmt(calc.totalDeficitsImputes)], bold: true });
-
-    rows.push({ libelle: 'VI. AMORTISSEMENTS REPUTES DIFFERES (ARD) IMPUTES', values: [''], bold: true });
-    rows.push({ libelle: 'Solde des ARD en début d\'exercice', values: [fmt(ard.solde_debut)] });
-    rows.push({ libelle: 'ARD de l\'exercice', values: [fmt(ard.ard_exercice)] });
-    rows.push({ libelle: 'ARD utilisés dans l\'exercice (imputés)', values: [fmt(ard.ard_utilises)] });
-    rows.push({ libelle: 'Solde des ARD en fin d\'exercice', values: [fmt(calc.ardSoldeFin)], bold: true });
-
-    rows.push({ libelle: 'VII. RESULTAT NET FISCAL DEFINITIF (IV − V − ARD utilisés)', values: [fmt(calc.resultatFiscalDefinitif)], bold: true });
-
-    return {
-      filename: `Resultat_Fiscal_${annee}`,
-      sheetName: 'Resultat Fiscal',
-      title: 'DETERMINATION DU RESULTAT FISCAL',
-      subtitle: `Regime : ${regimeFiscal === 'is' ? 'IS' : 'IBA'}`,
-      headers: ['MONTANT (FCFA)'],
-      rows,
-      entiteName,
-      exerciceAnnee: annee,
-      entiteNif,
-      dureeMois: duree,
-    };
-  };
+  const buildExcelOptions = () => buildResultatFiscalExcelOptions({
+    calc, reintegrations, deductions, deficits, ard, regimeFiscal, annee, duree, entiteName, entiteNif,
+  });
 
   const exportExcel = (): void => { void exportToExcel(buildExcelOptions()); };
   const previewExcel = (): void => { setExcelPreviewHtml(buildExcelPreviewHtml(buildExcelOptions())); };
 
-  const generatePDF = async (): Promise<jsPDF> => {
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    if (!pageRef.current) return pdf;
-    const canvas = await html2canvas(pageRef.current, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
-    const imgData = canvas.toDataURL('image/png');
-    const pdfWidth = 210;
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    return pdf;
+  const generatePDF = async () => {
+    if (!pageRef.current) throw new Error('Page non rendue');
+    return htmlToPdf(pageRef.current);
   };
 
   const openPreview = async (): Promise<void> => {

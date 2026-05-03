@@ -8,14 +8,13 @@ import type { ExcelRow, ExcelExportOptions } from '../lib/excelExport';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './BilanSYCEBNL.css';
-import type { BalanceLigne, Exercice, EtatBaseProps, Offre, BilanMode } from '../types';
+import type { BalanceLigne, EtatBaseProps, Offre, BilanMode } from '../types';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import {
   ACTIF_MAPPING,
   PASSIF_MAPPING,
   ACTIF_ROWS,
   PASSIF_ROWS,
-  type ActifResult,
   type PassifResult,
 } from './bilan/bilanSyscohadaData';
 import {
@@ -32,7 +31,7 @@ interface BilanSYSCOHADAProps extends EtatBaseProps {
   offre?: Offre;
 }
 
-function BilanSYSCOHADA({ page = 'actif', entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: BilanSYSCOHADAProps): React.JSX.Element {
+function BilanSYSCOHADA({ page = 'actif', entiteName, entiteNif = '', entiteId, offre = 'comptabilite', onBack }: BilanSYSCOHADAProps): React.JSX.Element {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   // Source automatique selon l'offre
   const balanceSource: string = offre === 'comptabilite' ? 'ecritures' : 'import';

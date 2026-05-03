@@ -4,13 +4,13 @@
  */
 
 import Anthropic from '@anthropic-ai/sdk';
+import { ServiceUnavailableError } from '../errors';
 
-// Erreur typee pour distinguer cote route et retourner un 503 generique
-// sans fuir le nom exact de la variable d'env au client.
-export class AnthropicKeyMissingError extends Error {
+// Erreur typee : 503 generique cote client, sans fuir le nom de la variable d'env.
+export class AnthropicKeyMissingError extends ServiceUnavailableError {
+  readonly code = 'AI_PROVIDER_UNAVAILABLE';
   constructor() {
-    super('ANTHROPIC_API_KEY non configuree');
-    this.name = 'AnthropicKeyMissingError';
+    super('Service IA indisponible.');
   }
 }
 

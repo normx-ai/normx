@@ -19,6 +19,7 @@ import {
 } from '../bilan/bilanSyscohadaData';
 import { computeAllFlux } from '../tft/calculs';
 import { rawSD, rawSC } from '../tft/soldes';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note34Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -205,15 +206,10 @@ function Note34({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note34P
   const ctxN = useMemo(() => buildCtx(lignesN, computeAllFlux(lignesN, lignesN1)), [lignesN, lignesN1]);
   const ctxN1 = useMemo(() => buildCtx(lignesN1, null), [lignesN1]);
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
   const parseNVal = (v: string): number => {
     const n = parseFloat(v.replace(/\s/g, '').replace(',', '.'));
     return isNaN(n) ? 0 : n;
   };
-  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
   const fmtPct = (v: number): string => v.toFixed(1).replace('.', ',') + ' %';
 
   // Resoudre la valeur d'une ligne pour une colonne (override > calc > vide)
@@ -253,7 +249,7 @@ function Note34({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note34P
   const formatCell = (s: Section, v: number | null): string => {
     if (v === null) return '';
     if (s.isPercent) return fmtPct(v);
-    return fmtM(v);
+    return fmtMontant(v);
   };
 
   const th: React.CSSProperties = { ...thStyle, padding: '6px 10px', fontSize: 9 };
@@ -324,7 +320,7 @@ function Note34({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note34P
       </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 8mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 9, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 34 — FICHE DE SYNTHESE DES PRINCIPAUX INDICATEURS FINANCIERS
         </h3>

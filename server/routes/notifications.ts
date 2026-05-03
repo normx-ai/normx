@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import * as notificationsService from '../services/notifications.service';
 import { asyncHandler } from '../middleware/asyncHandler';
+import { validateBody } from '../middleware/validate';
+import { createNotificationBody } from '../schemas/notifications.schema';
 
 const router = express.Router();
 
@@ -21,13 +23,10 @@ router.get('/:userId/unread-count', asyncHandler(async (req: Request, res: Respo
 }));
 
 // Creer une notification
-router.post('/', asyncHandler(async (req: Request, res: Response) => {
+router.post('/', validateBody(createNotificationBody), asyncHandler(async (req: Request, res: Response) => {
   const schema = req.tenantSchema;
   if (!schema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const { user_id, type, title, message } = req.body;
-  if (!user_id || !title || !message) {
-    return res.status(400).json({ error: 'user_id, title et message requis.' });
-  }
   const notification = await notificationsService.createNotification(schema, { user_id, type, title, message });
   res.status(201).json(notification);
 }));

@@ -5,6 +5,8 @@ import { asyncHandler } from '../middleware/asyncHandler';
 import pool from '../db';
 import { getValidatedSchemaName } from '../utils/tenant.utils';
 import logger from '../logger';
+import { validateBody } from '../middleware/validate';
+import { createCompteCustomBody, updateCompteCustomBody } from '../schemas/comptesCustom.schema';
 
 const router = express.Router();
 
@@ -109,22 +111,11 @@ router.get('/plan-fusionne', asyncHandler(async (req: Request, res: Response) =>
 }));
 
 // POST /api/comptes-custom — ajouter un compte personnalisé
-router.post('/', asyncHandler(async (req: Request, res: Response) => {
+router.post('/', validateBody(createCompteCustomBody), asyncHandler(async (req: Request, res: Response) => {
   if (!req.tenantSchema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
-  const { numero, libelle, sens, type } = req.body as {
-    numero?: string; libelle?: string; sens?: string; type?: string;
-  };
-  if (!numero?.trim()) {
-    return res.status(400).json({ error: 'Numéro obligatoire.' });
-  }
+  const { numero, libelle, sens, type } = req.body;
   const numeroClean = numero.trim();
   const typeFinal = type === 'disabled' ? 'disabled' : 'custom';
-  if (typeFinal === 'custom' && !libelle?.trim()) {
-    return res.status(400).json({ error: 'Libellé obligatoire pour un compte personnalisé.' });
-  }
-  if (sens && !['debiteur', 'crediteur', 'mixte'].includes(sens)) {
-    return res.status(400).json({ error: 'Sens invalide (debiteur|crediteur|mixte).' });
-  }
   const classe = numeroClean.charAt(0).match(/[1-9]/) ? parseInt(numeroClean.charAt(0), 10) : null;
   const schema = getValidatedSchemaName(req.tenantSchema);
   try {
@@ -145,20 +136,16 @@ router.post('/', asyncHandler(async (req: Request, res: Response) => {
 }));
 
 // PUT /api/comptes-custom/:id — modifier un compte perso
-router.put('/:id', asyncHandler(async (req: Request, res: Response) => {
+router.put('/:id', validateBody(updateCompteCustomBody), asyncHandler(async (req: Request, res: Response) => {
   if (!req.tenantSchema) return res.status(400).json({ error: 'Contexte tenant manquant.' });
   const id = parseInt(req.params.id, 10);
-  const { libelle, sens } = req.body as { libelle?: string; sens?: string };
-  if (sens && !['debiteur', 'crediteur', 'mixte'].includes(sens)) {
-    return res.status(400).json({ error: 'Sens invalide.' });
-  }
+  const { libelle, sens } = req.body;
   const schema = getValidatedSchemaName(req.tenantSchema);
   const updates: string[] = [];
   const values: (string | null)[] = [];
   let idx = 1;
   if (libelle !== undefined) { updates.push(`libelle = $${idx++}`); values.push(libelle || null); }
   if (sens !== undefined) { updates.push(`sens = $${idx++}`); values.push(sens || null); }
-  if (updates.length === 0) return res.status(400).json({ error: 'Aucun champ à mettre à jour.' });
   updates.push(`updated_at = NOW()`);
   values.push(String(id));
   const r = await pool.query(

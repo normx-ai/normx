@@ -8,6 +8,7 @@ import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate, parseInputNumber } from '../../utils/formatters';
 
 interface Note32Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -29,7 +30,7 @@ const emptyNonVentile = (): LigneNonVentile => ({ pays_val: '', autres_val: '', 
 function Note32({ entiteName, entiteNif = '', entiteId, onBack }: Note32Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -55,19 +56,13 @@ function Note32({ entiteName, entiteNif = '', entiteId, onBack }: Note32Props): 
     note32_nonventile: JSON.stringify(nonVentile),
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   const updateLigne = (idx: number, field: keyof LigneProd, value: string) => { setLignes(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l)); };
 
   // Totaux
   const valFields: (keyof LigneProd)[] = ['pays_val', 'autres_val', 'hors_val', 'immo_val', 'stock_ouv_val', 'stock_clo_val'];
   const totals: Record<string, number> = {};
-  for (const f of valFields) { totals[f] = lignes.reduce((s, l) => s + parseN(l[f]), 0) + parseN(nonVentile[f.replace('pays_val', 'pays_val').replace('autres_val', 'autres_val') as keyof LigneNonVentile] || '0'); }
+  for (const f of valFields) { totals[f] = lignes.reduce((s, l) => s + parseInputNumber(l[f]), 0) + parseInputNumber(nonVentile[f.replace('pays_val', 'pays_val').replace('autres_val', 'autres_val') as keyof LigneNonVentile] || '0'); }
 
   const th: React.CSSProperties = { ...thStyle, fontSize: 8 };
   const td: React.CSSProperties = { ...tdStyle, fontSize: 9 };
@@ -110,7 +105,7 @@ function Note32({ entiteName, entiteNif = '', entiteId, onBack }: Note32Props): 
       </div>
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 6mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 9, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 32 — PRODUCTION DE L'EXERCICE
         </h3>
@@ -189,17 +184,17 @@ function Note32({ entiteName, entiteNif = '', entiteId, onBack }: Note32Props): 
             <tr>
               <td style={{ ...tdB, background: '#e8e8e8' }} colSpan={2}>TOTAL</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.pays_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.pays_val)}</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.autres_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.autres_val)}</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.hors_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.hors_val)}</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.immo_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.immo_val)}</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.stock_ouv_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.stock_ouv_val)}</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.stock_clo_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.stock_clo_val)}</td>
             </tr>
           </tbody>
         </table>

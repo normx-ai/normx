@@ -184,10 +184,18 @@ CREATE INDEX IF NOT EXISTS idx_audit_module ON "${schema_name}".audit_log(module
 CREATE INDEX IF NOT EXISTS idx_audit_date ON "${schema_name}".audit_log(created_at);
 
 -- ========== ASSISTANT IA ==========
+-- visibility=shared : conversation lisible par tous les users du tenant ayant
+--                     permission lecture sur module 'assistant'
+-- visibility=private : seul created_by_user_id voit / modifie / supprime
+-- entite_id : rattachement optionnel a un dossier comptable interne
+-- scope memory : 'personal' (lie a un user) ou 'shared' (memoire metier tenant)
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".conversations (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER,
+  created_by_user_id UUID REFERENCES "${schema_name}".utilisateurs(id) ON DELETE SET NULL,
+  visibility VARCHAR(20) NOT NULL DEFAULT 'shared'
+    CHECK (visibility IN ('private', 'shared')),
+  entite_id INTEGER REFERENCES "${schema_name}".entites(id) ON DELETE SET NULL,
   titre VARCHAR(255) DEFAULT 'Nouvelle conversation',
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
@@ -204,16 +212,26 @@ CREATE TABLE IF NOT EXISTS "${schema_name}".conversation_messages (
 
 CREATE TABLE IF NOT EXISTS "${schema_name}".assistant_memory (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL,
+  user_id UUID REFERENCES "${schema_name}".utilisateurs(id) ON DELETE CASCADE,
+  scope VARCHAR(20) NOT NULL DEFAULT 'personal'
+    CHECK (scope IN ('personal', 'shared')),
+  entite_id INTEGER REFERENCES "${schema_name}".entites(id) ON DELETE SET NULL,
   cle VARCHAR(255) NOT NULL,
   valeur TEXT NOT NULL,
   created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
+  updated_at TIMESTAMP DEFAULT NOW(),
+  CONSTRAINT chk_memory_scope_user CHECK (
+    (scope = 'personal' AND user_id IS NOT NULL) OR
+    (scope = 'shared')
+  )
 );
 
-CREATE INDEX IF NOT EXISTS idx_conversations_user ON "${schema_name}".conversations(user_id);
+CREATE INDEX IF NOT EXISTS idx_conversations_creator ON "${schema_name}".conversations(created_by_user_id);
+CREATE INDEX IF NOT EXISTS idx_conversations_visibility ON "${schema_name}".conversations(visibility);
+CREATE INDEX IF NOT EXISTS idx_conversations_entite ON "${schema_name}".conversations(entite_id);
 CREATE INDEX IF NOT EXISTS idx_conv_messages_conv ON "${schema_name}".conversation_messages(conversation_id);
 CREATE INDEX IF NOT EXISTS idx_assistant_memory_user ON "${schema_name}".assistant_memory(user_id);
+CREATE INDEX IF NOT EXISTS idx_assistant_memory_scope ON "${schema_name}".assistant_memory(scope);
 
 -- ========== INDEX SUPPLEMENTAIRES (performance) ==========
 

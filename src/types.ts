@@ -61,10 +61,14 @@ export interface ToastData {
   type: ToastType;
 }
 
+// Source unique cote frontend pour CompteComptable.
+// Doit rester aligne avec server/types/comptes.ts (CRA bloque les imports
+// hors src/, donc duplication temporaire en attendant Vite).
 export interface CompteComptable {
   numero: string;
   libelle: string;
-  classe?: number;
+  classe?: number | string;
+  sens?: 'debiteur' | 'crediteur' | 'mixte' | string;
 }
 
 export interface EcritureRow {

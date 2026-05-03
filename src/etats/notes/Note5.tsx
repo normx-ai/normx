@@ -8,6 +8,7 @@ import type { EtatBaseProps, BalanceLigne } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note5Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -41,7 +42,7 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
     exercices, selectedExercice, setSelectedExercice,
     params, previewUrl, setPreviewUrl,
     pdfBlob, setPdfBlob, editing, setEditing,
-    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+    saving, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
   const [hideEmpty, setHideEmpty] = useState(false);
@@ -84,15 +85,7 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
-  const fmtM = (val: number): string => {
-    if (val === 0) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
 
   // Calcul depuis la balance
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[], crediteur = false) => {
@@ -164,9 +157,9 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
   const textareaStyle: React.CSSProperties = { width: '100%', minHeight: 50, padding: '8px 10px', fontSize: 12, lineHeight: '1.6', border: '1px solid #D4A843', borderRadius: 3, background: '#fffbf0', fontFamily: 'inherit', boxSizing: 'border-box', resize: 'vertical' };
 
   const renderAdjInput = (label: string, field: string, baseValue: number) => {
-    if (!editing) return fmtM(baseValue);
+    if (!editing) return fmtMontant(baseValue);
     const adj = getAdj(label, field);
-    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
+    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtMontant(baseValue - adj)} />;
   };
 
   const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => {
@@ -184,8 +177,8 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
   const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number }, variation: number) => (
     <tr>
       <td style={tdBold}>{label}</td>
-      <td style={tdBoldRight}>{fmtM(totals.anneeN)}</td>
-      <td style={tdBoldRight}>{fmtM(totals.anneeN1)}</td>
+      <td style={tdBoldRight}>{fmtMontant(totals.anneeN)}</td>
+      <td style={tdBoldRight}>{fmtMontant(totals.anneeN1)}</td>
       <td style={{ ...tdBoldRight, background: '#fafafa' }}>{variation !== 0 ? variation.toFixed(1) + ' %' : ''}</td>
     </tr>
   );
@@ -258,7 +251,7 @@ function Note5({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note5Pro
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

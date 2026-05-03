@@ -223,7 +223,7 @@ function buildRolePermissions(role: string): ModulePermissionEntry[] {
       return [
         { module: 'compta', perms: allTrue() },
         { module: 'etats', perms: allTrue() },
-        { module: 'assistant', perms: none() },
+        { module: 'assistant', perms: allTrue() },
         { module: 'admin', perms: none() },
       ];
 

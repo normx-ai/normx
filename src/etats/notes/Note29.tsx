@@ -11,6 +11,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note29Props extends EtatBaseProps { onGoToParametres?: () => void; }
 interface Rubrique { label: string; prefixes: string[]; group: 'frais' | 'revenus'; debit?: boolean; }
@@ -43,7 +44,7 @@ const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.\n• E
 function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -73,11 +74,6 @@ function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29P
     note29_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const fmtM = (v: number): string => Math.round(v).toLocaleString('fr-FR');
 
   const compDebit = (lignes: BalanceLigne[], pfx: string[]) => {
     let t = 0;
@@ -115,9 +111,9 @@ function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29P
   const calcVar = (t: { anneeN: number; anneeN1: number }) => t.anneeN1 !== 0 ? ((t.anneeN - t.anneeN1) / Math.abs(t.anneeN1) * 100) : 0;
 
   const renderAdj = (l: string, f: string, bv: number) => {
-    if (!editing) return fmtM(bv);
+    if (!editing) return fmtMontant(bv);
     const a = getAdj(l, f);
-    return <input value={a || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(l, f, v); }} style={inputSt} placeholder={fmtM(bv - a)} />;
+    return <input value={a || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(l, f, v); }} style={inputSt} placeholder={fmtMontant(bv - a)} />;
   };
 
   const renderRow = (r: { label: string; vals: { anneeN: number; anneeN1: number; variation: number } }) => {
@@ -135,8 +131,8 @@ function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29P
   const renderTotalRow = (label: string, t: { anneeN: number; anneeN1: number }) => (
     <tr key={label}>
       <td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td>
-      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN)}</td>
-      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(t.anneeN1)}</td>
+      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(t.anneeN)}</td>
+      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(t.anneeN1)}</td>
       <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{t.anneeN1 === 0 ? '-' : calcVar(t).toFixed(1) + ' %'}</td>
     </tr>
   );
@@ -178,7 +174,7 @@ function Note29({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note29P
       </div>
 
       <div ref={pageRef} style={{ width: '210mm', minHeight: '297mm', background: '#fff', margin: '0 auto 20px', padding: '6mm 10mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 12, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 29 — CHARGES ET REVENUS FINANCIERS
         </h3>

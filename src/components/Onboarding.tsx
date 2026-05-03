@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
 import type { NormxModule, Entite } from '../types';
-import type { OnboardingPrefill } from '../lib/queries';
 import { ENABLED_MODULES, isModuleEnabled } from '../config/modules';
 import OnboardingLayout from './onboarding/OnboardingLayout';
 import OnboardingStepEntite, { type TenantType } from './onboarding/OnboardingStepEntite';
@@ -13,7 +12,6 @@ interface OnboardingProps {
   userName: string;
   onComplete: (entite: Entite) => void;
   defaultModule?: string | null;
-  prefill?: OnboardingPrefill;
 }
 
 const ALL_MODULES: ModuleOption[] = [
@@ -36,30 +34,20 @@ const ALL_MODULES: ModuleOption[] = [
 // Filtre en temps reel : seuls les modules actives sont montres
 const MODULES: ModuleOption[] = ALL_MODULES.filter((m) => isModuleEnabled(m.id));
 
-export default function Onboarding({ userName, onComplete, defaultModule, prefill }: OnboardingProps): React.JSX.Element {
+export default function Onboarding({ userName, onComplete, defaultModule }: OnboardingProps): React.JSX.Element {
   const singleModuleMode = MODULES.length === 1;
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
-  // Pre-remplissage depuis le JWT Keycloak (attributs custom saisis a l'inscription).
-  // Si prefill.tenantType + prefill.modules sont la, le wizard saute les etapes
-  // 1 et 2 et auto-soumet la creation du tenant des le montage.
-  const prefilledModules: NormxModule[] = prefill?.modules
-    ? (prefill.modules.filter((m): m is NormxModule => MODULES.some(opt => opt.id === m)))
-    : [];
-
-  const initialModules: NormxModule[] = prefilledModules.length > 0
-    ? prefilledModules
-    : singleModuleMode
-      ? MODULES.map((m) => m.id)
-      : defaultModule && MODULES.some((m) => m.id === defaultModule)
-        ? [defaultModule as NormxModule]
-        : [];
+  // tenantType + modules sont saisis dans le wizard (plus dans Keycloak).
+  const initialModules: NormxModule[] = singleModuleMode
+    ? MODULES.map((m) => m.id)
+    : defaultModule && MODULES.some((m) => m.id === defaultModule)
+      ? [defaultModule as NormxModule]
+      : [];
 
   const [selectedModules, setSelectedModules] = useState<NormxModule[]>(initialModules);
-  // Nom d'entite jamais pre-rempli : le user doit explicitement saisir
-  // le nom de sa societe/cabinet (different du nom du compte Keycloak).
   const [entiteNom, setEntiteNom] = useState('');
-  const [tenantType, setTenantType] = useState<TenantType>(prefill?.tenantType || 'enterprise');
+  const [tenantType, setTenantType] = useState<TenantType>('enterprise');
 
   const currentYear = new Date().getFullYear();
   const [exerciceAnnee, setExerciceAnnee] = useState<number>(currentYear);

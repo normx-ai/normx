@@ -12,6 +12,7 @@ import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
 import { buildRubriques, Rubrique } from '../data/planSyscohadaNotes';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note22Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -24,7 +25,7 @@ const DEFAULT_COMMENTAIRE = `• Commenter toute variation significative.`;
 function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -56,11 +57,6 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
     note22_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const fmtM = (val: number): string => val === 0 ? '0' : Math.round(val).toLocaleString('fr-FR');
 
   // Charges = solde débiteur
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
@@ -97,9 +93,9 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
   const calcVar = (t: { anneeN: number; anneeN1: number }) => t.anneeN1 !== 0 ? ((t.anneeN - t.anneeN1) / Math.abs(t.anneeN1) * 100) : 0;
 
   const renderAdjInput = (key: string, field: string, baseValue: number) => {
-    if (!editing) return fmtM(baseValue);
+    if (!editing) return fmtMontant(baseValue);
     const adj = getAdj(key, field);
-    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(key, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
+    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(key, field, v); }} style={inputSt} placeholder={fmtMontant(baseValue - adj)} />;
   };
 
   const renderDetailRow = (r: Rubrique) => {
@@ -120,8 +116,8 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
   const renderTotalRow = (label: string, totals: { anneeN: number; anneeN1: number }) => (
     <tr key={label}>
       <td style={{ ...tdBold, background: '#f0f0f0' }}>{label}</td>
-      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totals.anneeN)}</td>
-      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totals.anneeN1)}</td>
+      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totals.anneeN)}</td>
+      <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totals.anneeN1)}</td>
       <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{calcVar(totals) !== 0 ? calcVar(totals).toFixed(1) + ' %' : ''}</td>
     </tr>
   );
@@ -173,7 +169,7 @@ function Note22({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note22P
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

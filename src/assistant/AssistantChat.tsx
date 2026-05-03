@@ -1,10 +1,16 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
-import { LuSend, LuMessageSquare, LuPlus, LuTrash2, LuBrain } from 'react-icons/lu';
+import { LuSend, LuMessageSquare, LuPlus, LuTrash2, LuBrain, LuLock, LuUsers } from 'react-icons/lu';
 import { TypeActivite } from '../types';
 import { fmtDayRelative } from '../utils/formatters';
+import { createLogger } from '../utils/logger';
 import './AssistantChat.css';
+
+const log = createLogger('assistant');
+
+type Visibility = 'private' | 'shared';
+type MemoryScope = 'personal' | 'shared';
 
 // ---- Local interfaces ----
 
@@ -22,6 +28,8 @@ interface DisplayMessage {
 interface ConversationItem {
   id: number;
   titre: string;
+  visibility: Visibility;
+  created_by_user_id: string | null;
   updated_at: string;
 }
 
@@ -29,6 +37,8 @@ interface MemoryItem {
   id: number;
   cle: string;
   valeur: string;
+  scope: MemoryScope;
+  user_id: string | null;
 }
 
 interface ChatApiResponse {
@@ -49,7 +59,6 @@ interface MessageRow {
 
 interface AssistantChatProps {
   userName: string;
-  userId: number;
   typeActivite: TypeActivite;
 }
 
@@ -89,7 +98,7 @@ const SUGGESTIONS_PROJET: string[] = [
   "La reconciliation de tresorerie d'un projet",
 ];
 
-function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): React.ReactElement {
+function AssistantChat({ userName, typeActivite }: AssistantChatProps): React.ReactElement {
   const userInitial: string = userName ? userName.charAt(0).toUpperCase() : 'U';
   const SUGGESTIONS: string[] = typeActivite === 'entreprise' ? SUGGESTIONS_SYSCOHADA
     : typeActivite === 'smt' ? SUGGESTIONS_SMT
@@ -102,37 +111,40 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
   const [input, setInput] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [memory, setMemory] = useState<MemoryItem[]>([]);
+  const [nextVisibility, setNextVisibility] = useState<Visibility>('shared');
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Load conversations list
   const loadConversations = useCallback(async (): Promise<void> => {
-    if (!userId) return;
     try {
-      const res: Response = await clientFetch(api.assistant.conversations(userId));
+      const res: Response = await clientFetch(api.assistant.conversations);
       if (res.ok) {
         const data: ConversationItem[] = await res.json();
         setConversations(data);
+      } else {
+        log.warn('loadConversations http error', { status: res.status });
       }
-    } catch (_err) {
-      // network error
+    } catch (err) {
+      log.warn('loadConversations network error', err instanceof Error ? err : String(err));
     }
-  }, [userId]);
+  }, []);
 
   // Load memory
   const loadMemory = useCallback(async (): Promise<void> => {
-    if (!userId) return;
     try {
-      const res: Response = await clientFetch(api.assistant.memory(userId));
+      const res: Response = await clientFetch(api.assistant.memory);
       if (res.ok) {
         const data: MemoryItem[] = await res.json();
         setMemory(data);
+      } else {
+        log.warn('loadMemory http error', { status: res.status });
       }
-    } catch (_err) {
-      // network error
+    } catch (err) {
+      log.warn('loadMemory network error', err instanceof Error ? err : String(err));
     }
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     loadConversations();
@@ -155,9 +167,11 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
           content: m.content,
           refs: m.articles_refs || [],
         })));
+      } else {
+        log.warn('openConversation refuse', { convId, status: res.status });
       }
-    } catch (_err) {
-      // network error
+    } catch (err) {
+      log.warn('openConversation network error', err instanceof Error ? err : String(err));
     }
   };
 
@@ -171,24 +185,30 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
   const deleteConversation = async (e: React.MouseEvent<HTMLButtonElement>, convId: number): Promise<void> => {
     e.stopPropagation();
     try {
-      await clientFetch(api.assistant.conversationById(convId), { method: 'DELETE' });
+      const res = await clientFetch(api.assistant.conversationById(convId), { method: 'DELETE' });
+      if (!res.ok) {
+        log.warn('deleteConversation refuse', { convId, status: res.status });
+      }
       if (activeConvId === convId) {
         setActiveConvId(null);
         setMessages([]);
       }
       loadConversations();
-    } catch (_err) {
-      // network error
+    } catch (err) {
+      log.warn('deleteConversation network error', err instanceof Error ? err : String(err));
     }
   };
 
   // Delete memory item
   const deleteMemoryItem = async (id: number): Promise<void> => {
     try {
-      await clientFetch(api.assistant.memoryById(id), { method: 'DELETE' });
+      const res = await clientFetch(api.assistant.memoryById(id), { method: 'DELETE' });
+      if (!res.ok) {
+        log.warn('deleteMemoryItem refuse', { id, status: res.status });
+      }
       loadMemory();
-    } catch (_err) {
-      // network error
+    } catch (err) {
+      log.warn('deleteMemoryItem network error', err instanceof Error ? err : String(err));
     }
   };
 
@@ -213,8 +233,9 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
         body: JSON.stringify({
           message: userMessage,
           conversationId: activeConvId,
-          userId: userId,
           typeActivite: typeActivite,
+          // visibility appliquee uniquement a la creation (conv inexistante)
+          ...(activeConvId ? {} : { visibility: nextVisibility }),
         }),
       });
 
@@ -277,6 +298,32 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
           </button>
         </div>
 
+        {/* Visibilite a appliquer a la prochaine conversation */}
+        {activeConvId === null && (
+          <div className="chat-visibility-toggle" role="radiogroup" aria-label="Visibilite de la nouvelle conversation">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={nextVisibility === 'shared'}
+              className={'visibility-btn' + (nextVisibility === 'shared' ? ' active' : '')}
+              onClick={() => setNextVisibility('shared')}
+              title="Lisible par tous les collaborateurs du tenant"
+            >
+              <LuUsers /> Partagee
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={nextVisibility === 'private'}
+              className={'visibility-btn' + (nextVisibility === 'private' ? ' active' : '')}
+              onClick={() => setNextVisibility('private')}
+              title="Lisible uniquement par moi"
+            >
+              <LuLock /> Privee
+            </button>
+          </div>
+        )}
+
         <div className="chat-history-list">
           {conversations.length === 0 && (
             <div style={{ padding: 16, fontSize: 13, color: '#999', textAlign: 'center' }}>
@@ -289,7 +336,14 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
               className={'chat-history-item' + (activeConvId === conv.id ? ' active' : '')}
               onClick={() => openConversation(conv.id)}
             >
-              <span className="chat-history-item-title">{conv.titre}</span>
+              <span className="chat-history-item-title">
+                {conv.visibility === 'private' ? (
+                  <LuLock title="Privee" style={{ verticalAlign: 'middle', marginRight: 4 }} />
+                ) : (
+                  <LuUsers title="Partagee" style={{ verticalAlign: 'middle', marginRight: 4 }} />
+                )}
+                {conv.titre}
+              </span>
               <span className="chat-history-item-date">{formatDate(conv.updated_at)}</span>
               <button
                 className="chat-history-delete"
@@ -311,6 +365,9 @@ function AssistantChat({ userName, userId, typeActivite }: AssistantChatProps): 
             memory.map((m: MemoryItem) => (
               <div key={m.id} className="memory-item">
                 <div className="memory-item-text">
+                  {m.scope === 'shared' && (
+                    <LuUsers title="Memoire partagee" style={{ verticalAlign: 'middle', marginRight: 4 }} />
+                  )}
                   <span className="memory-item-key">{m.cle}</span> : {m.valeur}
                 </div>
                 <button className="memory-delete-btn" onClick={() => deleteMemoryItem(m.id)} title="Supprimer">

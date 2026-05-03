@@ -6,6 +6,7 @@ import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
 import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note3FProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -32,7 +33,7 @@ function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): 
     exercices, selectedExercice, setSelectedExercice,
     params, previewUrl, setPreviewUrl,
     pdfBlob, setPdfBlob, editing, setEditing,
-    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+    saving, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
   const [commentaire, setCommentaire] = useState('');
@@ -73,16 +74,8 @@ function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): 
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const parseNum = (s: string): number => parseFloat(s.replace(/\s/g, '').replace(',', '.')) || 0;
-  const fmtM = (val: number): string => {
-    if (val === 0) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
 
   const totals = lignes.reduce((acc, l) => ({
     montant_initial: acc.montant_initial + parseNum(l.montant_initial),
@@ -217,7 +210,7 @@ function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): 
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>
@@ -272,10 +265,10 @@ function Note3F({ entiteName, entiteNif = '', entiteId, onBack }: Note3FProps): 
             ))}
             <tr style={{ borderTop: '2px solid #000' }}>
               <td style={{ ...tdStyle, fontWeight: 700, textAlign: 'center' }}>TOTAL</td>
-              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(totals.montant_initial)}</td>
-              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(totals.dotation_exercice)}</td>
-              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(totals.cumul_amort)}</td>
-              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtM(totals.vnc)}</td>
+              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(totals.montant_initial)}</td>
+              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(totals.dotation_exercice)}</td>
+              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(totals.cumul_amort)}</td>
+              <td style={{ ...tdRight, fontWeight: 700 }}>{fmtMontant(totals.vnc)}</td>
             </tr>
           </tbody>
         </table>

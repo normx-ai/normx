@@ -55,7 +55,7 @@ const TYPES_TIERS: TypeTiersOption[] = [
 ];
 
 
-function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteSigle, entiteAdresse, entiteNif, onBack }: GrandLivreTiersProps): React.JSX.Element {
+function GrandLivreTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteNif, onBack }: GrandLivreTiersProps): React.JSX.Element {
   const [data, setData] = useState<GLTiersRow[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filterType, setFilterType] = useState<string>('');

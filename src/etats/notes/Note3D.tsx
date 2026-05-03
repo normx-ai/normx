@@ -4,18 +4,18 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
 import {
   DEFAULT_COMMENTAIRE,
-  fmtM,
   prepareNote3D,
   prixCessionBalance,
   vncCessionBalance,
 } from './note3d/note3dData';
 import { Note3DTable } from './note3d/Note3DTable';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note3DProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -60,10 +60,6 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
   };
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const prixBal = prixCessionBalance(lignesN);
   const vncBal = vncCessionBalance(lignesN);
@@ -176,8 +172,8 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
         {(prixBal > 0 || vncBal > 0) && (
           <div style={{ marginTop: 8, padding: '6px 10px', background: '#dbeafe', borderRadius: 4, fontSize: 11 }}>
             <strong>Indicateurs balance :</strong>
-            {vncBal > 0 && <span> Compte 81/654 (VNC cessions) = {fmtM(vncBal)}</span>}
-            {prixBal > 0 && <span> | Compte 82/754 (Prix de cession) = {fmtM(prixBal)}</span>}
+            {vncBal > 0 && <span> Compte 81/654 (VNC cessions) = {fmtMontant(vncBal)}</span>}
+            {prixBal > 0 && <span> | Compte 82/754 (Prix de cession) = {fmtMontant(prixBal)}</span>}
           </div>
         )}
       </div>
@@ -206,7 +202,7 @@ function Note3D({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3DP
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

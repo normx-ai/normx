@@ -8,6 +8,7 @@ import { usePDFPreview } from './usePDFPreview';
 import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate, parseInputNumber } from '../../utils/formatters';
 
 interface Note33Props extends EtatBaseProps { onGoToParametres?: () => void; }
 
@@ -27,7 +28,7 @@ const emptyNV = (): LigneNonVentile => ({ etat_val: '', imp_dans_val: '', imp_ho
 function Note33({ entiteName, entiteNif = '', entiteId, onBack }: Note33Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -53,18 +54,12 @@ function Note33({ entiteName, entiteNif = '', entiteId, onBack }: Note33Props): 
     note33_nonventile: JSON.stringify(nonVentile),
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   const updateLigne = (idx: number, field: keyof LigneAchat, value: string) => { setLignes(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l)); };
 
   const valFields: (keyof LigneAchat)[] = ['etat_val', 'imp_dans_val', 'imp_hors_val', 'variation_stocks'];
   const totals: Record<string, number> = {};
-  for (const f of valFields) { totals[f] = lignes.reduce((s, l) => s + parseN(l[f]), 0) + parseN(nonVentile[f as keyof LigneNonVentile] || '0'); }
+  for (const f of valFields) { totals[f] = lignes.reduce((s, l) => s + parseInputNumber(l[f]), 0) + parseInputNumber(nonVentile[f as keyof LigneNonVentile] || '0'); }
 
   const th: React.CSSProperties = { ...thStyle, fontSize: 9 };
   const td: React.CSSProperties = { ...tdStyle, fontSize: 10 };
@@ -107,7 +102,7 @@ function Note33({ entiteName, entiteNif = '', entiteId, onBack }: Note33Props): 
       </div>
 
       <div ref={pageRef} style={{ width: '297mm', minHeight: '210mm', background: '#fff', margin: '0 auto 20px', padding: '5mm 6mm', boxShadow: '0 2px 12px rgba(0,0,0,0.1)', boxSizing: 'border-box', fontFamily: "'Inter', 'Segoe UI', Arial, sans-serif", fontSize: 10, color: '#1a1a1a' }}>
-        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDateShort(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
+        <div className="etat-header-officiel"><div className="etat-header-grid"><div className="etat-header-row"><span className="etat-header-label">Designation entite :</span><span className="etat-header-value">{entiteName || ''}</span><span className="etat-header-label">Exercice clos le :</span><span className="etat-header-value-right">{fmtDate(dateFin)}</span></div><div className="etat-header-row"><span className="etat-header-label">Numero d'identification :</span><span className="etat-header-value">{entiteNif || ''}</span><span className="etat-header-label">Duree (en mois) :</span><span className="etat-header-value-right">{duree}</span></div></div></div>
         <h3 style={{ textAlign: 'center', fontSize: 14, fontWeight: 700, margin: '30px 0 20px', textDecoration: 'underline' }}>
           NOTE 33 — ACHATS DESTINES A LA PRODUCTION
         </h3>
@@ -177,12 +172,12 @@ function Note33({ entiteName, entiteNif = '', entiteId, onBack }: Note33Props): 
             <tr>
               <td style={{ ...tdB, background: '#e8e8e8' }} colSpan={2}>TOTAL</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.etat_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.etat_val)}</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.imp_dans_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.imp_dans_val)}</td>
               <td style={{ ...tdBR, background: '#e8e8e8' }}></td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.imp_hors_val)}</td>
-              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtM(totals.variation_stocks)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.imp_hors_val)}</td>
+              <td style={{ ...tdBR, background: '#e8e8e8' }}>{fmtMontant(totals.variation_stocks)}</td>
             </tr>
           </tbody>
         </table>

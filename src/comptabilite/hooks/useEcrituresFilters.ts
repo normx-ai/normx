@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import { MOIS, type StatutTab } from '../SaisieJournal.types';
+import { type StatutTab } from '../SaisieJournal.types';
+import { MOIS } from '../../utils/formatters';
 
 export interface UseEcrituresFiltersResult {
   filterJournal: string;

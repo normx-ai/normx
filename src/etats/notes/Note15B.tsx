@@ -11,6 +11,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note15BProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -36,7 +37,7 @@ const DEFAULT_COMMENTAIRE = `• Justifier l'inscription de ces dettes dans une 
 function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15BProps): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -68,11 +69,6 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
     note15b_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-  const fmtM = (val: number): string => val === 0 ? '0' : Math.round(val).toLocaleString('fr-FR');
 
   const computeForPrefixes = (lignes: BalanceLigne[], prefixes: string[]) => {
     let total = 0;
@@ -98,13 +94,13 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
   const totalVariationPct = total.anneeN1 !== 0 ? ((total.anneeN - total.anneeN1) / Math.abs(total.anneeN1) * 100) : 0;
 
   const renderAdjInput = (label: string, field: string, baseValue: number) => {
-    if (!editing) return fmtM(baseValue);
+    if (!editing) return fmtMontant(baseValue);
     const adj = getAdj(label, field);
-    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtM(baseValue - adj)} />;
+    return <input value={adj || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} placeholder={fmtMontant(baseValue - adj)} />;
   };
 
   const renderStringInput = (label: string, field: string) => {
-    if (!editing) return fmtM(getAdj(label, field));
+    if (!editing) return fmtMontant(getAdj(label, field));
     return <input value={getAdj(label, field) || ''} onChange={e => { const v = e.target.value === '' ? 0 : parseFloat(e.target.value.replace(/\s/g, '').replace(',', '.')) || 0; setAdj(label, field, v); }} style={inputSt} />;
   };
 
@@ -152,7 +148,7 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
               <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numero d'identification :</span>
@@ -185,7 +181,7 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
                 <td style={{ ...tdStyle, textAlign: 'center' }}></td>
                 <td style={tdRight}>{renderAdjInput(r.label, 'anneeN', r.vals.anneeN)}</td>
                 <td style={tdRight}>{renderAdjInput(r.label, 'anneeN1', r.vals.anneeN1)}</td>
-                <td style={{ ...tdRight, background: '#fafafa' }}>{fmtM(r.vals.variationAbs)}</td>
+                <td style={{ ...tdRight, background: '#fafafa' }}>{fmtMontant(r.vals.variationAbs)}</td>
                 <td style={{ ...tdRight, background: '#fafafa' }}>{r.vals.variationPct !== 0 ? r.vals.variationPct.toFixed(1) + ' %' : ''}</td>
                 <td style={tdRight}>{renderStringInput(r.label, 'echeances')}</td>
               </tr>
@@ -193,9 +189,9 @@ function Note15B({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note15
             <tr>
               <td style={{ ...tdBold, background: '#f0f0f0' }}>TOTAL AUTRES FONDS PROPRES</td>
               <td style={{ ...tdBold, background: '#f0f0f0', textAlign: 'center' }}></td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(total.anneeN)}</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(total.anneeN1)}</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totalVariationAbs)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(total.anneeN)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(total.anneeN1)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totalVariationAbs)}</td>
               <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{totalVariationPct !== 0 ? totalVariationPct.toFixed(1) + ' %' : ''}</td>
               <td style={{ ...tdBold, background: '#f0f0f0' }}></td>
             </tr>

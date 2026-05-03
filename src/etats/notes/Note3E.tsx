@@ -4,10 +4,11 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import '../BilanSYCEBNL.css';
 import '../FicheIdentification.css';
-import type { EtatBaseProps, BalanceLigne } from '../../types';
+import type { EtatBaseProps } from '../../types';
 import { useNoteData } from './useNoteData';
 import { useBalanceLignes } from '../../hooks/useBalanceLignes';
 import BalanceSourcePanel from './BalanceSourcePanel';
+import { fmtMontant, fmtDate } from '../../utils/formatters';
 
 interface Note3EProps extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -39,7 +40,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
     exercices, selectedExercice, setSelectedExercice,
     params, previewUrl, setPreviewUrl,
     pdfBlob, setPdfBlob, editing, setEditing,
-    saving, saved, saveParams, annee, dateFin: dateFinStr, duree,
+    saving, saveParams, annee, dateFin: dateFinStr, duree,
   } = useNoteData({ entiteId });
 
   // Champs editables
@@ -107,10 +108,6 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
     return poste?.isEcart ?? false;
   };
 
-  const fmtMontant = (val: number): string => {
-    if (!val) return '0';
-    return Math.round(val).toLocaleString('fr-FR');
-  };
 
   const handleSave = async () => {
     const data: Record<string, string> = {
@@ -126,10 +123,6 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
 
   const dateFin = dateFinStr ? new Date(dateFinStr) : null;
 
-  const fmtDateShort = (d: Date | null): string => {
-    if (!d) return '';
-    return d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
 
   const updateLigne = (idx: number, field: keyof LigneReeval, value: string) => {
     setLignes(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
@@ -279,7 +272,7 @@ function Note3E({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note3EP
               <span className="etat-header-label">Désignation entité :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{dateFin ? fmtDateShort(dateFin) : ''}</span>
+              <span className="etat-header-value-right">{dateFin ? fmtDate(dateFin) : ''}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numéro d'identification :</span>

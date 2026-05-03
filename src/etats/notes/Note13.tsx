@@ -9,6 +9,7 @@ import NoteToolbar from './NoteToolbar';
 import PDFPreviewModal from './PDFPreviewModal';
 import EditableComment from './EditableComment';
 import { thStyle, tdStyle, tdRight, tdBold, tdBoldRight, inputSt } from './noteStyles';
+import { fmtMontant, fmtDate, parseInputNumber } from '../../utils/formatters';
 
 interface Note13Props extends EtatBaseProps {
   onGoToParametres?: () => void;
@@ -27,10 +28,10 @@ const emptyLigne = (): LigneActionnaire => ({ nom: '', nationalite: '', nature: 
 
 const DEFAULT_COMMENTAIRE = `• Indiquer si possible le montant du capital à la constitution.\n• Indiquer si possible les dates des AGE et le montant du capital augmenté en cas d'augmentation de capital.\n• Indiquer si possible les dates des AGE et le montant du capital diminué en cas de réduction de capital.\n• Indiquer les avantages accordés aux actions de préférence.\n• Apporteurs, capital non appelé : indiquer le délai restant pour appeler le capital.`;
 
-function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13Props): React.JSX.Element {
+function Note13({ entiteName, entiteNif = '', entiteId, onBack }: Note13Props): React.JSX.Element {
   const {
     exercices, selectedExercice, setSelectedExercice,
-    params, setParams, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
+    params, editing, setEditing, saving, saved, saveParams, annee, dateFin, duree,
   } = useNoteData({ entiteId });
 
   const pageRef = useRef<HTMLDivElement>(null);
@@ -63,19 +64,12 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
     note13_commentaire: commentaire,
   });
 
-  const fmtDateShort = (d: string): string => {
-    if (!d) return '';
-    return new Date(d).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  };
-
-  const parseN = (v: string): number => { const n = parseFloat(v.replace(/\s/g, '').replace(',', '.')); return isNaN(n) ? 0 : n; };
-  const fmtM = (v: number): string => v === 0 ? '0' : Math.round(v).toLocaleString('fr-FR');
 
   // Totaux
-  const vn = parseN(valeurNominale);
-  const totalNombre = lignes.reduce((s, l) => s + parseN(l.nombre), 0);
-  const totalMontant = totalNombre * vn - parseN(capitalNonAppeleMontant);
-  const totalCessions = lignes.reduce((s, l) => s + parseN(l.cessions), 0);
+  const vn = parseInputNumber(valeurNominale);
+  const totalNombre = lignes.reduce((s, l) => s + parseInputNumber(l.nombre), 0);
+  const totalMontant = totalNombre * vn - parseInputNumber(capitalNonAppeleMontant);
+  const totalCessions = lignes.reduce((s, l) => s + parseInputNumber(l.cessions), 0);
 
   const updateLigne = (idx: number, field: keyof LigneActionnaire, value: string) => {
     setLignes(prev => prev.map((l, i) => i === idx ? { ...l, [field]: value } : l));
@@ -127,7 +121,7 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
               <span className="etat-header-label">Designation entite :</span>
               <span className="etat-header-value">{entiteName || ''}</span>
               <span className="etat-header-label">Exercice clos le :</span>
-              <span className="etat-header-value-right">{fmtDateShort(dateFin)}</span>
+              <span className="etat-header-value-right">{fmtDate(dateFin)}</span>
             </div>
             <div className="etat-header-row">
               <span className="etat-header-label">Numero d'identification :</span>
@@ -173,7 +167,7 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
                 <td style={tdStyle}>{renderInput(l.nationalite, v => updateLigne(i, 'nationalite', v), inputLeft)}</td>
                 <td style={{ ...tdStyle, textAlign: 'center' }}>{renderInput(l.nature, v => updateLigne(i, 'nature', v), { ...inputLeft, textAlign: 'center' })}</td>
                 <td style={tdRight}>{renderInput(l.nombre, v => updateLigne(i, 'nombre', v))}</td>
-                <td style={{ ...tdRight, background: '#fafafa' }}>{(() => { const mt = parseN(l.nombre) * parseN(valeurNominale); return mt !== 0 ? fmtM(mt) : ''; })()}</td>
+                <td style={{ ...tdRight, background: '#fafafa' }}>{(() => { const mt = parseInputNumber(l.nombre) * parseInputNumber(valeurNominale); return mt !== 0 ? fmtMontant(mt) : ''; })()}</td>
                 <td style={tdRight}>{renderInput(l.cessions, v => updateLigne(i, 'cessions', v))}</td>
               </tr>
             ))}
@@ -199,9 +193,9 @@ function Note13({ entiteName, entiteNif = '', entiteId, offre, onBack }: Note13P
             {/* Total */}
             <tr>
               <td style={{ ...tdBold, background: '#f0f0f0' }} colSpan={3}>TOTAL</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totalNombre)}</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totalMontant)}</td>
-              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtM(totalCessions)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totalNombre)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totalMontant)}</td>
+              <td style={{ ...tdBoldRight, background: '#f0f0f0' }}>{fmtMontant(totalCessions)}</td>
             </tr>
           </tbody>
         </table>

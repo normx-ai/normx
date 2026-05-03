@@ -4,7 +4,7 @@ import { LuHouse, LuFileText } from 'react-icons/lu';
 import { ReferentielProvider } from '../contexts/ReferentielContext';
 import GestionClients from './GestionClients';
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Entite } from '../types';
-import { ENABLED_MODULES, isModuleEnabled } from '../config/modules';
+import { isModuleEnabled } from '../config/modules';
 import { MenuItem, MenuChild, TabItem } from './types';
 import ConfirmModal from '../components/ConfirmModal';
 import Topbar from './Topbar';
@@ -74,11 +74,6 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   const activeTab: string = urlParams.tab || 'accueil';
 
   const portailSection: PortailSection = location.pathname.includes('/portail/cabinet') ? 'cabinet' : 'clients';
-
-  const setActiveModule = useCallback((mod: NormxModule | null) => {
-    if (!mod) navigate('/app/portail');
-    else navigate(`/app/${mod}/accueil`);
-  }, [navigate]);
 
   const setActiveTab = useCallback((tab: string) => {
     if (activeModule) navigate(`/app/${activeModule}/${tab}`);

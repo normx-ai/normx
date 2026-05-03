@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { clientFetch } from '../lib/api';
 import { useExercicesQuery } from '../hooks/useExercicesQuery';
 import { LuDownload, LuArrowLeft, LuEye, LuX, LuPrinter, LuPlus, LuTrash2 } from 'react-icons/lu';
 import jsPDF from 'jspdf';
@@ -44,7 +43,7 @@ function formatPourcent(val: number | null): string {
 
 // ===================== COMPOSANT PRINCIPAL =====================
 
-function ExecBudgetaire_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', typeActivite, entiteId, offre = 'comptabilite', onBack }: EtatBaseProps): React.ReactElement {
+function ExecBudgetaire_Projet({ entiteName, entiteSigle = '', entiteAdresse = '', entiteNif = '', entiteId, onBack }: EtatBaseProps): React.ReactElement {
   const { exercices, selectedExercice, setSelectedExercice } = useExercicesQuery(entiteId);
   const [lignes, setLignes] = useState<BudgetLigne[]>([]);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);

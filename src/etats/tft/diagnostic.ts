@@ -29,7 +29,7 @@ export interface DiagnosticItem {
 // Suggestion de reclassement basee sur prefixe + sens du solde et plan officiel.
 function suggererReclassement(
   num: string,
-  lib: string,
+  _lib: string,
   montant: number,
   horsPlan: boolean,
 ): string | undefined {

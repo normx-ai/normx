@@ -6,6 +6,8 @@
 import express, { Request, Response } from 'express';
 import logger from '../logger';
 import { authenticateToken } from '../middleware/auth';
+import { validateBody } from '../middleware/validate';
+import { callbackBody } from '../schemas/auth.schema';
 
 
 const router = express.Router();
@@ -24,11 +26,8 @@ const COOKIE_OPTIONS = {
 };
 
 // POST /api/auth/callback - Echange le code Keycloak contre des tokens (stockes en cookies)
-router.post('/callback', async (req: Request, res: Response) => {
+router.post('/callback', validateBody(callbackBody), async (req: Request, res: Response) => {
   const { code, redirect_uri } = req.body;
-  if (!code || !redirect_uri) {
-    return res.status(400).json({ error: 'code et redirect_uri requis.' });
-  }
 
   try {
     const response = await fetch(TOKEN_URL, {

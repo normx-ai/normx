@@ -45,7 +45,7 @@ const TYPES_TIERS: TypeTiersOption[] = [
 ];
 
 
-function BalanceTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteSigle, entiteAdresse, entiteNif, onBack }: BalanceTiersProps): React.JSX.Element {
+function BalanceTiers({ entiteId, exerciceId, exerciceAnnee, entiteName, entiteSigle, entiteNif, onBack }: BalanceTiersProps): React.JSX.Element {
   const [data, setData] = useState<BalanceTiersRow[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [filterType, setFilterType] = useState<string>('');

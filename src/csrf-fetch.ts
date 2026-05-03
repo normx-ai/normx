@@ -68,7 +68,7 @@ function notifyAuthExpired(): void {
   window.dispatchEvent(new CustomEvent('auth:expired'));
 }
 
-function applyApiHeaders(input: RequestInfo | URL, init?: RequestInit): RequestInit {
+function applyApiHeaders(init?: RequestInit): RequestInit {
   const method = (init?.method || 'GET').toUpperCase();
   const headers = new Headers(init?.headers);
 
@@ -96,7 +96,7 @@ window.fetch = async function (input: RequestInfo | URL, init?: RequestInit): Pr
     return originalFetch(input, init);
   }
 
-  const finalInit = applyApiHeaders(input, init);
+  const finalInit = applyApiHeaders(init);
   const response = await originalFetch(input, finalInit);
 
   // 401 : une seule chance — refresh silencieux + retry. Si ca echoue
@@ -106,7 +106,7 @@ window.fetch = async function (input: RequestInfo | URL, init?: RequestInit): Pr
     const refreshed = await refreshSession();
     if (refreshed) {
       // Le cookie d'access_token a ete renouvele : on rejoue la requete.
-      return originalFetch(input, applyApiHeaders(input, init));
+      return originalFetch(input, applyApiHeaders(init));
     }
     notifyAuthExpired();
   }
