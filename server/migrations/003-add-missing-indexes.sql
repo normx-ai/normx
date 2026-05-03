@@ -21,9 +21,20 @@ CREATE INDEX IF NOT EXISTS idx_ecriture_lignes_tiers ON ecriture_lignes(tiers_id
 -- Index sur notifications
 CREATE INDEX IF NOT EXISTS idx_notifications_user_read ON notifications(utilisateur_id, lu);
 
--- Index sur declarations TVA
-CREATE INDEX IF NOT EXISTS idx_declarations_tva_exercice ON declarations_tva(exercice_id);
-CREATE INDEX IF NOT EXISTS idx_declaration_tva_lignes_declaration ON declaration_tva_lignes(declaration_id, onglet);
+-- Index sur declarations TVA — tables droppees par migration 009
+-- (CGI Congo specifique, retire du produit OHADA generique).
+-- Bloc enveloppe pour idempotence sur tenants crees apres 009.
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables
+             WHERE table_schema = current_schema() AND table_name = 'declarations_tva') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_declarations_tva_exercice ON declarations_tva(exercice_id)';
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.tables
+             WHERE table_schema = current_schema() AND table_name = 'declaration_tva_lignes') THEN
+    EXECUTE 'CREATE INDEX IF NOT EXISTS idx_declaration_tva_lignes_declaration ON declaration_tva_lignes(declaration_id, onglet)';
+  END IF;
+END $$;
 
 -- Index sur balance_lignes
 CREATE INDEX IF NOT EXISTS idx_balance_lignes_numero_compte ON balance_lignes(numero_compte);
