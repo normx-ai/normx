@@ -18,6 +18,7 @@ import PortailSidebar, { PortailSection } from './PortailSidebar';
 import CabinetPanel from './CabinetPanel';
 import { MODULE_LIST, getEtats } from './constants';
 import { buildMenuItems } from './menuConfig';
+import { useSidebarBadges, attachBadges } from './useSidebarBadges';
 import { useExercices } from './useExercices';
 import './Dashboard.css';
 
@@ -136,10 +137,14 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     navigate(`/app/${mod}/accueil`);
   };
 
-  // Menu items
+  // Menu items + badges (compteur ecritures brouillard, etc.)
+  const sidebarBadges = useSidebarBadges(entiteId, ex.exerciceId);
   const MENU_ITEMS: MenuItem[] = React.useMemo(
-    () => buildMenuItems({ activeModule, typeActivite, exerciceId: ex.exerciceId, etats }),
-    [activeModule, typeActivite, ex.exerciceId, etats]
+    () => attachBadges(
+      buildMenuItems({ activeModule, typeActivite, exerciceId: ex.exerciceId, etats }),
+      sidebarBadges,
+    ),
+    [activeModule, typeActivite, ex.exerciceId, etats, sidebarBadges]
   );
 
   const findMenuItem = React.useCallback((id: string): { label: string; icon: React.ComponentType<{ size?: number }> } => {

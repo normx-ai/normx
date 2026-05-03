@@ -348,6 +348,99 @@
   padding: 4px 16px 6px;
 }
 
+/* ===== Favoris epinglables (Phase 3) ===== */
+.compta-sidebar-favorites {
+  border-top: 1px solid var(--couleur-bordure-light);
+  padding: 8px 0 6px;
+}
+.compta-favorites-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 16px 6px;
+}
+.compta-favorites-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--couleur-texte-muted);
+}
+.compta-favorites-title svg { color: var(--couleur-primaire); }
+.compta-favorites-add {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--couleur-texte-secondaire);
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+.compta-favorites-add:hover {
+  background: var(--couleur-fond);
+  color: var(--couleur-primaire);
+  border-color: var(--couleur-bordure);
+}
+.compta-fav-item {
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  position: relative;
+}
+.compta-fav-item:hover .compta-fav-remove { opacity: 1; }
+.compta-fav-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--couleur-texte-slate);
+  cursor: pointer;
+  text-align: left;
+  min-width: 0;
+}
+.compta-fav-link:hover {
+  background: var(--couleur-fond);
+  color: var(--couleur-sidebar);
+}
+.compta-fav-item.active .compta-fav-link {
+  color: var(--couleur-primaire);
+  font-weight: 600;
+}
+.compta-fav-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--couleur-primaire);
+  flex-shrink: 0;
+}
+.compta-fav-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.compta-fav-remove {
+  background: transparent;
+  border: none;
+  color: var(--couleur-texte-muted);
+  cursor: pointer;
+  padding: 4px;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.15s, color 0.15s;
+}
+.compta-fav-remove:hover { color: var(--couleur-danger); }
+
 /* ===== Footer profil ===== */
 .compta-sidebar-profile {
   margin-top: auto;
@@ -500,6 +593,39 @@
   align-items: center;
   color: #9ca3af;
 }
+
+/* Badges notification dans la sidebar (Phase 2) */
+.compta-nav-label + .compta-nav-badge {
+  margin-left: auto;
+}
+.compta-nav-badge {
+  padding: 1px 7px;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+.compta-nav-badge + .compta-nav-arrow {
+  margin-left: 6px;
+}
+.compta-nav-badge.urgent { background: #fef2f2; color: #dc2626; }
+.compta-nav-badge.warning { background: #fff7ed; color: #ea580c; }
+.compta-nav-badge.info { background: #eff6ff; color: #2563eb; }
+.compta-nav-badge.neutral { background: var(--couleur-fond); color: var(--couleur-texte-secondaire); }
+
+/* Variante "dot" quand sidebar collapsee : juste un point colore */
+.compta-nav-badge-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: var(--couleur-texte-secondaire);
+}
+.compta-nav-badge-dot.urgent { background: #dc2626; }
+.compta-nav-badge-dot.warning { background: #ea580c; }
+.compta-nav-badge-dot.info { background: #2563eb; }
 
 .compta-sidebar.collapsed .compta-nav-label,
 .compta-sidebar.collapsed .compta-nav-arrow {

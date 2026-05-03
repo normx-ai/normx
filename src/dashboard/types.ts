@@ -2,6 +2,14 @@ import { NormxModule } from '../types';
 
 export type MenuGroup = 'pilotage' | 'quotidien' | 'cloture' | 'outils';
 
+export type MenuBadgeVariant = 'urgent' | 'warning' | 'info' | 'neutral';
+
+export interface MenuBadge {
+  text: string;
+  variant: MenuBadgeVariant;
+  title?: string;
+}
+
 export interface MenuItem {
   id: string;
   label: string;
@@ -10,6 +18,7 @@ export interface MenuItem {
   children?: MenuChild[];
   disabled?: boolean;
   group?: MenuGroup;
+  badge?: MenuBadge;
 }
 
 export interface MenuChild {

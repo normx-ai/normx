@@ -3,6 +3,8 @@ import { LuChevronLeft, LuChevronRight, LuFileText, LuPlus } from 'react-icons/l
 import { MenuItem, MenuChild } from './types';
 import { groupMenuItems } from './menuGroups';
 import { useReferentiel } from '../contexts/ReferentielContext';
+import { useFavorites } from './useFavorites';
+import SidebarFavorites from './SidebarFavorites';
 
 interface ComptaSidebarProps {
   menuItems: MenuItem[];
@@ -41,6 +43,7 @@ function ComptaSidebar({
   const entiteInitials = initials(entiteName);
   const userInitials = initials(userName);
   const metaParts = [referentielLabel, exerciceAnnee].filter(Boolean).join(' · ');
+  const favs = useFavorites();
 
   return (
     <>
@@ -115,6 +118,14 @@ function ComptaSidebar({
                     {!sidebarCollapsed && (
                       <>
                         <span className="compta-nav-label">{item.label}</span>
+                        {item.badge && (
+                          <span
+                            className={`compta-nav-badge ${item.badge.variant}`}
+                            title={item.badge.title || item.badge.text}
+                          >
+                            {item.badge.text}
+                          </span>
+                        )}
                         {item.hasArrow && (
                           <span className="compta-nav-arrow">
                             <LuChevronRight size={14} />
@@ -122,12 +133,27 @@ function ComptaSidebar({
                         )}
                       </>
                     )}
+                    {sidebarCollapsed && item.badge && (
+                      <span className={`compta-nav-badge-dot ${item.badge.variant}`} title={item.badge.title || item.badge.text} />
+                    )}
                   </button>
                 );
               })}
             </div>
           ))}
         </nav>
+
+        {/* Favoris epinglables (Phase 3) */}
+        <SidebarFavorites
+          favorites={favs.favorites}
+          menuItems={menuItems}
+          activeTab={activeTab}
+          collapsed={sidebarCollapsed}
+          onOpen={onChildClick}
+          onAdd={favs.add}
+          onRemove={favs.remove}
+          isFavorite={favs.has}
+        />
 
         {/* Footer profil utilisateur */}
         <div className="compta-sidebar-profile">
