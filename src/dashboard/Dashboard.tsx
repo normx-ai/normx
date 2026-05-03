@@ -173,7 +173,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   }, [activeModule, findMenuItem]);
 
   const openTab = (id: string): void => {
-    log.debug('openTab', { id, activeModule, willNavigate: !!activeModule });
+    log.debug('openTab', { id, activeModule: activeModule ?? '', willNavigate: !!activeModule });
     if (activeModule) {
       navigate(`/app/${activeModule}/${id}`);
     }
@@ -196,6 +196,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   };
 
   const handleMenuClick = (item: MenuItem): void => {
+    log.debug('handleMenuClick', { id: item.id, hasArrow: !!item.hasArrow, currentSection: activeSection ?? '' });
     if (item.hasArrow) {
       if (activeSection === item.id) { setActiveSection(null); }
       else {
