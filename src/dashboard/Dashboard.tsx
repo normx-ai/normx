@@ -309,6 +309,10 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
           <ComptaSidebar
             menuItems={MENU_ITEMS} activeTab={activeTab} activeSection={activeSection}
             parentSection={parentSection} sidebarCollapsed={sidebarCollapsed} moduleLabel={moduleLabel}
+            entiteName={entiteName} userName={userName}
+            exerciceAnnee={ex.exercices.find(e => e.id === ex.exerciceId)?.annee}
+            canCreateEcriture={activeModule === 'compta' && !!ex.exerciceId}
+            onCreateEcriture={() => openTab('journal')}
             onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
             onMenuClick={handleMenuClick} onChildClick={openTab} onCloseSection={() => setActiveSection(null)}
           />

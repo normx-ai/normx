@@ -20,7 +20,7 @@ interface BuildMenuItemsParams {
 
 export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }: BuildMenuItemsParams): MenuItem[] {
   const items: (MenuItem | false)[] = [
-    { id: 'accueil', label: 'Accueil', icon: LuHouse },
+    { id: 'accueil', label: 'Accueil', icon: LuHouse, group: 'pilotage' },
   ];
   const noExercice: boolean = !exerciceId;
   const isEntreprise = typeActivite === 'entreprise';
@@ -28,14 +28,14 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
   if (activeModule === 'compta') {
     items.push(
       {
-        id: 'saisie', label: 'Saisie', icon: LuPenLine, hasArrow: true, disabled: noExercice,
+        id: 'saisie', label: 'Saisie', icon: LuPenLine, hasArrow: true, disabled: noExercice, group: 'quotidien',
         children: [
           { id: 'journal', label: 'Saisie écritures', icon: LuPenLine },
           { id: 'lettrage', label: 'Lettrage', icon: LuArrowLeftRight },
         ]
       },
       {
-        id: 'consultation', label: 'Consultation', icon: LuBookOpen, hasArrow: true, disabled: noExercice,
+        id: 'consultation', label: 'Consultation', icon: LuBookOpen, hasArrow: true, disabled: noExercice, group: 'quotidien',
         children: [
           { id: '_compta_gen', label: 'Compta générale', isHeader: true },
           { id: 'journaux', label: 'Journaux', icon: LuClipboardList },
@@ -49,7 +49,7 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
         ]
       },
       {
-        id: 'tiers_section', label: 'Tiers', icon: LuUsers, hasArrow: true, disabled: noExercice,
+        id: 'tiers_section', label: 'Tiers', icon: LuUsers, hasArrow: true, disabled: noExercice, group: 'quotidien',
         children: [
           { id: 'tiers_membres', label: 'Membres', icon: LuUsers },
           { id: 'tiers_fournisseurs', label: 'Fournisseurs', icon: LuTruck },
@@ -58,13 +58,13 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
         ]
       },
       {
-        id: 'etats', label: 'États financiers', icon: LuChartBarIncreasing, hasArrow: true, disabled: noExercice,
+        id: 'etats', label: 'États financiers', icon: LuChartBarIncreasing, hasArrow: true, disabled: noExercice, group: 'cloture',
         children: isEntreprise
           ? ETATS_FINANCIERS_SYS.map((e: EtatFinancier) => ({ id: e.id, label: e.titre, icon: e.navIcon }))
           : etats.map((e: EtatFinancier) => ({ id: e.id, label: e.titre, icon: e.navIcon })),
       },
       isEntreprise && {
-        id: 'liasse_fiscale', label: 'Liasse fiscale', icon: LuBriefcase, hasArrow: true, disabled: noExercice,
+        id: 'liasse_fiscale', label: 'Liasse fiscale', icon: LuBriefcase, hasArrow: true, disabled: noExercice, group: 'cloture',
         children: [
           ...LIASSE_FISCALE_SYS.map((e: EtatFinancier) => ({ id: e.id, label: e.titre, icon: e.navIcon })),
           { id: '_ef_header', label: 'États financiers', isHeader: true },
@@ -77,19 +77,19 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
   if (activeModule === 'etats') {
     items.push(
       {
-        id: 'donnees', label: 'Données', icon: LuFileSpreadsheet, hasArrow: true, disabled: noExercice,
+        id: 'donnees', label: 'Données', icon: LuFileSpreadsheet, hasArrow: true, disabled: noExercice, group: 'quotidien',
         children: [
           { id: 'import_balance', label: 'Import balance', icon: LuUpload },
         ]
       },
       {
-        id: 'etats', label: 'États financiers', icon: LuChartBarIncreasing, hasArrow: true, disabled: noExercice,
+        id: 'etats', label: 'États financiers', icon: LuChartBarIncreasing, hasArrow: true, disabled: noExercice, group: 'cloture',
         children: isEntreprise
           ? ETATS_FINANCIERS_SYS.map((e: EtatFinancier) => ({ id: e.id, label: e.titre, icon: e.navIcon }))
           : etats.map((e: EtatFinancier) => ({ id: e.id, label: e.titre, icon: e.navIcon })),
       },
       isEntreprise && {
-        id: 'liasse_fiscale', label: 'Liasse fiscale', icon: LuBriefcase, hasArrow: true, disabled: noExercice,
+        id: 'liasse_fiscale', label: 'Liasse fiscale', icon: LuBriefcase, hasArrow: true, disabled: noExercice, group: 'cloture',
         children: [
           ...LIASSE_FISCALE_SYS.map((e: EtatFinancier) => ({ id: e.id, label: e.titre, icon: e.navIcon })),
           { id: '_ef_header', label: 'États financiers', isHeader: true },
@@ -101,7 +101,7 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
 
   items.push(
     {
-      id: 'rapports_section', label: 'Rapports', icon: LuChartBarIncreasing, hasArrow: true, disabled: noExercice,
+      id: 'rapports_section', label: 'Rapports', icon: LuChartBarIncreasing, hasArrow: true, disabled: noExercice, group: 'pilotage',
       children: [
         { id: 'tableau_bord', label: 'Tableau de bord financier', icon: LuLayoutDashboard },
         { id: 'repartition_charges', label: 'Répartition des charges', icon: LuChartPie },
@@ -111,7 +111,7 @@ export function buildMenuItems({ activeModule, typeActivite, exerciceId, etats }
       ]
     },
     {
-      id: 'outils', label: 'Outils', icon: LuWrench, hasArrow: true,
+      id: 'outils', label: 'Outils', icon: LuWrench, hasArrow: true, group: 'outils',
       children: [
         { id: 'assistant', label: 'Assistant IA', icon: LuBot },
         { id: 'aide_videos', label: 'Aide & Vidéos', icon: LuCircleHelp },

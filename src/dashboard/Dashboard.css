@@ -218,25 +218,63 @@
   min-width: 56px;
 }
 
-.compta-sidebar-header {
+/* ===== Society switcher (en-tete sidebar) ===== */
+.compta-sidebar-society {
+  padding: 12px 12px 10px;
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+.compta-sidebar.collapsed .compta-sidebar-society {
+  padding: 10px 6px;
+  text-align: center;
+}
+.compta-society-trigger {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--couleur-bordure);
-  min-height: 48px;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--couleur-fond-filter);
+  border: 1px solid var(--couleur-bordure);
+  width: 100%;
 }
-.compta-sidebar-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--couleur-texte-secondaire);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-.compta-sidebar.collapsed .compta-sidebar-header {
+.compta-sidebar.collapsed .compta-society-trigger {
   justify-content: center;
-  padding: 12px 8px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+}
+.compta-society-avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--couleur-sidebar);
+  color: var(--couleur-primaire);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.compta-society-info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+.compta-society-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--couleur-sidebar);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+.compta-society-meta {
+  font-size: 10.5px;
+  color: var(--couleur-texte-secondaire);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .compta-sidebar-toggle {
@@ -256,6 +294,138 @@
   background: var(--couleur-fond);
   color: var(--couleur-primaire);
   border-color: var(--couleur-bordure);
+}
+.compta-sidebar-toggle-collapsed {
+  margin: 6px auto 0;
+}
+
+/* ===== CTA "Nouvelle ecriture" ===== */
+.compta-sidebar-cta {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--couleur-bordure);
+}
+.compta-sidebar.collapsed .compta-sidebar-cta {
+  padding: 8px 6px;
+}
+.compta-cta-primary {
+  width: 100%;
+  background: var(--couleur-primaire);
+  color: var(--couleur-sidebar);
+  border: none;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s;
+}
+.compta-cta-primary:hover {
+  background: var(--couleur-primaire-hover);
+}
+.compta-sidebar.collapsed .compta-cta-primary {
+  padding: 10px 8px;
+}
+
+/* ===== Groupes de menu ===== */
+.compta-nav-group {
+  padding: 8px 0 4px;
+}
+.compta-nav-group + .compta-nav-group {
+  border-top: 1px solid var(--couleur-bordure-light);
+  margin-top: 2px;
+  padding-top: 8px;
+}
+.compta-nav-group-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--couleur-texte-muted);
+  padding: 4px 16px 6px;
+}
+
+/* ===== Footer profil ===== */
+.compta-sidebar-profile {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--couleur-bordure);
+  background: var(--couleur-fond-filter);
+}
+.compta-sidebar.collapsed .compta-sidebar-profile {
+  justify-content: center;
+  padding: 10px 6px;
+}
+.compta-profile-avatar {
+  width: 30px;
+  height: 30px;
+  background: var(--couleur-primaire);
+  color: var(--couleur-sidebar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.compta-profile-info {
+  flex: 1;
+  min-width: 0;
+}
+.compta-profile-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--couleur-sidebar);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.compta-profile-meta {
+  font-size: 10.5px;
+  color: var(--couleur-texte-secondaire);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Sidebar 2 : section header propre + bouton fermer ===== */
+.sidebar-2-section-header {
+  padding: 10px 14px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--couleur-texte-secondaire);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--couleur-bordure-light);
+  margin-top: 6px;
+}
+.sidebar-2-section-header[data-first] {
+  border-top: none;
+  margin-top: 0;
+}
+.sidebar-2-close {
+  margin: 8px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--couleur-texte-secondaire);
+  border: 1px solid var(--couleur-bordure);
+  font-size: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  transition: background-color 0.15s, color 0.15s;
+}
+.sidebar-2-close:hover {
+  background: var(--couleur-fond);
+  color: var(--couleur-sidebar);
 }
 
 .compta-sidebar-nav {

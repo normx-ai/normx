@@ -1,6 +1,8 @@
 import React from 'react';
-import { LuChevronLeft, LuChevronRight, LuFileText } from 'react-icons/lu';
+import { LuChevronLeft, LuChevronRight, LuFileText, LuPlus } from 'react-icons/lu';
 import { MenuItem, MenuChild } from './types';
+import { groupMenuItems } from './menuGroups';
+import { useReferentiel } from '../contexts/ReferentielContext';
 
 interface ComptaSidebarProps {
   menuItems: MenuItem[];
@@ -9,73 +11,139 @@ interface ComptaSidebarProps {
   parentSection: string | null;
   sidebarCollapsed: boolean;
   moduleLabel: string;
+  entiteName: string;
+  userName: string;
+  exerciceAnnee?: number;
+  canCreateEcriture: boolean;
+  onCreateEcriture: () => void;
   onToggleSidebar: () => void;
   onMenuClick: (item: MenuItem) => void;
   onChildClick: (childId: string) => void;
   onCloseSection: () => void;
 }
 
+const initials = (name: string): string => {
+  const parts = (name || '').trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+
 function ComptaSidebar({
   menuItems, activeTab, activeSection, parentSection,
   sidebarCollapsed, moduleLabel,
+  entiteName, userName, exerciceAnnee,
+  canCreateEcriture, onCreateEcriture,
   onToggleSidebar, onMenuClick, onChildClick, onCloseSection,
 }: ComptaSidebarProps): React.ReactElement {
+  const { label: referentielLabel } = useReferentiel();
+  const grouped = groupMenuItems(menuItems);
+  const entiteInitials = initials(entiteName);
+  const userInitials = initials(userName);
+  const metaParts = [referentielLabel, exerciceAnnee].filter(Boolean).join(' · ');
+
   return (
     <>
-      {/* Sidebar principale */}
       <aside className={`compta-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
-        <div className="compta-sidebar-header">
-          {!sidebarCollapsed && <span className="compta-sidebar-title">Navigation</span>}
-          <button
-            type="button"
-            className="compta-sidebar-toggle"
-            onClick={onToggleSidebar}
-            aria-label={sidebarCollapsed ? 'Déplier le menu' : 'Réduire le menu'}
-            title={sidebarCollapsed ? 'Déplier le menu' : 'Réduire le menu'}
-          >
-            {sidebarCollapsed ? <LuChevronRight size={16} /> : <LuChevronLeft size={16} />}
-          </button>
+        {/* Switcher societe */}
+        <div className="compta-sidebar-society">
+          <div className="compta-society-trigger" title={entiteName}>
+            <div className="compta-society-avatar">{entiteInitials}</div>
+            {!sidebarCollapsed && (
+              <div className="compta-society-info">
+                <div className="compta-society-name">{entiteName || '—'}</div>
+                {metaParts && <div className="compta-society-meta">{metaParts}</div>}
+              </div>
+            )}
+            {!sidebarCollapsed && (
+              <button
+                type="button"
+                className="compta-sidebar-toggle"
+                onClick={onToggleSidebar}
+                aria-label="Réduire le menu"
+                title="Réduire le menu"
+              >
+                <LuChevronLeft size={16} />
+              </button>
+            )}
+          </div>
+          {sidebarCollapsed && (
+            <button
+              type="button"
+              className="compta-sidebar-toggle compta-sidebar-toggle-collapsed"
+              onClick={onToggleSidebar}
+              aria-label="Déplier le menu"
+              title="Déplier le menu"
+            >
+              <LuChevronRight size={16} />
+            </button>
+          )}
         </div>
 
-        <nav className="compta-sidebar-nav">
-          {menuItems.map((item: MenuItem) => {
-            const IconComp: React.ComponentType<{ size?: number }> = item.icon;
-            const isParentActive: boolean = parentSection === item.id;
-            return (
-              <div key={item.id}>
-                <button
-                  className={`compta-nav-item ${activeTab === item.id || isParentActive || activeSection === item.id ? 'active' : ''} ${item.disabled ? 'disabled' : ''}`}
-                  onClick={() => { if (!item.disabled) onMenuClick(item); }}
-                  title={item.disabled ? 'Créez un exercice pour accéder à cette section' : ''}
-                >
-                  <span className="compta-nav-icon"><IconComp /></span>
-                  {!sidebarCollapsed && (
-                    <>
-                      <span className="compta-nav-label">{item.label}</span>
-                      {item.hasArrow && (
-                        <span className="compta-nav-arrow">
-                          <LuChevronRight size={14} />
-                        </span>
-                      )}
-                    </>
-                  )}
-                </button>
-              </div>
-            );
-          })}
-        </nav>
-
-        {!sidebarCollapsed && (
-          <div className="compta-sidebar-bottom">
-            <img src="/logo-carre-dark.png" alt="NORMX Finance" style={{ height: 28, width: 'auto', marginRight: 6, verticalAlign: 'middle' }} />
-            {moduleLabel}
+        {/* CTA Nouvelle ecriture */}
+        {canCreateEcriture && (
+          <div className="compta-sidebar-cta">
+            <button
+              type="button"
+              className="compta-cta-primary"
+              onClick={onCreateEcriture}
+              title="Nouvelle écriture"
+            >
+              <LuPlus size={16} />
+              {!sidebarCollapsed && <span>Nouvelle écriture</span>}
+            </button>
           </div>
         )}
+
+        {/* Groupes de menus */}
+        <nav className="compta-sidebar-nav">
+          {grouped.map(g => (
+            <div key={g.group} className="compta-nav-group">
+              {!sidebarCollapsed && <div className="compta-nav-group-label">{g.label}</div>}
+              {g.items.map(item => {
+                const IconComp = item.icon;
+                const isParentActive = parentSection === item.id;
+                const isActive = activeTab === item.id || isParentActive || activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    className={`compta-nav-item ${isActive ? 'active' : ''} ${item.disabled ? 'disabled' : ''}`}
+                    onClick={() => { if (!item.disabled) onMenuClick(item); }}
+                    title={item.disabled ? 'Créez un exercice pour accéder à cette section' : item.label}
+                  >
+                    <span className="compta-nav-icon"><IconComp /></span>
+                    {!sidebarCollapsed && (
+                      <>
+                        <span className="compta-nav-label">{item.label}</span>
+                        {item.hasArrow && (
+                          <span className="compta-nav-arrow">
+                            <LuChevronRight size={14} />
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </nav>
+
+        {/* Footer profil utilisateur */}
+        <div className="compta-sidebar-profile">
+          <div className="compta-profile-avatar">{userInitials}</div>
+          {!sidebarCollapsed && (
+            <div className="compta-profile-info">
+              <div className="compta-profile-name">{userName || 'Utilisateur'}</div>
+              <div className="compta-profile-meta">{moduleLabel}</div>
+            </div>
+          )}
+        </div>
       </aside>
 
       {/* Sidebar 2 : sous-menus */}
       {activeSection && (() => {
-        const section: MenuItem | undefined = menuItems.find((m: MenuItem) => m.id === activeSection);
+        const section = menuItems.find((m) => m.id === activeSection);
         if (!section || !section.children) return null;
         return (
           <aside className="compta-sidebar-2">
@@ -86,12 +154,12 @@ function ComptaSidebar({
               {section.children.map((child: MenuChild) => {
                 if (child.isHeader) {
                   return (
-                    <div key={child.id} style={{ padding: '10px 14px 4px', fontSize: 11, fontWeight: 700, color: '#888', textTransform: 'uppercase', letterSpacing: 0.5, borderTop: child.id !== '_compta_gen' ? '1px solid #eee' : 'none', marginTop: child.id !== '_compta_gen' ? 6 : 0 }}>
+                    <div key={child.id} className="sidebar-2-section-header" data-first={child.id === '_compta_gen' || undefined}>
                       {child.label}
                     </div>
                   );
                 }
-                const ChildIcon: React.ComponentType<{ size?: number }> = child.icon || LuFileText;
+                const ChildIcon = child.icon || LuFileText;
                 return (
                   <button
                     key={child.id}
@@ -104,6 +172,14 @@ function ComptaSidebar({
                 );
               })}
             </nav>
+            <button
+              type="button"
+              className="sidebar-2-close"
+              onClick={onCloseSection}
+              aria-label="Fermer le sous-menu"
+            >
+              <LuChevronLeft size={14} /> Fermer
+            </button>
           </aside>
         );
       })()}

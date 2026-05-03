@@ -1,5 +1,7 @@
 import { NormxModule } from '../types';
 
+export type MenuGroup = 'pilotage' | 'quotidien' | 'cloture' | 'outils';
+
 export interface MenuItem {
   id: string;
   label: string;
@@ -7,6 +9,7 @@ export interface MenuItem {
   hasArrow?: boolean;
   children?: MenuChild[];
   disabled?: boolean;
+  group?: MenuGroup;
 }
 
 export interface MenuChild {
