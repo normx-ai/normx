@@ -56,7 +56,9 @@ export default function Onboarding({ userName, onComplete, defaultModule, prefil
         : [];
 
   const [selectedModules, setSelectedModules] = useState<NormxModule[]>(initialModules);
-  const [entiteNom, setEntiteNom] = useState(prefill?.nom || '');
+  // Nom d'entite jamais pre-rempli : le user doit explicitement saisir
+  // le nom de sa societe/cabinet (different du nom du compte Keycloak).
+  const [entiteNom, setEntiteNom] = useState('');
   const [tenantType, setTenantType] = useState<TenantType>(prefill?.tenantType || 'enterprise');
 
   const currentYear = new Date().getFullYear();
@@ -132,18 +134,11 @@ export default function Onboarding({ userName, onComplete, defaultModule, prefil
     }
   };
 
-  // Auto-skip etapes 1 et 2 si tout est pre-rempli depuis le JWT.
-  // L'utilisateur a deja saisi nom/type/modules a l'inscription Keycloak,
-  // pas besoin de les redemander -> on cree le tenant et on saute a
-  // l'etape 3 (creation exercice). Garde ref pour eviter double-trigger.
-  useEffect(() => {
-    if (autoSubmitDone.current) return;
-    const fullyPrefilled = !!(prefill?.nom?.trim() && prefill?.tenantType && prefill?.modules?.length);
-    if (fullyPrefilled && step === 1 && !saving && !createdTenantId) {
-      autoSubmitDone.current = true;
-      handleCreateTenant();
-    }
-  }, [prefill, step, saving, createdTenantId]);
+  // Plus d'auto-skip : le nom de l'entite n'est jamais pre-rempli depuis
+  // Keycloak (le name Keycloak = nom de la personne, pas de la societe).
+  // L'utilisateur doit saisir le nom de son entite a l'etape 1, mais le
+  // type et les modules restent pre-remplis (gain UX).
+  void autoSubmitDone;
 
   const handleCreateExercice = async (): Promise<void> => {
     if (!exerciceAnnee || !exerciceDebut || !exerciceFin) {

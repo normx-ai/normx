@@ -20,7 +20,8 @@ import { filterEnabledModules } from '../config/modules';
 // ==================== TENANT ====================
 
 export interface OnboardingPrefill {
-  nom?: string;
+  // Le nom de l'entite n'est PAS pre-rempli (le 'name' Keycloak = nom
+  // de la personne, pas de la societe). L'utilisateur doit le saisir.
   tenantType?: 'enterprise' | 'cabinet';
   modules?: string[];
   phoneNumber?: string;

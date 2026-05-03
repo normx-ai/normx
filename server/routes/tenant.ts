@@ -17,11 +17,12 @@ router.get('/me', async (req: Request, res: Response) => {
   const tenant = await tenantService.getTenantBySlug(slug);
 
   if (!tenant) {
-    // Pre-remplissage du wizard depuis les attributs Keycloak saisis a l'inscription.
-    // Si tous les attributs requis sont presents, le wizard peut auto-soumettre
-    // l'etape "entite" et passer direct a la creation d'exercice.
+    // Pre-remplissage du wizard depuis les attributs Keycloak saisis a
+    // l'inscription. /!\ On ne pre-remplit PAS le nom de l'entite avec
+    // req.user.name : le name Keycloak est le nom de la PERSONNE
+    // (prenom+nom utilisateur), pas le nom de la SOCIETE/CABINET.
+    // Le user doit saisir explicitement le nom de son entite.
     const prefill = {
-      nom: req.user.name || '',
       tenantType: req.user.tenantType,
       modules: req.user.preferredModules,
       phoneNumber: req.user.phoneNumber,
