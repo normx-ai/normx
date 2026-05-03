@@ -7,7 +7,12 @@ interface PaginatedTotal { pagination?: { total?: number } }
 
 // Compteur d'ecritures filtrees, lit pagination.total (limit=1 pour ne
 // pas charger toutes les lignes juste pour un badge).
-function useEcrituresCount(entiteId: number, exerciceId: number | null, filters: Record<string, string>) {
+function useEcrituresCount(
+  entiteId: number,
+  exerciceId: number | null,
+  filters: Record<string, string>,
+  enabled: boolean,
+) {
   return useQuery<number>({
     queryKey: ['ecritures-count', entiteId, exerciceId, filters],
     queryFn: async () => {
@@ -20,19 +25,32 @@ function useEcrituresCount(entiteId: number, exerciceId: number | null, filters:
     },
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
-    enabled: entiteId > 0 && !!exerciceId,
+    enabled: enabled && entiteId > 0 && !!exerciceId,
   });
 }
 
 // Hook public : retourne tous les compteurs/badges utilises dans la sidebar.
 // L'ajout d'un nouveau badge se fait ici (un compteur React Query + son
 // build de MenuBadge), puis dans attachBadges() pour rattacher a l'item.
+//
+// `enabled` permet au caller de couper la query quand le module compta n'est
+// pas actif pour l'entite courante (sinon 403 garanti). Pattern React Query
+// standard pour conditionner les fetchs sur des permissions/contexte.
 export interface SidebarBadges {
   saisie?: MenuBadge;
 }
 
-export function useSidebarBadges(entiteId: number, exerciceId: number | null): SidebarBadges {
-  const { data: brouillardCount = 0 } = useEcrituresCount(entiteId, exerciceId, { statut: 'brouillard' });
+export interface UseSidebarBadgesOptions {
+  enabled?: boolean;
+}
+
+export function useSidebarBadges(
+  entiteId: number,
+  exerciceId: number | null,
+  options: UseSidebarBadgesOptions = {},
+): SidebarBadges {
+  const enabled = options.enabled ?? true;
+  const { data: brouillardCount = 0 } = useEcrituresCount(entiteId, exerciceId, { statut: 'brouillard' }, enabled);
 
   const saisie: MenuBadge | undefined = brouillardCount > 0
     ? {

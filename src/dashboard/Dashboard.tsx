@@ -136,7 +136,11 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   };
 
   // Menu items + badges (compteur ecritures brouillard, etc.)
-  const sidebarBadges = useSidebarBadges(entiteId, ex.exerciceId);
+  // Badge brouillard requete /api/ecritures qui exige module compta sur le
+  // tenant. On coupe la query quand on n'est pas sur compta pour eviter 403.
+  const sidebarBadges = useSidebarBadges(entiteId, ex.exerciceId, {
+    enabled: activeModule === 'compta',
+  });
   const MENU_ITEMS: MenuItem[] = React.useMemo(
     () => attachBadges(
       buildMenuItems({ activeModule, typeActivite, exerciceId: ex.exerciceId, etats }),
