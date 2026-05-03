@@ -20,7 +20,10 @@ import { MODULE_LIST, getEtats } from './constants';
 import { buildMenuItems } from './menuConfig';
 import { useSidebarBadges, attachBadges } from './useSidebarBadges';
 import { useExercices } from './useExercices';
+import { createLogger } from '../utils/logger';
 import './Dashboard.css';
+
+const log = createLogger('Dashboard');
 
 interface DashboardProps {
   userName: string;
@@ -170,6 +173,7 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
   }, [activeModule, findMenuItem]);
 
   const openTab = (id: string): void => {
+    log.debug('openTab', { id, activeModule, willNavigate: !!activeModule });
     if (activeModule) {
       navigate(`/app/${activeModule}/${id}`);
     }

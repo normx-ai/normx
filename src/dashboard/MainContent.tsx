@@ -1,4 +1,7 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
+import { createLogger } from '../utils/logger';
+
+const log = createLogger('MainContent');
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';
 import { ExerciceSelector } from './ExerciceManager';
 import { NOTES_ANNEXES, IMPLEMENTED_ETATS } from './notesConfig';
@@ -71,6 +74,10 @@ function MainContent(props: MainContentProps): React.ReactElement {
     typeActivite, entiteId, offre,
     onBack: () => openTab('accueil'),
   };
+
+  useEffect(() => {
+    log.debug('activeTab changed', { activeTab });
+  }, [activeTab]);
 
   const isTiersTab = ['tiers_membres', 'tiers_fournisseurs', 'tiers_bailleurs', 'tiers_personnel'].includes(activeTab);
   const tiersDefaultType = activeTab === 'tiers_membres' ? 'membre'

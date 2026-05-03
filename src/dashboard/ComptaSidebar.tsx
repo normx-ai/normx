@@ -5,6 +5,9 @@ import { groupMenuItems } from './menuGroups';
 import { useReferentiel } from '../contexts/ReferentielContext';
 import { useFavorites } from './useFavorites';
 import SidebarFavorites from './SidebarFavorites';
+import { createLogger } from '../utils/logger';
+
+const log = createLogger('Sidebar');
 
 interface ComptaSidebarProps {
   menuItems: MenuItem[];
@@ -189,8 +192,12 @@ function ComptaSidebar({
                 return (
                   <button
                     key={child.id}
+                    type="button"
                     className={`sidebar-2-item ${activeTab === child.id ? 'active' : ''}`}
-                    onClick={() => { onChildClick(child.id); }}
+                    onClick={() => {
+                      log.debug('sidebar-2 click', { id: child.id, label: child.label });
+                      onChildClick(child.id);
+                    }}
                   >
                     <span className="sidebar-2-icon"><ChildIcon size={15} /></span>
                     <span>{child.label}</span>
