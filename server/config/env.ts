@@ -48,12 +48,15 @@ const EnvSchema = z
     // ---- Auth (Keycloak)
     KEYCLOAK_URL: z.string().url(),
     KEYCLOAK_REALM: z.string().min(1),
-    KEYCLOAK_CLIENT_ID: z.string().min(1),
+    // Optionnel : fallback 'normx-app' dans server/routes/auth.ts si absent.
+    KEYCLOAK_CLIENT_ID: z.string().min(1).optional(),
 
-    // ---- Crypto
+    // ---- Crypto (optionnel : encryptField/decryptField pas utilises en prod
+    // actuellement, mais doivent crasher si appeles sans clef)
     ENCRYPTION_KEY: z
       .string()
-      .min(32, 'ENCRYPTION_KEY doit faire au moins 32 caracteres'),
+      .min(32, 'ENCRYPTION_KEY doit faire au moins 32 caracteres')
+      .optional(),
 
     // ---- IA (optionnel : si absent, les routes IA repondent 503)
     ANTHROPIC_API_KEY: z.string().startsWith('sk-ant-').optional(),
