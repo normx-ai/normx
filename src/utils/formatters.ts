@@ -31,10 +31,22 @@ export function fmtM(v: number): string {
   return Math.round(v).toLocaleString('fr-FR');
 }
 
+export interface FmtMontantOptions {
+  abbreviate?: boolean;
+}
+
 // Variante : retourne '0' si vide/zero plutot que chaine vide.
-// Arrondit a l'entier (pour affichages etats financiers).
-export function fmtMontant(v: number | null | undefined): string {
+// Arrondit a l'entier par defaut (pour affichages etats financiers).
+// Avec { abbreviate: true } : 1234 -> "1 k", 1234567 -> "1,2 M", 1234567890 -> "1,2 Md".
+export function fmtMontant(v: number | null | undefined, opts?: FmtMontantOptions): string {
   if (!v || v === 0) return '0';
+  if (opts?.abbreviate) {
+    const abs = Math.abs(v);
+    if (abs >= 1_000_000_000) return (v / 1_000_000_000).toFixed(1).replace('.', ',') + ' Md';
+    if (abs >= 1_000_000) return (v / 1_000_000).toFixed(1).replace('.', ',') + ' M';
+    if (abs >= 1_000) return Math.round(v / 1_000).toString() + ' k';
+    return Math.round(v).toString();
+  }
   return Math.round(v).toLocaleString('fr-FR');
 }
 

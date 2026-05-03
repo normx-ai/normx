@@ -68,18 +68,6 @@ export const MOIS: string[] = [
 
 // Props des sous-composants
 
-export interface EcrituresStatsProps {
-  ecritures: EcritureAPI[];
-  stats: StatsData | null;
-  nbSelectedBrouillard: number;
-  nbSelectedValidee: number;
-  onValider: () => void;
-  onDevalider: () => void;
-  onBack: () => void;
-  onOpenCreate: () => void;
-  onOpenImport?: () => void;
-}
-
 export interface EcrituresFiltersProps {
   filterJournal: string;
   setFilterJournal: (v: string) => void;
@@ -91,11 +79,11 @@ export interface EcrituresFiltersProps {
   setFilterDateDu: (v: string) => void;
   filterDateAu: string;
   setFilterDateAu: (v: string) => void;
-  searchTerm: string;
-  setSearchTerm: (v: string) => void;
   exerciceDateDebut?: string;
   exerciceDateFin?: string;
 }
+
+export type StatutTab = 'all' | 'brouillard' | 'validee';
 
 export interface EcrituresListProps {
   ecritures: EcritureAPI[];
@@ -104,6 +92,16 @@ export interface EcrituresListProps {
   onToggleSelectAll: () => void;
   onEdit: (ecr: EcritureAPI) => void;
   onDelete: (id: number) => void;
+  searchTerm: string;
+  setSearchTerm: (v: string) => void;
+  activeTab: StatutTab;
+  setActiveTab: (t: StatutTab) => void;
+  countAll: number;
+  countBrouillard: number;
+  countValidee: number;
+  onOpenCreate: () => void;
+  onOpenImport?: () => void;
+  onShortcut: (journal: string) => void;
 }
 
 export interface SaisieOverlayProps {

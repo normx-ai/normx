@@ -1,7 +1,9 @@
 import React from 'react';
-import { LuPenLine, LuTrash2 } from 'react-icons/lu';
+import { LuChevronDown } from 'react-icons/lu';
 import type { EcrituresListProps } from './SaisieJournal.types';
-import { fmt } from '../utils/formatters';
+import EcrituresToolbar from './EcrituresToolbar';
+import EcrituresEmpty from './EcrituresEmpty';
+import EcritureRow from './EcritureRow';
 
 function EcrituresList({
   ecritures,
@@ -10,18 +12,45 @@ function EcrituresList({
   onToggleSelectAll,
   onEdit,
   onDelete,
+  searchTerm,
+  setSearchTerm,
+  activeTab,
+  setActiveTab,
+  countAll,
+  countBrouillard,
+  countValidee,
+  onOpenCreate,
+  onOpenImport,
+  onShortcut,
 }: EcrituresListProps): React.JSX.Element {
+  const isEmpty = ecritures.length === 0;
+
   return (
-    <div className="ecritures-table-wrapper">
+    <div className="saisie-table-card">
+      <EcrituresToolbar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        countAll={countAll}
+        countBrouillard={countBrouillard}
+        countValidee={countValidee}
+      />
+
       <table className="ecritures-main-table">
         <thead>
           <tr>
             <th style={{ width: 36 }}>
-              <input type="checkbox" checked={ecritures.length > 0 && selectedIds.size === ecritures.length} onChange={onToggleSelectAll} />
+              <input
+                type="checkbox"
+                checked={!isEmpty && selectedIds.size === ecritures.length}
+                onChange={onToggleSelectAll}
+                aria-label="Tout sélectionner"
+              />
             </th>
-            <th>N°</th>
+            <th><span className="th-sortable">N° <LuChevronDown size={10} /></span></th>
             <th>Journal</th>
-            <th>Date</th>
+            <th><span className="th-sortable">Date <LuChevronDown size={10} /></span></th>
             <th>N° pièce</th>
             <th>Compte</th>
             <th style={{ width: 130 }}>Tiers</th>
@@ -33,55 +62,26 @@ function EcrituresList({
           </tr>
         </thead>
         <tbody>
-          {ecritures.length === 0 ? (
+          {isEmpty ? (
             <tr>
               <td colSpan={12} className="empty-cell">
-                <div className="empty-state-inline">
-                  <LuPenLine size={32} />
-                  <p>Aucune écriture</p>
-                  <span>Cliquez sur "Créer" pour saisir votre première écriture</span>
-                </div>
+                <EcrituresEmpty
+                  onOpenCreate={onOpenCreate}
+                  onOpenImport={onOpenImport}
+                  onShortcut={onShortcut}
+                />
               </td>
             </tr>
           ) : (
             ecritures.map(ecr => (
-              ecr.lignes.map((l, i) => (
-                <tr key={ecr.id + '-' + i} className={i > 0 ? 'sub-line' : 'main-line'}>
-                  {i === 0 && (
-                    <td rowSpan={ecr.lignes.length} className="cell-center">
-                      <input type="checkbox" checked={selectedIds.has(ecr.id)} onChange={() => onToggleSelect(ecr.id)} />
-                    </td>
-                  )}
-                  {i === 0 && <td rowSpan={ecr.lignes.length} className="cell-center">{ecr.id}</td>}
-                  {i === 0 && <td rowSpan={ecr.lignes.length} className="cell-journal">{ecr.journal}</td>}
-                  {i === 0 && <td rowSpan={ecr.lignes.length}>{new Date(ecr.date_ecriture).toLocaleDateString('fr-FR')}</td>}
-                  {i === 0 && <td rowSpan={ecr.lignes.length}>{ecr.numero_piece || ''}</td>}
-                  <td className={parseFloat(String(l.credit)) > 0 ? 'cell-credit' : ''}>{l.numero_compte}</td>
-                  <td style={{ fontSize: 12, color: '#666' }}>{l.tiers_nom || ''}</td>
-                  <td className={parseFloat(String(l.credit)) > 0 ? 'cell-credit indent' : ''}>
-                    {i === 0 ? ecr.libelle : l.libelle_compte}
-                  </td>
-                  <td style={{ textAlign: 'right' }}>{fmt(l.debit)}</td>
-                  <td style={{ textAlign: 'right' }}>{fmt(l.credit)}</td>
-                  {i === 0 && (
-                    <td rowSpan={ecr.lignes.length} className="cell-center">
-                      <span className={'statut-badge ' + (ecr.statut === 'validee' ? 'validee' : 'brouillard')}>
-                        {ecr.statut === 'validee' ? 'Validée' : 'Brouillard'}
-                      </span>
-                    </td>
-                  )}
-                  {i === 0 && (
-                    <td rowSpan={ecr.lignes.length} className="cell-actions">
-                      {ecr.statut !== 'validee' && (
-                        <>
-                          <button className="action-icon-btn edit" onClick={() => onEdit(ecr)} title="Modifier"><LuPenLine /></button>
-                          <button className="action-icon-btn delete" onClick={() => onDelete(ecr.id)} title="Supprimer"><LuTrash2 /></button>
-                        </>
-                      )}
-                    </td>
-                  )}
-                </tr>
-              ))
+              <EcritureRow
+                key={ecr.id}
+                ecr={ecr}
+                selected={selectedIds.has(ecr.id)}
+                onToggleSelect={onToggleSelect}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
             ))
           )}
         </tbody>

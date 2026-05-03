@@ -82,8 +82,27 @@
 .cd-qa { background: #fff; border: 1px solid #e4e8ed; border-radius: 10px; padding: 12px; display: flex; align-items: center; gap: 11px; cursor: pointer; transition: all 0.15s; text-decoration: none; color: inherit; text-align: left; font-family: inherit; width: 100%; }
 .cd-qa:hover { border-color: #D4A843; background: #fef9ee; transform: translateY(-1px); }
 .cd-qa-icon { width: 36px; height: 36px; border-radius: 8px; background: #0F2A42; color: #D4A843; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.cd-qa-title { font-size: 12.5px; font-weight: 600; color: #0F2A42; }
-.cd-qa-sub { font-size: 11px; color: #6b7785; margin-top: 1px; }
+.cd-qa-content { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cd-qa-title { display: block; font-size: 13px; font-weight: 600; color: #0F2A42; line-height: 1.3; }
+.cd-qa-sub { display: block; font-size: 11.5px; color: #6b7785; line-height: 1.3; }
+
+/* Lien-bouton (tete de panel) */
+.cd-link-btn { background: none; border: none; padding: 6px 12px; font-family: inherit; font-size: 12px; font-weight: 600; color: #D4A843; cursor: pointer; }
+.cd-link-btn:hover { color: #c49a38; text-decoration: underline; }
+
+/* Top clients : nom + code */
+.cd-tiers-name { font-weight: 600; color: #0F2A42; }
+.cd-tiers-code { font-size: 11px; color: #6b7785; margin-top: 1px; }
+
+/* Echeance : ligne badge */
+.cd-deadline-badge-row { margin-top: 4px; }
+
+/* Tresorerie : couleurs solde */
+.cd-treso-pos { color: #16a34a; }
+.cd-treso-neg { color: #dc2626; }
+
+/* Panel : marge top quand bloc autonome (activite recente) */
+.cd-panel-mt { margin-top: 16px; }
 
 /* Empty state */
 .cd-empty { padding: 32px; text-align: center; color: #6b7785; font-size: 13px; }
