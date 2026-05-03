@@ -26,11 +26,16 @@ function ComptaSidebar({
       <aside className={`compta-sidebar ${sidebarCollapsed ? 'collapsed' : ''}`}>
         <div className="compta-sidebar-header">
           {!sidebarCollapsed && <span className="compta-sidebar-title">Navigation</span>}
+          <button
+            type="button"
+            className="compta-sidebar-toggle"
+            onClick={onToggleSidebar}
+            aria-label={sidebarCollapsed ? 'Déplier le menu' : 'Réduire le menu'}
+            title={sidebarCollapsed ? 'Déplier le menu' : 'Réduire le menu'}
+          >
+            {sidebarCollapsed ? <LuChevronRight size={16} /> : <LuChevronLeft size={16} />}
+          </button>
         </div>
-
-        <button className="compta-sidebar-toggle" onClick={onToggleSidebar}>
-          {sidebarCollapsed ? <LuChevronRight /> : <LuChevronLeft />}
-        </button>
 
         <nav className="compta-sidebar-nav">
           {menuItems.map((item: MenuItem) => {

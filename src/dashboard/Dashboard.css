@@ -219,39 +219,43 @@
 }
 
 .compta-sidebar-header {
-  padding: 14px 16px;
-  border: 1px solid var(--couleur-bordure);
-  min-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--couleur-bordure);
+  min-height: 48px;
 }
 .compta-sidebar-title {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 700;
-  color: #374151;
+  color: var(--couleur-texte-secondaire);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
+}
+.compta-sidebar.collapsed .compta-sidebar-header {
+  justify-content: center;
+  padding: 12px 8px;
 }
 
 .compta-sidebar-toggle {
-  position: absolute;
-  right: -14px;
-  top: 60px;
   width: 28px;
   height: 28px;
-  background: #D4A843;
-  color: white;
-  border: 2px solid white;
-  border-radius: 50%;
+  background: transparent;
+  color: var(--couleur-texte-secondaire);
+  border: 1px solid transparent;
   cursor: pointer;
-  font-size: 12px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s;
+  flex-shrink: 0;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
 }
 .compta-sidebar-toggle:hover {
-  background: #C09935;
+  background: var(--couleur-fond);
+  color: var(--couleur-primaire);
+  border-color: var(--couleur-bordure);
 }
 
 .compta-sidebar-nav {
