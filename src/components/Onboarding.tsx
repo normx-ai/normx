@@ -69,16 +69,19 @@ export default function Onboarding({ userName, onComplete, defaultModule, prefil
   const [error, setError] = useState('');
 
   const isCabinet = tenantType === 'cabinet';
-  const cleanModules = (mods: NormxModule[]): NormxModule[] =>
-    mods.includes('compta') ? mods.filter((m) => m !== 'etats') : mods;
-  const finalModules = isCabinet ? cleanModules([...ENABLED_MODULES]) : cleanModules(selectedModules);
+  // Compta + etats sont envoyes ensemble au backend quand le mode 'complete'
+  // est choisi : la compta inclut nativement les etats mais on garde les
+  // deux modules actifs cote tenant pour que les ecrans 'Etats financiers'
+  // restent accessibles meme en mode compta complete.
+  const finalModules = isCabinet ? [...ENABLED_MODULES] : selectedModules;
   const canFinish = (isCabinet || selectedModules.length > 0) && entiteNom.trim().length > 0 && !saving;
 
   const toggleModule = (id: NormxModule): void => {
-    const comptaIncludesEtats = selectedModules.includes('compta');
-    if (id === 'etats' && comptaIncludesEtats) return;
     setSelectedModules((prev) => {
       let next = prev.includes(id) ? prev.filter((m) => m !== id) : [...prev, id];
+      // Compta active automatiquement etats (la compta produit nativement
+      // les etats financiers : on garde le module etats pour que les ecrans
+      // soient accessibles).
       if (id === 'compta' && next.includes('compta') && !next.includes('etats')) {
         next = [...next, 'etats'];
       }
