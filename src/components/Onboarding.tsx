@@ -69,11 +69,17 @@ export default function Onboarding({ userName, onComplete, defaultModule, prefil
   const [error, setError] = useState('');
 
   const isCabinet = tenantType === 'cabinet';
-  // Compta + etats sont envoyes ensemble au backend quand le mode 'complete'
-  // est choisi : la compta inclut nativement les etats mais on garde les
-  // deux modules actifs cote tenant pour que les ecrans 'Etats financiers'
-  // restent accessibles meme en mode compta complete.
-  const finalModules = isCabinet ? [...ENABLED_MODULES] : selectedModules;
+  // 'compta' et 'etats' sont mutuellement exclusifs cote backend :
+  // - 'compta' inclut nativement les ecrans Etats financiers (genere
+  //   depuis les ecritures saisies).
+  // - 'etats' est le mode standalone : import balance Excel pour generer
+  //   les etats SANS saisie comptable.
+  // Si 'compta' est selectionne, on retire 'etats' avant l'envoi pour
+  // eviter d'activer le double mode (saisie + import) qui n'a pas de
+  // sens fonctionnel.
+  const cleanModules = (mods: NormxModule[]): NormxModule[] =>
+    mods.includes('compta') ? mods.filter((m) => m !== 'etats') : mods;
+  const finalModules = isCabinet ? cleanModules([...ENABLED_MODULES]) : cleanModules(selectedModules);
   const canFinish = (isCabinet || selectedModules.length > 0) && entiteNom.trim().length > 0 && !saving;
 
   const toggleModule = (id: NormxModule): void => {
