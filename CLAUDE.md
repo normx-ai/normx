@@ -41,6 +41,44 @@ Le middleware central de `server/index.ts` les serialise en `{ error, code, deta
 Ne JAMAIS faire `res.status(4xx).json(...)` directement dans une route — lever
 l'erreur typee dans le service et laisser `asyncHandler` propager.
 
+## Hooks React custom : stabilite des references
+
+Tout hook custom qui retourne un objet ou un tableau DOIT memoiser son retour :
+
+```ts
+// MAUVAIS — nouvelle reference a chaque render, casse les useMemo/useCallback aval
+export function useFoo() {
+  const { data } = useQuery(...);
+  return { foo: data, bar: derived };  // ref change tjrs
+}
+
+// BON — ref stable tant que les deps changent pas
+export function useFoo() {
+  const { data } = useQuery(...);
+  return useMemo(() => ({ foo: data, bar: derived }), [data, derived]);
+}
+```
+
+Pourquoi : si un consommateur fait `useMemo(..., [hookRetour])` ou
+`useCallback(..., [hookRetour])`, et que la ref change a chaque render,
+toute la chaine en aval est invalidee a chaque render. Ca peut creer
+des cascades d'effets infinis qui freeze l'UI (cas vu : useSidebarBadges
+non memoise -> MENU_ITEMS recompute -> findMenuItem recree -> useEffect
+tire -> setOpenTabs -> re-render -> boucle).
+
+Regle ESLint `react-hooks/exhaustive-deps` activee en error pour signaler
+les deps manquantes. Si tu ne veux pas qu'un useEffect re-run quand un
+callback change (cas legitime : effet "fire-and-forget" qui lit la
+derniere valeur), utilise un `useRef` :
+
+```ts
+const fnRef = useRef(fn);
+fnRef.current = fn;
+useEffect(() => {
+  fnRef.current(...);  // lit toujours la derniere version, sans dep
+}, [autreDep]);
+```
+
 ## Variables d'environnement
 
 Source unique : `server/config/env.ts`. Validees au boot via Zod.

@@ -162,14 +162,22 @@ function Dashboard({ userName, isCabinet = false, entiteName, entiteId, userId, 
     return { label: id, icon: LuFileText };
   }, [MENU_ITEMS, etats]);
 
-  // Restaurer les icones des onglets apres rechargement de page
+  // Restaurer les icones des onglets apres changement de module.
+  // findMenuItem est lu via une ref pour eviter une cascade de re-renders :
+  // findMenuItem depend de MENU_ITEMS qui depend de hooks (sidebarBadges, ...)
+  // dont les references peuvent changer a chaque render. Mettre findMenuItem
+  // dans les deps creerait une boucle infinie de setOpenTabs -> re-render ->
+  // nouvelle ref findMenuItem -> setOpenTabs. L'effet ne doit se declencher
+  // que sur changement reel de activeModule.
+  const findMenuItemRef = useRef(findMenuItem);
+  findMenuItemRef.current = findMenuItem;
   useEffect(() => {
     setOpenTabs(prev => prev.map(t => {
       if (t.id === 'accueil') return { ...t, icon: LuHouse };
-      const info = findMenuItem(t.id);
+      const info = findMenuItemRef.current(t.id);
       return { ...t, icon: info.icon, label: info.label };
     }));
-  }, [activeModule, findMenuItem]);
+  }, [activeModule]);
 
   const openTab = (id: string): void => {
     log.debug('openTab', { id, activeModule: activeModule ?? '', willNavigate: !!activeModule });
