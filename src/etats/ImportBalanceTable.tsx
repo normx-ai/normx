@@ -31,10 +31,12 @@ function ImportBalanceTable({
   // pour que l'affichage des anomalies reste fonctionnel.
   const { referentiel } = useReferentiel();
   const { data: planComptableData = [] } = usePlanComptable(referentiel);
-  const planComptable = planSensMapProp ? [] : (planComptableData as PlanCompteEntry[]);
   const planSensMap = useMemo(
-    () => planSensMapProp || buildPlanComptableSensMap(planComptable),
-    [planSensMapProp, planComptable]
+    () => {
+      if (planSensMapProp) return planSensMapProp;
+      return buildPlanComptableSensMap(planComptableData as PlanCompteEntry[]);
+    },
+    [planSensMapProp, planComptableData]
   );
   const totalSID = lignes.reduce((s, l) => s + (parseFloat(String(l.si_debit)) || 0), 0);
   const totalSIC = lignes.reduce((s, l) => s + (parseFloat(String(l.si_credit)) || 0), 0);

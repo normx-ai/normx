@@ -107,7 +107,9 @@ function getRoleModulePerms(role: string): RoleModuleEntry[] {
 export function usePermissions(): UsePermissionsResult {
   const { user, isLoading } = useKeycloak();
 
-  const roles = user?.roles ?? [];
+  // useMemo sur roles : sinon `?? []` cree un nouveau [] a chaque render,
+  // invalidant le useMemo permissions en aval.
+  const roles = useMemo(() => user?.roles ?? [], [user?.roles]);
 
   const permissions = useMemo(() => buildPermissionsForRoles(roles), [roles]);
 

@@ -147,8 +147,10 @@ function BilanSMT({ entiteName, entiteNif = '', entiteId, offre = 'comptabilite'
     queryKey: ['balance', entiteId, selectedExercice?.id, balanceSource],
     queryFn: loadBalanceFn, staleTime: 2 * 60 * 1000, enabled: !!entiteId && !!selectedExercice,
   });
-  const lignesN = balanceData?.lignesN ?? [];
-  const lignesN1 = balanceData?.lignesN1 ?? [];
+  // useMemo : sinon `?? []` cree un nouveau [] a chaque render, invalidant
+  // les useMemo en aval (cf bug SPA freeze - cascade de re-renders).
+  const lignesN = useMemo(() => balanceData?.lignesN ?? [], [balanceData]);
+  const lignesN1 = useMemo(() => balanceData?.lignesN1 ?? [], [balanceData]);
   const balanceFound = lignesN.length > 0;
   const sourceUsed = balanceData?.source ?? '';
 
