@@ -1,7 +1,5 @@
 import React, { Suspense, useEffect } from 'react';
 import { createLogger } from '../utils/logger';
-
-const log = createLogger('MainContent');
 import { TypeActivite, Offre, NormxModule, EtatFinancier, Exercice, Entite } from '../types';
 import { ExerciceSelector } from './ExerciceManager';
 import { NOTES_ANNEXES, IMPLEMENTED_ETATS } from './notesConfig';
@@ -15,6 +13,8 @@ import {
   ImportBalance,
   TiersPage, AssistantChat, AideVideos, ParametresTabs,
 } from './lazyModules';
+
+const log = createLogger('MainContent');
 
 interface MainContentProps {
   activeTab: string;

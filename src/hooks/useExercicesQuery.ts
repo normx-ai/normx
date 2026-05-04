@@ -13,7 +13,7 @@
  *   meme entite partagent la meme selection (utile pour la liasse complete).
  */
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
@@ -63,7 +63,11 @@ export function useExercicesQuery(entiteId: number): UseExercicesQueryResult {
     enabled: entiteId > 0,
   });
 
-  const exercices: Exercice[] = exercicesData ?? [];
+  // useMemo pour stabiliser la ref : sinon `exercicesData ?? []` cree un
+  // nouveau [] a chaque render quand exercicesData est null/undefined,
+  // ce qui invaliderait les useEffect/useMemo en aval qui dependent de
+  // `exercices` (cf bug SPA freeze - boucles de re-renders).
+  const exercices: Exercice[] = useMemo(() => exercicesData ?? [], [exercicesData]);
 
   const { data: selectedExercice = null } = useQuery<Exercice | null>({
     queryKey: ['selected-exercice', entiteId],
