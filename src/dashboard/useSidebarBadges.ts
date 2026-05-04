@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { clientFetch } from '../lib/api';
 import { api } from '../lib/apiEndpoints';
@@ -52,15 +53,21 @@ export function useSidebarBadges(
   const enabled = options.enabled ?? true;
   const { data: brouillardCount = 0 } = useEcrituresCount(entiteId, exerciceId, { statut: 'brouillard' }, enabled);
 
-  const saisie: MenuBadge | undefined = brouillardCount > 0
-    ? {
-        text: String(brouillardCount),
-        variant: brouillardCount >= 10 ? 'warning' : 'info',
-        title: `${brouillardCount} écriture${brouillardCount > 1 ? 's' : ''} en brouillard`,
-      }
-    : undefined;
-
-  return { saisie };
+  // useMemo critique : sans memoization, le retour { saisie } est un nouvel
+  // objet a chaque render. Comme MENU_ITEMS dans Dashboard.tsx depend de
+  // sidebarBadges via useMemo, sa reference change tjrs -> findMenuItem
+  // useCallback invalide -> useEffect [activeModule, findMenuItem] tire ->
+  // setOpenTabs declenche re-render -> boucle infinie qui freeze le SPA.
+  return useMemo<SidebarBadges>(() => {
+    const saisie: MenuBadge | undefined = brouillardCount > 0
+      ? {
+          text: String(brouillardCount),
+          variant: brouillardCount >= 10 ? 'warning' : 'info',
+          title: `${brouillardCount} écriture${brouillardCount > 1 ? 's' : ''} en brouillard`,
+        }
+      : undefined;
+    return { saisie };
+  }, [brouillardCount]);
 }
 
 // Injecte les badges dans les bons items (par id) sans muter l'array original.
