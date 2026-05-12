@@ -956,7 +956,7 @@
     "numero_original": "185",
     "libelle": "Comptes permanents non bloques des etablissements et succursales",
     "classe": 1,
-    "sens": "crediteur"
+    "sens": "mixte"
   },
   {
     "numero": "186000",
